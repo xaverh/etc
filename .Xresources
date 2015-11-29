@@ -1,0 +1,129 @@
+! font settings --------------------------------------------------------------
+
+Xft.autohint: true
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+! Solarized color scheme for the X Window System
+!
+! http://ethanschoonover.com/solarized
+
+
+! Common
+
+#define S_yellow #b58900
+#define S_orange #cb4b16
+#define S_red #dc322f
+#define S_magenta #d33682
+#define S_violet #6c71c4
+#define S_blue #268bd2
+#define S_cyan #2aa198
+#define S_green #859900
+
+
+! Dark
+
+! #define S_base03 #002b36
+! #define S_base02 #073642
+! #define S_base01 #586e75
+! #define S_base00 #657b83
+! #define S_base0 #839496
+! #define S_base1 #93a1a1
+! #define S_base2 #eee8d5
+! #define S_base3 #fdf6e3
+
+
+! Light
+
+#define S_base03 #fdf6e3
+#define S_base02 #eee8d5
+#define S_base01 #93a1a1
+#define S_base00 #839496
+#define S_base0 #657b83
+#define S_base1 #586e75
+#define S_base2 #073642
+#define S_base3 #002b36
+
+
+! To only apply colors to your terminal, for example, prefix
+! the color assignment statement with its name. Example:
+!
+! URxvt*background: S_base03
+
+*background: S_base03
+*foreground: S_base0
+*fading: 0
+*fadeColor: S_base03
+*cursorColor: S_base1
+*pointerColorBackground: S_base01
+*pointerColorForeground: S_base1
+
+*color0: S_base02
+*color1: S_red
+*color2: S_green
+*color3: S_yellow
+*color4: S_blue
+*color5: S_magenta
+*color6: S_cyan
+*color7: S_base2
+*color8: S_base03
+*color9: S_orange
+*color10: S_base01
+*color11: S_base00
+*color12: S_base0
+*color13: S_violet
+*color14: S_base1
+*color15: S_base3
+
+URxvt.intensityStyles: false
+XTerm*faceName: xft:Source Code Pro:pixelsize=13
+
+URxvt*geometry: 86x24
+URxvt*scrollBar: false
+! *termName: rxvt-unicode-256color
+URxvt*font: xft:Source Code Pro:pixelsize=13
+URxvt*italicFont: xft:Source Code Pro:pixelsize=13:italic
+URxvt*boldFont: xft:Source Code Pro:pixelsize=13:bold
+URxvt*boldItalicFont: xft:Source Code Pro:pixelsize=13:bold:italic
+!URxvt*font -misc-tamsyn-medium-r-*-*-13-*-*-*-*-*-*-*
+! enhanced letter spacing for Source Code Pro
+URxvt*letterSpace: -1.5
+! If you do not use the Perl extension features, you can improve the security and speed by disabling Perl extensions completely.
+! URxvt.perl-ext:
+! URxvt.perl-ext-common:
+URxvt*iconFile:/usr/share/icons/gnome/48x48/apps/terminal.png
+! alpine*iconFile:/home/xha/.icons/Numix-Circle/48x48/apps/alpine.png
+! vlc*iconFile:/home/xha/.icons/Numix-Circle/48x48/apps/vlc.svg
+zathura*iconFile:/home/xha/.local/share/icons/zathura-circle.png
+
+! xscreensaver ---------------------------------------------------------------
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-fixed-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #101010
+xscreensaver.Dialog.background:         #D8D8D8
+xscreensaver.Dialog.topShadowColor:     #D8D8D8
+xscreensaver.Dialog.bottomShadowColor:  #D8D8D8
+xscreensaver.Dialog.Button.foreground:  #101010
+xscreensaver.Dialog.Button.background:  #E5E5E5
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #101010
+xscreensaver.Dialog.text.background:    #E5E5E5
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        0
+xscreensaver.Dialog.shadowThickness:    2
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #101010
+xscreensaver.passwd.thermometer.background:  #2E2E2E
+xscreensaver.passwd.thermometer.width:       8

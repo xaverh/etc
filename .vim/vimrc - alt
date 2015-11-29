@@ -1,0 +1,325 @@
+set autoindent
+set autoread
+set background=dark
+set backspace=eol,start,indent
+set cindent
+set cinoptions=(0,u0,g0,:0,j1,J1,)200
+set colorcolumn=+1
+set copyindent
+set cpoptions=q
+set cursorline
+set encoding=utf8
+set fileformats=unix,dos,mac
+set foldcolumn=1
+set guioptions+=T
+set guioptions+=m
+set guioptions-=e
+set guioptions-=r
+set guioptions-=t
+set guitablabel=%M\ %t
+set hidden
+set history=700
+set hlsearch
+set ignorecase
+set incsearch 
+set laststatus=2
+set linebreak
+set magic
+set matchtime=2
+set noerrorbells
+set noexpandtab
+set nostartofline
+set number
+set pastetoggle=<F8>
+set ruler
+set scrolloff=5
+set shiftwidth=4
+set shortmess=a
+set showcmd
+set showmatch
+set smartcase
+set smarttab
+set softtabstop=8
+set statusline=\ %{HasPaste()}%F%M%R%H%W%Y\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ %l\ \ \ Column:\ %v\ \ \ %p%%
+set t_Co=16
+set tabstop=8
+set textwidth=80
+set timeoutlen=1000
+set visualbell t_vb=
+set whichwrap+=<,>,[,] ",h,l
+set wildmenu
+set wrap
+
+if !has("win32") && !has("win64")
+	set term=rxvt-unicode-256color " XXX for solarized's magenta in Gnome
+endif
+
+filetype plugin on
+filetype indent on
+syntax enable 
+
+let mapleader = ","
+let g:mapleader = ","
+
+nmap <leader>w :w!<cr>
+
+if has('gui_running')
+	set background=light
+endif
+if !has('gui_running')
+	let g:solarized_bold=1
+	let g:solarized_underline=1
+	let g:solarized_italic=1
+endif
+colorscheme solarized
+call togglebg#map("<F5>")
+
+
+if has("gui_running")
+	nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+	nnoremap <C-F2> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
+	nnoremap <C-F3> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
+endif
+
+
+if has("gui_gtk2")
+	set guifont=Source\ Code\ Pro\\,Ubuntu\ Mono\\,\ 10
+elseif has("gui_mac")
+	set guifont=Menlo:h11
+else
+	set guifont=Consolas:h10
+endif
+
+
+"set showbreak=«\ 
+"set list
+" set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
+
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Smart way to move between windows
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+
+" Close all the buffers
+map <leader>ba :1,1000 bd!<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+map <M-PageDown> :tabnext<cr> 
+map <M-PageUp> :tabprevious<cr> 
+
+" Opens a new tab with the current buffer's path
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+map <leader>l :w<cr>:cd %:p:h<cr>:echom system("~/Dropbox/lavim.lua " . @%)<cr>:redraw<cr>
+if has("win32") || has("win64")
+map <C-K> :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+imap <C-K> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+else
+map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.5.py<cr>
+imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.5.py<cr>
+endif
+
+" Specify the behavior when switching between buffers 
+try
+	set switchbuf=useopen,usetab,newtab
+	set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+			\ if line("'\"") > 0 && line("'\"") <= line("$") |
+			\   exe "normal! g`\"" |
+			\ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+
+
+" Remap VIM 0 to first non-blank character
+"map 0 ^
+
+" delete trailing white space on save; TODO: more filetypes
+func! DeleteTrailingWS()
+	exe "normal mz"
+	%s/\s\+$//ge
+	exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite *.hs :call DeleteTrailingWS()
+autocmd BufWrite *.hamlet :call DeleteTrailingWS()
+autocmd BufWrite *.julius :call DeleteTrailingWS()
+autocmd BufWrite *.cassius :call DeleteTrailingWS()
+autocmd BufWrite *.lucius :call DeleteTrailingWS()
+
+" When you press gv you vimgrep after the selected text
+vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+
+" Open vimgrep and put the cursor in the right position
+map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+
+" Vimgreps in the current file
+map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
+
+" When you press <leader>r you can search and replace the selected text
+vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+
+" Do :help cope if you are unsure what cope is. It's super useful!
+"
+" When you search with vimgrep, display your results in cope by doing:
+"   <leader>cc
+"
+" To go to the next search result do:
+"   <leader>n
+"
+" To go to the previous search results do:
+"   <leader>p
+"
+map <leader>cc :botright cope<cr>
+map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+"Shortcuts using <leader>
+"map <leader>sn ]s
+"map <leader>sp [s
+"map <leader>sa zg
+"map <leader>s? z=
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Quickly open a buffer for scripbble
+map <leader>q :e ~/buffer<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! CmdLine(str)
+	exe "menu Foo.Bar :" . a:str
+	emenu Foo.Bar
+	unmenu Foo
+endfunction 
+
+function! VisualSelection(direction, extra_filter) range
+	let l:saved_reg = @"
+	execute "normal! vgvy"
+
+	let l:pattern = escape(@", '\\/.*$^~[]')
+	let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+	if a:direction == 'b'
+		execute "normal ?" . l:pattern . "^M"
+	elseif a:direction == 'gv'
+		call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.' . a:extra_filter)
+	elseif a:direction == 'replace'
+		call CmdLine("%s" . '/'. l:pattern . '/')
+	elseif a:direction == 'f'
+		execute "normal /" . l:pattern . "^M"
+	endif
+
+	let @/ = l:pattern
+	let @" = l:saved_reg
+endfunction
+
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+	if &paste
+		return 'PASTE MODE  '
+	en
+	return ''
+endfunction
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+	let l:currentBufNum = bufnr("%")
+	let l:alternateBufNum = bufnr("#")
+
+	if buflisted(l:alternateBufNum)
+		buffer #
+	else
+		bnext
+	endif
+
+	if bufnr("%") == l:currentBufNum
+		new
+	endif
+
+	if buflisted(l:currentBufNum)
+		execute("bdelete! ".l:currentBufNum)
+	endif
+endfunction
+
+"let g:tex_flavor='lualatex'
+"au FileType tex set sw=2
+"au FileType tex setlocal spell spelllang=de_19
+"let g:Tex_DefaultTargetFormat='pdf'
+
+" Mappings for Swapping words:
+" To use gc to swap the current character with the next, without changing the cursor position:
+nnoremap <silent> gc xph
+" To use gw to swap the current word with the next, without changing cursor position (This version will work across newlines):
+"nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>
+"To use gl to swap the current word with the previous, keeping cursor on current word: (This feels like pushing the word to the left.) (See note.)
+"nnoremap <silent> gl "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>
+"To use gr to swap the current word with the next, keeping cursor on current word: (This feels like pushing the word to the right.) (See note.)
+" nnoremap <silent> gr "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>
+nnoremap gr "xdiwdwep"xp
+"To use g{ to swap the current paragraph with the next:
+"nnoremap g{ {dap}p{
+
+map <F4> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	exec "!gcc\ -o\ %<\ %<"
+	exec "! ./%<"
+endfunc
+
+" Show hightlighting groups for current word
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" When in GVIM, show filetypes in menu
+if has('gui_running')
+	let do_syntax_sel_menu = 1|runtime~! synmenu.vim|aunmenu &Syntax.&Show\ filetypes\ in\ menu
+endif
