@@ -38,7 +38,7 @@ IndentCaseLabels: false
 IndentFunctionDeclarationAfterType: true
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: false
+KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 ObjCSpaceAfterProperty: false
@@ -47,8 +47,8 @@ PenaltyBreakBeforeFirstCallParameter: 100
 PenaltyBreakComment: 100
 PenaltyBreakFirstLessLess: 0
 PenaltyBreakString: 100
-PenaltyExcessCharacter: 1
-PenaltyReturnTypeOnItsOwnLine: 20
+PenaltyExcessCharacter: 50
+PenaltyReturnTypeOnItsOwnLine: 51
 PointerAlignment: Left
 SpaceAfterCStyleCast: false
 SpaceBeforeAssignmentOperators: true
