@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Code
+Comment=Microsoft Visual Studio Code
+Exec=Code %F
+Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png
+Terminal=false
+Type=Application
+Categories=Development;
+Actions=new-window
+
+[Desktop Action new-window]
+Name=Open a New Window
+Exec=Code -n %F
