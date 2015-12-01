@@ -38,7 +38,7 @@ sudo dnf upgrade -y
 # rdesktop claws-mail-plugins clang golang-vet golang-godoc @c-development
 ### hsetroot cb-compositor cb-exit
 
-sudo apt-get install git zsh texlive texlive-latex-extra unrar gimp faac faad p7zip fonts-linuxlibertine clang clang-format-3.7 lua5.3 golang xclip network-manager-openconnect-gnome
+sudo apt-get install adobe-flashplugin git zsh texlive texlive-latex-extra unrar gimp faac faad p7zip fonts-linuxlibertine clang clang-format-3.7 lua5.3 golang xclip network-manager-openconnect-gnome
 
 sudo dnf -y install zsh texlive-scheme-medium vim-enhanced vim-X11 \
 flash-plugin gstreamer1-plugins-bad-freeworld \
