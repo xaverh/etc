@@ -136,12 +136,12 @@ if has("win32") || has("win64")
 	imap <C-K> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
 else
 " temporary until Fedora has Clang 3.6
-"	map <C-K> :%pyfile /usr/share/clang/clang-format.py<cr>
-"	imap <C-K> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
+	map <C-K> :%pyfile /usr/share/clang/clang-format.py<cr>
+	imap <C-K> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
 "	map <C-K> :%pyfile ~/.vim/clang-format.py<cr>
 "	imap <C-K> <c-o>:%pyfile ~/.vim/clang-format.py<cr>
-	map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
-	imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
+"	map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
+"	imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
 endif
 
 autocmd FileType go map <C-K> :GoFmt<cr>
