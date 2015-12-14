@@ -4,13 +4,11 @@ Version=1.0
 Type=Application
 Name=Visual Studio Code
 GenericName=Code Editor
-Icon=code.png
+Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png
 Path=/opt/VSCode-linux-x64
 Exec=/opt/VSCode-linux-x64/Code %U
 StartupNotify=false
 StartupWMClass=Code
-OnlyShowIn=Unity;
-X-UnityGenerated=true
 Actions=NewWindow;
 
 [Desktop Action NewWindow]
@@ -51,4 +49,4 @@ Name[vi]=Mở cửa sổ mới
 Name[zh_CN]=新建窗口
 Name[zh_TW]=開啟新視窗
 Exec=/opt/VSCode-linux-x64/Code -n %U
-OnlyShowIn=Unity;
+Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png

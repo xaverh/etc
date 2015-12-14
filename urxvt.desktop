@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=rxvt-unicode client/daemon
+Icon=utilities-terminal
+Exec=urxvtcd
+StartupNotify=false
+StartupWMClass=urxvt
