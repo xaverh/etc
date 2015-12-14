@@ -13,6 +13,9 @@ Xft.lcdfilter: lcddefault
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
 
+sudo pacman -S gnome-themes-maia firefox-kde-i18n-de zsh rxvt-unicode vim texlive-most kdemultimedia-ffmpegthumbs clang clementine
+yaourt kdegraphics-thumbnailsers-framework-git
+
 # sudo yum-config-manager --add-repo=http://download.opensuse.org/repositories/home:/satya164:/elegance-colors/Fedora_`rpm -E %fedora`/home:satya164:elegance-colors.repo
 
 # sudo yum-config-manager --add-repo=http://negativo17.org/repos/fedora-handbrake.repo
