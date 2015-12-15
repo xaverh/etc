@@ -106,18 +106,18 @@ if has('gui_running')
 	set columns=86
 	set lines=34
 endif
-set t_Co=16
+set t_Co=256
 "let g:solarized_termcolors=256
-"let base16colorspace=256  " Access colors present in 256 colorspace
+let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
-if has('gui_running')
-	set background=light
-endif
-if !has('gui_running')
-	let g:solarized_bold=1
-	let g:solarized_underline=1
-	let g:solarized_italic=1
-endif
+"if has('gui_running')
+	"set background=light
+"endif
+"if !has('gui_running')
+	"let g:solarized_bold=1
+	"let g:solarized_underline=1
+	"let g:solarized_italic=1
+"endif
 "let g:solarized_visibility='low'
 "let g:solarized_hitrail=1
 colorscheme solarized
