@@ -120,7 +120,7 @@ set background=dark
 "endif
 "let g:solarized_visibility='low'
 "let g:solarized_hitrail=1
-colorscheme solarized
+colorscheme default
 call togglebg#map("<F5>")
 if has("gui_gtk2")
 	set guifont=Ubuntu\ Mono\\,Source\ Code\ Pro\\,\ 12
