@@ -3,12 +3,14 @@ Encoding=UTF-8
 Version=1.0
 Type=Application
 Name=Visual Studio Code
-GenericName=Code Editor
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png
 Path=/opt/VSCode-linux-x64
 Exec=/opt/VSCode-linux-x64/Code %U
 StartupNotify=false
 StartupWMClass=Code
+OnlyShowIn=Unity;
+X-UnityGenerated=true
+GenericName=Code Editor
 Actions=NewWindow;
 
 [Desktop Action NewWindow]
@@ -42,7 +44,7 @@ Name[ru]=Новое окно
 Name[sk]=Otvoriť nové okno
 Name[sl]=Odpri novo okno
 Name[sv]=Öppna ett nytt fönster
-Name[tr]=Yeni pencere aç 
+Name[tr]=Yeni pencere aç
 Name[ug]=يېڭى كۆزنەك ئېچىش
 Name[uk]=Відкрити нове вікно
 Name[vi]=Mở cửa sổ mới
