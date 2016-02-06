@@ -61,7 +61,7 @@ Xft.lcdfilter: lcddefault
 ! *cursorColor: S_base1
 ! *pointerColorBackground: S_base01
 ! *pointerColorForeground: S_base1
-! 
+!
 ! *color0: S_base02
 ! *color1: S_red
 ! *color2: S_green
@@ -102,17 +102,18 @@ Xft.lcdfilter: lcddefault
 *color15: #000000
 
 URxvt.intensityStyles: false
-XTerm*faceName: xft:Source Code Pro:pixelsize=13
+! XTerm*faceName: xft:Menlo:pixelsize=13
 
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
 ! *termName: rxvt-unicode-256color
-URxvt*font: xft:Source Code Pro:pixelsize=13
-URxvt*italicFont: xft:Source Code Pro:pixelsize=13:italic
-URxvt*boldFont: xft:Source Code Pro:pixelsize=13:bold
-URxvt*boldItalicFont: xft:Source Code Pro:pixelsize=13:bold:italic
-!URxvt*font -misc-tamsyn-medium-r-*-*-13-*-*-*-*-*-*-*
-! enhanced letter spacing for Source Code Pro
+URxvt*font: xft:Menlo:pixelsize=14
+URxvt*italicFont: xft:Menlo:pixelsize=14:italic
+URxvt*boldFont: xft:Menlo:pixelsize=14:bold
+URxvt*boldItalicFont: xft:Menlo:pixelsize=14:bold:italic
+! URxvt*font: -sgi-screen-medium-r-normal--14-140-72-72-m-80--ascii
+! URxvt*boldFont: -sgi-screen-bold-r-normal--14-140-72-72-m-80--ascii
+! enhanced letter spacing for Menlo
 URxvt*letterSpace: -1.5
 ! If you do not use the Perl extension features, you can improve the security and speed by disabling Perl extensions completely.
 ! URxvt.perl-ext:
@@ -149,3 +150,40 @@ xscreensaver.Dialog.shadowThickness:    2
 xscreensaver.passwd.thermometer.foreground:  #101010
 xscreensaver.passwd.thermometer.background:  #2E2E2E
 xscreensaver.passwd.thermometer.width:       8
+! Base16 Tubbs
+! Scheme: Xaver Hellauer (https://github.com/xaverh)
+
+! URxvt*tintColor:                      color
+! URxvt*fadeColor:                      color
+
+URxvt*background:                     #2C2C2C
+URxvt*foreground:                     #E0E0D0
+URxvt*cursorColor:                    #E0E0D0
+
+! URxvt*colorBD:                        color
+! URxvt*colorIT:                        color
+! URxvt*colorUL:                        color
+! URxvt*colorRV:                        color
+! URxvt*underlineColor:                 color
+URxvt*scrollColor:                    #E0E0D0
+! URxvt*troughColor:                    color
+URxvt*highlightColor:                 #565657
+URxvt*highlightTextColor:             #a8b8a8
+
+URxvt*color0:                         #3f3f3f
+URxvt*color1:                         #DA4939
+URxvt*color2:                         #81AC3A
+URxvt*color3:                         #DA7416
+URxvt*color4:                         #9AB8D7
+URxvt*color5:                         #C71585
+URxvt*color6:                         #8CD0D3
+URxvt*color7:                         #E0E0D0
+URxvt*color8:                         #709080
+URxvt*color9:                         #F92672
+URxvt*color10:                        #72D5A3
+URxvt*color11:                        #F0DFAF
+URxvt*color12:                        #008995
+URxvt*color13:                        #DC8CC3
+URxvt*color14:                        #93E0E3
+URxvt*color15:                        #ffffff
+
