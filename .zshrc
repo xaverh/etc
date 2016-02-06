@@ -1,9 +1,9 @@
 unsetopt allexport autoresume bashautolist bsdecho correctall cshjunkiehistory cshjunkiequotes cshnullcmd cshnullglob dvorak kshautoload listbeep promptbang  pushdsilent pushdtohome recexact
 setopt aliases alwayslastprompt autolist autoparamkeys autoparamslash autoremoveslash badpattern banghist bareglobqual bgnice caseglob casematch equals functionargzero globalrcs hashlistall listambiguous listtypes promptcr promptpercent promptsp rcs transientrprompt autocd beep completeinword correct rmstarwait braceccl autopushd pushdminus pushdignoredups nomatch noglobdots extendedglob noclobber histallowclobber multios checkjobs nohup autocontinue longlistjobs notify sharehistory appendhistory extendedhistory histnostore histignorealldups histignorespace globcomplete automenu menucomplete completealiases alwaystoend listpacked listrowsfirst autonamedirs cbases cdablevars chasedots chaselinks flowcontrol promptsubst
 
-autoload -U promptinit
-promptinit
-prompt grb
+# autoload -U promptinit
+# promptinit
+# prompt grb
 
 HISTFILE=~/.zsh_history
 SAVEHIST=100000
@@ -28,10 +28,10 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-# PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[blue]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[cyan]%} %4~%{$reset_color%} %# "
-# PS2='\%_> ' # printed when zsh needs more information to complete a command
-# PS3='?# '   # selection prompt used within a select loop
-# PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
+PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[blue]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[cyan]%} %4~%{$reset_color%} %# "
+PS2='\%_> ' # printed when zsh needs more information to complete a command
+PS3='?# '   # selection prompt used within a select loop
+PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 
 (( EUID != 0 )) && umask 0077 || umask 0002
 
