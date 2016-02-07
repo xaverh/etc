@@ -15,3 +15,6 @@ typeset -U fpath
 PATH="$PATH:$HOME/.npm-global/bin"
 
 export PATH
+
+GOPATH="$HOME/.gopath/"
+export GOPATH
