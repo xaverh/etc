@@ -1,4 +1,4 @@
-AccessModifierOffset: -8
+AccessModifierOffset: -4
 AlignAfterOpenBracket: true
 #AlignConsecutiveAssignments: false
 #AlignConsecutiveDeclarations: true
@@ -24,8 +24,8 @@ BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: false
 ColumnLimit: 80
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 8
-ContinuationIndentWidth: 8
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 #IncludeCategories:
@@ -37,7 +37,7 @@ DerivePointerAlignment: false
 #    Priority:        1
 IndentCaseLabels: false
 IndentFunctionDeclarationAfterType: true # no longer mentioned in doc, maybe deprecated
-IndentWidth: 8
+IndentWidth: 4
 IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
@@ -62,7 +62,7 @@ SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Cpp11
-TabWidth: 8
+TabWidth: 4
 UseTab: ForIndentation
 ---
 Language: JavaScript

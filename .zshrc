@@ -28,7 +28,7 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[blue]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[cyan]%} %4~%{$reset_color%} %# "
+PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[cyan]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[blue]%} %4~%{$reset_color%} %# "
 PS2='\%_> ' # printed when zsh needs more information to complete a command
 PS3='?# '   # selection prompt used within a select loop
 PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
@@ -162,16 +162,16 @@ zstyle ':completion:*:rm:*' ignore-line yes
 
 # manpage colors
 # export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking
-export LESS_TERMCAP_mb=$'\E[00;36m'     # begin blinking
+export LESS_TERMCAP_mb=$'\E[00;31m'     # begin blinking
 # export LESS_TERMCAP_md=$'\E[00;36m'     # begin bold
-export LESS_TERMCAP_md=$'\E[00;34m'     # begin bold
+export LESS_TERMCAP_md=$'\E[00;96m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'         # end mode
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
-# export LESS_TERMCAP_so=$'\E[00;100;97m' # begin standout-mode - info box
-export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
+export LESS_TERMCAP_so=$'\E[00;100;97m' # begin standout-mode - info box
+#export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 # export LESS_TERMCAP_us=$'\E[00;31m'     # begin underline
-export LESS_TERMCAP_us=$'\E[00;35m'     # begin underline
+export LESS_TERMCAP_us=$'\E[00;95m'     # begin underline
 export GROFF_NO_SGR=1
 
 # Erstellt aus .flac-Dateien .m4a-Dateien:
@@ -237,3 +237,4 @@ fi
 # export ANT_ROOT=/usr/bin
 # export PATH=$ANT_ROOT:$PATH
 #
+
