@@ -238,5 +238,5 @@ fi
 # export PATH=$ANT_ROOT:$PATH
 #
 
-source .zsh/agnoster.zsh-theme
+source ~/.zsh/agnoster.zsh-theme
 
