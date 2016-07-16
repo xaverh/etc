@@ -163,11 +163,11 @@ DIR 36
 LINK 35
 
 # pipe, socket, block device, character device (blue bg)
-FIFO 30;44
-SOCK 35;44
-DOOR 35;44 # Solaris 2.5 and later
-BLK  33;44
-CHR  37;44
+FIFO 31;100
+SOCK 35;100
+DOOR 35;100 # Solaris 2.5 and later
+BLK  33;100
+CHR  37;100
 
 
 #############################################################################
@@ -198,211 +198,212 @@ EXEC 01;31  # Unix
 ### Text formats
 
 # Text that we can edit with a regular editor
-.txt 32
-.org 32
-.md 32
-.mkd 32
-.markdown 32
-.tex 32
-.adoc 32
-.asciidoc 32
+.txt 31
+.org 31
+.md 31
+.mkd 31
+.markdown 31
+.tex 31
+.adoc 31
+.asciidoc 31
 
 # Source text
-.h 32
-.H 32
-.hh 32
-.hpp 32
-.hxx 32
-.h++ 32
-.c 32
-.C 32
-.cc 32
-.cpp 32
-.cxx 32
-.c++ 32
-.objc 32
-.sh 32
-.csh 32
-.zsh 32
-.el 32
-.vim 32
-.java 32
-.pl 32
-.pm 32
-.py 32
-.rb 32
-.hs 32
-.php 32
-.htm 32
-.html 32
-.shtml 32
-.erb 32
-.haml 32
-.xml 32
-.rdf 32
-.css 32
-.sass 32
-.scss 32
-.less 32
-.js 32
-.es 32
-.coffee 32
-.man 32
-.0 32
-.1 32
-.2 32
-.3 32
-.4 32
-.5 32
-.6 32
-.7 32
-.8 32
-.9 32
-.l 32
-.n 32
-.p 32
-.pod 32
-.go 32
-.lua 32
-.lavim 32
+.h 31
+.H 31
+.hh 31
+.hpp 31
+.hxx 31
+.h++ 31
+.c 31
+.C 31
+.cc 31
+.cpp 31
+.cxx 31
+.c++ 31
+.objc 31
+.sh 31
+.csh 31
+.zsh 31
+.el 31
+.vim 31
+.java 31
+.pl 31
+.pm 31
+.py 31
+.rb 31
+.hs 31
+.php 31
+.htm 31
+.html 31
+.shtml 31
+.erb 31
+.haml 31
+.xml 31
+.rdf 31
+.css 31
+.sass 31
+.scss 31
+.less 31
+.js 31
+.es 31
+.coffee 31
+.man 31
+.0 31
+.1 31
+.2 31
+.3 31
+.4 31
+.5 31
+.6 31
+.7 31
+.8 31
+.9 31
+.l 31
+.n 31
+.p 31
+.pod 31
+.go 31
+.lua 31
+.lavim 31
 
 ### Multimedia formats
 
 # Image
-.bmp 33
-.cgm 33
-.dl 33
-.dvi 33
-.emf 33
-.eps 33
-.gif 33
-.jpeg 33
-.jpg 33
-.JPG 33
-.mng 33
-.pbm 33
-.pcx 33
-.pdf 33
-.pgm 33
-.png 33
-.PNG 33
-.ppm 33
-.pps 33
-.ppsx 33
-.ps 33
-.svg 33
-.svgz 33
-.tga 33
-.tif 33
-.tiff 33
-.xbm 33
-.xcf 33
-.xpm 33
-.xwd 33
-.xwd 33
-.yuv 33
+.bmp 34
+.cgm 34
+.dl 34
+.dvi 34
+.emf 34
+.eps 34
+.gif 34
+.jpeg 34
+.jpg 34
+.JPG 34
+.mng 34
+.pbm 34
+.pcx 34
+.pdf 34
+.pgm 34
+.png 34
+.PNG 34
+.ppm 34
+.pps 34
+.ppsx 34
+.ps 34
+.svg 34
+.svgz 34
+.tga 34
+.tif 34
+.tiff 34
+.xbm 34
+.xcf 34
+.xpm 34
+.xwd 34
+.xwd 34
+.yuv 34
 
 # Audio
-.aac 33
-.au  33
-.flac 33
-.mid 33
-.midi 33
-.mka 33
-.mp3 33
-.mpa 33
-.mpeg 33
-.mpg 33
-.ogg  33
-.ra 33
-.wav 33
+.aac 34
+.au  34
+.flac 34
+.mid 34
+.midi 34
+.mka 34
+.mp3 34
+.mpa 34
+.mpeg 34
+.mpg 34
+.ogg  34
+.ra 34
+.wav 34
 
 # Video
-.anx 33
-.asf 33
-.avi 33
-.axv 33
-.flc 33
-.fli 33
-.flv 33
-.gl 33
-.m2v 33
-.m4v 33
-.mkv 33
-.mov 33
-.MOV 33
-.mp4 33
-.mp4v 33
-.mpeg 33
-.mpg 33
-.nuv 33
-.ogm 33
-.ogv 33
-.ogx 33
-.qt 33
-.rm 33
-.rmvb 33
-.swf 33
-.vob 33
-.webm 33
-.wmv 33
+.anx 34
+.asf 34
+.avi 34
+.axv 34
+.flc 34
+.fli 34
+.flv 34
+.gl 34
+.m2v 34
+.m4v 34
+.mkv 34
+.mov 34
+.MOV 34
+.mp4 34
+.mp4v 34
+.mpeg 34
+.mpg 34
+.nuv 34
+.ogm 34
+.ogv 34
+.ogx 34
+.qt 34
+.rm 34
+.rmvb 34
+.swf 34
+.vob 34
+.webm 34
+.wmv 34
 
 ### Misc
 
 # Binary document formats and multimedia source
-.doc 31
-.docx 31
-.rtf 31
-.dot 31
-.dotx 31
-.xls 31
-.xlsx 31
-.ppt 31
-.pptx 31
-.fla 31
-.psb 31
-.PSB 31
-.psd 31
-.PSD 31
-.dng 31
-.DNG 31
-.pef 31
-.PEF 31
-.cr2 31
-.CR2 31
-.nef 31
-.NEF 31
-.orf 31
-.ORF 31
+.doc 36
+.docx 36
+.rtf 36
+.dot 36
+.dotx 36
+.xls 36
+.xlsx 36
+.ppt 36
+.pptx 36
+.fla 36
+.psb 36
+.PSB 36
+.psd 36
+.PSD 36
+.dng 36
+.DNG 36
+.pef 36
+.PEF 36
+.cr2 36
+.CR2 36
+.nef 36
+.NEF 36
+.orf 36
+.ORF 36
 
 # Archives, compressed
-.7z   1;35
-.apk  1;35
-.arj  1;35
-.bin  1;35
-.bz   1;35
-.bz2  1;35
-.cab  1;35  # Win
-.deb  1;35
-.dmg  1;35  # OSX
-.gem  1;35
-.gz   1;35
-.iso  1;35
-.jar  1;35
-.msi  1;35  # Win
-.rar  1;35
-.rpm  1;35
-.tar  1;35
-.tbz  1;35
-.tbz2 1;35
-.tgz  1;35
-.tx   1;35
-.war  1;35
-.xpi  1;35
-.xz   1;35
-.z    1;35
-.Z    1;35
-.zip  1;35
+.7z   35
+.apk  35
+.arj  35
+.bin  35
+.bz   35
+.bz2  35
+.cab  35  # Win
+.deb  35
+.dmg  35  # OSX
+.gem  35
+.gpg  35
+.gz   35
+.iso  35
+.jar  35
+.msi  35  # Win
+.rar  35
+.rpm  35
+.tar  35
+.tbz  35
+.tbz2 35
+.tgz  35
+.tx   35
+.war  35
+.xpi  35
+.xz   35
+.z    35
+.Z    35
+.zip  35
 
 # For testing
 .ANSI-30-black 30
@@ -436,32 +437,32 @@ EXEC 01;31  # Unix
 # .idx 01;32
 # .out 01;32
 # *_lavim.tex 01;32
-.log 01;34
-*~ 01;34
-*# 01;34
-.aux 01;34
-.toc 01;34
-.idx 01;34
-.out 01;34
-*_lavim.tex 01;34
+.log 32
+*~ 32
+*# 32
+.aux 32
+.toc 32
+.idx 32
+.out 32
+*_lavim.tex 32
 
 # Unimportant non-text files
 # For universal scheme, use brightcyan 01;36
 # For optimal on dark bg (but too prominent on light bg), change to 01;33
-.bak 01;36
-.BAK 01;36
-.old 01;36
-.OLD 01;36
-.org_archive 01;36
-.off 01;36
-.OFF 01;36
-.dist 01;36
-.DIST 01;36
-.orig 01;36
-.ORIG 01;36
-.swp 01;36
-.swo 01;36
-*,v 01;36
+.bak 32
+.BAK 32
+.old 32
+.OLD 32
+.org_archive 32
+.off 32
+.OFF 32
+.dist 32
+.DIST 32
+.orig 32
+.ORIG 32
+.swp 32
+.swo 32
+*,v 32
 # .bak 01;33
 # .BAK 01;33
 # .old 01;33
@@ -476,15 +477,4 @@ EXEC 01;31  # Unix
 # .swp 01;33
 # .swo 01;33
 # *,v 01;33
-
-# The brightmagenta (Solarized: purple) color is free for you to use for your
-# custom file type
-.gpg 34
-.gpg 34
-.pgp 34
-.asc 34
-.3des 34
-.aes 34
-.enc 34
-.sqlite 34
 
