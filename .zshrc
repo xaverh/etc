@@ -44,7 +44,7 @@ bindkey '^Ed' _bkdate
 alias grep="grep -i --color=auto"
 alias ...='../..'
 alias ....='../../..'
-alias ls='ls -F --color=auto'
+ls --color=auto &> /dev/null && alias ls='ls -F --color=auto' || alias ls='ls -GF'
 alias aus="su -c 'shutdown -h now'"
 alias lsbig='ls -Slh | head'
 alias lssmall='ls -Slhr | head'
