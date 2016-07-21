@@ -69,7 +69,7 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias dropbox_reset="echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p"
 alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
-alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
+alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 
 global-alias-space(){
