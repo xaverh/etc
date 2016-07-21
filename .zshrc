@@ -1,10 +1,6 @@
 unsetopt allexport autoresume bashautolist bsdecho correctall cshjunkiehistory cshjunkiequotes cshnullcmd cshnullglob dvorak kshautoload listbeep promptbang  pushdsilent pushdtohome recexact
 setopt aliases alwayslastprompt autolist autoparamkeys autoparamslash autoremoveslash badpattern banghist bareglobqual bgnice caseglob casematch equals functionargzero globalrcs hashlistall listambiguous listtypes promptcr promptpercent promptsp rcs transientrprompt autocd beep completeinword correct rmstarwait braceccl autopushd pushdminus pushdignoredups nomatch noglobdots extendedglob noclobber histallowclobber multios checkjobs nohup autocontinue longlistjobs notify sharehistory appendhistory extendedhistory histnostore histignorealldups histignorespace globcomplete automenu menucomplete completealiases alwaystoend listpacked listrowsfirst autonamedirs cbases cdablevars chasedots chaselinks flowcontrol promptsubst
 
-# autoload -U promptinit
-# promptinit
-# prompt grb
-
 HISTFILE=~/.zsh_history
 SAVEHIST=100000
 HISTSIZE=120000
@@ -73,7 +69,8 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias dropbox_reset="echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p"
 alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
-alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden"
+alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
+alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 
 global-alias-space(){
 	local ga="$LBUFFER[(w)-1]"
