@@ -1,6 +1,11 @@
 unsetopt allexport autoresume bashautolist bsdecho correctall cshjunkiehistory cshjunkiequotes cshnullcmd cshnullglob dvorak kshautoload listbeep promptbang  pushdsilent pushdtohome recexact
 setopt aliases alwayslastprompt autolist autoparamkeys autoparamslash autoremoveslash badpattern banghist bareglobqual bgnice caseglob casematch equals functionargzero globalrcs hashlistall listambiguous listtypes promptcr promptpercent promptsp rcs transientrprompt autocd beep completeinword correct rmstarwait braceccl autopushd pushdminus pushdignoredups nomatch noglobdots extendedglob noclobber histallowclobber multios checkjobs nohup autocontinue longlistjobs notify sharehistory appendhistory extendedhistory histnostore histignorealldups histignorespace globcomplete automenu menucomplete completealiases alwaystoend listpacked listrowsfirst autonamedirs cbases cdablevars chasedots chaselinks flowcontrol promptsubst
 
+# Gary Bernhardt's Prompt
+autoload -U promptinit
+promptinit
+prompt grb
+
 HISTFILE=~/.zsh_history
 SAVEHIST=100000
 HISTSIZE=120000
@@ -235,5 +240,5 @@ fi
 # export PATH=$ANT_ROOT:$PATH
 #
 
-source ~/.zsh/agnoster.zsh-theme
+# source ~/.zsh/agnoster.zsh-theme
 
