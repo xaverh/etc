@@ -44,7 +44,7 @@ colorword() {
 function minutes_since_last_commit {
     now=`date +%s`
     last_commit=`git log --pretty=format:'%at' -1 2>/dev/null`
-    if $last_commit ; then
+    if $lastcommit ; then
       seconds_since_last_commit=$((now-last_commit))
       minutes_since_last_commit=$((seconds_since_last_commit/60))
       echo $minutes_since_last_commit
@@ -61,7 +61,7 @@ function prompt_grb_scm_time_since_commit() {
         local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
         if [ "$MINUTES_SINCE_LAST_COMMIT" -eq -1 ]; then
           COLOR="$pc[scm_time_uncommitted]"
-          local SINCE_LAST_COMMIT="${COLOR}uncommitted$pc[reset]"
+          local SINCE_LAST_COMMIT="${COLOR}uncommitted$pc[reset]"  
         else
           if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
             COLOR="$pc[scm_time_long]"
@@ -89,7 +89,7 @@ prompt_grb_setup() {
     else
       verbose=1
     fi
-
+  
     typeset -A colorcode
     colorcode[black]=0
     colorcode[red]=1
@@ -109,7 +109,7 @@ prompt_grb_setup() {
     colorcode[c]=$colorcode[cyan]
     colorcode[w]=$colorcode[white]
     colorcode[.]=$colorcode[default]
-
+  
     typeset -A attcode
     attcode[none]=00
     attcode[bold]=01
@@ -125,7 +125,7 @@ prompt_grb_setup() {
     attcode[no-blink]=25
     attcode[no-reverse]=27
     attcode[no-conceal]=28
-
+  
     local -A pc
     pc[divider]='black'
     pc[default]='default'
@@ -162,7 +162,7 @@ prompt_grb_setup() {
 
 	p_line="$pc[line]%y$pc[reset]"
 
-    PROMPT="$pc[divider]\$(repeat \$COLUMNS printf '-')$pc[reset]"
+    PROMPT="$pc[reset]"
     PROMPT+=
 	if [ $verbose ]; then
 		PROMPT+="$pc[host]%m$pc[reset]"
