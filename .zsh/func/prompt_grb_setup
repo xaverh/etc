@@ -61,7 +61,7 @@ function prompt_grb_scm_time_since_commit() {
         local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
         if [ "$MINUTES_SINCE_LAST_COMMIT" -eq -1 ]; then
           COLOR="$pc[scm_time_uncommitted]"
-          local SINCE_LAST_COMMIT="${COLOR}uncommitted$pc[reset]"  
+          local SINCE_LAST_COMMIT="${COLOR}uncommitted$pc[reset]"
         else
           if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
             COLOR="$pc[scm_time_long]"
@@ -89,7 +89,7 @@ prompt_grb_setup() {
     else
       verbose=1
     fi
-  
+
     typeset -A colorcode
     colorcode[black]=0
     colorcode[red]=1
@@ -109,7 +109,7 @@ prompt_grb_setup() {
     colorcode[c]=$colorcode[cyan]
     colorcode[w]=$colorcode[white]
     colorcode[.]=$colorcode[default]
-  
+
     typeset -A attcode
     attcode[none]=00
     attcode[bold]=01
@@ -125,7 +125,7 @@ prompt_grb_setup() {
     attcode[no-blink]=25
     attcode[no-reverse]=27
     attcode[no-conceal]=28
-  
+
     local -A pc
     pc[divider]='black'
     pc[default]='default'
@@ -311,28 +311,28 @@ prompt_wunjo_scm_branch() {
 
 	echo -n "$pc[punc]$pc[scm_branch]$(zgit_head)"
 
-	#if zgit_inworktree; then
-	#	if ! zgit_isindexclean; then
-	#		echo -n "$pc[scm_status_staged]+"
-	#	fi
+	if zgit_inworktree; then
+		if ! zgit_isindexclean; then
+			echo -n "$pc[scm_status_staged]+"
+		fi
 
-	#	local -a dirty
-	#	if ! zgit_isworktreeclean; then
-	#		dirty+='!'
-	#	fi
+		local -a dirty
+		if ! zgit_isworktreeclean; then
+			dirty+='!'
+		fi
 
-	#	if zgit_hasunmerged; then
-	#		dirty+='*'
-	#	fi
+		if zgit_hasunmerged; then
+			dirty+='*'
+		fi
 
-	#	if zgit_hasuntracked; then
-	#		dirty+='?'
-	#	fi
+		if zgit_hasuntracked; then
+			dirty+='?'
+		fi
 
-	#	if [ $#dirty -gt 0 ]; then
-	#		echo -n "$pc[scm_status_dirty]${(j::)dirty}"
-	#	fi
-	#fi
+		if [ $#dirty -gt 0 ]; then
+			echo -n "$pc[scm_status_dirty]${(j::)dirty}"
+		fi
+	fi
 
 	echo $pc[reset]
 }
