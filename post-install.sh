@@ -16,16 +16,14 @@ gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rg
 sudo pacman -S gnome-themes-maia firefox-kde-i18n-de zsh rxvt-unicode vim texlive-most kdemultimedia-ffmpegthumbs clang clementine
 yaourt kdegraphics-thumbnailsers-framework-git
 
-# sudo yum-config-manager --add-repo=http://download.opensuse.org/repositories/home:/satya164:/elegance-colors/Fedora_`rpm -E %fedora`/home:satya164:elegance-colors.repo
-
 # sudo yum-config-manager --add-repo=http://negativo17.org/repos/fedora-handbrake.repo
-
-# sudo yum-config-manager --add-repo=http://download.opensuse.org/repositories/home:/paolorotolo:/numix/Fedora_`rpm -E %fedora`/home:paolorotolo:numix.repo
 
 # Fedora
 sudo dnf -y install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-`rpm -E %fedora`.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-`rpm -E %fedora`.noarch.rpm http://linuxdownload.adobe.com/adobe-release/adobe-release-`uname -m`-1.0-1.noarch.rpm http://rpm.livna.org/livna-release.rpm
 
 sudo dnf upgrade -y
+
+# GNOME-Shell-Plugins: Dash to dock, Hide top bar, Straight top bar, Transparent top bar
 
 # sudo dnf -y install tint2 clipit xfce4-power-manager pnmixer \
 # rxvt-unicode-256color-ml conky dmenu catfish Thunar tumbler viewnior \
@@ -38,22 +36,22 @@ sudo dnf upgrade -y
 # mythes-de wget samba freetype-freeworld  vim obconf lxappearance obmenu \
 # network-manager-applet thunderbird firewall-config slock htop cups \
 # cups-bjnp python-smbc avahi system-config-printer gutenprint-cups \
-# rdesktop claws-mail-plugins clang golang-vet golang-godoc @c-development
+# rdesktop claws-mail-plugins clang golang-godoc @c-development
 ### hsetroot cb-compositor cb-exit
 
 sudo apt-get install adobe-flashplugin git zsh texlive texlive-latex-extra unrar gimp faac faad p7zip fonts-linuxlibertine clang clang-format-3.7 lua5.3 golang xclip network-manager-openconnect-gnome
 
 sudo dnf -y install zsh texlive-scheme-medium vim-enhanced vim-X11 \
-flash-plugin gstreamer1-plugins-bad-freeworld \
+flash-plugin gstreamer1-plugins-bad-freeworld glib2-devel \
 gstreamer1-libav gstreamer1-plugins-ugly \
 gstreamer1-plugins-bad-free-extras gstreamer1-plugins-good-extras \
 gimp faac flac evince-djvu evince-dvi \
 samba  linux-libertine-fonts \
 linux-libertine-biolinum-fonts clang golang golang-godoc \
-golang-vet freetype-freeworld lato-fonts ghc @c-development @gnome-games \
+freetype-freeworld lato-fonts ghc @c-development @gnome-games \
 transcode kernel-devel @"Development Libraries" glibc-static libstdc++-static \
 libdvdcss fuse-exfat cmake gnome-tweak-tool gnome-kra-ora-thumbnailer \
-gnome-nds-thumbnailer gnome-epub-thumbnailer gtk-murrine-engine cabextract lzip \
+gnome-nds-thumbnailer gnome-epub-thumbnailer cabextract lzip \
 p7zip p7zip-plugins unrar libreoffice-langpack-de
 
 # openSUSE
@@ -88,9 +86,9 @@ chsh -s /bin/zsh
 # artwiz-aleczapka-fonts levien-inconsolata-fonts cmus aria2 dvd+rw-tools wodim
 # dunst
 
-
-gsettings set org.gnome.desktop.interface gtk-theme "Numix Light"
-gsettings set org.gnome.desktop.wm.preferences theme "Numix Light"
+# Numix
+# gsettings set org.gnome.desktop.interface gtk-theme "Numix Light"
+# gsettings set org.gnome.desktop.wm.preferences theme "Numix Light"
 
 
 # To make the change permanent, write vm.swappiness=1 on your /etc/sysctl.conf
