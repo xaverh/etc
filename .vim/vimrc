@@ -108,7 +108,7 @@ if has('gui_running')
 endif
 set t_Co=256
 "let g:solarized_termcolors=256
-let base16colorspace=256  " Access colors present in 256 colorspace
+"let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
 "if has('gui_running')
 	"set background=light
@@ -120,8 +120,8 @@ set background=dark
 "endif
 "let g:solarized_visibility='low'
 "let g:solarized_hitrail=1
-colorscheme default
-call togglebg#map("<F5>")
+colorscheme molokai
+" call togglebg#map("<F5>")
 if has("gui_gtk2")
 	set guifont=Ubuntu\ Mono\\,Source\ Code\ Pro\\,\ 12
 elseif has("gui_mac")

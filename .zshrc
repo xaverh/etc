@@ -1,10 +1,6 @@
 unsetopt allexport autoresume bashautolist bsdecho correctall cshjunkiehistory cshjunkiequotes cshnullcmd cshnullglob dvorak kshautoload listbeep promptbang  pushdsilent pushdtohome recexact
 setopt aliases alwayslastprompt autolist autoparamkeys autoparamslash autoremoveslash badpattern banghist bareglobqual bgnice caseglob casematch equals functionargzero globalrcs hashlistall listambiguous listtypes promptcr promptpercent promptsp rcs transientrprompt autocd beep completeinword correct rmstarwait braceccl autopushd pushdminus pushdignoredups nomatch noglobdots extendedglob noclobber histallowclobber multios checkjobs nohup autocontinue longlistjobs notify sharehistory appendhistory extendedhistory histnostore histignorealldups histignorespace globcomplete automenu menucomplete completealiases alwaystoend listpacked listrowsfirst autonamedirs cbases cdablevars chasedots chaselinks flowcontrol promptsubst
 
-autoload -U promptinit
-promptinit
-prompt grb
-
 HISTFILE=~/.zsh_history
 SAVEHIST=100000
 HISTSIZE=120000
@@ -28,7 +24,7 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-# PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[blue]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[cyan]%} %4~%{$reset_color%} %# "
+# PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[cyan]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[blue]%} %4~%{$reset_color%} %# "
 # PS2='\%_> ' # printed when zsh needs more information to complete a command
 # PS3='?# '   # selection prompt used within a select loop
 # PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
@@ -44,7 +40,7 @@ bindkey '^Ed' _bkdate
 alias grep="grep -i --color=auto"
 alias ...='../..'
 alias ....='../../..'
-alias ls='ls -F --color=auto'
+ls --color=auto &> /dev/null && alias ls='ls -F --color=auto' || alias ls='ls -GF'
 alias aus="su -c 'shutdown -h now'"
 alias lsbig='ls -Slh | head'
 alias lssmall='ls -Slhr | head'
@@ -73,7 +69,8 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias dropbox_reset="echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p"
 alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
-alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden"
+alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
+alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 
 global-alias-space(){
 	local ga="$LBUFFER[(w)-1]"
@@ -162,13 +159,13 @@ zstyle ':completion:*:rm:*' ignore-line yes
 
 # manpage colors
 # export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking
-export LESS_TERMCAP_mb=$'\E[00;36m'     # begin blinking
-# export LESS_TERMCAP_md=$'\E[00;36m'     # begin bold
-export LESS_TERMCAP_md=$'\E[00;34m'     # begin bold
+export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
+# export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
+export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'         # end mode
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
-# export LESS_TERMCAP_so=$'\E[00;100;97m' # begin standout-mode - info box
-export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
+export LESS_TERMCAP_so=$'\E[00;40;39m' # begin standout-mode - info box
+#export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 # export LESS_TERMCAP_us=$'\E[00;31m'     # begin underline
 export LESS_TERMCAP_us=$'\E[00;35m'     # begin underline
@@ -237,3 +234,10 @@ fi
 # export ANT_ROOT=/usr/bin
 # export PATH=$ANT_ROOT:$PATH
 #
+
+# source ~/.zsh/agnoster.zsh-theme
+
+# Gary Bernhardt's Prompt
+autoload -U promptinit
+promptinit
+prompt grb
