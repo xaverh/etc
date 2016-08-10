@@ -204,40 +204,6 @@ if [[ -x /usr/lib/command-not-found || -x /usr/share/command-not-found/command-n
 }
 fi
 
-# autoload -Uz bashcompinit && bashcompinit
-
-# if [[ -x "/usr/bin/dnf" ]]; then
-	# source $HOME/.HOME/dnf-completion.bash
-# fi
-#
-# # source /etc/bash_completion.d/cowsay.bashcomp
-# # source /etc/bash_completion.d/cabal
-#
-# # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-# export COCOS_CONSOLE_ROOT=/home/xha/Software/cocos2d-x/tools/cocos2d-console/bin
-# export PATH=$COCOS_CONSOLE_ROOT:$PATH
-#
-# # Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
-# export COCOS_TEMPLATES_ROOT=/home/xha/Software/cocos2d-x/templates
-# export PATH=$COCOS_TEMPLATES_ROOT:$PATH
-#
-# # Add environment variable NDK_ROOT for cocos2d-x
-# export NDK_ROOT=/home/xha/Software/Android/android-ndk-r10e/
-# export PATH=$NDK_ROOT:$PATH
-#
-# # Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-# export ANDROID_SDK_ROOT=/home/xha/Software/Android/android-sdk-linux/
-# export PATH=$ANDROID_SDK_ROOT:$PATH
-# export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
-#
-# # Add environment variable ANT_ROOT for cocos2d-x
-# export ANT_ROOT=/usr/bin
-# export PATH=$ANT_ROOT:$PATH
-#
-
-# source ~/.zsh/agnoster.zsh-theme
-
-# Gary Bernhardt's Prompt
 autoload -U promptinit
 promptinit
 prompt grb
