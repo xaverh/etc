@@ -1,15 +1,16 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Type=Application
 Name=Visual Studio Code
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=/usr/local/bin/code %U
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/code.png
-Path=/opt/VSCode-linux-x64
-Exec=/opt/VSCode-linux-x64/Code %U
-StartupNotify=false
+Type=Application
+StartupNotify=true
 StartupWMClass=Code
-GenericName=Code Editor
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;
 Actions=new-window;
+Keywords=vscode;
 
 [Desktop Action new-window]
 Name=New Window
@@ -48,5 +49,5 @@ Name[uk]=Відкрити нове вікно
 Name[vi]=Mở cửa sổ mới
 Name[zh_CN]=新建窗口
 Name[zh_TW]=開啟新視窗
-Exec=/opt/VSCode-linux-x64/Code -n %U
+Exec=/opt/VSCode-linux-x64/Code --new-window %U
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png
