@@ -21,7 +21,7 @@
 eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
 
 ## Set root window colour
-#hsetroot -solid "#2E3436" &
+# hsetroot -solid "#2E3436" &
 
 ## Group start:
 ## 1. nitrogen - restores wallpaper
@@ -66,12 +66,16 @@ xset r rate 250 25 &
 ## Turn on/off system beep
 xset b off &
 
+## The following command runs hacks and fixes for #! LiveCD sessions.
+## Safe to delete after installation.
+cb-cowpowers &
+
+## cb-welcome - post-installation script, will not run in a live session and
+## only runs once. Safe to remove.
+(sleep 10s && cb-welcome --firstrun) &
+
 ## cb-fortune - have Waldorf say a little adage
 #(sleep 120s && cb-fortune) &
 
 ## Run the conky
 conky -q &
-
-# Autostart the Dropbox deamon
-(sleep 30s && ~/.dropbox-dist/dropboxd) &
-

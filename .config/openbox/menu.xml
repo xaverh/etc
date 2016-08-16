@@ -1,5 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://openbox.org/
+                file:///usr/share/openbox/menu.xsd">
+
 	<menu id="root-menu" label="Openbox 3">
 		<item label="Run Program">
 			<action name="Execute">
@@ -12,32 +17,39 @@
 		<item label="Terminal">
 			<action name="Execute">
 				<command>
-					urxvt256c-mlcd
+                    ~/bin/urxvtcd_arch.sh
 				</command>
 			</action>
 		</item>
-		<item label="Web Browser">
+		<item label="Firefox">
 			<action name="Execute">
 				<command>
 					firefox
 				</command>
 			</action>
 		</item>
-		<item label="File Manager">
+        <item label="Claws Mail">
+            <action name="Execute">
+                <command>
+                    claws-mail
+                </command>
+            </action>
+        </item>
+		<item label="PCManFM file manager">
 			<action name="Execute">
 				<command>
-					thunar
+					pcmanfm
 				</command>
 			</action>
 		</item>
 		<item label="Text Editor">
 			<action name="Execute">
 				<command>
-					gvim
+					~/bin/urxvtcd_arch.sh -e vim
 				</command>
 			</action>
 		</item>
-		<item label="Media Player">
+		<item label="VLC media player">
 			<action name="Execute">
 				<command>
 					vlc
@@ -46,50 +58,43 @@
 		</item>
 		<separator/>
 		<menu id="accessories" label="Accessories">
-			<item label="Catfish File Search">
+		    <item label="Catfish File Search">
 				<action name="Execute">
 					<command>
 						catfish
 					</command>
 				</action>
 			</item>
-			<item label="Archive Manager">
+		    <item label="Archive Manager">
 				<action name="Execute">
 					<command>
 						file-roller
 					</command>
 				</action>
 			</item>
-			<item label="gvim Text Editor">
+			<item label="~/bin/urxvtcd_arch.sh -e vim Text Editor">
 				<action name="Execute">
 					<command>
-						gvim
+						~/bin/urxvtcd_arch.sh -e vim
 					</command>
 				</action>
 			</item>
 			<item label="Task Manager (htop)">
 				<action name="Execute">
-					<command>urxvt256c-mlcd -e &quot;htop&quot;</command>
+					<command>~/bin/urxvtcd_arch.sh -e &quot;htop&quot;</command>
 				</action>
 			</item>
-			<item label="Rxvt-unicode Terminal">
+			<item label="Terminator Terminal">
 				<action name="Execute">
 					<command>
-						urxvt256c-mlcd
+						terminator
 					</command>
 				</action>
 			</item>
-			<item label="Thunar File Manager">
+			<item label="PCManFM file manager">
 				<action name="Execute">
 					<command>
-						thunar
-					</command>
-				</action>
-			</item>
-			<item label="Thunar File Manager (root)">
-				<action name="Execute">
-					<command>
-						gksudo thunar
+						pcmanfm
 					</command>
 				</action>
 			</item>
@@ -102,14 +107,14 @@
 					</command>
 				</action>
 			</item>
-			<item label="Viewnior Image Viewer">
+		    <item label="Viewnior Image Viewer">
 				<action name="Execute">
 					<command>
 						viewnior
 					</command>
 				</action>
 			</item>
-			<menu id="graphicsScreenshots" label="Take Screenshot">
+		    <menu id="graphicsScreenshots" label="Take Screenshot">
 				<item label="Screenshooter">
 					<action name="Execute">
 						<command>
@@ -149,7 +154,7 @@
 			</menu>
 		</menu>
 		<menu id="multimedia" label="Multimedia">
-			<item label="VLC Media Player">
+		    <item label="VLC Media Player">
 				<action name="Execute">
 					<command>
 						vlc
@@ -172,7 +177,7 @@
 			</item>
 		</menu>
 		<menu id="network" label="Network">
-			<menu execute="cb-firefox-pipemenu" id="wwwbrowsers" label="WWW Browsers"/>
+		    <menu execute="cb-x-www-browser-pipemenu" id="wwwbrowsers" label="WWW Browsers"/>
 			<item label="gFTP Client">
 				<action name="Execute">
 					<command>
@@ -207,11 +212,11 @@
 			<menu execute="cb-dropbox-pipemenu" id="dropbox" label="Dropbox"/>
 		</menu>
 		<menu id="office" label="Office">
-			<menu execute="cb-libreoffice-pipemenu" id="libreoffice" label="LibreOffice"/>
-			<item label="Google Docs">
+		    <menu id="libreoffice" label="LibreOffice" execute="cb-libreoffice-pipemenu" />
+		    <item label="Google Docs">
 				<action name="Execute">
 					<command>
-						firefox https://drive.google.com/
+						x-www-browser https://drive.google.com/
 					</command>
 				</action>
 			</item>
@@ -245,16 +250,18 @@
 			</item>
 		</menu>
 		<separator/>
-		<menu execute="cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>
-		<menu execute="cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>
+        <menu execute="~/.config/openbox/cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>
+        <menu execute="~/.config/openbox/cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>
 		<separator/>
 		<menu id="settings" label="Settings">
-			<menu execute="cb-compositor" id="CompositingPipeMenu" label="Compositor"/>
+            <!--
+            <menu execute="cb-compositor" id="CompositingPipeMenu" label="Compositor"/>
+            -->
 			<menu id="conkyconfig" label="Conky">
 				<item label="Edit .conkyrc">
 					<action name="Execute">
 						<command>
-							gvim ~/.conkyrc
+							~/bin/urxvtcd_arch.sh -e vim ~/.conkyrc
 						</command>
 					</action>
 				</item>
@@ -269,14 +276,14 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							urxvt256c-mlcd -e &quot;man conky&quot;
+							~/bin/urxvtcd_arch.sh -e "man conky"
 						</command>
 					</action>
 				</item>
 				<item label="Wiki Page">
 					<action name="Execute">
 						<command>
-							firefox http://crunchbanglinux.org/wiki/conky
+							x-www-browser http://crunchbanglinux.org/wiki/conky
 						</command>
 					</action>
 				</item>
@@ -285,7 +292,7 @@
 				<item label="Edit start-up script">
 					<action name="Execute">
 						<command>
-							gvim ~/.config/dmenu/dmenu-bind.sh
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/dmenu/dmenu-bind.sh
 						</command>
 					</action>
 				</item>
@@ -293,7 +300,7 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							urxvt256c-mlcd -e &quot;man dmenu&quot;
+							~/bin/urxvtcd_arch.sh -e "man dmenu"
 						</command>
 					</action>
 				</item>
@@ -302,7 +309,7 @@
 				<item label="Edit config file">
 					<action name="Execute">
 						<command>
-							gvim ~/.gmrunrc
+							~/bin/urxvtcd_arch.sh -e vim ~/.gmrunrc
 						</command>
 					</action>
 				</item>
@@ -310,7 +317,7 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							urxvt256c-mlcd -e &quot;man gmrun&quot;
+							~/bin/urxvtcd_arch.sh -e "man gmrun"
 						</command>
 					</action>
 				</item>
@@ -319,21 +326,21 @@
 				<item label="Edit menu.xml">
 					<action name="Execute">
 						<command>
-							gvim ~/.config/openbox/menu.xml
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/menu.xml
 						</command>
 					</action>
 				</item>
 				<item label="Edit rc.xml">
 					<action name="Execute">
 						<command>
-							gvim ~/.config/openbox/rc.xml
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/rc.xml
 						</command>
 					</action>
 				</item>
 				<item label="Edit autostart">
 					<action name="Execute">
 						<command>
-							gvim ~/.config/openbox/autostart
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/autostart
 						</command>
 					</action>
 				</item>
@@ -367,15 +374,32 @@
 					<action name="Restart"/>
 				</item>
 			</menu>
+			<menu id="terminatorconfig" label="Terminator">
+				<item label="Edit config file">
+					<action name="Execute">
+						<command>
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/terminator/config
+						</command>
+					</action>
+				</item>
+				<separator label="Help?"/>
+				<item label="man page">
+					<action name="Execute">
+						<command>
+							~/bin/urxvtcd_arch.sh -e "man terminator_config"
+						</command>
+					</action>
+				</item>
+			</menu>
 			<menu id="tint2config" label="tint2">
 				<item label="Edit config file">
 					<action name="Execute">
 						<command>
-							gvim ~/.config/tint2/tint2rc
+							~/bin/urxvtcd_arch.sh -e vim ~/.config/tint2/tint2rc
 						</command>
 					</action>
 				</item>
-				<item label="Restart tint2">
+                <item label="Restart tint2">
 					<action name="Execute">
 						<command>
 							tint2restart
@@ -386,34 +410,34 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							urxvt256c-mlcd -e &quot;man tint2&quot;
+							~/bin/urxvtcd_arch.sh -e "man tint2"
 						</command>
 					</action>
 				</item>
 				<item label="Online Help">
 					<action name="Execute">
 						<command>
-							firefox http://code.google.com/p/tint2/wiki/Welcome
+							x-www-browser http://code.google.com/p/tint2/wiki/Welcome
 						</command>
 					</action>
 				</item>
 			</menu>
 			<menu id="DisplaySettings" label="Display Settings">
-				<item label="ARandR Screen Layout Editor">
-					<action name="Execute">
-						<command>
+			    <item label="ARandR Screen Layout Editor">
+				    <action name="Execute">
+					    <command>
 						    arandr
 					    </command>
-					</action>
-				</item>
-				<separator label="Help?"/>
-				<item label="man xrandr">
-					<action name="Execute">
-						<command>
-						    urxvt256c-mlcd -e &quot;man xrandr&quot;
+				    </action>
+			    </item>
+			    <separator label="Help?"/>
+			    <item label="man xrandr">
+				    <action name="Execute">
+					    <command>
+						    ~/bin/urxvtcd_arch.sh -e "man xrandr"
 					    </command>
-					</action>
-				</item>
+				    </action>
+			    </item>
 			</menu>
 			<menu id="Notifications" label="Notifications">
 				<item label="settings">
@@ -422,13 +446,6 @@
 					</action>
 				</item>
 			</menu>
-			<item label="Edit Default Applications">
-				<action name="Execute">
-					<command>
-						urxvt256c-mlcd -e &quot;sudo update-alternatives --all&quot;
-					</command>
-				</action>
-			</item>
 			<item label="User Interface Settings">
 				<action name="Execute">
 					<command>
@@ -459,8 +476,8 @@
 			</item>
 		</menu>
 		<menu id="system" label="System">
-			<menu execute="cb-printing-pipemenu" id="PrintingPipeMenu" label="Printers"/>
-			<item label="GParted">
+		    <menu execute="cb-printing-pipemenu" id="PrintingPipeMenu" label="Printers"/>
+		    <item label="GParted">
 				<action name="Execute">
 					<command>
 						gksudo gparted
