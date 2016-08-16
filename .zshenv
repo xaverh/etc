@@ -12,7 +12,7 @@ typeset -U fpath
 
 # User specific environment and startup programs
 
-PATH="$PATH:$HOME/.npm-global/bin:$HOME/Software/dotfiles/bin"
+PATH="$PATH:$HOME/.npm-global/bin"
 
 export PATH
 
