@@ -150,40 +150,77 @@ xscreensaver.Dialog.shadowThickness:    2
 xscreensaver.passwd.thermometer.foreground:  #101010
 xscreensaver.passwd.thermometer.background:  #2E2E2E
 xscreensaver.passwd.thermometer.width:       8
-! Base16 Tubbs
+
+!! Base16 Tubbs
+!! Scheme: Xaver Hellauer (https://github.com/xaverh)
+!
+!! URxvt*tintColor:                      color
+!! URxvt*fadeColor:                      color
+!
+!URxvt*background:                     #2C2C2C
+!URxvt*foreground:                     #E0E0D0
+!URxvt*cursorColor:                    #E0E0D0
+!
+!! URxvt*colorBD:                        color
+!! URxvt*colorIT:                        color
+!! URxvt*colorUL:                        color
+!! URxvt*colorRV:                        color
+!! URxvt*underlineColor:                 color
+!URxvt*scrollColor:                    #E0E0D0
+!! URxvt*troughColor:                    color
+!URxvt*highlightColor:                 #565657
+!URxvt*highlightTextColor:             #a8b8a8
+!
+!URxvt*color0:                         #3f3f3f
+!URxvt*color1:                         #DA4939
+!URxvt*color2:                         #81AC3A
+!URxvt*color3:                         #DA7416
+!URxvt*color4:                         #9AB8D7
+!URxvt*color5:                         #C71585
+!URxvt*color6:                         #8CD0D3
+!URxvt*color7:                         #E0E0D0
+!URxvt*color8:                         #709080
+!URxvt*color9:                         #F92672
+!URxvt*color10:                        #72D5A3
+!URxvt*color11:                        #F0DFAF
+!URxvt*color12:                        #008995
+!URxvt*color13:                        #DC8CC3
+!URxvt*color14:                        #93E0E3
+!URxvt*color15:                        #ffffff
+
+! Visual Studio ish theme
 ! Scheme: Xaver Hellauer (https://github.com/xaverh)
 
 ! URxvt*tintColor:                      color
 ! URxvt*fadeColor:                      color
 
-URxvt*background:                     #2C2C2C
-URxvt*foreground:                     #E0E0D0
-URxvt*cursorColor:                    #E0E0D0
+URxvt*background:                     #1E1E1E
+URxvt*foreground:                     #BBBBBB
+URxvt*cursorColor:                    #FFFFFF
 
 ! URxvt*colorBD:                        color
 ! URxvt*colorIT:                        color
 ! URxvt*colorUL:                        color
 ! URxvt*colorRV:                        color
 ! URxvt*underlineColor:                 color
-URxvt*scrollColor:                    #E0E0D0
+URxvt*scrollColor:                    #FFFFFF
 ! URxvt*troughColor:                    color
-URxvt*highlightColor:                 #565657
-URxvt*highlightTextColor:             #a8b8a8
+URxvt*highlightColor:                 #A4CDEF
+URxvt*highlightTextColor:             #BBBBBB
 
-URxvt*color0:                         #3f3f3f
-URxvt*color1:                         #DA4939
-URxvt*color2:                         #81AC3A
-URxvt*color3:                         #DA7416
-URxvt*color4:                         #9AB8D7
-URxvt*color5:                         #C71585
-URxvt*color6:                         #8CD0D3
-URxvt*color7:                         #E0E0D0
-URxvt*color8:                         #709080
-URxvt*color9:                         #F92672
-URxvt*color10:                        #72D5A3
-URxvt*color11:                        #F0DFAF
-URxvt*color12:                        #008995
-URxvt*color13:                        #DC8CC3
-URxvt*color14:                        #93E0E3
-URxvt*color15:                        #ffffff
-
+URxvt*color0:                         #252526
+URxvt*color1:                         #CE9178
+URxvt*color2:                         #608B4E
+URxvt*color3:                         #DCDCB2
+URxvt*color4:                         #569CD6
+URxvt*color5:                         #C586C0
+URxvt*color6:                         #4EC9B0
+URxvt*color7:                         #ADADAD
+URxvt*color8:                         #1E1E1E
+URxvt*color9:                         #CEB2A7
+URxvt*color10:                        #758B6C
+URxvt*color11:                        #DCDCC4
+URxvt*color12:                        #9CDCFE
+URxvt*color13:                        #C5A5C2
+URxvt*color14:                        #8DC9BD
+URxvt*color15:                        #FDF6E3
