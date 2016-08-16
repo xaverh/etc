@@ -21,11 +21,11 @@ if not awful.util.file_readable(themes .. themename .. "/theme.lua") then
 end
 themedir      = themes .. themename
 
-if awful.util.file_readable(home .. "/.wallpaper.jpg") then
-    theme.wallpaper      = home .. "/.wallpaper.jpg"
-else
-    theme.wallpaper = home .. "/Dropbox/Dokumente/Erinnerungen/Desktopmotive/Windows 7/Brasilien/BR-olwp" .. math.random(1, 6) .. ".jpg"
-end
+-- if awful.util.file_readable(home .. "/.wallpaper.jpg") then
+--     theme.wallpaper      = home .. "/.wallpaper.jpg"
+-- else
+--     theme.wallpaper = home .. "/Dropbox/Dokumente/Erinnerungen/Desktopmotive/Windows 7/Brasilien/BR-olwp" .. math.random(1, 6) .. ".jpg"
+-- end
 
 if awful.util.file_readable(config .. "/vain/init.lua") then
     theme.useless_gap_width  = "3"
