@@ -187,7 +187,7 @@ memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
     function (widget, args)
         memtenth = round(args[1]/10)
-        swaptenth = round(args[5]/10)
+        swaptenth = 0--round(args[5]/10)
         ram = "RAM: " .. hashbar[memtenth+1] 
         swap = "Swap: "  .. hashbar[swaptenth+1]
         if args[1] > 85 then
