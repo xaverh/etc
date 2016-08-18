@@ -52,7 +52,7 @@ alias lla='ls -lA'
 alias llh='ls -lh'
 alias l='ls -lhA'
 alias dfh='df -H'
-alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"'
+alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"'
 alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
 alias -s txt=vim
 alias -s de=$BROWSER
