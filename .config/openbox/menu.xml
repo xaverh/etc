@@ -14,38 +14,31 @@
 			</action>
 		</item>
 		<separator/>
-		<item label="Terminal">
+		<item label="rxvt-unicode client/daemon">
 			<action name="Execute">
 				<command>
                    ~/Software/dotfiles/bin/urxvtcd
 				</command>
 			</action>
 		</item>
-		<item label="Firefox">
+		<item label="Chromium">
 			<action name="Execute">
 				<command>
-					firefox
+					chromium
 				</command>
 			</action>
 		</item>
-        <item label="Claws Mail">
-            <action name="Execute">
-                <command>
-                    claws-mail
-                </command>
-            </action>
-        </item>
-		<item label="PCManFM file manager">
+		<item label="PCManFM">
 			<action name="Execute">
 				<command>
 					pcmanfm
 				</command>
 			</action>
 		</item>
-		<item label="Text Editor">
+		<item label="Visual Studio Code">
 			<action name="Execute">
 				<command>
-					~/bin/urxvtcd_arch.sh -e vim
+					code --new-window
 				</command>
 			</action>
 		</item>
@@ -57,48 +50,6 @@
 			</action>
 		</item>
 		<separator/>
-		<menu id="accessories" label="Accessories">
-		    <item label="Catfish File Search">
-				<action name="Execute">
-					<command>
-						catfish
-					</command>
-				</action>
-			</item>
-		    <item label="Archive Manager">
-				<action name="Execute">
-					<command>
-						file-roller
-					</command>
-				</action>
-			</item>
-			<item label="~/bin/urxvtcd_arch.sh -e vim Text Editor">
-				<action name="Execute">
-					<command>
-						~/bin/urxvtcd_arch.sh -e vim
-					</command>
-				</action>
-			</item>
-			<item label="Task Manager (htop)">
-				<action name="Execute">
-					<command>~/bin/urxvtcd_arch.sh -e &quot;htop&quot;</command>
-				</action>
-			</item>
-			<item label="Terminator Terminal">
-				<action name="Execute">
-					<command>
-						terminator
-					</command>
-				</action>
-			</item>
-			<item label="PCManFM file manager">
-				<action name="Execute">
-					<command>
-						pcmanfm
-					</command>
-				</action>
-			</item>
-		</menu>
 		<menu id="graphics" label="Graphics">
 			<item label="GIMP">
 				<action name="Execute">

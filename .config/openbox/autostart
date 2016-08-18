@@ -1,6 +1,6 @@
 ## Openbox autostart.sh
 ## ====================
-## When you login to your CrunchBang Openbox session, this autostart script 
+## When you login to your CrunchBang Openbox session, this autostart script
 ## will be executed to set-up your environment and launch any applications
 ## you want to run at startup.
 ##
@@ -17,8 +17,10 @@
 ##
 ## Have fun & happy CrunchBangin'! :)
 
+compton -b
+
 ## Configure touchpad. See 'man synaptics' for more info.
-synclient VertEdgeScroll=1 HorizEdgeScroll=1 TapButton1=1 VertScrollDelta=-15 HorizScrollDelta=-15 2>/dev/null
+synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-15 HorizScrollDelta=-15 2>/dev/null
 
 ## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
 ## Adjust the values according to your preferances.
