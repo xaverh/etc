@@ -104,7 +104,3 @@ libX11-devel.x86_64 libXmu-devel.x86_64 libXi-devel.x86_64 libzip-devel.x86_64
 libpng12-devel.x86_64 libcurl-devel.x86_64 libsqlite3x-devel.x86_64
 libgle-devel.x86_64 glew-devel glfw-devel fontconfig-devel ant
 
-
-firefox gedit gnome-tweak-tool rxvt-unicode zsh clang ttf-liberation otf-fira-mono otf-fira-sans vim adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-code-pro-fonts texlive-most ssh file-roller p7zip unrar lrzip cdrkit gimp gtk-engine-murrine yosembiance-git go go-tools eog
-
-yaourt freetype2-infinality
