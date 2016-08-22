@@ -245,7 +245,7 @@
         <to>4</to>
       </action>
     </keybind>
-        <keybind key="W-S-1">
+    <keybind key="W-S-1">
       <action name="SendToDesktop">
         <to>1</to>
       </action>
@@ -427,7 +427,7 @@
     <keybind key="W-A-Up">
       <action name="GrowToEdgeNorth"/>
     </keybind>
-<keybind key="W-A-Left">
+    <keybind key="W-A-Left">
       <action name="UnmaximizeFull"/>
       <action name="MaximizeVert"/>
       <action name="MoveResizeTo">
