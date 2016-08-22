@@ -113,19 +113,19 @@ task_urgent_font_color = #FFFFFF 100
 task_iconified_font_color = #d8d8d8 60
 font_shadow = 0
 
-# Launcher
-launcher = 1
-launcher_padding = 8 4 15
-launcher_background_id = 0
-launcher_icon_size = 24
-# Specify icon theme names with launcher_icon_theme.
-# if you have an XSETTINGS manager running (like xfsettingsd), tint2 will follow your current theme.
-# launcher_icon_theme = Numix Circle
-# Each launcher_item_app must be a full path to a .desktop file
-launcher_item_app = urxvtcd.desktop
-launcher_item_app = pcmanfm.desktop
-launcher_item_app = code.desktop
-launcher_item_app = chromium.desktop
+## Launcher
+#launcher = 1
+#launcher_padding = 8 4 15
+#launcher_background_id = 0
+#launcher_icon_size = 24
+## Specify icon theme names with launcher_icon_theme.
+## if you have an XSETTINGS manager running (like xfsettingsd), tint2 will follow your current theme.
+## launcher_icon_theme = Numix Circle
+## Each launcher_item_app must be a full path to a .desktop file
+#launcher_item_app = urxvtcd.desktop
+#launcher_item_app = pcmanfm.desktop
+#launcher_item_app = code.desktop
+#launcher_item_app = chromium.desktop
 
 # System Tray
 systray = 1
