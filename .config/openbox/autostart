@@ -20,6 +20,8 @@
 # run desktop independent stuff first
 ~/Software/dotfiles/bin/desktop_independent_stuff.sh &
 
+pcmanfm --daemon-mode --desktop &
+
 # compton -b &
 
 ## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
@@ -37,12 +39,14 @@ xset b off &
 ## 2. compositor - start
 ## 3. sleep - give compositor time to start
 ## 4. tint2 panel
-(\
-nitrogen --restore && \
+# (\
+# nitrogen --restore && \
 # cb-compositor --start && \
-sleep 2s && \
-tint2 \
-) &
+# sleep 2s && \
+# tint2 \
+# ) &
+
+tint2 &
 
 ## Volume control for systray
 volumeicon &
@@ -62,10 +66,6 @@ xscreensaver -no-splash &
 
 ## Start Clipboard manager
 (sleep 3s && clipit) &
-
-## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
-## Adjust the values according to your preferances.
-xset r rate 250 25 &
 
 ## cb-fortune - have Waldorf say a little adage
 #(sleep 120s && cb-fortune) &
