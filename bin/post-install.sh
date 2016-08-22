@@ -25,20 +25,6 @@ sudo dnf upgrade -y
 
 # GNOME-Shell-Plugins: Dash to dock, Hide top bar, Straight top bar, Transparent top bar
 
-# sudo dnf -y install tint2 clipit xfce4-power-manager pnmixer \
-# rxvt-unicode-256color-ml conky dmenu catfish Thunar tumbler viewnior \
-# gimp transmission libreoffice zathura-plugins-all gmrun arandr \
-# xfce4-notifyd nitrogen slim scrot gtk-murrine-engine ghc lua golang \
-# golang-vim ghc libdvdcss zsh  texlive-scheme-medium gvim vim flash-plugin \
-# unrar gstreamer1-plugins-bad-freeworld gstreamer1-libav \
-# gstreamer1-plugins-ugly gstreamer1-plugins-bad-free-extras \
-# gstreamer1-plugins-good-extras vlc faac flac p7zip hunspell-de \
-# mythes-de wget samba freetype-freeworld  vim obconf lxappearance obmenu \
-# network-manager-applet thunderbird firewall-config slock htop cups \
-# cups-bjnp python-smbc avahi system-config-printer gutenprint-cups \
-# rdesktop claws-mail-plugins clang golang-godoc @c-development
-### hsetroot cb-compositor cb-exit
-
 sudo apt-get install adobe-flashplugin git zsh texlive texlive-latex-extra unrar gimp faac faad p7zip fonts-linuxlibertine clang clang-format-3.7 lua5.3 golang xclip network-manager-openconnect-gnome
 
 sudo dnf -y install zsh texlive-scheme-medium vim-enhanced vim-X11 \
