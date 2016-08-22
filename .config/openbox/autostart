@@ -17,17 +17,17 @@
 ##
 ## Have fun & happy CrunchBangin'! :)
 
-compton -b
+# run desktop independent stuff first
+~/Software/dotfiles/bin/desktop_independent_stuff.sh &
 
-## Configure touchpad. See 'man synaptics' for more info.
-synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-15 HorizScrollDelta=-15 2>/dev/null
+compton -b &
 
 ## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
 ## Adjust the values according to your preferances.
-xset r rate 250 25
+xset r rate 250 25 &
 
 ## Turn on/off system beep.
-xset b off
+xset b off &
 
 ## GNOME PolicyKit and Keyring
 eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
@@ -48,22 +48,17 @@ tint2 \
 ) &
 
 ## Volume control for systray
-(sleep 2s && pnmixer) &
+volumeicon &
+# (sleep 2s && pnmixer) &
 
 ## Volume keys daemon
-xfce4-volumed &
+# xfce4-volumed &
 
 ## Enable power management
-xfce4-power-manager &
+# xfce4-power-manager &
 
 ## Start Thunar Daemon
-thunar --daemon &
-
-## Detect and configure touchpad. See 'man synclient' for more info.
-if egrep -iq 'touchpad' /proc/bus/input/devices; then
-    synclient VertEdgeScroll=1 &
-    synclient TapButton1=1 &
-fi
+# thunar --daemon &
 
 ## Start xscreensaver
 xscreensaver -no-splash &
@@ -75,19 +70,9 @@ xscreensaver -no-splash &
 ## Adjust the values according to your preferances.
 xset r rate 250 25 &
 
-## Turn on/off system beep
-xset b off &
-
-## The following command runs hacks and fixes for #! LiveCD sessions.
-## Safe to delete after installation.
-cb-cowpowers &
-
-## cb-welcome - post-installation script, will not run in a live session and
-## only runs once. Safe to remove.
-(sleep 10s && cb-welcome --firstrun) &
-
 ## cb-fortune - have Waldorf say a little adage
 #(sleep 120s && cb-fortune) &
 
 ## Run the conky
-conky -q &
+conky -c /home/xha/Software/dotfiles/etc/conky_grey -d &
+conky -c /home/xha/Software/dotfiles/etc/conky1.10_shortcuts_grey -d &
