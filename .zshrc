@@ -88,7 +88,7 @@ preexec() {
 	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;$TERM (%j): $2\a"
 }
 
-sex simple-extract () {
+sx simple-extract () {
 if [[ -f $1 ]]
 then
 	case $1 in
@@ -118,8 +118,16 @@ else
 fi
 }
 
+Set_my_git () {
+	git config --global user.email "software@hellauer.bayern"
+	git config --global user.name "Xaver Hellauer"
+	git config --global core.editor "code --wait"
+	git config --global diff.tool "default-difftool"
+	git config --global difftool.default-difftool.cmd "code --wait --diff \$LOCAL \$REMOTE"
+}
+
 # braucht mencoder und mplayer
-avijoin () {
+Avijoin () {
 	# TODO checken ob mencoder da ist!
 	cat $* > movie_tmp.avi; # TODO Frage nach finalem Namen
 	mencoder -forceidx -oac copy -ovc copy movie_tmp.avi -o ./movie_final.avi
