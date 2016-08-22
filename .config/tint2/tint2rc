@@ -59,8 +59,8 @@ border_color = #888888 20
 # Panel
 panel_monitor = all
 panel_position = bottom center horizontal
-panel_items = LTSBC
-panel_size = 100% 30
+panel_items = TSBC
+panel_size = 100% 36
 panel_margin = 0 -1
 panel_padding = 0 0
 panel_dock = 0
@@ -83,7 +83,7 @@ taskbar_active_background_id = 6
 taskbar_name = 1
 taskbar_name_background_id = 0
 taskbar_name_active_background_id = 0
-taskbar_name_font = Liberation Sans 9
+taskbar_name_font = PragmataPro 12
 taskbar_name_font_color = #828282 100
 taskbar_name_active_font_color = #828282 100
 
@@ -106,7 +106,7 @@ task_urgent_icon_asb = 100 0 0
 task_iconified_icon_asb = 80 0 0
 
 # Fonts
-task_font = Liberation Sans 06_55 6
+task_font = PragmataPro 06_55 6
 task_font_color = #828282 60
 task_active_font_color = #828282 100
 task_urgent_font_color = #FFFFFF 100
@@ -115,17 +115,17 @@ font_shadow = 0
 
 # Launcher
 launcher = 1
-launcher_padding = 8 4 4
+launcher_padding = 8 4 15
 launcher_background_id = 0
 launcher_icon_size = 24
-# Specify icon theme names with launcher_icon_theme. 
+# Specify icon theme names with launcher_icon_theme.
 # if you have an XSETTINGS manager running (like xfsettingsd), tint2 will follow your current theme.
-launcher_icon_theme = Numix Circle
+# launcher_icon_theme = Numix Circle
 # Each launcher_item_app must be a full path to a .desktop file
-launcher_item_app = /usr/share/applications/urxvt256c-mlcd.desktop
-launcher_item_app = /usr/share/applications/xfce4-file-manager.desktop
-launcher_item_app = /usr/share/applications/gvim.desktop
-launcher_item_app = /usr/share/applications/firefox.desktop
+launcher_item_app = urxvtcd.desktop
+launcher_item_app = pcmanfm.desktop
+launcher_item_app = code.desktop
+launcher_item_app = chromium.desktop
 
 # System Tray
 systray = 1
@@ -137,9 +137,9 @@ systray_icon_asb = 100 0 0
 
 # Clock
 time1_format = %d/%m/%y
-time1_font = Liberation Sans 8
-time2_format = %H.%M
-time2_font = Liberation Sans 8
+time1_font = PragmataPro 8
+time2_format = %H.%M %P
+time2_font = PragmataPro 8
 clock_font_color = #b5b5b5 100
 clock_padding = 12 4
 clock_background_id = 0
@@ -153,7 +153,7 @@ tooltip_show_timeout = 0.0
 tooltip_hide_timeout = 0.0
 tooltip_background_id = 7
 tooltip_font_color = #d8d8d8 100
-tooltip_font = Liberation Sans normal 9.0
+tooltip_font = PragmataPro normal 9.0
 
 # Mouse
 mouse_middle = none
@@ -166,8 +166,8 @@ battery = 0
 battery_low_status = 20
 battery_low_cmd = notify-send "battery low"
 battery_hide = 96
-bat1_font = Liberation Mono 8
-bat2_font = Liberation Mono 8
+bat1_font = PragmataPro 8
+bat2_font = PragmataPro 8
 battery_font_color = #b5b5b5 100
 battery_padding = 2 0
 battery_background_id = 0

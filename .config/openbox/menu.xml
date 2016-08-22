@@ -455,14 +455,14 @@
 		<item label="Lock Screen">
 			<action name="Execute">
 				<command>
-					cb-lock
+					slock
 				</command>
 			</action>
 		</item>
 		<item label="Exit">
 			<action name="Execute">
 				<command>
-					cb-exit
+					~/Software/dotfiles/bin/bl-exit
 				</command>
 			</action>
 		</item>
