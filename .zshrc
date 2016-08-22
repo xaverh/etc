@@ -124,6 +124,7 @@ Set_my_git () {
 	git config --global core.editor "code --wait"
 	git config --global diff.tool "default-difftool"
 	git config --global difftool.default-difftool.cmd "code --wait --diff \$LOCAL \$REMOTE"
+	command -v gnome-keyring >/dev/null 2>&1 && git config --global credential.helper gnome-keyring
 }
 
 # braucht mencoder und mplayer
