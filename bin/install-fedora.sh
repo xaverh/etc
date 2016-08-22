@@ -11,4 +11,4 @@ sudo dnf -y install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-re
 # rdesktop claws-mail-plugins clang golang-godoc @c-development
 ### hsetroot cb-compositor cb-exit
 
-sudo dnf install xclip tint2 pcmanfm conky tumbler tumbler-extras zathura-plugins-all flash-plugin unrar gstreamer1-plugins-bad-freeworld gstreamer1-libav gstreamer1-plugins-ugly gstreamer1-plugins-bad-free-extras gstreamer1-plugins-good-extras vlc nitrogen viewnior lxappearance-obconf gtk-murrine-engine gtk-unico-engine network-manager-applet
+sudo dnf install xclip tint2 pcmanfm conky tumbler tumbler-extras zathura-plugins-all flash-plugin unrar gstreamer1-plugins-bad-freeworld gstreamer1-libav gstreamer1-plugins-ugly gstreamer1-plugins-bad-free-extras gstreamer1-plugins-good-extras vlc nitrogen viewnior lxappearance-obconf gtk-murrine-engine gtk-unico-engine network-manager-applet seahorse

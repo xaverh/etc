@@ -7,3 +7,6 @@ fi
 
 ## GNOME PolicyKit and Keyring
 eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
+
+# start rxvt-unicode daemon
+urxvtd &
