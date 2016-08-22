@@ -5,7 +5,7 @@ conky.config = {
 	cpu_avg_samples = 2,
 	default_color = 'FFFFFF',
 	double_buffer = true,
-	font = 'TeeFranklin:size=9',
+	font = 'PragmataPro:size=9',
 	gap_x = 25,
 	gap_y = 45,
 	minimum_width = 200,
@@ -17,18 +17,16 @@ conky.config = {
 	use_xft = true,
 }
 conky.text = [[
-${color2}open new terminal - ${color}mod+Enter
-${color2}kill focused - ${color}mod+Shift+q
-${color2}toggle split direction - ${color}mod+q
-${color2}dmenu - ${color}mod+d
-${color2}bmenu - ${color}mod+Ctrl+b
-${color2}morc_menu - ${color}mod+z
-${color2}switch to workspace 1-8 - ${color}mod+1-8
-${color2}send to workspace 1-8 - ${color}mod+Ctrl+1-8
-${color2}navigate workspaces - ${color}mod+Ctrl+arrowkeys
-${color2}toggle floating - ${color}mod+Shift+Space
-${color2}exit - ${color}mod+0
-
-${color2}help - ${color}mod+Shift+h
-default mod=<Super>
+${color2}new terminal - ${color}Win + ↵
+#${color2}kill focused - ${color}Win + Shift + q
+#${color2}toggle split direction - ${color}Win + q
+${color2}dmenu - ${color}Win + d
+#${color2}bmenu - ${color}Win+Ctrl+b
+#${color2}morc_menu - ${color}Win+z
+${color2}switch to workspace 𝑛 - ${color}Win + 𝑛
+${color2}send to workspace 𝑛 - ${color}Win + ⇧ + 𝑛
+${color2}send to adjacent workspace - ${color}Win + ⇧ + ←↑→↓
+${color2}navigate workspaces - ${color}Win + ←↑→↓
+#${color2}toggle floating - ${color}Win+Shift+Space
+${color2}exit - ${color}Win + 0
 ]]
