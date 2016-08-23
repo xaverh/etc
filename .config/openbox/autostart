@@ -49,8 +49,8 @@ xset b off &
 tint2 &
 
 ## Volume control for systray
-volumeicon &
-# (sleep 2s && pnmixer) &
+# volumeicon &
+(sleep 2s && pnmixer) &
 
 ## Volume keys daemon
 # xfce4-volumed &
@@ -73,3 +73,6 @@ xscreensaver -no-splash &
 ## Run the conky
 conky -d &
 conky -c /home/xha/Software/dotfiles/etc/conky1.10_shortcuts_grey -d &
+
+# Dropbox
+~/.dropbox-dist/dropboxd &
