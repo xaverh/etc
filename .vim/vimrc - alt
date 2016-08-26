@@ -21,7 +21,7 @@ set hidden
 set history=700
 set hlsearch
 set ignorecase
-set incsearch 
+set incsearch
 set laststatus=2
 set linebreak
 set magic
@@ -50,13 +50,9 @@ set whichwrap+=<,>,[,] ",h,l
 set wildmenu
 set wrap
 
-if !has("win32") && !has("win64")
-	set term=rxvt-unicode-256color " XXX for solarized's magenta in Gnome
-endif
-
 filetype plugin on
 filetype indent on
-syntax enable 
+syntax enable
 
 let mapleader = ","
 let g:mapleader = ","
@@ -91,7 +87,7 @@ else
 endif
 
 
-"set showbreak=«\ 
+"set showbreak=«\
 "set list
 " set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
 
@@ -122,9 +118,9 @@ map <leader>ba :1,1000 bd!<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <M-PageDown> :tabnext<cr> 
-map <M-PageUp> :tabprevious<cr> 
+map <leader>tm :tabmove
+map <M-PageDown> :tabnext<cr>
+map <M-PageUp> :tabprevious<cr>
 
 " Opens a new tab with the current buffer's path
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
@@ -140,7 +136,7 @@ map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.5.py<cr>
 imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.5.py<cr>
 endif
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
 	set switchbuf=useopen,usetab,newtab
 	set stal=2
@@ -232,7 +228,7 @@ function! CmdLine(str)
 	exe "menu Foo.Bar :" . a:str
 	emenu Foo.Bar
 	unmenu Foo
-endfunction 
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
 	let l:saved_reg = @"
