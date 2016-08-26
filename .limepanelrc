@@ -2,7 +2,7 @@ panel_height='25'
 #mainfont='-zevv-*-*-*-*-*-20-*-*-*-*-*-*-*'
 mainfont='PragmataPro:size=12'
 iconfont="-*-ionicons-medium-r-normal-*-16-*-*-*-p-*-*-1"
-powerlinefont='dejavu sans mono for Powerline:size=12:style=regular'
+#powerlinefont='dejavu sans mono for Powerline:size=12:style=regular'
 gap=15
 main_menu="mygtkmenui -- .config/GTKmenu/MainMenu"
 COLOR_FOCUSED_DESKTOP_FG='#FF1ABB9B'

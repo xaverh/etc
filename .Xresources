@@ -106,7 +106,6 @@ URxvt.intensityStyles: false
 
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-! *termName: rxvt-unicode-256color
 URxvt*font: xft:PragmataPro:pixelsize=16
 URxvt*italicFont: xft:PragmataPro:pixelsize=16:italic
 URxvt*boldFont: xft:PragmataPro:pixelsize=16:bold
