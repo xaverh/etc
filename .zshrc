@@ -28,6 +28,7 @@ bindkey "\e[B"  history-beginning-search-forward-end
 # PS2='\%_> ' # printed when zsh needs more information to complete a command
 # PS3='?# '   # selection prompt used within a select loop
 # PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
+RPROMPT="%(?.%{$fg[green]%}✓ %{$reset_color%}.%{$fg[red]%}✗ %{$reset_color%})"
 
 (( EUID != 0 )) && umask 0077 || umask 0002
 
@@ -124,6 +125,7 @@ Set_my_git () {
 	git config --global core.editor "code --wait"
 	git config --global diff.tool "default-difftool"
 	git config --global difftool.default-difftool.cmd "code --wait --diff \$LOCAL \$REMOTE"
+	git config --global credential.helper "store"
 	command -v gnome-keyring >/dev/null 2>&1 && git config --global credential.helper gnome-keyring
 }
 
