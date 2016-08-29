@@ -1,5 +1,3 @@
-! font settings --------------------------------------------------------------
-
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
@@ -8,233 +6,45 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-! Solarized color scheme for the X Window System
-!
-! http://ethanschoonover.com/solarized
-
-
-! Common
-
-! #define S_yellow #b58900
-! #define S_orange #cb4b16
-! #define S_red #dc322f
-! #define S_magenta #d33682
-! #define S_violet #6c71c4
-! #define S_blue #268bd2
-! #define S_cyan #2aa198
-! #define S_green #859900
-
-
-! Dark
-
-! #define S_base03 #002b36
-! #define S_base02 #073642
-! #define S_base01 #586e75
-! #define S_base00 #657b83
-! #define S_base0 #839496
-! #define S_base1 #93a1a1
-! #define S_base2 #eee8d5
-! #define S_base3 #fdf6e3
-
-
-! Light
-
-! #define S_base03 #fdf6e3
-! #define S_base02 #eee8d5
-! #define S_base01 #93a1a1
-! #define S_base00 #839496
-! #define S_base0 #657b83
-! #define S_base1 #586e75
-! #define S_base2 #073642
-! #define S_base3 #002b36
-
-
-! To only apply colors to your terminal, for example, prefix
-! the color assignment statement with its name. Example:
-!
-! URxvt*background: S_base03
-
-! *background: S_base03
-! *foreground: S_base0
-! *fading: 0
-! *fadeColor: S_base03
-! *cursorColor: S_base1
-! *pointerColorBackground: S_base01
-! *pointerColorForeground: S_base1
-!
-! *color0: S_base02
-! *color1: S_red
-! *color2: S_green
-! *color3: S_yellow
-! *color4: S_blue
-! *color5: S_magenta
-! *color6: S_cyan
-! *color7: S_base2
-! *color8: S_base03
-! *color9: S_orange
-! *color10: S_base01
-! *color11: S_base00
-! *color12: S_base0
-! *color13: S_violet
-! *color14: S_base1
-! *color15: S_base3
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! Dark pastels theme !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*foreground: #DCDCCC
-*background: #2C2C2C
-*color0: #3F3F3F
-*color1: #705050
-*color2: #60B48A
-*color3: #DFAF8F
-*color4: #9AB8D7
-*color5: #DC8CC3
-*color6: #8CD0D3
-*color7: #DCDCCC
-*color8: #709080
-*color9: #DCA3A3
-*color10: #72D5A3
-*color11: #F0DFAF
-*color12: #94BFF3
-*color13: #EC93D3
-*color14: #93E0E3
-*color15: #000000
-
-URxvt.intensityStyles: false
-! XTerm*faceName: xft:Menlo:pixelsize=13
-
+URxvt*intensityStyles: false
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-URxvt*font: xft:PragmataPro:pixelsize=16
-URxvt*italicFont: xft:PragmataPro:pixelsize=16:italic
-URxvt*boldFont: xft:PragmataPro:pixelsize=16:bold
-URxvt*boldItalicFont: xft:PragmataPro:pixelsize=16:bold:italic
-! URxvt*font: -sgi-screen-medium-r-normal--14-140-72-72-m-80--ascii
-! URxvt*boldFont: -sgi-screen-bold-r-normal--14-140-72-72-m-80--ascii
-! enhanced letter spacing for Menlo
-URxvt*letterSpace: -1.5
-! If you do not use the Perl extension features, you can improve the security and speed by disabling Perl extensions completely.
-! URxvt.perl-ext:
-! URxvt.perl-ext-common:
-URxvt*iconFile:/usr/share/icons/gnome/48x48/apps/terminal.png
-! alpine*iconFile:/home/xha/.icons/Numix-Circle/48x48/apps/alpine.png
-! vlc*iconFile:/home/xha/.icons/Numix-Circle/48x48/apps/vlc.svg
-zathura*iconFile:/home/xha/.local/share/icons/zathura-circle.png
+! URxvt*font: xft:PragmataPro:pixelsize=16
+! URxvt*italicFont: xft:PragmataPro:pixelsize=16:italic
+! URxvt*boldFont: xft:PragmataPro:pixelsize=16:bold
+! URxvt*boldItalicFont: xft:PragmataPro:pixelsize=16:bold:italic
+URxvt*font: -sgi-screen-medium-r-*-*-14-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-14-*-*-*-*-*-*-*
+! URxvt*letterSpace: -1.5
 
-! xscreensaver ---------------------------------------------------------------
-
-!font settings
-xscreensaver.Dialog.headingFont:        -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-xscreensaver.Dialog.bodyFont:           -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-xscreensaver.Dialog.labelFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-xscreensaver.Dialog.unameFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-xscreensaver.Dialog.buttonFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-xscreensaver.Dialog.dateFont:           -*-fixed-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.passwd.passwdFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-!general dialog box (affects main hostname, username, password text)
-xscreensaver.Dialog.foreground:         #101010
-xscreensaver.Dialog.background:         #D8D8D8
-xscreensaver.Dialog.topShadowColor:     #D8D8D8
-xscreensaver.Dialog.bottomShadowColor:  #D8D8D8
-xscreensaver.Dialog.Button.foreground:  #101010
-xscreensaver.Dialog.Button.background:  #E5E5E5
-!username/password input box and date text colour
-xscreensaver.Dialog.text.foreground:    #101010
-xscreensaver.Dialog.text.background:    #E5E5E5
-xscreensaver.Dialog.internalBorderWidth:24
-xscreensaver.Dialog.borderWidth:        0
-xscreensaver.Dialog.shadowThickness:    2
-!timeout bar (background is actually determined by Dialog.text.background)
-xscreensaver.passwd.thermometer.foreground:  #101010
-xscreensaver.passwd.thermometer.background:  #2E2E2E
-xscreensaver.passwd.thermometer.width:       8
-
-!! Base16 Tubbs
-!! Scheme: Xaver Hellauer (https://github.com/xaverh)
-!
-!! URxvt*tintColor:                      color
-!! URxvt*fadeColor:                      color
-!
-!URxvt*background:                     #2C2C2C
-!URxvt*foreground:                     #E0E0D0
-!URxvt*cursorColor:                    #E0E0D0
-!
-!! URxvt*colorBD:                        color
-!! URxvt*colorIT:                        color
-!! URxvt*colorUL:                        color
-!! URxvt*colorRV:                        color
-!! URxvt*underlineColor:                 color
-!URxvt*scrollColor:                    #E0E0D0
-!! URxvt*troughColor:                    color
-!URxvt*highlightColor:                 #565657
-!URxvt*highlightTextColor:             #a8b8a8
-!
-!URxvt*color0:                         #3f3f3f
-!URxvt*color1:                         #DA4939
-!URxvt*color2:                         #81AC3A
-!URxvt*color3:                         #DA7416
-!URxvt*color4:                         #9AB8D7
-!URxvt*color5:                         #C71585
-!URxvt*color6:                         #8CD0D3
-!URxvt*color7:                         #E0E0D0
-!URxvt*color8:                         #709080
-!URxvt*color9:                         #F92672
-!URxvt*color10:                        #72D5A3
-!URxvt*color11:                        #F0DFAF
-!URxvt*color12:                        #008995
-!URxvt*color13:                        #DC8CC3
-!URxvt*color14:                        #93E0E3
-!URxvt*color15:                        #ffffff
-
-! Visual Studio ish theme
-! Scheme: Xaver Hellauer (https://github.com/xaverh)
-
-! URxvt*tintColor:                      color
-! URxvt*fadeColor:                      color
-
-URxvt*background:                     #1E1E1E
-URxvt*foreground:                     #BBBBBB
-URxvt*cursorColor:                    #FFFFFF
-
-! URxvt*colorBD:                        color
-! URxvt*colorIT:                        color
-! URxvt*colorUL:                        color
-! URxvt*colorRV:                        color
-! URxvt*underlineColor:                 color
-URxvt*scrollColor:                    #FFFFFF
-! URxvt*troughColor:                    color
-URxvt*highlightColor:                 #A4CDEF
-URxvt*highlightTextColor:             #BBBBBB
-
-! black
-URxvt*color0:       #252526
-URxvt*color8:       #1e1e1e
-
-! red
-URxvt*color1:       #ce9178
-URxvt*color9:       #ceb2a7
-
-! green
-URxvt*color2:       #608b4e
-URxvt*color10:      #758b6c
-
-! yellow
-URxvt*color3:       #dcdcb2
-URxvt*color11:      #dcdcc4
-
-! blue
-URxvt*color4:       #569cd6
-URxvt*color12:      #9cdcfe
-
-! magenta
-URxvt*color5:       #c586c0
-URxvt*color13:      #c5a5c2
-
-! cyan
-URxvt*color6:       #4ec9b0
-URxvt*color14:      #8dc9bd
-
-! white
-URxvt*color7:       #adadad
-URxvt*color15:      #fdf6e3
+URxvt*tintColor:            color
+URxvt*fadeColor:            color
+URxvt*colorBD:              color
+URxvt*colorIT:              color
+URxvt*colorUL:              color
+URxvt*colorRV:              color
+URxvt*underlineColor:       color
+URxvt*scrollColor:          #FFFFFF
+URxvt*troughColor:          color
+URxvt*highlightColor:       #A4CDEF
+URxvt*highlightTextColor:   #BBBBBB
+URxvt*background:           #1E1E1E
+URxvt*foreground:           #BBBBBB
+URxvt*cursorColor:          #FFFFFF
+URxvt*cursorBlink:			1
+URxvt*color0:       		#252526
+URxvt*color8:       		#1e1e1e
+URxvt*color1:       		#ce9178
+URxvt*color9:       		#ceb2a7
+URxvt*color2:       		#608b4e
+URxvt*color10:      		#758b6c
+URxvt*color3:       		#dcdcb2
+URxvt*color11:      		#dcdcc4
+URxvt*color4:       		#569cd6
+URxvt*color12:      		#9cdcfe
+URxvt*color5:       		#c586c0
+URxvt*color13:      		#c5a5c2
+URxvt*color6:       		#4ec9b0
+URxvt*color14:      		#8dc9bd
+URxvt*color7:       		#adadad
+URxvt*color15:      		#fdf6e3
