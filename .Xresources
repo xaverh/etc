@@ -13,19 +13,20 @@ URxvt*scrollBar: false
 ! URxvt*italicFont: xft:PragmataPro:pixelsize=16:italic
 ! URxvt*boldFont: xft:PragmataPro:pixelsize=16:bold
 ! URxvt*boldItalicFont: xft:PragmataPro:pixelsize=16:bold:italic
-URxvt*font: -sgi-screen-medium-r-*-*-14-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-14-*-*-*-*-*-*-*
+URxvt*font: -sgi-screen-medium-r-*-*-15-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-15-*-*-*-*-*-*-*
 ! URxvt*letterSpace: -1.5
+! URxvt*inheritPixmap: true
+URxvt*transparent:   true
+URxvt*shading: 15
 
-*tintColor:          	color
-*fadeColor:          	color
-*colorBD:            	color
-*colorIT:            	color
-*colorUL:            	color
-*colorRV:            	color
-*underlineColor:     	color
+! *colorBD:            	color
+! *colorIT:            	color
+! *colorUL:            	color
+! *colorRV:            	color
+! *underlineColor:     	color
 *scrollColor:        	#FFFFFF
-*troughColor:        	color
+! *troughColor:        	color
 *highlightColor:     	#A4CDEF
 *highlightTextColor: 	#BBBBBB
 *background:         	#1E1E1E
