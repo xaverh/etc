@@ -28,7 +28,7 @@ bindkey "\e[B"  history-beginning-search-forward-end
 # PS2='\%_> ' # printed when zsh needs more information to complete a command
 # PS3='?# '   # selection prompt used within a select loop
 # PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
-RPROMPT="%(?.%{$fg[green]%}✓ %{$reset_color%}.%{$fg[red]%}✗ %{$reset_color%})"
+RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
 
 (( EUID != 0 )) && umask 0077 || umask 0002
 
