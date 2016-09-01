@@ -3,7 +3,7 @@
 # besser: in /etc/X11/Xresources:
 
 sudo pacman -S zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver otf-fira-mono otf-fira-sans compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch xorg-fontsel viewnior gconf jdk8-openjdk dunst pkgfile scrot jsoncpp
-# yaourt -S dropbox spotify gtk-theme-arc super-flat-remix-icon-theme lemonbar lemonbuddy
+# yaourt -S dropbox spotify gtk-theme-arc super-flat-remix-icon-theme lemonbar-sm-git lemonbuddy-git stalonetray
 
 echo "Xft.dpi: 96
 Xft.antialias: true
