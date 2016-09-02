@@ -1,7 +1,8 @@
 #!/usr/bin/sh
 
 # Installing stuff
-sudo pacman -S vlc git unzip firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts
+sudo pacman -Syyu --noconfirm
+sudo pacman -Sq --noconfirm vlc firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts
 
 # Install and start dropbox
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
