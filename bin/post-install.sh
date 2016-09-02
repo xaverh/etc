@@ -1,6 +1,6 @@
 #!/usr/bin/sh
-
-sudo pacman -S vlc firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh
+sudo pacman -Syyu --noconfirm
+sudo pacman -Sq --noconfirm vlc firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh
 # yaourt -S dropbox spotify sgi-fonts
 # xorg-fontsel
 
