@@ -1,9 +1,28 @@
 #!/usr/bin/sh
 
-sudo pacman -S vlc firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh
-# yaourt -S dropbox spotify sgi-fonts
-# xorg-fontsel
+# Installing stuff
+sudo pacman -S vlc git unzip firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts
 
+# Install and start dropbox
+cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+~/.dropbox-dist/dropboxd &!
+
+cd ~/Software
+wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/spotify.tar.gz" | tar xzf -
+cd spotify
+makepkg -si
+
+cd ~/Software
+wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/sgi-fonts.tar.gz" | tar xzf -
+cd sgi-fonts
+makepkg -si
+
+cd ~/Software
+wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/urxvtcd.tar.gz" | tar xzf -
+cd urxvtcd
+makepkg -si
+
+## setting up antialiasing
 echo "Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
@@ -12,9 +31,23 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 " | sudo tee /etc/X11/Xresources > /dev/null
 sudo chmod 644 /etc/X11/Xresources
-
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
+
+# linking stuff
+rm -r ~/.config/Code/User
+ln -s ~/Dropbox/Visual\ Studio\ Code/User ~/.config/Code/User
+ln -s ~/Software/dotfiles/.clang-format ~
+ln -s ~/Software/dotfiles/.dircolors ~
+ln -s ~/Software/dotfiles/.toprc ~
+ln -s ~/Software/dotfiles/.Xresources ~
+xrdb ~/.Xresources
+ln -s ~/Software/dotfiles/.zlogin ~
+ln -s ~/Software/dotfiles/.zsh ~
+ln -s ~/Software/dotfiles/.zshrc ~
+ln -s ~/Software/dotfiles/.zshenv ~
+ln -s ~/Software/dotfiles/.zprofile ~
+
 
 # Fedora
 # sudo yum-config-manager --add-repo=http://negativo17.org/repos/fedora-handbrake.repo
