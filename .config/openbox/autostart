@@ -1,28 +1,13 @@
-## Openbox autostart.sh
-## ====================
-## When you login to your CrunchBang Openbox session, this autostart script
-## will be executed to set-up your environment and launch any applications
-## you want to run at startup.
-##
-## Note*: some programs, such as 'nm-applet' are run via XDG autostart.
-## Run '/usr/lib/openbox/openbox-xdg-autostart --list' to list any
-## XDG autostarted programs.
-##
-## More information about this can be found at:
-## http://openbox.org/wiki/Help:Autostart
-##
-## If you do something cool with your autostart script and you think others
-## could benefit from your hack, please consider sharing it at:
-## http://crunchbang.org/forums/
-##
-## Have fun & happy CrunchBangin'! :)
+pcmanfm --daemon-mode &
+compton --daemon &
+urxvtd --fork --quiet --opendisplay &
+dunst &
 
-# run desktop independent stuff first
-~/Software/dotfiles/bin/desktop_independent_stuff.sh &
-
-pcmanfm --daemon-mode --desktop &
-
-# compton -b &
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+	# gehört eigentlich in https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Configuration
+	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-30 HorizScrollDelta=-30 PalmDetect=1 2>/dev/null
+	syndaemon -i 0.5 -t -K -R -d &
+fi
 
 ## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
 ## Adjust the values according to your preferances.
@@ -34,45 +19,23 @@ xset b off &
 ## Set root window colour
 # hsetroot -solid "#2E3436" &
 
-## Group start:
-## 1. nitrogen - restores wallpaper
-## 2. compositor - start
-## 3. sleep - give compositor time to start
-## 4. tint2 panel
-# (\
-# nitrogen --restore && \
-# cb-compositor --start && \
-# sleep 2s && \
-# tint2 \
-# ) &
-
+~/.fehbg &
 tint2 &
 
 ## Volume control for systray
-# volumeicon &
-(sleep 2s && pnmixer) &
-
-## Volume keys daemon
-# xfce4-volumed &
+(sleep 2s && volumeicon) &
 
 ## Enable power management
 # xfce4-power-manager &
-
-## Start Thunar Daemon
-# thunar --daemon &
 
 ## Start xscreensaver
 xscreensaver -no-splash &
 
 ## Start Clipboard manager
-(sleep 3s && clipit) &
-
-## cb-fortune - have Waldorf say a little adage
-#(sleep 120s && cb-fortune) &
+# (sleep 3s && clipit) &
 
 ## Run the conky
-conky -d &
-conky -c /home/xha/Software/dotfiles/etc/conky1.10_shortcuts_grey -d &
+# conky -d &
+# conky -c /home/xha/Software/dotfiles/etc/conky1.10_shortcuts_grey -d &
 
-# Dropbox
-~/.dropbox-dist/dropboxd &
+dropbox &
