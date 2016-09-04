@@ -40,7 +40,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Arc_modified</name>
+    <name>Numix-Frost-Light</name>
     <titleLayout>SDLIMC</titleLayout>
     <!--
       avaible characters are NDSLIMC, each can occur at most once.
@@ -121,12 +121,12 @@
     <number>4</number>
     <firstdesk>1</firstdesk>
     <names>
-      <name>א</name>
-      <name>ב</name>
-      <name>ג</name>
-      <name>ד</name>
+      <name>@</name>
+      <name>&gt;&gt;=</name>
+      <name>music</name>
+      <name>etc</name>
     </names>
-    <popupTime>875</popupTime>
+    <popupTime>885</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
          desktops.  Set this to 0 to disable the popup. -->
   </desktops>
@@ -327,7 +327,7 @@
         <command>gmrun</command>
       </action>
     </keybind>
-    <keybind key="W-d">
+    <keybind key="W-space">
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
@@ -351,7 +351,7 @@
           <enabled>true</enabled>
           <name>Terminal</name>
         </startupnotify>
-        <command>~/Software/dotfiles/bin/urxvtcd</command>
+        <command>urxvtcd</command>
       </action>
     </keybind>
     <keybind key="W-w">
@@ -369,16 +369,16 @@
           <enabled>true</enabled>
           <name>Lock screen</name>
         </startupnotify>
-        <command>slock</command>
+        <command>xscreensaver-command --lock</command>
       </action>
     </keybind>
     <keybind key="W-h">
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>htop</name>
+          <name>top</name>
         </startupnotify>
-        <command>terminator --command="htop"</command>
+        <command>urxvtcd -e htop</command>
       </action>
     </keybind>
     <keybind key="W-v">
@@ -404,11 +404,11 @@
         <menu>client-list-combined-menu</menu>
       </action>
     </keybind>
-    <keybind key="W-space">
+    <!--<keybind key="W-space">
       <action name="ShowMenu">
         <menu>root-menu</menu>
       </action>
-    </keybind>
+    </keybind>-->
     <keybind key="A-C-q">
       <action name="ShowMenu">
         <menu>root-menu</menu>
@@ -460,6 +460,26 @@
         <command>amixer -D pulse set Master toggle</command>
       </action>
     </keybind>
+    <keybind key="XF86AudioPlay">
+      <action name="Execute">
+        <command>~/Software/dotfiles/bin/hey_dj.sh PlayPause</command>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioNext">
+      <action name="Execute">
+        <command>~/Software/dotfiles/bin/hey_dj.sh Next</command>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioPrev">
+      <action name="Execute">
+        <command>~/Software/dotfiles/bin/hey_dj.sh Previous</command>
+      </action>
+    </keybind>
+    <keybind key="XF86Sleep">
+      <action name="Execute">
+        <command>systemctl suspend</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
@@ -474,28 +494,8 @@
     <!-- Set this to TRUE to move the mouse pointer across the desktop when
        switching due to hitting the edge of the screen -->
     <context name="Frame">
-      <mousebind button="A-Left" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
-      </mousebind>
-      <mousebind button="A-Left" action="Click">
-        <action name="Unshade"/>
-      </mousebind>
-      <mousebind button="A-Left" action="Drag">
+      <mousebind button="W-Left" action="Drag">
         <action name="Move"/>
-      </mousebind>
-      <mousebind button="A-Right" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
-        <action name="Unshade"/>
-      </mousebind>
-      <mousebind button="A-Right" action="Drag">
-        <action name="Resize"/>
-      </mousebind>
-      <mousebind button="A-Middle" action="Press">
-        <action name="Lower"/>
-        <action name="FocusToBottom"/>
-        <action name="Unfocus"/>
       </mousebind>
       <mousebind button="A-Up" action="Click">
         <action name="GoToDesktop">
@@ -758,16 +758,6 @@
       </mousebind>
     </context>
     <context name="Desktop">
-      <mousebind button="Up" action="Click">
-        <action name="GoToDesktop">
-          <to>previous</to>
-        </action>
-      </mousebind>
-      <mousebind button="Down" action="Click">
-        <action name="GoToDesktop">
-          <to>next</to>
-        </action>
-      </mousebind>
       <mousebind button="A-Up" action="Click">
         <action name="GoToDesktop">
           <to>previous</to>
@@ -946,30 +936,6 @@
       <skip_taskbar>yes</skip_taskbar>
       <fullscreen>no</fullscreen>
       <maximized>no</maximized>
-    </application>
-    <application class="Gimp" name="gimp" role="gimp-toolbox" type="utility">
-      <maximized>vertical</maximized>
-    </application>
-    <application class="Gimp" name="gimp" role="gimp-dock" type="utility">
-      <maximized>vertical</maximized>
-    </application>
-    <application class="Gimp" name="gimp" role="gimp-image-window" type="normal">
-      <position force="no">
-        <x>center</x>
-        <y>center</y>
-      </position>
-    </application>
-    <application class="Gimp" name="gimp-2.8" role="gimp-toolbox" type="utility">
-      <maximized>vertical</maximized>
-    </application>
-    <application class="Gimp" name="gimp-2.8" role="gimp-dock" type="utility">
-      <maximized>vertical</maximized>
-    </application>
-    <application class="Gimp" name="gimp-2.8" role="gimp-image-window" type="normal">
-      <position force="no">
-        <x>center</x>
-        <y>center</y>
-      </position>
     </application>
   </applications>
 </openbox_config>
