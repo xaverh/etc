@@ -1,0 +1,2 @@
+#!/bin/sh
+feh  --bg-tile --no-fehbg ~/Pictures/Patterns/`ls ~/Pictures/Patterns/ | shuf -n 1`
