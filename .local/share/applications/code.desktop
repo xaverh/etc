@@ -2,7 +2,7 @@
 Name=Visual Studio Code
 Comment=Code Editing. Redefined.
 GenericName=Text Editor
-Exec=/usr/local/bin/code %U
+Exec=/usr/local/bin/code %F
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/code.png
 Type=Application
 StartupNotify=true
@@ -49,5 +49,5 @@ Name[uk]=Відкрити нове вікно
 Name[vi]=Mở cửa sổ mới
 Name[zh_CN]=新建窗口
 Name[zh_TW]=開啟新視窗
-Exec=/opt/VSCode-linux-x64/Code --new-window %U
+Exec=/opt/VSCode-linux-x64/Code --new-window %F
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/vscode.png
