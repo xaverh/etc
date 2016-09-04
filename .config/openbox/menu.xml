@@ -4,18 +4,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://openbox.org/
                 file:///usr/share/openbox/menu.xsd">
-<menu id="applications-menu" label="Applications" execute="/usr/libexec/openbox-xdg-menu applications"/>
-<menu id="preferences-menu" label="Preferences" execute="/usr/libexec/openbox-xdg-menu preferences"/>
-<menu id="administration-menu" label="Administration" execute="/usr/libexec/openbox-xdg-menu system-settings"/>
-<menu id="terminals-menu" label="Terminals" execute="/usr/libexec/openbox-xdg-menu /etc/xdg/openbox/terminals"/>
 <menu id="root-menu" label="Openbox 3">
   <separator label="Openbox"/>
-  <menu id="applications-menu"/>
-  <menu id="preferences-menu"/>
-  <menu id="administration-menu"/>
-  <separator/>
-  <menu id="terminals-menu"/>
-  <separator/>
   <item label="Reconfigure">
     <action name="Reconfigure" />
   </item>
@@ -41,14 +31,7 @@
 		<item label="rxvt-unicode client/daemon">
 			<action name="Execute">
 				<command>
-                   ~/Software/dotfiles/bin/urxvtcd
-				</command>
-			</action>
-		</item>
-		<item label="Chromium">
-			<action name="Execute">
-				<command>
-					chromium
+                   urxvtcd
 				</command>
 			</action>
 		</item>
@@ -63,6 +46,13 @@
 			<action name="Execute">
 				<command>
 					code --new-window
+				</command>
+			</action>
+		</item>
+		<item label="Lɜafpad">
+			<action name="Execute">
+				<command>
+					l3afpad
 				</command>
 			</action>
 		</item>
@@ -90,13 +80,6 @@
 				</action>
 			</item>
 		    <menu id="graphicsScreenshots" label="Take Screenshot">
-				<item label="Screenshooter">
-					<action name="Execute">
-						<command>
-							xfce4-screenshooter
-						</command>
-					</action>
-				</item>
 				<separator label="scrot"/>
 				<item label="Now">
 					<action name="Execute">
@@ -225,9 +208,9 @@
 			</item>
 		</menu>
 		<separator/>
-        <menu execute="~/.config/openbox/cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>
-        <menu execute="~/.config/openbox/cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>
-		<separator/>
+        <!--<menu execute="~/.config/openbox/cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>-->
+        <!--<menu execute="~/.config/openbox/cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>-->
+		<!--<separator/>-->
 		<menu id="settings" label="Settings">
             <!--
             <menu execute="cb-compositor" id="CompositingPipeMenu" label="Compositor"/>
@@ -236,7 +219,7 @@
 				<item label="Edit .conkyrc">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.conkyrc
+							urxvtcd -e vim ~/.conkyrc
 						</command>
 					</action>
 				</item>
@@ -247,44 +230,12 @@
 						</command>
 					</action>
 				</item>
-				<separator label="Help?"/>
-				<item label="man page">
-					<action name="Execute">
-						<command>
-							~/bin/urxvtcd_arch.sh -e "man conky"
-						</command>
-					</action>
-				</item>
-				<item label="Wiki Page">
-					<action name="Execute">
-						<command>
-							x-www-browser http://crunchbanglinux.org/wiki/conky
-						</command>
-					</action>
-				</item>
-			</menu>
-			<menu id="dmenuconfig" label="dmenu">
-				<item label="Edit start-up script">
-					<action name="Execute">
-						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/dmenu/dmenu-bind.sh
-						</command>
-					</action>
-				</item>
-				<separator label="Help?"/>
-				<item label="man page">
-					<action name="Execute">
-						<command>
-							~/bin/urxvtcd_arch.sh -e "man dmenu"
-						</command>
-					</action>
-				</item>
 			</menu>
 			<menu id="gmrunconfig" label="gmrun">
 				<item label="Edit config file">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.gmrunrc
+							urxvtcd -e vim ~/.gmrunrc
 						</command>
 					</action>
 				</item>
@@ -292,7 +243,7 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e "man gmrun"
+							urxvtcd -e "man gmrun"
 						</command>
 					</action>
 				</item>
@@ -301,21 +252,21 @@
 				<item label="Edit menu.xml">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/menu.xml
+							urxvtcd -e vim ~/.config/openbox/menu.xml
 						</command>
 					</action>
 				</item>
 				<item label="Edit rc.xml">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/rc.xml
+							urxvtcd -e vim ~/.config/openbox/rc.xml
 						</command>
 					</action>
 				</item>
 				<item label="Edit autostart">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/openbox/autostart
+							urxvtcd -e vim ~/.config/openbox/autostart
 						</command>
 					</action>
 				</item>
@@ -353,7 +304,7 @@
 				<item label="Edit config file">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/terminator/config
+							urxvtcd -e vim ~/.config/terminator/config
 						</command>
 					</action>
 				</item>
@@ -361,7 +312,7 @@
 				<item label="man page">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e "man terminator_config"
+							urxvtcd -e "man terminator_config"
 						</command>
 					</action>
 				</item>
@@ -370,29 +321,14 @@
 				<item label="Edit config file">
 					<action name="Execute">
 						<command>
-							~/bin/urxvtcd_arch.sh -e vim ~/.config/tint2/tint2rc
+							code ~/.config/tint2/tint2rc
 						</command>
 					</action>
 				</item>
                 <item label="Restart tint2">
 					<action name="Execute">
 						<command>
-							tint2restart
-						</command>
-					</action>
-				</item>
-				<separator label="Help?"/>
-				<item label="man page">
-					<action name="Execute">
-						<command>
-							~/bin/urxvtcd_arch.sh -e "man tint2"
-						</command>
-					</action>
-				</item>
-				<item label="Online Help">
-					<action name="Execute">
-						<command>
-							x-www-browser http://code.google.com/p/tint2/wiki/Welcome
+							killall -SIGUSR1 tint2
 						</command>
 					</action>
 				</item>
@@ -409,7 +345,7 @@
 			    <item label="man xrandr">
 				    <action name="Execute">
 					    <command>
-						    ~/bin/urxvtcd_arch.sh -e "man xrandr"
+						    urxvtcd -e "man xrandr"
 					    </command>
 				    </action>
 			    </item>
@@ -428,13 +364,13 @@
 					</command>
 				</action>
 			</item>
-			<item label="Power Management">
+			<!--<item label="Power Management">
 				<action name="Execute">
 					<command>
 						xfce4-power-manager-settings
 					</command>
 				</action>
-			</item>
+			</item>-->
 			<item label="Screensaver">
 				<action name="Execute">
 					<command>
@@ -442,16 +378,16 @@
 					</command>
 				</action>
 			</item>
-			<item label="Choose Wallpaper">
+			<item label="Next Wallpaper">
 				<action name="Execute">
 					<command>
-						nitrogen ~/images/wallpapers/
+						~/.fehbg
 					</command>
 				</action>
 			</item>
 		</menu>
 		<menu id="system" label="System">
-		    <menu execute="cb-printing-pipemenu" id="PrintingPipeMenu" label="Printers"/>
+		    <!--<menu execute="cb-printing-pipemenu" id="PrintingPipeMenu" label="Printers"/>-->
 		    <item label="GParted">
 				<action name="Execute">
 					<command>
@@ -459,34 +395,26 @@
 					</command>
 				</action>
 			</item>
-			<item label="Synaptic Package Manager">
-				<action name="Execute">
-					<command>
-						gksudo synaptic
-					</command>
-				</action>
-			</item>
-			<item label="User Login Settings">
-				<action name="Execute">
-					<command>
-						gksudo slimconf
-					</command>
-				</action>
-			</item>
 		</menu>
-		<!--<menu id="help" label="Help" execute="cb-help-pipemenu" />-->
 		<separator/>
 		<item label="Lock Screen">
 			<action name="Execute">
 				<command>
-					slock
+					xscreensaver-command --lock
 				</command>
 			</action>
 		</item>
-		<item label="Exit">
+		<item label="Have you tried turnin' it off and on again?">
 			<action name="Execute">
 				<command>
-					~/Software/dotfiles/bin/bl-exit
+					systemctl reboot
+				</command>
+			</action>
+		</item>
+		<item label="Power Off">
+			<action name="Execute">
+				<command>
+					systemctl poweroff
 				</command>
 			</action>
 		</item>
