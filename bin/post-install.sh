@@ -54,5 +54,7 @@ mkdir ~/.fonts
 ln -s ~/Dropbox/Fonts/Menlo ~/.fonts
 ln -s ~/Dropbox/Fonts/San\ Francisco ~/.fonts
 ln -s ~/Software/dotfiles/.local/share/thumbnailers ~/.local/share/
+rmdir .config/zathura
+ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
 
 chsh -s /bin/zsh
