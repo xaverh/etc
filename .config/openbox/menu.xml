@@ -162,6 +162,11 @@
 					</action>
 				</item>
 			</menu>
+			<item label="Lightdm settings">
+				<action name="Execute">
+					<execute>gksudo lightdm-gtk-greeter-settings</execute>
+				</action>
+			</item>
 			<item label="User Interface Settings">
 				<action name="Execute">
 					<command>
