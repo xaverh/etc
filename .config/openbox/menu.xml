@@ -1,33 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<openbox_menu xmlns="http://openbox.org/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://openbox.org/
-                file:///usr/share/openbox/menu.xsd">
-<menu id="root-menu" label="Openbox 3">
-  <separator label="Openbox"/>
-  <item label="Reconfigure">
-    <action name="Reconfigure" />
-  </item>
-  <item label="Exit">
-    <action name="Exit">
-      <prompt>yes</prompt>
-    </action>
-  </item>
-  <separator/>
-  <item label="Log Out">
-    <action name="SessionLogout">
-      <prompt>yes</prompt>
-    </action>
-  </item>
-		<item label="Run Program">
-			<action name="Execute">
-				<command>
-					gmrun
-				</command>
-			</action>
-		</item>
-		<separator/>
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
+	<menu id="root-menu" label="Openbox 3">
 		<item label="rxvt-unicode client/daemon">
 			<action name="Execute">
 				<command>
@@ -56,6 +29,11 @@
 				</command>
 			</action>
 		</item>
+		<item label="GIMP">
+			<action name="Execute">
+				<execute>gimp</execute>
+			</action>
+		</item>
 		<item label="VLC media player">
 			<action name="Execute">
 				<command>
@@ -63,79 +41,7 @@
 				</command>
 			</action>
 		</item>
-		<separator/>
-		<menu id="graphics" label="Graphics">
-			<item label="GIMP">
-				<action name="Execute">
-					<command>
-						gimp
-					</command>
-				</action>
-			</item>
-		    <item label="Viewnior Image Viewer">
-				<action name="Execute">
-					<command>
-						viewnior
-					</command>
-				</action>
-			</item>
-		    <menu id="graphicsScreenshots" label="Take Screenshot">
-				<separator label="scrot"/>
-				<item label="Now">
-					<action name="Execute">
-						<command>
-							scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/images/ &amp; viewnior ~/images/$f'
-						</command>
-					</action>
-				</item>
-				<item label="In 5 Seconds...">
-					<action name="Execute">
-						<command>
-							scrot -d 5 '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/images/ &amp; viewnior ~/images/$f'
-						</command>
-					</action>
-				</item>
-				<item label="In 10 Seconds...">
-					<action name="Execute">
-						<command>
-							scrot -d 10 '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/images/ &amp; viewnior ~/images/$f'
-						</command>
-					</action>
-				</item>
-				<item label="Selected Area... (click &amp; drag mouse)">
-					<action name="Execute">
-						<command>
-							scrot -s '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/images/ &amp; viewnior ~/images/$f'
-						</command>
-					</action>
-				</item>
-			</menu>
-		</menu>
-		<menu id="multimedia" label="Multimedia">
-		    <item label="VLC Media Player">
-				<action name="Execute">
-					<command>
-						vlc
-					</command>
-				</action>
-			</item>
-			<item label="Volume Control">
-				<action name="Execute">
-					<command>
-						pavucontrol
-					</command>
-				</action>
-			</item>
-			<item label="Xfburn">
-				<action name="Execute">
-					<command>
-						xfburn
-					</command>
-				</action>
-			</item>
-		</menu>
-		<menu id="network" label="Network">
-		    <menu execute="cb-x-www-browser-pipemenu" id="wwwbrowsers" label="WWW Browsers"/>
+		<!--<menu id="network" label="Network">
 			<item label="gFTP Client">
 				<action name="Execute">
 					<command>
@@ -168,51 +74,13 @@
 			<menu execute="cb-sshconfig-pipemenu" id="sshconfig" label="SSH"/>
 			<separator label="Services"/>
 			<menu execute="cb-dropbox-pipemenu" id="dropbox" label="Dropbox"/>
-		</menu>
-		<menu id="office" label="Office">
-		    <menu id="libreoffice" label="LibreOffice" execute="cb-libreoffice-pipemenu" />
-		    <item label="Google Docs">
-				<action name="Execute">
-					<command>
-						x-www-browser https://drive.google.com/
-					</command>
-				</action>
-			</item>
-			<item label="AbiWord Word Processor">
-				<action name="Execute">
-					<command>
-						abiword
-					</command>
-				</action>
-			</item>
-			<item label="Gnumeric Spreadsheet">
-				<action name="Execute">
-					<command>
-						gnumeric
-					</command>
-				</action>
-			</item>
-			<item label="Calculator">
-				<action name="Execute">
-					<command>
-						galculator
-					</command>
-				</action>
-			</item>
-			<item label="Evince PDF Viewer">
-				<action name="Execute">
-					<command>
-						evince
-					</command>
-				</action>
-			</item>
-		</menu>
+		</menu>-->
 		<separator/>
-        <!--<menu execute="~/.config/openbox/cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>-->
-        <!--<menu execute="~/.config/openbox/cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>-->
+		<!--<menu execute="~/.config/openbox/cb-places-pipemenu" id="pipe-placesmenu" label="Places"/>-->
+		<!--<menu execute="~/.config/openbox/cb-recent-files-pipemenu" id="pipe-recentfilesmenu" label="Recent Files"/>-->
 		<!--<separator/>-->
 		<menu id="settings" label="Settings">
-            <!--
+			<!--
             <menu execute="cb-compositor" id="CompositingPipeMenu" label="Compositor"/>
             -->
 			<menu id="conkyconfig" label="Conky">
@@ -231,46 +99,7 @@
 					</action>
 				</item>
 			</menu>
-			<menu id="gmrunconfig" label="gmrun">
-				<item label="Edit config file">
-					<action name="Execute">
-						<command>
-							urxvtcd -e vim ~/.gmrunrc
-						</command>
-					</action>
-				</item>
-				<separator label="Help?"/>
-				<item label="man page">
-					<action name="Execute">
-						<command>
-							urxvtcd -e "man gmrun"
-						</command>
-					</action>
-				</item>
-			</menu>
 			<menu id="obConfig" label="Openbox">
-				<item label="Edit menu.xml">
-					<action name="Execute">
-						<command>
-							urxvtcd -e vim ~/.config/openbox/menu.xml
-						</command>
-					</action>
-				</item>
-				<item label="Edit rc.xml">
-					<action name="Execute">
-						<command>
-							urxvtcd -e vim ~/.config/openbox/rc.xml
-						</command>
-					</action>
-				</item>
-				<item label="Edit autostart">
-					<action name="Execute">
-						<command>
-							urxvtcd -e vim ~/.config/openbox/autostart
-						</command>
-					</action>
-				</item>
-				<separator/>
 				<item label="GUI Menu Editor">
 					<action name="Execute">
 						<command>
@@ -300,23 +129,6 @@
 					<action name="Restart"/>
 				</item>
 			</menu>
-			<menu id="terminatorconfig" label="Terminator">
-				<item label="Edit config file">
-					<action name="Execute">
-						<command>
-							urxvtcd -e vim ~/.config/terminator/config
-						</command>
-					</action>
-				</item>
-				<separator label="Help?"/>
-				<item label="man page">
-					<action name="Execute">
-						<command>
-							urxvtcd -e "man terminator_config"
-						</command>
-					</action>
-				</item>
-			</menu>
 			<menu id="tint2config" label="tint2">
 				<item label="Edit config file">
 					<action name="Execute">
@@ -325,7 +137,7 @@
 						</command>
 					</action>
 				</item>
-                <item label="Restart tint2">
+				<item label="Restart tint2">
 					<action name="Execute">
 						<command>
 							killall -SIGUSR1 tint2
@@ -334,26 +146,19 @@
 				</item>
 			</menu>
 			<menu id="DisplaySettings" label="Display Settings">
-			    <item label="ARandR Screen Layout Editor">
-				    <action name="Execute">
-					    <command>
+				<item label="ARandR Screen Layout Editor">
+					<action name="Execute">
+						<command>
 						    arandr
 					    </command>
-				    </action>
-			    </item>
-			    <separator label="Help?"/>
-			    <item label="man xrandr">
-				    <action name="Execute">
-					    <command>
-						    urxvtcd -e "man xrandr"
-					    </command>
-				    </action>
-			    </item>
-			</menu>
-			<menu id="Notifications" label="Notifications">
-				<item label="settings">
+					</action>
+				</item>
+				<separator label="Help?"/>
+				<item label="man xrandr">
 					<action name="Execute">
-						<command>xfce4-notifyd-config</command>
+						<command>
+						    urxvtcd -e &quot;man xrandr&quot;
+					    </command>
 					</action>
 				</item>
 			</menu>
@@ -386,22 +191,22 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="system" label="System">
-		    <!--<menu execute="cb-printing-pipemenu" id="PrintingPipeMenu" label="Printers"/>-->
-		    <item label="GParted">
-				<action name="Execute">
-					<command>
-						gksudo gparted
-					</command>
-				</action>
-			</item>
-		</menu>
 		<separator/>
 		<item label="Lock Screen">
 			<action name="Execute">
 				<command>
 					xscreensaver-command --lock
 				</command>
+			</action>
+		</item>
+		<item label="Log Out">
+			<action name="SessionLogout">
+				<prompt>yes</prompt>
+			</action>
+		</item>
+		<item label="Exit">
+			<action name="Exit">
+				<prompt>yes</prompt>
 			</action>
 		</item>
 		<item label="Have you tried turnin' it off and on again?">
