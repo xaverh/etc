@@ -68,7 +68,11 @@ alias dropbox_reset="echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/
 alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
 alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
-alias Fix_steam="find ~/.steam/root/ -name \"libgpg-error.so*\" -print -delete"
+
+Fix_steam() {
+	find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete
+	find ~/.steam/root/ -name \"libgpg-error.so*\" -print -delete
+}
 
 global-alias-space(){
 	local ga="$LBUFFER[(w)-1]"
