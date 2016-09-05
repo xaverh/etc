@@ -24,10 +24,6 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-# PROMPT="%11(D.%24(d.%{$fg[green]%}Merry X-Mas! .).)%(?..%{$fg[magenta]%}%? )%(!.%{$fg[red]%}.%{$fg_no_bold[cyan]%})%n@%M%1(j. %{$fg_no_bold[yellow]%}%j.)%{$fg_no_bold[blue]%} %4~%{$reset_color%} %# "
-# PS2='\%_> ' # printed when zsh needs more information to complete a command
-# PS3='?# '   # selection prompt used within a select loop
-# PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
 
 (( EUID != 0 )) && umask 0077 || umask 0002
@@ -83,13 +79,14 @@ zle -N global-alias-space
 bindkey ' ' global-alias-space
 
 chpwd() {
-	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;$TERM (%j): %~\a"
+	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
 }
 
 preexec() {
-	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;$TERM (%j): $2\a"
+	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
 }
 
+# A case for a suffix alias?
 sx simple-extract () {
 if [[ -f $1 ]]
 then
