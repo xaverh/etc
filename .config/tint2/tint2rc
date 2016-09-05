@@ -113,3 +113,4 @@ execp_interval = 1
 execp_continuous = 1
 execp_command = xprop -root -notype _NET_CURRENT_DESKTOP  _NET_DESKTOP_NAMES | lua ~/Software/dotfiles/bin/workspacer.lua
 execp_markup = 1
+execp_padding = 6 0
