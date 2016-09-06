@@ -5,7 +5,7 @@ dunst &
 
 if egrep -iq 'touchpad' /proc/bus/input/devices; then
 	# gehört eigentlich in https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Configuration
-	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-30 HorizScrollDelta=-30 PalmDetect=1 2>/dev/null
+	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
 	syndaemon -i 0.5 -t -K -R -d &
 fi
 
