@@ -18,7 +18,11 @@ for i = 1, 2 do
 	if string.match(input, "_NET_DESKTOP_NAMES") then
 		local begin
 		_, begin = string.find(input, "=%s")
-		workspace_names = split(string.sub(input, begin+1), '", "')
+		if begin then
+			workspace_names = split(string.sub(input, begin+1), '", "')
+		else
+			workspace_names = {"pa","re","ci","vo","mu","xa","ze","bi","so","dekto"}
+		end
 	end
 end
 
