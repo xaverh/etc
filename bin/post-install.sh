@@ -12,6 +12,7 @@ makepkg -si
 
 cd ~/Software
 pkgbuilder spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox
+pkgbuilder -F 2bwm-git
 
 ## setting up antialiasing
 echo "Xft.dpi: 96
