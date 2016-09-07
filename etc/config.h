@@ -47,11 +47,13 @@ static const char *terminal[]  = { "urxvtcd", NULL };
 static const char *click1[]    = { "xdotool","click", "1", NULL };
 static const char *click2[]    = { "xdotool","click", "2", NULL };
 static const char *click3[]    = { "xdotool","click", "3", NULL };
-/* Example
-static const char *vol_up[]    = { "amixer", "set", "Master", "unmute", "3%+", "-q", NULL };
-static const char *vol_down[]  = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
-static const char *vol_mute[]  = { "amixer", "set", "Master", "mute", "-q", NULL };
-*/
+static const char *vol_up[]    = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%+", "-q", NULL };
+static const char *vol_down[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
+static const char *vol_mute[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
+static const char *music_play[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","PlayPause", NULL};
+static const char *music_previous[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Next", NULL};
+static const char *music_next[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Previous", NULL};
+
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
 {
@@ -144,7 +146,7 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_m,          maxvert_hor,       {.i=TWOBWM_MAXIMIZE_HORIZONTALLY}},
     // Maximize and move
     // vertically left
-    {  MOD |SHIFT,        XK_y,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_LEFT}},
+    {  MOD |SHIFT,        XK_z,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_LEFT}},
     // vertically right
     {  MOD |SHIFT,        XK_u,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_RIGHT}},
     // horizontally left
@@ -152,7 +154,7 @@ static key keys[] = {
     // horizontally right
     {  MOD |SHIFT,        XK_n,          maxhalf,           {.i=TWOBWM_MAXHALF_HORIZONTAL_TOP}},
     //fold half vertically
-    {  MOD |SHIFT|CONTROL,XK_y,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_VERTICAL}},
+    {  MOD |SHIFT|CONTROL,XK_z,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_VERTICAL}},
     //fold half horizontally
     {  MOD |SHIFT|CONTROL,XK_b,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_HORIZONTAL}},
     //unfold vertically
@@ -190,22 +192,24 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Left,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT}},
     // Start programs
     {  MOD ,              XK_Return,     start,             {.com = terminal}},
-    {  MOD ,              XK_space,          start,             {.com = menucmd}},
-    {  MOD |SHIFT,        XK_y,          start,             {.com = gmrun}},
+    {  MOD ,              XK_space,      start,             {.com = menucmd}},
+    {  MOD ,              XK_y,          start,             {.com = gmrun}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
-    {  MOD ,              XK_w,      halfandcentered,   {.i=0}},
+    {  MOD ,              XK_w,          halfandcentered,   {.i=0}},
     // Fake clicks using xdotool
     {  MOD |CONTROL,      XK_Up,         start,             {.com = click1}},
     {  MOD |CONTROL,      XK_Down,       start,             {.com = click2}},
 	{  MOD |CONTROL,      XK_Right,      start,             {.com = click3}},
-/* example
-    {  0x000000,          0x1008ff13, start,             {.com = vol_up}},
-    {  0x000000,          0x1008ff11,  start,             {.com = vol_down}},
-    {  0x000000,          0x1008ff15, start,             {.com = vol_mute}},
-*/
-
+    // Volume control
+    {  0x000000,          0x1008ff13,    start,             {.com = vol_up}},
+    {  0x000000,          0x1008ff11,    start,             {.com = vol_down}},
+    {  0x000000,          0x1008ff12,    start,             {.com = vol_mute}},
+    // Music control
+    {  0x000000,          0x1008ff14,    start,             {.com = music_play}},
+    {  0x000000,          0x1008ff16,    start,             {.com = music_previous}},
+    {  0x000000,          0x1008ff17,    start,             {.com = music_next}},
 
     // Change current workspace
        DESKTOPCHANGE(     XK_1,                             0)
@@ -220,6 +224,7 @@ static key keys[] = {
        DESKTOPCHANGE(     XK_0,                             9)
 };
 static Button buttons[] = {
+    // {  0x000000 ,  XCB_BUTTON_INDEX_1,     raise_current_window,      {}},
     {  MOD        ,XCB_BUTTON_INDEX_1,     mousemotion,   {.i=TWOBWM_MOVE}},
     {  MOD        ,XCB_BUTTON_INDEX_3,     mousemotion,   {.i=TWOBWM_RESIZE}},
     {  MOD|CONTROL,XCB_BUTTON_INDEX_3,     start,         {.com = menucmd}},
