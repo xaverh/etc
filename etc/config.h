@@ -13,19 +13,19 @@ static const float    resize_keep_aspect_ratio= 1.03;
 ///---Offsets---///
 /*0)offsetx          1)offsety
  *2)maxwidth         3)maxheight */
-static const uint8_t offsets[] = {0,0,0,0};
+static const uint8_t offsets[] = {20,23,40,40};
 ///---Colors---///
 /*0)focuscol         1)unfocuscol
  *2)fixedcol         3)unkilcol
  *4)fixedunkilcol    5)outerbordercol
  *6)emptycol         */
-static const char *colors[] = {"#35586c","#333333","#7a8c5c","#ff6666","#cc9933","#0d131a","#000000"};
+static const char *colors[] = {"#adadad","#81d8d0","#569cd6","#f89290","#c586c0","#1e1e1e","#0d131c"};
 /*
  * If you are using a composition manager enable the COMPTON flag in the Makefile
  * (By changing -DNCOMPTON to -DCOMPTON)
  */
 /* if this is set to true the inner border and outer borders colors will be swapped */
-static const bool inverted_colors = true;
+static const bool inverted_colors = false;
 ///---Cursor---///
 /* default position of the cursor:
  * correct values are:
@@ -36,7 +36,7 @@ static const bool inverted_colors = true;
 /*0) Outer border size. If you put this negative it will be a square.
  *1) Full borderwidth    2) Magnet border size
  *3) Resize border size  */
-static const uint8_t borders[] = {3,5,5,4};
+static const uint8_t borders[] = {5,7,7,7};
 /* Windows that won't have a border.*/
 #define LOOK_INTO "WM_NAME"
 static const char *ignore_names[] = {"bar", "xclock"};
@@ -44,6 +44,7 @@ static const char *ignore_names[] = {"bar", "xclock"};
 static const char *menucmd[]   = { "/home/xha/Software/dotfiles/bin/dmenu_recent", NULL };
 static const char *gmrun[]     = { "/usr/bin/gmrun",NULL};
 static const char *terminal[]  = { "urxvtcd", NULL };
+static const char *file_manager[]  = { "pcmanfm", NULL };
 static const char *click1[]    = { "xdotool","click", "1", NULL };
 static const char *click2[]    = { "xdotool","click", "2", NULL };
 static const char *click3[]    = { "xdotool","click", "3", NULL };
@@ -194,6 +195,7 @@ static key keys[] = {
     {  MOD ,              XK_Return,     start,             {.com = terminal}},
     {  MOD ,              XK_space,      start,             {.com = menucmd}},
     {  MOD ,              XK_y,          start,             {.com = gmrun}},
+    {  MOD ,              XK_e,          start,             {.com = file_manager}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
