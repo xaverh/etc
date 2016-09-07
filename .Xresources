@@ -18,8 +18,8 @@ URxvt*scrollBar: false
 ! URxvt*boldFont: xft:PragmataPro:pixelsize=16:bold
 ! URxvt*boldItalicFont: xft:PragmataPro:pixelsize=16:bold:italic
 ! URxvt*letterSpace: -1.5
-URxvt*font: -sgi-screen-medium-r-*-*-15-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-15-*-*-*-*-*-*-*
+URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 ! URxvt*inheritPixmap: true
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
