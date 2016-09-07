@@ -174,14 +174,14 @@ zstyle ':completion:*:rm:*' ignore-line yes
 # export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
 # export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
-export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
+export LESS_TERMCAP_md=$'\E[00;34m'     # begin bold
+export LESS_TERMCAP_us=$'\E[00;95m'     # begin underline
 export LESS_TERMCAP_me=$'\E[0m'         # end mode
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export LESS_TERMCAP_so=$'\E[00;40;39m' # begin standout-mode - info box
 #export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 # export LESS_TERMCAP_us=$'\E[00;31m'     # begin underline
-export LESS_TERMCAP_us=$'\E[00;35m'     # begin underline
 export GROFF_NO_SGR=1
 
 # Erstellt aus .flac-Dateien .m4a-Dateien:
