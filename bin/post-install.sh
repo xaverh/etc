@@ -61,6 +61,5 @@ ln -s ~/Software/dotfiles/.local/share/thumbnailers ~/.local/share/
 rmdir .config/zathura
 ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
 ln -s ~/Software/dotfiles/.config/awesome ~/.config/
-ln -s ~/Software/dotfiles/.local/share/awesome ~/.local/share/
 
 chsh -s /bin/zsh
