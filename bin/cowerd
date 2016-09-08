@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+cd $HOME/Software && cower -d "$1"
+builddir="$_"
+cd "$builddir" && code --wait PKGBUILD
+makepkg -si && cd - &>/dev/null
+rm -Rf "$builddir"
