@@ -11,7 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
--- {{{ Error handling
+-- Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -34,11 +34,9 @@ do
 		in_error = false
 	end)
 end
--- }}}
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.local/share/awesome/themes/andermatt/theme.lua")
+beautiful.init("~/Software/dotfiles/nolink/awesome/themes/andermatt/theme.lua")
+
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtcd"
@@ -68,26 +66,24 @@ local layouts =
 	awful.layout.suit.max.fullscreen,
 	awful.layout.suit.magnifier
 }
--- }}}
 
--- {{{ Wallpaper
-if beautiful.wallpaper then
-	for s = 1, screen.count() do
-		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-	end
+-- TODO: randomize
+-- theme.wallpaper = "~/Pictures/2016-09-04_GaneshIdols_EN-IN10544278676_1920x1080.jpg"
+for s = 1, screen.count() do
+	gears.wallpaper.tiled("/home/xha/Pictures/Patterns/argyle.png", s)
 end
--- }}}
 
--- {{{ Tags
+-- Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
 for s = 1, screen.count() do
 	-- Each screen has its own tag table.
-	tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+	-- tags[s] = awful.tag({"pa","re","ci","vo","mu","xa","ze","bi","so","dekto"}, s, layouts[1])
+	-- tags[s] = awful.tag({"א","ב","ג","ד","ה","ו","ז","ח","ט","י"}, s, layouts[1])
+	tags[s] = awful.tag({"i","ii","iii","iv","v","vi","vii","viii","ix","x"}, s, layouts[1])
 end
--- }}}
 
--- {{{ Menu
+-- Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
@@ -106,9 +102,8 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
 
--- {{{ Wibox
+-- Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
@@ -202,17 +197,15 @@ for s = 1, screen.count() do
 
 	mywibox[s]:set_widget(layout)
 end
--- }}}
 
--- {{{ Mouse bindings
+-- Mouse bindings
 root.buttons(awful.util.table.join(
 	awful.button({ }, 3, function () mymainmenu:toggle() end),
 	awful.button({ }, 4, awful.tag.viewnext),
 	awful.button({ }, 5, awful.tag.viewprev)
 ))
--- }}}
 
--- {{{ Key bindings
+-- Key bindings
 globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
 	awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
@@ -346,9 +339,8 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
 
--- {{{ Rules
+-- Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
 	-- All clients will match this rule.
@@ -369,9 +361,8 @@ awful.rules.rules = {
 	-- { rule = { class = "Firefox" },
 	--   properties = { tag = tags[1][2] } },
 }
--- }}}
 
--- {{{ Signals
+-- Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
 	-- Enable sloppy focus
@@ -442,4 +433,3 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}

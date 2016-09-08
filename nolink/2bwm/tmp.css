@@ -28,4 +28,17 @@ color6:       #4ec9b0;
 color14:      #81d8d0;
 color7:       #adadad;
 color15:      #d4d4d4;
+
+fg_normal : #DCDCCC;
+fg_focus  : #F0DFAF;
+fg_urgent : #CC9393;
+bg_normal : #3F3F3F;
+bg_focus  : #1E2320;
+bg_urgent : #3F3F3F;
+bg_systray: #3F3F3F;
+border_normal : #3F3F3F;
+border_focus  : #6F6F6F;
+border_marked : #CC9393;
+titlebar_bg_normal: #3F3F3F;
+titlebar_bg_focus : #3F3F3F;
 };
