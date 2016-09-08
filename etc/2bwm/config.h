@@ -19,7 +19,8 @@ static const uint8_t offsets[] = {20,23,40,40};
  *2)fixedcol         3)unkilcol
  *4)fixedunkilcol    5)outerbordercol
  *6)emptycol         */
-static const char *colors[] = {"#adadad","#81d8d0","#569cd6","#f89290","#c586c0","#1e1e1e","#0d131c"};
+static const char *colors[] = {"#ECEFF1","#607D8B","#FFF176","#64B5F6","#81C784","#57877B","#212121"};
+static const char *colors[] = {"#d4d4d4","#adadad","#569cd6","#f89290","#c586c0","#1e1e1e","#0d131c"};
 /*
  * If you are using a composition manager enable the COMPTON flag in the Makefile
  * (By changing -DNCOMPTON to -DCOMPTON)
