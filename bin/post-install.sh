@@ -11,7 +11,7 @@ cd pkgbuilder
 makepkg -si
 
 cd ~/Software
-pkgbuilder spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox
+pkgbuilder spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox sprunge
 pkgbuilder -F 2bwm-git
 
 ## setting up antialiasing
