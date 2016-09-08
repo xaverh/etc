@@ -13,53 +13,34 @@ theme = {}
 theme.font      = "Screen 10"
 
 -- Colors
-theme.fg_normal  = "#DCDCCC"
-theme.fg_focus   = "#F0DFAF"
-theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#3F3F3F"
-theme.bg_focus   = "#1E2320"
-theme.bg_urgent  = "#3F3F3F"
+theme.fg_normal  = "#ADADAD"
+theme.fg_focus   = "#81D8D0"
+theme.fg_urgent  = "#F89290"
+theme.bg_normal  = "#1E1E1E"
+theme.bg_focus   = "#333333"
+theme.bg_urgent  = "#F89290"
 theme.bg_systray = theme.bg_normal
 
 -- Borders
 theme.border_width  = 2
-theme.border_normal = "#3F3F3F"
+theme.border_normal = "#333333"
 theme.border_focus  = "#6F6F6F"
-theme.border_marked = "#CC9393"
+theme.border_marked = "#C586C0"
 
 -- Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
-
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- [taglist|tasklist]_[bg|fg]_[focus|urgent]
--- titlebar_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- Example:
---theme.taglist_bg_focus = "#CC9393"
-
--- Widgets
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
---theme.fg_center_widget = "#88A175"
---theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
---theme.border_widget    = "#3F3F3F"
+theme.titlebar_bg_focus  = "#1E1E1E"
+theme.titlebar_bg_normal = "#1E1E1E"
+theme.tasklist_disable_icon = true
 
 -- Mouse finder
-theme.mouse_finder_color = "#CC9393"
--- mouse_finder_[timeout|animate_timeout|radius|factor]
+theme.mouse_finder_color = "#DCDCAA"
 
 -- Menu
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_height = 15
-theme.menu_width  = 100
+theme.menu_width  = 200
 
 -- Icons
 -- Taglist
@@ -72,18 +53,18 @@ theme.awesome_icon           = "/home/xha/Software/dotfiles/nolink/awesome/theme
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
 
 -- Layout
-theme.layout_tile       = "/usr/share/awesome/themes/default/layouts/tile.png"
-theme.layout_tileleft   = "/usr/share/awesome/themes/default/layouts/tileleft.png"
-theme.layout_tilebottom = "/usr/share/awesome/themes/default/layouts/tilebottom.png"
-theme.layout_tiletop    = "/usr/share/awesome/themes/default/layouts/tiletop.png"
-theme.layout_fairv      = "/usr/share/awesome/themes/default/layouts/fairv.png"
-theme.layout_fairh      = "/usr/share/awesome/themes/default/layouts/fairh.png"
-theme.layout_spiral     = "/usr/share/awesome/themes/default/layouts/spiral.png"
-theme.layout_dwindle    = "/usr/share/awesome/themes/default/layouts/dwindle.png"
-theme.layout_max        = "/usr/share/awesome/themes/default/layouts/max.png"
-theme.layout_fullscreen = "/usr/share/awesome/themes/default/layouts/fullscreen.png"
-theme.layout_magnifier  = "/usr/share/awesome/themes/default/layouts/magnifier.png"
-theme.layout_floating   = "/usr/share/awesome/themes/default/layouts/floating.png"
+theme.layout_tile       = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layoutsy/tile.png"
+theme.layout_tileleft   = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/tileleft.png"
+theme.layout_tilebottom = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/tilebottom.png"
+theme.layout_tiletop    = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/tiletop.png"
+theme.layout_fairv      = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/fairv.png"
+theme.layout_fairh      = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/fairh.png"
+theme.layout_spiral     = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/spiral.png"
+theme.layout_dwindle    = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/dwindle.png"
+theme.layout_max        = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/max.png"
+theme.layout_fullscreen = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/fullscreen.png"
+theme.layout_magnifier  = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/magnifier.png"
+theme.layout_floating   = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/layouts/floating.png"
 
 -- Titlebar
 theme.titlebar_close_button_focus  = "/home/xha/Software/dotfiles/nolink/awesome/themes/andermatt/titlebar/close_focus.png"
