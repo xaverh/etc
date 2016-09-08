@@ -2,17 +2,24 @@
 
 # Installing stuff
 sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu xscreensaver conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick lightdm-gtk-greeter-settings accountsservice unrar obmenu
+sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu xscreensaver conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick lightdm-gtk-greeter-settings accountsservice unrar obmenu awesome
 
 mkdir ~/Software
 cd ~/Software
-wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/pkgbuilder.tar.gz" | tar xzf -
-cd pkgbuilder
+wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" | tar xzf -
+cd cower
 makepkg -si
 
 cd ~/Software
-pkgbuilder spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox sprunge
-pkgbuilder -F 2bwm-git
+cower -d spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox sprunge 2bwm-git
+cowerd spotify
+cowerd sgi-fonts
+cowerd urxvtcd
+cowerd numix-frost-themes
+cowerd conan
+cowerd dropbox
+cowerd sprunge
+cowerd 2bwm-git
 
 ## setting up antialiasing
 echo "Xft.dpi: 96
@@ -53,5 +60,7 @@ ln -s ~/Dropbox/Fonts/San\ Francisco ~/.fonts
 ln -s ~/Software/dotfiles/.local/share/thumbnailers ~/.local/share/
 rmdir .config/zathura
 ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
+ln -s ~/Software/dotfiles/.config/awesome ~/.config/
+ln -s ~/Software/dotfiles/.local/share/awesome ~/.local/share/
 
 chsh -s /bin/zsh
