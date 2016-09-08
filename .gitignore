@@ -8,7 +8,7 @@
 .local/share/applications/Hotline Miami.desktop
 .local/share/applications/Broforce.desktop
 .local/share/applications/Worms Reloaded.desktop
-etc/dwm/pkg/
-etc/dwm/src/
+nolink/dwm/pkg/
+nolink/dwm/src/
 *.tar.xz
 *.tar.gz
