@@ -1,0 +1,21 @@
+Ourico*selected.border: #676365
+Ourico*selected.fg: #d3d7cf
+Ourico*selected.bg: #3e4446
+Ourico*normal.border: #555753
+Ourico*normal.bg: #2e3436
+Ourico*normal.fg: #d3d7cf
+
+Ourico*deskname.bg: #3e4446
+Ourico*deskname.fg: #d3d7cf
+Ourico*deskname.border: #555753
+
+Ourico*font: Screen
+
+Ourico*height: 13
+Ourico*width: 0
+Ourico*borderpx: 0
+
+Ourico*showdesktop: 1
+Ourico*showtagbar: 0
+Ourico*focusonly: 0
+Ourico*bottom: 0
