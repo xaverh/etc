@@ -1,0 +1,22 @@
+#!/bin/sh
+
+run_once () {
+	pgrep $1 > /dev/null || ($@ &)
+}
+
+run_once compton --daemon
+~/.fehbg &
+xset b off &
+run_once pcmanfm --daemon-mode
+run_once urxvtd --fork --quiet --opendisplay
+run_once dunst
+
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
+	syndaemon -i 0.5 -t -K -R -d &
+fi
+
+while true; do
+   xsetroot -name "$( date +"%F %R %Z" )"
+   sleep 1m    # Update time every minute
+done &
