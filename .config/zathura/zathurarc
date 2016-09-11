@@ -1,2 +1,2 @@
 set font "Screen normal 8"
-set adjust_window width
+set adjust-open "width"
