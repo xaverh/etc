@@ -1,14 +1,27 @@
 #!/usr/bin/env bash
 
-# this is a simple config for herbstluftwm
-
 hc() {
     herbstclient "$@"
 }
 
-hc emit_hook reload
+run_once () {
+	pgrep $1 > /dev/null || ($@ &)
+}
 
+run_once compton --daemon
 ~/.fehbg &
+xset b off &
+run_once pcmanfm --daemon-mode
+run_once urxvtd --fork --quiet --opendisplay
+run_once dunst
+run_once tint2
+
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
+	syndaemon -i 0.5 -t -K -R -d &
+fi
+
+hc emit_hook reload
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -18,10 +31,12 @@ hc keyunbind --all
 # Mod=Mod1    # Use alt as the main modifier
 Mod=Mod4  # Use the super key as the main modifier
 
-hc keybind $Mod-Shift-q quit
+hc keybind $Mod-Control-Shift-q quit
 hc keybind $Mod-Shift-r reload
-hc keybind $Mod-Shift-c close
+hc keybind $Mod-q close
 hc keybind $Mod-Return spawn urxvtcd
+hc keybind $Mod-space spawn ~/Software/dotfiles/bin/dmenu_recent
+hc keybind $Mod-e spawn pcmanfm
 
 # basic movement
 # focusing clients
@@ -63,7 +78,7 @@ hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
 # tags
-tag_names=( {1..9} )
+tag_names=( {"i","ii","iii","iv","v","vi","vii","viii","ix","x"} )
 tag_keys=( {1..9} 0 )
 
 hc rename default "${tag_names[0]}" || true
@@ -88,7 +103,7 @@ hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
-hc keybind $Mod-space                                                           \
+hc keybind $Mod-Shift-space                                                           \
             or , and . compare tags.focus.curframe_wcount = 2                   \
                      . cycle_layout +1 vertical horizontal max vertical grid    \
                , cycle_layout +1
@@ -109,34 +124,27 @@ hc keybind $Mod-i jumpto urgent
 # theme
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
-hc set frame_border_active_color '#222222'
-hc set frame_border_normal_color '#101010'
-hc set frame_bg_normal_color '#565656'
-hc set frame_bg_active_color '#345F0C'
-hc set frame_border_width 1
-hc set always_show_frame 1
+hc set frame_border_width 0
 hc set frame_bg_transparent 1
-hc set frame_transparent_width 5
-hc set frame_gap 4
-
-hc attr theme.active.color '#9fbc00'
-hc attr theme.normal.color '#454545'
-hc attr theme.urgent.color orange
-hc attr theme.inner_width 1
-hc attr theme.inner_color black
-hc attr theme.border_width 3
-hc attr theme.floating.border_width 4
-hc attr theme.floating.outer_width 1
-hc attr theme.floating.outer_color black
-hc attr theme.active.inner_color '#3E4A00'
-hc attr theme.active.outer_color '#3E4A00'
-hc attr theme.background_color '#141414'
+hc set frame_transparent_width 0
+hc set frame_gap 0
+hc set always_show_frame 0
 
 hc set window_gap 10
 hc set frame_padding 0
 hc set smart_window_surroundings 0
-hc set smart_frame_surroundings 1
+hc set smart_frame_surroundings 0
 hc set mouse_recenter_gap 0
+hc set focus_follows_mouse 1
+
+hc attr theme.tiling.outer_color '#000000'
+hc attr theme.floating.outer_color '#000000'
+hc attr theme.active.outer_color '#000000'
+hc attr theme.active.color '#e1485a'
+hc attr theme.normal.color '#f5f5f5'
+hc attr theme.urgent.color '#c81a71'
+hc attr theme.outer_width 3
+hc attr theme.border_width 6
 
 # rules
 hc unrule -F
@@ -154,15 +162,21 @@ hc unlock
 
 herbstclient set tree_style '╾│ ├└╼─┐'
 
+# start floating on all tags
+for i in ${!tag_names[@]} ; do
+    hc floating "${tag_names[$i]}" on
+done
+
 # do multi monitor setup here, e.g.:
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
 # or simply:
 # hc detect_monitors
 
 # find the panel
-panel=~/.config/herbstluftwm/panel.sh
-[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+# panel=~/.config/herbstluftwm/panel
+# [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+# for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     # start it on each monitor
-    "$panel" $monitor &
-done
+    # "$panel" $monitor &
+# done
+
