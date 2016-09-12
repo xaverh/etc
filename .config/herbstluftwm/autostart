@@ -54,7 +54,7 @@ herbstclient keybind $Mod-Control-Up      resize up +$resizestep
 herbstclient keybind $Mod-Control-Right   resize right +$resizestep
 
 # tags
-tag_names=( {"pa","re","ci","vo","mu"} )
+tag_names=( {"www","code","music","read","etc"} )
 tag_keys=( {1..9} 0 )
 
 herbstclient rename default "${tag_names[0]}" || true
@@ -123,7 +123,7 @@ herbstclient attr theme.urgent.color '#c81a71'
 herbstclient attr theme.outer_width 3
 herbstclient attr theme.border_width 6
 
-herbstclient pad 0 22
+herbstclient pad 0 20
 
 # rules
 herbstclient unrule -F
