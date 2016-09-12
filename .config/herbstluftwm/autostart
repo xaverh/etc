@@ -135,6 +135,10 @@ herbstclient rule focus=on # normally focus new clients
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+herbstclient rule class="Code" tag="code"
+# the following two should be only one command somehow
+herbstclient rule class="Zathura" tag="read"
+herbstclient floating "read" on
 
 # unlock, just to be sure
 herbstclient unlock
