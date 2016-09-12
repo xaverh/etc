@@ -144,7 +144,6 @@ herbstclient unlock
 #     herbstclient floating "${tag_names[$i]}" on
 # done
 
-
 # do multi monitor setup here, e.g.:
 # herbstclient set_monitors 1280x1024+0+0 1280x1024+1280+0
 # or simply:
@@ -159,6 +158,3 @@ herbstclient unlock
 # done
 
 run_once tint2
-
-# killall lemonbar
-# run_once ~/.config/herbstluftwm/lemonbar.sh
