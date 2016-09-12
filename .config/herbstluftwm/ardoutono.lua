@@ -1,10 +1,10 @@
 -- Configuration
-local tag_here_focused = { before = "#", after = "", color = "#81D8D0", show = true}
+local tag_here_focused = { before = "", after = "", color = "#81D8D0", show = true}
 local tag_here_notfocused = { before = "", after = "", color = "#608b4e", show = true}
 local tag_nothere_focused = { before = "", after = "", color = "#608b4e", show = true}
 local tag_nothere_notfocused = { before = "", after = "", color = "#608b4e", show = true}
-local tag_empty = { before = "", after = "", color = "#608b4e", show = false }
-local tag_not_empty = {before = " ", after = "", color = false, show = true}
+local tag_empty = { before = "", after = "", color = "#adadad", show = true }
+local tag_not_empty = {before = "", after = "", color = false, show = true}
 local tag_urgent = {before = "", after = "", color = "#f89290", show = true}
 
 -- Items

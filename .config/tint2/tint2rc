@@ -34,7 +34,7 @@ strut_policy = follow_size
 
 # Taskbar
 taskbar_mode = multi_desktop
-taskbar_padding = 40 0 10
+taskbar_padding = 10 0 10
 taskbar_background_id = 0
 taskbar_active_background_id = 0
 taskbar_distribute_size = 1
@@ -113,4 +113,4 @@ execp_interval = 0
 execp_continuous = 1
 execp_command = herbstclient -i | lua /home/xha/Software/dotfiles/.config/herbstluftwm/ardoutono.lua
 execp_markup = 1
-execp_padding = 6 0
+execp_padding = 4 0
