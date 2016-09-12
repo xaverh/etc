@@ -70,7 +70,7 @@ systray_icon_size = 16
 systray_icon_asb = 50 0 -10
 
 # Clock
-time1_format = %H:%M
+time1_format = %a %-d. %-I:%M %P
 time1_font = Screen 9
 clock_font_color = #DCDCDC 100
 clock_padding = 10 6
@@ -113,4 +113,4 @@ execp_interval = 0
 execp_continuous = 1
 execp_command = herbstclient -i | lua /home/xha/Software/dotfiles/.config/herbstluftwm/ardoutono.lua
 execp_markup = 1
-execp_padding = 4 0
+execp_padding = 6 0
