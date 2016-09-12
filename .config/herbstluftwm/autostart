@@ -8,18 +8,9 @@ run_once () {
 	pgrep $1 > /dev/null || ($@ &)
 }
 
-run_once compton --daemon
-~/.fehbg &
-xset b off &
-run_once pcmanfm --daemon-mode
-run_once urxvtd --fork --quiet --opendisplay
-run_once dunst
-run_once tint2
-
-if egrep -iq 'touchpad' /proc/bus/input/devices; then
-	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
-	syndaemon -i 0.5 -t -K -R -d &
-fi
+# run_once tint2
+run_once nm-applet
+run_once volumeicon
 
 hc emit_hook reload
 
@@ -37,6 +28,7 @@ hc keybind $Mod-q close
 hc keybind $Mod-Return spawn urxvtcd
 hc keybind $Mod-space spawn ~/Software/dotfiles/bin/dmenu_recent
 hc keybind $Mod-e spawn pcmanfm
+hc keybind $Mod-l spawn slock
 
 # basic movement
 # focusing clients
@@ -44,20 +36,12 @@ hc keybind $Mod-Left  focus left
 hc keybind $Mod-Down  focus down
 hc keybind $Mod-Up    focus up
 hc keybind $Mod-Right focus right
-hc keybind $Mod-h     focus left
-hc keybind $Mod-j     focus down
-hc keybind $Mod-k     focus up
-hc keybind $Mod-l     focus right
 
 # moving clients
 hc keybind $Mod-Shift-Left  shift left
 hc keybind $Mod-Shift-Down  shift down
 hc keybind $Mod-Shift-Up    shift up
 hc keybind $Mod-Shift-Right shift right
-hc keybind $Mod-Shift-h     shift left
-hc keybind $Mod-Shift-j     shift down
-hc keybind $Mod-Shift-k     shift up
-hc keybind $Mod-Shift-l     shift right
 
 # splitting frames
 # create an empty frame at the specified direction
@@ -68,10 +52,6 @@ hc keybind $Mod-Control-space split explode
 
 # resizing frames
 resizestep=0.05
-hc keybind $Mod-Control-h       resize left +$resizestep
-hc keybind $Mod-Control-j       resize down +$resizestep
-hc keybind $Mod-Control-k       resize up +$resizestep
-hc keybind $Mod-Control-l       resize right +$resizestep
 hc keybind $Mod-Control-Left    resize left +$resizestep
 hc keybind $Mod-Control-Down    resize down +$resizestep
 hc keybind $Mod-Control-Up      resize up +$resizestep
@@ -160,12 +140,12 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 # unlock, just to be sure
 hc unlock
 
-herbstclient set tree_style '╾│ ├└╼─┐'
-
 # start floating on all tags
 for i in ${!tag_names[@]} ; do
     hc floating "${tag_names[$i]}" on
 done
+
+herbstclient set tree_style '╾│ ├└╼─┐'
 
 # do multi monitor setup here, e.g.:
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
@@ -173,10 +153,10 @@ done
 # hc detect_monitors
 
 # find the panel
-# panel=~/.config/herbstluftwm/panel
-# [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-# for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+panel=~/.config/herbstluftwm/panel.sh
+[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     # start it on each monitor
-    # "$panel" $monitor &
-# done
+    "$panel" $monitor &
+done
 
