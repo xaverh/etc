@@ -52,6 +52,7 @@ URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 
 ! blue
 *.color4:       #569cd6
+! die ist sehr nah an der Kollegin in Cyan
 *.color12:      #9cdcfe
 
 ! magenta
