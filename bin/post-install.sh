@@ -2,7 +2,9 @@
 
 # Installing stuff
 sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick lightdm-gtk-greeter-settings accountsservice unrar obmenu awesome slock xautolock
+sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick lightdm-gtk-greeter-settings accountsservice unrar obmenu awesome slock xautolock git herbstluftwm
+
+gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
 
 mkdir ~/Software
 cd ~/Software
@@ -10,9 +12,13 @@ wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" | tar x
 cd cower
 makepkg -si
 
+sudo cp ~/Software/dotfiles/bin/cowerd /usr/local/bin
+sudo chmod 755 /usr/local/bin/cowerd
+
 cd ~/Software
-cower -d spotify sgi-fonts urxvtcd numix-frost-themes conan dropbox sprunge 2bwm-git
-# TODO: cowerd
+cowerd python-patch
+cowerd python-monotonic
+cowerd python-fasteners
 cowerd spotify
 cowerd sgi-fonts
 cowerd urxvtcd
@@ -20,7 +26,6 @@ cowerd numix-frost-themes
 cowerd conan
 cowerd dropbox
 cowerd sprunge
-cowerd 2bwm-git
 
 ## setting up antialiasing
 echo "Xft.dpi: 96
@@ -35,7 +40,7 @@ gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
 
 # linking stuff
-rm -r ~/.config/Code/User
+rm -r ~/.config/Code/User || mkdir --parents ~/.config/Code
 ln -s ~/Dropbox/Visual\ Studio\ Code/User ~/.config/Code/User
 ln -s ~/Software/dotfiles/.clang-format ~
 ln -s ~/Software/dotfiles/.dircolors ~
@@ -62,5 +67,6 @@ ln -s ~/Software/dotfiles/.local/share/thumbnailers ~/.local/share/
 rmdir .config/zathura
 ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
 ln -s ~/Software/dotfiles/.xprofile ~
+ln -s ~/Software/dotfiles/.config/herbstluftwm/ ~/.config/
 
-chsh -s /bin/zsh
+chsh -s /usr/bin/zsh
