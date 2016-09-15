@@ -23,6 +23,7 @@ prepare() {
   patch -Np1 < ../dwm-6.1-push_no_master.diff
   patch -Np1 < ../dwm-6.1-save_floats_own.diff
   patch -Np1 < ../dwm-uselessgap-6.1.diff
+  patch -Np1 < ../dwm-6.1-focusonclick_xaverh.diff
 }
 
 build() {
