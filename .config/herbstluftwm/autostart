@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 
-run_once () {
-	pgrep $1 > /dev/null || ($@ &)
-}
-
-# run_once tint2
-run_once nm-applet
-run_once volumeicon
-
+herbstclient silent new_attr bool my_not_first_autostart
 herbstclient emit_hook reload
 
 # remove all existing keybindings
@@ -72,6 +65,8 @@ herbstclient keybind $Mod-period use_index +1 --skip-visible
 herbstclient keybind $Mod-comma  use_index -1 --skip-visible
 
 # layouting
+herbstclient set default_frame_layout 3
+herbstclient set_layout grid # The above doesn't change the root frame
 herbstclient keybind $Mod-r remove
 herbstclient keybind $Mod-s floating toggle
 herbstclient keybind $Mod-f fullscreen toggle
@@ -138,6 +133,7 @@ herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' m
 herbstclient rule class="Code" tag="code"
 # the following two should be only one command somehow
 herbstclient rule class="Zathura" tag="read"
+herbstclient rule class="Vlc" pseudotile=on
 herbstclient floating "read" on
 
 # unlock, just to be sure
@@ -161,4 +157,8 @@ herbstclient unlock
 #     "$panel" $monitor &
 # done
 
-run_once tint2
+if herbstclient silent new_attr bool my_not_first_autostart ; then
+    tint2 &
+    nm-applet &
+    volumeicon &
+fi
