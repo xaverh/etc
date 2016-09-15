@@ -28,10 +28,12 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "Vlc",      NULL,       NULL,       1 << 5,       0,           -1 }
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55f; /* factor of master area size [0.05f..0.95f] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
