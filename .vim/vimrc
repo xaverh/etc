@@ -107,25 +107,13 @@ if has('gui_running')
 	set lines=34
 endif
 set t_Co=256
-"let g:solarized_termcolors=256
-"let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
 "if has('gui_running')
 	"set background=light
 "endif
-"if !has('gui_running')
-	"let g:solarized_bold=1
-	"let g:solarized_underline=1
-	"let g:solarized_italic=1
-"endif
-"let g:solarized_visibility='low'
-"let g:solarized_hitrail=1
-colorscheme molokai
 " call togglebg#map("<F5>")
 if has("gui_gtk2")
 	set guifont=Ubuntu\ Mono\\,Source\ Code\ Pro\\,\ 12
-elseif has("gui_mac")
-	set guifont=Menlo:h11
 else
 	set guifont=Consolas:h10
 endif
@@ -135,11 +123,8 @@ if has("win32") || has("win64")
 	map <C-K> :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
 	imap <C-K> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
 else
-" temporary until Fedora has Clang 3.6
 	map <C-K> :%pyfile /usr/share/clang/clang-format.py<cr>
 	imap <C-K> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
-"	map <C-K> :%pyfile ~/.vim/clang-format.py<cr>
-"	imap <C-K> <c-o>:%pyfile ~/.vim/clang-format.py<cr>
 "	map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
 "	imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
 endif
@@ -163,9 +148,9 @@ let g:mapleader = ","
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-"map <M-PageDown> :tabnext<cr> 
-"map <M-PageUp> :tabprevious<cr> 
+map <leader>tm :tabmove
+"map <M-PageDown> :tabnext<cr>
+"map <M-PageUp> :tabprevious<cr>
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
