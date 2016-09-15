@@ -29,7 +29,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Vlc",      NULL,       NULL,       1 << 5,       0,           -1 }
+	{ "Vlc",      NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 }
 };
 
@@ -62,9 +62,9 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = {"/home/xha/Software/dotfiles/bin/dmenu_recent", NULL};
 static const char *termcmd[]  = { "urxvtcd", NULL };
 static const char *filemanagercmd[]  = { "pcmanfm", NULL };
-static const char *playnextcmd[]  = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.Next",  "||", "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.vlc", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.Next", NULL };
-static const char *playpreviouscmd[]  = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.Previous",  "||", "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.vlc", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.Previous", NULL };
-static const char *playpausecmd[]  = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.PlayPause",  "||", "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.vlc", "/org/mpris/MediaPlayer2",  "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
+static const char *playpausecmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","PlayPause", NULL};
+static const char *playnextcmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Next", NULL};
+static const char *playpreviouscmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Previous", NULL};
 static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%+", "-q", NULL };
 static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
 static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
