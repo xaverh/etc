@@ -23,14 +23,14 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-run_once compton --daemon
+compton --daemon &
 ~/.fehbg &
 xset b off &
 xset s off &
 xset -dpms &
 
-pcmanfm --daemon-mode
-urxvtd --fork --quiet --opendisplay
+pcmanfm --daemon-mode &
+urxvtd --fork --quiet --opendisplay &
 dunst &
 dropbox &
 xautolock -time 10 -locker slock &
