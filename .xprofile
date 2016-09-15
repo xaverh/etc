@@ -7,6 +7,9 @@ run_once () {
 run_once compton --daemon
 ~/.fehbg &
 xset b off &
+xset s off &
+xset -dpms
+
 run_once pcmanfm --daemon-mode
 run_once urxvtd --fork --quiet --opendisplay
 run_once dunst

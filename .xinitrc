@@ -23,7 +23,27 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-# start some nice programs
+run_once compton --daemon
+~/.fehbg &
+xset b off &
+xset s off &
+xset -dpms &
+
+pcmanfm --daemon-mode
+urxvtd --fork --quiet --opendisplay
+dunst &
+dropbox &
+xautolock -time 10 -locker slock &
+
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
+	syndaemon -i 0.5 -t -K -R -d &
+fi
+
+while true; do
+   xsetroot -name "$( date +"%F %R %Z" )"
+   sleep 1m    # Update time every minute
+done &
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
@@ -32,4 +52,4 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-exec herbstluftwm
+exec dwm

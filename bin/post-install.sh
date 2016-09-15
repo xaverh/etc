@@ -2,7 +2,7 @@
 
 # Installing stuff
 sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git
+sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang pcmanfm-gtk3 xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs
 
 gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
 
@@ -26,6 +26,11 @@ cowerd numix-frost-themes
 cowerd conan
 cowerd dropbox
 cowerd sprunge
+
+sudo abs
+cd ~/Software/dotfiles/nolink/dwm
+updpkgsums
+makepkg -sfi
 
 ## setting up antialiasing
 echo "Xft.dpi: 96
