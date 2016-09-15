@@ -2,25 +2,23 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"HelveticaNeue:size=11",
-	"NotoEmoji:size=11"
+	"monospace:size=10"
 };
-static const char dmenufont[]       = "HelveticaNeue:size=11";
-static const char normbordercolor[] = "#333333";
-static const char normbgcolor[]     = "#1e1e1e";
-static const char normfgcolor[]     = "#d4d4d4";
-static const char selbordercolor[]  = "#d4d4d4";
-static const char selbgcolor[]      = "#d4d4d4";
-static const char selfgcolor[]      = "#1e1e1e";
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int snap      = 10;       /* snap pixel */
+static const char dmenufont[]       = "monospace:size=10";
+static const char normbordercolor[] = "#444444";
+static const char normbgcolor[]     = "#222222";
+static const char normfgcolor[]     = "#bbbbbb";
+static const char selbordercolor[]  = "#005577";
+static const char selbgcolor[]      = "#005577";
+static const char selfgcolor[]      = "#eeeeee";
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int focusonwheelscroll = 0;        /* 0 means using the scroll wheel on a window will not change focus */
-static const unsigned int gappx     = 15;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const int focusonwheelscroll = 0;        /* False means using the scroll wheel on a window will not change focus */
 
 /* tagging */
-static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "🍺" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -28,26 +26,24 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Vlc",      NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 }
+	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55f; /* factor of master area size [0.05f..0.95f] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "🔪",      tile },    /* first entry is default */
-	{ "☁️",      NULL },    /* no layout function means floating behavior */
-	{ "👓",      monocle },
+	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[M]",      monocle },
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -59,28 +55,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenucmd[] = {"/home/xha/Software/dotfiles/bin/dmenu_recent", NULL};
-static const char *termcmd[]  = { "urxvtcd", NULL };
-static const char *filemanagercmd[]  = { "pcmanfm", NULL };
-static const char *playpausecmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","PlayPause", NULL};
-static const char *playnextcmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Next", NULL};
-static const char *playpreviouscmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","Previous", NULL};
-static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%+", "-q", NULL };
-static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
-static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_e,      spawn,          {.v = filemanagercmd } },
-	{ 0,                            0x1008ff13,spawn,          {.v = raisevolumecmd } },
-	{ 0,                            0x1008ff11,spawn,          {.v = lowervolumecmd } },
-	{ 0,                            0x1008ff12,spawn,          {.v = mutecmd } },
-	{ 0,                            0x1008ff17,spawn,          {.v = playnextcmd } },
-	{ 0,                            0x1008ff14,spawn,          {.v = playpausecmd } },
-	{ 0,                            0x1008ff16,spawn,          {.v = playpreviouscmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -88,16 +69,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
-    { MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
+	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_q,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefloating, {0} },
+	{ MODKEY,                       XK_space,  setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -110,9 +89,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
-	// TAGKEYS(                        XK_7,                      6)
-	// TAGKEYS(                        XK_8,                      7)
-	// TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_7,                      6)
+	TAGKEYS(                        XK_8,                      7)
+	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
