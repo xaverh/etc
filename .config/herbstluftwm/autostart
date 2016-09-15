@@ -16,7 +16,7 @@ herbstclient keybind $Mod-Shift-r reload
 herbstclient keybind $Mod-q close
 herbstclient keybind $Mod-Return spawn urxvtcd
 herbstclient keybind $Mod-space spawn ~/Software/dotfiles/bin/dmenu_recent
-herbstclient keybind $Mod-e spawn pcmanfm
+herbstclient keybind $Mod-e spawn thunar
 herbstclient keybind $Mod-l spawn slock
 
 # basic movement

@@ -8,10 +8,10 @@
 				</command>
 			</action>
 		</item>
-		<item label="PCManFM">
+		<item label="Thunar">
 			<action name="Execute">
 				<command>
-					pcmanfm
+					thunar
 				</command>
 			</action>
 		</item>

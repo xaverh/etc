@@ -29,7 +29,7 @@ xset b off &
 xset s off &
 xset -dpms &
 
-pcmanfm --daemon-mode &
+thunar --daemon &
 urxvtd --fork --quiet --opendisplay &
 dunst &
 dropbox &

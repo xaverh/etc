@@ -10,7 +10,7 @@ xset b off &
 xset s off &
 xset -dpms
 
-run_once pcmanfm --daemon-mode
+run_once thunar --daemon
 run_once urxvtd --fork --quiet --opendisplay
 run_once dunst
 run_once dropbox
