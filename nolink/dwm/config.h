@@ -15,10 +15,10 @@ static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 10; /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 20; /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
-static const char *tags[] = { "pa","re","ci","vo","mu","xa","ze","bi","so", "dekto" };
+static const char *tags[] = { "pa","re","ci","vo","mu","xa","ze","bi","so", "Penis" };
 
 static const Rule rules[] = {
 	/* xprop(1):
