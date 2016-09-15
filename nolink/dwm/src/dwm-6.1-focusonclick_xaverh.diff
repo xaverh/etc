@@ -1,19 +1,19 @@
-diff --git a/nolink/dwm/src/dwm-6.1/config.def.h b/nolink/dwm/src/dwm-6.1/config.def.h
+diff --git a/config.def.h b/config.def.h
 index 7054c06..4ef71b7 100644
---- a/nolink/dwm/src/dwm-6.1/config.def.h
-+++ b/nolink/dwm/src/dwm-6.1/config.def.h
+--- a/config.def.h
++++ b/config.def.h
 @@ -15,6 +15,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
  static const unsigned int snap      = 32;       /* snap pixel */
  static const int showbar            = 1;        /* 0 means no bar */
  static const int topbar             = 1;        /* 0 means bottom bar */
 +static const int focusonwheelscroll = 0;        /* False means using the scroll wheel on a window will not change focus */
- 
+
  /* tagging */
  static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-diff --git a/nolink/dwm/src/dwm-6.1/dwm.c b/nolink/dwm/src/dwm-6.1/dwm.c
+diff --git a/dwm.c b/dwm.c
 index 2401ac2..c2da25f 100644
---- a/nolink/dwm/src/dwm-6.1/dwm.c
-+++ b/nolink/dwm/src/dwm-6.1/dwm.c
+--- a/dwm.c
++++ b/dwm.c
 @@ -446,7 +446,9 @@ buttonpress(XEvent *e)
  		else
  			click = ClkWinTitle;
@@ -37,4 +37,4 @@ index 2401ac2..c2da25f 100644
 +			            BUTTONMASK, GrabModeSync, GrabModeSync, None, None);
  	}
  }
- 
+
