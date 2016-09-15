@@ -2,10 +2,10 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"HelveticaNeue:size=10",
-	"NotoColorEmoji:size=10"
+	"HelveticaNeue:size=11",
+	"NotoEmoji:size=11"
 };
-static const char dmenufont[]       = "Screen:size=10";
+static const char dmenufont[]       = "HelveticaNeue:size=11";
 static const char normbordercolor[] = "#333333";
 static const char normbgcolor[]     = "#1e1e1e";
 static const char normfgcolor[]     = "#d4d4d4";
@@ -16,10 +16,10 @@ static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 10; /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 15; /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
-static const char *tags[] = { "🍺","re","ci","vo","mu","xa","ze","bi","so", "dekto" };
+static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "🍺" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,9 +37,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "🔪",      tile },    /* first entry is default */
+	{ "☁️",      NULL },    /* no layout function means floating behavior */
+	{ "👓",      monocle },
 };
 
 /* key definitions */
@@ -92,9 +92,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+	// TAGKEYS(                        XK_7,                      6)
+	// TAGKEYS(                        XK_8,                      7)
+	// TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
