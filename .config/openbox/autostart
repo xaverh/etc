@@ -1,4 +1,4 @@
-pcmanfm --daemon-mode &
+thunar --daemon &
 compton --daemon &
 urxvtd --fork --quiet --opendisplay &
 dunst &

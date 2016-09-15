@@ -22,7 +22,8 @@ prepare() {
   cp $srcdir/config.h config.h
   patch -Np1 < ../dwm-6.1-push_no_master.diff
   patch -Np1 < ../dwm-6.1-save_floats_own.diff
-  patch -Np1 < ../dwm-uselessgap-6.1.diff
+  patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
+  patch -Np1 < ../dwm-fancybar-6.1.diff
 }
 
 build() {
@@ -39,5 +40,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         '3f6ff89e86c7a212bff2a0efe9cc3ef7'
+         'd140a65d5a8ba964d93365b7bf75e883'
          '939f403a71b6e85261d09fc3412269ee')
