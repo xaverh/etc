@@ -54,7 +54,7 @@ task_iconified_background_id = 0
 urgent_nb_of_blink = 100
 
 # Fonts
-task_font = Screen 8
+task_font = HelveticaNeue 9
 task_font_color = #308C9D 100
 task_active_font_color = #8BD990 100
 task_urgent_font_color = #FFFFFF 100
@@ -71,7 +71,7 @@ systray_icon_asb = 50 0 -10
 
 # Clock
 time1_format = %a %-d. %-I:%M %P
-time1_font = Screen 9
+time1_font = HelveticaNeue 9
 clock_font_color = #DCDCDC 100
 clock_padding = 10 6
 clock_background_id = 0
@@ -86,7 +86,7 @@ tooltip_padding = 2 2
 tooltip_show_timeout = 0.0
 tooltip_hide_timeout = 0.0
 tooltip_background_id = 2
-tooltip_font = Screen 9
+tooltip_font = HelveticaNeue 9
 tooltip_font_color = #FFFFFF 100
 
 # Mouse
@@ -100,15 +100,15 @@ battery = 1
 battery_low_status = 20
 battery_low_cmd = notify-send "battery low"
 battery_hide = 100
-bat1_font = Screen 9
-bat2_font = Screen 9
+bat1_font = HelveticaNeue 9
+bat2_font = HelveticaNeue 9
 battery_font_color = #B5B5B5 100
 battery_padding = 0 0
 battery_background_id = 0
 
 # Workspace switcher
 execp = new
-execp_font = Screen 8
+execp_font = HelveticaNeue 9
 execp_interval = 0
 execp_continuous = 1
 execp_command = herbstclient -i | lua /home/xha/Software/dotfiles/.config/herbstluftwm/ardoutono.lua
