@@ -9,6 +9,10 @@
 .local/share/applications/Broforce.desktop
 .local/share/applications/Worms Reloaded.desktop
 nolink/dwm/pkg/
-nolink/dwm/src/
+nolink/dwm/src/dwm-6.1/dwm
+nolink/dwm/src/dwm-6.1/dwm.c.orig
+nolink/dwm/src/dwm-6.1/config.h
+nolink/dwm/src/config.h
+*.o
 *.tar.xz
 *.tar.gz
