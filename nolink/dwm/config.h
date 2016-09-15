@@ -2,7 +2,8 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*"
+	"HelveticaNeue:size=10",
+	"NotoColorEmoji:size=10"
 };
 static const char dmenufont[]       = "Screen:size=10";
 static const char normbordercolor[] = "#333333";
@@ -18,7 +19,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const unsigned int gappx     = 10; /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
-static const char *tags[] = { "pa","re","ci","vo","mu","xa","ze","bi","so", "dekto" };
+static const char *tags[] = { "🍺","re","ci","vo","mu","xa","ze","bi","so", "dekto" };
 
 static const Rule rules[] = {
 	/* xprop(1):
