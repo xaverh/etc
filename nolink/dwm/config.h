@@ -2,7 +2,7 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"Screen:size=10"
+	"-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*"
 };
 static const char dmenufont[]       = "Screen:size=10";
 static const char normbordercolor[] = "#333333";
