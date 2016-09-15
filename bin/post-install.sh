@@ -73,5 +73,6 @@ rmdir .config/zathura
 ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
 ln -s ~/Software/dotfiles/.xprofile ~
 ln -s ~/Software/dotfiles/.config/herbstluftwm/ ~/.config/
+ln -s ~/Software/dotfiles/.vim ~
 
 chsh -s /usr/bin/zsh
