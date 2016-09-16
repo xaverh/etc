@@ -10,7 +10,7 @@
 +#define HEIGHT(X)               ((X)->h + 2 * (X)->bw + gappx)
  #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
  #define TEXTW(X)                (drw_text(drw, 0, 0, 0, 0, (X), 0) + drw->fonts[0]->h)
- 
+
 @@ -1293,12 +1293,36 @@ void
  resizeclient(Client *c, int x, int y, int w, int h)
  {
@@ -19,7 +19,7 @@
 +	unsigned int gapoffset;
 +	unsigned int gapincr;
 +	Client *nbc;
- 
+
 -	c->oldx = c->x; c->x = wc.x = x;
 -	c->oldy = c->y; c->y = wc.y = y;
 -	c->oldw = c->w; c->w = wc.width = w;
@@ -33,8 +33,8 @@
 +	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
 +		gapincr = gapoffset = 0;
 +	} else {
-+		/* Remove border and gap if layout is monocle or only one client */
-+		if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) {
++		/* Remove border and gap if layout is monocle */
++		if (selmon->lt[selmon->sellt]->arrange == monocle) {
 +			gapoffset = 0;
 +			gapincr = -2 * borderpx;
 +			wc.border_width = 0;

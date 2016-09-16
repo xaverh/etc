@@ -92,33 +92,34 @@ preexec() {
 
 # A case for a suffix alias?
 sx simple-extract () {
-if [[ -f $1 ]]
-then
-	case $1 in
-	*.7z)		7z x $1			;;
-	*.7z.001)	7z x $1			;;
-	*.lzma)		unlzma $1		;;
-	*.tar.bz2)	tar -xvjf $1		;;
-	*.tar.gz)	tar -xvzf $1		;;
-	*.rar)		unrar x $1		;;
-	*.deb)		ar -x $1		;;
-	*.bz2)		bzip2 -d $1		;;
-	*.lzh)		lha x $1		;;
-	*.gz)		gunzip -d --verbose $1  ;;
-	*.tar)		tar -xvf $1		;;
-	*.tgz)		tar -xvzf $1		;;
-	*.tbz2)		tar -xvjf $1		;;
-	*.txz)		tar -xvJf $1		;;
-	*.tar.xz)	tar -xvJf $1		;;
-	*.xz)		7z x $1			;;
-	*.zip)		unzip $1		;;
-	*.Z)		uncompress $1		;;
-	*)		echo "'$1' Error. This is no compression type \
-			      known to simple-extract." ;;
-	esac
-else
-	echo "'$1' is not a valid file"
-fi
+	for f in "$@"; do
+		if [[ -f $f ]]; then
+			case $f in
+				*.7z)		7z x $f						;;
+				*.7z.001)	7z x $f						;;
+				*.lzma)		unlzma $f					;;
+				*.tar.bz2)	tar -xvjf $f				;;
+				*.tar.gz)	tar -xvzf $f				;;
+				*.rar)		unrar x $f					;;
+				*.deb)		ar -x $f					;;
+				*.bz2)		bzip2 -d $f					;;
+				*.lzh)		lha x $f					;;
+				*.gz)		gunzip -d --verbose $f  	;;
+				*.tar)		tar -xvf $f					;;
+				*.tgz)		tar -xvzf $f				;;
+				*.tbz2)		tar -xvjf $f				;;
+				*.txz)		tar -xvJf $f				;;
+				*.tar.xz)	tar -xvJf $f				;;
+				*.xz)		7z x $f						;;
+				*.zip)		unzip $f					;;
+				*.Z)		uncompress $f				;;
+				*)			echo "'$f' Error. This is no compression type \
+			      				known to simple-extract." ;;
+			esac
+		else
+			echo "'$f' is not a valid file"
+		fi
+	done
 }
 
 Set_my_git () {

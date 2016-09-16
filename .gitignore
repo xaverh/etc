@@ -4,14 +4,12 @@
 .local/share/applications/Sid Meier's Civilization Beyond Earth.desktop
 .local/share/applications/Sid Meier's Civilization V.desktop
 .local/share/applications/Tropico 5.desktop
-.local/share/applications/userapp-Firefox-M321MY.desktop
+.local/share/applications/userapp-Firefox-*.desktop
 .local/share/applications/Hotline Miami.desktop
 .local/share/applications/Broforce.desktop
 .local/share/applications/Worms Reloaded.desktop
 nolink/dwm/pkg/
-nolink/dwm/src/dwm-6.1/dwm
-nolink/dwm/src/dwm-6.1/dwm.c.orig
-nolink/dwm/src/dwm-6.1/config.h
+nolink/dwm/src/dwm-6.1/*
 nolink/dwm/src/config.h
 *.o
 *.tar.xz

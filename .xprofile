@@ -7,7 +7,10 @@ run_once () {
 run_once compton --daemon
 ~/.fehbg &
 xset b off &
-run_once pcmanfm --daemon-mode
+xset s off &
+xset -dpms
+
+run_once thunar --daemon
 run_once urxvtd --fork --quiet --opendisplay
 run_once dunst
 run_once dropbox
