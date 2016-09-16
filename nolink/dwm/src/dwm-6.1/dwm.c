@@ -60,7 +60,7 @@
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel, SchemeLast }; /* color schemes */
-enum { NetSupported, NetWMName, NetWMState,
+enum { NetSupported, NetWMName, NetWMState, NetSupportingWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
@@ -494,6 +494,7 @@ cleanup(void)
 	XSync(dpy, False);
 	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
 	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+	XDeleteProperty(dpy, root, netatom[NetSupportingWMCheck]);
 }
 
 void
@@ -708,13 +709,15 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, xx, w, dx;
-	unsigned int i, occ = 0, urg = 0;
+	int x, xx, w, dx, tw, mw;
+	unsigned int i, occ = 0, urg = 0, n = 0, extra = 0;
 	Client *c;
 
 	dx = (drw->fonts[0]->ascent + drw->fonts[0]->descent + 2) / 4;
 
 	for (c = m->clients; c; c = c->next) {
+		if (ISVISIBLE(c))
+			n++;
 		occ |= c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
@@ -745,14 +748,40 @@ drawbar(Monitor *m)
 		x = m->ww;
 	if ((w = x - xx) > bh) {
 		x = xx;
-		if (m->sel) {
-			drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, m->sel->name, 0);
-			drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
-		} else {
-			drw_setscheme(drw, &scheme[SchemeNorm]);
-			drw_rect(drw, x, 0, w, bh, 1, 0, 1);
+		if (n > 0) {
+			tw = m->sel->name ? TEXTW(m->sel->name) : 0;
+			mw = (tw >= w || n == 1) ? 0 : (w - tw) / (n - 1);
+
+			i = 0;
+			for (c = m->clients; c; c = c->next) {
+				if (!ISVISIBLE(c) || c == m->sel)
+					continue;
+				tw = TEXTW(c->name);
+				if(tw < mw)
+					extra += (mw - tw);
+				else
+					i++;
+			}
+			if (i > 0)
+				mw += extra / i;
+
+			for (c = m->clients; c; c = c->next) {
+				if (!ISVISIBLE(c))
+					continue;
+				xx = x + w;
+				tw = TEXTW(c->name);
+				w = MIN(m->sel == c ? w : mw, tw);
+
+				drw_setscheme(drw, m->sel == c ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
+				drw_text(drw, x, 0, w, bh, c->name, 0);
+				drw_rect(drw, x + 1, 1, dx, dx, c->isfixed, c->isfloating, 0);
+
+				x += w;
+				w = xx - x;
+			}
 		}
+		drw_setscheme(drw, &scheme[SchemeNorm]);
+		drw_rect(drw, x, 0, w, bh, 1, 0, 1);
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 }
@@ -1356,8 +1385,8 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
 		gapincr = gapoffset = 0;
 	} else {
-		/* Remove border and gap if layout is monocle or only one client */
-		if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) {
+		/* Remove border and gap if layout is monocle */
+		if (selmon->lt[selmon->sellt]->arrange == monocle) {
 			gapoffset = 0;
 			gapincr = -2 * borderpx;
 			wc.border_width = 0;
@@ -1642,6 +1671,7 @@ setup(void)
 	wmatom[WMTakeFocus] = XInternAtom(dpy, "WM_TAKE_FOCUS", False);
 	netatom[NetActiveWindow] = XInternAtom(dpy, "_NET_ACTIVE_WINDOW", False);
 	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
+	netatom[NetSupportingWMCheck] = XInternAtom(dpy, "_NET_SUPPORTING_WM_CHECK", False);
 	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
 	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
@@ -1666,6 +1696,14 @@ setup(void)
 	XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32,
 			PropModeReplace, (unsigned char *) netatom, NetLast);
 	XDeleteProperty(dpy, root, netatom[NetClientList]);
+	/* EWMH support for _NET_SUPPORTING_WM_CHECK */
+	XChangeProperty(dpy, root, netatom[NetSupportingWMCheck], XA_WINDOW,
+	                32, PropModeReplace, (unsigned char *)&mons->barwin, 1);
+	XChangeProperty(dpy, mons->barwin, netatom[NetSupportingWMCheck], XA_WINDOW,
+	                32, PropModeReplace, (unsigned char *)&mons->barwin, 1);
+	XChangeProperty(dpy, mons->barwin, netatom[NetWMName],
+	                XInternAtom(dpy, "UTF8_STRING", False), 8,
+	                PropModeReplace, (unsigned char *)"dwm", strlen("dwm"));
 	/* select for events */
 	wa.cursor = cursor[CurNormal]->cursor;
 	wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask|ButtonPressMask|PointerMotionMask
