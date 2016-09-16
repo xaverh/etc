@@ -20,6 +20,7 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 prepare() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
+  patch -Np1 < ../dwm-6.1-firefox-fullscreen_xaverh.diff
   patch -Np1 < ../dwm-6.1-push_no_master.diff
   patch -Np1 < ../dwm-6.1-save_floats_own.diff
   patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
@@ -40,5 +41,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         'd140a65d5a8ba964d93365b7bf75e883'
+         'bfce9324e2f40540197a718db6f6b464'
          '939f403a71b6e85261d09fc3412269ee')
