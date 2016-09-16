@@ -64,7 +64,7 @@ ln -s ~/Software/dotfiles/.local/share/applications ~/.local/share/
 rm -r ~/.config/fontconfig
 ln -s ~/Software/dotfiles/.config/fontconfig ~/.config/
 ln -s ~/Software/dotfiles/.config/dunst ~/.config/
-ln -s ~/Software/dotfiles/.compton.conf ~
+ln -s ~/Software/dotfiles/.config/compton.conf ~/.config/
 mkdir ~/.fonts
 ln -s ~/Dropbox/Fonts/Menlo ~/.fonts
 ln -s ~/Dropbox/Fonts/San\ Francisco ~/.fonts
