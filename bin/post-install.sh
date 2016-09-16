@@ -2,7 +2,7 @@
 
 # Installing stuff
 sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm vlc qt4 firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload thunar thunar-archive-plugin
+sudo pacman -Sq --noconfirm firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch viewnior jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload thunar thunar-archive-plugin exfat-utils tumbler ffmpegthumbnailer raw-thumbnailer mpv lib32-libpulse
 
 gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
 
