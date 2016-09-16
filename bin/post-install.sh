@@ -63,4 +63,6 @@ rmdir .config/zathura
 ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
 ln -s ~/Software/dotfiles/.xprofile ~
 
+timedatectl set-ntp 1
+
 chsh -s /bin/zsh
