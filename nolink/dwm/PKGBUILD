@@ -25,6 +25,8 @@ prepare() {
   patch -Np1 < ../dwm-6.1-save_floats_own.diff
   patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
   # patch -Np1 < ../dwm-fancybar-6.1.diff
+  patch -Np1 < ../dwm-6.1-monocle-symbol_xaverh.diff
+  patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
 }
 
 build() {
@@ -41,5 +43,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         'cd6682b99e3b998f33325043cd46f499'
+         '71ad9d20989c264d7248010b2f593115'
          '939f403a71b6e85261d09fc3412269ee')
