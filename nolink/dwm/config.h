@@ -5,18 +5,18 @@ static const char *fonts[] = {
 	"HelveticaNeue:size=10",
 	"NotoEmoji:size=11"
 };
-static const char dmenufont[]       = "HelveticaNeue:size=11";
+static const char dmenufont[]       = "HelveticaNeue:size=10";
 static const char normbordercolor[] = "#333333";
 static const char normbgcolor[]     = "#1e1e1e";
 static const char normfgcolor[]     = "#d4d4d4";
-static const char selbordercolor[]  = "#81d8d0";
+static const char selbordercolor[]  = "#696969";
 static const char selbgcolor[]      = "#1e1e1e";
-static const char selfgcolor[]      = "#8b4e86";
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const char selfgcolor[]      = "#569cd6";
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "🍺" };
@@ -28,8 +28,9 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 }
+	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 },
+	{ "Spotify",  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 }
 };
 
 /* layout(s) */
@@ -57,8 +58,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenucmd[] = {"/home/xha/Software/dotfiles/bin/dmenu_recent", NULL};
+static const char *dmenucmd[] = { "/home/xha/Software/dotfiles/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "urxvtcd", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"/home/xha/Software/dotfiles/bin/hey_dj.sh","PlayPause", NULL};

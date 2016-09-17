@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
 if [ -d "$cachedir" ]; then
@@ -23,7 +23,7 @@ awk -v histfile=$historyfile '
 			x[$0]=1
 		}
 	} !x[$0]++ ' "$cache" \
-	| dmenu -f -i -fn 'HelveticaNeue-11' "$@" \
+	| dmenu -f -i "$@" \
 	| awk -v histfile=$historyfile '
 		BEGIN {
 			FS=OFS="\t"
