@@ -19,7 +19,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
-static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "❓", "🍺" };
+static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -30,6 +30,7 @@ static const Rule rules[] = {
 	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 },
 	{ "Spotify",  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Steam",    NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 }
 };
 
@@ -109,8 +110,17 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
 	TAGKEYS(                        XK_7,                      6)
-	// TAGKEYS(                        XK_8,                      7)
-	// TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_8,                      7)
+	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        0xffb1,                    0)
+	TAGKEYS(                        0xffb2,                    1)
+	TAGKEYS(                        0xffb3,                    2)
+	TAGKEYS(                        0xffb4,                    3)
+	TAGKEYS(                        0xffb5,                    4)
+	TAGKEYS(                        0xffb6,                    5)
+	TAGKEYS(                        0xffb7,                    6)
+	TAGKEYS(                        0xffb8,                    7)
+	TAGKEYS(                        0xffb9,                    8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
