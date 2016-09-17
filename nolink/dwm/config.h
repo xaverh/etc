@@ -82,7 +82,7 @@ static Key keys[] = {
 	{ 0,                            0x1008ff12,spawn,          {.v = mutecmd } },
 	{ MODKEY,                       0xffab,    spawn,          {.v = raisevolumecmd } },
 	{ MODKEY,                       0xffad,    spawn,          {.v = lowervolumecmd } },
-	{ MODKEY,                       0xffac,    spawn,          {.v = mutecmd } },
+	{ MODKEY,                       0xffaa,    spawn,          {.v = mutecmd } },
 	{ 0,                            0x1008ff17,spawn,          {.v = playnextcmd } },
 	{ 0,                            0x1008ff14,spawn,          {.v = playpausecmd } },
 	{ 0,                            0x1008ff16,spawn,          {.v = playpreviouscmd } },
@@ -121,15 +121,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	TAGKEYS(                        0xffb1,                    0)
-	TAGKEYS(                        0xffb2,                    1)
-	TAGKEYS(                        0xffb3,                    2)
-	TAGKEYS(                        0xffb4,                    3)
-	TAGKEYS(                        0xffb5,                    4)
-	TAGKEYS(                        0xffb6,                    5)
-	TAGKEYS(                        0xffb7,                    6)
-	TAGKEYS(                        0xffb8,                    7)
-	TAGKEYS(                        0xffb9,                    8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
