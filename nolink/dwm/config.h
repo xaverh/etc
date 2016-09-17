@@ -88,7 +88,7 @@ static Key keys[] = {
 	{ 0,                            0x1008ff16,spawn,          {.v = playpreviouscmd } },
 	{ MODKEY,                       0xff56,    spawn,          {.v = mpdnextcmd } },
 	{ MODKEY,                       0xff55,    spawn,          {.v = mpdpausecmd } },
-	{ MODKEY,                       0xff13,    spawn,          {.v = mpdpreviouscmd } },
+	{ MODKEY,                       0xff57,    spawn,          {.v = mpdpreviouscmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
