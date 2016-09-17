@@ -23,7 +23,7 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-compton --daemon &
+compton --config ~/.config/compton.conf --daemon &
 ~/.fehbg &
 xset b off &
 xset s off &
@@ -34,6 +34,7 @@ urxvtd --fork --quiet --opendisplay &
 dunst &
 dropbox &
 xautolock -time 10 -locker slock &
+mpd
 
 if egrep -iq 'touchpad' /proc/bus/input/devices; then
 	synclient VertEdgeScroll=0 HorizEdgeScroll=0 TapButton1=1 VertScrollDelta=-45 HorizScrollDelta=-45 PalmDetect=1 2>/dev/null
