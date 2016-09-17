@@ -1,0 +1,32 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"windows": {
+		"command": "cmd",
+		"isShellCommand": false,
+		"args": [
+			"/C",
+			"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall",
+			"amd64",
+			"&",
+			"cl",
+			"/Ox",
+			"/TP",
+			"/EHsc",
+			"/Fe${fileBasename}.exe",
+			"${file}"
+		],
+		"showOutput": "always"
+	},
+	"linux": {
+		"command": "clang++",
+		"isShellCommand": true,
+		"args": [
+			"-std=c++14",
+			"-O3",
+			"-o ${fileBasename}"
+		],
+		"showOutput": "always"
+	}
+}
