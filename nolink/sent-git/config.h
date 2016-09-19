@@ -9,8 +9,10 @@ static char *fontfallbacks[] = {
 #define NUMFONTSCALES 42
 #define FONTSZ(x) ((int)(10.0 * powf(1.1288, (x)))) /* x in [0, NUMFONTSCALES-1] */
 
-static const char *fgcol = "#000000";
-static const char *bgcol = "#FFFFFF";
+static const char *colors[] = {
+	"#373330", /* foreground color */
+	"#fbf1dd", /* background color */
+};
 
 static const float linespacing = 1.4;
 
@@ -43,4 +45,12 @@ static Shortcut shortcuts[] = {
 	{ XK_Up,          advance,        {.i = -1} },
 	{ XK_Next,        advance,        {.i = +1} },
 	{ XK_Prior,       advance,        {.i = -1} },
+	{ XK_n,           advance,        {.i = +1} },
+	{ XK_p,           advance,        {.i = -1} },
+};
+
+static Filter filters[] = {
+	{ "\\.ff$", "cat" },
+	{ "\\.ff.bz2$", "bunzip2" },
+	{ "\\.[a-z0-9]+$", "2ff" },
 };
