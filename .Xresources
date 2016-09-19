@@ -25,8 +25,6 @@ URxvt*letterSpace: -1.5
 ! URxvt*shading: 15
 
 *scrollColor:        	#FFFFFF
-*highlightColor:     	#A4CDEF
-*highlightTextColor: 	#1e1e1e
 *cursorBlink:			1
 
 !! special
@@ -61,30 +59,23 @@ URxvt*letterSpace: -1.5
 
 ! Dracula theme
 ! special
-*.foreground:   #ffffff
-*.background:   #1e1f29
-*.cursorColor:  #ffffff
-! black
-*.color0:       #000000
-*.color8:       #4d4d4d
-! red
-*.color1:       #ff5555
-*.color9:       #ff5555
-! green
-*.color2:       #50fa7b
-*.color10:      #50fa7b
-! yellow
-*.color3:       #f1fa8c
-*.color11:      #f1fa8c
-! blue
-*.color4:       #bd93f9
-*.color12:      #bd93f9
-! magenta
-*.color5:       #ff79c6
-*.color13:      #ff79c6
-! cyan
-*.color6:       #8be9fd
-*.color14:      #8be9fd
-! white
-*.color7:       #e5e5e5
-*.color15:      #ffffff
+*highlightColor: #44475a
+*.foreground:    #f8f8f2
+*.background:    #282a36
+*.cursorColor:   #f8f8f2
+*.color0:        #000000
+*.color8:        #4D4D4D
+*.color1:        #FF5555
+*.color9:        #FF6E67
+*.color2:        #50FA7B
+*.color10:       #5AF78E
+*.color3:        #F1FA8C
+*.color11:       #F4F99D
+*.color4:        #CAA9FA
+*.color12:       #CAA9FA
+*.color5:        #FF79C6
+*.color13:       #FF92D0
+*.color6:        #8BE9FD
+*.color14:       #9AEDFE
+*.color7:        #BFBFBF
+*.color15: 	     #E6E6E6
