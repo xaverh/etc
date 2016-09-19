@@ -16,7 +16,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 26;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -71,6 +71,7 @@ static const char *mpdpreviouscmd[] = {"mpc", "prev", NULL};
 static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%+", "-q", NULL };
 static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
 static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
+static const char *lockcmd[]  = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -121,6 +122,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY,                       0xff1b,    spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
