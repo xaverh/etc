@@ -14,3 +14,6 @@ nolink/dwm/src/config.h
 *.o
 *.tar.xz
 *.tar.gz
+nolink/sent/pkg/
+nolink/sent/sent/
+nolink/sent/src/
