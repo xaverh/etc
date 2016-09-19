@@ -26,9 +26,15 @@ cowerd numix-frost-themes
 cowerd conan
 cowerd dropbox
 cowerd sprunge
+cowerd farbfeld
 
 sudo abs
+
 cd ~/Software/dotfiles/nolink/dwm
+updpkgsums
+makepkg -sfi
+
+cd ~/Software/dofiles/nolink/sent
 updpkgsums
 makepkg -sfi
 
