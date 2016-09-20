@@ -5,13 +5,16 @@ static char *fontfallbacks[] = {
 	"dejavu sans",
 	"roboto",
 	"ubuntu",
+	"NotoEmoji"
 };
 #define NUMFONTSCALES 42
 #define FONTSZ(x) ((int)(10.0 * powf(1.1288, (x)))) /* x in [0, NUMFONTSCALES-1] */
 
 static const char *colors[] = {
-	"#373330", /* foreground color */
-	"#fbf1dd", /* background color */
+//	"#373330", /* foreground color */
+//	"#fbf1dd", /* background color */
+	"#f8f8f2",
+	"#282a36"
 };
 
 static const float linespacing = 1.4;
@@ -52,5 +55,6 @@ static Shortcut shortcuts[] = {
 static Filter filters[] = {
 	{ "\\.ff$", "cat" },
 	{ "\\.ff.bz2$", "bunzip2" },
+	{ "\\.ff.xz$", "xz --decompress" },
 	{ "\\.[a-z0-9]+$", "2ff" },
 };
