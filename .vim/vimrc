@@ -16,7 +16,7 @@ set cindent
 set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set colorcolumn=+1
 set copyindent
-set cursorline
+"set cursorline
 set encoding=utf8
 set foldclose=all
 set foldcolumn=1
@@ -106,7 +106,7 @@ if has('gui_running')
 	set columns=86
 	set lines=34
 endif
-set t_Co=256
+color dracula
 set background=dark
 "if has('gui_running')
 	"set background=light
