@@ -33,6 +33,7 @@ static const Rule rules[] = {
 	{ "presenter", "sent",     "sent",      -1,           1,           -1 },
 	{ "Spotify",   NULL,       NULL,        1 << 2,       0,           -1 },
 	{ "Steam",     NULL,       NULL,        1 << 5,       0,           -1 },
+	{ "URxvt",     "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
 	{ "Zathura",   NULL,       NULL,        1 << 3,       1,           -1 }
 };
 
@@ -63,6 +64,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "/home/xha/Software/dotfiles/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
+static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *playnextcmd[] = {"playerctl", "next", NULL};
