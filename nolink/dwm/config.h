@@ -6,17 +6,17 @@ static const char *fonts[] = {
 	"NotoEmoji:size=11"
 };
 static const char dmenufont[]       = "HelveticaNeue:size=10";
-static const char normbordercolor[] = "#333333";
-static const char normbgcolor[]     = "#1e1e1e";
-static const char normfgcolor[]     = "#d4d4d4";
-static const char selbordercolor[]  = "#696969";
-static const char selbgcolor[]      = "#1e1e1e";
-static const char selfgcolor[]      = "#569cd6";
+static const char normbordercolor[] = "#4D4D4D";
+static const char normbgcolor[]     = "#282a36";
+static const char normfgcolor[]     = "#f8f8f2";
+static const char selbordercolor[]  = "#F1FA8C";
+static const char selbgcolor[]      = "#282a36";
+static const char selfgcolor[]      = "#8BE9FD";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 26;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 28;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -26,12 +26,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Code",     NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 0,       0,           -1 },
-	{ "Spotify",  NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Steam",    NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Zathura",  NULL,       NULL,       1 << 3,       1,           -1 }
+	/* class       instance    title        tags mask     isfloating   monitor */
+	{ "Code",      NULL,       NULL,        1 << 1,       0,           -1 },
+	{ "Firefox",   NULL,       NULL,        1 << 0,       0,           -1 },
+	{ "Firefox",   "Places",   "Library",   -1,           1,           -1 },
+	{ "presenter", "sent",     "sent",      -1,           1,           -1 },
+	{ "Spotify",   NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "Steam",     NULL,       NULL,        1 << 5,       0,           -1 },
+	{ "Zathura",   NULL,       NULL,        1 << 3,       1,           -1 }
 };
 
 /* layout(s) */
@@ -60,7 +62,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "/home/xha/Software/dotfiles/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "urxvtcd", NULL };
+static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *playnextcmd[] = {"playerctl", "next", NULL};
