@@ -1,10 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
 static char *fontfallbacks[] = {
-	"HelveticaNeue"
+	"Trade Gothic Next LT Pro",
+	// "HelveticaNeue"
 	"dejavu sans",
-	"roboto",
-	"ubuntu",
 	"NotoEmoji"
 };
 #define NUMFONTSCALES 42
