@@ -130,11 +130,12 @@ Set_my_git () {
 	git config --global diff.tool "default-difftool"
 	git config --global difftool.default-difftool.cmd "code --wait --diff \$LOCAL \$REMOTE"
 	git config --global credential.helper "store"
+	git config --global alias.gl "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 	command -v gnome-keyring >/dev/null 2>&1 && git config --global credential.helper gnome-keyring
 }
 
 # braucht mencoder und mplayer
-Avijoin () {
+Join_avi () {
 	# TODO checken ob mencoder da ist!
 	cat $* > movie_tmp.avi; # TODO Frage nach finalem Namen
 	mencoder -forceidx -oac copy -ovc copy movie_tmp.avi -o ./movie_final.avi
