@@ -27,6 +27,7 @@ cowerd conan
 cowerd dropbox
 cowerd sprunge
 cowerd farbfeld
+cowerd toilet
 
 sudo abs
 
