@@ -8,6 +8,7 @@
 .local/share/applications/Hotline Miami.desktop
 .local/share/applications/Broforce.desktop
 .local/share/applications/Worms Reloaded.desktop
+.local/share/applications/mimeapps.list
 nolink/dwm/pkg/
 nolink/dwm/src/dwm-6.1/*
 nolink/dwm/src/config.h
