@@ -2,7 +2,7 @@
 
 static char *fontfallbacks[] = {
 	"Trade Gothic Next LT Pro",
-	// "HelveticaNeue"
+	"HelveticaNeue"
 	"dejavu sans",
 	"NotoEmoji"
 };
@@ -10,10 +10,10 @@ static char *fontfallbacks[] = {
 #define FONTSZ(x) ((int)(10.0 * powf(1.1288, (x)))) /* x in [0, NUMFONTSCALES-1] */
 
 static const char *colors[] = {
-//	"#373330", /* foreground color */
-//	"#fbf1dd", /* background color */
-	"#f8f8f2",
-	"#282a36"
+	"#373330", /* foreground color */
+	"#fbf1dd"  /* background color */
+	// "#f8f8f2",
+	// "#282a36"
 };
 
 static const float linespacing = 1.4;
