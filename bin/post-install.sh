@@ -24,6 +24,8 @@ cowerd python-fasteners
 cowerd spotify
 cowerd sgi-fonts
 cowerd urxvtcd
+sudo pacman-key -r 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
+sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
 cowerd numix-frost-themes
 cowerd conan
 cowerd dropbox
