@@ -6,17 +6,17 @@ static const char *fonts[] = {
 	"NotoEmoji:size=10"
 };
 static const char dmenufont[]       = "HelveticaNeue:size=10";
-static const char normbordercolor[] = "#4D4D4D";
+static const char normbordercolor[] = "#282a36";
 static const char normbgcolor[]     = "#282a36";
 static const char normfgcolor[]     = "#f8f8f2";
-static const char selbordercolor[]  = "#F1FA8C";
-static const char selbgcolor[]      = "#282a36";
-static const char selfgcolor[]      = "#8BE9FD";
+static const char selbordercolor[]  = "#44475a";
+static const char selbgcolor[]      = "#44475a";
+static const char selfgcolor[]      = "#f8f8f2";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 28;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -27,14 +27,15 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class       instance    title        tags mask     isfloating   monitor */
-	{ "Code",      NULL,       NULL,        1 << 1,       0,           -1 },
-	{ "Firefox",   NULL,       NULL,        1 << 0,       0,           -1 },
-	{ "Firefox",   "Places",   "Library",   -1,           1,           -1 },
-	{ "presenter", "sent",     "sent",      -1,           1,           -1 },
-	{ "Spotify",   NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "Steam",     NULL,       NULL,        1 << 5,       0,           -1 },
-	{ "URxvt",     "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
-	{ "Zathura",   NULL,       NULL,        1 << 3,       1,           -1 }
+	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
+	{ "Code",           NULL,       NULL,        1 << 1,       0,           -1 },
+	{ "Firefox",        "Places",   "Library",   -1,           1,           -1 },
+	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
+	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
+	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
+	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 },
+	{ "Zathura",        NULL,       NULL,        1 << 3,       1,           -1 }
 };
 
 /* layout(s) */
