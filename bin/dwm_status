@@ -31,11 +31,14 @@ old_time=$now
 
 print_volume() {
 	volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-	if test "$volume" -gt 0
-	then
-		echo -e "\uE05D${volume}"
-	else
-		echo -e "Mute"
+	if amixer get Master | grep -q off; then
+		echo -e "🔇   "
+	elif test "$volume" -eq 100; then
+		echo -e "🔊 ${volume} %   "
+	elif test "$volume" -gt 0; then
+		echo -e "🔉 ${volume} %   "
+	elif test "$volume" -eq 0; then
+		echo -e "🔈 ${volume} %   "
 	fi
 }
 
@@ -87,12 +90,12 @@ do
 	vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
-	xsetroot -name "🐏 $(print_mem)⬇️ $vel_recv ⬆️ $vel_trans   $(print_wifi)$(print_bat)📅  $(print_date)"
+	xsetroot -name "🐏 $(print_mem)⬇️ $vel_recv ⬆️ $vel_trans   $(print_wifi)$(print_bat)$(print_volume)📅  $(print_date)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
 	old_transmitted_bytes=$transmitted_bytes
 	old_time=$now
 
-	sleep 2
+	sleep 1
 done
