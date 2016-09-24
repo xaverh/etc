@@ -1,1 +1,1 @@
-/home/xha/Software/dotfiles/nolink/dwm/config.h
+/home/xha/src/dotfiles/nolink/dwm/config.h

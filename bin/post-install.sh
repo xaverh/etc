@@ -2,44 +2,40 @@
 
 # Installing stuff
 sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm --needed firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload thunar thunar-archive-plugin exfat-utils tumbler ffmpegthumbnailer raw-thumbnailer mpv lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins youtube-dl numlockx npm nodejs mpc p7zip zsh-syntax-highlighting ranger
+sudo pacman -Sq --noconfirm --needed firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 dmenu conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload thunar thunar-archive-plugin exfat-utils tumbler ffmpegthumbnailer raw-thumbnailer mpv lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins youtube-dl numlockx npm nodejs mpc p7zip zsh-syntax-highlighting ranger pulseaudio pulseaudio-alsa pamixer alsa-utils bc
 
-# on a laptop additionally install acpi
+# Laptop?
+sudo pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
+sudo cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+sudo chmod a+r /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+sudo systemctl enable wpa_supplicant@wlan0.service
+sudo systemctl start wpa_supplicant@wlan0.service
 
-gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
 
-mkdir ~/Software
-cd ~/Software
-wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" | tar xzf -
-cd cower
+mkdir ~/aur
+cd ~/aur
+wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/yaah.tar.gz" | tar xzf -
+cd yaah
 makepkg -si
 
-sudo cp ~/Software/dotfiles/bin/cowerd /usr/local/bin
-sudo chmod 755 /usr/local/bin/cowerd
+# sudo cp ~/Software/dotfiles/bin/cowerd /usr/local/bin
+# sudo chmod 755 /usr/local/bin/cowerd
+# sudo pacman-key -r 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
+# sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1DM
 
-cd ~/Software
-cowerd python-patch
-cowerd python-monotonic
-cowerd python-fasteners
-cowerd spotify
-cowerd sgi-fonts
-cowerd urxvtcd
-sudo pacman-key -r 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
-sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1DM
-cowerd numix-frost-themes
-cowerd conan
-cowerd dropbox
-cowerd sprunge
-cowerd farbfeld
-cowerd toilet
+cd ~/aur
+yaah vivaldi vivaldi-ffmpeg-codecs vivaldi-widevine python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet
+
+# evtl. benötigte Pakete
+# numix-frost-themes
 
 sudo abs
 
-cd ~/Software/dotfiles/nolink/dwm
+cd ~/src/dotfiles/nolink/dwm
 updpkgsums
 makepkg -sfi
 
-cd ~/Software/dotfiles/nolink/sent-git
+cd ~/src/dotfiles/nolink/sent-git
 updpkgsums
 makepkg -sfi
 
@@ -91,3 +87,4 @@ mkdir ~/.npm-packages
 timedatectl set-ntp 1
 
 chsh -s /usr/bin/zsh
+localectl set-x11-keymap de
