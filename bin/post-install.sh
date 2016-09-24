@@ -6,7 +6,6 @@ sudo pacman -Sq --noconfirm --needed firefox lxappearance-obconf zsh rxvt-unicod
 
 # on a laptop additionally install acpi
 
-gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
 
 mkdir ~/Software
 cd ~/Software
