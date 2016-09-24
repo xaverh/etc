@@ -18,7 +18,7 @@ wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/yaah.tar.gz" | tar xz
 cd yaah
 makepkg -si
 
-# sudo cp ~/Software/dotfiles/bin/cowerd /usr/local/bin
+# sudo cp ~/src/dotfiles/bin/cowerd /usr/local/bin
 # sudo chmod 755 /usr/local/bin/cowerd
 # sudo pacman-key -r 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
 # sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1DM
@@ -53,35 +53,35 @@ gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rg
 
 # linking stuff
 rm -r ~/.config/Code/User || mkdir --parents ~/.config/Code
-ln -s ~/Dropbox/Visual\ Studio\ Code/User ~/.config/Code/User
-ln -s ~/Software/dotfiles/.clang-format ~
-ln -s ~/Software/dotfiles/.dircolors ~
-ln -s ~/Software/dotfiles/.toprc ~
-ln -s ~/Software/dotfiles/.Xresources ~
+ln -s ~/src/dotfiles/.config/Code/User ~/.config/Code/User
+ln -s ~/src/dotfiles/.clang-format ~
+ln -s ~/src/dotfiles/.dircolors ~
+ln -s ~/src/dotfiles/.toprc ~
+ln -s ~/src/dotfiles/.Xresources ~
 xrdb ~/.Xresources
-ln -s ~/Software/dotfiles/.zlogin ~
-ln -s ~/Software/dotfiles/.zsh ~
-ln -s ~/Software/dotfiles/.zshrc ~
-ln -s ~/Software/dotfiles/.zshenv ~
-ln -s ~/Software/dotfiles/.zprofile ~
+ln -s ~/src/dotfiles/.zlogin ~
+ln -s ~/src/dotfiles/.zsh ~
+ln -s ~/src/dotfiles/.zshrc ~
+ln -s ~/src/dotfiles/.zshenv ~
+ln -s ~/src/dotfiles/.zprofile ~
 rm -r ~/.config/openbox
-ln -s ~/Software/dotfiles/.config/openbox ~/.config/
-ln -s ~/Software/dotfiles/.config/tint2 ~/.config/
-ln -s ~/Software/dotfiles/.local/share/applications ~/.local/share/
+ln -s ~/src/dotfiles/.config/openbox ~/.config/
+ln -s ~/src/dotfiles/.config/tint2 ~/.config/
+ln -s ~/src/dotfiles/.local/share/applications ~/.local/share/
 rm -r ~/.config/fontconfig
-ln -s ~/Software/dotfiles/.config/fontconfig ~/.config/
-ln -s ~/Software/dotfiles/.config/dunst ~/.config/
-ln -s ~/Software/dotfiles/.config/compton.conf ~/.config/
+ln -s ~/src/dotfiles/.config/fontconfig ~/.config/
+ln -s ~/src/dotfiles/.config/dunst ~/.config/
+ln -s ~/src/dotfiles/.config/compton.conf ~/.config/
 mkdir ~/.fonts
 ln -s ~/Dropbox/Fonts/Menlo ~/.fonts
 ln -s ~/Dropbox/Fonts/San\ Francisco ~/.fonts
-ln -s ~/Software/dotfiles/.local/share/thumbnailers ~/.local/share/
+ln -s ~/src/dotfiles/.local/share/thumbnailers ~/.local/share/
 rmdir .config/zathura
-ln -s ~/Software/dotfiles/.config/zathura/ ~/.config/
-ln -s ~/Software/dotfiles/.xprofile ~
-ln -s ~/Software/dotfiles/.config/herbstluftwm/ ~/.config/
-ln -s ~/Software/dotfiles/.vim ~
-ln -s ~/Software/dotfiles/.npmrc ~
+ln -s ~/src/dotfiles/.config/zathura/ ~/.config/
+ln -s ~/src/dotfiles/.xprofile ~
+ln -s ~/src/dotfiles/.config/herbstluftwm/ ~/.config/
+ln -s ~/src/dotfiles/.vim ~
+ln -s ~/src/dotfiles/.npmrc ~
 mkdir ~/.npm-packages
 
 timedatectl set-ntp 1
