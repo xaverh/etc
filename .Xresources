@@ -13,13 +13,13 @@ URxvt*scrollBar: false
 ! URxvt*italicFont: xft:Menlo:pixelsize=13:italic
 ! URxvt*boldFont: xft:Menlo:pixelsize=13:bold
 ! URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
-URxvt*font: xft:PragmataPro:pixelsize=14
-URxvt*italicFont: xft:PragmataPro:pixelsize=14:italic
-URxvt*boldFont: xft:PragmataPro:pixelsize=14:bold
-URxvt*boldItalicFont: xft:PragmataPro:pixelsize=14:bold:italic
-URxvt*letterSpace: -1.5
-! URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
-! URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
+! URxvt*font: xft:PragmataPro:pixelsize=14
+! URxvt*italicFont: xft:PragmataPro:pixelsize=14:italic
+! URxvt*boldFont: xft:PragmataPro:pixelsize=14:bold
+! URxvt*boldItalicFont: xft:PragmataPro:pixelsize=14:bold:italic
+! URxvt*letterSpace: -1.5
+URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 ! URxvt*inheritPixmap: true
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
