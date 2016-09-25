@@ -24,13 +24,16 @@ makepkg -si
 # sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1DM
 
 cd ~/aur
-yaah vivaldi vivaldi-ffmpeg-codecs vivaldi-widevine python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet
+yaah python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet
 
 # evtl. benötigte Pakete
 # numix-frost-themes
 
-sudo abs
+# sudo abs
 
+mkdir ~/src
+cd ~/src
+git clone https://github.com/xaverh/dotfiles.git
 cd ~/src/dotfiles/nolink/dwm
 updpkgsums
 makepkg -sfi
@@ -59,32 +62,27 @@ ln -s ~/src/dotfiles/.dircolors ~
 ln -s ~/src/dotfiles/.toprc ~
 ln -s ~/src/dotfiles/.Xresources ~
 xrdb ~/.Xresources
+ln -s ~/src/dotfiles/.xinitrc ~
 ln -s ~/src/dotfiles/.zlogin ~
 ln -s ~/src/dotfiles/.zsh ~
 ln -s ~/src/dotfiles/.zshrc ~
 ln -s ~/src/dotfiles/.zshenv ~
 ln -s ~/src/dotfiles/.zprofile ~
-rm -r ~/.config/openbox
-ln -s ~/src/dotfiles/.config/openbox ~/.config/
-ln -s ~/src/dotfiles/.config/tint2 ~/.config/
-ln -s ~/src/dotfiles/.local/share/applications ~/.local/share/
-rm -r ~/.config/fontconfig
 ln -s ~/src/dotfiles/.config/fontconfig ~/.config/
 ln -s ~/src/dotfiles/.config/dunst ~/.config/
 ln -s ~/src/dotfiles/.config/compton.conf ~/.config/
-mkdir ~/.fonts
-ln -s ~/Dropbox/Fonts/Menlo ~/.fonts
-ln -s ~/Dropbox/Fonts/San\ Francisco ~/.fonts
-ln -s ~/src/dotfiles/.local/share/thumbnailers ~/.local/share/
-rmdir .config/zathura
+mkdir --parents ~/.local/share/fonts
+ln -s ~/Dropbox/Fonts/Menlo ~/.local/share/fonts
+ln -s ~/Dropbox/Fonts/San\ Francisco ~/.local/share/fonts
 ln -s ~/src/dotfiles/.config/zathura/ ~/.config/
-ln -s ~/src/dotfiles/.xprofile ~
-ln -s ~/src/dotfiles/.config/herbstluftwm/ ~/.config/
 ln -s ~/src/dotfiles/.vim ~
 ln -s ~/src/dotfiles/.npmrc ~
 mkdir ~/.npm-packages
+mkdir ~/bin
+ln -s ~/src/dotfiles/bin/dwm_status ~/bin
 
 timedatectl set-ntp 1
 
-chsh -s /usr/bin/zsh
 localectl set-x11-keymap de
+
+reboot
