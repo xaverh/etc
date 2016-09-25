@@ -16,6 +16,11 @@ depends=('sh' 'libxinerama' 'libxft' 'freetype2')
 source=("http://dl.suckless.org/tools/dmenu-$pkgver.tar.gz")
 md5sums=('6fedf081133bc0725cb040b3b8ac3fac')
 
+prepare() {
+  cd $srcdir/$pkgname-$pkgver
+  patch -Np1 < ../dmenu-4.6-window-name_xaverh.diff
+}
+
 build() {
   cd $pkgname-$pkgver
   make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
