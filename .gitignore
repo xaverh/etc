@@ -18,8 +18,5 @@ nolink/dwm/src/config.h
 nolink/sent-git/pkg/
 nolink/sent-git/sent-git/
 nolink/sent-git/src/sent-git/
-<<<<<<< Updated upstream
 .config/Code/User/workspaceStorage/
-=======
 .vim/.netrwhist
->>>>>>> Stashed changes
