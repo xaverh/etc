@@ -174,6 +174,17 @@ zstyle ':completion:*:*:rm:*' file-patterns \
 *~*(~|.(o|old|bak|BAK)):all-files:all\ files'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:pacman:*' force-list always
+zstyle ':completion:*:*:pacman:*' menu yes select
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*'   force-list always
+# complete manual by their section
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
+
+
+
 
 # manpage colors
 # export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking
