@@ -31,8 +31,6 @@ xset -dpms &
 
 urxvtd --fork --quiet --opendisplay &
 dunst &
-dropbox &
-xautolock -time 10 -locker slock &
 mpd &
 
 # This should be in the accoring config file
