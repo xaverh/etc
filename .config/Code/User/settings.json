@@ -43,5 +43,13 @@
 		"*.npmrc": "ini",
 		"*.h": "c"
 	},
-	"workbench.editor.showTabs": trueT
+	"workbench.editor.showTabs": true,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/.DS_Store": true,
+		"**/._*": true,
+		"**/*.un~": true
+	}
 }
