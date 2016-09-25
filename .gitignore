@@ -20,3 +20,5 @@ nolink/sent-git/sent-git/
 nolink/sent-git/src/sent-git/
 .config/Code/User/workspaceStorage/
 .vim/.netrwhist
+nolink/dmenu/pkg/
+nolink/dmenu/src/
