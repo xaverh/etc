@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --randomize --bg-tile --no-fehbg ~/Pictures/Patterns/*
+feh --randomize --bg-tile --no-fehbg ~/pix/Patterns/*
