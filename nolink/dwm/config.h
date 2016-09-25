@@ -2,10 +2,11 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"HelveticaNeue:size=10",
+	"Screen:size=10",
+	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]       = "HelveticaNeue:size=10";
+static const char dmenufont[]       = "Screen:size=10";
 static const char normbordercolor[] = "#282a36";
 static const char normbgcolor[]     = "#282a36";
 static const char normfgcolor[]     = "#f8f8f2";
@@ -63,7 +64,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/xha/Software/dotfiles/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
 static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
