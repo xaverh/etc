@@ -59,7 +59,6 @@ timedatectl set-timezone Europe/Berlin
 # Locale configuration
 # This doesn't work yet, we are still missing LC_ALL and LANGUAGE
 localectl set-locale LANG=en_US.UTF-8
-localectl set-locale LANGUAGE=en_US.UTF-8
 localectl set-keymap de
 localectl set-x11-keymap de
 
