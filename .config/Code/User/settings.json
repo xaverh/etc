@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "PragmataPro, Consolas, Menlo, Consolas, Source Code Pro, Fira Mono, Ubuntu Mono",
+	"editor.fontFamily": "SF Mono, PragmataPro, Consolas, Menlo, Consolas, Source Code Pro, Fira Mono, Ubuntu Mono",
 	"editor.fontSize": 13,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
@@ -33,7 +33,7 @@
 	],
 	"clang.completion.enable": false,
 	"files.autoSave": "afterDelay",
-	"editor.fontLigatures": false,
+	"editor.fontLigatures": true,
 	"editor.renderWhitespace": false,
 	// "terminal.integrated.shell.windows": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
 	// kann das in eine Erweiterung?
