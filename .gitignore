@@ -22,3 +22,6 @@ nolink/sent-git/src/sent-git/
 .vim/.netrwhist
 nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
+nolink/st/pkg/
+nolink/st/src/st-0.7/*
+nolink/st/src/config.h
