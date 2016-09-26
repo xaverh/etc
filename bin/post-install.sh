@@ -1,35 +1,19 @@
 #!/usr/bin/sh
 
-# Installing stuff
-sudo pacman -Syyu --noconfirm
-sudo pacman -Sq --noconfirm --needed firefox lxappearance-obconf zsh rxvt-unicode vim texlive-most clang xarchiver compton lua gparted xorg-xkill steam noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts tint2 conky ttf-linux-libertine gimp l3afpad zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload thunar thunar-archive-plugin exfat-utils tumbler ffmpegthumbnailer raw-thumbnailer mpv lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins youtube-dl numlockx npm nodejs mpc p7zip zsh-syntax-highlighting ranger pulseaudio pulseaudio-alsa pamixer alsa-utils bc
+timedatectl set-ntp 1
 
-# Laptop?
-sudo pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
-sudo cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-sudo chmod a+r /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-sudo systemctl enable wpa_supplicant@wlan0.service
-sudo systemctl start wpa_supplicant@wlan0.service
+localectl set-x11-keymap de
 
-
+# AUR
 mkdir ~/aur
 cd ~/aur
 wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/yaah.tar.gz" | tar xzf -
 cd yaah
 makepkg -si
 
-# sudo cp ~/src/dotfiles/bin/cowerd /usr/local/bin
-# sudo chmod 755 /usr/local/bin/cowerd
-# sudo pacman-key -r 24B445614FAC071891EDCE49CDBD406AA1AA7A1D
-# sudo pacman-key --lsign-key 24B445614FAC071891EDCE49CDBD406AA1AA7A1DM
-
 cd ~/aur
 yaah python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet
-
-# evtl. benötigte Pakete
-# numix-frost-themes
-
-# sudo abs
+# Pakete installieren
 
 mkdir ~/src
 cd ~/src
@@ -56,8 +40,9 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 " | sudo tee /etc/X11/Xresources > /dev/null
 sudo chmod 644 /etc/X11/Xresources
-gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
-gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
+
+# Dropbox
+systemctl --user enable dropbox
 
 # linking stuff
 rm -r ~/.config/Code/User || mkdir --parents ~/.config/Code
@@ -85,9 +70,7 @@ ln -s ~/src/dotfiles/.npmrc ~
 mkdir ~/.npm-packages
 mkdir ~/bin
 ln -s ~/src/dotfiles/bin/dwm_status ~/bin
-
-timedatectl set-ntp 1
-
-localectl set-x11-keymap de
+mkdir --parents ~/.config/ranger
+ln -s ~/src/.config/ranger/rc.conf ~/.config/ranger/
 
 reboot
