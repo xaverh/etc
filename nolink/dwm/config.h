@@ -10,14 +10,14 @@ static const char dmenufont[]       = "Screen:size=10";
 static const char normbordercolor[] = "#282a36";
 static const char normbgcolor[]     = "#282a36";
 static const char normfgcolor[]     = "#f8f8f2";
-static const char selbordercolor[]  = "#44475a";
+static const char selbordercolor[]  = "#f8f8f2";
 static const char selbgcolor[]      = "#44475a";
 static const char selfgcolor[]      = "#f8f8f2";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const unsigned int gappx     = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
