@@ -103,7 +103,7 @@ pacman -Syu
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 lspci | grep -e VGA -e 3D
 
-pacman --needed -S  zsh rxvt-unicode vim clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst pkgfile scrot jsoncpp feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} libstdc++5 llvm imagemagick unrar slock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip zsh-syntax-highlighting ranger xorg-{server,server-utils,xinit,apps,xfontsel} firefox steam openmp texlive-most lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins pulseaudio pulseaudio-alsa pamixer alsa-utils bc aria2 lxappearance compton w3m
+pacman --needed -S  zsh{,-syntax-highlighting} rxvt-unicode vim clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst pkgfile scrot jsoncpp feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} libstdc++5 llvm imagemagick unrar slock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip ranger xorg-{server,server-utils,xinit,apps,xfontsel} firefox steam openmp texlive-most lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins pulseaudio pulseaudio-alsa pamixer alsa-utils bc aria2 lxappearance compton w3m
 
 # Laptop?
 pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
