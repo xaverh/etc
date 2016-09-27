@@ -1,23 +1,21 @@
-/* See LICENSE file for copyright and license details. */
-
 /* appearance */
 static const char *fonts[] = {
 	"Screen:size=10",
 	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]       = "Screen:size=10";
-static const char normbordercolor[] = "#282a36";
-static const char normbgcolor[]     = "#282a36";
-static const char normfgcolor[]     = "#f8f8f2";
-static const char selbordercolor[]  = "#f8f8f2";
-static const char selbgcolor[]      = "#44475a";
-static const char selfgcolor[]      = "#f8f8f2";
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 10;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const char dmenufont[]         = "Screen:size=10";
+static const char normbordercolor[]   = "#bd93f9";
+static const char normbgcolor[]       = "#282a36";
+static const char normfgcolor[]       = "#f8f8f2";
+static const char selbordercolor[]    = "#50fa7b";
+static const char selbgcolor[]        = "#44475a";
+static const char selfgcolor[]        = "#f8f8f2";
+static const unsigned int borderpx    = 3;        /* border pixel of windows */
+static const unsigned int snap        = 10;       /* snap pixel */
+static const int showbar              = 1;        /* 0 means no bar */
+static const int topbar               = 1;        /* 0 means bottom bar */
+static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -108,6 +106,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_k,          pushup,         {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
 	{ MODKEY,                       XK_q,          killclient,     {0} },
+	{ 0,                            XK_F4,         killclient,     {0} },
 	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[2]} },
@@ -149,3 +148,18 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
+/*
+Key						Code						Firefox				dwm
+F1						Menu						Help
+F2						"unknown"					-
+F3						Find						Find
+F4						-							-					close client
+F5						Compile						Refresh
+F6						-							URL Bar
+F7						-							-
+F8						-							-
+F9						-							-
+F10						-							Menu
+F11						Fullscreen					Fullscreen
+F12						-							Developer Tools
+*/
