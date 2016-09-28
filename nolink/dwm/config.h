@@ -1,22 +1,21 @@
-/* See LICENSE file for copyright and license details. */
-
 /* appearance */
 static const char *fonts[] = {
 	"Screen:size=10",
+	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]       = "Screen:size=10";
-static const char normbordercolor[] = "#282a36";
-static const char normbgcolor[]     = "#282a36";
-static const char normfgcolor[]     = "#f8f8f2";
-static const char selbordercolor[]  = "#44475a";
-static const char selbgcolor[]      = "#44475a";
-static const char selfgcolor[]      = "#f8f8f2";
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 10;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int gappx     = 22;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const char dmenufont[]         = "Screen:size=10";
+static const char normbordercolor[]   = "#bd93f9";
+static const char normbgcolor[]       = "#282a36";
+static const char normfgcolor[]       = "#f8f8f2";
+static const char selbordercolor[]    = "#50fa7b";
+static const char selbgcolor[]        = "#44475a";
+static const char selfgcolor[]        = "#f8f8f2";
+static const unsigned int borderpx    = 3;        /* border pixel of windows */
+static const unsigned int snap        = 10;       /* snap pixel */
+static const int showbar              = 1;        /* 0 means no bar */
+static const int topbar               = 1;        /* 0 means bottom bar */
+static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -35,8 +34,7 @@ static const Rule rules[] = {
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
 	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
 	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
-	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 },
-	{ "Zathura",        NULL,       NULL,        0,            1,           -1 }
+	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 }
 };
 
 /* layout(s) */
@@ -64,7 +62,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/xha/Software/dotfiles/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
 static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
@@ -105,7 +103,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return,     zoom,           {0} },
-	{ 0,                            XK_Super_R,    zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_j,          pushdown,       {0} },
     { MODKEY|ShiftMask,             XK_k,          pushup,         {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
@@ -134,6 +131,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 };
 
+#define Button6 6
+#define Button7 7
+#define Button8 8
+
 /* button definitions */
 /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
@@ -149,5 +150,23 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkClientWin,         0,              Button8,        zoom,           {0} },
+	{ ClkClientWin,         0,              Button6,        setmfact,       {.f = -0.05} },
+	{ ClkClientWin,         0,              Button7,        setmfact,       {.f = +0.05} },
 };
 
+/*
+Key						Code						Firefox				dwm
+F1						Menu						Help
+F2						"unknown"					-
+F3						Find						Find
+F4						-							-					close client
+F5						Compile						Refresh
+F6						-							URL Bar
+F7						-							-
+F8						-							-
+F9						-							-
+F10						-							Menu
+F11						Fullscreen					Fullscreen
+F12						-							Developer Tools
+*/

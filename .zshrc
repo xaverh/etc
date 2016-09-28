@@ -69,6 +69,8 @@ alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
 alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
+alias pacman='pacman --color=auto'
+alias sudo='sudo '
 
 Fix_steam() {
 	find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete
@@ -172,6 +174,17 @@ zstyle ':completion:*:*:rm:*' file-patterns \
 *~*(~|.(o|old|bak|BAK)):all-files:all\ files'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:pacman:*' force-list always
+zstyle ':completion:*:*:pacman:*' menu yes select
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*'   force-list always
+# complete manual by their section
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
+
+
+
 
 # manpage colors
 # export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking

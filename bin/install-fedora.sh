@@ -53,6 +53,8 @@ sudo dnf install xclip tint2 pcmanfm conky tumbler tumbler-extras zathura-plugin
 # gsettings set org.gnome.desktop.interface gtk-theme "Numix Light"
 # gsettings set org.gnome.desktop.wm.preferences theme "Numix Light"
 
+gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
+gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
 
 # To make the change permanent, write vm.swappiness=1 on your /etc/sysctl.conf
 # file.

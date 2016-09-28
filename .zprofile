@@ -1,5 +1,5 @@
 # bspwm stuff
-PATH="/usr/bin/core_perl:/usr/local/bin:/usr/bin"
+PATH="/usr/bin/core_perl:/usr/local/bin:/usr/bin:$HOME/bin"
 export PATH
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CONFIG_DIRS=/usr/etc/xdg:/etc/xdg
