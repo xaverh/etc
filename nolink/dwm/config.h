@@ -2,10 +2,10 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"HelveticaNeue:size=10",
+	"Screen:size=10",
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]       = "HelveticaNeue:size=10";
+static const char dmenufont[]       = "Screen:size=10";
 static const char normbordercolor[] = "#282a36";
 static const char normbgcolor[]     = "#282a36";
 static const char normfgcolor[]     = "#f8f8f2";
@@ -27,15 +27,16 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class       instance    title        tags mask     isfloating   monitor */
-	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Code",           NULL,       NULL,        1 << 1,       0,           -1 },
+	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Firefox",        "Places",   "Library",   -1,           1,           -1 },
+	{ "Opera",          NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
 	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
 	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
 	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 },
-	{ "Zathura",        NULL,       NULL,        1 << 3,       1,           -1 }
+	{ "Zathura",        NULL,       NULL,        0,            1,           -1 }
 };
 
 /* layout(s) */
@@ -104,6 +105,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return,     zoom,           {0} },
+	{ 0,                            XK_Super_R,    zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_j,          pushdown,       {0} },
     { MODKEY|ShiftMask,             XK_k,          pushup,         {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
