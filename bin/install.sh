@@ -1,5 +1,5 @@
 loadkeys de
-cat /proc/partitions
+lsblk
 ping google.com
 timedatectl set-ntp true
 
@@ -20,30 +20,29 @@ pacstrap /mnt base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
 vi /mnt/etc/fstab
+# add discard for ssds
 arch-chroot /mnt
-
-ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-hwclock --systohc --utc
-
-vi /etc/locale.gen
-#uncomment preferred locale
-
-locale-gen
-
-echo LANG=en_US.UTF-8 > /etc/locale.conf
-echo KEYMAP=de > /etc/vconsole.conf
 
 mkinitcpio -p linux
 
 passwd
+
+# Intel CPU
+pacman -S intel-ucode
 
 # BIOS
 pacman -S syslinux
 syslinux-install_update -i -m -a
 vi /boot/syslinux/syslinux.cfg
 
-# Intel CPU
-pacman -S intel-ucode
+# UEFI
+bootctl --path=/boot install
+
+cp /usr/share/systemd/bootctl/loader.conf /boot/loader.conf
+cp /usr/share/systemd/bootctl/arch.conf /boot/loader/entries/
+# get PARTUUID, put in arch.conf, and then tidy that mess!
+ls -l /dev/disk/by-partuuid/ >> /boot/loader/entries/arch.conf
+vi /boot/loader/entries/arch.conf
 
 exit
 
@@ -51,47 +50,75 @@ exit
 
 reboot
 
+# Time configuration
+vi /etc/systemd/timesyncd.conf
+timedatectl set-ntp true
+timedatectl set-local-rtc false
+timedatectl set-timezone Europe/Berlin
+
+# Locale configuration
+# This doesn't work yet, we are still missing LC_ALL and LANGUAGE
+localectl set-locale LANG=en_US.UTF-8
+localectl set-keymap de
+localectl set-x11-keymap de
 
 # network configuration
 hostnamectl set-hostname myhostname
+systemctl enable --now systemd-networkd
+
 ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 
 /etc/systemd/network/wired.network
 [Match]
-Name=enp1s0
+Name=eth*
 
 [Network]
-DHCP=ipv4
+DHCP=yes
 
 [DHCP]
 RouteMetric=10
 
 /etc/systemd/network/wireless.network
 [Match]
-Name=wlp2s0
+Name=wlan*
 
 [Network]
-DHCP=ipv4
+DHCP=yes
 
 [DHCP]
 RouteMetric=20
 
-systemctl start systemd-networkd.service
-systemctl enable systemd-networkd.service
-
-vi /etc/resolv.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc
+/etc/systemd/resolved.conf
+systemctl enable --now systemd-resolved
 
 # Install optional packages
 rankmirrors /etc/pacman.d/mirrorlist > /tmp/mirrorlist
 vi /tmp/mirrorlist
 mv /tmp/mirrorlist /etc/pacman.d/mirrorlist
 vi /etc/pacman.conf
+# enable multilib
 pacman -Syu
-pacman --needed -S  zsh rxvt-unicode vim clang lua xorg-xkill noto-fonts noto-fonts-cjk noto-fonts-emoji screenfetch jdk8-openjdk dunst pkgfile scrot jsoncpp feh xorg-xfontsel wget adobe-source-code-pro-fonts adobe-source-serif-pro-fonts adobe-source-sans-pro-fonts dmenu ttf-linux-libertine gimp zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb libstdc++5 llvm imagemagick unrar slock xautolock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip zsh-syntax-highlighting ranger xorg-server xorg-server-utils xorg-xinit
-
 # find video card
+# Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 lspci | grep -e VGA -e 3D
+
+pacman --needed -S  zsh{,-syntax-highlighting} rxvt-unicode vim clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst scrot jsoncpp feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} libstdc++5 llvm imagemagick unrar slock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip ranger xorg-{server,server-utils,xinit,apps,xfontsel} firefox steam openmp texlive-most lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins pulseaudio pulseaudio-alsa pamixer alsa-utils bc aria2 lxappearance compton w3m
+
+# Laptop?
+pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
+ln -s /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.bak
+chmod a+r /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+systemctl enable wpa_supplicant@wlan0
+systemctl start wpa_supplicant@wlan0
+
+# DVD?
+pacman -Sq --noconfirm --needed libdvdcss
 
 # users
 useradd xha -m -g users -G wheel,storage,power,network,video,audio,lp -s /usr/bin/zsh
-visudo /etc/sudoers
+passwd xha
+visudo
+
+reboot

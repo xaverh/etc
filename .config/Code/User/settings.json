@@ -1,0 +1,55 @@
+{
+	"editor.fontFamily": "SF Mono, PragmataPro, Consolas, Menlo, Consolas, Source Code Pro, Fira Mono, Ubuntu Mono",
+	"editor.fontSize": 13,
+	// "editor.lineHeight": 24,
+	"editor.rulers": [
+		80
+	],
+	"editor.formatOnType": true,
+	"editor.scrollBeyondLastLine": false,
+	"editor.acceptSuggestionOnEnter": false,
+	"editor.wrappingColumn": 0,
+	"editor.wrappingIndent": "indent",
+	"editor.tabSize": 4,
+	// "editor.mouseWheelScrollSensitivity": 0.3,
+	"editor.insertSpaces": false,
+	"window.openFilesInNewWindow": true,
+	"window.reopenFolders": "all",
+	"files.trimTrailingWhitespace": true,
+	"javascript.suggest.useCodeSnippetsOnMethodSuggest": true,
+	"clang.cxxflags": [
+		"-std=c++14",
+		"-pedantic",
+		"-Weverything",
+		"-Wno-c++98-compat",
+		"-Wno-c++98-compat-pedantic",
+		"-Wno-unused-macros",
+		"-Wno-shadow",
+		"-O3"
+	],
+	"clang.cflags": [
+		"-std=c11",
+		"-Weverything"
+	],
+	"clang.completion.enable": false,
+	"files.autoSave": "afterDelay",
+	"editor.fontLigatures": true,
+	"editor.renderWhitespace": false,
+	// "terminal.integrated.shell.windows": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+	// kann das in eine Erweiterung?
+	"files.associations": {
+		"*.clang-format": "yaml",
+		"autostart": "shellscript",
+		"*.npmrc": "ini",
+		"*.h": "c"
+	},
+	"workbench.editor.showTabs": true,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/.DS_Store": true,
+		"**/._*": true,
+		"**/*.un~": true
+	}
+}
