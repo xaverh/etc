@@ -68,25 +68,19 @@ systemctl enable --now systemd-networkd
 
 ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 
-/etc/systemd/network/wired.network
-[Match]
+echo "[Match]
 Name=eth*
-
 [Network]
 DHCP=yes
-
 [DHCP]
-RouteMetric=10
+RouteMetric=10" > /etc/systemd/network/wired.network
 
-/etc/systemd/network/wireless.network
-[Match]
+echo "[Match]
 Name=wlan*
-
 [Network]
 DHCP=yes
-
 [DHCP]
-RouteMetric=20
+RouteMetric=20" > /etc/systemd/network/wireless.network
 
 ln -sf /run/systemd/resolve/resolv.conf /etc
 /etc/systemd/resolved.conf

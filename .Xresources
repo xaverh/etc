@@ -6,7 +6,7 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-URxvt*intensityStyles: false
+URxvt.intensityStyles: false
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
 ! URxvt*font: xft:Menlo:pixelsize=13
@@ -16,8 +16,8 @@ URxvt*scrollBar: false
 ! URxvt*letterSpace: -1.5
 URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
 URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
-URxvt.internalBorder:  12
-URxvt*inheritPixmap: true
+URxvt.internalBorder:  14
+URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
 
@@ -54,25 +54,27 @@ URxvt*inheritPixmap: true
 !*.color7:       #adadad
 !*.color15:      #d4d4d4
 
-! Dracula theme
-! special
-*highlightColor: #44475a
-*.foreground:    #f8f8f2
-*.background:    #000000
-*.cursorColor:   #f8f8f2
-*.color0:        #000000
-*.color8:        #4D4D4D
-*.color1:        #FF5555
-*.color9:        #FF6E67
-*.color2:        #50FA7B
-*.color10:       #5AF78E
-*.color3:        #F1FA8C
-*.color11:       #F4F99D
-*.color4:        #CAA9FA
-*.color12:       #CAA9FA
-*.color5:        #FF79C6
-*.color13:       #FF92D0
-*.color6:        #8BE9FD
-*.color14:       #9AEDFE
-*.color7:        #BFBFBF
-*.color15: 	     #E6E6E6
+*background: #151B1A
+*foreground: #8FA388
+
+! Alternate foreground
+!*foreground: #7E9982
+
+*cursorColor: #9E6438
+
+*color0: #2E2B38
+*color1: #984E66
+*color2: #7A8C54
+*color3: #9E6438
+*color4: #395667
+*color5: #9D916B
+*color6: #536556
+*color7: #828181
+*color8: #474159
+*color9: #A86D56
+*color10: #9FB274
+*color11: #B29F5E
+*color12: #507A91
+*color13: #B89855
+*color14: #7E9982
+*color15: #BDBDA4
