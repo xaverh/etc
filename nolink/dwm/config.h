@@ -26,9 +26,10 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class       instance    title        tags mask     isfloating   monitor */
-	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Code",           NULL,       NULL,        1 << 1,       0,           -1 },
+	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Firefox",        "Places",   "Library",   -1,           1,           -1 },
+	{ "Opera",          NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
 	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
@@ -106,7 +107,6 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_k,          pushup,         {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
 	{ MODKEY,                       XK_q,          killclient,     {0} },
-	{ 0,                            XK_F4,         killclient,     {0} },
 	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[2]} },
@@ -131,6 +131,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 };
 
+#define Button6 6
+#define Button7 7
+#define Button8 8
+
 /* button definitions */
 /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
@@ -146,6 +150,9 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkClientWin,         0,              Button8,        zoom,           {0} },
+	{ ClkClientWin,         0,              Button6,        setmfact,       {.f = -0.05} },
+	{ ClkClientWin,         0,              Button7,        setmfact,       {.f = +0.05} },
 };
 
 /*
