@@ -26,8 +26,9 @@ prepare() {
   patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
   # patch -Np1 < ../dwm-fancybar-6.1.diff
   patch -Np1 < ../dwm-6.1-monocle-symbol_xaverh.diff
-  patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
+  # patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
   patch -Np1 < ../dwm-6.1-optimize_xaverh.diff
+  patch -Np1 < ../dwm-statuscolors-6.1_xaverh.diff
 }
 
 build() {
@@ -44,5 +45,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         '33640f89a5723cbb4524f59fdecf088f'
+         '0c3d9c4f8e942f5a54d882977f9d6939'
          '939f403a71b6e85261d09fc3412269ee')
