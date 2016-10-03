@@ -5,17 +5,20 @@ static const char *fonts[] = {
 	"NotoEmoji:size=10"
 };
 static const char dmenufont[]         = "Screen:size=10";
-static const char normbordercolor[]   = "#bd93f9";
-static const char normbgcolor[]       = "#282a36";
-static const char normfgcolor[]       = "#f8f8f2";
-static const char selbordercolor[]    = "#50fa7b";
-static const char selbgcolor[]        = "#44475a";
-static const char selfgcolor[]        = "#f8f8f2";
 static const unsigned int borderpx    = 3;        /* border pixel of windows */
 static const unsigned int snap        = 10;       /* snap pixel */
 static const int showbar              = 1;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
+#define NUMCOLORS         4
+static const char colors[NUMCOLORS][MAXCOLORS][8] = {
+  // border   foreground background
+  { "#bd93f9", "#f8f8f2", "#282a36" },  // normal
+  { "#50fa7b", "#f8f8f2", "#44475a" },  // selected
+  { "#ff0000", "#000000", "#ffff00" },  // urgent/warning  (black on yellow)
+  { "#ff0000", "#ffffff", "#ff0000" },  // error (white on red)
+  // add more here
+};
 
 /* tagging */
 static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
@@ -62,7 +65,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
 static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
