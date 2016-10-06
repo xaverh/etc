@@ -131,7 +131,7 @@ prompt_grb_setup() {
     pc[default]='default'
     pc[date]='cyan'
     pc[time]='Blue'
-    pc[host]='Green'
+    pc[host]='Yellow'
     pc[user]='cyan'
     pc[punc]='yellow'
     pc[line]='magenta'
@@ -147,7 +147,7 @@ prompt_grb_setup() {
     pc[scm_time_medium]='yellow'
     pc[scm_time_long]='red'
     pc[scm_time_uncommitted]='Magenta'
-    pc[#]='Yellow'
+    pc[#]='blue'
     for cn in ${(k)pc}; do
       pc[${cn}]=$(colorword $pc[$cn])
     done
@@ -173,7 +173,7 @@ prompt_grb_setup() {
 #    PROMPT+="
 #"
 	#PROMPT+="($pc[hist]%h$pc[reset])"
-	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
+	PROMPT+=":$pc[path]%~$pc[reset]"
     PROMPT+="($pc[scm_branch]\$(prompt_wunjo_scm_branch)$pc[reset])"
 	PROMPT+=" $pc[#]%#$pc[reset] "
 
