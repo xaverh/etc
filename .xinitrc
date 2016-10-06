@@ -31,7 +31,6 @@ xset -dpms &
 
 urxvtd --fork --quiet --opendisplay &
 dunst &
-mpd &
 
 # This should be in the accoring config file
 if egrep -iq 'touchpad' /proc/bus/input/devices; then
