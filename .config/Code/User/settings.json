@@ -51,5 +51,23 @@
 		"**/.DS_Store": true,
 		"**/._*": true,
 		"**/*.un~": true
-	}
+	},
+	"beard-color.backgroundColor": "#1e1e1e",
+	"beard-color.foregroundColor": "#f2f0c9",
+	"beard-color.classColor": "#81d8d0",
+	"beard-color.commentColor": "#406847",
+	"beard-color.controlColor": "#9393b0",
+	"beard-color.entityColor": "#b0535e",
+	"beard-color.functionColor": "#fce779",
+	"beard-color.headerColor": "#000080",
+	"beard-color.invalidColor": "#a62844",
+	"beard-color.nameColor": "#bfe3e3",
+	"beard-color.neutralColor": "#606073",
+	"beard-color.numberColor": "#7ba886",
+	"beard-color.punctuationColor": "#5986c9",
+	"beard-color.regexColor": "#6c63a6",
+	"beard-color.sidebarColor": "#252526",
+	"beard-color.stringColor": "#f2b33d",
+	"beard-color.strregColor": "#b0535e",
+	"beard-color.typeColor": "#2484bf"
 }

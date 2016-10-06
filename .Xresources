@@ -6,16 +6,16 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-URxvt.intensityStyles: false
+URxvt.intensityStyles: true
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-! URxvt*font: xft:Menlo:pixelsize=13
-! URxvt*italicFont: xft:Menlo:pixelsize=13:italic
-! URxvt*boldFont: xft:Menlo:pixelsize=13:bold
-! URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
-! URxvt*letterSpace: -1.5
-URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
+URxvt*font: xft:SFMono:pixelsize=13
+URxvt*italicFont: xft:SFMono:pixelsize=13:italic
+URxvt*boldFont: xft:SFMono:pixelsize=13:bold
+URxvt*boldItalicFont: xft:SFMono:pixelsize=13:bold:italic
+URxvt*letterSpace: -2
+! URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+! URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 URxvt.internalBorder:  14
 URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
@@ -24,57 +24,40 @@ URxvt*inheritPixmap: false
 *scrollColor:        	#FFFFFF
 *cursorBlink:			1
 
-!! special
-!*.foreground:   #d4d4d4
-!*.background:   #1e1e1e
-!*.cursorColor:  #d4d4d4
-!! black
-!*.color0:       #333333
-!*.color8:       #1e1e1e
-!! red
-!*.color1:       #f89290
-!*.color9:       #ce9178
-!! green
-!*.color2:       #608b4e
-!*.color10:      #a4d78e
-!! yellow
-!*.color3:       #f7f890
-!*.color11:      #dcdcaa
-!! blue
-!*.color4:       #569cd6
-!! die ist sehr nah an der Kollegin in Cyan
-!*.color12:      #9cdcfe
-!! magenta
-!*.color5:       #8b4e86
-!*.color13:      #c586c0
-!! cyan
-!*.color6:       #4ec9b0
-!*.color14:      #81d8d0
-!! white
-!*.color7:       #adadad
-!*.color15:      #d4d4d4
+! special
+*.foreground:   #f2f0c9
+*.background:   #1e1e1e
+*.cursorColor:  #f2f0c9
 
-*background: #151B1A
-*foreground: #8FA388
+! black
+*.color0:       #1e1e1e
+*.color8:       #373b41
 
-! Alternate foreground
-!*foreground: #7E9982
+! red
+*.color1:       #a62844
+*.color9:       #b0535e
 
-*cursorColor: #9E6438
+! green
+*.color2:       #406847
+*.color10:      #7ba886
 
-*color0: #2E2B38
-*color1: #984E66
-*color2: #7A8C54
-*color3: #9E6438
-*color4: #395667
-*color5: #9D916B
-*color6: #536556
-*color7: #828181
-*color8: #474159
-*color9: #A86D56
-*color10: #9FB274
-*color11: #B29F5E
-*color12: #507A91
-*color13: #B89855
-*color14: #7E9982
-*color15: #BDBDA4
+! yellow
+*.color3:       #f2b33d
+*.color11:      #fce779
+
+! blue
+*.color4:       #2484bf
+*.color12:      #5986c9
+
+! magenta
+*.color5:       #6c63a6
+*.color13:      #9393b0
+
+! cyan
+*.color6:       #81d8d0
+*.color14:      #bfe3e3
+
+! white
+*.color7:       #606073
+*.color15:      #f2f0c9
+
