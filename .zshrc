@@ -233,7 +233,9 @@ if [[ -x /usr/lib/command-not-found || -x /usr/share/command-not-found/command-n
 }
 fi
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 autoload -U promptinit
 promptinit
