@@ -14,9 +14,9 @@ static const unsigned int gappx       = 20;       /* gap pixel between windows (
 #define NUMCOLORS         3
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
-  { "#bd93f9", "#f8f8f2", "#282a36" },  // normal
-  { "#50fa7b", "#f8f8f2", "#44475a" },  // selected
-  { "#bd93f9", "#ff5555", "#282a36" },  // red
+  { "#6c63a6", "#f2f0c9", "#1e1e1e" },  // normal
+  { "#406847", "#f2f0c9", "#373b41" },  // selected
+  { "#a62844", "#a62844", "#1e1e1e" },  // urgent/warning
   // add more here
 };
 

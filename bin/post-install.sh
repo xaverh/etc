@@ -43,6 +43,7 @@ sudo chmod 644 /etc/X11/Xresources
 
 # Dropbox
 systemctl --user enable dropbox
+systemctl --user enable mpd
 
 # linking stuff
 rm -r ~/.config/Code/User || mkdir --parents ~/.config/Code

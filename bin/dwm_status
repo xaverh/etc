@@ -32,13 +32,13 @@ old_time=$now
 print_volume() {
 	volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
 	if amixer get Master | grep -q off; then
-		echo -e "🔇   "
+		echo -e "🔇 | "
 	elif test "$volume" -eq 100; then
-		echo -e "🔊 ${volume} %   "
+		echo -e "🔊 ${volume} % | "
 	elif test "$volume" -gt 0; then
-		echo -e "🔉 ${volume} %   "
+		echo -e "🔉 ${volume} % | "
 	elif test "$volume" -eq 0; then
-		echo -e "🔈 ${volume} %   "
+		echo -e "🔈 ${volume} % | "
 	fi
 }
 
@@ -49,13 +49,13 @@ print_wifi() {
 	then
 		wifi=$(iw wlan0 link | grep SSID | sed 's,.*SSID: ,,')
 		# connectedto=$(iw wlp2s0 link | grep Connected | awk '{print $3}' | cut -c 10-)
-		echo -e "📶 $wifi $ip   "
+		echo -e "📶 $wifi $ip | "
 	fi
 }
 
 print_mem(){
 	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1000))
-	echo -e "$memfree MB   "
+	echo -e "🐏 $memfree MB | "
 }
 
 # print_temp(){
@@ -69,16 +69,16 @@ print_bat(){
 	onl="$(grep "on-line" <(acpi -V))"
 	charge="$(cat /sys/class/power_supply/BAT0/capacity)"
 	if [[ ( -z $onl && ${charge} -gt 20 ) ]]; then
-		echo -e "🔋 ${charge}   "
+		echo -e "🔋 ${charge} | "
 	elif [[ ( -z $onl && ${charge} -le 20 ) ]]; then
-		echo -e "🔋 ${charge}   "
+		echo -e "🔋 ${charge} | "
 	else
-		echo -e "🔋 ${charge}   "
+		echo -e "🔋 ${charge} | "
 	fi
 }
 
 print_date(){
-	date +"%a %e. %R %Z"
+	date +"📅 %a %e. %R %Z"
 }
 
 while true
@@ -90,7 +90,7 @@ do
 	vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
-	xsetroot -name "🐏 $(print_mem)⬇️ $vel_recv   ⬆️ $vel_trans   $(print_wifi)$(print_bat)$(print_volume)📅  $(print_date)"
+	xsetroot -name "$(print_mem)⬇️ $vel_recv | ⬆️ $vel_trans | $(print_wifi)$(print_bat)$(print_volume)$(print_date)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
