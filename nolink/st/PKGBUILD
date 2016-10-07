@@ -13,7 +13,7 @@ url="http://st.suckless.org"
 source=(http://dl.suckless.org/st/$pkgname-$pkgver.tar.gz
         config.h)
 md5sums=('29b2a599cf1511c8062ed8f025c84c63'
-         'a5cd575c78e9ac5ade7ef4e15518e25c')
+         '65e990da20bdbb8f6a71fa60fc846487')
 
 prepare() {
   cd $srcdir/$pkgname-$pkgver
