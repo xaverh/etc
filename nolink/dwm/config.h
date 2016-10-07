@@ -1,7 +1,7 @@
 /* appearance */
 static const char *fonts[] = {
 	"SFMono:size=10",
-	"Screen:size=10",
+	// "Screen:size=10",
 	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
@@ -21,7 +21,8 @@ static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 };
 
 /* tagging */
-static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
+// static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
+static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const Rule rules[] = {
 	/* xprop(1):
