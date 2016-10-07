@@ -45,5 +45,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         '0c3d9c4f8e942f5a54d882977f9d6939'
+         'f7dd0e82674696b36b4b4f3b351132e8'
          '939f403a71b6e85261d09fc3412269ee')

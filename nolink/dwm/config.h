@@ -1,27 +1,28 @@
 /* appearance */
 static const char *fonts[] = {
-	"Screen:size=10",
+	"SFMono:size=10",
+	// "Screen:size=10",
 	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]         = "Screen:size=10";
+static const char dmenufont[]         = "SFMono:size=10";
 static const unsigned int borderpx    = 3;        /* border pixel of windows */
 static const unsigned int snap        = 10;       /* snap pixel */
 static const int showbar              = 1;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
-#define NUMCOLORS         4
+#define NUMCOLORS         3
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
   { "#bd93f9", "#f8f8f2", "#282a36" },  // normal
   { "#50fa7b", "#f8f8f2", "#44475a" },  // selected
-  { "#ff0000", "#000000", "#ffff00" },  // urgent/warning  (black on yellow)
-  { "#ff0000", "#ffffff", "#ff0000" },  // error (white on red)
+  { "#bd93f9", "#ff5555", "#282a36" },  // red
   // add more here
 };
 
 /* tagging */
-static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
+// static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
+static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
 static const Rule rules[] = {
 	/* xprop(1):
