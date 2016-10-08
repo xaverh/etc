@@ -21,8 +21,8 @@ static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 };
 
 /* tagging */
-// static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
-static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+static const char *tags[] = { "🏄", "⌨", "🎸", "🎮", "🍺", "🚽" };
+/* static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }; */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -36,7 +36,7 @@ static const Rule rules[] = {
 	{ "Opera",          NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
+	{ "Steam",          NULL,       NULL,        1 << 3,       0,           -1 },
 	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
 	{ "URxvt",          "cava",     NULL,        1 << 2,       1,           -1 },
 	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 }
