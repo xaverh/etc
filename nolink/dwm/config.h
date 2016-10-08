@@ -37,7 +37,7 @@ static const Rule rules[] = {
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
 	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
-	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
+	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       0,           -1 },
 	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 }
 };
 
