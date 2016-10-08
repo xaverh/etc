@@ -29,6 +29,7 @@ prepare() {
   # patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
   patch -Np1 < ../dwm-6.1-optimize_xaverh.diff
   patch -Np1 < ../dwm-statuscolors-6.1_xaverh.diff
+  patch -Np1 < ../dwm-6.1-barheight_xaverh.diff
 }
 
 build() {
