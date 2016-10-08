@@ -81,6 +81,10 @@ print_date(){
 	date +"📅 %a %e. %R %Z"
 }
 
+print_song(){
+	mpc status | grep -q playing && mpc current -f "📻 %artist% – %title% #| "
+}
+
 while true
 do
 	# Get new transmitted, received byte number values and current time
@@ -90,7 +94,7 @@ do
 	vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
-	xsetroot -name "$(print_mem)⬇️ $vel_recv | ⬆️ $vel_trans | $(print_wifi)$(print_bat)$(print_volume)$(print_date)"
+	xsetroot -name "$(print_song)$(print_mem)⬇️ $vel_recv | ⬆️ $vel_trans | $(print_wifi)$(print_bat)$(print_volume)$(print_date)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
