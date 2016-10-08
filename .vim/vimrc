@@ -156,6 +156,9 @@ map <leader>tm :tabmove
 map j gj
 map k gk
 
+" Map öö to the Esc functionality
+inoremap öö <Esc>
+
 " Always show filetypes in menu
 if has('gui_running')
 	let do_syntax_sel_menu = 1|runtime~! synmenu.vim|aunmenu &Syntax.&Show\ filetypes\ in\ menu
