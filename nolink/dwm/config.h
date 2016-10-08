@@ -15,7 +15,7 @@ static const unsigned int gappx       = 20;       /* gap pixel between windows (
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
   { "#6c63a6", "#f2f0c9", "#1e1e1e" },  // normal
-  { "#f2b33d", "#f2f0c9", "#373b41" },  // selected
+  { "#f2b33d", "#f2b33d", "#1e1e1e" },  // selected
   { "#a62844", "#a62844", "#1e1e1e" },  // urgent/warning
   // add more here
 };
