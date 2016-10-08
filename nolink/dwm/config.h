@@ -21,8 +21,8 @@ static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 };
 
 /* tagging */
-static const char *tags[] = { "🏄", "⌨", "🎸", "🎮", "🍺", "🚽" };
-/* static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }; */
+static const char *tags[] = { "🏄", "👓", "🎸", "🎮", "🍺", "🌴", "🚽" };
+// static const char *tags[] = { "i", "ii", "iii", "iv", "v", "vi" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -49,9 +49,10 @@ static const int resizehints = 1;      /* 1 means respect size hints in tiled re
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "🔪",      tile },    /* first entry is default */
+	// { "🔪",      tile },    /* first entry is default */
+	{ "🍱",     tile},
 	{ "☁️",      NULL },    /* no layout function means floating behavior */
-	{ "👓",      monocle },
+	{ "🎦",     monocle },
 };
 
 /* key definitions */
@@ -69,7 +70,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
-static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi && urxvtc --geometry 80x24+10000+100 -name cava -e cava", NULL };
+static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "pgrep ncmpcpp || (urxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nfi && urxvtc --geometry 50x24+1790+100 -name cava -e cava); mpc play", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *playnextcmd[] = {"playerctl", "next", NULL};
