@@ -111,7 +111,7 @@ systemctl start wpa_supplicant@wlan0
 pacman -Sq --noconfirm --needed libdvdcss
 
 # users
-useradd xha -m -g users -G wheel,storage,power,network,video,audio,lp -s /usr/bin/zsh
+useradd xha -m -G wheel -s /usr/bin/zsh
 passwd xha
 visudo
 
