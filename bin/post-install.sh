@@ -12,7 +12,7 @@ cd yaah
 makepkg -si
 
 cd ~/aur
-yaah python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet
+yaah python-patch python-monotonic python-fasteners spotify sgi-fonts urxvtcd conan dropbox sprunge farbfeld toilet cava-git
 # Pakete installieren
 
 mkdir ~/src
