@@ -77,6 +77,12 @@ Fix_steam() {
 	find ~/.steam/root/ -name "libgpg-error.so*" -print -delete
 }
 
+Why_no_steam() {
+	cd ~/.local/share/Steam/ubuntu12_32
+	LD_LIBRARY_PATH=".:${LD_LIBRARY_PATH}" ldd $(file *|sed '/ELF/!d;s/:.*//g') | grep 'not found' | sort | uniq
+	cd ~1
+}
+
 global-alias-space(){
 	local ga="$LBUFFER[(w)-1]"
 	[[ -n $ga ]] && LBUFFER[(w)-1]="${${galiases[$ga]}:-$ga}"
