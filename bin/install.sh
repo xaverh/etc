@@ -104,8 +104,13 @@ pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
 ln -s /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.bak
 chmod a+r /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+# ctrl_interface=/var/run/wpa_supplicant
+# eapol_version=1
+# ap_scan=1
+# fast_reauth=1
 systemctl enable wpa_supplicant@wlan0
 systemctl start wpa_supplicant@wlan0
+# wpa_passphrase
 
 # DVD?
 pacman -Sq --noconfirm --needed libdvdcss
