@@ -34,7 +34,8 @@
 	"clang.completion.enable": false,
 	"files.autoSave": "afterDelay",
 	"editor.fontLigatures": true,
-	"editor.renderWhitespace": false,
+	"editor.renderWhitespace": "none",
+	"editor.formatOnSave": true,
 	// "terminal.integrated.shell.windows": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
 	// kann das in eine Erweiterung?
 	"files.associations": {
