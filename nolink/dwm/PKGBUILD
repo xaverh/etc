@@ -27,9 +27,10 @@ prepare() {
   # patch -Np1 < ../dwm-fancybar-6.1.diff
   patch -Np1 < ../dwm-6.1-monocle-symbol_xaverh.diff
   # patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
-  patch -Np1 < ../dwm-6.1-optimize_xaverh.diff
+  # patch -Np1 < ../dwm-6.1-optimize_xaverh.diff
   patch -Np1 < ../dwm-statuscolors-6.1_xaverh.diff
   patch -Np1 < ../dwm-6.1-barheight_xaverh.diff
+  patch -Np1 < ../dwm-pertag-6.1.diff
 }
 
 build() {
