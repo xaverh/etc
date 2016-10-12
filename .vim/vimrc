@@ -106,7 +106,8 @@ if has('gui_running')
 	set columns=86
 	set lines=34
 endif
-color dracula
+let g:hybrid_custom_term_colors = 1
+color hybrid
 set background=dark
 "if has('gui_running')
 	"set background=light
