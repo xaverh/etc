@@ -43,7 +43,7 @@ ls -l /dev/disk/by-uuid/ >> /boot/loader/entries/arch.conf
 vi /boot/loader/entries/arch.conf
 
 vi /etc/mkinitcpio.conf
-# put "resume" behind "udev"
+# replace "udev" with "systemd"
 
 mkinitcpio -p linux
 
