@@ -1,2 +1,4 @@
 set font "SFMono"
 set adjust-open "width"
+set inputbar-bg "#131313"
+set inputbar-fg "#f2f0c9"

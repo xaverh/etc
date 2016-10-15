@@ -21,9 +21,7 @@ pacstrap /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
 vi /mnt/etc/fstab
 # add discard for ssds
-arch-chroot /mnt
-
-mkinitcpio -p linux
+arch-chroot /mnt /bin/bash
 
 passwd
 
@@ -40,9 +38,14 @@ bootctl --path=/boot install
 
 cp /usr/share/systemd/bootctl/loader.conf /boot/loader.conf
 cp /usr/share/systemd/bootctl/arch.conf /boot/loader/entries/
-# get PARTUUID, put in arch.conf, and then tidy that mess!
-ls -l /dev/disk/by-partuuid/ >> /boot/loader/entries/arch.conf
+# get UUID for root=UUID=<uuid of /> and resume=UUID=<uuid of swap>, it put in arch.conf, and then tidy that mess!
+ls -l /dev/disk/by-uuid/ >> /boot/loader/entries/arch.conf
 vi /boot/loader/entries/arch.conf
+
+vi /etc/mkinitcpio.conf
+# put "resume" behind "udev"
+
+mkinitcpio -p linux
 
 exit
 
