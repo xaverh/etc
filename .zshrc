@@ -69,7 +69,7 @@ alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
 alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
-alias pacman='pacman --color=auto'
+# alias pacman='pacman --color=auto'
 alias sudo='sudo '
 
 Fix_steam() {
