@@ -84,6 +84,7 @@ static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "tog
 static const char *lockcmd[]  = { "slock", NULL };
 static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
 static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
+static const char *screenshotcmd[] = { "scrot", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -138,7 +139,8 @@ static Key keys[] = {
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ 0,							0x1008f002,	   spawn,          {.v = brightnessupcmd} },
-	{ 0,							0x1008f003,    spawn,          {.v = brightnessdowncmd} }
+	{ 0,							0x1008f003,    spawn,          {.v = brightnessdowncmd} },
+	{ 0, 							0xff61,        spawn,          {.v = screenshotcmd} }
 };
 
 #define Button6 6
