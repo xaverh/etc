@@ -1,6 +1,6 @@
 {
-	"editor.fontFamily": "SF Mono, PragmataPro, Consolas, Menlo, Consolas, Source Code Pro, Fira Mono, Ubuntu Mono",
-	"editor.fontSize": 13,
+	"editor.fontFamily": "Fira Mono, SF Mono, Consolas, Source Code Pro",
+	"editor.fontSize": 12,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
 		80
@@ -42,6 +42,7 @@
 		"*.clang-format": "yaml",
 		"autostart": "shellscript",
 		"*.npmrc": "ini",
+		"*.service": "ini",
 		"*.h": "c"
 	},
 	"workbench.editor.showTabs": true,
