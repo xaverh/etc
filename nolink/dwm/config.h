@@ -82,6 +82,8 @@ static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Mast
 static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
 static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
+static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
+static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -135,6 +137,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                          8)
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
+	{ 0,							0x1008f002,	   spawn,          {.v = brightnessupcmd} },
+	{ 0,							0x1008f003,    spawn,          {.v = brightnessdowncmd} }
 };
 
 #define Button6 6
