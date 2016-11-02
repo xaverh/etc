@@ -1,6 +1,6 @@
 {
-	"editor.fontFamily": "Fira Mono, SF Mono, Consolas, Source Code Pro",
-	"editor.fontSize": 12,
+	"editor.fontFamily": "SF Mono, Consolas, Source Code Pro",
+	"editor.fontSize": 13,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
 		80
@@ -8,8 +8,8 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wrappingColumn": 0,
-	"editor.wrappingIndent": "indent",
+	"editor.wrappingColumn": -1,
+	"editor.wrappingIndent": "same",
 	"editor.tabSize": 4,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
 	"editor.insertSpaces": false,
@@ -31,7 +31,7 @@
 		"-std=c11",
 		"-Weverything"
 	],
-	"clang.completion.enable": false,
+	// "clang.completion.enable": false,
 	"files.autoSave": "afterDelay",
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
