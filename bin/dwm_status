@@ -49,6 +49,7 @@ print_wifi() {
 	then
 		wifi=$(iw wlan0 link | grep SSID | sed 's,.*SSID: ,,')
 		# connectedto=$(iw wlp2s0 link | grep Connected | awk '{print $3}' | cut -c 10-)
+		# TODO: Wifi sign appears even if laptop is connected to ethernet
 		echo -e "📶 $wifi $ip | "
 	fi
 }
@@ -81,6 +82,10 @@ print_date(){
 	date +"📅 %a %e. %R %Z"
 }
 
+print_song(){
+	mpc status | grep -q playing && mpc current -f "📻 %artist% – %title% #| "
+}
+
 while true
 do
 	# Get new transmitted, received byte number values and current time
@@ -90,7 +95,7 @@ do
 	vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
-	xsetroot -name "$(print_mem)⬇️ $vel_recv | ⬆️ $vel_trans | $(print_wifi)$(print_bat)$(print_volume)$(print_date)"
+	xsetroot -name "$(print_song)$(print_mem)⬇️ $vel_recv | ⬆️ $vel_trans | $(print_wifi)$(print_bat)$(print_volume)$(print_date)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes

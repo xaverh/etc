@@ -1,2 +1,4 @@
-set font "Screen"
+set font "SFMono 8"
 set adjust-open "width"
+set default-bg "#131313"
+set default-fg "#f2f0c9"

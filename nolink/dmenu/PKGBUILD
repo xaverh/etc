@@ -18,7 +18,9 @@ md5sums=('6fedf081133bc0725cb040b3b8ac3fac')
 
 prepare() {
   cd $srcdir/$pkgname-$pkgver
+  cp $srcdir/config.h config.h
   patch -Np1 < ../dmenu-4.6-window-name_xaverh.diff
+  patch -Np1 < ../dmenu-lineheight-4.6.diff
 }
 
 build() {
