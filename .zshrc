@@ -69,12 +69,18 @@ alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
 alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
-alias pacman='pacman --color=auto'
-alias sudo='sudo '
+# alias pacman='pacman --color=auto'
+# alias sudo='sudo '
 
 Fix_steam() {
 	find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete
 	find ~/.steam/root/ -name "libgpg-error.so*" -print -delete
+}
+
+Why_no_steam() {
+	cd ~/.local/share/Steam/ubuntu12_32
+	LD_LIBRARY_PATH=".:${LD_LIBRARY_PATH}" ldd $(file *|sed '/ELF/!d;s/:.*//g') | grep 'not found' | sort | uniq
+	cd ~1
 }
 
 global-alias-space(){

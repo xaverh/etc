@@ -15,14 +15,14 @@ static const unsigned int gappx       = 20;       /* gap pixel between windows (
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
   { "#6c63a6", "#f2f0c9", "#1e1e1e" },  // normal
-  { "#f2b33d", "#f2f0c9", "#373b41" },  // selected
+  { "#f2b33d", "#f2b33d", "#1e1e1e" },  // selected
   { "#a62844", "#a62844", "#1e1e1e" },  // urgent/warning
   // add more here
 };
 
 /* tagging */
-// static const char *tags[] = { "🏄", "🏢", "🎸", "📖", "📧", "♠️", "❓", "🍺", "🚽" };
-static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+static const char *tags[] = { "🏄", "👓", "🎸", "🎮", "🍺", "🌴", "🚽" };
+// static const char *tags[] = { "i", "ii", "iii", "iv", "v", "vi" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -36,8 +36,9 @@ static const Rule rules[] = {
 	{ "Opera",          NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "Steam",          NULL,       NULL,        1 << 5,       0,           -1 },
+	{ "Steam",          NULL,       NULL,        1 << 3,       0,           -1 },
 	{ "URxvt",          "ncmpcpp",  NULL,        1 << 2,       1,           -1 },
+	{ "URxvt",          "cava",     NULL,        1 << 2,       1,           -1 },
 	{ "vivaldi-stable", NULL,       NULL,        1 << 0,       0,           -1 }
 };
 
@@ -48,9 +49,10 @@ static const int resizehints = 1;      /* 1 means respect size hints in tiled re
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "🔪",      tile },    /* first entry is default */
+	// { "🔪",      tile },    /* first entry is default */
+	{ "🍱",     tile},
 	{ "☁️",      NULL },    /* no layout function means floating behavior */
-	{ "👓",      monocle },
+	{ "🎦",     monocle },
 };
 
 /* key definitions */
@@ -66,9 +68,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
+static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-lh", "24", "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
 static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
-static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 140x40+100+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+100+100  -name ncmpcpp -e ncmpcpp\nfi", NULL };
+static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "pgrep ncmpcpp || (urxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nfi && urxvtc --geometry 50x24+1790+100 -name cava -e cava); mpc play", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *playnextcmd[] = {"playerctl", "next", NULL};
@@ -80,6 +82,9 @@ static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Mast
 static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
 static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
+static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
+static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
+static const char *screenshotcmd[] = { "scrot", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -133,6 +138,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                          8)
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
+	{ 0,							0x1008f002,	   spawn,          {.v = brightnessupcmd} },
+	{ 0,							0x1008f003,    spawn,          {.v = brightnessdowncmd} },
+	{ 0, 							0xff61,        spawn,          {.v = screenshotcmd} }
 };
 
 #define Button6 6

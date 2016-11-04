@@ -106,7 +106,8 @@ if has('gui_running')
 	set columns=86
 	set lines=34
 endif
-color dracula
+let g:hybrid_custom_term_colors = 1
+color hybrid
 set background=dark
 "if has('gui_running')
 	"set background=light
@@ -155,6 +156,9 @@ map <leader>tm :tabmove
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
+
+" Map öö to the Esc functionality
+inoremap öö <Esc>
 
 " Always show filetypes in menu
 if has('gui_running')
