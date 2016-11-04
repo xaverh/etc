@@ -131,7 +131,7 @@ prompt_grb_setup() {
     pc[default]='default'
     pc[date]='cyan'
     pc[time]='Blue'
-    pc[host]='Yellow'
+    pc[host]='yellow'
     pc[user]='cyan'
     pc[punc]='yellow'
     pc[line]='magenta'
