@@ -2,7 +2,7 @@
 
 _pkgname=sent
 pkgname=${_pkgname}-git
-pkgver=r111.efea657
+pkgver=r116.0ff43aa
 pkgrel=1
 pkgdesc="Simple plain-text presentation tool"
 arch=('i686' 'x86_64')
