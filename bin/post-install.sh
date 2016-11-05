@@ -73,5 +73,7 @@ mkdir ~/bin
 ln -s ~/src/dotfiles/bin/dwm_status ~/bin
 mkdir --parents ~/.config/ranger
 ln -s ~/src/.config/ranger/rc.conf ~/.config/ranger/
+rmdir ~/.config/mpv
+ln -s ~/src/dotfiles/.config/mpv/ ~/.config
 
 reboot
