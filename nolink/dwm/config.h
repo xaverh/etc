@@ -138,8 +138,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                          8)
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
-	{ 0,							0x1008f002,	   spawn,          {.v = brightnessupcmd} },
-	{ 0,							0x1008f003,    spawn,          {.v = brightnessdowncmd} },
+	{ 0,							0x1008ff02,	   spawn,          {.v = brightnessupcmd} },
+	{ 0,							0x1008ff03,    spawn,          {.v = brightnessdowncmd} },
 	{ 0, 							0xff61,        spawn,          {.v = screenshotcmd} }
 };
 
