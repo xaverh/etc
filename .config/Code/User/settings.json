@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "SF Mono, Consolas, Source Code Pro",
+	"editor.fontFamily": "SF Mono, Menlo, Consolas, Source Code Pro",
 	"editor.fontSize": 13,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
@@ -71,5 +71,6 @@
 	"beard-color.sidebarColor": "#252526",
 	"beard-color.stringColor": "#f2b33d",
 	"beard-color.strregColor": "#b0535e",
-	"beard-color.typeColor": "#2484bf"
+	"beard-color.typeColor": "#2484bf",
+	"git.confirmSync": false
 }
