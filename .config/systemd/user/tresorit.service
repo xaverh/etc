@@ -1,0 +1,10 @@
+[Unit]
+Description=Keybase
+After=network.target
+
+[Service]
+ExecStart=/home/xha/.local/share/tresorit/tresorit --hidden
+
+[Install]
+WantedBy=default.target
+
