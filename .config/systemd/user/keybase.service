@@ -1,0 +1,10 @@
+[Unit]
+Description=Keybase
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/keybase -d service
+
+[Install]
+WantedBy=default.target
+

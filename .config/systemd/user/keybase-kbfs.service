@@ -1,0 +1,9 @@
+[Unit]
+Description=Keybase KBFS
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/kbfsfuse -debug /keybase
+
+[Install]
+WantedBy=default.target
