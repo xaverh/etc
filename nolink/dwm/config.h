@@ -85,6 +85,14 @@ static const char *lockcmd[]  = { "slock", NULL };
 static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
 static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
 static const char *screenshotcmd[] = { "scrot", NULL };
+// static const char *feh0cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/0.jpg", NULL };
+// static const char *feh1cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/1.jpg", NULL };
+// static const char *feh2cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/2.jpg", NULL };
+// static const char *feh3cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/3.jpg", NULL };
+// static const char *feh4cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/4.jpg", NULL };
+// static const char *feh5cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/5.jpg", NULL };
+// static const char *feh6cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/6.jpg", NULL };
+// static const char *feh7cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/7.jpg", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -127,6 +135,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = +1 } },
+	// { MODKEY,						XK_0,          spawn,          {.v = feh0cmd}},
+	// { MODKEY,						XK_1,          spawn,          {.v = feh1cmd}},
+	// { MODKEY,						XK_2,          spawn,          {.v = feh2cmd}},
+	// { MODKEY,						XK_3,          spawn,          {.v = feh3cmd}},
+	// { MODKEY,						XK_4,          spawn,          {.v = feh4cmd}},
+	// { MODKEY,						XK_5,          spawn,          {.v = feh5cmd}},
+	// { MODKEY,						XK_6,          spawn,          {.v = feh6cmd}},
+	// { MODKEY,						XK_7,          spawn,          {.v = feh7cmd}},
 	TAGKEYS(                        XK_1,                          0)
 	TAGKEYS(                        XK_2,                          1)
 	TAGKEYS(                        XK_3,                          2)
@@ -134,8 +150,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,                          4)
 	TAGKEYS(                        XK_6,                          5)
 	TAGKEYS(                        XK_7,                          6)
-	TAGKEYS(                        XK_8,                          7)
-	TAGKEYS(                        XK_9,                          8)
+	// TAGKEYS(                        XK_8,                          7)
+	// TAGKEYS(                        XK_9,                          8)
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ 0,							0x1008ff02,	   spawn,          {.v = brightnessupcmd} },
