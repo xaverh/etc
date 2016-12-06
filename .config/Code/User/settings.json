@@ -72,5 +72,6 @@
 	"beard-color.stringColor": "#f2b33d",
 	"beard-color.strregColor": "#b0535e",
 	"beard-color.typeColor": "#2484bf",
-	"git.confirmSync": false
+	"git.confirmSync": false,
+	"window.zoomLevel": 0
 }
