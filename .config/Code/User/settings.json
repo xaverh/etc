@@ -16,7 +16,6 @@
 	"window.openFilesInNewWindow": true,
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
-	"javascript.suggest.useCodeSnippetsOnMethodSuggest": true,
 	"clang.cxxflags": [
 		"-std=c++14",
 		"-pedantic",
