@@ -73,5 +73,7 @@
 	"beard-color.strregColor": "#b0535e",
 	"beard-color.typeColor": "#2484bf",
 	"git.confirmSync": false,
-	"window.zoomLevel": 0
+	"window.zoomLevel": 0,
+	"window.fullScreenZenMode": true,
+	"workbench.editor.showTabCloseButton": false
 }
