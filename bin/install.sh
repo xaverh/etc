@@ -116,7 +116,7 @@ systemctl enable --now wpa_supplicant@wlan0
 # wpa_passphrase
 
 # DVD?
-pacman -Sq --noconfirm --needed libdvdcss
+pacman -Sq --noconfirm --needed libdvdcss dvd+rw-tools
 
 # SSD?
 systemctl enable fstrim.timer
