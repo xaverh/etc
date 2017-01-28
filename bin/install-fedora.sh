@@ -1,5 +1,12 @@
 sudo dnf -y install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-`rpm -E %fedora`.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-`rpm -E %fedora`.noarch.rpm http://linuxdownload.adobe.com/adobe-release/adobe-release-`uname -m`-1.0-1.noarch.rpm http://rpm.livna.org/livna-release.rpm
 
+sudo dnf config-manager --add-repo=http://negativo17.org/repos/fedora-steam.repo
+sudo dnf config-manager --add-repo=http://negativo17.org/repos/fedora-spotify.repo
+
+sudo dnf upgrade
+
+sudo dnf -y install gnome-tweak-tool freetype-freeworld  gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs youtube-dl steam flash-plugin vim-enhanced p7zip libdvdcss texlive-scheme-medium evince-djvu evince-dvi @c-development p7zip-plugins @gnome-games clang flac nautilus-dropbox spotify-client
+
 # sudo dnf -y install clipit xfce4-power-manager \
 # catfish \
 # gimp transmission libreoffice gmrun arandr \
@@ -44,7 +51,7 @@ sudo dnf install xclip tint2 pcmanfm conky tumbler tumbler-extras zathura-plugin
 
 # http://wiki.ubuntuusers.de/Canon_Pixma_Scanner # braucht Neustart
 
-# von Beta-Versionen aus immer: yum synchronize-distribution
+# von Beta-Versionen aus immer: dnf distro-sync
 
 # artwiz-aleczapka-fonts levien-inconsolata-fonts cmus aria2 dvd+rw-tools wodim
 # dunst
@@ -55,6 +62,7 @@ sudo dnf install xclip tint2 pcmanfm conky tumbler tumbler-extras zathura-plugin
 
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
+sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
 
 # To make the change permanent, write vm.swappiness=1 on your /etc/sysctl.conf
 # file.

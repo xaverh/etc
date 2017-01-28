@@ -1,6 +1,6 @@
 {
-	"editor.fontFamily": "SF Mono, Menlo, Consolas, Source Code Pro",
-	"editor.fontSize": 13,
+	"editor.fontFamily": "PragmataPro, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
+	"editor.fontSize": 15,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
 		80
@@ -8,7 +8,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wrappingColumn": -1,
+	"editor.wrappingColumn": 0,
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 4,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
@@ -31,7 +31,7 @@
 		"-Weverything"
 	],
 	// "clang.completion.enable": false,
-	"files.autoSave": "afterDelay",
+	"files.autoSave": "off",
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
 	"editor.formatOnSave": true,
@@ -74,5 +74,6 @@
 	"git.confirmSync": false,
 	"window.zoomLevel": 0,
 	"window.fullScreenZenMode": true,
-	"workbench.editor.showTabCloseButton": false
+	"workbench.statusBar.visible": true,
+	"C_Cpp.formatting": "disabled"
 }
