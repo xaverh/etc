@@ -1,0 +1,36 @@
+.colors {
+	foregroundColor: #d4d4d4;
+	backgroundColor: #1e1e1e;
+	/* not sure if this is useable; #f3f3f3 on the light theme */
+	sidebarColor: #252526;
+	/* usually dark green */
+	commentColor: #608b4e;
+	/* usually dark blue */
+	typeColor: #569cd6;
+	/* usually light green */
+	numberColor: #b5cea8;
+	/* usually light blue */
+	nameColor: #9cdcfe;
+	/* usually salmon */
+	stringColor: #ce9178;
+	/* usually light purple */
+	controlColor: #c586c0;
+	/* usually light yellow */
+	functionColor: #DCDCAA;
+	/* usually dark purple */
+	regexColor: #646695;
+	/* usually dark yellow */
+	entityColor: #d7ba7d;
+	/* usually dark red */
+	invalidColor: #f44747;
+	/* usually neutral grey */
+	neutralColor: #808080;
+	/* usually cyan */
+	classColor: #4EC9B0;
+	/* usually light red */
+	strregColor: #d16969;
+	/* usually medium blue */
+	punctuationColor: #6796e6;
+	/* usually intense blue; not yet seen in reality */
+	headerColor: #000080;
+}
