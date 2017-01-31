@@ -101,7 +101,7 @@ pacman -Syu
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 lspci | grep -e VGA -e 3D
 
-pacman --needed -S  zsh rxvt-unicode vim clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst scrot jsoncpp feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} libstdc++5 llvm imagemagick unrar slock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip ranger xorg{,-apps,-fonts} firefox steam openmp texlive-most lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins pulseaudio pulseaudio-alsa pamixer alsa-utils bc aria2 lxappearance compton w3m mac cmatrix lolcat ttf-dejavu iperf3
+pacman --needed -S  zsh rxvt-unicode vim clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst scrot jsoncpp feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} libstdc++5 llvm imagemagick unrar slock git abs mpd ncmpcpp unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs mpc p7zip ranger xorg{,-apps,-fonts} firefox steam steam-native-runtime gst-plugins-good gst-libav openmp texlive-most lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins pulseaudio pulseaudio-alsa pamixer alsa-utils bc aria2 lxappearance compton w3m mac cmatrix lolcat ttf-dejavu iperf3
 
 # Laptop?
 pacman -Sq --noconfirm --needed xf86-input-synaptics acpi wpa_supplicant iw
@@ -116,7 +116,7 @@ systemctl enable --now wpa_supplicant@wlan0
 # wpa_passphrase
 
 # DVD?
-pacman -Sq --noconfirm --needed libdvdcss
+pacman -Sq --noconfirm --needed libdvdcss dvd+rw-tools
 
 # SSD?
 systemctl enable fstrim.timer

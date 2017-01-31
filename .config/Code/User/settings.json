@@ -1,6 +1,6 @@
 {
-	"editor.fontFamily": "SF Mono, Menlo, Consolas, Source Code Pro",
-	"editor.fontSize": 13,
+	"editor.fontFamily": "PragmataPro, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
+	"editor.fontSize": 15,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
 		80
@@ -8,7 +8,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wrappingColumn": -1,
+	"editor.wrappingColumn": 0,
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 4,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
@@ -16,7 +16,6 @@
 	"window.openFilesInNewWindow": true,
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
-	"javascript.suggest.useCodeSnippetsOnMethodSuggest": true,
 	"clang.cxxflags": [
 		"-std=c++14",
 		"-pedantic",
@@ -32,7 +31,7 @@
 		"-Weverything"
 	],
 	// "clang.completion.enable": false,
-	"files.autoSave": "afterDelay",
+	"files.autoSave": "off",
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
 	"editor.formatOnSave": true,
@@ -72,5 +71,9 @@
 	"beard-color.stringColor": "#f2b33d",
 	"beard-color.strregColor": "#b0535e",
 	"beard-color.typeColor": "#2484bf",
-	"git.confirmSync": false
+	"git.confirmSync": false,
+	"window.zoomLevel": 0,
+	"window.fullScreenZenMode": true,
+	"workbench.statusBar.visible": true,
+	"C_Cpp.formatting": "disabled"
 }
