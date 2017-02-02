@@ -42,4 +42,6 @@ numlockx &
 
 dwm_status &
 
+syndaemon -i 0.5 -t -K -R &
+
 exec dwm
