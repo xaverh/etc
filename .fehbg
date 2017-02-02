@@ -1,2 +1,3 @@
 #!/bin/sh
+# feh  --bg-fill --no-fehbg '/home/xha/Dropbox/Keira Knightley.png'
 feh --randomize --bg-fill --no-fehbg ~/Dropbox/Wallpapers/USA/*
