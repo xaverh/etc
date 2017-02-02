@@ -3,9 +3,11 @@ sudo dnf -y install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-re
 sudo dnf config-manager --add-repo=http://negativo17.org/repos/fedora-steam.repo
 sudo dnf config-manager --add-repo=http://negativo17.org/repos/fedora-spotify.repo
 
+sudo dnf config-manager --set-enabled fedora-cisco-openh264
+
 sudo dnf upgrade
 
-sudo dnf -y install gnome-tweak-tool freetype-freeworld  gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs youtube-dl steam flash-plugin vim-enhanced p7zip libdvdcss texlive-scheme-medium evince-djvu evince-dvi @c-development p7zip-plugins @gnome-games clang flac nautilus-dropbox spotify-client
+sudo dnf -y install gnome-tweak-tool freetype-freeworld  gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs youtube-dl steam flash-plugin vim-enhanced p7zip libdvdcss texlive-scheme-medium evince-djvu evince-dvi @c-development p7zip-plugins @gnome-games clang flac nautilus-dropbox spotify-client gstreamer1-plugin-openh264 mozilla-openh264 gstreamer1-vaapi ffmpeg
 
 # sudo dnf -y install clipit xfce4-power-manager \
 # catfish \
