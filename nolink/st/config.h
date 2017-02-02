@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-// static char font[] = "SFMono:13";
-static char font[] = "-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*";
+static char font[] = "SFMono:13";
+// static char font[] = "-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*";
 static int borderpx = 20;
 
 /*
