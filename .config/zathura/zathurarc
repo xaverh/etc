@@ -1,4 +1,4 @@
-set font "SFMono 8"
+set font "PragmataPro 8"
 set adjust-open "width"
-set default-bg "#131313"
-set default-fg "#f2f0c9"
+set default-bg "#1e1e1e"
+set default-fg "#d4d4d4"
