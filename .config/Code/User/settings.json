@@ -13,7 +13,6 @@
 	"editor.tabSize": 4,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
 	"editor.insertSpaces": false,
-	"window.openFilesInNewWindow": true,
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
 	// "clang.cxxflags": [
