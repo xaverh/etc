@@ -1,5 +1,6 @@
 /* appearance */
 static const char *fonts[] = {
+	// "SystemFont:size=11",
 	"PragmataPro:size=10",
 	// "SFMono:size=10",
 	// "Screen:size=10",
@@ -10,20 +11,20 @@ static const char dmenufont[]         = "PragmataPro:size=10";
 static const unsigned int borderpx    = 3;        /* border pixel of windows */
 static const unsigned int snap        = 10;       /* snap pixel */
 static const int showbar              = 1;        /* 0 means no bar */
-static const int topbar               = 1;        /* 0 means bottom bar */
+static const int topbar               = 0;        /* 0 means bottom bar */
 static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
 #define NUMCOLORS         3
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
-  { "#6c63a6", "#f2f0c9", "#1e1e1e" },  // normal
-  { "#f2b33d", "#f2b33d", "#1e1e1e" },  // selected
-  { "#a62844", "#a62844", "#1e1e1e" },  // urgent/warning
+  { "#608b4e", "#d4d4d4", "#1e1e1e" },  // normal
+  { "#d7ba7d", "#d7ba7d", "#1e1e1e" },  // selected
+  { "#f44747", "#f44747", "#1e1e1e" },  // urgent/warning
   // add more here
 };
 
 /* tagging */
 static const char *tags[] = { "🏄", "👓", "🎸", "🎮", "🍺", "🌴", "🚽" };
-// static const char *tags[] = { "i", "ii", "iii", "iv", "v", "vi" };
+// static const char *tags[] = { "i", "ii", "iii", "iv", "v", "vi", "vii" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -54,6 +55,9 @@ static const Layout layouts[] = {
 	{ "🍱",     tile},
 	{ "☁️",      NULL },    /* no layout function means floating behavior */
 	{ "🎦",     monocle },
+	// { "[]=",     tile},
+	// { "<><",      NULL },    /* no layout function means floating behavior */
+	// { "[M]",     monocle },
 };
 
 /* key definitions */
