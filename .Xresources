@@ -9,11 +9,15 @@ Xft.lcdfilter: lcddefault
 URxvt.intensityStyles: true
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-URxvt*font: xft:SFMono:pixelsize=13
-URxvt*italicFont: xft:SFMono:pixelsize=13:italic
-URxvt*boldFont: xft:SFMono:pixelsize=13:bold
-URxvt*boldItalicFont: xft:SFMono:pixelsize=13:bold:italic
-URxvt*letterSpace: -2
+URxvt*font: xft:PragmataProMono:pixelsize=14
+URxvt*italicFont: xft:PragmataProMono:pixelsize=14:italic
+URxvt*boldFont: xft:PragmataProMono:pixelsize=14:bold
+URxvt*boldItalicFont: xft:PragmataProMono:pixelsize=14:bold:italic
+!URxvt*font: xft:PragmataPro:pixelsize=13
+!URxvt*italicFont: xft:SFMono:pixelsize=13:italic
+!URxvt*boldFont: xft:SFMono:pixelsize=13:bold
+!URxvt*boldItalicFont: xft:SFMono:pixelsize=13:bold:italic
+URxvt*letterSpace: -1
 ! URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
 ! URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 URxvt.internalBorder:  14
