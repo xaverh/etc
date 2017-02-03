@@ -1,11 +1,12 @@
 /* appearance */
 static const char *fonts[] = {
-	"SFMono:size=10",
+	"PragmataPro:size=10",
+	// "SFMono:size=10",
 	// "Screen:size=10",
 	/* "HelveticaNeue:size=10", */
 	"NotoEmoji:size=10"
 };
-static const char dmenufont[]         = "SFMono:size=10";
+static const char dmenufont[]         = "PragmataPro:size=10";
 static const unsigned int borderpx    = 3;        /* border pixel of windows */
 static const unsigned int snap        = 10;       /* snap pixel */
 static const int showbar              = 1;        /* 0 means no bar */
