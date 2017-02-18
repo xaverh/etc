@@ -23,9 +23,9 @@ prepare() {
   patch -Np1 < ../dwm-6.1-firefox-fullscreen_xaverh.diff
   patch -Np1 < ../dwm-6.1-push_no_master.diff
   patch -Np1 < ../dwm-6.1-save_floats_own.diff
-  patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
+  # patch -Np1 < ../dwm-uselessgap-6.1_xaverh.diff
   # patch -Np1 < ../dwm-fancybar-6.1.diff
-  patch -Np1 < ../dwm-6.1-monocle-symbol_xaverh.diff
+  # patch -Np1 < ../dwm-6.1-monocle-symbol_xaverh.diff
   # patch -Np1 < ../dwm-hide_vacant_tags-6.1.diff
   # patch -Np1 < ../dwm-6.1-optimize_xaverh.diff
   patch -Np1 < ../dwm-statuscolors-6.1_xaverh.diff
@@ -47,5 +47,5 @@ package() {
 }
 
 md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
-         '2339e2f60bdd32942b20f1088a91b133'
+         '26902ba5dd4d41bedd672f783166bb86'
          '939f403a71b6e85261d09fc3412269ee')

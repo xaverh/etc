@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "SFMono:13";
+static char font[] = "Menlo:size=11";
 // static char font[] = "-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*";
 static int borderpx = 20;
 
@@ -87,29 +87,29 @@ static unsigned int tabspaces = 8;
 static const char *colorname[] = {
 
   /* 8 normal colors */
-  "#1e1e1e", /* black   */
-  "#a62844", /* red     */
-  "#406847", /* green   */
-  "#f2b33d", /* yellow  */
-  "#2484bf", /* blue    */
-  "#6c63a6", /* magenta */
-  "#81d8d0", /* cyan    */
-  "#606073", /* white   */
+  "#252526", /* black   */
+  "#f44747", /* red     */
+  "#608b4e", /* green   */
+  "#ce9178", /* yellow  */
+  "#6796e6", /* blue    */
+  "#646695", /* magenta */
+  "#06989a", /* cyan    */
+  "#808080", /* white   */
 
   /* 8 bright colors */
-  "#373b41", /* black   */
-  "#b0535e", /* red     */
-  "#7ba886", /* green   */
-  "#fce779", /* yellow  */
-  "#5986c9", /* blue    */
-  "#9393b0", /* magenta */
-  "#bfe3e3", /* cyan    */
-  "#f2f0c9", /* white   */
+  "#454545", /* black   */
+  "#d16969", /* red     */
+  "#b5cea8", /* green   */
+  "#d7ba7d", /* yellow  */
+  "#9cdcfe", /* blue    */
+  "#c586c0", /* magenta */
+  "#4ec9b0", /* cyan    */
+  "#d4d4d4", /* white   */
 
   	[255] = 0,
 
   /* special colors */
-  "#f2f0c9", /* foreground */
+  "#d4d4d4", /* foreground */
   "#1e1e1e", /* background */
 };
 
