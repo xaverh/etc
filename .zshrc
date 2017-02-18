@@ -24,7 +24,7 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
+# RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
 
 (( EUID != 0 )) && umask 0077 || umask 0002
 
@@ -245,4 +245,7 @@ fi
 
 autoload -U promptinit
 promptinit
-prompt grb
+
+PURE_PROMPT_SYMBOL=%%
+
+prompt pure
