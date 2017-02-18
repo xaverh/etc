@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Menlo:size=11";
+static char font[] = "Menlo:size=10";
 // static char font[] = "-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*";
 static int borderpx = 20;
 
