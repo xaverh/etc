@@ -40,7 +40,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Numix-Frost-Light</name>
+    <name>Bunsen-Dark</name>
     <titleLayout>DLIMC</titleLayout>
     <!--
       avaible characters are NDSLIMC, each can occur at most once.
@@ -333,7 +333,7 @@
           <enabled>true</enabled>
           <name>dmenu</name>
         </startupnotify>
-        <command>~/Software/dotfiles/bin/dmenu_recent</command>
+        <command>~/src/dotfiles/bin/dmenu_recent</command>
       </action>
     </keybind>
     <keybind key="W-e">
@@ -369,7 +369,7 @@
           <enabled>true</enabled>
           <name>Lock screen</name>
         </startupnotify>
-        <command>xscreensaver-command --lock</command>
+        <command>slock</command>
       </action>
     </keybind>
     <keybind key="W-h">
@@ -929,6 +929,7 @@
 
   # end of the example
 -->
+    <application class="*"> <decor>no</decor> </application>
     <application name="gmessage">
       <decor>no</decor>
       <shade>no</shade>

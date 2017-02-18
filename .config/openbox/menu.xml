@@ -22,10 +22,10 @@
 				</command>
 			</action>
 		</item>
-		<item label="Lɜafpad">
+		<item label="Vim">
 			<action name="Execute">
 				<command>
-					l3afpad
+					urxvtcd -e vim
 				</command>
 			</action>
 		</item>
@@ -34,10 +34,17 @@
 				<execute>gimp</execute>
 			</action>
 		</item>
-		<item label="VLC media player">
+		<item label="mpv">
 			<action name="Execute">
 				<command>
-					vlc
+					mpv
+				</command>
+			</action>
+		</item>
+		<item label="Zathura">
+			<action name="Execute">
+				<command>
+					zathura
 				</command>
 			</action>
 		</item>
