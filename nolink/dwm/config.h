@@ -1,18 +1,19 @@
 /* appearance */
 static const char *fonts[] = {
+	"Menlo:size=10",
 	// "SystemFont:size=11",
-	"PragmataPro:size=10",
+	// "PragmataPro:size=10",
 	// "SFMono:size=10",
-	// "Screen:size=10",
+	// "-sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*",
 	/* "HelveticaNeue:size=10", */
-	"NotoEmoji:size=10"
+	// "NotoEmoji:size=10"
 };
-static const char dmenufont[]         = "PragmataPro:size=10";
-static const unsigned int borderpx    = 3;        /* border pixel of windows */
+static const char dmenufont[]         = "Menlo:size=10";
+static const unsigned int borderpx    = 1;        /* border pixel of windows */
 static const unsigned int snap        = 10;       /* snap pixel */
 static const int showbar              = 1;        /* 0 means no bar */
-static const int topbar               = 0;        /* 0 means bottom bar */
-static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
+static const int topbar               = 1;        /* 0 means bottom bar */
+// static const unsigned int gappx       = 20;       /* gap pixel between windows (part of the uselessgaps patch) */
 #define NUMCOLORS         3
 static const char colors[NUMCOLORS][MAXCOLORS][8] = {
   // border   foreground background
@@ -23,8 +24,9 @@ static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 };
 
 /* tagging */
-static const char *tags[] = { "🏄", "👓", "🎸", "🎮", "🍺", "🌴", "🚽" };
-// static const char *tags[] = { "i", "ii", "iii", "iv", "v", "vi", "vii" };
+// static const char *tags[] = { "🏄", "👓", "🎸", "🎮", "🍺", "🌴", "🚽" };
+// static const char *tags[] = {"Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ"};
+static const char *tags[] = {"i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -35,6 +37,7 @@ static const Rule rules[] = {
 	{ "Code",           NULL,       NULL,        1 << 1,       0,           -1 },
 	{ "Firefox",        NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Firefox",        "Places",   "Library",   -1,           1,           -1 },
+	{ "Google-chrome",  NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "Opera",          NULL,       NULL,        1 << 0,       0,           -1 },
 	{ "presenter",      "sent",     "sent",      0,            1,           -1 },
 	{ "Spotify",        NULL,       NULL,        1 << 2,       0,           -1 },
@@ -52,12 +55,12 @@ static const int resizehints = 1;      /* 1 means respect size hints in tiled re
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	// { "🔪",      tile },    /* first entry is default */
-	{ "🍱",     tile},
-	{ "☁️",      NULL },    /* no layout function means floating behavior */
-	{ "🎦",     monocle },
-	// { "[]=",     tile},
-	// { "<><",      NULL },    /* no layout function means floating behavior */
-	// { "[M]",     monocle },
+	// { "☁️",      NULL },    /* no layout function means floating behavior */
+	// { "🍱",     tile},
+	// { "🎦",     monocle },
+	{ "[]=",     tile},
+	{ "<><",     NULL },    /* no layout function means floating behavior */
+	{ "[M]",     monocle },
 };
 
 /* key definitions */
@@ -73,16 +76,17 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-lh", "24", "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
-static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
-static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "pgrep ncmpcpp || (urxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nfi && urxvtc --geometry 50x24+1790+100 -name cava -e cava); mpc play", NULL };
+static const char *dmenucmd[] = { "/home/xha/bin/dmenu_recent", "-m", dmenumon, "-fn", dmenufont, "-lh", "20", "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
+// static const char *termcmd[] = { "/bin/sh", "-c", "urxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 80x24+$[$RANDOM % 970 + 30]+$[$RANDOM % 512 + 30]\nfi", NULL };
+static const char *termcmd[] = { "st", NULL };
+// static const char *ncmpcppcmd[] = { "/bin/sh", "-c", "pgrep ncmpcpp || (urxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nif [ $? -eq 2 ]; then\nurxvtd -q -o -f\nurxvtc --geometry 140x40+80+100 -name ncmpcpp -e ncmpcpp\nfi && urxvtc --geometry 50x24+1790+100 -name cava -e cava); mpc play", NULL };
 static const char *filemanagercmd[]  = { "thunar", NULL };
 static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *playnextcmd[] = {"playerctl", "next", NULL};
 static const char *playpreviouscmd[] = {"playerctl", "previous", NULL};
-static const char *mpdpausecmd[] = {"mpc", "toggle", NULL};
-static const char *mpdnextcmd[] = {"mpc", "next", NULL};
-static const char *mpdpreviouscmd[] = {"mpc", "prev", NULL};
+// static const char *mpdpausecmd[] = {"mpc", "toggle", NULL};
+// static const char *mpdnextcmd[] = {"mpc", "next", NULL};
+// static const char *mpdpreviouscmd[] = {"mpc", "prev", NULL};
 static const char *raisevolumecmd[]    = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%+", "-q", NULL };
 static const char *lowervolumecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "unmute", "5%-", "-q", NULL };
 static const char *mutecmd[]  = { "amixer", "-D", "pulse", "set", "Master", "toggle", "-q", NULL };
@@ -90,19 +94,14 @@ static const char *lockcmd[]  = { "slock", NULL };
 static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
 static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
 static const char *screenshotcmd[] = { "scrot", NULL };
-// static const char *feh0cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/0.jpg", NULL };
-// static const char *feh1cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/1.jpg", NULL };
-// static const char *feh2cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/2.jpg", NULL };
-// static const char *feh3cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/3.jpg", NULL };
-// static const char *feh4cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/4.jpg", NULL };
-// static const char *feh5cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/5.jpg", NULL };
-// static const char *feh6cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/6.jpg", NULL };
-// static const char *feh7cmd[] = { "feh", "--bg-fill", "--no-fehbg", "/home/xha/Dropbox/Wallpapers/Workspaces/7.jpg", NULL };
+// static const char *urlcmd[]  = { "clipmenu-url", NULL };
+static const char *clipcmd[]  = { "clipmenu", "-m", dmenumon, "-fn", dmenufont, "-lh", "20", "-nb", colors[0][2], "-nf", colors[0][1], "-sb", colors[1][2], "-sf", colors[1][1], NULL };
+static const char *showclipboardcmd[] = {"/bin/sh", "-c", "tmptitle=\"`tail --lines=1 /tmp/clipmenu.3.xha/line_cache`\"\nxsetroot -name \"$tmptitle\"", NULL };
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
 	{ MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return,     spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,          spawn,          {.v = filemanagercmd } },
 	{ 0,                            0x1008ff13,    spawn,          {.v = raisevolumecmd } },
 	{ 0,                            0x1008ff11,    spawn,          {.v = lowervolumecmd } },
@@ -113,10 +112,10 @@ static Key keys[] = {
 	{ 0,                            0x1008ff17,    spawn,          {.v = playnextcmd } },
 	{ 0,                            0x1008ff14,    spawn,          {.v = playpausecmd } },
 	{ 0,                            0x1008ff16,    spawn,          {.v = playpreviouscmd } },
-	{ MODKEY,                       0xff56,        spawn,          {.v = mpdnextcmd } },
-	{ MODKEY,                       0xff13,        spawn,          {.v = mpdpausecmd } },
-	{ MODKEY,                       0xff55,        spawn,          {.v = mpdpreviouscmd } },
-	{ MODKEY,                       XK_numbersign, spawn,          {.v = ncmpcppcmd } },
+	// { MODKEY,                       0xff56,        spawn,          {.v = mpdnextcmd } },
+	// { MODKEY,                       0xff13,        spawn,          {.v = mpdpausecmd } },
+	// { MODKEY,                       0xff55,        spawn,          {.v = mpdpreviouscmd } },
+	// { MODKEY,                       XK_numbersign, spawn,          {.v = ncmpcppcmd } },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
@@ -124,7 +123,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,          incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return,     zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return,     zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_j,          pushdown,       {0} },
     { MODKEY|ShiftMask,             XK_k,          pushup,         {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
@@ -140,14 +139,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = +1 } },
-	// { MODKEY,						XK_0,          spawn,          {.v = feh0cmd}},
-	// { MODKEY,						XK_1,          spawn,          {.v = feh1cmd}},
-	// { MODKEY,						XK_2,          spawn,          {.v = feh2cmd}},
-	// { MODKEY,						XK_3,          spawn,          {.v = feh3cmd}},
-	// { MODKEY,						XK_4,          spawn,          {.v = feh4cmd}},
-	// { MODKEY,						XK_5,          spawn,          {.v = feh5cmd}},
-	// { MODKEY,						XK_6,          spawn,          {.v = feh6cmd}},
-	// { MODKEY,						XK_7,          spawn,          {.v = feh7cmd}},
 	TAGKEYS(                        XK_1,                          0)
 	TAGKEYS(                        XK_2,                          1)
 	TAGKEYS(                        XK_3,                          2)
@@ -155,13 +146,16 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,                          4)
 	TAGKEYS(                        XK_6,                          5)
 	TAGKEYS(                        XK_7,                          6)
-	// TAGKEYS(                        XK_8,                          7)
-	// TAGKEYS(                        XK_9,                          8)
+	TAGKEYS(                        XK_8,                          7)
+	TAGKEYS(                        XK_9,                          8)
 	{ MODKEY,                       0xff1b,        spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ 0,							0x1008ff02,	   spawn,          {.v = brightnessupcmd} },
 	{ 0,							0x1008ff03,    spawn,          {.v = brightnessdowncmd} },
-	{ 0, 							0xff61,        spawn,          {.v = screenshotcmd} }
+	{ 0, 							0xff61,        spawn,          {.v = screenshotcmd} },
+	{ MODKEY,                       XK_Insert, 	   spawn,          {.v = clipcmd } },
+	// { MODKEY,                       XK_o,          spawn,          {.v = urlcmd } },
+	{ MODKEY,						XK_ssharp,     spawn,          {.v = showclipboardcmd}}
 };
 
 #define Button6 6

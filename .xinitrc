@@ -23,7 +23,7 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-compton --config ~/.config/compton.conf --daemon &
+# compton --config ~/.config/compton.conf --daemon &
 ~/.fehbg &
 xset b off &
 xset s off &
@@ -40,8 +40,15 @@ fi
 
 numlockx &
 
-dwm_status &
+dwm_status_min &
 
-syndaemon -i 0.5 -t -K -R &
+# syndaemon -i 0.5 -t -K -R &
 
-exec dwm
+# tint2 &
+
+while true; do
+    # Log stderror to a file
+    # dwm 2> ~/.dwm.log
+    # No error logging
+    dwm >/dev/null 2>&1
+done
