@@ -1,1 +1,0 @@
-/home/xha/src/dotfiles/nolink/dwm/config.h
