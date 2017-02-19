@@ -13,17 +13,18 @@ URxvt*scrollBar: false
 !URxvt*italicFont: xft:PragmataProMono:pixelsize=14:italic
 !URxvt*boldFont: xft:PragmataProMono:pixelsize=14:bold
 !URxvt*boldItalicFont: xft:PragmataProMono:pixelsize=14:bold:italic
-URxvt*font: xft:Menlo:pixelsize=13
-URxvt*italicFont: xft:Menlo:pixelsize=13:italic
-URxvt*boldFont: xft:Menlo:pixelsize=13:bold
-URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
-URxvt*letterSpace: -1
-! URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
-! URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
+! URxvt*font: xft:Menlo:pixelsize=13
+! URxvt*italicFont: xft:Menlo:pixelsize=13:italic
+! URxvt*boldFont: xft:Menlo:pixelsize=13:bold
+! URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
+! URxvt*letterSpace: -1
+URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
 URxvt.internalBorder:  14
 URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
+URxvt.perl-ext-common: selection-to-clipboard
 
 *scrollColor:        	#FFFFFF
 *cursorBlink:			1
@@ -64,3 +65,14 @@ URxvt*inheritPixmap: false
 ! white
 *.color7:       #808080
 *.color15:      #d4d4d4
+
+
+x11-ssh-askpass*font:                   -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+x11-ssh-askpass*background:             #000000
+x11-ssh-askpass*foreground:             #ffffff
+x11-ssh-askpass.Button*background:      #000000
+x11-ssh-askpass.Indicator*foreground:   #ff9900
+x11-ssh-askpass.Indicator*background:   #090909
+x11-ssh-askpass*topShadowColor:         #000000
+x11-ssh-askpass*bottomShadowColor:      #000000
+x11-ssh-askpass.*borderWidth:           1
