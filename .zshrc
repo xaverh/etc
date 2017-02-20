@@ -131,17 +131,6 @@ sx simple-extract () {
 	done
 }
 
-Set_my_git () {
-	git config --global user.email "software@hellauer.bayern"
-	git config --global user.name "Xaver Hellauer"
-	git config --global core.editor "code --wait"
-	git config --global diff.tool "default-difftool"
-	git config --global difftool.default-difftool.cmd "code --wait --diff \$LOCAL \$REMOTE"
-	git config --global credential.helper "store"
-	git config --global alias.gl "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-	command -v gnome-keyring >/dev/null 2>&1 && git config --global credential.helper gnome-keyring
-}
-
 # braucht mencoder und mplayer
 Join_avi () {
 	# TODO checken ob mencoder da ist!
