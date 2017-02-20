@@ -49,11 +49,8 @@ alias lsbig='ls -Slh | head'
 alias lssmall='ls -Slhr | head'
 alias lsnew='ls -tlh | head'
 alias lsold='ls -tlh | tail'
-alias la='ls -A'
-alias ll='ls -l'
-alias lla='ls -lA'
-alias llh='ls -lh'
-alias l='ls -lhA'
+alias la='ls -lhA --group-directories-first'
+alias ll='ls -lh --group-directories-first'
 alias dfh='df -H'
 alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"'
 alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
@@ -71,12 +68,9 @@ alias -g H='| head'
 alias d='dirs -v'
 alias j='jobs -l'
 alias dropbox_reset="echo fs.inotify.max_user_watches=100000 | sudo tee -a /etc/sysctl.conf; sudo sysctl -p"
-alias Kleentex="mv (*.toc|*.aux|*.log|*.out|*_lavim.tex) /tmp"
 alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/null || (defaults write com.apple.finder AppleShowAllFiles NO && killall Finder)"
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
-# alias pacman='pacman --color=auto'
-# alias sudo='sudo '
 
 Fix_steam() {
 	find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete
