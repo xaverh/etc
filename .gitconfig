@@ -1,0 +1,14 @@
+[user]
+	email = xaver@hellauer.bayern
+	name = Xaver Hellauer
+[color]
+	ui = auto
+[core]
+	editor = code --wait
+	whitespace = fix
+[diff]
+	tool = default-difftool
+[difftool "default-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[alias]
+	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
