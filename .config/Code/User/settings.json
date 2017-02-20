@@ -1,18 +1,18 @@
 {
-	"editor.fontFamily": "Menlo, SF Mono, PragmataPro, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
-	// "editor.fontSize": 15,
+	"editor.fontFamily": "PragmataPro, Menlo, SF Mono, PragmataPro, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
+	"editor.fontSize": 16,
+	"terminal.integrated.fontSize": 16,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
-		80
 	],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": false,
 	"editor.wrappingColumn": 0,
 	"editor.wrappingIndent": "same",
-	"editor.tabSize": 4,
+	"editor.tabSize": 8,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
-	"editor.insertSpaces": false,
+	"editor.insertSpaces": true, // XXX
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
 	// "clang.cxxflags": [
@@ -57,5 +57,8 @@
 	"zenMode.fullScreen": true,
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "disabled",
-	"window.menuBarVisibility": "toggle"
+	"window.menuBarVisibility": "toggle",
+	"[haskell]": {
+		// "editor.insertSpaces": true
+	}
 }

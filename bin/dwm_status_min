@@ -6,6 +6,6 @@ print_date(){
 
 while true
 do
-	xsetroot -name "$(print_date)"
-	sleep 1
+	xsetroot -name " $(print_date)"
+	sleep 2
 done
