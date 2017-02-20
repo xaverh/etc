@@ -24,6 +24,12 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
+
+# autoload -U promptinit
+# promptinit
+
+PROMPT='%B%~ %%%b '
+
 # RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
 
 (( EUID != 0 )) && umask 0077 || umask 0002
@@ -243,9 +249,9 @@ if [[ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.
 	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-autoload -U promptinit
-promptinit
+# autoload -U promptinit
+# promptinit
 
-PURE_PROMPT_SYMBOL=%%
+# PURE_PROMPT_SYMBOL=%%
 
-prompt pure
+# prompt grb
