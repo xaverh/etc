@@ -13,23 +13,26 @@
 	"editor.tabSize": 8,
 	// "editor.mouseWheelScrollSensitivity": 0.3,
 	"editor.insertSpaces": true, // XXX
+	"editor.cursorBlinking": "smooth",
+	"editor.renderLineHighlight": "line",
+	"editor.renderControlCharacters": true,
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
-	// "clang.cxxflags": [
-	// 	"-std=c++14",
-	// 	"-pedantic",
-	// 	"-Weverything",
-	// 	"-Wno-c++98-compat",
-	// 	"-Wno-c++98-compat-pedantic",
-	// 	"-Wno-unused-macros",
-	// 	"-Wno-shadow",
-	// 	"-O3"
-	// ],
-	// "clang.cflags": [
-	// 	"-std=c11",
-	// 	"-Weverything"
-	// ],
-	// "clang.completion.enable": false,
+	"clang.cxxflags": [
+		"-std=c++14",
+		"-pedantic",
+		"-Weverything",
+		"-Wno-c++98-compat",
+		"-Wno-c++98-compat-pedantic",
+		"-Wno-unused-macros",
+		"-Wno-shadow",
+		"-O3"
+	],
+	"clang.cflags": [
+		"-std=c11",
+		"-Weverything"
+	],
+	"clang.completion.enable": false,
 	"files.autoSave": "off",
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
