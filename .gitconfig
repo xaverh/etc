@@ -1,6 +1,7 @@
 [user]
 	email = xaver@hellauer.bayern
 	name = Xaver Hellauer
+	signingkey = 1119D14EB6DCAADB3669F8A80940C207E5E7CFEF
 [color]
 	ui = auto
 [core]
@@ -12,3 +13,12 @@
 	cmd = code --wait --diff $LOCAL $REMOTE
 [alias]
 	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+	default = current
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	require = true
+[branch]
+	autosetuprebase = always
+
