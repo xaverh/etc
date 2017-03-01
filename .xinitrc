@@ -50,11 +50,9 @@ fi
 
 numlockx &
 
-dwm_status_min &
+systemctl start --user dwmstatus.service
 
-# syndaemon -i 0.5 -t -K -R &
-
-# tint2 &
+# hostnamectl | grep laptop &&  syndaemon -i 0.5 -t -K -R &
 
 while true; do
     # Log stderror to a file
