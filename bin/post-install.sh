@@ -8,7 +8,7 @@ wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz" | tar 
 cd pacaur
 makepkg -si
 
-pacaur -Sa spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code playerctl
+pacaur -Sa spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code playerctl clipmenu
 
 mkdir ~/src
 cd ~/src
