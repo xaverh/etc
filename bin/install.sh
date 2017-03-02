@@ -105,12 +105,12 @@ lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S zsh rxvt-unicode clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst scrot feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick unrar slock git abs unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu openssh xclip ssh-askpass
+pacman --needed -S zsh rxvt-unicode clang lua noto-fonts{,-cjk,-emoji} screenfetch dunst scrot feh wget adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick unrar slock git abs unzip ttyload exfat-utils mpv youtube-dl numlockx npm nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu openssh xclip ssh-askpass tmux
 
 pacman --needed -S jsoncpp libstdc++5 mpd ncmpcpp mpc ranger firefox steam steam-native-runtime lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins aria2 lxappearance compton w3m cmatrix lolcat iperf3
 
 # Laptop?
-pacman --needed -S xf86-input-synaptics acpi wpa_supplicant iw
+pacman --needed -S xf86-input-synaptics acpi wpa_supplicant iw syndaemon
 
 # XXX
 # ln -s /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
