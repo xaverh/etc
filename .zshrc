@@ -43,14 +43,21 @@ bindkey '^Ed' _bkdate
 alias grep="grep -i --color=auto"
 alias ...='../..'
 alias ....='../../..'
-ls --color=auto &> /dev/null && alias ls='ls --classify --color=auto' || alias ls='ls -GF'
+if ls --color=auto &> /dev/null; then
+	alias ls='ls --classify --color=auto'
+	alias la='ls -l --almost-all --human-readable --group-directories-first'
+	alias ll='ls -l --human-readable --group-directories-first'
+	alias lx='ll -X'
+else
+	alias ls='ls -GFp'
+	alias la='ls -lhA'
+	alias ll='ls -lh'
+fi
 alias aus="su -c 'shutdown -h now'"
 alias lsbig='ls -Slh | head'
 alias lssmall='ls -Slhr | head'
 alias lsnew='ls -tlh | head'
 alias lsold='ls -tlh | tail'
-alias la='ls -l --almost-all --human-readable --group-directories-first'
-alias ll='ls -l --human-readable --group-directories-first'
 alias dfh='df -H'
 alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"'
 alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
