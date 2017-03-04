@@ -25,6 +25,7 @@ URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
 URxvt.perl-ext-common: selection-to-clipboard
+URxvt*visualBell: true
 
 *scrollColor:        	#FFFFFF
 *cursorBlink:			1

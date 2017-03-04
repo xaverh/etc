@@ -3,6 +3,7 @@ Description=URxvt Daemon Service
 
 [Service]
 ExecStart=/usr/bin/urxvtd -q -o
+Restart=always
 
 [Install]
 WantedBy=default.target
