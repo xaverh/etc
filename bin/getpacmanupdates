@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# --
-# Get Pacman Updates Output for lemonbuddy
-# --
-
-upd=': '
-upd+=$(pacman -Qu | wc -l)
-echo $upd

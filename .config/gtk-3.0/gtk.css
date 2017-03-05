@@ -1,7 +1,0 @@
-window.ssd headerbar.titlebar {
-  border: none;
-  box-shadow: none;
-  background-image: linear-gradient(to bottom,
-    shade(@theme_bg_color, 1.05),
-    shade(@theme_bg_color, 1.00));
-}
