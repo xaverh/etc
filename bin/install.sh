@@ -111,7 +111,7 @@ ttf-linux-libertine gimp zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick \
 unrar slock git abs unzip ttyload exfat-utils mpv youtube-dl numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu \
-openssh xclip x11-ssh-askpass go go-tools tmux vifm
+openssh xclip x11-ssh-askpass go go-tools tmux vifm stow
 
 pacman --needed -S jsoncpp libstdc++5 mpd ncmpcpp mpc ranger firefox steam \
 steam-native-runtime lib32-libpulse lib32-openal lib32-nss lib32-gtk2 \
