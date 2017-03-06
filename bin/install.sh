@@ -90,6 +90,7 @@ RouteMetric=20" > /etc/systemd/network/wireless.network
 ln -sf /run/systemd/resolve/resolv.conf /etc
 vim /etc/systemd/resolved.conf
 systemctl enable --now systemd-resolved
+systemctl enable --now systemd-networkd
 
 # Install optional packages
 rankmirrors /etc/pacman.d/mirrorlist > /tmp/mirrorlist
