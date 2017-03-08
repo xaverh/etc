@@ -2,11 +2,11 @@
 
 timedatectl set-ntp 1
 
-mkdir ~/src
-cd ~/src
-git clone git@github.com:xaverh/dotfiles.git
+cd
+git clone git@github.com:xaverh/etc.git
 
-cd /tmp
+mkdir ~/tmp
+cd ~/tmp
 wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz" | tar xzf -
 cd aurutils
 makepkg -si
@@ -22,7 +22,7 @@ repo-add /var/cache/pacman/aur/aur.db.tar
 
 sudo pacman -Syu
 
-aurutils -ukn spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code playerctl clipmenu neofetch
+aursync -un spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code playerctl clipmenu neofetch
 
 sudo pacman -Syu
 
@@ -39,14 +39,8 @@ cd ~/src/dotfiles/nolink/sent-git
 updpkgsums
 makepkg -sfi
 
-cd ~/src/dotfiles/nolink/dmenu
-updpkgsums
-makepkg -sfi
-
 # Dropbox
 systemctl --user enable dropbox
 # systemctl --user enable mpd
-
-# linking stuff with stow
 
 reboot
