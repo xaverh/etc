@@ -80,6 +80,7 @@ alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killal
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias custom='repose -vf aur -r /var/cache/pacman/aur -p /var/cache/pacman/aur'
+alias gist='gist -c'
 
 Fix_steam() {
 	find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete

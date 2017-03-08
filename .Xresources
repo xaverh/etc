@@ -13,6 +13,7 @@ URxvt*scrollBar: false
 !URxvt*italicFont: xft:PragmataProMono:pixelsize=14:italic
 !URxvt*boldFont: xft:PragmataProMono:pixelsize=14:bold
 !URxvt*boldItalicFont: xft:PragmataProMono:pixelsize=14:bold:italic
+! URxvt*lineSpace: 3
 ! URxvt*font: xft:Menlo:pixelsize=13
 ! URxvt*italicFont: xft:Menlo:pixelsize=13:italic
 ! URxvt*boldFont: xft:Menlo:pixelsize=13:bold

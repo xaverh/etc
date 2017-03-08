@@ -110,7 +110,7 @@ pacman --needed -S zsh rxvt-unicode clang lua noto-fonts{,-cjk,-emoji} dunst scr
 pacman --needed -S jsoncpp libstdc++5 mpd ncmpcpp mpc ranger firefox steam steam-native-runtime lib32-libpulse lib32-openal lib32-nss lib32-gtk2 lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib lib32-alsa-plugins aria2 lxappearance compton w3m cmatrix lolcat iperf3
 
 # Laptop?
-pacman --needed -S xf86-input-synaptics acpi wpa_supplicant iw syndaemon
+pacman --needed -S acpi wpa_supplicant iw wireless_tools # is wireless_tools deprecated?
 
 # XXX
 # ln -s /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
