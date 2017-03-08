@@ -36,6 +36,7 @@ set linebreak
 set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
 set matchpairs+=«:»
 set matchtime=2
+set nocompatible
 set noerrorbells
 set noexpandtab
 set nohidden
@@ -78,7 +79,6 @@ if &buftype == 'help'
 endif
 endfunction
 
-
 " Returns true if paste mode is enabled
 function! HasPaste()
 	if &paste
@@ -100,7 +100,6 @@ vmap  <expr>  <S-DOWN>   DVB_Drag('down')
 vmap  <expr>  <S-UP>     DVB_Drag('up')
 vmap  <expr>  D          DVB_Duplicate()
 
-
 " Colors & Fonts & Appearance
 if has('gui_running')
 	set columns=86
@@ -109,15 +108,8 @@ endif
 let g:hybrid_custom_term_colors = 1
 color hybrid
 set background=dark
-"if has('gui_running')
-	"set background=light
-"endif
 " call togglebg#map("<F5>")
-if has("gui_gtk2")
-	set guifont=Ubuntu\ Mono\\,Source\ Code\ Pro\\,\ 12
-else
-	set guifont=Consolas:h10
-endif
+set guifont=Consolas:h10
 
 " Clang-Format & gofmt
 if has("win32") || has("win64")
@@ -132,14 +124,6 @@ endif
 
 autocmd FileType go map <C-K> :GoFmt<cr>
 autocmd FileType go imap <C-K> <C-O>:GoFmt<cr>
-
-" Lavim FIXME 1. Speicherort lavim, 2. autocmd FileType
-map <leader>l :w<cr>:cd %:p:h<cr>:echom system("~/Dropbox/lavim.lua " . @%)<cr>:redraw<cr>
-
-" Include Go on Windows
-if has("win32") || has("win64")
-	set runtimepath+=c:\go\misc\vim
-endif
 
 " Comma as leader
 let mapleader = ","
@@ -208,10 +192,6 @@ imap <F2> <c-o><F2>
 " Toggle naughty characters
 map <F6> :set list!<CR>
 imap <F6> <c-o>:set list!<CR>
-
-" Disable arrow keys to get used to hjkl
-" noremap <Up> <Nop>
-" noremap <Down> <Nop>
 
 " Make it easy to navigate errors (and vimgreps)...
 " nmap <silent> <RIGHT>         :cnext<CR>
