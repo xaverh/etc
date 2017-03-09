@@ -1,3 +1,15 @@
+set nocompatible                   " required for vundle
+filetype off                       " required for vundle
+set rtp+=~/.vim/bundle/Vundle.vim  " required for vundle
+
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'altercation/vim-colors-solarized'
+
+call vundle#end()
+
 filetype plugin indent on
 syntax enable
 
@@ -36,7 +48,6 @@ set linebreak
 set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
 set matchpairs+=«:»
 set matchtime=2
-set nocompatible
 set noerrorbells
 set noexpandtab
 set nohidden
@@ -105,10 +116,12 @@ if has('gui_running')
 	set columns=86
 	set lines=34
 endif
-let g:hybrid_custom_term_colors = 1
-color hybrid
-set background=dark
-" call togglebg#map("<F5>")
+"let g:hybrid_custom_term_colors = 1
+" color hybrid
+set t_Co=256
+set background=light
+colorscheme PaperColor
+call togglebg#map("<F5>")
 set guifont=Consolas:h10
 
 " Clang-Format & gofmt
