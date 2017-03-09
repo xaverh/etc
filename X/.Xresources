@@ -19,8 +19,8 @@ URxvt*scrollBar: false
 ! URxvt*boldFont: xft:Menlo:pixelsize=13:bold
 ! URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
 ! URxvt*letterSpace: -1
-URxvt*font: -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-13-*-*-*-*-*-*-*
+URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
+URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
 URxvt.internalBorder:  14
 URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
