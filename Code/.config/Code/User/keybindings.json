@@ -14,5 +14,10 @@
 		"key": "ctrl+k u",
 		"command": "editor.action.transformToUppercase",
 		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+`",
+		"command": "workbench.action.terminal.focus",
+		"when": "!terminalFocus"
 	}
 ]

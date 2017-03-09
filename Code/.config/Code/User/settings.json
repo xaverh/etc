@@ -68,5 +68,10 @@
         "workbench.iconTheme": "vs-seti",
 	"editor.minimap.enabled": true,
 	"editor.dragAndDrop": true,
-	"editor.minimap.renderCharacters": false
+	"editor.minimap.renderCharacters": false,
+	"workbench.colorTheme": "papercolor-vscode",
+	"terminal.external.linuxExec": "urxvtc",
+	"gitProjectManager.baseProjectsFolders": [
+		"$HOME/src"
+	]
 }
