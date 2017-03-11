@@ -1,17 +1,6 @@
 *.un~
 .vscode
 *.swp
-.local/share/applications/Sid Meier's Civilization Beyond Earth.desktop
-.local/share/applications/Sid Meier's Civilization V.desktop
-.local/share/applications/Tropico 5.desktop
-.local/share/applications/userapp-Firefox-*.desktop
-.local/share/applications/Hotline Miami.desktop
-.local/share/applications/Broforce.desktop
-.local/share/applications/Worms Reloaded.desktop
-.local/share/applications/mimeapps.list
-nolink/dwm/pkg/
-nolink/dwm/src/dwm-6.1/*
-nolink/dwm/src/config.h
 *.o
 *.tar.xz
 *.tar.gz
@@ -22,8 +11,5 @@ nolink/sent-git/src/sent-git/
 vim/.vim/.netrwhist
 nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
-nolink/st/pkg/
-nolink/st/src/st-0.7/*
-nolink/st/src/config.h
 .vifm/vifminfo
 **/.browse.VC.db*
