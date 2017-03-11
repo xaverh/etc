@@ -60,7 +60,7 @@
 	"window.zoomLevel": 0,
 	"zenMode.fullScreen": true,
 	"workbench.statusBar.visible": true,
-	"C_Cpp.formatting": "disabled",
+	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
 	"[haskell]": {
 		"editor.insertSpaces": true
