@@ -102,11 +102,11 @@ zle -N global-alias-space
 bindkey ' ' global-alias-space
 
 chpwd() {
-	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
+	[[ $TERM == (xterm*|*rxvt*|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
 }
 
 preexec() {
-	[[ $TERM == (xterm*|*rxvt*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
+	[[ $TERM == (xterm*|*rxvt*|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
 }
 
 # A case for a suffix alias?
@@ -248,3 +248,11 @@ fi
 # PURE_PROMPT_SYMBOL=%%
 
 # prompt grb
+
+# required for st
+# http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
+function zle-line-init () { echoti smkx }
+function zle-line-finish () { echoti rmkx }
+zle -N zle-line-init
+zle -N zle-line-finish
+

@@ -8,6 +8,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'dracula/vim'
+Plugin 'colorsupport.vim'
 
 call vundle#end()
 
@@ -16,8 +17,8 @@ syntax enable
 
 if has("win32") || has("win64")
  	let &undodir=$HOME . '\AppData\Local\VIM_UNDO_FILES\'
-" else
-" 	let &undodir=$HOME . '/.vim/VIM_UNDO_FILES/' . hostname()
+else
+ 	let &undodir='/tmp/'
 endif
 
 "set cpoptions=q
@@ -70,11 +71,15 @@ set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %
 set tabstop=4
 set textwidth=80
 set timeoutlen=1000
+set title
 set ttymouse=urxvt
 set undofile
 set undolevels=5000
 set visualbell t_vb=
 set whichwrap+=<,>,[,],h,l
+" http://stackoverflow.com/questions/526858/how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
+set wildmode=longest,list,full
+set wildmenu
 set wildmenu
 set wildmode=longest,full
 set wrap
