@@ -9,23 +9,23 @@ Xft.lcdfilter: lcddefault
 URxvt.intensityStyles: true
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-!URxvt*font: xft:PragmataProMono:pixelsize=14
-!URxvt*italicFont: xft:PragmataProMono:pixelsize=14:italic
-!URxvt*boldFont: xft:PragmataProMono:pixelsize=14:bold
-!URxvt*boldItalicFont: xft:PragmataProMono:pixelsize=14:bold:italic
+URxvt*font: xft:PragmataProMono:pixelsize=16
+URxvt*italicFont: xft:PragmataProMono:pixelsize=16:italic
+URxvt*boldFont: xft:PragmataProMono:pixelsize=16:bold
+URxvt*boldItalicFont: xft:PragmataProMono:pixelsize=16:bold:italic
 ! URxvt*lineSpace: 3
 ! URxvt*font: xft:Menlo:pixelsize=13
 ! URxvt*italicFont: xft:Menlo:pixelsize=13:italic
 ! URxvt*boldFont: xft:Menlo:pixelsize=13:bold
 ! URxvt*boldItalicFont: xft:Menlo:pixelsize=13:bold:italic
-! URxvt*letterSpace: -1
-URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
-URxvt.internalBorder:  14
+URxvt*letterSpace: -1
+!URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
+!URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
+URxvt*internalBorder:  16
 URxvt*inheritPixmap: false
 ! URxvt*transparent:   true
 ! URxvt*shading: 15
-URxvt.perl-ext-common: selection-to-clipboard
+URxvt*perl-ext-common: selection-to-clipboard
 URxvt*visualBell: true
 
 *scrollColor:        	#FFFFFF
@@ -78,3 +78,32 @@ x11-ssh-askpass.Indicator*background:   #090909
 x11-ssh-askpass*topShadowColor:         #000000
 x11-ssh-askpass*bottomShadowColor:      #000000
 x11-ssh-askpass.*borderWidth:           1
+
+*.foreground:   #4d4d4c
+*.background:   #eeeeee
+*.cursorColor:  #4d4d4c
+! ! black
+*.color0:       #4d4d4c
+*.color8:       #969694
+! ! red
+*.color1:       #d7005f
+*.color9:       #d7005f
+! ! green
+*.color2:       #718c00
+*.color10:      #718c00
+! ! yellow
+*.color3:       #d75f00
+*.color11:      #d75f00
+! ! blue
+*.color4:       #4271ae
+*.color12:      #4271ae
+! ! magenta
+*.color5:       #8959a8
+*.color13:      #8959a8
+! ! cyan
+*.color6:       #3e999f
+*.color14:      #3e999f
+! ! white
+*.color7:       #eeeeee
+*.color15:      #f5f5f5
+
