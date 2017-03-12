@@ -5,9 +5,6 @@ set rtp+=~/.vim/bundle/Vundle.vim  " required for vundle
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'dracula/vim'
 Plugin 'colorsupport.vim'
 
 call vundle#end()
@@ -118,17 +115,8 @@ vmap  <expr>  <S-UP>     DVB_Drag('up')
 vmap  <expr>  D          DVB_Duplicate()
 
 " Colors & Fonts & Appearance
-if has('gui_running')
-	set columns=86
-	set lines=34
-endif
-"let g:hybrid_custom_term_colors = 1
-" color hybrid
-set t_Co=256
-set background=light
-colorscheme PaperColor
-call togglebg#map("<F5>")
-set guifont=Consolas:h10
+set background=dark
+"call togglebg#map("<F5>")
 
 " Clang-Format & gofmt
 if has("win32") || has("win64")
@@ -137,8 +125,6 @@ if has("win32") || has("win64")
 else
 	map <C-K> :%pyfile /usr/share/clang/clang-format.py<cr>
 	imap <C-K> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
-"	map <C-K> :%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
-"	imap <C-K> <c-o>:%pyfile /usr/share/vim/addons/syntax/clang-format-3.6.py<cr>
 endif
 
 autocmd FileType go map <C-K> :GoFmt<cr>
@@ -196,12 +182,6 @@ autocmd BufWrite *.hamlet :call DeleteTrailingWS()
 autocmd BufWrite *.julius :call DeleteTrailingWS()
 autocmd BufWrite *.cassius :call DeleteTrailingWS()
 autocmd BufWrite *.lucius :call DeleteTrailingWS()
-
-" Modify GUI with ctrl+f1-2
-if has("gui_running")
-	nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
-	nnoremap <C-F2> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
-endif
 
 " Update in insert mode
 nmap <F2> :update<CR>

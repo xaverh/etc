@@ -4,7 +4,6 @@
 	"terminal.integrated.fontSize": 16,
 	// "editor.lineHeight": 24,
 	"editor.rulers": [
-		80
 	],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
