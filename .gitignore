@@ -15,3 +15,4 @@ nolink/dmenu/src/dmenu-4.6/
 **/.browse.VC.db*
 ranger/.config/ranger/history
 ranger/.config/ranger/tagged
+ranger/.config/ranger/bookmarks
