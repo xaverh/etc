@@ -25,6 +25,7 @@ set autoread
 set backspace=indent,eol,start
 set cindent
 set cinoptions=(0,u0,g0,:0,j1,J1,)200
+set clipboard=unnamed
 set colorcolumn=+1
 set copyindent
 "set cursorline
