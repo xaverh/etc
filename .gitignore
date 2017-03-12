@@ -13,3 +13,5 @@ nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
 .vifm/vifminfo
 **/.browse.VC.db*
+ranger/.config/ranger/history
+ranger/.config/ranger/tagged
