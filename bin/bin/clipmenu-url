@@ -1,0 +1,14 @@
+#!/bin/bash
+
+files=(/tmp/clipmenu.3.$USER/*)
+
+newest=${files[0]}
+for f in "${files[@]}"; do
+	if [[ $f -nt $newest ]]; then
+  		newest=$f
+	fi
+done
+
+if url=$(grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" "$newest"); then
+	xdg-open $url
+fi
