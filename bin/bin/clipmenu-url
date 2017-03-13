@@ -9,6 +9,6 @@ for f in "${files[@]}"; do
 	fi
 done
 
-if url=$(grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" "$newest"); then
+if url=$(grep --max-count=1 --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" "$newest"); then
 	xdg-open $url
 fi
