@@ -28,11 +28,9 @@ bindkey "\e[B"  history-beginning-search-forward-end
 # autoload -U promptinit
 # promptinit
 
-PROMPT='%n@%m:%B%~ %%%b '
+PROMPT='%n@%m:%B%~ %#%b '
 
 # RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
-
-(( EUID != 0 )) && umask 0077 || umask 0002
 
 bindkey -e
 
@@ -102,11 +100,13 @@ zle -N global-alias-space
 bindkey ' ' global-alias-space
 
 chpwd() {
-	[[ $TERM == (xterm*|*rxvt*|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
+	[[ $TERM == (dvtm*|xterm*|*rxvt*|screen-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
+	# [[ $TERM == (dvtm*) ]] && echo -en "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
 }
 
 preexec() {
-	[[ $TERM == (xterm*|*rxvt*|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
+	[[ $TERM == (dvtm*|xterm*|*rxvt*|screen-256color|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
+	# [[ $TERM == (dvtm*) ]] && echo -en "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
 }
 
 # A case for a suffix alias?
@@ -251,8 +251,8 @@ fi
 
 # required for st
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
-function zle-line-init () { echoti smkx }
-function zle-line-finish () { echoti rmkx }
-zle -N zle-line-init
-zle -N zle-line-finish
+# function zle-line-init () { echoti smkx }
+# function zle-line-finish () { echoti rmkx }
+# zle -N zle-line-init
+# zle -N zle-line-finish
 
