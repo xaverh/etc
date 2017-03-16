@@ -5,7 +5,6 @@ set rtp+=~/.vim/bundle/Vundle.vim  " required for vundle
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'colorsupport.vim'
 
 call vundle#end()
 
@@ -121,15 +120,15 @@ set background=dark
 
 " Clang-Format & gofmt
 if has("win32") || has("win64")
-	map <C-K> :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
-	imap <C-K> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+	map <C-I> :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+	imap <C-I> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
 else
-	map <C-K> :%pyfile /usr/share/clang/clang-format.py<cr>
-	imap <C-K> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
+	map <C-I> :%pyfile /usr/share/clang/clang-format.py<cr>
+	imap <C-I> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
 endif
 
-autocmd FileType go map <C-K> :GoFmt<cr>
-autocmd FileType go imap <C-K> <C-O>:GoFmt<cr>
+autocmd FileType go map <C-I> :GoFmt<cr>
+autocmd FileType go imap <C-I> <C-O>:GoFmt<cr>
 
 " Comma as leader
 let mapleader = ","
