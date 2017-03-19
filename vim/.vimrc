@@ -5,6 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim  " required for vundle
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'mhinz/vim-randomtag'
 
 call vundle#end()
 
@@ -16,6 +17,9 @@ if has("win32") || has("win64")
 else
  	let &undodir='/tmp/'
 endif
+
+set t_ts=k
+set t_fs=\
 
 "set cpoptions=q
 "set tabline=%M\ %t
@@ -69,7 +73,7 @@ set tabstop=4
 set textwidth=80
 set timeoutlen=1000
 set title
-set ttymouse=urxvt
+" set ttymouse=urxvt
 set undofile
 set undolevels=5000
 set visualbell t_vb=

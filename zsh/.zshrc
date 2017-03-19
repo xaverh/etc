@@ -25,13 +25,7 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "\e[A"  history-beginning-search-backward-end
 bindkey "\e[B"  history-beginning-search-forward-end
 
-
-# autoload -U promptinit
-# promptinit
-
 PROMPT='%n@%m:%B%~ %#%b '
-
-# RPROMPT="%(?.%{$fg[green]%}%? %{$reset_color%}.%{$fg[red]%}%? %{$reset_color%})"
 
 bindkey -e
 
@@ -78,7 +72,7 @@ alias Nohidden="dconf reset /org/gtk/settings/file-chooser/show-hidden &> /dev/n
 alias Showhidden="defaults write com.apple.finder AppleShowAllFiles YES &&killall Finder"
 alias Fix_dotnet="find /opt/dotnet -name '*.so' -type f -print | xargs ldd | grep 'not found'"
 alias -g IX="| curl -F 'f:1=<-' ix.io"
-alias custom='repose -vf aur -r /var/cache/pacman/aur -p /var/cache/pacman/aur'
+alias Aur='repose -vf aur -r /var/cache/pacman/aur -p /var/cache/pacman/aur'
 alias gist='gist -c'
 
 Fix_steam() {
@@ -101,13 +95,13 @@ zle -N global-alias-space
 bindkey ' ' global-alias-space
 
 chpwd() {
-	[[ $TERM == (dvtm*|xterm*|*rxvt*|screen-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
-	# [[ $TERM == (dvtm*) ]] && echo -en "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
+	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
+	[[ $TERM == (tmux*|screen*) ]] && printf "\033kzsh\033\\"
 }
 
 preexec() {
-	[[ $TERM == (dvtm*|xterm*|*rxvt*|screen-256color|st-256color) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
-	# [[ $TERM == (dvtm*) ]] && echo -en "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
+	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
+	[[ $TERM == (tmux*|screen*) ]] && printf "\033k$1\033\\"
 }
 
 # A case for a suffix alias?
@@ -130,6 +124,7 @@ sx simple-extract () {
 				*.tbz2)		tar -xvjf $f				;;
 				*.txz)		tar -xvJf $f				;;
 				*.tar.xz)	tar -xvJf $f				;;
+				*.tar.lz)   tar --lzip -xvf $f          ;;
 				*.xz)		7z x $f						;;
 				*.zip)		unzip $f					;;
 				*.Z)		uncompress $f				;;
@@ -186,7 +181,7 @@ zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
 # complete manual by their section
 zstyle ':completion:*:manuals'    separate-sections true
-zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:manuals.*'  insert-sections   false
 zstyle ':completion:*:man:*'      menu yes select
 
 
@@ -248,8 +243,8 @@ fi
 
 # required for st
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
-# function zle-line-init () { echoti smkx }
-# function zle-line-finish () { echoti rmkx }
-# zle -N zle-line-init
-# zle -N zle-line-finish
+function zle-line-init () { echoti smkx }
+function zle-line-finish () { echoti rmkx }
+zle -N zle-line-init
+zle -N zle-line-finish
 
