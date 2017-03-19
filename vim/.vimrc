@@ -20,6 +20,10 @@ endif
 
 set t_ts=k
 set t_fs=\
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" let &t_ZH = "\e[3m"
+" let &t_ZR = "\e[23m"
 
 "set cpoptions=q
 "set tabline=%M\ %t
@@ -70,6 +74,7 @@ set smarttab
 set softtabstop=0
 set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ %l\ \ \ Column:\ %v\ \ \ %p%%
 set tabstop=4
+" set termguicolors
 set textwidth=80
 set timeoutlen=1000
 set title
