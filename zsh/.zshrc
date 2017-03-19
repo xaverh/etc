@@ -188,10 +188,10 @@ zstyle ':completion:*:man:*'      menu yes select
 
 
 # manpage colors
-export LESS_TERMCAP_mb=$'\E[00;31m'     # begin blinking
-export LESS_TERMCAP_md=$'\E[00;34m'     # begin bold
-export LESS_TERMCAP_us=$'\E[00;93m'     # begin underline
-export LESS_TERMCAP_so=$'\E[00;44;1m'   # begin standout-mode
+export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
+export LESS_TERMCAP_md=$'\E[01;95m'     # begin bold
+export LESS_TERMCAP_us=$'\E[00;94m'     # begin underline
+export LESS_TERMCAP_so=$'\E[00;100;2m'  # begin standout-mode
 export LESS_TERMCAP_me=$'\E[0m'         # end bold
 export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
