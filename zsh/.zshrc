@@ -9,6 +9,7 @@ zmodload -i zsh/complist
 autoload -Uz compinit && compinit
 export EDITOR=vim
 export PAGER=less
+LESS="-i"; export LESS
 autoload -U colors && colors
 autoload -U zmv
 autoload -U keeper && keeper
@@ -192,17 +193,13 @@ zstyle ':completion:*:man:*'      menu yes select
 
 
 # manpage colors
-# export LESS_TERMCAP_mb=$'\E[00;34m'     # begin blinking
 export LESS_TERMCAP_mb=$'\E[00;31m'     # begin blinking
-# export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
-export LESS_TERMCAP_md=$'\E[00;33m'     # begin bold
-export LESS_TERMCAP_us=$'\E[00;34m'     # begin underline
-export LESS_TERMCAP_me=$'\E[0m'         # end mode
-export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
-export LESS_TERMCAP_so=$'\E[00;40;39m' # begin standout-mode - info box
-#export LESS_TERMCAP_so=$'\E[00;102;37m' # begin standout-mode - info box
+export LESS_TERMCAP_md=$'\E[00;34m'     # begin bold
+export LESS_TERMCAP_us=$'\E[00;93m'     # begin underline
+export LESS_TERMCAP_so=$'\E[00;44;1m'   # begin standout-mode
+export LESS_TERMCAP_me=$'\E[0m'         # end bold
 export LESS_TERMCAP_ue=$'\E[0m'         # end underline
-# export LESS_TERMCAP_us=$'\E[00;31m'     # begin underline
+export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
 # Erstellt aus .flac-Dateien .m4a-Dateien:
