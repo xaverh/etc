@@ -16,3 +16,5 @@ nolink/dmenu/src/dmenu-4.6/
 ranger/.config/ranger/history
 ranger/.config/ranger/tagged
 ranger/.config/ranger/bookmarks
+weechat/.weechat/sec.conf
+*.weechatlog
