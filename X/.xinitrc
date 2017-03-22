@@ -47,6 +47,8 @@ fi
 
 numlockx &
 
+systemctl --user start dwmstatus.service
+
 while true; do
     # Log stderror to a file
     # dwm 2> ~/.dwm.log
