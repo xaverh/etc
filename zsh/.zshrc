@@ -9,7 +9,6 @@ zmodload -i zsh/complist
 autoload -Uz compinit && compinit
 export EDITOR=vim
 export PAGER=less
-LESS="-i"; export LESS
 autoload -U colors && colors
 autoload -U zmv
 autoload -U keeper && keeper
@@ -243,8 +242,10 @@ fi
 
 # required for st
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
-function zle-line-init () { echoti smkx }
-function zle-line-finish () { echoti rmkx }
-zle -N zle-line-init
-zle -N zle-line-finish
+if [[ $TERM == (tmux*|st*) ]]; then
+	function zle-line-init () { echoti smkx }
+	function zle-line-finish () { echoti rmkx }
+	zle -N zle-line-init
+	zle -N zle-line-finish
+fi
 
