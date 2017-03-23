@@ -9,7 +9,6 @@ zmodload -i zsh/complist
 autoload -Uz compinit && compinit
 export EDITOR=vim
 export PAGER=less
-LESS="-i"; export LESS
 autoload -U colors && colors
 autoload -U zmv
 autoload -U keeper && keeper
