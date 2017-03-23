@@ -36,7 +36,9 @@ set clipboard=unnamed
 set colorcolumn=+1
 set copyindent
 "set cursorline
+set display=truncate
 set encoding=utf8
+set fixendofline
 set foldclose=all
 set foldcolumn=1
 set foldopen=all
@@ -74,7 +76,6 @@ set smarttab
 set softtabstop=0
 set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ %l\ \ \ Column:\ %v\ \ \ %p%%
 set tabstop=4
-" set termguicolors
 set textwidth=80
 set timeoutlen=1000
 set title
@@ -86,8 +87,6 @@ set whichwrap+=<,>,[,],h,l
 " http://stackoverflow.com/questions/526858/how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
 set wildmode=longest,list,full
 set wildmenu
-set wildmenu
-set wildmode=longest,full
 set wrap
 
 " Make :help appear in a full-screen tab, instead of a window
@@ -125,7 +124,7 @@ vmap  <expr>  D          DVB_Duplicate()
 
 " Colors & Fonts & Appearance
 set background=dark
-"call togglebg#map("<F5>")
+let c_comment_strings=1
 
 " Clang-Format & gofmt
 if has("win32") || has("win64")

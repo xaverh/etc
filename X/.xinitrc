@@ -47,7 +47,7 @@ fi
 
 numlockx &
 
-systemctl start --user dwmstatus.service
+systemctl --user start dwmstatus.service
 
 while true; do
     # Log stderror to a file
