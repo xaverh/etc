@@ -2,7 +2,6 @@
 	"editor.fontFamily": "PragmataPro, Menlo, SF Mono, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
 	"editor.fontSize": 16,
 	"terminal.integrated.fontSize": 16,
-	// "editor.lineHeight": 24,
 	"editor.rulers": [
 	],
 	"editor.formatOnType": true,
@@ -37,8 +36,6 @@
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
 	"editor.formatOnSave": false,
-	// "terminal.integrated.shell.windows": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-	// kann das in eine Erweiterung?
 	"files.associations": {
 		"*.clang-format": "yaml",
 		"autostart": "shellscript",
@@ -71,5 +68,11 @@
 	"terminal.external.linuxExec": "urxvtc",
 	"gitProjectManager.baseProjectsFolders": [
 		"$HOME/src"
-	]
+	],
+	"[cpp]": {
+		"editor.quickSuggestions": false
+	},
+	"[c]": {
+		"editor.quickSuggestions": false
+	}
 }
