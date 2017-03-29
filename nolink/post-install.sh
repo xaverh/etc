@@ -22,7 +22,7 @@ repo-add /var/cache/pacman/aur/aur.db.tar
 
 sudo pacman -Syu
 
-aursync -un spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code playerctl clipmenu neofetch
+aursync -un spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch
 
 sudo pacman -Syu
 
