@@ -26,7 +26,6 @@ bindkey "\e[B"  history-beginning-search-forward-end
 
 PROMPT='%n@%m:%B%~ %#%b '
 
-# Keybindings
 bindkey -e
 
 _bkdate() { BUFFER="$BUFFER$(date '+%F')"; CURSOR=$#BUFFER; }
