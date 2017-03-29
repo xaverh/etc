@@ -34,7 +34,7 @@ chmod 600 ${SSH_ENV}
 if test -f /usr/lib/ssh/x11-ssh-askpass
 then
 	SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null
-fi
+fi &
 
 dunst &
 
@@ -47,7 +47,7 @@ fi
 
 numlockx &
 
-systemctl --user start dwmstatus.service
+systemctl --user start dwmstatus.service &
 
 while true; do
     # Log stderror to a file

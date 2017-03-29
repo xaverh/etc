@@ -78,7 +78,7 @@ set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %
 set tabstop=4
 set textwidth=80
 set timeoutlen=1000
-set title
+" set title
 " set ttymouse=urxvt
 set undofile
 set undolevels=5000

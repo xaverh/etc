@@ -19,7 +19,7 @@ x11-ssh-askpass.*borderWidth:           1
 URxvt.intensityStyles: true
 URxvt*geometry: 86x24
 URxvt*scrollBar: false
-URxvt*letterSpace: -1
+! URxvt*letterSpace: -1
 URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
 URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
 URxvt*internalBorder:  16
@@ -30,30 +30,22 @@ URxvt*visualBell: true
 
 URxvt*cursorBlink: 1
 
-*.foreground:   #4d4d4c
-*.background:   #eeeeee
-*.cursorColor:  #4d4d4c
-!! black
-*.color0:       #4d4d4c
-*.color8:       #969694
-!! red
-*.color1:       #d7005f
-*.color9:       #d7005f
-!! green
-*.color2:       #718c00
-*.color10:      #718c00
-!! yellow
-*.color3:       #d75f00
-*.color11:      #d75f00
-!! blue
-*.color4:       #4271ae
-*.color12:      #4271ae
-!! magenta
-*.color5:       #8959a8
-*.color13:      #8959a8
-!! cyan
-*.color6:       #3e999f
-*.color14:      #3e999f
-!! white
-*.color7:       #eeeeee
-*.color15:      #f5f5f5
+*.background: #1E1E1E
+*.color0:     #1E1E1E
+*.color1:     #E32791
+*.color2:     #30C798
+*.color3:     #E3C472
+*.color4:     #6769E6
+*.color5:     #E59FDF
+*.color6:     #81D8D0
+*.color7:     #969696
+*.color8:     #515151
+*.color9:     #E466AD
+*.color10:    #6CD1B2
+*.color11:    #E4CF98
+*.color12:    #9091E6
+*.color13:    #E5B6E1
+*.color14:    #A2DCD7
+*.color15:    #E5E6E6
+*.foreground: #E5E6E6
+

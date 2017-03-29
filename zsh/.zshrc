@@ -26,6 +26,7 @@ bindkey "\e[B"  history-beginning-search-forward-end
 
 PROMPT='%n@%m:%B%~ %#%b '
 
+# Keybindings
 bindkey -e
 
 _bkdate() { BUFFER="$BUFFER$(date '+%F')"; CURSOR=$#BUFFER; }
@@ -95,12 +96,12 @@ bindkey ' ' global-alias-space
 
 chpwd() {
 	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
-	[[ $TERM == (tmux*|screen*) ]] && printf "\033kzsh\033\\"
+	#[[ $TERM == (tmux*|screen*) ]] && echo -n "\033kzsh\033\\"
 }
 
 preexec() {
 	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
-	[[ $TERM == (tmux*|screen*) ]] && printf "\033k$1\033\\"
+	#[[ $TERM == (tmux*|screen*) ]] && echo -n "\033k$1\033\\"
 }
 
 # A case for a suffix alias?
