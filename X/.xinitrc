@@ -26,10 +26,10 @@ xset b off &
 xset s off &
 xset -dpms &
 
-SSH_ENV=$HOME/.ssh/environment
-ssh-agent | grep -v echo > ${SSH_ENV}
-chmod 600 ${SSH_ENV}
-. ${SSH_ENV} > /dev/null
+# SSH_ENV=$HOME/.ssh/environment
+# ssh-agent | grep -v echo > ${SSH_ENV}
+# chmod 600 ${SSH_ENV}
+# . ${SSH_ENV} > /dev/null
 
 if test -f /usr/lib/ssh/x11-ssh-askpass
 then
