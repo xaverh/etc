@@ -5,6 +5,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=9223372036854775807
 SAVEHIST=9223372036854775807
 eval `dircolors $HOME/.dircolors 2> /dev/null` || eval `dircolors`
+zstyle :compinstall filename '$HOME/.zshrc'
 zmodload -i zsh/complist
 autoload -Uz compinit && compinit
 export EDITOR=vim
