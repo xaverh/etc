@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "PragmataPro, Menlo, SF Mono, Ubuntu Mono, SF Mono, Menlo, Consolas, Source Code Pro",
+	"editor.fontFamily": "Input, Menlo, SF Mono, Source Code Pro",
 	"editor.fontSize": 16,
 	"terminal.integrated.fontSize": 16,
 	"editor.rulers": [
@@ -7,7 +7,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wordWrap": "off",
+	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
@@ -74,5 +74,6 @@
 	},
 	"[c]": {
 		"editor.quickSuggestions": false
-	}
+	},
+	"workbench.colorTheme": "Qillqaq"
 }
