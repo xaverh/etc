@@ -12,6 +12,10 @@ call vundle#end()
 filetype plugin indent on
 syntax enable
 
+" Comma as leader
+let mapleader = ","
+let g:mapleader = ","
+
 if has("win32") || has("win64")
  	let &undodir=$HOME . '\AppData\Local\VIM_UNDO_FILES\'
 else
@@ -30,12 +34,16 @@ set t_fs=\
 set autoindent
 set autoread
 set backspace=indent,eol,start
+set backup
+set backupdir=~/tmp,/tmp
+set backupskip=/tmp/*,~/tmp/*
 set cindent
 set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
 set colorcolumn=+1
 set copyindent
 "set cursorline
+set directory=~/tmp,/tmp
 set display=truncate
 set encoding=utf8
 set fixendofline
@@ -53,6 +61,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
+set lazyredraw
 set linebreak
 set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
 set matchpairs+=«:»
@@ -88,6 +97,20 @@ set whichwrap+=<,>,[,],h,l
 set wildmode=longest,list,full
 set wildmenu
 set wrap
+set writebackup
+
+" save session
+nnoremap <leader>s :mksession<CR>
+
+" toggle between number and relativenumber
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
 
 " Make :help appear in a full-screen tab, instead of a window
 augroup HelpInTabs
@@ -128,19 +151,15 @@ let c_comment_strings=1
 
 " Clang-Format & gofmt
 if has("win32") || has("win64")
-	map <C-I> :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
-	imap <C-I> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+	map <leader>i :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
+	" imap <C-I> <c-o>:%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format.py<cr>
 else
-	map <C-I> :%pyfile /usr/share/clang/clang-format.py<cr>
-	imap <C-I> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
+	map <leader>i :%pyfile /usr/share/clang/clang-format.py<cr>
+	" imap <C-I> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
 endif
 
 autocmd FileType go map <C-I> :GoFmt<cr>
 autocmd FileType go imap <C-I> <C-O>:GoFmt<cr>
-
-" Comma as leader
-let mapleader = ","
-let g:mapleader = ","
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
