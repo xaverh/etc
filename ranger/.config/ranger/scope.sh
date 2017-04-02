@@ -50,8 +50,8 @@ safepipe() { "$@"; test $? = 0 -o $? = 141; }
 if [ "$preview_images" = "True" ]; then
     case "$mimetype" in
         # Image previews for SVG files, disabled by default.
-        ###image/svg+xml)
-        ###   convert "$path" "$cached" && exit 6 || exit 1;;
+        # image/svg+xml)
+           # convert "$path" "$cached" && exit 6 || exit 1;;
         # Image previews for image files. w3mimgdisplay will be called for all
         # image files (unless overriden as above), but might fail for
         # unsupported types.
@@ -78,9 +78,8 @@ case "$extension" in
         # avoid password prompt by providing empty password
         try 7z -p l "$path" && { dump | trim; exit 0; } || exit 1;;
     ## PDF documents:
-    #pdf)
-        #try pdftotext -l 10 -nopgbrk -q "$path" - && \
-            #{ dump | trim | fmt -s -w $width; exit 0; } || exit 1;;
+    # pdf)
+	   # convert "$path""[0]" "$cached".png && exit 6 || exit 1;;
     # BitTorrent Files
     torrent)
         try transmission-show "$path" && { dump | trim; exit 5; } || exit 1;;
