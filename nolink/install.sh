@@ -42,7 +42,7 @@ linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
 options root=PARTUUID=f69907aa-e58a-4f56-8bc0-208e5f1ad73a rootfstype=xfs add_efi_memmap rw
-# :r! blkid to get real PARTUUID
+# :r! lsblk -n -o PARTUUID /dev/sdb1 to get real PARTUUID
 
 # /boot/loader/loader.conf
 timeout 3
