@@ -46,7 +46,6 @@ else
 	alias la='ls -lhA'
 	alias ll='ls -lh'
 fi
-alias aus="su -c 'shutdown -h now'"
 alias lsbig='ls -Slh | head'
 alias lssmall='ls -Slhr | head'
 alias lsnew='ls -tlh | head'
