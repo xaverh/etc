@@ -4,20 +4,5 @@
 		"key": "ctrl+j",
 		"command": "editor.action.joinLines",
 		"when": "editorTextFocus && !editorReadonly"
-	},
-	{
-		"key": "ctrl+k l",
-		"command": "editor.action.transformToLowercase",
-		"when": "editorTextFocus && !editorReadonly"
-	},
-	{
-		"key": "ctrl+k u",
-		"command": "editor.action.transformToUppercase",
-		"when": "editorTextFocus && !editorReadonly"
-	},
-	{
-		"key": "ctrl+`",
-		"command": "workbench.action.terminal.focus",
-		"when": "!terminalFocus"
 	}
 ]
