@@ -75,5 +75,12 @@
 	"[c]": {
 		"editor.quickSuggestions": false
 	},
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Ysgrifennwr",
+	"workbench.experimental.colorCustomizations": {
+		"editorCursor": "#20BBFC",
+		"statusBarBackground": "#005577",
+		"statusBarDebuggingBackground": "#AF5E00",
+		"statusBarNoFolderBackground": "#442059",
+		"statusBarForeground": "#e5e5e6"
+	}
 }
