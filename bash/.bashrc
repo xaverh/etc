@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# directory colors
+eval `dircolors $HOME/.dircolors 2> /dev/null` || eval `dircolors`
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
 export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
@@ -42,5 +44,10 @@ else
 	alias la='ls -lhA'
 	alias ll='ls -lh'
 fi
+alias dfh='df -H'
+alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"'
+alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
+alias d='dirs -v'
+alias j='jobs -l'
 
-PS1='\[\e[1m\]\w\[\e[0m\] \$ '
+PS1='\[\e[1m\]\w \$\[\e[0m\] '
