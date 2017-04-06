@@ -65,7 +65,7 @@
 	"editor.minimap.enabled": true,
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
-	"terminal.external.linuxExec": "urxvtc",
+	"terminal.external.linuxExec": "st",
 	"gitProjectManager.baseProjectsFolders": [
 		"$HOME/src"
 	],
@@ -82,5 +82,6 @@
 		"statusBarDebuggingBackground": "#AF5E00",
 		"statusBarNoFolderBackground": "#442059",
 		"statusBarForeground": "#e5e5e6"
-	}
+	},
+	"workbench.settings.openDefaultSettings": false
 }
