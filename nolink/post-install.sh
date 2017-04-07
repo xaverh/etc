@@ -43,4 +43,6 @@ makepkg -sfi
 systemctl --user enable dropbox
 # systemctl --user enable mpd
 
+systemctl enable devmon@$USER.service
+
 reboot
