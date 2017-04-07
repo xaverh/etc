@@ -40,7 +40,7 @@ set backupskip=/tmp/*,~/tmp/*
 set cindent
 set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
-set colorcolumn=+1
+" set colorcolumn=+1
 set copyindent
 "set cursorline
 set directory=~/tmp,/tmp
@@ -73,7 +73,7 @@ set nostartofline
 set number
 set numberwidth=1
 set pastetoggle=<F8>
-set ruler
+set noruler
 set scrolloff=5
 set shiftwidth=4
 set shortmess=at
@@ -87,7 +87,7 @@ set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %
 set tabstop=4
 set textwidth=80
 set timeoutlen=1000
-" set title
+set title
 " set ttymouse=urxvt
 set undofile
 set undolevels=5000
@@ -225,3 +225,6 @@ imap <F6> <c-o>:set list!<CR>
 " nmap <silent> <LEFT>          :cprev<CR>
 " nmap <silent> <LEFT><LEFT>    :cpf<CR><C-G>
 
+" http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
