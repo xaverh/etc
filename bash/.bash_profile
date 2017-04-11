@@ -4,6 +4,9 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+ANDROID_HOME="$HOME/.android-sdk"
+export ANDROID_HOME
+
 PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
 export PATH
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -15,8 +18,6 @@ export SSH_AUTH_SOCK
 GOPATH="$HOME/.gopath/"
 export GOPATH
 
-ANDROID_HOME="$HOME/.android-sdk"
-export ANDROID_HOME
 
 export EDITOR=vim
 export PAGER=less
