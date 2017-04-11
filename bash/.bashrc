@@ -51,3 +51,9 @@ alias d='dirs -v'
 alias j='jobs -l'
 
 PS1='\[\e[1m\]\w \$\[\e[0m\] '
+
+
+h() {
+	grep -a $@ $HISTFILE
+}
+
