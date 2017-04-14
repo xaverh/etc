@@ -109,7 +109,7 @@ lspci | grep -e VGA -e 3D
 # NVidia: XXX
 
 pacman --needed -S clang libstdc++5 lua noto-fonts{,-cjk,-emoji} dunst scrot feh \
-zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick \
+zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp \
 unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu \
