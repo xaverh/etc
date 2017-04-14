@@ -83,5 +83,7 @@
 		"statusBarForeground": "#e5e5e6"
 	},
 	"workbench.settings.openDefaultSettings": false,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"clang-format.language.typescript.enable": false,
+	"clang-format.language.javascript.enable": false
 }
