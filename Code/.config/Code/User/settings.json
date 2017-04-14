@@ -82,6 +82,5 @@
 		"statusBarNoFolderBackground": "#442059",
 		"statusBarForeground": "#e5e5e6"
 	},
-	"workbench.settings.openDefaultSettings": false,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.settings.openDefaultSettings": false
 }
