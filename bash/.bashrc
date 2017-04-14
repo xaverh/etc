@@ -22,7 +22,7 @@ export HISTSIZE=""
 export HISTFILESIZE=""
 
 # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443
-HISTCONTROL=ignoredups:erasedups
+HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
