@@ -58,10 +58,6 @@
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
-	// "[haskell]": {
-	// 	"editor.insertSpaces": true
-        // },
-        "workbench.iconTheme": "vs-seti",
 	"editor.minimap.enabled": true,
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
