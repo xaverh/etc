@@ -66,9 +66,6 @@
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
 	"terminal.external.linuxExec": "st",
-	"gitProjectManager.baseProjectsFolders": [
-		"$HOME/src"
-	],
 	"[cpp]": {
 		"editor.quickSuggestions": false
 	},
@@ -81,9 +78,12 @@
 		"statusBarDebuggingBackground": "#AF5E00",
 		"statusBarNoFolderBackground": "#442059",
 		"statusBarForeground": "#e5e5e6"
+		// "panelActiveTitleForeground": "#f9f8f4",
+		// "panelInactiveTitleForeground": "#a6a5a3",
+		// "sideBarBackground": "#edece8"
 	},
 	"workbench.settings.openDefaultSettings": false,
-	"workbench.colorTheme": "Qillqaq",
 	"clang-format.language.typescript.enable": false,
-	"clang-format.language.javascript.enable": false
+	"clang-format.language.javascript.enable": false,
+	"workbench.colorTheme": "Qillqaq"
 }
