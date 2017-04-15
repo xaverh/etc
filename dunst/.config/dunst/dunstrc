@@ -1,5 +1,5 @@
 [global]
-    font = InputSansCondensed Bold 15
+    font = InputSansCondensed Bold 12
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -148,8 +148,8 @@
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [frame]
-    width = 2
-    color = "#1e1e1e"
+    width = 1
+    color = "#005577"
 
 [shortcuts]
 
@@ -187,7 +187,7 @@
 [urgency_critical]
     background = "#1e1e1e"
     foreground = "#e32791"
-    timeout = 0
+    timeout = 60
 
 
 # Every section that isn't one of the above is interpreted as a rules to
