@@ -76,6 +76,10 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
+	"[typescript]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
 	"workbench.experimental.colorCustomizations": {
 		"editorCursor": "#20BBFC",
 		"statusBarBackground": "#005577",
@@ -90,5 +94,6 @@
 	"clang-format.language.typescript.enable": false,
 	"clang-format.language.javascript.enable": false,
 	"editor.detectIndentation": true,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"typescript.tsserver.log": "verbose"
 }
