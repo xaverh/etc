@@ -62,3 +62,34 @@ h() {
 	grep -a $@ $HISTFILE
 }
 
+sx () {
+	for f in "$@"; do
+		if [[ -f $f ]]; then
+			case $f in
+				*.7z)		7z x $f			;;
+				*.7z.001)	7z x $f			;;
+				*.lzma)		unlzma $f		;;
+				*.tar.bz2)	tar -xvjf $f		;;
+				*.tar.gz)	tar -xvzf $f		;;
+				*.rar)		unrar x $f		;;
+				*.deb)		ar -x $f		;;
+				*.bz2)		bzip2 -d $f		;;
+				*.lzh)		lha x $f		;;
+				*.gz)		gunzip -d --verbose $f  ;;
+				*.tar)		tar -xvf $f		;;
+				*.tgz)		tar -xvzf $f		;;
+				*.tbz2)		tar -xvjf $f		;;
+				*.txz)		tar -xvJf $f		;;
+				*.tar.xz)	tar -xvJf $f		;;
+				*.tar.lz)   	tar --lzip -xvf $f	;;
+				*.xz)		7z x $f			;;
+				*.zip)		unzip $f		;;
+				*.Z)		uncompress $f		;;
+				*)			echo "'$f' Error. This is no compression type \
+			      				known to simple-extract." ;;
+			esac
+		else
+			echo "'$f' is not a valid file"
+		fi
+	done
+}
