@@ -20,3 +20,4 @@ ranger/.config/ranger/tagged
 ranger/.config/ranger/bookmarks
 weechat/.weechat/sec.conf
 *.weechatlog
+vifm/.vifm/vifminfo
