@@ -1,5 +1,5 @@
 [Unit]
-Description=Keybase
+Description=Tresorit
 After=network.target
 
 [Service]
