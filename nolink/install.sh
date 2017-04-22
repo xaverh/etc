@@ -108,9 +108,9 @@ lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S clang libstdc++5 lua noto-fonts{,-cjk,-emoji} dunst scrot feh \
-zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp \
-unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm \
+pacman --needed -S clang libstdc++5 lua dunst scrot feh \
+zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
+unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
