@@ -4,7 +4,7 @@
 	"terminal.integrated.fontSize": 16,
 	"editor.rulers": [],
 	"editor.formatOnType": true,
-	"editor.scrollBeyondLastLine": false,
+	"editor.scrollBeyondLastLine": true,
 	"editor.acceptSuggestionOnEnter": false,
 	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
@@ -12,7 +12,7 @@
 	"editor.insertSpaces": false,
 	"editor.cursorBlinking": "smooth",
 	"editor.cursorStyle": "line",
-	"editor.renderLineHighlight": "line",
+	"editor.renderLineHighlight": "all",
 	"editor.renderControlCharacters": true,
 	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
@@ -30,10 +30,9 @@
 		"-std=c11",
 		"-Weverything"
 	],
-	"clang.completion.enable": false,
-	"files.autoSave": "off",
+	"files.autoSave": "afterDelay",
 	"editor.fontLigatures": true,
-	"editor.renderWhitespace": "none",
+	"editor.renderWhitespace": "boundary",
 	"editor.formatOnSave": false,
 	"files.associations": {
 		"*.clang-format": "yaml",
@@ -47,6 +46,7 @@
 		"**/.git": true,
 		"**/.svn": true,
 		"**/.hg": true,
+		"**/CVS": true,
 		"**/.DS_Store": true,
 		"**/._*": true,
 		"**/*.un~": true
@@ -76,6 +76,10 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
+	"[python]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true
+	},
 	"[typescript]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
@@ -91,9 +95,13 @@
 		// "sideBarBackground": "#edece8"
 	},
 	"workbench.settings.openDefaultSettings": false,
-	"clang-format.language.typescript.enable": false,
+	"clang-format.language.typescript.enable": true,
 	"clang-format.language.javascript.enable": false,
 	"editor.detectIndentation": true,
 	"workbench.colorTheme": "Qillqaq",
-	"typescript.tsserver.log": "verbose"
+	"typescript.tsserver.log": "verbose",
+	"debug.inlineValues": true,
+	"clang.completion.enable": true,
+	"C_Cpp.autocomplete": "Default",
+	"tslint.enable": true
 }
