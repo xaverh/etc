@@ -108,7 +108,7 @@ lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S clang libstdc++5 lua dunst scrot feh \
+pacman --needed -S clang libstdc++5 lua dunst scrot feh noto-fonts-emoji \
 zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
 unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
