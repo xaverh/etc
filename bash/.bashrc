@@ -17,18 +17,23 @@ export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
+export HISTTIMEFORMAT="%y.%m.%d %T"
+
 # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
 export HISTSIZE=""
 export HISTFILESIZE=""
 
 # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443
-HISTCONTROL=ignoredups:erasedups
+export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+export HISTCONTROL=ignoreboth
 
 set -o emacs
 shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 dirspell dotglob globasciiranges lastpipe lithist no_empty_cmd_completion nocaseglob nocasematch
-shopt -s autocd cdable_vars cdspell checkjobs checkwinsize complete_fullquote direxpand expand_aliases extglob extquote failglob globstar histreedit histverify interactive_comments progcomp promptvars sourcepath
+shopt -s autocd cdable_vars cdspell checkjobs checkwinsize complete_fullquote \
+direxpand expand_aliases extglob extquote failglob globstar histreedit \
+histverify interactive_comments progcomp promptvars sourcepath cmdhist
 shopt -s hostcomplete
 
 alias grep="grep -i --color=auto"
@@ -51,3 +56,40 @@ alias d='dirs -v'
 alias j='jobs -l'
 
 PS1='\[\e[1m\]\w \$\[\e[0m\] '
+
+
+h() {
+	grep -a $@ $HISTFILE
+}
+
+sx () {
+	for f in "$@"; do
+		if [[ -f $f ]]; then
+			case $f in
+				*.7z)		7z x $f			;;
+				*.7z.001)	7z x $f			;;
+				*.lzma)		unlzma $f		;;
+				*.tar.bz2)	tar -xvjf $f		;;
+				*.tar.gz)	tar -xvzf $f		;;
+				*.rar)		unrar x $f		;;
+				*.deb)		ar -x $f		;;
+				*.bz2)		bzip2 -d $f		;;
+				*.lzh)		lha x $f		;;
+				*.gz)		gunzip -d --verbose $f  ;;
+				*.tar)		tar -xvf $f		;;
+				*.tgz)		tar -xvzf $f		;;
+				*.tbz2)		tar -xvjf $f		;;
+				*.txz)		tar -xvJf $f		;;
+				*.tar.xz)	tar -xvJf $f		;;
+				*.tar.lz)   	tar --lzip -xvf $f	;;
+				*.xz)		7z x $f			;;
+				*.zip)		unzip $f		;;
+				*.Z)		uncompress $f		;;
+				*)			echo "'$f' Error. This is no compression type \
+			      				known to simple-extract." ;;
+			esac
+		else
+			echo "'$f' is not a valid file"
+		fi
+	done
+}

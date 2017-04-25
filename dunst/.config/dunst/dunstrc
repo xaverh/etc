@@ -1,5 +1,5 @@
 [global]
-    font = SFMono 10
+    font = InputSansCondensed Bold 12
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -148,8 +148,8 @@
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [frame]
-    width = 2
-    color = "#267682"
+    width = 1
+    color = "#005577"
 
 [shortcuts]
 
@@ -175,19 +175,19 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#202020"
-    foreground = "#51C4D4"
+    background = "#1e1e1e"
+    foreground = "#e5e6e6"
     timeout = 10
 
 [urgency_normal]
-    background = "#51C4D4"
-    foreground = "#202020"
+    background = "#1e1e1e"
+    foreground = "#30c798"
     timeout = 10
 
 [urgency_critical]
-    background = "#FFFFFF"
-    foreground = "#202020"
-    timeout = 0
+    background = "#1e1e1e"
+    foreground = "#e32791"
+    timeout = 60
 
 
 # Every section that isn't one of the above is interpreted as a rules to
