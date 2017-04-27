@@ -18,10 +18,10 @@ mkfs.xfs /dev/sdX
 # mount everything accordingly below /mnt
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel vim
 
 genfstab -U /mnt >> /mnt/etc/fstab # settings for SSDs?
-arch-chroot /mnt /bin/bash
+arch-chroot /mnt
 
 passwd
 
@@ -60,11 +60,9 @@ reboot
 
 # Locale configuration
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-localectl list-locales
 locale-gen
 localectl set-locale LANG=en_US.UTF-8
 localectl set-keymap de
-localectl set-x11-keymap de
 
 # Time configuration
 vi /etc/systemd/timesyncd.conf # TODO
@@ -112,7 +110,7 @@ pacman --needed -S clang libstdc++5 lua dunst scrot feh noto-fonts-emoji \
 zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
 unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
-texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac ttf-dejavu \
+texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
 playerctl wqy-microhei bash-completion udevil
 
@@ -144,7 +142,7 @@ pacman --needed -S libdvdcss dvd+rw-tools
 systemctl enable fstrim.timer
 
 # users
-useradd xha -m -G wheel -s /usr/bin/zsh
+useradd xha -m -G wheel
 passwd xha
 visudo
 # Defaults insults
