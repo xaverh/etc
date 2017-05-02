@@ -95,6 +95,7 @@ systemctl enable --now systemd-resolved
 systemctl enable --now systemd-networkd
 
 # Install optional packages
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 rankmirrors /etc/pacman.d/mirrorlist > /tmp/mirrorlist
 vi /tmp/mirrorlist
 mv /tmp/mirrorlist /etc/pacman.d/mirrorlist
