@@ -7,13 +7,12 @@
 nolink/sent-git/pkg/
 nolink/sent-git/sent-git/
 nolink/sent-git/src/sent-git/
-.config/Code/User/workspaceStorage/
+Code/.config/Code/User/workspaceStorage/
 vim/.vim/.netrwhist
 vim/.vim/bundle/
 !vim/.vim/bundle/Vundle.vim/
 nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
-.vifm/vifminfo
 **/.browse.VC.db*
 ranger/.config/ranger/history
 ranger/.config/ranger/tagged
@@ -22,3 +21,4 @@ weechat/.weechat/sec.conf
 *.weechatlog
 weechat/.weechat/certs/
 vifm/.vifm/vifminfo
+
