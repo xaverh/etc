@@ -45,4 +45,6 @@ systemctl --user enable dropbox
 
 systemctl enable devmon@$USER.service
 
+ln -s ~/.local/share/applications/mimeapps.list ~/.config/mimeapps.list
+
 reboot
