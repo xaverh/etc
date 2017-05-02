@@ -32,7 +32,7 @@
 	],
 	"files.autoSave": "afterDelay",
 	"editor.fontLigatures": true,
-	"editor.renderWhitespace": "boundary",
+	"editor.renderWhitespace": "none",
 	"editor.formatOnSave": false,
 	"files.associations": {
 		"*.clang-format": "yaml",
@@ -78,7 +78,8 @@
 	},
 	"[python]": {
 		"editor.tabSize": 4,
-		"editor.insertSpaces": true
+		"editor.insertSpaces": true,
+		"editor.renderWhitespace": "boundary"
 	},
 	"[typescript]": {
 		"editor.tabSize": 2,
