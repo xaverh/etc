@@ -53,7 +53,7 @@
 	},
 	"git.confirmSync": false,
 	"window.zoomLevel": 0,
-	"zenMode.fullScreen": true,
+	"zenMode.fullScreen": false,
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
@@ -62,12 +62,6 @@
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
 	"terminal.external.linuxExec": "st",
-	"[c]": {
-		"editor.quickSuggestions": false
-	},
-	"[cpp]": {
-		"editor.quickSuggestions": false
-	},
 	"[json]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
@@ -104,5 +98,12 @@
 	"debug.inlineValues": true,
 	"clang.completion.enable": true,
 	"C_Cpp.autocomplete": "Default",
-	"tslint.enable": true
+	"tslint.enable": true,
+	"clang.diagnostic.enable": true,
+	"[cpp]": {
+		"editor.quickSuggestions": false
+	},
+	"[c]": {
+		"editor.quickSuggestions": false
+	}
 }
