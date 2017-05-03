@@ -6,7 +6,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": true,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wordWrap": "on",
+	"editor.wordWrap": "off",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
@@ -39,7 +39,8 @@
 		"autostart": "shellscript",
 		"*.npmrc": "ini",
 		"*.service": "ini",
-		"*.h": "c"
+		"*.h": "c",
+		"*.ymp": "xml"
 	},
 	"workbench.editor.showTabs": true,
 	"files.exclude": {
