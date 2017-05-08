@@ -3,15 +3,24 @@
 timedatectl set-ntp 1
 
 cd
+mkdir ~/.cache
+mkdir ~/.mozilla
+# ext enc
+mkdir ~/.ssh
 git clone git@github.com:xaverh/etc.git
+mkdir -p ~/.config/Code/User/workspaceStorage
+rm .bashrc .bash_logout .bash_profile
+cd ~/etc
+stow -v !(nolink)
+git submodule update
 
 mkdir ~/tmp
 cd ~/tmp
 wget -O - "https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz" | tar xzf -
 cd aurutils
-makepkg -si
+makepkg -Ccsfi
 
-sudo cp ~/src/dotfiles/nolink/etc/pacman.d/aur /etc/pacman.d/aur
+sudo cp ~/etc/nolink/etc/pacman.d/aur /etc/pacman.d/aur
 sudo chmod 644 /etc/pacman.d/aur
 
 # Include AUR into pacman.conf

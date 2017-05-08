@@ -14,11 +14,11 @@ gdisk /dev/sdX
 fdisk /dev/sdX
 
 # make filesystems
-mkfs.xfs /dev/sdX
+mkfs.ext4 -O encrypt,metadata_csum,64bit /dev/sdX
 # mount everything accordingly below /mnt
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel vim
+pacstrap /mnt base base-devel vim bash-completion
 
 genfstab -U /mnt >> /mnt/etc/fstab # settings for SSDs?
 arch-chroot /mnt
@@ -49,7 +49,7 @@ timeout 3
 default arch
 
 # replace "udev" with "systemd" in /etc/mkinitcpio.conf
-
+# MODULES="... crypto-crc32c"
 mkinitcpio -p linux
 
 exit
@@ -113,7 +113,7 @@ unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
-playerctl wqy-microhei bash-completion udevil
+playerctl wqy-microhei firefox
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam \
