@@ -31,7 +31,7 @@ repo-add /var/cache/pacman/aur/aur.db.tar
 
 sudo pacman -Syu
 
-aursync -un spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch fman ttf-vlgothic
+aursync -un spotify sgi-fonts urxvtcd conan dropbox farbfeld toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch fman ttf-vlgothic aurutils
 
 sudo pacman -Syu
 
@@ -53,6 +53,8 @@ systemctl --user enable dropbox
 # systemctl --user enable mpd
 
 systemctl enable devmon@$USER.service
+# oder
+systemctl enable udisks
 
 ln -s ~/.local/share/applications/mimeapps.list ~/.config/mimeapps.list
 
