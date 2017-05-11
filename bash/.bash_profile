@@ -7,10 +7,7 @@
 ANDROID_HOME="$HOME/.android-sdk"
 export ANDROID_HOME
 
-PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
-if which ruby >/dev/null && which gem >/dev/null; then
-	    PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
-fi
+PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.yarn-global/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
 export PATH
 
 export XDG_CONFIG_HOME="$HOME/.config"

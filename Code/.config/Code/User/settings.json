@@ -6,7 +6,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": true,
 	"editor.acceptSuggestionOnEnter": false,
-	"editor.wordWrap": "off",
+	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
@@ -63,6 +63,10 @@
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
 	"terminal.external.linuxExec": "st",
+	"[html]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
 	"[json]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
@@ -75,6 +79,10 @@
 		"editor.tabSize": 4,
 		"editor.insertSpaces": true,
 		"editor.renderWhitespace": "boundary"
+	},
+	"[sass]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
 	},
 	"[typescript]": {
 		"editor.tabSize": 2,
