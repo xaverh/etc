@@ -88,16 +88,16 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
-	// "workbench.colorCustomizations": {
-	// 	"editorCursor.foreground": "#20BBFC",
-	// 	"statusBar.background": "#005577",
-	// 	"statusBar.debuggingBackground": "#AF5E00",
-	// 	"statusBar.noFolderBackground": "#442059",
-	// 	"statusBar.foreground": "#e5e5e6",
-	// 	"panelTitle.activeForeground": "#f9f8f4",
-	// 	"panelTitle.inactiveForeground": "#a6a5a3"
-	// 	// "sideBar.background": "#edece8"
-	// },
+	"workbench.colorCustomizations": {
+		"editorCursor.foreground": "#20BBFC",
+		"statusBar.background": "#005577",
+		"statusBar.debuggingBackground": "#AF5E00",
+		"statusBar.noFolderBackground": "#442059",
+		"statusBar.foreground": "#e5e5e6",
+		"panelTitle.activeForeground": "#f9f8f4",
+		"panelTitle.inactiveForeground": "#a6a5a3"
+		// "sideBar.background": "#edece8"
+	},
 	"workbench.settings.openDefaultSettings": false,
 	"clang-format.language.typescript.enable": true,
 	"clang-format.language.javascript.enable": false,
@@ -107,7 +107,6 @@
 	"debug.inlineValues": true,
 	"clang.completion.enable": true,
 	"C_Cpp.autocomplete": "Default",
-	"tslint.enable": true,
 	"clang.diagnostic.enable": true,
 	"[cpp]": {
 		"editor.quickSuggestions": false
@@ -115,5 +114,6 @@
 	"[c]": {
 		"editor.quickSuggestions": false
 	},
-	"javascript.implicitProjectConfig.checkJs": true
+	"javascript.implicitProjectConfig.checkJs": true,
+	"typescript.format.enable": false
 }
