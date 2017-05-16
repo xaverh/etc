@@ -113,7 +113,7 @@ unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
-playerctl wqy-microhei firefox pcmanfm ttf-freefont
+playerctl wqy-microhei firefox pcmanfm ttf-freefont openvpn
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam \
