@@ -108,12 +108,6 @@
 	"clang.completion.enable": true,
 	"C_Cpp.autocomplete": "Default",
 	"clang.diagnostic.enable": true,
-	"[cpp]": {
-		"editor.quickSuggestions": false
-	},
-	"[c]": {
-		"editor.quickSuggestions": false
-	},
 	"javascript.implicitProjectConfig.checkJs": true,
 	"typescript.format.enable": false
 }
