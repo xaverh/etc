@@ -109,17 +109,15 @@ lspci | grep -e VGA -e 3D
 
 pacman --needed -S clang libstdc++5 lua dunst scrot feh noto-fonts-emoji \
 zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
-unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm yarn \
+unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
 playerctl wqy-microhei firefox pcmanfm ttf-freefont openvpn
 
 # optional packages
-pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam \
-steam-native-runtime lib32-libpulse lib32-openal lib32-nss lib32-gtk2 \
-lib32-gtk3 lib32-libcanberra lib32-gconf lib32-dbus-glib lib32-libnm-glib \
-lib32-alsa-plugins aria2 w3m cmatrix lolcat iperf3 darktable ttf-dejavu \
+pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime \
+lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-dejavu \
 adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp ttyload
 
 # Laptop?

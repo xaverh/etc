@@ -58,6 +58,4 @@ systemctl enable udisks
 
 ln -s ~/.local/share/applications/mimeapps.list ~/.config/mimeapps.list
 
-yarn config set prefix ~/.yarn-global
-
 reboot
