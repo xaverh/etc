@@ -17,7 +17,7 @@ export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
-export HISTTIMEFORMAT="%y.%m.%d %T"
+# export HISTTIMEFORMAT="%y.%m.%d %T"
 
 # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
 export HISTSIZE=""
