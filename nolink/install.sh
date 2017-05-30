@@ -109,7 +109,7 @@ lspci | grep -e VGA -e 3D
 
 pacman --needed -S clang libstdc++5 lua dunst scrot feh noto-fonts-emoji \
 zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
-unrar slock git unzip exfat-utils mpv youtube-dl numlockx npm \
+unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
