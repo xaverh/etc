@@ -5,7 +5,7 @@
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
-	"editor.acceptSuggestionOnEnter": false,
+	"editor.acceptSuggestionOnEnter": "off",
 	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
@@ -99,5 +99,7 @@
 	"clang.diagnostic.enable": true,
 	"javascript.implicitProjectConfig.checkJs": true,
 	"typescript.format.enable": false,
-	"workbench.colorTheme": "Ysgrifennwr"
+	"workbench.colorTheme": "Qillqaq",
+	"extensions.autoUpdate": false,
+	"editor.renderIndentGuides": false
 }
