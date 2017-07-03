@@ -107,17 +107,17 @@ lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S clang libstdc++5 lua dunst scrot feh noto-fonts-emoji \
+pacman --needed -S clang libstdc++5 lua dunst scrot feh \
 zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick gulp pavucontrol \
 unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
-playerctl wqy-microhei firefox pcmanfm ttf-freefont openvpn
+playerctl firefox pcmanfm openvpn
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime \
-lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-dejavu \
+lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable \
 adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp ttyload
 
 # Laptop?
