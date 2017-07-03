@@ -31,7 +31,7 @@ repo-add /var/cache/pacman/aur/aur.db.tar
 
 sudo pacman -Syu
 
-aursync -un spotify-stable sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch aurutils repoctl systemd-resolved-public-dns
+aursync -un spotify-stable sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch aurutils repoctl openvpn-update-systemd-resolved
 
 repoctl config new /var/cache/pacman/aur/aur.db.tar
 
