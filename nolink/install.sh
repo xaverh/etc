@@ -113,12 +113,12 @@ unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm \
 nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
-playerctl firefox pcmanfm openvpn
+playerctl firefox pcmanfm openvpn adobe-source-{code,sans,serif}-pro-fonts \
+adobe-source-han-{sans,serif}-otc-fonts
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime \
-lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable \
-adobe-source-{code,sans,serif}-pro-fonts ttf-linux-libertine gimp ttyload
+lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp ttyload
 
 # Laptop?
 pacman --needed -S acpi wpa_supplicant iw wireless_tools # is wireless_tools deprecated?
