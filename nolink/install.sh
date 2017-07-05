@@ -78,6 +78,7 @@ Name=en*
 [Network]
 DHCP=yes
 [DHCP]
+UseDNS=false
 RouteMetric=10" > /etc/systemd/network/wired.network
 
 echo "[Match]
@@ -85,6 +86,7 @@ Name=wl*
 [Network]
 DHCP=yes
 [DHCP]
+UseDNS=false
 RouteMetric=20" > /etc/systemd/network/wireless.network
 
 ln -sf /run/systemd/resolve/resolv.conf /etc
