@@ -114,7 +114,7 @@ nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
 playerctl firefox pcmanfm openvpn adobe-source-{code,sans,serif}-pro-fonts \
-adobe-source-han-{sans,serif}-otc-fonts
+adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime \
