@@ -1,0 +1,9 @@
+[Match]
+Name=wl*
+
+[Network]
+DHCP=yes
+
+[DHCP]
+UseDNS=false
+RouteMetric=20
