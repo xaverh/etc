@@ -11,6 +11,7 @@ mkdir -p ~/.config/Code/User/workspaceStorage
 rm .bashrc .bash_logout .bash_profile
 cd ~/etc
 stow -v !(nolink)
+git submodule init
 git submodule update
 
 mkdir ~/tmp
