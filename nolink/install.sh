@@ -64,7 +64,7 @@ vim /etc/systemd/network/wireless.network
 ln -sf /run/systemd/resolve/resolv.conf /etc
 vim /etc/systemd/resolved.conf
 vim /etc/nsswitch.conf
-# clean hosts line
+# hosts: files mymachines resolve myhostname
 
 systemctl enable --now systemd-resolved
 systemctl enable --now systemd-networkd
@@ -90,8 +90,7 @@ playerctl firefox openvpn adobe-source-{code,sans,serif}-pro-fonts \
 adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji
 
 # optional packages
-pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime \
-lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp ttyload pcmanfm
+pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm
 
 # Laptop?
 pacman --needed -S acpi wpa_supplicant iw wireless_tools # is wireless_tools deprecated?
