@@ -14,7 +14,6 @@
 	"editor.cursorStyle": "line",
 	"editor.renderLineHighlight": "all",
 	"editor.renderControlCharacters": true,
-	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
 	"clang.cxxflags": [
 		"-std=c++14",
@@ -101,5 +100,7 @@
 	"typescript.format.enable": false,
 	"workbench.colorTheme": "Qillqaq",
 	"extensions.autoUpdate": false,
-	"editor.renderIndentGuides": false
+	"editor.renderIndentGuides": false,
+	"editor.autoIndent": true,
+	"window.restoreWindows": "all"
 }
