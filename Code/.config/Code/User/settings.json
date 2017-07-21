@@ -15,20 +15,20 @@
 	"editor.renderLineHighlight": "all",
 	"editor.renderControlCharacters": true,
 	"files.trimTrailingWhitespace": true,
-	"clang.cxxflags": [
-		"-std=c++14",
-		"-pedantic",
-		"-Weverything",
-		"-Wno-c++98-compat",
-		"-Wno-c++98-compat-pedantic",
-		"-Wno-unused-macros",
-		"-Wno-shadow",
-		"-O3"
-	],
-	"clang.cflags": [
-		"-std=c11",
-		"-Weverything"
-	],
+	// "clang.cxxflags": [
+	// 	"-std=c++14",
+	// 	"-pedantic",
+	// 	"-Weverything",
+	// 	"-Wno-c++98-compat",
+	// 	"-Wno-c++98-compat-pedantic",
+	// 	"-Wno-unused-macros",
+	// 	"-Wno-shadow",
+	// 	"-O3"
+	// ],
+	// "clang.cflags": [
+	// 	"-std=c11",
+	// 	"-Weverything"
+	// ],
 	"files.autoSave": "afterDelay",
 	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
@@ -93,9 +93,10 @@
 	"editor.detectIndentation": true,
 	"typescript.tsserver.log": "verbose",
 	"debug.inlineValues": true,
-	"clang.completion.enable": true,
+	// "clang.completion.enable": true,
 	"C_Cpp.autocomplete": "Default",
-	"clang.diagnostic.enable": true,
+	"C_Cpp.intelliSenseEngine": "Default",
+	// "clang.diagnostic.enable": true,
 	"javascript.implicitProjectConfig.checkJs": true,
 	"typescript.format.enable": false,
 	"workbench.colorTheme": "Qillqaq",
