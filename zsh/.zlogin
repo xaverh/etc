@@ -1,1 +1,0 @@
-# fortune | cowsay -f vader
