@@ -22,6 +22,7 @@ export GOPATH
 
 export EDITOR=vim
 export PAGER=less
+export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp > ~/.xorg.log 2>&1

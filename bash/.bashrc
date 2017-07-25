@@ -1,9 +1,11 @@
-#
-# ~/.bashrc
-#
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+test -d ~/.bash_hist/ || mkdir ~/.bash_hist/
+if [ ! -f ~/.bash_hist/`date +%Y-%m` ]; then
+	# https://stackoverflow.com/questions/13168463/using-date-command-to-get-previous-current-and-next-month
+	tail -n 500 ~/.bash_hist/`date --date="$(date +%Y-%m-15) -1 month" +%Y-%m` > ~/.bash_hist/`date +%Y-%m`
+fi
 
 # directory colors
 eval `dircolors $HOME/.dircolors 2> /dev/null` || eval `dircolors`
@@ -17,17 +19,15 @@ export LESS_TERMCAP_ue=$'\E[0m'         # end underline
 export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
-# export HISTTIMEFORMAT="%y.%m.%d %T"
-
 # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
 export HISTSIZE=""
 export HISTFILESIZE=""
 
-# http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443
+# http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
-export HISTCONTROL=ignoreboth
+PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+HISTFILE=~/.bash_hist/`date +%Y-%m`
 
 set -o emacs
 shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 dirspell dotglob globasciiranges lastpipe lithist no_empty_cmd_completion nocaseglob nocasematch
@@ -55,11 +55,15 @@ alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
 alias d='dirs -v'
 alias j='jobs -l'
 
-PS1='\[\e[1m\]\w \$\[\e[0m\] '
-
+# https://superuser.com/questions/300316/set-ps1-differently-on-local-computer-and-in-ssh-session
+if [ -n "$SSH_CLIENT" ]; then
+	PS1='\[\e[1m\]\[$(tput setaf 2)\]\H:\w \$\[\e[0m\]\[$(tput sgr0)\] '
+else
+	PS1='\[\e[1m\]\w \$\[\e[0m\] '
+fi
 
 h() {
-	grep -a $@ $HISTFILE
+	grep -a $@ ~/.bash_hist/*
 }
 
 sx () {
@@ -92,7 +96,3 @@ sx () {
 		fi
 	done
 }
-
-# tabtab source for electron-forge package
-# uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[ -f /home/xha/.config/yarn/global/node_modules/tabtab/.completions/electron-forge.bash ] && . /home/xha/.config/yarn/global/node_modules/tabtab/.completions/electron-forge.bash
