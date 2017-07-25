@@ -1,0 +1,6 @@
+#!/bin/bash
+# original author: Kai Hendry
+# https://github.com/kaihendry/dotfiles
+
+cd /tmp
+scrot "$@" '%s_$wx$h.png' -u -e 'upload $f'
