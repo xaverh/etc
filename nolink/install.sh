@@ -87,7 +87,7 @@ nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
 texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
 openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
 playerctl firefox openvpn adobe-source-{code,sans,serif}-pro-fonts \
-adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji
+adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji avahi
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm
@@ -102,6 +102,8 @@ vim /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # fast_reauth=1
 
 systemctl enable --now wpa_supplicant@wlan0
+
+systemctl enable --now avahi-daemon
 
 # DVD?
 pacman --needed -S libdvdcss dvd+rw-tools
