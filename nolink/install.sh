@@ -80,14 +80,8 @@ lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S clang libstdc++5 lua dunst scrot feh \
-zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick pavucontrol \
-unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm \
-nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp \
-texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac \
-openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim \
-playerctl firefox openvpn adobe-source-{code,sans,serif}-pro-fonts \
-adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji avahi
+
+pacman --needed -S clang libstdc++5 lua dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick pavucontrol unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm nodejs p7zip xorg{,-apps,-fonts,-xinit} gst-plugins-good gst-libav openmp texlive-most pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac openssh xclip x11-ssh-askpass go go-tools tmux vifm stow dmenu ncdu vim playerctl firefox openvpn adobe-source-{code,sans,serif}-pro-fonts adobe-source-han-{sans,serif}-otc-fonts noto-fonts-emoji avahi
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm
