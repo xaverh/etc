@@ -103,5 +103,6 @@
 	"extensions.autoUpdate": false,
 	"editor.renderIndentGuides": false,
 	"editor.autoIndent": true,
-	"window.restoreWindows": "all"
+	"window.restoreWindows": "all",
+	"git.enableSmartCommit": true
 }
