@@ -36,12 +36,13 @@ makepkg -Ccsfi
 
 cd ~/src
 git clone git@github.com:xaverh/st.git
-cd dwm
+cd st
+tic -sx st.info
 makepkg -Ccsfi
 
 cd ~/src
 git clone git@github.com:xaverh/ttf-input.git
-cd dwm
+cd ttf-input
 makepkg -Ccsfi
 
 cd ~/src
