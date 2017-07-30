@@ -32,19 +32,21 @@ pacaur -S spotify-stable sgi-fonts conan dropbox toilet cava-git google-chrome w
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
 cd dwm
-updpkgsums
 makepkg -Ccsfi
 
 cd ~/src
 git clone git@github.com:xaverh/st.git
 cd dwm
-updpkgsums
 makepkg -Ccsfi
 
 cd ~/src
 git clone git@github.com:xaverh/ttf-input.git
 cd dwm
-updpkgsums
+makepkg -Ccsfi
+
+cd ~/src
+git clone git@github.com:xaverh/dvtm.git
+cd dvtm
 makepkg -Ccsfi
 
 mkdir -p ~/.local/share/systemd/user
