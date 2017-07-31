@@ -18,18 +18,15 @@ mount /dev/sdX1 /mnt/boot
 # btrfs
 mkfs.btrfs -L Archlinux /dev/mapper/cryptroot
 mkfs.vat /dev/sdX1
-mount /dev/mapper/cryptroot /mnt
+mount -o compress=lzo,space_cache,noatime,ssd /dev/mapper/cryptroot /mnt
 cd /mnt
 btrfs subvolume create @
 btrfs subvolume create @home
-btrfs subvolume create @snapshots
-btrfs subvolume create @tmp
 btrfs subvolume create @usr-local
 btrfs subvolume create @var-tmp
-btrfs subvolume create @var-lib-machines
+# btrfs subvolume create @var-lib-machines
 btrfs subvolume create @var-cache
 btrfs subvolume create @var-log
-btrfs subvolume create @var-spool
 btrfs subvolume create @var-lib-pacman
 mkdir -p @var-cache/pacman/pkg
 btrfs subvolume create @var-cache-pacman-pkg
@@ -37,7 +34,7 @@ cd /
 umount /mnt
 mount -o subvol=@,compress=lzo,space_cache,noatime,ssd /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/home
-mkdir -p /mnt/.snapshots
+mkdir -p /mnt/snapshots
 mkdir -p /mnt/tmp
 mkdir -p /mnt/usr/local
 mkdir -p /mnt/var/tmp
@@ -61,7 +58,7 @@ mount -o subvol=@var-lib-pacman,compress=lzo,space_cache,noatime,ssd /dev/mapper
 mount -o subvol=@var-cache-pacman-pkg,compress=lzo,space_cache,noatime,ssd /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel vim bash-completion intel-ucode btrfs-progs
+pacstrap /mnt base base-devel vim bash-completion intel-ucode btrfs-progs wpa_supplicant
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
@@ -136,7 +133,7 @@ pacman --needed -S clang lua dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} ll
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3 aria2 w3m cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts vifm
 
 # Laptop?
-pacman --needed -S acpi wpa_supplicant iw wireless_tools # is wireless_tools deprecated?
+pacman --needed -S acpi iw wireless_tools # is wireless_tools deprecated?
 
 vim /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # ctrl_interface=/var/run/wpa_supplicant
