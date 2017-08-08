@@ -155,6 +155,7 @@ useradd xha -m -G wheel
 passwd xha
 visudo
 # Defaults insults
+# Defaults env_keep += "EDITOR"
 
 systemctl edit getty@tty1
 # [Service]
