@@ -44,6 +44,7 @@ set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
 " set colorcolumn=+1
 set copyindent
+set cryptmethod=blowfish2
 "set cursorline
 set directory=~/tmp,/tmp
 set display=truncate

@@ -6,7 +6,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wordWrap": "on",
+	"editor.wordWrap": "off",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
@@ -105,5 +105,6 @@
 			"editor.autoIndent": true,
 			"window.restoreWindows": "all",
 			"git.enableSmartCommit": true,
-			"markdown.preview.fontSize": 18
+			"markdown.preview.fontSize": 18,
+			"workbench.startupEditor": "welcomePage"
 		}
