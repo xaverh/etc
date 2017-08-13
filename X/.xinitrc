@@ -45,7 +45,7 @@ numlockx &
 
 systemctl --user start dwmstatus.service &
 
-(sleep 3 && st -t journalctl -e dvtm -t journalctl "journalctl -b -f -n 1000")&
+(sleep 3 && st -g 147x147 -t journalctl -e dvtm -t journalctl "journalctl -b -f -n 1000")&
 
 while true; do
     # Log stderror to a file
