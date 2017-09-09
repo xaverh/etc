@@ -99,12 +99,13 @@
 			// "clang.diagnostic.enable": true,
 			"javascript.implicitProjectConfig.checkJs": true,
 			"typescript.format.enable": false,
-			"workbench.colorTheme": "Qillqaq",
+			"workbench.colorTheme": "Ysgrifennwr",
 			"extensions.autoUpdate": false,
 			"editor.renderIndentGuides": false,
 			"editor.autoIndent": true,
 			"window.restoreWindows": "all",
 			"git.enableSmartCommit": true,
 			"markdown.preview.fontSize": 18,
-			"workbench.startupEditor": "welcomePage"
+			"workbench.startupEditor": "welcomePage",
+			"editor.smoothScrolling": true
 		}
