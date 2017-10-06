@@ -6,7 +6,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wordWrap": "off",
+	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
@@ -99,7 +99,6 @@
 			// "clang.diagnostic.enable": true,
 			"javascript.implicitProjectConfig.checkJs": true,
 			"typescript.format.enable": false,
-			"workbench.colorTheme": "Ysgrifennwr",
 			"extensions.autoUpdate": false,
 			"editor.renderIndentGuides": false,
 			"editor.autoIndent": true,
@@ -107,5 +106,6 @@
 			"git.enableSmartCommit": true,
 			"markdown.preview.fontSize": 18,
 			"workbench.startupEditor": "welcomePage",
-			"editor.smoothScrolling": true
+			"editor.smoothScrolling": true,
+			"workbench.colorTheme": "Qillqaq"
 		}
