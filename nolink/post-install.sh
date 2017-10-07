@@ -27,7 +27,7 @@ makepkg -Ccsfi
 
 sudo pacman -Syu
 
-pacaur -S spotify-stable sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch openvpn-update-systemd-resolved
+pacaur -S spotify-stable sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs
 
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
