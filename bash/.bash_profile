@@ -7,7 +7,7 @@
 ANDROID_HOME="$HOME/.android-sdk"
 export ANDROID_HOME
 
-PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.yarn-global/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
+PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
 export PATH
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -22,6 +22,7 @@ export GOPATH
 
 export EDITOR=vim
 export PAGER=less
+export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp > ~/.xorg.log 2>&1

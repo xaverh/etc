@@ -5,7 +5,7 @@
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
-	"editor.acceptSuggestionOnEnter": false,
+	"editor.acceptSuggestionOnEnter": "off",
 	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
@@ -14,90 +14,98 @@
 	"editor.cursorStyle": "line",
 	"editor.renderLineHighlight": "all",
 	"editor.renderControlCharacters": true,
-	"window.reopenFolders": "all",
 	"files.trimTrailingWhitespace": true,
-	"clang.cxxflags": [
-		"-std=c++14",
-		"-pedantic",
-		"-Weverything",
-		"-Wno-c++98-compat",
-		"-Wno-c++98-compat-pedantic",
-		"-Wno-unused-macros",
-		"-Wno-shadow",
-		"-O3"
-	],
-	"clang.cflags": [
-		"-std=c11",
-		"-Weverything"
-	],
-	"files.autoSave": "afterDelay",
-	"editor.fontLigatures": true,
-	"editor.renderWhitespace": "none",
-	"editor.formatOnSave": false,
-	"files.associations": {
-		"*.clang-format": "yaml",
-		"autostart": "shellscript",
-		"*.npmrc": "ini",
-		"*.service": "ini",
-		"*.h": "c",
-		"*.ymp": "xml"
-	},
-	"workbench.editor.showTabs": true,
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/CVS": true,
-		"**/.DS_Store": true,
-		"**/._*": true,
-		"**/*.un~": true
-	},
-	"git.confirmSync": false,
-	"window.zoomLevel": 0,
-	"zenMode.fullScreen": false,
-	"workbench.statusBar.visible": true,
-	"C_Cpp.formatting": "Disabled",
-	"window.menuBarVisibility": "toggle",
-	"workbench.iconTheme": "vs-seti",
-	"editor.minimap.enabled": true,
-	"editor.dragAndDrop": true,
-	"editor.minimap.renderCharacters": false,
-	"terminal.external.linuxExec": "st",
-	"[html]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[json]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[javascript]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[python]": {
-		"editor.tabSize": 4,
-		"editor.insertSpaces": true,
-		"editor.renderWhitespace": "boundary"
-	},
-	"[scss]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[typescript]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"workbench.settings.openDefaultSettings": false,
-	"clang-format.language.typescript.enable": true,
-	"clang-format.language.javascript.enable": false,
-	"editor.detectIndentation": true,
-	"typescript.tsserver.log": "verbose",
-	"debug.inlineValues": true,
-	"clang.completion.enable": true,
-	"C_Cpp.autocomplete": "Default",
-	"clang.diagnostic.enable": true,
-	"javascript.implicitProjectConfig.checkJs": true,
-	"typescript.format.enable": false,
-	"workbench.colorTheme": "Ysgrifennwr"
-}
+	// "clang.cxxflags": [
+		// 	"-std=c++14",
+		// 	"-pedantic",
+		// 	"-Weverything",
+		// 	"-Wno-c++98-compat",
+		// 	"-Wno-c++98-compat-pedantic",
+		// 	"-Wno-unused-macros",
+		// 	"-Wno-shadow",
+		// 	"-O3"
+		// ],
+		// "clang.cflags": [
+			// 	"-std=c11",
+			// 	"-Weverything"
+			// ],
+			"files.autoSave": "afterDelay",
+			"editor.fontLigatures": true,
+			"editor.renderWhitespace": "none",
+			"editor.formatOnSave": false,
+			"files.associations": {
+				"*.clang-format": "yaml",
+				"autostart": "shellscript",
+				"*.npmrc": "ini",
+				"*.service": "ini",
+				"*.h": "c",
+				"*.ymp": "xml"
+			},
+			"workbench.editor.showTabs": true,
+			"files.exclude": {
+				"**/.git": true,
+				"**/.svn": true,
+				"**/.hg": true,
+				"**/CVS": true,
+				"**/.DS_Store": true,
+				"**/._*": true,
+				"**/*.un~": true
+			},
+			"git.confirmSync": false,
+			"window.zoomLevel": 0,
+			"zenMode.fullScreen": false,
+			"workbench.statusBar.visible": true,
+			"C_Cpp.formatting": "Disabled",
+			"window.menuBarVisibility": "toggle",
+			"workbench.iconTheme": "vs-seti",
+			"editor.minimap.enabled": true,
+			"editor.dragAndDrop": true,
+			"editor.minimap.renderCharacters": false,
+			"terminal.external.linuxExec": "st",
+			"[html]": {
+				"editor.tabSize": 2,
+				"editor.insertSpaces": true
+			},
+			"[json]": {
+				"editor.tabSize": 2,
+				"editor.insertSpaces": true
+			},
+			"[javascript]": {
+				"editor.tabSize": 2,
+				"editor.insertSpaces": true
+			},
+			"[python]": {
+				"editor.tabSize": 4,
+				"editor.insertSpaces": true,
+				"editor.renderWhitespace": "boundary"
+			},
+			"[scss]": {
+				"editor.tabSize": 2,
+				"editor.insertSpaces": true
+			},
+			"[typescript]": {
+				"editor.tabSize": 2,
+				"editor.insertSpaces": true
+			},
+			"workbench.settings.openDefaultSettings": false,
+			"clang-format.language.typescript.enable": true,
+			"clang-format.language.javascript.enable": false,
+			"editor.detectIndentation": true,
+			"typescript.tsserver.log": "verbose",
+			"debug.inlineValues": true,
+			// "clang.completion.enable": true,
+			"C_Cpp.autocomplete": "Default",
+			"C_Cpp.intelliSenseEngine": "Default",
+			// "clang.diagnostic.enable": true,
+			"javascript.implicitProjectConfig.checkJs": true,
+			"typescript.format.enable": false,
+			"extensions.autoUpdate": false,
+			"editor.renderIndentGuides": false,
+			"editor.autoIndent": true,
+			"window.restoreWindows": "all",
+			"git.enableSmartCommit": true,
+			"markdown.preview.fontSize": 18,
+			"workbench.startupEditor": "welcomePage",
+			"editor.smoothScrolling": true,
+			"workbench.colorTheme": "Qillqaq"
+		}
