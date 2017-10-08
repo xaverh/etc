@@ -22,8 +22,10 @@ else
  	let &undodir='/tmp/'
 endif
 
-set t_ts=k
-set t_fs=\
+" set t_ts=^[]2;
+" set t_fs=^[\\
+" set t_ts=k
+" set t_fs=\
 " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " let &t_ZH = "\e[3m"
@@ -42,6 +44,7 @@ set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
 " set colorcolumn=+1
 set copyindent
+set cryptmethod=blowfish2
 "set cursorline
 set directory=~/tmp,/tmp
 set display=truncate

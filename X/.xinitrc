@@ -21,8 +21,8 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-# xsetroot -solid "#1e1e1e"
-~/.fehbg &
+xsetroot -solid "#1e1e1e"
+#~/.fehbg &
 xset b off &
 xset s off &
 xset -dpms &
@@ -44,6 +44,8 @@ fi
 numlockx &
 
 systemctl --user start dwmstatus.service &
+
+(sleep 3 && st -g 147x147 -t journalctl -e dvtm -t journalctl "journalctl -b -f -n 1000")&
 
 while true; do
     # Log stderror to a file

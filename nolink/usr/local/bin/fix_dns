@@ -1,0 +1,3 @@
+#!/bin/sh
+/etc/openvpn/scripts/update-systemd-resolved
+/etc/openvpn/update-resolv-conf
