@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "Input, Consolas, Menlo, SF Mono, Source Code Pro",
+	"editor.fontFamily": "Input, Consolas, SF Mono, Menlo, Source Code Pro",
 	"editor.fontSize": 16,
 	"terminal.integrated.fontSize": 16,
 	"editor.rulers": [],
@@ -91,6 +91,6 @@
 	"markdown.preview.fontSize": 18,
 	"workbench.startupEditor": "newUntitledFile",
 	"editor.smoothScrolling": true,
-	"git.enableCommitSigning": true,
+	"git.enableCommitSigning": false,
 	"workbench.colorTheme": "Qillqaq"
 }
