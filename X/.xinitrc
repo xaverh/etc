@@ -21,8 +21,8 @@ if [ -f "$usermodmap" ]; then
 	xmodmap "$usermodmap"
 fi
 
-xsetroot -solid "#1e1e1e"
-#~/.fehbg &
+#xsetroot -solid "#1e1e1e"
+~/.fehbg &
 xset b off &
 xset s off &
 xset -dpms &
