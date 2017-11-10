@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": true,
+	"workbench.editor.showTabs": false,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -43,7 +43,7 @@
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
-	"workbench.iconTheme": "vs-seti",
+	"workbench.iconTheme": null,
 	"editor.minimap.enabled": true,
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
@@ -92,5 +92,7 @@
 	"workbench.startupEditor": "newUntitledFile",
 	"editor.smoothScrolling": true,
 	"git.enableCommitSigning": false,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"workbench.panel.location": "bottom",
+	"explorer.decorations.badges": false
 }
