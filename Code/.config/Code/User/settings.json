@@ -92,8 +92,8 @@
 	"workbench.startupEditor": "newUntitledFile",
 	"editor.smoothScrolling": true,
 	"git.enableCommitSigning": false,
-	"workbench.colorTheme": "Qillqaq",
 	"workbench.panel.location": "bottom",
 	"explorer.decorations.badges": false,
-	"explorer.confirmDelete": false
+	"explorer.confirmDelete": false,
+	"workbench.colorTheme": "Ysgrifennwr"
 }
