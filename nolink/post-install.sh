@@ -62,8 +62,6 @@ systemctl --user enable dropbox
 systemctl --user enable clipmenud
 
 systemctl enable devmon@$USER.service
-# oder
-systemctl enable udisks
 
 ln -s ~/.local/share/applications/mimeapps.list ~/.config/mimeapps.list
 

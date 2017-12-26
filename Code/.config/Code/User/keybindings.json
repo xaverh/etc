@@ -4,5 +4,9 @@
 		"key": "ctrl+j",
 		"command": "editor.action.joinLines",
 		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+r ctrl+r",
+		"command": "workbench.action.openRecent"
 	}
 ]
