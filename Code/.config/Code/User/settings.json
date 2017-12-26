@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": false,
+	"workbench.editor.showTabs": true,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -92,7 +92,6 @@
 	"workbench.startupEditor": "newUntitledFile",
 	"editor.smoothScrolling": true,
 	"git.enableCommitSigning": false,
-	"workbench.panel.location": "bottom",
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
 	"workbench.colorTheme": "Qillqaq"
