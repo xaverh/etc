@@ -94,5 +94,6 @@
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"git.autofetch": true
 }
