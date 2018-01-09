@@ -45,11 +45,6 @@ git clone git@github.com:xaverh/ttf-input.git
 cd ttf-input
 makepkg -Ccsfi
 
-cd ~/src
-git clone git@github.com:xaverh/dvtm.git
-cd dvtm
-makepkg -Ccsfi
-
 mkdir -p ~/.local/share/systemd/user
 cp ~/etc/nolink/systemd/user/{dwmstatus,slock,ssh-agent}.service ~/.local/share/systemd/user
 systemctl enable --user slock
