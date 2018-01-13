@@ -43,7 +43,6 @@
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
-	"workbench.iconTheme": null,
 	"editor.minimap.enabled": true,
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
@@ -95,5 +94,6 @@
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
 	"workbench.colorTheme": "Qillqaq",
-	"git.autofetch": true
+	"git.autofetch": true,
+	"workbench.iconTheme": null
 }
