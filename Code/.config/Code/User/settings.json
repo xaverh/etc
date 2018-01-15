@@ -6,7 +6,7 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wordWrap": "off",
+	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
