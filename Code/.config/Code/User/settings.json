@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": true,
+	"workbench.editor.showTabs": false,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -96,5 +96,26 @@
 	"workbench.colorTheme": "Qillqaq",
 	"git.autofetch": true,
 	"workbench.iconTheme": null,
-	"javascript.implicitProjectConfig.checkJs": true
+	"javascript.format.enable": true,
+	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		{
+			"language": "html",
+			"autoFix": true
+		},
+		{
+			"language": "vue",
+			"autoFix": true
+		}
+	],
+	"eslint.options": {
+		"plugins": [
+			"vue",
+			"html"
+		]
+	},
+	"vetur.format.defaultFormatter.js": "vscode-typescript",
+	"vetur.format.defaultFormatter.ts": "vscode-typescript"
 }
