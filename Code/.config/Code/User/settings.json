@@ -95,5 +95,6 @@
 	"explorer.confirmDelete": false,
 	"workbench.colorTheme": "Qillqaq",
 	"git.autofetch": true,
-	"workbench.iconTheme": null
+	"workbench.iconTheme": null,
+	"javascript.implicitProjectConfig.checkJs": true
 }
