@@ -72,6 +72,10 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
+	"[vue]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
 	"workbench.settings.openDefaultSettings": false,
 	"clang-format.language.typescript.enable": true,
 	"clang-format.language.javascript.enable": false,
@@ -93,9 +97,8 @@
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
-	"workbench.colorTheme": "Qillqaq",
+	"workbench.colorTheme": "Ysgrifennwr",
 	"git.autofetch": true,
-	"workbench.iconTheme": null,
 	"javascript.format.enable": true,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
 	"eslint.validate": [
