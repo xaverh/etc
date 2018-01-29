@@ -8,5 +8,9 @@
 	{
 		"key": "ctrl+r ctrl+r",
 		"command": "workbench.action.openRecent"
+	},
+	{
+		"key": "F7",
+		"command": "settings.cycle.colorTheme"
 	}
 ]
