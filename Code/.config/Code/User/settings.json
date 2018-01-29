@@ -55,6 +55,10 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
+	"[jsonc]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
 	"[javascript]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
@@ -97,7 +101,7 @@
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
-	"workbench.colorTheme": "Ysgrifennwr",
+	"workbench.colorTheme": "Qillqaq",
 	"git.autofetch": true,
 	"javascript.format.enable": true,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
