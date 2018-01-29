@@ -63,6 +63,10 @@
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.quickSuggestions": true
+	},
 	"[python]": {
 		"editor.tabSize": 4,
 		"editor.insertSpaces": true,
@@ -124,5 +128,19 @@
 		]
 	},
 	"vetur.format.defaultFormatter.js": "vscode-typescript",
-	"vetur.format.defaultFormatter.ts": "vscode-typescript"
+	"vetur.format.defaultFormatter.ts": "vscode-typescript",
+	"settings.cycle": [
+		{
+			"id": "colorTheme",
+			"overrideWorkspaceSettings": false,
+			"values": [
+				{
+					"workbench.colorTheme": "Qillqaq"
+				},
+				{
+					"workbench.colorTheme": "Ysgrifennwr"
+				}
+			]
+		}
+	]
 }
