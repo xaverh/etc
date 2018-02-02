@@ -94,7 +94,7 @@
 	"C_Cpp.intelliSenseEngine": "Default",
 	"javascript.implicitProjectConfig.checkJs": true,
 	"typescript.format.enable": false,
-	"extensions.autoUpdate": true,
+	"extensions.autoUpdate": false,
 	"editor.renderIndentGuides": false,
 	"editor.autoIndent": true,
 	"window.restoreWindows": "all",
