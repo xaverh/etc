@@ -11,6 +11,8 @@ Code/.config/Code/User/workspaceStorage/
 vim/.vim/.netrwhist
 vim/.vim/bundle/
 !vim/.vim/bundle/Vundle.vim/
+vim/.vim/.tmp/*
+!vim/.vim/.tmp/.gitkeep
 nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
 **/.browse.VC.db*

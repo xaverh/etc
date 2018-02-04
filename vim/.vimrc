@@ -37,8 +37,8 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set backup
-set backupdir=~/tmp,/tmp
-set backupskip=/tmp/*,~/tmp/*
+set backupdir=~/.vim/.tmp/,/tmp
+set backupskip=/tmp/*,~/.vim/.tmp/*
 set cindent
 set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
