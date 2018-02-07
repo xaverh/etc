@@ -142,5 +142,6 @@
 				}
 			]
 		}
-	]
+	],
+	"search.smartCase": true
 }
