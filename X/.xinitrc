@@ -47,6 +47,8 @@ systemctl --user start dwmstatus.service &
 
 (sleep 3 && st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000")&
 
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 while true; do
     # Log stderror to a file
     # dwm 2> ~/.dwm.log
