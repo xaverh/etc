@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": false,
+	"workbench.editor.showTabs": true,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
