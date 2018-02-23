@@ -24,7 +24,7 @@ bootctl install
 vim /etc/mkinitcpio.conf
 # replace "udev" with "systemd" in /etc/mkinitcpio.conf
 # encrypted:
-# HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
+# HOOKS="systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
 
 vim /boot/loader/loader.conf
 # timeout 3
@@ -37,7 +37,7 @@ vim /boot/loader/entries/arch.conf
 # initrd  /initramfs-linux.img
 # options rw root=PARTUUID=f699...
 # # :r! lsblk -n -o PARTUUID /dev/sdb1 to get real PARTUUID
-# options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` luks.options=timeout=0s root=UUID=`UUID of /dev/sdX2`
+# options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` root=UUID=`UUID of /dev/sdX2`
 
 # generate locale
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
