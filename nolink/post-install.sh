@@ -16,18 +16,13 @@ git submodule update
 
 mkdir ~/tmp
 cd ~/tmp
-gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
-curl "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" | tar xzf -
-cd cower
-makepkg -Ccsfi
-cd ~/tmp
-curl "https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz" | tar xzf -
-cd aurutils
+git clone https://aur.archlinux.org/yay.git
+cd yay
 makepkg -Ccsfi
 
-sudo pacman -Syu
+yay -Syu
 
-pacaur -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git
+yay -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git
 
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
