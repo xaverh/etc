@@ -21,7 +21,7 @@ makepkg -Ccsfi
 
 yay -Syu
 
-yay -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code-bin clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git
+yay -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome-beta wire-desktop-bin visual-studio-code-bin clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git brave-bin
 
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
