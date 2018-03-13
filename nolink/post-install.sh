@@ -14,15 +14,14 @@ stow -v !(nolink)
 git submodule init
 git submodule update
 
-mkdir ~/tmp
-cd ~/tmp
+cd /tmp
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -Ccsfi
 
 yay -Syu
 
-yay -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git
+yay -S spotify ffmpeg-compat-54 sgi-fonts conan dropbox toilet cava-git google-chrome wire-desktop-bin visual-studio-code-bin clipmenu neofetch openvpn-update-systemd-resolved simple-mtpfs mons openvpn-update-resolv-conf-git
 
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
