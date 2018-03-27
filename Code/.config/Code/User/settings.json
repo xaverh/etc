@@ -143,5 +143,6 @@
 			]
 		}
 	],
-	"search.smartCase": true
+	"search.smartCase": true,
+	"search.location": "sidebar"
 }
