@@ -1,16 +1,15 @@
 // Place your key bindings in this file to overwrite the defaults
 [
 	{
-		"key": "ctrl+j",
-		"command": "editor.action.joinLines",
-		"when": "editorTextFocus && !editorReadonly"
-	},
-	{
 		"key": "ctrl+r ctrl+r",
 		"command": "workbench.action.openRecent"
 	},
 	{
 		"key": "F7",
 		"command": "settings.cycle.colorTheme"
+	},
+	{
+		"key": "ctrl+shift+j",
+		"command": "editor.action.joinLines"
 	}
 ]
