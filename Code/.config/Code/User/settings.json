@@ -39,7 +39,7 @@
 	},
 	"git.confirmSync": false,
 	"window.zoomLevel": 0,
-	"zenMode.fullScreen": false,
+	"zenMode.fullScreen": true,
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
@@ -144,5 +144,5 @@
 		}
 	],
 	"search.smartCase": true,
-	"search.location": "sidebar"
+	"search.location": "panel"
 }
