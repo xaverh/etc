@@ -145,5 +145,6 @@
 	],
 	"search.smartCase": true,
 	"search.location": "panel",
-	"typescript.experimental.syntaxFolding": true
+	"typescript.experimental.syntaxFolding": true,
+	"latex-workshop.view.pdf.viewer": "tab"
 }
