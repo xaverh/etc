@@ -147,11 +147,8 @@
 	"latex-workshop.view.pdf.viewer": "tab",
 	"eslint.enable": true,
 	"eslint.run": "onType",
-	"vetur.format.defaultFormatter.js": "prettier",
-	"prettier.eslintIntegration": false,
-	"vetur.format.defaultFormatter.css": "prettier",
-	"vetur.format.defaultFormatter.scss": "prettier",
-	"vetur.format.defaultFormatter.ts": "prettier",
+	"vetur.format.defaultFormatter.js": "vscode-typescript",
+	"vetur.format.defaultFormatter.ts": "vscode-typescript",
 	"vetur.validation.style": true,
 	"vetur.validation.template": true
 }
