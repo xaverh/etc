@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ['standard']
+  extends: ['standard', 'plugin:prettier/recommended']
 }

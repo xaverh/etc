@@ -107,7 +107,7 @@
 	"explorer.confirmDelete": false,
 	"workbench.colorTheme": "Qillqaq",
 	"git.autofetch": true,
-	"javascript.format.enable": true,
+	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
 	"eslint.validate": [
 		"javascript",
@@ -147,8 +147,11 @@
 	"latex-workshop.view.pdf.viewer": "tab",
 	"eslint.enable": true,
 	"eslint.run": "onType",
-	"vetur.format.defaultFormatter.js": "vscode-typescript",
-	"vetur.format.defaultFormatter.ts": "vscode-typescript",
+	"vetur.format.defaultFormatter.js": "prettier",
+	"vetur.format.defaultFormatter.ts": "prettier",
 	"vetur.validation.style": true,
-	"vetur.validation.template": true
+	"vetur.validation.template": true,
+	"prettier.semi": false,
+	"prettier.eslintIntegration": true,
+	"prettier.singleQuote": true
 }
