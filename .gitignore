@@ -23,4 +23,3 @@ weechat/.weechat/sec.conf
 *.weechatlog
 weechat/.weechat/certs/
 bin/bin/firefox-dev/
-
