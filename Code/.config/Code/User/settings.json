@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": true,
+	"workbench.editor.showTabs": false,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -142,7 +142,6 @@
 	],
 	"search.smartCase": true,
 	"search.location": "panel",
-	"typescript.experimental.syntaxFolding": true,
 	"latex-workshop.view.pdf.viewer": "tab",
 	"eslint.enable": true,
 	"eslint.run": "onType",
@@ -154,5 +153,5 @@
 	"prettier.eslintIntegration": true,
 	"prettier.singleQuote": true,
 	"debug.toolBarLocation": "docked",
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Ysgrifennwr"
 }
