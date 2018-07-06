@@ -149,9 +149,6 @@
 	"vetur.format.defaultFormatter.ts": "prettier",
 	"vetur.validation.style": true,
 	"vetur.validation.template": true,
-	"prettier.semi": false,
-	"prettier.eslintIntegration": true,
-	"prettier.singleQuote": true,
 	"debug.toolBarLocation": "docked",
 	"workbench.colorTheme": "Ysgrifennwr"
 }
