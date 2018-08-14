@@ -151,5 +151,7 @@
 	"vetur.validation.style": true,
 	"vetur.validation.template": true,
 	"debug.toolBarLocation": "docked",
-	"workbench.colorTheme": "Ysgrifennwr"
+	"workbench.colorTheme": "Ysgrifennwr",
+	"breadcrumbs.enabled": true,
+	"window.titleBarStyle": "custom"
 }
