@@ -22,5 +22,6 @@ ranger/.config/ranger/bookmarks
 weechat/.weechat/sec.conf
 *.weechatlog
 weechat/.weechat/certs/
-vifm/.vifm/vifminfo
+bin/bin/firefox-dev/
+*.AppImage
 
