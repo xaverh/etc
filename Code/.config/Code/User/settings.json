@@ -27,7 +27,7 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": true,
+	"workbench.editor.showTabs": false,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -39,7 +39,7 @@
 	},
 	"git.confirmSync": false,
 	"window.zoomLevel": 0,
-	"zenMode.fullScreen": false,
+	"zenMode.fullScreen": true,
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
@@ -105,9 +105,8 @@
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
 	"explorer.confirmDelete": false,
-	"workbench.colorTheme": "Ysgrifennwr",
 	"git.autofetch": true,
-	"javascript.format.enable": true,
+	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
 	"eslint.validate": [
 		"javascript",
@@ -127,8 +126,6 @@
 			"html"
 		]
 	},
-	"vetur.format.defaultFormatter.js": "vscode-typescript",
-	"vetur.format.defaultFormatter.ts": "vscode-typescript",
 	"settings.cycle": [
 		{
 			"id": "colorTheme",
@@ -144,5 +141,15 @@
 		}
 	],
 	"search.smartCase": true,
-	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe"
+	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+	"search.location": "panel",
+	"latex-workshop.view.pdf.viewer": "tab",
+	"eslint.enable": true,
+	"eslint.run": "onType",
+	"vetur.format.defaultFormatter.js": "vscode-typescript",
+	"vetur.format.defaultFormatter.ts": "vscode-typescript",
+	"vetur.validation.style": true,
+	"vetur.validation.template": true,
+	"debug.toolBarLocation": "docked",
+	"workbench.colorTheme": "Ysgrifennwr"
 }
