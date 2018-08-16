@@ -153,5 +153,6 @@
 	"debug.toolBarLocation": "docked",
 	"workbench.colorTheme": "Ysgrifennwr",
 	"breadcrumbs.enabled": true,
-	"window.titleBarStyle": "custom"
+	"window.titleBarStyle": "custom",
+	"latex-workshop.message.update.show": false
 }
