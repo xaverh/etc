@@ -21,7 +21,7 @@ makepkg -Ccsfi
 
 yay -Syu
 
-yay -S spotify ffmpeg-compat-54 sgi-fonts conan toilet google-chrome-beta wire-desktop-bin visual-studio-code-bin clipmenu openvpn-update-systemd-resolved mons
+yay -S spotify ffmpeg-compat-54 sgi-fonts conan toilet google-chrome-beta wire-desktop-bin visual-studio-code-bin clipmenu openvpn-update-systemd-resolved mons ttf-ibm-plex
 
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
