@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "Input, Consolas, SF Mono, Menlo, Source Code Pro",
+	"editor.fontFamily": "IBM Plex Mono, Input, Consolas, SF Mono, Menlo, Source Code Pro",
 	"editor.fontSize": 16,
 	"terminal.integrated.fontSize": 16,
 	"editor.rulers": [],
@@ -151,8 +151,9 @@
 	"vetur.validation.style": true,
 	"vetur.validation.template": true,
 	"debug.toolBarLocation": "docked",
-	"workbench.colorTheme": "Ysgrifennwr",
+	"workbench.colorTheme": "Qillqaq",
 	"breadcrumbs.enabled": true,
-	"window.titleBarStyle": "custom",
-	"latex-workshop.message.update.show": false
+	"window.titleBarStyle": "native",
+	"latex-workshop.message.update.show": false,
+	"prettier.eslintIntegration": true
 }
