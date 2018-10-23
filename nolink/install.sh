@@ -9,7 +9,7 @@ cryptsetup -y --use-random -v luksFormat /dev/sdX2
 cryptsetup open /dev/sdX2 cryptroot
 
 mkfs.xfs -L Archlinux /dev/mapper/cryptroot
-mkfs.vat /dev/sdX1
+mkfs.vfat /dev/sdX1
 mount /dev/mapper/cryptroot /mnt
 mkdir /mnt/boot
 mount /dev/sdX1 /mnt/boot
