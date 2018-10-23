@@ -22,9 +22,8 @@ arch-chroot /mnt
 passwd
 bootctl install
 vim /etc/mkinitcpio.conf
-# replace "udev" with "systemd" in /etc/mkinitcpio.conf
-# encrypted:
-# HOOKS="systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
+# HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
+# sd-encrypt only needed if hd is encrypted
 
 vim /boot/loader/loader.conf
 # timeout 3
@@ -76,22 +75,28 @@ vim /etc/pacman.d/mirrorlist
 vim /etc/pacman.conf
 # enable multilib
 # enable Color VerbosePkgLists
-# add ILoveCandy
 pacman -Syu
 # find video card
 lspci | grep -e VGA -e 3D
 # Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
 # NVidia: XXX
 
-pacman --needed -S clang lua dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} llvm imagemagick pavucontrol unrar slock git unzip exfat-utils mpv youtube-dl rtmpdump numlockx npm nodejs p7zip xorg{,-apps,-xinit,-server} gst-plugins-good gst-libav openmp texlive-most biber pulseaudio pulseaudio-alsa pamixer alsa-utils bc mac openssh xclip x11-ssh-askpass go go-tools stow dmenu ncdu playerctl firefox speech-dispatcher openvpn adobe-source-{code,sans,serif}-pro-fonts adobe-source-han-{sans,serif}-otc-fonts avahi mc htop udisks2 tmux polkit-gnome keybase kbfs neofetch pacman-contrib
+# Common:
+pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtube-dl rtmpdumpnpm nodejs p7zip gst-plugins-good gst-libav texlive-most biber pulseaudio pulseaudio-alsa alsa-utils mac go go-tools stow ncdu firefox speech-dispatcher openvpn adobe-source-{code,sans,serif}-pro-fonts adobe-source-han-{sans,serif}-otc-fonts avahi tmux neofetch pacman-contrib
+
+# suckless:
+pacman --needed -S dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} slock mpv numlockx xorg{,-apps,-xinit,-server} pamixer bc xclip opensshx11-ssh-askpass dmenu playerctl udisks2
 
 # optional packages
-pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs
+pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs 
+
+# removed packages:
+# openmp mc htop polkit-gnome 
 
 # Laptop?
 pacman --needed -S acpi iw wireless_tools # is wireless_tools deprecated?
 
-vim /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+cp /usr/share/doc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # ctrl_interface=/var/run/wpa_supplicant
 # eapol_version=1
 # ap_scan=1
