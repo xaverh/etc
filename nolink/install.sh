@@ -36,7 +36,7 @@ vim /boot/loader/entries/arch.conf
 # initrd  /intel-ucode.img
 # initrd  /initramfs-linux.img
 # options rw root=PARTUUID=f699...
-# # :r! lsblk -n -o PARTUUID /dev/sdb1 to get real PARTUUID
+# # :r! blkid to get real PARTUUID
 # options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` root=UUID=`UUID of /dev/sdX2`
 
 # generate locale
