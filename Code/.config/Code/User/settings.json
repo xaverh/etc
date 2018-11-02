@@ -155,5 +155,7 @@
 	"breadcrumbs.enabled": true,
 	"window.titleBarStyle": "native",
 	"latex-workshop.message.update.show": false,
-	"prettier.eslintIntegration": true
+	"prettier.eslintIntegration": true,
+	"files.autoSaveDelay": 4000,
+	"latex-workshop.latex.autoBuild.onSave.enabled": false
 }
