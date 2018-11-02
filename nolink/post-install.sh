@@ -19,7 +19,7 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -Ccsfi
 
-yay -Syu
+yay -Syu --save --sudoloop --answerdiff All
 
 yay -S spotify conan google-chrome wire-desktop-bin visual-studio-code-bin clipmenu openvpn-update-systemd-resolved mons ttf-ibm-plex
 # removed packages
