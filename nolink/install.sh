@@ -36,7 +36,7 @@ vim /boot/loader/entries/arch.conf
 # initrd  /initramfs-linux.img
 # options root=PARTUUID=f699... rootfstype=xfs add_efi_memmap rw
 # # :r! blkid to get real PARTUUID
-# options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` root=UUID=`UUID of /dev/sdX2` 
+# options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` root=UUID=`UUID of /dev/sdX2`
 
 # generate locale
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -88,13 +88,13 @@ pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtub
 pacman --needed -S dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} slock mpv numlockx xorg{,-apps,-xinit,-server} pamixer bc xclip opensshx11-ssh-askpass dmenu playerctl udisks2
 
 # optional packages
-pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs 
+pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs
 
 # removed packages:
-# openmp mc htop polkit-gnome 
+# openmp mc htop polkit-gnome
 
 # Laptop?
-pacman --needed -S acpi iw wireless_tools # is wireless_tools deprecated?
+pacman --needed -S acpi iw
 
 cp /usr/share/doc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # ctrl_interface=/var/run/wpa_supplicant
