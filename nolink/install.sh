@@ -94,7 +94,9 @@ pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native
 # openmp mc htop polkit-gnome
 
 # Laptop?
-pacman --needed -S acpi iw
+pacman --needed -S acpi iw crda
+
+# Uncomment the right regulatory domain in /etc/conf.d/wireless-regdom.
 
 cp /usr/share/doc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # ctrl_interface=/var/run/wpa_supplicant
