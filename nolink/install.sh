@@ -98,6 +98,9 @@ pacman --needed -S acpi iw crda
 
 # Uncomment the right regulatory domain in /etc/conf.d/wireless-regdom.
 
+# diable power save mode for wifi
+iw dev wlp2s0 set power_save off
+
 cp /usr/share/doc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 # ctrl_interface=/var/run/wpa_supplicant
 # eapol_version=1
