@@ -54,6 +54,7 @@ alias wget='wget -U="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, 
 alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
 alias d='dirs -v'
 alias j='jobs -l'
+alias file_count='find .//. ! -name . -print | grep -c //'
 
 # https://superuser.com/questions/300316/set-ps1-differently-on-local-computer-and-in-ssh-session
 if [ -n "$SSH_CLIENT" ]; then
