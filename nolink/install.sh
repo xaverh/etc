@@ -15,7 +15,7 @@ mkdir /mnt/boot
 mount /dev/sdX1 /mnt/boot
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel vim bash-completion intel-ucode wpa_supplicant
+pacstrap /mnt base base-devel vim bash-completion # intel-ucode amd-ucode wpa_supplicant
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
@@ -30,13 +30,6 @@ vim /boot/loader/loader.conf
 # default arch
 
 vim /boot/loader/entries/arch.conf
-# title   Arch Linux
-# linux   /vmlinuz-linux
-# initrd  /intel-ucode.img
-# initrd  /initramfs-linux.img
-# options root=PARTUUID=f699... rootfstype=xfs add_efi_memmap rw
-# # :r! blkid to get real PARTUUID
-# options rw rd.luks.uuid=`UUID of /dev/mapper/cryptroot` root=UUID=`UUID of /dev/sdX2`
 
 # generate locale
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
