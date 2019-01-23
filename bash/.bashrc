@@ -30,7 +30,7 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 HISTFILE=~/.bash_hist/`date +%Y-%m`
 
 set -o emacs
-shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 dirspell dotglob globasciiranges lastpipe lithist no_empty_cmd_completion nocaseglob nocasematch
+shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 compat44 dirspell dotglob globasciiranges lastpipe lithist no_empty_cmd_completion nocaseglob nocasematch
 shopt -s autocd cdable_vars cdspell checkjobs checkwinsize complete_fullquote \
 direxpand expand_aliases extglob extquote failglob globstar histreedit \
 histverify interactive_comments progcomp promptvars sourcepath cmdhist
