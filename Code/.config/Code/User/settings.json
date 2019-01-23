@@ -100,7 +100,7 @@
 	"window.restoreWindows": "all",
 	"git.enableSmartCommit": true,
 	"markdown.preview.fontSize": 18,
-	"workbench.startupEditor": "newUntitledFile",
+	"workbench.startupEditor": "welcomePageInEmptyWorkbench",
 	"editor.smoothScrolling": true,
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
@@ -153,9 +153,8 @@
 	"debug.toolBarLocation": "docked",
 	"workbench.colorTheme": "Qillqaq",
 	"breadcrumbs.enabled": true,
-	"window.titleBarStyle": "native",
 	"latex-workshop.message.update.show": false,
-	"prettier.eslintIntegration": true,
 	"files.autoSaveDelay": 4000,
-	"latex-workshop.latex.autoBuild.onSave.enabled": false
+	"latex-workshop.latex.autoBuild.onSave.enabled": false,
+	"window.titleBarStyle": "native"
 }
