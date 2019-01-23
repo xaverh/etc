@@ -81,7 +81,7 @@ pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtub
 pacman --needed -S dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} slock mpv numlockx xorg{,-apps,-xinit,-server} pamixer bc xclip opensshx11-ssh-askpass dmenu playerctl udisks2
 
 # optional packages
-pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs
+pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs telegram-desktop ttf-opensans
 
 # removed packages:
 # openmp mc htop polkit-gnome
