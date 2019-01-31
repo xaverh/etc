@@ -23,18 +23,15 @@ export GROFF_NO_SGR=1
 export HISTSIZE=""
 export HISTFILESIZE=""
 
+set +o braceexpand emacs hashall histexpand history interactive-comments monitor
+set -o allexport errexit errtrace functrace ignoreeof keyword noclobber noexec noglob nolog notify nounset physical pipefail posix privileged verbose vi xtrace
+shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 compat44 dirspell dotglob execfail extdebug failglob globasciiranges gnu_errfmt lastpipe inherit_errexit lithist localvar_inherit localvar_unset mailwarn no_empty_cmd_completion nocaseglob nocasematch nullglob progcomp_alias restricted_shell shift_verbose xpg_echo
+shopt -s autocd cdable_vars cdspell checkjobs checkwinsize cmdhist complete_fullquote direxpand expand_aliases extglob extquote force_fignore globstar histappend histreedit histverify hostcomplete interactive_comments progcomp promptvars sourcepath
+
 # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
 export HISTCONTROL=ignoredups:erasedups
-shopt -s histappend
 PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 HISTFILE=~/.bash_hist/`date +%Y-%m`
-
-set -o emacs
-shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 compat44 dirspell dotglob globasciiranges lastpipe lithist no_empty_cmd_completion nocaseglob nocasematch
-shopt -s autocd cdable_vars cdspell checkjobs checkwinsize complete_fullquote \
-direxpand expand_aliases extglob extquote failglob globstar histreedit \
-histverify interactive_comments progcomp promptvars sourcepath cmdhist
-shopt -s hostcomplete
 
 alias grep="grep -i --color=auto"
 alias ...='../..'
