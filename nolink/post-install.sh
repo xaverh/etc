@@ -14,17 +14,6 @@ stow -v !(nolink)
 git submodule init
 git submodule update
 
-cd /tmp
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -Ccsfi
-
-yay -Syu --save --sudoloop --answerdiff All
-
-yay -S spotify conan google-chrome wire-desktop-bin visual-studio-code-bin clipmenu openvpn-update-systemd-resolved mons ttf-ibm-plex
-# removed packages
-# ffmpeg-compat-54 toilet sgi-fonts
-
 cd ~/src
 git clone git@github.com:xaverh/dwm.git
 cd dwm
