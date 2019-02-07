@@ -156,5 +156,8 @@
 	"latex-workshop.message.update.show": false,
 	"files.autoSaveDelay": 4000,
 	"latex-workshop.latex.autoBuild.onSave.enabled": false,
-	"window.titleBarStyle": "native"
+	"window.titleBarStyle": "native",
+	"workbench.list.keyboardNavigation": "filter",
+	"search.usePCRE2": true,
+	"workbench.useExperimentalGridLayout": true
 }
