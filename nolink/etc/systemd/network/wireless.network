@@ -1,9 +1,13 @@
 [Match]
-Name=wl*
+Name=wlp2s0
 
 [Network]
-DHCP=yes
+DHCP=true
 
 [DHCP]
 UseDNS=false
+UseNTP=false
 RouteMetric=20
+
+[IPv6AcceptRA]
+UseDNS=false
