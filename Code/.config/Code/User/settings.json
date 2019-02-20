@@ -27,7 +27,6 @@
 		"*.h": "c",
 		"*.ymp": "xml"
 	},
-	"workbench.editor.showTabs": false,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -151,13 +150,18 @@
 	"vetur.validation.style": true,
 	"vetur.validation.template": true,
 	"debug.toolBarLocation": "docked",
-	"workbench.colorTheme": "Qillqaq",
-	"breadcrumbs.enabled": true,
 	"latex-workshop.message.update.show": false,
 	"files.autoSaveDelay": 4000,
-	"latex-workshop.latex.autoBuild.onSave.enabled": false,
-	"window.titleBarStyle": "native",
 	"workbench.list.keyboardNavigation": "filter",
 	"search.usePCRE2": true,
-	"workbench.useExperimentalGridLayout": true
+	"workbench.useExperimentalGridLayout": true,
+	"latex-workshop.latex.autoBuild.run": "never",
+	"workbench.colorTheme": "Qillqaq",
+	"workbench.sideBar.location": "left",
+	"breadcrumbs.enabled": true,
+	"workbench.editor.highlightModifiedTabs": true,
+	"window.titleBarStyle": "native",
+	"workbench.editor.showTabs": false,
+	"breadcrumbs.symbolPath": "on",
+	"diffEditor.ignoreTrimWhitespace": true
 }
