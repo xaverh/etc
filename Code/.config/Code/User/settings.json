@@ -161,7 +161,8 @@
 	"breadcrumbs.enabled": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"window.titleBarStyle": "native",
-	"workbench.editor.showTabs": false,
 	"breadcrumbs.symbolPath": "on",
-	"diffEditor.ignoreTrimWhitespace": true
+	"diffEditor.ignoreTrimWhitespace": true,
+	"window.openWithoutArgumentsInNewWindow": "off",
+	"window.openFoldersInNewWindow": "off"
 }
