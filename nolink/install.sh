@@ -15,7 +15,7 @@ mkdir /mnt/boot
 mount /dev/sdX1 /mnt/boot
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel vim bash-completion # intel-ucode amd-ucode wpa_supplicant
+pacstrap /mnt base base-devel vim bash-completion # intel-ucode amd-ucode iwd
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
@@ -95,13 +95,7 @@ pacman --needed -S acpi iw crda
 # source: https://bbs.archlinux.org/viewtopic.php?id=196375
 iw dev wlp2s0 set power_save off
 
-cp /usr/share/doc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-# ctrl_interface=/var/run/wpa_supplicant
-# eapol_version=1
-# ap_scan=1
-# fast_reauth=1
-
-systemctl enable --now wpa_supplicant@wlan0
+systemctl enable --now iwd
 
 systemctl enable --now avahi-daemon
 
