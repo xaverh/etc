@@ -75,13 +75,13 @@ lspci | grep -e VGA -e 3D
 # NVidia: XXX
 
 # Common:
-pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtube-dl rtmpdumpnpm nodejs p7zip gst-plugins-good gst-libav texlive-most biber pulseaudio pulseaudio-alsa alsa-utils mac go go-tools stow ncdu firefox speech-dispatcher openvpn adobe-source-{code,sans,serif}-pro-fonts adobe-source-han-{sans,serif}-otc-fonts avahi tmux neofetch pacman-contrib
+pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtube-dl rtmpdumpnpm nodejs p7zip gst-plugins-good gst-libav texlive-most biber pulseaudio pulseaudio-alsa alsa-utils mac go go-tools stow ncdu firefox-developer-edition speech-dispatcher openvpn adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts avahi tmux neofetch pacman-contrib
 
-# suckless:
-pacman --needed -S dunst scrot feh zathura-{pdf-poppler,ps,djvu,cb} slock mpv numlockx xorg{,-apps,-xinit,-server} pamixer bc xclip openssh x11-ssh-askpass dmenu playerctl udisks2 polkit-gnome
+# suckless desktop:
+pacman --needed -S dunst scrot feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server pamixer bc xclip openssh x11-ssh-askpass dmenu playerctl udisks2 polkit-gnome neovim newsboat sxiv
 
 # optional packages
-pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs telegram-desktop ttf-opensans newsboat
+pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs telegram-desktop ttf-opensans
 
 # removed packages:
 # openmp mc htop
