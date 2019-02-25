@@ -15,7 +15,7 @@ mkdir /mnt/boot
 mount /dev/sdX1 /mnt/boot
 
 vi /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel vim bash-completion # intel-ucode amd-ucode iwd
+pacstrap /mnt base base-devel neovim bash-completion # intel-ucode amd-ucode
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
@@ -87,7 +87,7 @@ pacman --needed -S imagemagick jsoncpp mpd ncmpcpp mpc ranger steam steam-native
 # openmp mc htop
 
 # Laptop?
-pacman --needed -S acpi iw crda
+pacman --needed -S acpi iw iwd crda
 
 # Uncomment the right regulatory domain in /etc/conf.d/wireless-regdom.
 
