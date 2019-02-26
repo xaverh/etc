@@ -41,7 +41,7 @@
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
-	"editor.minimap.enabled": true,
+	"editor.minimap.enabled": false,
 	"editor.dragAndDrop": true,
 	"editor.minimap.renderCharacters": false,
 	"terminal.external.linuxExec": "st",
@@ -165,5 +165,6 @@
 	"window.openFoldersInNewWindow": "off",
 	"files.autoSaveDelay": 1001,
 	"zenMode.centerLayout": false,
-	"zenMode.hideLineNumbers": false
+	"zenMode.hideLineNumbers": false,
+	"workbench.activityBar.visible": false
 }

@@ -43,5 +43,9 @@
 	{
 		"key": "ctrl+0",
 		"command": "editor.action.fontZoomReset"
+	},
+	{
+		"key": "ctrl+[Backquote]",
+		"command": "workbench.action.toggleActivityBarVisibility"
 	}
 ]
