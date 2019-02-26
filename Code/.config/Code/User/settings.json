@@ -38,7 +38,6 @@
 	},
 	"git.confirmSync": false,
 	"window.zoomLevel": 0,
-	"zenMode.fullScreen": true,
 	"workbench.statusBar.visible": true,
 	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
@@ -151,7 +150,6 @@
 	"vetur.validation.template": true,
 	"debug.toolBarLocation": "docked",
 	"latex-workshop.message.update.show": false,
-	"files.autoSaveDelay": 4000,
 	"workbench.list.keyboardNavigation": "filter",
 	"search.usePCRE2": true,
 	"workbench.useExperimentalGridLayout": true,
@@ -164,5 +162,8 @@
 	"breadcrumbs.symbolPath": "on",
 	"diffEditor.ignoreTrimWhitespace": true,
 	"window.openWithoutArgumentsInNewWindow": "off",
-	"window.openFoldersInNewWindow": "off"
+	"window.openFoldersInNewWindow": "off",
+	"files.autoSaveDelay": 1001,
+	"zenMode.centerLayout": false,
+	"zenMode.hideLineNumbers": false
 }
