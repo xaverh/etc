@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=(/tmp/clipmenu.3.$USER/*)
+files=($XDG_RUNTIME_DIR/clipmenu.5.$USER/*)
 
 newest=${files[0]}
 for f in "${files[@]}"; do
