@@ -22,6 +22,7 @@ export GOPATH
 
 export EDITOR=vim
 export PAGER=less
+export TERMINAL=st
 export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
