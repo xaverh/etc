@@ -56,4 +56,4 @@ numlockx &
     # dwm >/dev/null 2>&1
 # done
 
-exec i3
+exec herbstluftwm

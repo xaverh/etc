@@ -78,7 +78,7 @@ lspci | grep -e VGA -e 3D
 pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtube-dl rtmpdumpnpm nodejs p7zip gst-plugins-good gst-libav texlive-most biber pulseaudio pulseaudio-alsa alsa-utils mac go go-tools stow ncdu firefox-developer-edition speech-dispatcher openvpn adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts avahi tmux neofetch pacman-contrib
 
 # desktop:
-pacman --needed -S dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server pamixer bc xclip openssh x11-ssh-askpass dmenu playerctl udisks2 polkit-gnome neovim newsboat sxiv imagemagick udevil autocutsel
+pacman --needed -S dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server pamixer bc xclip openssh x11-ssh-askpass dmenu playerctl udisks2 polkit-gnome neovim newsboat sxiv imagemagick udevil autocutsel herbstluftwm
 
 # optional packages
 pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs telegram-desktop ttf-opensans pandoc
