@@ -30,7 +30,7 @@ shopt -s autocd cdable_vars cdspell checkjobs checkwinsize cmdhist complete_full
 
 # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
 export HISTCONTROL=ignoredups:erasedups
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -n; history -w; history -c; history -r"
 HISTFILE=~/.bash_hist/`date +%Y-%m`
 
 alias grep="grep -i --color=auto"
