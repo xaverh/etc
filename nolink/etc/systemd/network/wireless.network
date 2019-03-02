@@ -3,6 +3,8 @@ Name=wlp2s0
 
 [Network]
 DHCP=true
+IPv6AcceptRA=true
+IPv6PrivacyExtensions=true
 
 [DHCP]
 UseDNS=false
