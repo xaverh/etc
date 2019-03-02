@@ -71,23 +71,37 @@ vim /etc/pacman.conf
 pacman -Syu
 # find video card
 lspci | grep -e VGA -e 3D
-# Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel
+# Intel: pacman -S xf86-video-intel mesa-libgl lib32-mesa-libgl vulkan-intel libva-intel-driver lib32-libva-intel-driver libvdpau-va-gl
 # NVidia: XXX
+# Laptop?
+pacman --needed -S acpi iw iwd crda bluez bluez-utils
 
 # Common:
-pacman --needed -S clang lua llvm pavucontrol unrar git unzip exfat-utils youtube-dl rtmpdumpnpm nodejs p7zip gst-plugins-good gst-libav texlive-most biber pulseaudio pulseaudio-alsa alsa-utils mac go go-tools stow ncdu firefox-developer-edition speech-dispatcher openvpn adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts avahi tmux neofetch pacman-contrib
+pacman -S --needed unrar git unzip exfat-utils rtmpdump p7zip lzip pulseaudio pulseaudio-alsa alsa-utils mac stow ncdu speech-dispatcher openvpn tmux neofetch pacman-contrib udisks2 udevil openssh asp bind-tools wget
+
+# optional dependencies
+pacman -S --needed --asdeps python-neovim
 
 # desktop:
-pacman --needed -S dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server pamixer bc xclip openssh x11-ssh-askpass dmenu playerctl udisks2 polkit-gnome neovim newsboat sxiv imagemagick udevil autocutsel herbstluftwm
+pacman -S --needed dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server xorg-fonts xorg-fontsel xorg-xfd pamixer bc xclip x11-ssh-askpass dmenu playerctl polkit-gnome newsboat sxiv imagemagick autocutsel bspwm telegram-desktop firefox-developer-edition adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-linux-libertine ttf-ibm-plex wqy-microhei pavucontrol ponymix i3lock clipmenu youtube-dl weechat rtorrent chromium
+
+# optional dependencies
+pacman -S --asdeps sxhkd xdo python-pycryptodome gst-plugins-good gst-libav hunspell-en_USn ttf-opensans
+
+# software development:
+pacman -S --needed valgrind gdb clang llvm cmake openmp nodejs npm go go-tools lua tokei texlive-most biber pandoc
+
+# optional depedencies:
+pacman -S --asdeps openmp
+
+# applications:
+pacman -S --needed steam rawtherapee gimp
+
+# optional dependencies
+pacman -S --asdeps steam-native-runtime
 
 # optional packages
-pacman --needed -S jsoncpp mpd ncmpcpp mpc ranger steam steam-native-runtime lib32-gtk3steam lib32-gtk3 aria2 cmatrix lolcat iperf3 darktable ttf-linux-libertine gimp libopenraw ttyload pcmanfm libstdc++5 xorg-fonts btrfs-progs keybase kbfs telegram-desktop ttf-opensans pandoc
-
-# removed packages:
-# openmp mc htop
-
-# Laptop?
-pacman --needed -S acpi iw iwd crda
+pacman -S --needed mpd ncmpcpp mpc ranger aria2 cmatrix lolcat iperf3 darktable libopenraw ttyload
 
 # Uncomment the right regulatory domain in /etc/conf.d/wireless-regdom.
 
