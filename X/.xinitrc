@@ -56,4 +56,7 @@ numlockx &
     # dwm >/dev/null 2>&1
 # done
 
-exec herbstluftwm
+# 2bwm &
+exec bspwm
+exec st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000"
+
