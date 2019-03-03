@@ -81,7 +81,7 @@ de.defstyle("input-edln", {
 })
 
 de.defstyle("frame", {
-    background_colour = grey90,
+    background_colour = grey10,
     de.substyle("quasiactive", {
         -- Something detached from the frame is active
         padding_colour = grey10,

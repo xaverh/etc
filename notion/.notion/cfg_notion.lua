@@ -144,3 +144,9 @@ dopath("cfg_defaults")
 defbindings("WScreen", {
     kpress(META .. "Shift+Q", "ioncore.restart()")
 })
+
+defwinprop{
+    class = "SshAskpass",
+    interface = "ssh-askpass",
+    float = true
+}

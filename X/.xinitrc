@@ -47,7 +47,7 @@ numlockx &
 
 (sleep 3 && st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000")&
 
-(sleep 4 && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1)&
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # while true; do
     # Log stderror to a file
@@ -57,6 +57,6 @@ numlockx &
 # done
 
 # exec 2bwm
-exec notion
+exec notion 2> ~/.notion.log
 # exec st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000"
 
