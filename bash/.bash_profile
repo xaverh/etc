@@ -20,7 +20,8 @@ GOPATH="$HOME/.gopath/"
 export GOPATH
 
 
-export EDITOR=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export PAGER=less
 export TERMINAL=st
 export AWS_REGION=eu-central-1
