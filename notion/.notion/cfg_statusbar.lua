@@ -6,10 +6,10 @@
 mod_statusbar.create{
     -- First screen, bottom left corner.
     screen=0,
-    pos='bl',
+    pos='tl',
 
     -- Set this to true if you want a full-width statusbar.
-    fullsize=false,
+    fullsize=true,
 
     -- Swallow systray windows.
     systray=false,
@@ -37,7 +37,7 @@ mod_statusbar.create{
     -- right, respectively, and %systray is a placeholder for system tray
     -- windows and icons.
     --
-    template="%workspace_name_pager %filler %date",
+    template="%workspace_num_name_pager %filler %exec_notionstatus",
     --template="[ %date || load:% %>load || mail:% %>mail_new/%>mail_total ] %filler%systray",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
 }
@@ -45,43 +45,11 @@ mod_statusbar.create{
 -- Launch ion-statusd. This must be done after creating any statusbars
 -- for necessary statusd modules to be parsed from the templates.
 mod_statusbar.launch_statusd{
-    -- Date meter
-    date={
-        -- ISO-8601 date format with additional abbreviated day name.
-        date_format='%a %Y-%m-%d %H:%M:%S',
-        -- Finnish etc. date format
-        --date_format='%a %d.%m.%Y %H:%M',
-        -- Locale date format (usually shows seconds, which would require
-        -- updating rather often and can be distracting)
-        --date_format='%c',
-
-        -- Additional date formats.
-        --[[
-        formats={
-            time = '%H:%M', -- %date_time
+    exec = {
+        notionstatus = {
+            program = 'go run /home/xha/bin/notionstatus.go',
+            retry_delay = 60000
         }
-        --]]
-    },
 
-    -- Load meter
-    load={
-        --update_interval=10*1000,
-        --important_threshold=1.5,
-        --critical_threshold=4.0,
-    },
-
-    -- Mail meter
-    --
-    -- To monitor more mbox files, add them to the files table.  For
-    -- example, add mail_work_new and mail_junk_new to the template
-    -- above, and define them in the files table:
-    --
-    -- files = { work = "/path/to/work_email", junk = "/path/to/junk" }
-    --
-    -- Don't use the keyword 'spool' as it's reserved for mbox.
-    mail={
-        --update_interval=60*1000,
-        --mbox=os.getenv("MAIL"),
-        --files={},
-    },
+    }
 }

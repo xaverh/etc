@@ -22,7 +22,9 @@ local light_cyan = "#A2DCD7" -- Sinbad, R=162, G=220, B=215
 local grey90 = "#E5E6E6" -- Grey 90%, R=229, G=230, B=230
 local sky_blue = "#20BBFC" -- Deep Sky Blue, R=32, G=187, B=252
 local orange = "#AF5E00" -- Golden Brown, R=175, G=94, B=0
-local deep_blue = "#005577"
+local deep_blue = "#005577" -- Blue Lagoon, R=0, G=85, B=119
+local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
+local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
 
 local mainfont = "-sgi-screen-medium-r-normal--11-*-72-72-m-*-*-*"
 
@@ -43,40 +45,33 @@ de.defstyle("*", {
 de.defstyle("tab", {
     font = mainfont,
     de.substyle("active-selected", {
-        shadow_colour = grey10,
-        highlight_colour = grey60,
         background_colour = deep_blue,
         foreground_colour = grey90,
     }),
     de.substyle("active-unselected", {
-        shadow_colour = "#ffffff",
-        highlight_colour = "#ffffff",
-        background_colour = "#d8d8d8",
-        foreground_colour = "#000000",
+        background_colour = cyprus,
+        foreground_colour = grey90,
     }),
     de.substyle("inactive-selected", {
-        shadow_colour = "#ffffff",
-        highlight_colour = "#ffffff",
-        background_colour = "#a8a8a8",
-        foreground_colour = "#000000",
+        background_colour = grey30,
+        foreground_colour = grey90,
     }),
     de.substyle("inactive-unselected", {
-        shadow_colour = "#ffffff",
-        highlight_colour = "#ffffff",
-        background_colour = "#d8d8d8",
-        foreground_colour = "#000000",
+        background_colour = grey20,
+        foreground_colour = grey90,
     }),
     text_align = "center",
 })
 
 de.defstyle("input-edln", {
+    transparent_background = false,
     de.substyle("*-cursor", {
-        background_colour = "#000000",
-        foreground_colour = "#d8d8d8",
+        background_colour = grey90,
+        foreground_colour = cyprus,
     }),
     de.substyle("*-selection", {
-        background_colour = "#f0c000",
-        foreground_colour = "#000000",
+        background_colour = green,
+        foreground_colour = grey10,
     }),
 })
 
