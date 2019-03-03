@@ -32,7 +32,7 @@ xset -dpms &
 # 	SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null
 # fi &
 
-dunst &
+(sleep 5 && dunst)&
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
@@ -45,9 +45,9 @@ numlockx &
 
 # systemctl --user start dwmstatus.service &
 
-# (sleep 3 && st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000")&
+(sleep 3 && st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000")&
 
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+(sleep 4 && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1)&
 
 # while true; do
     # Log stderror to a file
@@ -56,7 +56,7 @@ numlockx &
     # dwm >/dev/null 2>&1
 # done
 
-# 2bwm &
-exec bspwm
-exec st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000"
+# exec 2bwm
+exec notion
+# exec st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000"
 
