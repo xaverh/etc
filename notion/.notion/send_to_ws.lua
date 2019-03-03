@@ -33,7 +33,19 @@ defbindings("WMPlex", {
 	    kpress(META .. "Shift+7", "send_to_ws(_sub, 6, false)"),
 	    kpress(META .. "Shift+8", "send_to_ws(_sub, 7, false)"),
 	    kpress(META .. "Shift+9", "send_to_ws(_sub, 8, false)"),
-	    kpress(META .. "Shift+N", "send_to_new_ws(_sub, 'WGroupWS')"),
+	    kpress(META .. "Shift+0", "send_to_ws(_sub, 9, false)"),
+	    kpress(META .. "Control+Shift+1", "send_to_ws(_sub, 0, true)"),
+	    kpress(META .. "Control+Shift+2", "send_to_ws(_sub, 1, true)"),
+	    kpress(META .. "Control+Shift+3", "send_to_ws(_sub, 2, true)"),
+	    kpress(META .. "Control+Shift+4", "send_to_ws(_sub, 3, true)"),
+	    kpress(META .. "Control+Shift+5", "send_to_ws(_sub, 4, true)"),
+	    kpress(META .. "Control+Shift+6", "send_to_ws(_sub, 5, true)"),
+	    kpress(META .. "Control+Shift+7", "send_to_ws(_sub, 6, true)"),
+	    kpress(META .. "Control+Shift+8", "send_to_ws(_sub, 7, true)"),
+	    kpress(META .. "Control+Shift+9", "send_to_ws(_sub, 8, true)"),
+	    kpress(META .. "Control+Shift+0", "send_to_ws(_sub, 9, true)"),
+	    kpress(META .. "Shift+N", "send_to_new_ws(_sub, 'WGroupWS', false)"),
+	    kpress(META .. "Control+Shift+N", "send_to_new_ws(_sub, 'WGroupWS', true)"),
 })
 
 
