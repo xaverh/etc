@@ -3,7 +3,6 @@ return {
     ["exec"] = {
         ["notionstatus"] = {
             ["program"] = "go run /home/xha/bin/notionstatus.go",
-            ["retry_delay"] = 60000,
         },
     },
 }

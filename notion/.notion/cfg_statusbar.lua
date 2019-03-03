@@ -48,7 +48,7 @@ mod_statusbar.launch_statusd{
     exec = {
         notionstatus = {
             program = 'go run /home/xha/bin/notionstatus.go',
-            retry_delay = 60000
+            -- retry_delay = 60000
         }
 
     }
