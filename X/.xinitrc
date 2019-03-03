@@ -45,7 +45,7 @@ numlockx &
 
 # systemctl --user start dwmstatus.service &
 
-(sleep 3 && st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000")&
+st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000" &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
@@ -56,7 +56,5 @@ numlockx &
     # dwm >/dev/null 2>&1
 # done
 
-# exec 2bwm
-exec notion 2> ~/.notion.log
-# exec st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000"
+exec notion
 
