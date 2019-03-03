@@ -83,10 +83,10 @@ pacman -S --needed unrar git unzip exfat-utils rtmpdump p7zip lzip pulseaudio pu
 pacman -S --needed --asdeps python-neovim
 
 # desktop:
-pacman -S --needed dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server xorg-fonts xorg-fontsel xorg-xfd pamixer bc xclip x11-ssh-askpass dmenu playerctl polkit-gnome newsboat sxiv imagemagick autocutsel bspwm telegram-desktop firefox-developer-edition adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-linux-libertine ttf-ibm-plex wqy-microhei pavucontrol ponymix i3lock clipmenu youtube-dl weechat rtorrent chromium
+pacman -S --needed dunst feh zathura-pdf-poppler zathura-ps zathura-djvu zathura-cb slock mpv numlockx xorg xorg-apps xorg-xinit xorg-server xorg-fonts xorg-fontsel xorg-xlsfonts xorg-xfd pamixer bc xclip x11-ssh-askpass dmenu playerctl polkit-gnome newsboat sxiv imagemagick autocutsel notion telegram-desktop firefox-developer-edition adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-linux-libertine ttf-ibm-plex wqy-microhei pavucontrol ponymix i3lock clipmenu youtube-dl weechat rtorrent
 
 # optional dependencies
-pacman -S --asdeps sxhkd xdo python-pycryptodome gst-plugins-good gst-libav hunspell-en_USn ttf-opensans
+pacman -S --asdeps python-pycryptodome gst-plugins-good gst-libav hunspell-en_USn ttf-opensans
 
 # software development:
 pacman -S --needed valgrind gdb clang llvm cmake openmp nodejs npm go go-tools lua tokei texlive-most biber pandoc

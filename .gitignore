@@ -24,4 +24,4 @@ weechat/.weechat/sec.conf
 weechat/.weechat/certs/
 bin/bin/firefox-dev/
 *.AppImage
-
+notion/.notion/default-session--0/saved_*
