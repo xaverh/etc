@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 timedatectl set-ntp 1
 
@@ -11,18 +11,10 @@ mkdir -p ~/.config/Code/User/workspaceStorage
 rm .bashrc .bash_logout .bash_profile
 cd ~/etc
 stow -v !(nolink)
-git submodule init
-git submodule update
-
-cd ~/src
-git clone git@github.com:xaverh/dwm.git
-cd dwm
-makepkg -Ccsfi
 
 cd ~/src
 git clone git@github.com:xaverh/st.git
 cd st
-tic -sx st.info
 makepkg -Ccsfi
 
 cd ~/src
@@ -31,11 +23,11 @@ cd ttf-input
 makepkg -Ccsfi
 
 mkdir -p ~/.local/share/systemd/user
-cp ~/etc/nolink/systemd/user/{dwmstatus,slock,ssh-agent}.service ~/.local/share/systemd/user
+cp ~/etc/nolink/systemd/user/{slock,ssh-agent}.service ~/.local/share/systemd/user
 systemctl enable --user slock
 systemctl enable --user ssh-agent
 
-systemctl --user enable clipmenud
+systemctl enable --user clipmenud
 
 systemctl enable devmon@$USER.service
 
