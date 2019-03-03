@@ -84,7 +84,7 @@ de.defstyle("frame", {
     }),
     de.substyle("userattr1", {
         -- For user scripts
-        padding_colour = "#009010",
+        padding_colour = green,
     }),
     padding_pixels = 0,
 })
@@ -111,39 +111,33 @@ de.defstyle("frame-transient", {
 
 
 de.defstyle("actnotify", {
-    shadow_colour = "#c04040",
-    highlight_colour = "#c04040",
-    background_colour = "#901010",
-    foreground_colour = "#eeeeee",
+    background_colour = magenta,
+    foreground_colour = grey10,
 })
 
 de.defstyle("tab", {
     de.substyle("*-*-*-unselected-activity", {
-        shadow_colour = "#c04040",
-        highlight_colour = "#c04040",
-        background_colour = "#901010",
-        foreground_colour = "#eeeeee",
+        background_colour = magenta,
+        foreground_colour = grey10,
     }),
 
     de.substyle("*-*-*-selected-activity", {
-        shadow_colour = "#c04040",
-        highlight_colour = "#c04040",
-        background_colour = "#b03030",
-        foreground_colour = "#ffffff",
+        background_colour = light_magenta,
+        foreground_colour = grey90,
     }),
 
     de.substyle("*-*-*-tabnumber", {
-        background_colour = "black",
-        foreground_colour = "green",
+        background_colour = grey10,
+        foreground_colour = green,
     }),
 })
 
 de.defstyle("tab-frame", {
-    spacing = 0,
+    spacing = 1,
 })
 
 de.defstyle("tab-frame-floating", {
-    spacing = 0,
+    spacing = 1,
 })
 
 de.defstyle("tab-menuentry", {

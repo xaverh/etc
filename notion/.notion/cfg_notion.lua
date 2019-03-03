@@ -70,11 +70,11 @@ ioncore.set{
     --screen_notify=true,
 
     -- Automatically save layout on restart and exit.
-    --autosave_layout=true,
+    autosave_layout=true,
 
     -- Mouse focus mode; set to "sloppy" if you want the focus to follow the
     -- mouse, and to "disabled" otherwise.
-    --mousefocus="sloppy",
+    mousefocus="sloppy",
 
     -- Controls Notion's reaction to stacking requests sent by clients. Set to
     -- "ignore" to ignore these requests, and to "activate" to set the activity
@@ -126,17 +126,9 @@ dopath("cfg_defaults")
 --dopath("mod_notionflux")
 --dopath("mod_xrandr")
 
---
--- Common customisations
---
-
 -- Uncommenting the following lines should get you plain-old-menus instead
 -- of query-menus.
 
---defbindings("WScreen", {
---    kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
---})
---
 --defbindings("WMPlex.toplevel", {
 --    kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 --})

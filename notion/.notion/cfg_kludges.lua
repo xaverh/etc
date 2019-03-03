@@ -24,6 +24,12 @@ defwinprop {
     statusbar = "systray",
 }
 
+defwinprop {
+    class = "st-256color",
+    instance = "st-256color",
+    ignore_resizeinc = true
+}
+
 -- https://sourceforge.net/tracker/?func=detail&aid=3471910&group_id=314802&atid=1324528
 -- defwinprop {
 --     class = "Gimp",
