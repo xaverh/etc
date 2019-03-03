@@ -45,42 +45,24 @@ defbindings("WScreen", {
     kpress(META.."comma", "WScreen.switch_prev(_)"),
     kpress(META.."period", "WScreen.switch_next(_)"),
 
+    bdoc("Go to the previously active region."),
+    kpress(META.."Tab", "mod_menu.grabmenu(_, _sub, 'focuslist_')"),
+
     submap(META.."K", {
-        bdoc("Go to first region demanding attention or previously active one."),
-        kpress("K", "mod_menu.grabmenu(_, _sub, 'focuslist')"),
-        -- Alternative without (cyclable) menu
-        --kpress("K", "ioncore.goto_activity() or ioncore.goto_previous()"),
-
-        --bdoc("Go to previous active object."),
-        --kpress("K", "ioncore.goto_previous()"),
-
-        --bdoc("Go to first object on activity/urgency list."),
-        --kpress("I", "ioncore.goto_activity()"),
-
         bdoc("Clear all tags."),
         kpress("T", "ioncore.tagged_clear()"),
     }),
 
-    bdoc("Go to n:th screen on multihead setup."),
-    kpress(META.."Shift+1", "ioncore.goto_nth_screen(0)"),
-    -- kpress(META.."Q", "ioncore.goto_nth_screen(0)"),
-    kpress(META.."Shift+2", "ioncore.goto_nth_screen(1)"),
-    -- kpress(META.."W", "ioncore.goto_nth_screen(1)"),
-    kpress(META.."Shift+3", "ioncore.goto_nth_screen(2)"),
-    -- kpress(META.."E", "ioncore.goto_nth_screen(2)"),
-
     bdoc("Go to next/previous screen on multihead setup."),
     kpress(META.."Shift+comma", "ioncore.goto_prev_screen()"),
-    -- kpress(META.."I", "ioncore.goto_prev_screen()"),
-    -- kpress(META.."O", "ioncore.goto_next_screen()"),
-    kpress(META.."grave", "ioncore.goto_next_screen()"),
+    kpress(META.."Shift+period", "ioncore.goto_next_screen()"),
 
     bdoc("Create a new workspace of chosen default type."),
     kpress(META.."F9", "ioncore.create_ws(_)"),
 
     bdoc("Display the main menu."),
     kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
-    --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
+    -- kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
     mpress("Button3", "mod_menu.pmenu(_, _sub, 'mainmenu')"),
 
     bdoc("Display the window list menu."),
@@ -92,8 +74,7 @@ defbindings("WScreen", {
     -- the managing group of that window. The right/left directions are
     -- used instead of next/prev, because they work better in conjunction
     -- with tilings.
-    kpress(META.."Tab", "ioncore.goto_next(_chld, 'right')",
-           "_chld:non-nil"),
+    -- kpress(META.."Tab", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
     submap(META.."K", {
         bdoc("Backward-circulate focus."),
         kpress("AnyModifier+Tab", "ioncore.goto_next(_chld, 'left')",
