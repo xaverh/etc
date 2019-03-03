@@ -37,7 +37,7 @@ de.defstyle("*", {
     border_style = "elevated",
     font = mainfont,
     text_align = "center",
-    transparent_background = false,
+    transparent_background = true,
 })
 
 de.defstyle("tab", {
@@ -81,7 +81,7 @@ de.defstyle("input-edln", {
 })
 
 de.defstyle("frame", {
-    background_colour = grey10,
+    background_colour = red,
     de.substyle("quasiactive", {
         -- Something detached from the frame is active
         padding_colour = grey10,
@@ -90,13 +90,13 @@ de.defstyle("frame", {
         -- For user scripts
         padding_colour = "#009010",
     }),
-    padding_pixels = 1,
+    padding_pixels = 0,
 })
 
 de.defstyle("frame-tiled", {
     shadow_pixels = 0,
     highlight_pixels = 0,
-    spacing = 8,
+    spacing = 0,
 })
 
 --de.defstyle("frame-tiled-alt", {
@@ -143,7 +143,7 @@ de.defstyle("tab", {
 })
 
 de.defstyle("tab-frame", {
-    spacing = 1,
+    spacing = 0,
 })
 
 de.defstyle("tab-frame-floating", {
@@ -163,17 +163,19 @@ de.defstyle("tab-menuentry-big", {
 de.defstyle("stdisp", {
     shadow_pixels = 0,
     highlight_pixels = 0,
+    padding_pixels = 3,
     text_align = "left",
-    background_colour = "#000000",
-    foreground_colour = "grey",
-    font="-misc-fixed-medium-r-*-*-13-*-*-*-*-60-*-*",
+    background_colour = grey10,
+    foreground_colour = grey90,
+    font=mainfont,
+    transparent_background = false,
 
     de.substyle("important", {
-        foreground_colour = "green",
+        foreground_colour = green,
     }),
 
     de.substyle("critical", {
-        foreground_colour = "red",
+        foreground_colour = red,
     }),
 })
 
