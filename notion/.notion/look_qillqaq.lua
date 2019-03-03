@@ -24,6 +24,7 @@ local sky_blue = "#20BBFC" -- Deep Sky Blue, R=32, G=187, B=252
 local orange = "#AF5E00" -- Golden Brown, R=175, G=94, B=0
 local deep_blue = "#005577" -- Blue Lagoon, R=0, G=85, B=119
 local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
+local grey70 = "#b8b8b8" -- Grey 70%, R=184, G=184, B=184
 local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
 
 local mainfont = "-sgi-screen-medium-r-normal--11-*-72-72-m-*-*-*"

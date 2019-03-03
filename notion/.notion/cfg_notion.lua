@@ -141,10 +141,3 @@ dopath("cfg_defaults")
 --    kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 --})
 
-
-defwinprop{
-    class = "SshAskpass",
-    interface = "ssh-askpass",
-    float = true
-}
-

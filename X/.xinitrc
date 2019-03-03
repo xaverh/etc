@@ -56,5 +56,5 @@ st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000" &
     # dwm >/dev/null 2>&1
 # done
 
-exec notion
+exec notion 2> ~/.notion.log
 
