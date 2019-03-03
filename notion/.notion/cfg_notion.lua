@@ -70,7 +70,7 @@ ioncore.set{
     --screen_notify=true,
 
     -- Automatically save layout on restart and exit.
-    autosave_layout=true,
+    autosave_layout=false,
 
     -- Mouse focus mode; set to "sloppy" if you want the focus to follow the
     -- mouse, and to "disabled" otherwise.
@@ -133,3 +133,4 @@ dopath("cfg_defaults")
 --    kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 --})
 
+dopath("send_to_ws")
