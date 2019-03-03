@@ -8,11 +8,11 @@ nolink/sent-git/pkg/
 nolink/sent-git/sent-git/
 nolink/sent-git/src/sent-git/
 Code/.config/Code/User/workspaceStorage/
-vim/.vim/.netrwhist
-vim/.vim/bundle/
-!vim/.vim/bundle/Vundle.vim/
-vim/.vim/.tmp/*
-!vim/.vim/.tmp/.gitkeep
+neovim/.config/nvim/.netrwhist
+neovim/.config/nvim/bundle/
+!neovim/.config/nvim/bundle/Vundle.vim/
+neovim/.config/nvim/.tmp/*
+!neovim/.config/nvim/.tmp/.gitkeep
 nolink/dmenu/pkg/
 nolink/dmenu/src/dmenu-4.6/
 **/.browse.VC.db*

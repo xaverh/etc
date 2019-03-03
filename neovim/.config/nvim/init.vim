@@ -1,14 +1,3 @@
-set nocompatible                   " required for vundle
-filetype off                       " required for vundle
-set rtp+=~/.vim/bundle/Vundle.vim  " required for vundle
-
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'mhinz/vim-randomtag'
-
-call vundle#end()
-
 filetype plugin indent on
 syntax enable
 
@@ -44,7 +33,8 @@ set cinoptions=(0,u0,g0,:0,j1,J1,)200
 set clipboard=unnamed
 " set colorcolumn=+1
 set copyindent
-set cryptmethod=blowfish2
+" XXX
+" set cryptmethod=blowfish2
 "set cursorline
 set directory=~/tmp,/tmp
 set display=truncate
