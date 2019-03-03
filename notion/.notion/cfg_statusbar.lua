@@ -37,7 +37,7 @@ mod_statusbar.create{
     -- right, respectively, and %systray is a placeholder for system tray
     -- windows and icons.
     --
-    template="%workspace_pager %date",
+    template="%workspace_name_pager %filler %date",
     --template="[ %date || load:% %>load || mail:% %>mail_new/%>mail_total ] %filler%systray",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
 }
