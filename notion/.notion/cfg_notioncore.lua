@@ -2,6 +2,14 @@
 -- Notion core configuration file
 --
 
+local grey10 = "#1E1E1E" -- Grey 10%, R=30, G=30, B=30
+local grey30 = "#515151" -- Grey 30%, R=81, G=81, B=81
+local grey70 = "#b8b8b8" -- Grey 70%, R=184, G=184, B=184
+local grey90 = "#E5E6E6" -- Grey 90%, R=229, G=230, B=230
+local deep_blue = "#005577" -- Blue Lagoon, R=0, G=85, B=119
+local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
+local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
+local mainfont = "SGI Screen:style=Regular:pixelsize=11"
 
 --
 -- Bindings. This includes global bindings and bindings common to
@@ -55,16 +63,16 @@ defbindings("WScreen", {
 
     bdoc("Go to n:th screen on multihead setup."),
     kpress(META.."Shift+1", "ioncore.goto_nth_screen(0)"),
-    kpress(META.."Q", "ioncore.goto_nth_screen(0)"),
+    -- kpress(META.."Q", "ioncore.goto_nth_screen(0)"),
     kpress(META.."Shift+2", "ioncore.goto_nth_screen(1)"),
-    kpress(META.."W", "ioncore.goto_nth_screen(1)"),
+    -- kpress(META.."W", "ioncore.goto_nth_screen(1)"),
     kpress(META.."Shift+3", "ioncore.goto_nth_screen(2)"),
-    kpress(META.."E", "ioncore.goto_nth_screen(2)"),
+    -- kpress(META.."E", "ioncore.goto_nth_screen(2)"),
 
     bdoc("Go to next/previous screen on multihead setup."),
     kpress(META.."Shift+comma", "ioncore.goto_prev_screen()"),
-    kpress(META.."I", "ioncore.goto_prev_screen()"),
-    kpress(META.."O", "ioncore.goto_next_screen()"),
+    -- kpress(META.."I", "ioncore.goto_prev_screen()"),
+    -- kpress(META.."O", "ioncore.goto_next_screen()"),
     kpress(META.."grave", "ioncore.goto_next_screen()"),
 
     bdoc("Create a new workspace of chosen default type."),
@@ -123,7 +131,7 @@ defbindings("WClientWin", {
 
 defbindings("WGroupCW", {
     bdoc("Toggle client window group full-screen mode"),
-    kpress_wait(META.."Return", "WGroup.set_fullscreen(_, 'toggle')"),
+    kpress_wait(META.."F11", "WGroup.set_fullscreen(_, 'toggle')"),
 })
 
 
@@ -134,7 +142,7 @@ defbindings("WGroupCW", {
 
 defbindings("WMPlex", {
     bdoc("Close current object."),
-    kpress_wait(META.."C", "WRegion.rqclose_propagate(_, _sub)"),
+    kpress_wait(META.."Q", "WRegion.rqclose_propagate(_, _sub)"),
 })
 
 -- Frames for transient windows ignore this bindmap
@@ -143,33 +151,19 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."T", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
 
     bdoc("Lock screen"),
-    kpress(META.."L", "notioncore.exec_on(_, notioncore.lookup_script('notion-lock'))"),
-
-    bdoc("Query for manual page to be displayed."),
-    kpress(ALTMETA.."F1", "mod_query.query_man(_, ':man')"),
-
-    bdoc("Show the Notion manual page."),
-    kpress(META.."F1", "ioncore.exec_on(_, ':man notion')"),
+    kpress(META.."Escape", "notioncore.exec_on(_, notioncore.lookup_script('notion-lock'))"),
 
     bdoc("Run a terminal emulator."),
-    kpress(ALTMETA.."F2", "mod_query.exec_on_merr(_, XTERM or 'xterm')"),
+    kpress(META.."Return", "mod_query.exec_on_merr(_, XTERM or 'xterm')"),
+
+    bdoc("Run st."),
+    kpress(META.."Shift+Return", "mod_query.exec_on_merr(_, 'st')"),
 
     bdoc("Query for command line to execute."),
-    kpress(ALTMETA.."F3", "mod_query.query_exec(_)"),
+    kpress(META.."space", "mod_query.query_exec(_)"),
 
     bdoc("Query for Lua code to execute."),
     kpress(META.."F3", "mod_query.query_lua(_)"),
-
-    bdoc("Query for host to connect to with SSH."),
-    kpress(ALTMETA.."F4", "mod_query.query_ssh(_, ':ssh')"),
-
-    bdoc("Query for file to edit."),
-    kpress(ALTMETA.."F5",
-           "mod_query.query_editfile(_, 'run-mailcap --action=edit')"),
-
-    bdoc("Query for file to view."),
-    kpress(ALTMETA.."F6",
-           "mod_query.query_runfile(_, 'run-mailcap --action=view')"),
 
     bdoc("Query for workspace to go to or create a new one."),
     kpress(ALTMETA.."F9", "mod_query.query_workspace(_)"),
@@ -309,30 +303,18 @@ defbindings("WMoveresMode", {
     kpress("Right", "WMoveresMode.resize(_, 0, 1, 0, 0)"),
     kpress("Up",    "WMoveresMode.resize(_, 0, 0, 1, 0)"),
     kpress("Down",  "WMoveresMode.resize(_, 0, 0, 0, 1)"),
-    kpress("F",     "WMoveresMode.resize(_, 1, 0, 0, 0)"),
-    kpress("B",     "WMoveresMode.resize(_, 0, 1, 0, 0)"),
-    kpress("P",     "WMoveresMode.resize(_, 0, 0, 1, 0)"),
-    kpress("N",     "WMoveresMode.resize(_, 0, 0, 0, 1)"),
 
     bdoc("Shrink in specified direction."),
     kpress("Shift+Left",  "WMoveresMode.resize(_,-1, 0, 0, 0)"),
     kpress("Shift+Right", "WMoveresMode.resize(_, 0,-1, 0, 0)"),
     kpress("Shift+Up",    "WMoveresMode.resize(_, 0, 0,-1, 0)"),
     kpress("Shift+Down",  "WMoveresMode.resize(_, 0, 0, 0,-1)"),
-    kpress("Shift+F",     "WMoveresMode.resize(_,-1, 0, 0, 0)"),
-    kpress("Shift+B",     "WMoveresMode.resize(_, 0,-1, 0, 0)"),
-    kpress("Shift+P",     "WMoveresMode.resize(_, 0, 0,-1, 0)"),
-    kpress("Shift+N",     "WMoveresMode.resize(_, 0, 0, 0,-1)"),
 
     bdoc("Move in specified direction."),
     kpress(META.."Left",  "WMoveresMode.move(_,-1, 0)"),
     kpress(META.."Right", "WMoveresMode.move(_, 1, 0)"),
     kpress(META.."Up",    "WMoveresMode.move(_, 0,-1)"),
     kpress(META.."Down",  "WMoveresMode.move(_, 0, 1)"),
-    kpress(META.."F",     "WMoveresMode.move(_,-1, 0)"),
-    kpress(META.."B",     "WMoveresMode.move(_, 1, 0)"),
-    kpress(META.."P",     "WMoveresMode.move(_, 0,-1)"),
-    kpress(META.."N",     "WMoveresMode.move(_, 0, 1)"),
 })
 
 
@@ -399,3 +381,102 @@ defctxmenu("WClientWin", "Client window", {
 defbindings("WScreen", {
     kpress(META .. "Shift+Q", "ioncore.restart()")
 })
+
+-- TODO: there must be a way to put the volume into the statusbar and update it every time a change to the volume is done
+
+local mute = "ioncore.exec('ponymix mute && ponymix is-muted && dunstify -t 200 \"mute\" || dunstify -t 200 \"volume: \"`ponymix get-volume`\" %\"')"
+local louder = "ioncore.exec('ponymix unmute && ponymix increase 5 && ponymix is-muted && dunstify -t 200 \"mute\" || dunstify -t 200 \"volume: \"`ponymix get-volume`\" %\"')"
+local silenter = "ioncore.exec('ponymix unmute && ponymix decrease 5 && ponymix is-muted && dunstify -t 200 \"mute\" || dunstify -t 200 \"volume: \"`ponymix get-volume`\" %\"')"
+local playpause = "ioncore.exec('playerctl play-pause')"
+local nextsong = "ioncore.exec('playerctl next')"
+local prevsong = "ioncore.exec('playerctl previous')"
+
+defbindings("WScreen", {
+    kpress("XF86AudioMute", mute)
+})
+
+defbindings("WScreen", {
+    kpress("XF86AudioRaiseVolume", louder)
+})
+
+defbindings("WScreen", {
+    kpress("XF86AudioLowerVolume", silenter)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_0", mute)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_Add", louder)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_Subtract", silenter)
+})
+
+defbindings("WScreen", {
+    kpress("XF86AudioPlay", playpause)
+})
+
+defbindings("WScreen", {
+    kpress("XF86AudioNext", nextsong)
+})
+
+defbindings("WScreen", {
+    kpress("XF86AudioPrev", prevsong)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_Separator", playpause)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_Multiply", nextsong)
+})
+
+defbindings("WScreen", {
+    kpress(META .. "KP_Divide", prevsong)
+})
+
+defbindings("WScreen", {
+    kpress("XF86MonBrightnessDown", "ioncore.exec('xbacklight -dec 7; dunstify -t 100 \"backlight: `xbacklight -get`\" -t 400')")
+})
+
+defbindings("WScreen", {
+    kpress("XF86MonBrightnessUp", "ioncore.exec('xbacklight -inc 7; dunstify -t 100 \"backlight: `xbacklight -get`\" -t 400')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "Insert", "ioncore.exec('clipmenu -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey70 .. "\" -sb \"" .. deep_blue .. "\" -sf \"" .. grey90 .. "\"')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "e", "ioncore.exec('fman')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "Shift+Escape", "ioncore.exec('systemctl suspend')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "o", "ioncore.exec('clipmenu-url')")
+})
+
+defbindings("WScreen", {
+    kpress("Print", "ioncore.exec('import \"/home/xha/tmp/Screenshot_`date +%Y-%m-%d-%H-%M-%S`.png\"')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "Print", "ioncore.exec('import -window root \"/home/xha/tmp/Screenshot_`date +%Y-%m-%d-%H-%M-%S`.png\"')")
+})
+
+-- defbindings("WScreen", {
+--     kpress(META .. "Shift+Return", "ioncore.exec('st')")
+-- })
+
+-- FIXME
+-- defbindings("WScreen", {
+--     kpress(META .. "Shift+A", "ioncore.exec('/bin/bash -c st -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | dmenu -l 5 -p \"Attach to tmux session:\" -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey70 .. "\" -sb \"" .. deep_blue .. "\" -sf \"" .. grey90 .. "\"')")
+-- })
+
