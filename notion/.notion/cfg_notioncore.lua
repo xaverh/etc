@@ -44,6 +44,8 @@ defbindings("WScreen", {
     bdoc("Switch to next/previous object within current screen."),
     kpress(META.."comma", "WScreen.switch_prev(_)"),
     kpress(META.."period", "WScreen.switch_next(_)"),
+    mclick(META.."Shift+Button4", "WScreen.switch_prev(_)"),
+    mclick(META.."Shift+Button5", "WScreen.switch_next(_)"),
 
     bdoc("Go to the previously active region."),
     kpress(META.."Tab", "mod_menu.grabmenu(_, _sub, 'focuslist_')"),
@@ -61,7 +63,7 @@ defbindings("WScreen", {
     kpress(META.."F9", "ioncore.create_ws(_)"),
 
     bdoc("Display the main menu."),
-    kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
+    kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
     -- kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
     mpress("Button3", "mod_menu.pmenu(_, _sub, 'mainmenu')"),
 
@@ -230,14 +232,6 @@ defbindings("WFrame.toplevel", {
         kpress("9", "WFrame.switch_nth(_, 8)"),
         kpress("0", "WFrame.switch_nth(_, 9)"),
 
-        bdoc("Switch to next/previous object within the frame."),
-        kpress("N", "WFrame.switch_next(_)"),
-        kpress("P", "WFrame.switch_prev(_)"),
-
-        bdoc("Move current object within the frame left/right."),
-        kpress("comma", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
-        kpress("period", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
-
         bdoc("Maximize the frame horizontally/vertically."),
         kpress("H", "WFrame.maximize_horiz(_)"),
         kpress("V", "WFrame.maximize_vert(_)"),
@@ -245,6 +239,13 @@ defbindings("WFrame.toplevel", {
         bdoc("Attach tagged objects to this frame."),
         kpress("A", "ioncore.tagged_attach(_)"),
     }),
+    bdoc("Switch to next/previous object within the frame."),
+    kpress(META .. "Next", "WFrame.switch_next(_)"),
+    kpress(META .. "Prior", "WFrame.switch_prev(_)"),
+
+    bdoc("Move current object within the frame left/right."),
+    kpress(META .. "Shift+Prior", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
+    kpress(META .. "Shift+Next", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
 })
 
 -- Bindings for floating frames
@@ -451,10 +452,6 @@ defbindings("WScreen", {
 defbindings("WScreen", {
     kpress(META .. "Print", "ioncore.exec('import -window root \"/home/xha/tmp/Screenshot_`date +%Y-%m-%d-%H-%M-%S`.png\"')")
 })
-
--- defbindings("WScreen", {
---     kpress(META .. "Shift+Return", "ioncore.exec('st')")
--- })
 
 -- FIXME
 -- defbindings("WScreen", {
