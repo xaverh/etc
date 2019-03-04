@@ -1,9 +1,20 @@
-filetype plugin indent on
-syntax enable
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" Comma as leader
-let mapleader = ","
-let g:mapleader = ","
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'mhinz/vim-randomtag'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'junegunn/limelight.vim' | Plug 'junegunn/goyo.vim'
+call plug#end()
+
+" Comma as leader (default is \)
+" let mapleader = ","
+" let g:mapleader = ","
 
 if has("win32") || has("win64")
  	let &undodir=$HOME . '\AppData\Local\VIM_UNDO_FILES\'
@@ -221,3 +232,8 @@ imap <F6> <c-o>:set list!<CR>
 " http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
+
+" Options for plugins
+
+" Limelight
+let g:limelight_conceal_ctermfg = 8
