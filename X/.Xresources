@@ -17,16 +17,22 @@ x11-ssh-askpass*bottomShadowColor:      #000000
 x11-ssh-askpass.*borderWidth:           1
 
 URxvt.intensityStyles: true
-URxvt*geometry: 86x24
+URxvt*geometry: 80x24
 URxvt*scrollBar: false
 ! URxvt*letterSpace: -1
-URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
-URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
+! URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
+! URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
+URxvt*font: xft:IBM Plex Mono Text:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldFont: xft:IBM Plex Mono SemiBold:style=SemiBold:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*italicFont: xft:IBM Plex Mono Text:style=Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldItalicFont: xft:IBM Plex Mono SemiBold:style=SemiBold Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
 URxvt*internalBorder:  16
 URxvt*inheritPixmap: false
 URxvt*transparent: false
-URxvt*perl-ext-common: selection-to-clipboard
-URxvt*visualBell: true
+URxvt*visualBell: false
+URxvt*saveLines: 10000
+URxvt.fading: 10
+URxvt.fadeColor: #1e1e1e
 
 URxvt*cursorBlink: 1
 

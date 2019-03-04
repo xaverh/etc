@@ -1,7 +1,7 @@
 {
-	"editor.fontFamily": "Input, Consolas, SF Mono, Menlo, Source Code Pro",
-	"editor.fontSize": 16,
-	"terminal.integrated.fontSize": 15,
+	"editor.fontFamily": "IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
+	"editor.fontSize": 15,
+	"terminal.integrated.fontSize": 14,
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
@@ -16,7 +16,6 @@
 	"editor.renderControlCharacters": true,
 	"files.trimTrailingWhitespace": true,
 	"files.autoSave": "afterDelay",
-	"editor.fontLigatures": true,
 	"editor.renderWhitespace": "none",
 	"editor.formatOnSave": false,
 	"files.associations": {
