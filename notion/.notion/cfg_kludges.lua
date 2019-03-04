@@ -36,6 +36,20 @@ defwinprop {
     ignore_resizeinc = true
 }
 
+defwinprop {
+    class = "Firefox Developer Edition",
+    instance = "Browser",
+    role = "About",
+    float = true,
+}
+
+defwinprop {
+    class = "Firefox",
+    instance = "Browser",
+    role = "About",
+    float = true
+}
+
 -- https://sourceforge.net/tracker/?func=detail&aid=3471910&group_id=314802&atid=1324528
 -- defwinprop {
 --     class = "Gimp",
