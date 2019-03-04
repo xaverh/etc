@@ -9,7 +9,8 @@ local grey90 = "#E5E6E6" -- Grey 90%, R=229, G=230, B=230
 local deep_blue = "#005577" -- Blue Lagoon, R=0, G=85, B=119
 local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
 local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
-local mainfont = "SGI Screen:style=Regular:pixelsize=11"
+local green = "#30C798" -- Shamrock, R=48, G=199, B=152
+local mainfont = "SGI Screen:style=Regular:pixelsize=12"
 
 --
 -- Bindings. This includes global bindings and bindings common to
@@ -143,7 +144,7 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."Shift+Return", "mod_query.exec_on_merr(_, 'st')"),
 
     bdoc("Query for command line to execute."),
-    kpress(META.."space", "mod_query.query_exec(_)"),
+    kpress(META.."Shift+space", "mod_query.query_exec(_)"),
 
     bdoc("Query for Lua code to execute."),
     kpress(META.."F3", "mod_query.query_lua(_)"),
@@ -430,7 +431,11 @@ defbindings("WScreen", {
 })
 
 defbindings("WScreen", {
-    kpress(META .. "Insert", "ioncore.exec('clipmenu -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey70 .. "\" -sb \"" .. deep_blue .. "\" -sf \"" .. grey90 .. "\"')")
+    kpress(META .. "Insert", "ioncore.exec('clipmenu -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey90 .. "\" -sb \"" .. grey10 .. "\" -sf \"" .. green .. "\"')")
+})
+
+defbindings("WScreen", {
+    kpress(META .. "space", "ioncore.exec('dmenu_recent -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey90 .. "\" -sb \"" .. grey10 .. "\" -sf \"" .. green .. "\"')")
 })
 
 defbindings("WScreen", {

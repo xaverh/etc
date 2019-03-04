@@ -36,7 +36,7 @@ ioncore.set{
     --kbresize_delay=1500,
 
     -- Opaque resize?
-    --opaque_resize=false,
+    opaque_resize=true,
 
     -- Movement commands warp the pointer to frames instead of just
     -- changing focus. Enabled by default.
