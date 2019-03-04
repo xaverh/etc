@@ -14,7 +14,6 @@
 	cmd = code --wait --diff $LOCAL $REMOTE
 [alias]
 	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	dad = !curl https://icanhazdadjoke.com/ && git add
 [push]
 	default = current
 [filter "lfs"]
@@ -23,4 +22,3 @@
 	require = true
 [branch]
 	autosetuprebase = always
-
