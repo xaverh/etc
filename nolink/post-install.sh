@@ -33,7 +33,29 @@ systemctl enable devmon@$USER.service
 
 ln -s ~/.local/share/applications/mimeapps.list ~/.config/mimeapps.list
 
-code --install-extension James-Yu.latex-workshop --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-emoji --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension coolbear.systemd-unit-file --install-extension dbaeumer.vscode-eslint --install-extension eg2.ts-tslint --install-extension eg2.vscode-npm-script --install-extension hoovercj.vscode-settings-cycler --install-extension idleberg.emoji-code --install-extension ms-vscode.go --install-extension ms-vscode.cpptools --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension ravilang.ravi-debug --install-extension satoren.lualint --install-extension twxs.cmake --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
+code \
+--install-extension bierner.markdown-checkbox \
+--install-extension bierner.markdown-emoji \
+--install-extension bierner.markdown-footnotes \
+--install-extension bierner.markdown-mermaid \
+--install-extension cg-cnu.vscode-remind-me \
+--install-extension chenxsan.vscode-standardjs \
+--install-extension eg2.ts-tslint \
+--install-extension eg2.vscode-npm-script \
+--install-extension hoovercj.vscode-settings-cycler \
+--install-extension idleberg.emoji-code \
+--install-extension James-Yu.latex-workshop \
+--install-extension ms-vscode.cpptools \
+--install-extension ms-vscode.Go \
+--install-extension msjsdiag.debugger-for-chrome \
+--install-extension nhoizey.gremlins \
+--install-extension octref.vetur  \
+--install-extension trixnz.vscode-lua \
+--install-extension twxs.cmake \
+--install-extension wmaurer.change-case \
+--install-extension xaver.clang-format \
+--install-extension xaver.theme-qillqaq \
+--install-extension xaver.theme-ysgrifennwr
 
 npm install --global generator-code gulp-cli typescript vsce @vue/cli yo
 
