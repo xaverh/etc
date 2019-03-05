@@ -135,7 +135,7 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."T", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
 
     bdoc("Lock screen"),
-    kpress(META.."Escape", "notioncore.exec_on(_, notioncore.lookup_script('notion-lock'))"),
+    kpress(META.."Escape", "ioncore.exec('slock')"),
 
     bdoc("Run a terminal emulator."),
     kpress(META.."Return", "mod_query.exec_on_merr(_, XTERM or 'xterm')"),
@@ -310,8 +310,7 @@ defbindings("WMoveresMode", {
 defmenu("mainmenu", {
     menuentry("Run...",         "mod_query.query_exec(_)"),
     menuentry("Terminal",       "mod_query.exec_on_merr(_, XTERM or 'xterm')"),
-    menuentry("Lock screen",
-        "notioncore.exec_on(_, notioncore.lookup_script('notion-lock'))"),
+    menuentry("Lock screen",    "ioncore.exec('slock')"),
     menuentry("Help",           "mod_query.query_man(_)"),
     menuentry("About Notion",      "mod_query.show_about_ion(_)"),
     submenu("Styles",           "stylemenu"),
