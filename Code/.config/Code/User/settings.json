@@ -165,6 +165,6 @@
 	"files.autoSaveDelay": 1001,
 	"zenMode.centerLayout": false,
 	"zenMode.hideLineNumbers": false,
-	"workbench.activityBar.visible": false,
+	"workbench.activityBar.visible": true,
 	"diffEditor.renderSideBySide": false
 }
