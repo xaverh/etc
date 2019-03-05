@@ -24,7 +24,9 @@
 		"*.npmrc": "ini",
 		"*.service": "ini",
 		"*.h": "c",
-		"*.ymp": "xml"
+		"*.ymp": "xml",
+		"*.network": "ini",
+		"*.link": "ini"
 	},
 	"files.exclude": {
 		"**/.git": true,
@@ -62,7 +64,10 @@
 	},
 	"[markdown]": {
 		"editor.wordWrap": "on",
-		"editor.quickSuggestions": true
+		"editor.quickSuggestions": true,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4,
+		"editor.renderWhitespace": "boundary"
 	},
 	"[python]": {
 		"editor.tabSize": 4,
@@ -105,7 +110,7 @@
 	"git.autofetch": true,
 	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-	"eslint.validate": [
+	"standard.validate": [
 		"javascript",
 		"javascriptreact",
 		{
@@ -117,7 +122,7 @@
 			"autoFix": true
 		}
 	],
-	"eslint.options": {
+	"standard.options": {
 		"plugins": [
 			"vue",
 			"html"
@@ -139,10 +144,9 @@
 	],
 	"search.smartCase": true,
 	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-	"search.location": "panel",
 	"latex-workshop.view.pdf.viewer": "tab",
-	"eslint.enable": true,
-	"eslint.run": "onType",
+	"standard.enable": true,
+	"standard.run": "onType",
 	"vetur.format.defaultFormatter.js": "vscode-typescript",
 	"vetur.format.defaultFormatter.ts": "vscode-typescript",
 	"vetur.validation.style": true,
@@ -154,7 +158,6 @@
 	"workbench.useExperimentalGridLayout": true,
 	"latex-workshop.latex.autoBuild.run": "never",
 	"workbench.colorTheme": "Qillqaq",
-	"workbench.sideBar.location": "left",
 	"breadcrumbs.enabled": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"window.titleBarStyle": "native",
@@ -166,5 +169,6 @@
 	"zenMode.centerLayout": false,
 	"zenMode.hideLineNumbers": false,
 	"workbench.activityBar.visible": true,
-	"diffEditor.renderSideBySide": false
+	"diffEditor.renderSideBySide": false,
+	"explorer.autoReveal": false
 }
