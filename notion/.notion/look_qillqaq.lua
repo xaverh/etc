@@ -27,7 +27,9 @@ local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
 local grey70 = "#b8b8b8" -- Grey 70%, R=184, G=184, B=184
 local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
 
-local mainfont = "-sgi-screen-medium-r-normal--11-*-72-72-m-*-*-*"
+dopath("local_settings")
+
+local mainfont = xha_mainfont or "-sgi-screen-medium-r-normal--11-*-72-72-m-*-*-*"
 
 de.defstyle("*", {
     shadow_colour = grey10,
