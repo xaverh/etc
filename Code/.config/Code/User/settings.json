@@ -157,7 +157,7 @@
 	"search.usePCRE2": true,
 	"workbench.useExperimentalGridLayout": true,
 	"latex-workshop.latex.autoBuild.run": "never",
-	"workbench.colorTheme": "Qillqaq",
+	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
 	"breadcrumbs.enabled": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"window.titleBarStyle": "native",
@@ -170,5 +170,7 @@
 	"zenMode.hideLineNumbers": false,
 	"workbench.activityBar.visible": true,
 	"diffEditor.renderSideBySide": false,
-	"explorer.autoReveal": false
+	"explorer.autoReveal": false,
+	"editor.fontLigatures": false,
+	"workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons"
 }
