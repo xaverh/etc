@@ -1,7 +1,8 @@
 {
-	"editor.fontFamily": "IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
-	"editor.fontSize": 15,
-	"terminal.integrated.fontSize": 14,
+	"editor.fontFamily": "Iosevka Xha, IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
+	"editor.fontSize": 16,
+	"editor.fontWeight": "400",
+	"terminal.integrated.fontSize": 15,
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
@@ -67,7 +68,10 @@
 		"editor.quickSuggestions": true,
 		"editor.insertSpaces": true,
 		"editor.tabSize": 4,
-		"editor.renderWhitespace": "boundary"
+		"editor.renderWhitespace": "boundary",
+		"diffEditor.ignoreTrimWhitespace": false,
+		"editor.trimAutoWhitespace": false,
+		"files.trimTrailingWhitespace": false
 	},
 	"[python]": {
 		"editor.tabSize": 4,
@@ -157,7 +161,7 @@
 	"search.usePCRE2": true,
 	"workbench.useExperimentalGridLayout": true,
 	"latex-workshop.latex.autoBuild.run": "never",
-	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+	"workbench.colorTheme": "Qillqaq",
 	"breadcrumbs.enabled": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"window.titleBarStyle": "native",
@@ -170,7 +174,5 @@
 	"zenMode.hideLineNumbers": false,
 	"workbench.activityBar.visible": true,
 	"diffEditor.renderSideBySide": false,
-	"explorer.autoReveal": false,
-	"editor.fontLigatures": false,
-	"workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons"
+	"explorer.autoReveal": false
 }
