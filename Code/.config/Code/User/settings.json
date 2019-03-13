@@ -1,7 +1,7 @@
 {
-	"editor.fontFamily": "Iosevka Xha, IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
+	"editor.fontFamily": "Iosifovich, IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
 	"editor.fontSize": 16,
-	"editor.fontWeight": "400",
+	"editor.fontWeight": "500",
 	"terminal.integrated.fontSize": 15,
 	"editor.rulers": [],
 	"editor.formatOnType": true,
