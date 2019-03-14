@@ -52,6 +52,7 @@ alias 7zultra='7z a -t7z -mx=9 -mfb=64 -md=32m -ms=on'
 alias d='dirs -v'
 alias j='jobs -l'
 alias file_count='find .//. ! -name . -print | grep -c //'
+alias ix="curl -F 'f:1=<-' ix.io"
 
 # https://superuser.com/questions/300316/set-ps1-differently-on-local-computer-and-in-ssh-session
 if [ -n "$SSH_CLIENT" ]; then
