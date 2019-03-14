@@ -33,7 +33,7 @@
 #
 ## Needed for tag editor and file operations to work.
 ##
-mpd_music_dir = ~/Music
+mpd_music_dir = ~/var/music
 #
 #mpd_crossfade_time = 5
 #
@@ -243,7 +243,7 @@ allow_for_physical_item_deletion = yes
 #
 #search_engine_default_search_mode = 1
 #
-external_editor = vim
+external_editor = nvim
 #
 ## Note: set to yes if external editor is a console application.
 ##
