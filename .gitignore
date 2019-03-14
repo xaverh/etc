@@ -18,3 +18,4 @@ weechat/.weechat/sec.conf
 weechat/.weechat/certs/
 notion/.notion/default-session--0/saved_*
 notion/.notion/local_settings.lua
+mpd/.local/share/mpd/database
