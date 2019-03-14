@@ -110,7 +110,6 @@
 	"editor.smoothScrolling": true,
 	"git.enableCommitSigning": false,
 	"explorer.decorations.badges": false,
-	"explorer.confirmDelete": false,
 	"git.autofetch": true,
 	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
@@ -174,5 +173,7 @@
 	"zenMode.hideLineNumbers": false,
 	"workbench.activityBar.visible": true,
 	"diffEditor.renderSideBySide": false,
-	"explorer.autoReveal": false
+	"explorer.autoReveal": false,
+	"terminal.integrated.fontWeight": "500",
+	"files.enableTrash": false
 }
