@@ -2,6 +2,8 @@
 -- Notion core configuration file
 --
 
+dopath("local_settings")
+
 local grey10 = "#1E1E1E" -- Grey 10%, R=30, G=30, B=30
 local grey30 = "#515151" -- Grey 30%, R=81, G=81, B=81
 local grey70 = "#b8b8b8" -- Grey 70%, R=184, G=184, B=184
@@ -10,7 +12,7 @@ local deep_blue = "#005577" -- Blue Lagoon, R=0, G=85, B=119
 local grey20 = "#3a3d41" -- Grey 20%, R=58, G=61, B=65
 local cyprus = "#0f3a4b" -- Cyprus, R=15, G=58, B=75
 local green = "#30C798" -- Shamrock, R=48, G=199, B=152
-local mainfont = "SGI Screen:style=Regular:pixelsize=12"
+local mainfont = xha_xft_mainfont or "SGI Screen:style=Regular:pixelsize=12"
 
 --
 -- Bindings. This includes global bindings and bindings common to
@@ -434,7 +436,7 @@ defbindings("WScreen", {
 })
 
 defbindings("WScreen", {
-    kpress(META .. "space", "ioncore.exec('dmenu_recent -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey90 .. "\" -sb \"" .. grey10 .. "\" -sf \"" .. green .. "\"')")
+    kpress(META .. "space", "ioncore.exec('dmenu_recent -f -i -m 0 -fn \"" .. mainfont .. "\" -nb \"" .. grey10 .. "\" -nf \"" .. grey90 .. "\" -sb \"" .. grey10 .. "\" -sf \"" .. green .. "\"')")
 })
 
 defbindings("WScreen", {
