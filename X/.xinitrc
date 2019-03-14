@@ -1,7 +1,5 @@
 #!/bin/sh
 
-xmodmap $HOME/.Xmodmap
-
 xsetroot -solid "#1e1e1e"
 xset b off &
 xset s off &
@@ -27,4 +25,6 @@ st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000" &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-exec notion 2> ~/.notion.log
+urxvtd -q -o -f &
+
+exec bspwm 2> /tmp/bspwm.log
