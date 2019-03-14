@@ -175,5 +175,7 @@
 	"diffEditor.renderSideBySide": false,
 	"explorer.autoReveal": false,
 	"terminal.integrated.fontWeight": "500",
-	"files.enableTrash": false
+	"files.enableTrash": false,
+	"workbench.settings.editor": "json",
+	"zenMode.fullScreen": true
 }
