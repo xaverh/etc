@@ -1,4 +1,5 @@
 *.un~
+*.old
 .vscode
 *.swp
 *.o
@@ -9,7 +10,6 @@ Code/.config/Code/
 Code/.config/Code/User/workspaceStorage/
 neovim/.config/nvim/.netrwhist
 neovim/.config/nvim/bundle/
-!neovim/.config/nvim/bundle/Vundle.vim/
 neovim/.config/nvim/.tmp/*
 !neovim/.config/nvim/.tmp/.gitkeep
 **/.browse.VC.db*
@@ -18,5 +18,3 @@ weechat/.weechat/sec.conf
 weechat/.weechat/certs/
 notion/.notion/default-session--0/saved_*
 notion/.notion/local_settings.lua
-X/.local/share/mime
-X/.local/share/recently-used.xbel
