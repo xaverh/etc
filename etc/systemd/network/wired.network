@@ -1,0 +1,15 @@
+[Match]
+Name=eno1
+
+[Network]
+DHCP=true
+IPv6AcceptRA=true
+IPv6PrivacyExtensions=true
+
+[DHCP]
+UseDNS=false
+UseNTP=false
+RouteMetric=10
+
+[IPv6AcceptRA]
+UseDNS=false
