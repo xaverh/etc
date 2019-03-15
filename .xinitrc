@@ -1,6 +1,6 @@
 #!/bin/sh
 
-xsetroot -solid "#1e1e1e"
+# xsetroot -solid "#1e1e1e"
 xset b off &
 xset s off &
 xset -dpms &
@@ -28,5 +28,7 @@ urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -
 go run bin/bspwmstatus.go | lemonbar -f "Iosifovich:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" -B "#1E1E1E" -F "#E5E6E6" | sh &
 
 (sleep 3 && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1) &
+
+(test -x ~/.fehbg && ~/.fehbg) &
 
 exec bspwm 2> /tmp/bspwm.log
