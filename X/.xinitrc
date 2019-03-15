@@ -21,10 +21,12 @@ fi
 
 numlockx &
 
-st -t journalctl -e tmux new-session -s journalctl "journalctl -b -f -n 1000" &
-
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
 urxvtd -q -o -f &
+
+urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
+
+go run bin/bspwmstatus.go | lemonbar -f "Iosifovich:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" &
+
+(sleep 3 && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1) &
 
 exec bspwm 2> /tmp/bspwm.log

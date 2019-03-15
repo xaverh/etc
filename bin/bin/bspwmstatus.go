@@ -32,6 +32,9 @@ const (
 
 	ipPattern    = "[0-9.]+"
 	srcIPPattern = "src [0-9.]+"
+
+	// Formatting
+	alignRight = "%{r}"
 )
 
 var (
@@ -273,23 +276,25 @@ func main() {
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
 	go updateBspwmState(bspwmChan)
-	var status [8]string
+	var status [9]string
+	status[1] = alignRight
 	go func() {
 		for {
 			select {
 			case status[0] = <-bspwmChan:
-			case status[1] = <-memChan:
-			case status[2] = <-netChan:
-			case status[3] = <-tempChan:
-			case status[4] = <-wifiChan:
-			case status[5] = <-ipChan:
-			case status[6] = <-powChan:
+				fmt.Println(strings.Join(status[:], fieldSeparator))
+			case status[2] = <-memChan:
+			case status[3] = <-netChan:
+			case status[4] = <-tempChan:
+			case status[5] = <-wifiChan:
+			case status[6] = <-ipChan:
+			case status[7] = <-powChan:
 			}
 		}
 	}()
 	func() {
 		for {
-			status[7] = time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
+			status[8] = time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
 			fmt.Println(strings.Join(status[:], fieldSeparator))
 			// sleep until beginning of next second
 			var now = time.Now()
