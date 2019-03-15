@@ -21,11 +21,11 @@ fi
 
 numlockx &
 
-urxvtd -q -o -f &
+urxvtd -q -o -f
 
 urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
 
-go run bin/bspwmstatus.go | lemonbar -f "Iosifovich:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" &
+go run bin/bspwmstatus.go | lemonbar -f "Iosifovich:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" -B "#1E1E1E" -F "#E5E6E6" | sh &
 
 (sleep 3 && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1) &
 
