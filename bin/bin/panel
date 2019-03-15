@@ -15,6 +15,8 @@ bspc subscribe report > /tmp/panel-fifo &
 
 panel_bar < /tmp/panel-fifo | lemonbar -a 32 -u 2 -n "bspwm_panel" -g x24 -f "-sgi-screen-medium-r-normal--14-*-72-72-m-*-*-*" -F "#a7a5a5" -B "#333232" | sh &
 
+panel_bar < /tmp/panel-fifo
+
 wid=$(xdo id -m -a "bspwm_panel")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
 

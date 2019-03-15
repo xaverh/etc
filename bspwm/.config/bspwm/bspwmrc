@@ -13,7 +13,8 @@ bspc config gapless_monocle      true
 
 bspc rule -a 'discord' desktop='^3'
 bspc rule -a 'Chromium' desktop='^1'
-bpsc rule -a 'URxvt:journalctl' desktop='^5'
+bspc rule -a 'URxvt:journalctl' desktop='^5'
 bspc rule -a '*:zathura' state=tiled
+bspc rule -a 'TelegramDesktop' desktop='^3'
 
 bspc wm --adopt-orphans
