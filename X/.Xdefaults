@@ -26,15 +26,15 @@ URxvt*font: xft:Iosifovich Terminal:style=Medium,Regular:pixelsize=16:antialias=
 URxvt*boldFont: xft:Iosifovich Terminal:style=Bold:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
 URxvt*italicFont: xft:Iosifovitch Terminal:style=Medium,Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
 URxvt*boldItalicFont: xft:Iosifovich Terminal:style=Bold Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt*internalBorder:  16
-URxvt*inheritPixmap: false
-URxvt*transparent: false
-URxvt*visualBell: false
-URxvt*saveLines: 10000
+URxvt.internalBorder:  16
+URxvt.inheritPixmap: false
+URxvt.transparent: false
+URxvt.visualBell: false
+URxvt.saveLines: 10000
 URxvt.fading: 10
 URxvt.fadeColor: #1e1e1e
-
-URxvt*cursorBlink: 1
+Urxvt.cursorColor: #20BBFC
+URxvt.cursorBlink: 1
 
 URxvt.background: #1E1E1E
 URxvt.color0:     #1E1E1E
