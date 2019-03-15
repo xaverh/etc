@@ -53,6 +53,7 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias file_count='find .//. ! -name . -print | grep -c //'
 alias ix="curl -F 'f:1=<-' ix.io"
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # https://superuser.com/questions/300316/set-ps1-differently-on-local-computer-and-in-ssh-session
 if [ -n "$SSH_CLIENT" ]; then
