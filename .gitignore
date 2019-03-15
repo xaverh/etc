@@ -20,3 +20,4 @@ notion/.notion/default-session--0/saved_*
 notion/.notion/local_settings.lua
 mpd/.local/share/mpd/database
 mpd/.local/share/mpd/state
+.dotfiles
