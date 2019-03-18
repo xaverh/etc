@@ -1,18 +1,16 @@
 {
-	"editor.fontFamily": "Iosifovich, IBM Plex Mono Text, Input, Consolas, SF Mono, Menlo, Source Code Pro",
-	"editor.fontSize": 16,
-	"editor.fontWeight": "500",
+	"editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
+	"editor.fontSize": 15,
+	"editor.fontWeight": "400",
 	"terminal.integrated.fontSize": 15,
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wordWrap": "on",
+	"editor.wordWrap": "off",
 	"editor.wrappingIndent": "same",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
-	"editor.cursorBlinking": "smooth",
-	"editor.cursorStyle": "line",
 	"editor.renderLineHighlight": "all",
 	"editor.renderControlCharacters": true,
 	"files.trimTrailingWhitespace": true,
@@ -177,5 +175,8 @@
 	"terminal.integrated.fontWeight": "500",
 	"files.enableTrash": false,
 	"workbench.settings.editor": "json",
-	"zenMode.fullScreen": true
+	"zenMode.fullScreen": true,
+	"editor.cursorSmoothCaretAnimation": true,
+	"editor.cursorStyle": "line",
+	"editor.cursorBlinking": "phase"
 }

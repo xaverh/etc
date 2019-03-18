@@ -10,7 +10,7 @@ super + shift + Return
 	urxvtc -e tmux
 
 # program launcher
-super + @space
+super + space
 	dmenu_recent -f -i -m 0 -fn "Iosifovich:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" -nb "#1E1E1E" -nf "#E5E6E6" -sb "#005577" -sf "#E5E6E6"
 
 # make sxhkd reload its configuration files:
@@ -21,9 +21,13 @@ super + Escape
 # bspwm hotkeys
 #
 
-# quit/restart bspwm
-super + alt + {q,r}
-	bspc {quit,wm -r}
+# quit bspwm
+super + alt + q
+	pkill -x panel; bspc quit
+
+# restart bspwm
+super + alt + r
+	bspc wm -r
 
 # close and kill
 super + {_,shift + }q

@@ -20,13 +20,13 @@ URxvt.intensityStyles: true
 URxvt*geometry: 80x24
 URxvt*scrollBar: false
 ! URxvt*letterSpace: -1
-! URxvt*font: -sgi-screen-medium-r-*-*-16-*-*-*-*-*-*-*
+! URxvt*font: -ibm-ibm plex mono medium-medium-r-normal--0-0-0-0-m-0-iso10646-1
 ! URxvt*boldFont: -sgi-screen-bold-r-*-*-16-*-*-*-*-*-*-*
-URxvt*font: xft:Iosifovich Terminal:style=Medium,Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt*boldFont: xft:Iosifovich Terminal:style=Bold:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt*italicFont: xft:Iosifovitch Terminal:style=Medium,Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt*boldItalicFont: xft:Iosifovich Terminal:style=Bold Italic:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.internalBorder:  16
+URxvt*font: xft:IBM Plex Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*italicFont: xft:IBM Plex Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.internalBorder:  14
 URxvt.inheritPixmap: false
 URxvt.transparent: false
 URxvt.visualBell: false

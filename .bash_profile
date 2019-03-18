@@ -19,7 +19,7 @@ export GOPATH
 export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
-export TERMINAL=st
+export TERMINAL=urxvtc
 export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
