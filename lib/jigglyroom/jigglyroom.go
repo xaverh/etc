@@ -28,14 +28,10 @@ const (
 	netReceivedSign    = ""
 	netTransmittedSign = ""
 
-	fieldSeparator = " "
+	fieldSeparator = "   "
 
 	ipPattern    = "[0-9.]+"
 	srcIPPattern = "src [0-9.]+"
-
-	// Formatting
-	alignRight = ""
-	// alignLeft  = "%{l}"
 
 	colorK = "#1E1E1E" /* Grey 10%, R=30, G=30, B=30 */
 	colorR = "#E32791" /* Deep Cerise, R=227, G=39, B=145 */
@@ -76,7 +72,7 @@ const (
 var (
 	netDevs = map[string]struct{}{
 		"eno1:":      {},
-		"wlp2s0:":    {},
+		// "wlp2s0:":    {},
 		"enp0s20u1:": {},
 		"ppp0:":      {},
 	}
@@ -122,7 +118,7 @@ func formatHerbstluftwmStatus(input string) string {
 			bg = colorUrgentBg
 			fg = colorUrgentFg
 		}
-		result = result + "^bg(" + bg + ")^fg(" + fg + ")^ca(1,herbstclient focus_monitor " + screen + " && herbstclient use " + v[1:] + ") " + v[1:] + " ^ca()"
+		result = result + "^bg(" + bg + ")^fg(" + fg + ")^ca(1,herbstclient focus_monitor " + screen + " && herbstclient use " + v[1:] + ")" + fieldSeparator + v[1:] + fieldSeparator + "^ca()"
 	}
 	return result + "^bg(" + colorDefaultBg + ")^fg(" + colorDefaultFg + ")"
 }
@@ -235,7 +231,7 @@ func updatePower(powChan chan<- string) {
 			icon = pluggedSign
 		}
 
-		powChan <- fmt.Sprintf("%d%%s", enPerc, icon)
+		powChan <- fmt.Sprintf("%d%%%s", enPerc, icon)
 		time.Sleep(time.Duration(10 * time.Second))
 	}
 }
@@ -345,72 +341,59 @@ func updateHerbstluftwmState(herbstluftwmChan chan<- string) {
 	}
 }
 
-// func updateBspwmState(bspwmChan chan<- string) {
-// 	cmd := exec.Command("bspc", "subscribe", "report")
-// 	out, err := cmd.StdoutPipe()
+func updateTime(timeChan chan<- string) {
+	for {
+		timeChan <- time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
+		// sleep until beginning of next second
+		var now = time.Now()
+		time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))
+	}
+}
 
-// 	err = cmd.Start()
-// 	if err != nil {
-// 		bspwmChan <- fmt.Sprintf("Failed to start err=%v", err)
-// 	}
-
-// 	scanner := bufio.NewScanner(out)
-
-// 	defer cmd.Wait()
-// 	for scanner.Scan() {
-// 		bspwmChan <- fmt.Sprint(formatBspwmStatus(scanner.Text()))
-// 	}
-// 	if err := scanner.Err(); err != nil {
-// 		bspwmChan <- fmt.Sprintf("reading standard input: %v", err)
-// 	}
-// }
+func feedDzen2(status [6]string) {
+	rightTextOnly := strings.TrimSpace(strings.Join(status[1:], fieldSeparator))
+	rightTextOnlyQuoted := strconv.Quote(rightTextOnly)
+	out, err := exec.Command("textwidth", os.Args[2], rightTextOnlyQuoted).CombinedOutput()
+	if err != nil {
+		fmt.Printf("failed to exec textwidth: %v", err)
+	}
+	textWidth, _ := strconv.Atoi(strings.TrimSuffix(string(out), "\n"))
+	panelWidth, _ := strconv.Atoi(os.Args[3])
+	// the magic number 5 below moves output slightly to right
+	output := status[0] + "^pa(" + strconv.Itoa(panelWidth-textWidth+5) + ")" + rightTextOnly
+	fmt.Println(output)
+}
 
 func main() {
 	memChan := make(chan string)
 	netChan := make(chan string)
 	tempChan := make(chan string)
-	wifiChan := make(chan string)
+	// wifiChan := make(chan string)
 	ipChan := make(chan string)
-	powChan := make(chan string)
+	// powChan := make(chan string)
 	herbstluftwmChan := make(chan string)
+	timeChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan)
-	go updateWIFI(wifiChan)
+	// go updateWIFI(wifiChan)
 	go updateIPAdress(ipChan)
-	go updatePower(powChan)
+	// go updatePower(powChan)
 	go updateHerbstluftwmState(herbstluftwmChan)
-	var status [8]string
-	go func() {
-		for {
-			select {
-			case status[0] = <-herbstluftwmChan:
-				// fmt.Println(strings.Join(status[:], fieldSeparator))
-			case status[1] = <-memChan:
-			case status[2] = <-netChan:
-			case status[3] = <-tempChan:
-			case status[4] = <-wifiChan:
-			case status[5] = <-ipChan:
-			case status[6] = <-powChan:
-			}
+	go updateTime(timeChan)
+	var status [6]string
+	for {
+		select {
+		case status[0] = <-herbstluftwmChan:
+			feedDzen2(status)
+		case status[5] = <-timeChan:
+			feedDzen2(status)
+		case status[1] = <-memChan:
+		case status[2] = <-netChan:
+		case status[3] = <-tempChan:
+		// case status[4] = <-wifiChan:
+		case status[4] = <-ipChan:
+		// case status[6] = <-powChan:
 		}
-	}()
-	func() {
-		for {
-			status[7] = time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
-			rightTextOnly := strings.Join(status[2:], fieldSeparator)
-			rightTextOnlyQuoted := strconv.Quote(rightTextOnly)
-			out, err := exec.Command("textwidth", os.Args[2], rightTextOnlyQuoted).CombinedOutput()
-			if err != nil {
-				fmt.Printf("failed to exec textwidth: %v", err)
-			}
-			textWidth, _ := strconv.Atoi(strings.TrimSuffix(string(out),"\n"))
-			panelWidth, _ := strconv.Atoi(os.Args[3])
-			output := status[0] + "^pa(" + strconv.Itoa(panelWidth-textWidth) + ")" + rightTextOnly
-			fmt.Println(output)
-			// sleep until beginning of next second
-			var now = time.Now()
-			time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))
-		}
-	}()
+	}
 }
