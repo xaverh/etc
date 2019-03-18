@@ -70,6 +70,7 @@ dmenu \
 dunst \
 firefox-developer-edition \
 gimp \
+herbstluftwm \
 hsetroot \
 imagemagick \
 mpv \
@@ -229,6 +230,9 @@ code \
 --install-extension xaver.clang-format \
 --install-extension xaver.theme-qillqaq \
 --install-extension xaver.theme-ysgrifennwr
+
+# Fonts
+mkdir -p ~/.local/share/fonts/noto && wget -qO- "https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip" | bsdtar -xvf- -C ~/.local/share/fonts/noto
 
 npm install --global generator-code \
 gulp-cli \

@@ -17,4 +17,7 @@ bspc rule -a 'URxvt:journalctl' desktop='^5'
 bspc rule -a '*:zathura' state=tiled
 bspc rule -a 'TelegramDesktop' desktop='^3'
 
+# wid=$(xdo id -m -a "jigglyroom")
+# xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
 bspc wm --adopt-orphans

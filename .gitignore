@@ -26,7 +26,8 @@
 .fehbg
 .gopath
 .lesshst
-lib
+lib/*
+!lib/jigglyroom
 .local/*
 !.local/share/applications/mimeapps.list
 .mozilla

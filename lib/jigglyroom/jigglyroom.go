@@ -34,8 +34,8 @@ const (
 	srcIPPattern = "src [0-9.]+"
 
 	// Formatting
-	alignRight = "%{r}"
-	alignLeft  = "%{l}"
+	alignRight = ""
+	// alignLeft  = "%{l}"
 
 	colorK = "#1E1E1E" /* Grey 10%, R=30, G=30, B=30 */
 	colorR = "#E32791" /* Deep Cerise, R=227, G=39, B=145 */
@@ -55,32 +55,22 @@ const (
 	colorLightC = "#A2DCD7" /* Sinbad, R=162, G=220, B=215 */
 	colorLightW = "#E5E6E6" /* Grey 90%, R=229, G=230, B=230 */
 
-	colorDefaultFg         = colorLightW
-	colorDefaultBg         = colorK
-	colorMonitorFg         = "#8dbcdf"
-	colorMonitorBg         = colorDefaultBg
-	colorFocusedMonitorFg  = "#b1d0e8"
-	colorFocusedMonitorBg  = "#144b6c"
-	colorFreeFg            = colorDefaultFg
-	colorFreeBg            = colorDefaultBg
-	colorFreeUl            = colorFreeBg
-	colorFocusedFreeFg     = colorDefaultFg
-	colorFocusedFreeBg     = colorDefaultBg
-	colorFocusedFreeUl     = colorFocusedFreeBg
-	colorOccupiedFg        = "#a7a5a5"
-	colorOccupiedBg        = colorDefaultBg
-	colorOccupiedUl        = colorOccupiedBg
-	colorFocusedOccupiedFg = "#d6d3d2"
-	colorFocusedOccupiedBg = "#504e4e"
-	colorFocusedOccupiedUl = colorFocusedOccupiedBg
-	colorUrgentFg          = colorLightW
-	colorUrgentBg          = colorR
-	colorUrgentUl          = colorUrgentBg
-	colorFocusedUrgentFg   = "#501d1f"
-	colorFocusedUrgentBg   = "#d5443e"
-	colorFocusedUrgentUl   = colorFocusedUrgentBg
-	colorStateFg           = colorM
-	colorStateBg           = colorDefaultBg
+	colorDarkB = "#005577"
+
+	colorDefaultFg           = colorLightW
+	colorDefaultBg           = colorK
+	colorFreeFg              = colorW
+	colorFreeBg              = colorDefaultBg
+	colorFocusedHereFg       = colorLightW
+	colorFocusedHereBg       = colorDarkB
+	colorNotFocusedHereFg    = colorLightW
+	colorNotFocusedHereBg    = colorC
+	colorFocusedNotHereFg    = colorDarkB
+	colorFocusedNotHereBg    = colorDefaultBg
+	colorNotFocusedNotHereFg = colorC
+	colorNotFocusedNotHereBg = colorDefaultBg
+	colorUrgentFg            = colorDefaultFg
+	colorUrgentBg            = colorR
 )
 
 var (
@@ -93,107 +83,48 @@ var (
 	ipRegex    = regexp.MustCompilePOSIX(ipPattern)
 	srcIPRegex = regexp.MustCompilePOSIX(srcIPPattern)
 	ssidRegex  = regexp.MustCompile("SSID: (.*?)\n")
+	screen     = os.Args[1]
 )
 
-func formatBspwmStatus(input string) string {
-	items := strings.SplitAfterN(strings.TrimPrefix(input, "W"), ":", -1)
-	result := alignLeft
+func formatHerbstluftwmStatus(input string) string {
+	items := strings.Split(strings.TrimSpace(input), "\t")
+	result := ""
 	fg := colorDefaultFg
 	bg := colorDefaultBg
-	ul := colorDefaultBg
-	onFocusedMonitor := false
-	monitorCount := 0
 	for _, v := range items {
 		switch v[:1] {
-		case "m":
-			fg = colorMonitorFg
-			bg = colorMonitorBg
-			onFocusedMonitor = false
-			monitorCount++
-
-		case "M":
-			fg = colorFocusedMonitorFg
-			bg = colorFocusedMonitorBg
-			onFocusedMonitor = true
-			monitorCount++
-
-		case "f":
-			fg = colorFreeFg
+		case ".":
+			// empty tag
 			bg = colorFreeBg
-			ul = colorFreeUl
-
-		case "F":
-			if onFocusedMonitor {
-				fg = colorFocusedFreeFg
-				bg = colorFocusedFreeBg
-				ul = colorFocusedFreeUl
-			} else {
-				fg = colorFreeFg
-				bg = colorFreeBg
-				ul = colorFreeUl
-			}
-
-		case "o":
-			fg = colorOccupiedFg
-			bg = colorOccupiedBg
-			ul = colorOccupiedUl
-
-		case "O":
-			if onFocusedMonitor {
-				fg = colorFocusedOccupiedFg
-				bg = colorFocusedOccupiedBg
-				ul = colorFocusedOccupiedUl
-			} else {
-				fg = colorOccupiedFg
-				bg = colorOccupiedBg
-				ul = colorOccupiedUl
-			}
-
-		case "u":
-			fg = colorUrgentFg
+			fg = colorFreeFg
+		case ":":
+			// occupied tag
+			bg = colorDefaultBg
+			fg = colorDefaultFg
+		case "+":
+			// viewed, here, !focused
+			bg = colorNotFocusedHereBg
+			fg = colorNotFocusedHereFg
+		case "-":
+			// viewed, !here, !focused
+			bg = colorNotFocusedNotHereBg
+			fg = colorNotFocusedNotHereFg
+		case "%":
+			// viewed, !here, focused
+			bg = colorFocusedNotHereBg
+			fg = colorFocusedNotHereFg
+		case "#":
+			// viewed, here, focused
+			bg = colorFocusedHereBg
+			fg = colorFocusedHereFg
+		case "!":
+			// urgent
 			bg = colorUrgentBg
-			ul = colorUrgentUl
-
-		case "U":
-			if onFocusedMonitor {
-				fg = colorFocusedUrgentFg
-				bg = colorFocusedUrgentBg
-				ul = colorFocusedUrgentUl
-			} else {
-				fg = colorUrgentFg
-				bg = colorUrgentBg
-				ul = colorUrgentUl
-			}
+			fg = colorUrgentFg
 		}
-		name := strings.TrimSuffix(v[1:], ":")
-		switch v[:1] {
-		case "m":
-			fallthrough
-		case "M":
-			if monitorCount > 1 {
-				result = result + "%{F" + fg + "}%{B" + bg + "}%{A:bspc monitor -f " + name + ":} " + name + " %{A}%{B-}%{F-}"
-			}
-		case "f":
-			fallthrough
-		case "F":
-			fallthrough
-		case "o":
-			fallthrough
-		case "O":
-			fallthrough
-		case "u":
-			fallthrough
-		case "U":
-			result = result + "%{F" + fg + "}%{B" + bg + "}%{U" + ul + "}%{+u}%{A:bspc desktop -f " + name + ":} " + name + " %{A}%{B-}%{F-}%{-u}"
-		case "L":
-			fallthrough
-		case "T":
-			fallthrough
-		case "G":
-			result = result + "%{F" + colorStateFg + "}%{B" + colorStateBg + "} " + name + " %{B-}%{F-}"
-		}
+		result = result + "^bg(" + bg + ")^fg(" + fg + ")^ca(1,herbstclient focus_monitor " + screen + " && herbstclient use " + v[1:] + ") " + v[1:] + " ^ca()"
 	}
-	return result
+	return result + "^bg(" + colorDefaultBg + ")^fg(" + colorDefaultFg + ")"
 }
 
 func fixed(pre string, rate int) string {
@@ -344,7 +275,7 @@ func updateTemperature(tempChan chan<- string) {
 		// Airolo:
 		// var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone2/temp")
 		// Andermatt:
-		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone1/temp")
+		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone2/temp")
 		if err != nil {
 			tempChan <- "temp unknown"
 		}
@@ -388,25 +319,51 @@ func updateMemUse(memChan chan<- string) {
 	}
 }
 
-func updateBspwmState(bspwmChan chan<- string) {
-	cmd := exec.Command("bspc", "subscribe", "report")
+func updateHerbstluftwmState(herbstluftwmChan chan<- string) {
+	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
 
 	err = cmd.Start()
 	if err != nil {
-		bspwmChan <- fmt.Sprintf("Failed to start err=%v", err)
+		herbstluftwmChan <- fmt.Sprintf("Failed to start err=%v", err)
 	}
-
 	scanner := bufio.NewScanner(out)
-
-	defer cmd.Wait()
-	for scanner.Scan() {
-		bspwmChan <- fmt.Sprint(formatBspwmStatus(scanner.Text()))
+	for ok := true; ok; ok = scanner.Scan() {
+		action := strings.Split(scanner.Text(), "\t")
+		switch action[0] {
+		default:
+			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
+			if err != nil {
+				herbstluftwmChan <- "ERROR: Failed to display tags."
+			} else {
+				herbstluftwmChan <- formatHerbstluftwmStatus(string(out))
+			}
+		}
 	}
 	if err := scanner.Err(); err != nil {
-		bspwmChan <- fmt.Sprintf("reading standard input: %v", err)
+		herbstluftwmChan <- fmt.Sprintf("reading standard input: %v", err)
 	}
 }
+
+// func updateBspwmState(bspwmChan chan<- string) {
+// 	cmd := exec.Command("bspc", "subscribe", "report")
+// 	out, err := cmd.StdoutPipe()
+
+// 	err = cmd.Start()
+// 	if err != nil {
+// 		bspwmChan <- fmt.Sprintf("Failed to start err=%v", err)
+// 	}
+
+// 	scanner := bufio.NewScanner(out)
+
+// 	defer cmd.Wait()
+// 	for scanner.Scan() {
+// 		bspwmChan <- fmt.Sprint(formatBspwmStatus(scanner.Text()))
+// 	}
+// 	if err := scanner.Err(); err != nil {
+// 		bspwmChan <- fmt.Sprintf("reading standard input: %v", err)
+// 	}
+// }
 
 func main() {
 	memChan := make(chan string)
@@ -415,34 +372,42 @@ func main() {
 	wifiChan := make(chan string)
 	ipChan := make(chan string)
 	powChan := make(chan string)
-	bspwmChan := make(chan string)
+	herbstluftwmChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan)
 	go updateWIFI(wifiChan)
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
-	go updateBspwmState(bspwmChan)
-	var status [9]string
-	status[1] = alignRight
+	go updateHerbstluftwmState(herbstluftwmChan)
+	var status [8]string
 	go func() {
 		for {
 			select {
-			case status[0] = <-bspwmChan:
-				fmt.Println(strings.Join(status[:], fieldSeparator))
-			case status[2] = <-memChan:
-			case status[3] = <-netChan:
-			case status[4] = <-tempChan:
-			case status[5] = <-wifiChan:
-			case status[6] = <-ipChan:
-			case status[7] = <-powChan:
+			case status[0] = <-herbstluftwmChan:
+				// fmt.Println(strings.Join(status[:], fieldSeparator))
+			case status[1] = <-memChan:
+			case status[2] = <-netChan:
+			case status[3] = <-tempChan:
+			case status[4] = <-wifiChan:
+			case status[5] = <-ipChan:
+			case status[6] = <-powChan:
 			}
 		}
 	}()
 	func() {
 		for {
-			status[8] = time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
-			fmt.Println(strings.Join(status[:], fieldSeparator))
+			status[7] = time.Now().Local().Format("Mon 02 Jan 15:04:05 MST")
+			rightTextOnly := strings.Join(status[2:], fieldSeparator)
+			rightTextOnlyQuoted := strconv.Quote(rightTextOnly)
+			out, err := exec.Command("textwidth", os.Args[2], rightTextOnlyQuoted).CombinedOutput()
+			if err != nil {
+				fmt.Printf("failed to exec textwidth: %v", err)
+			}
+			textWidth, _ := strconv.Atoi(strings.TrimSuffix(string(out),"\n"))
+			panelWidth, _ := strconv.Atoi(os.Args[3])
+			output := status[0] + "^pa(" + strconv.Itoa(panelWidth-textWidth) + ")" + rightTextOnly
+			fmt.Println(output)
 			// sleep until beginning of next second
 			var now = time.Now()
 			time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))
