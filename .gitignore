@@ -25,6 +25,7 @@
 .esd_auth
 .fehbg
 .gopath
+.gnupg
 .lesshst
 lib/*
 !lib/jigglyroom
