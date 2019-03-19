@@ -1,182 +1,202 @@
 {
-	"editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
-	"editor.fontSize": 15,
-	"editor.fontWeight": "400",
-	"terminal.integrated.fontSize": 15,
-	"editor.rulers": [],
-	"editor.formatOnType": true,
-	"editor.scrollBeyondLastLine": false,
-	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wordWrap": "on",
-	"editor.wrappingIndent": "same",
-	"editor.tabSize": 8,
-	"editor.insertSpaces": false,
-	"editor.renderLineHighlight": "all",
-	"editor.renderControlCharacters": true,
-	"files.trimTrailingWhitespace": true,
-	"files.autoSave": "afterDelay",
-	"editor.renderWhitespace": "none",
-	"editor.formatOnSave": false,
-	"files.associations": {
-		"*.clang-format": "yaml",
-		"autostart": "shellscript",
-		"*.npmrc": "ini",
-		"*.service": "ini",
-		"*.h": "c",
-		"*.ymp": "xml",
-		"*.network": "ini",
-		"*.link": "ini"
-	},
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/CVS": true,
-		"**/.DS_Store": true,
-		"**/._*": true,
-		"**/*.un~": true
-	},
-	"git.confirmSync": false,
-	"window.zoomLevel": 0,
-	"workbench.statusBar.visible": true,
-	"C_Cpp.formatting": "Disabled",
-	"window.menuBarVisibility": "toggle",
-	"editor.minimap.enabled": false,
-	"editor.dragAndDrop": true,
-	"editor.minimap.renderCharacters": false,
-	"terminal.external.linuxExec": "st",
-	"[html]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[json]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[jsonc]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[javascript]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[markdown]": {
-		"editor.wordWrap": "on",
-		"editor.quickSuggestions": true,
-		"editor.insertSpaces": true,
-		"editor.tabSize": 4,
-		"editor.renderWhitespace": "boundary",
-		"diffEditor.ignoreTrimWhitespace": false,
-		"editor.trimAutoWhitespace": false,
-		"files.trimTrailingWhitespace": false
-	},
-	"[python]": {
-		"editor.tabSize": 4,
-		"editor.insertSpaces": true,
-		"editor.renderWhitespace": "boundary"
-	},
-	"[scss]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[typescript]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"[vue]": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true
-	},
-	"workbench.settings.openDefaultSettings": false,
-	"clang-format.language.typescript.enable": true,
-	"clang-format.language.javascript.enable": false,
-	"editor.detectIndentation": true,
-	"typescript.tsserver.log": "verbose",
-	"debug.inlineValues": true,
-	"C_Cpp.autocomplete": "Default",
-	"C_Cpp.intelliSenseEngine": "Default",
-	"javascript.implicitProjectConfig.checkJs": true,
-	"typescript.format.enable": false,
-	"extensions.autoUpdate": false,
-	"editor.renderIndentGuides": false,
-	"editor.autoIndent": true,
-	"window.restoreWindows": "all",
-	"git.enableSmartCommit": true,
-	"markdown.preview.fontSize": 18,
-	"workbench.startupEditor": "welcomePageInEmptyWorkbench",
-	"editor.smoothScrolling": true,
-	"git.enableCommitSigning": false,
-	"explorer.decorations.badges": false,
-	"git.autofetch": true,
-	"javascript.format.enable": false,
-	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-	"standard.validate": [
-		"javascript",
-		"javascriptreact",
-		{
-			"language": "html",
-			"autoFix": true
-		},
-		{
-			"language": "vue",
-			"autoFix": true
-		}
-	],
-	"standard.options": {
-		"plugins": [
-			"vue",
-			"html"
-		]
-	},
-	"settings.cycle": [
-		{
-			"id": "colorTheme",
-			"overrideWorkspaceSettings": false,
-			"values": [
-				{
-					"workbench.colorTheme": "Qillqaq"
-				},
-				{
-					"workbench.colorTheme": "Ysgrifennwr"
-				}
-			]
-		}
-	],
-	"search.smartCase": true,
-	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-	"latex-workshop.view.pdf.viewer": "tab",
-	"standard.enable": true,
-	"standard.run": "onType",
-	"vetur.format.defaultFormatter.js": "vscode-typescript",
-	"vetur.format.defaultFormatter.ts": "vscode-typescript",
-	"vetur.validation.style": true,
-	"vetur.validation.template": true,
-	"debug.toolBarLocation": "docked",
-	"latex-workshop.message.update.show": false,
-	"workbench.list.keyboardNavigation": "filter",
-	"search.usePCRE2": true,
-	"workbench.useExperimentalGridLayout": true,
-	"latex-workshop.latex.autoBuild.run": "never",
-	"workbench.colorTheme": "Qillqaq",
-	"breadcrumbs.enabled": true,
-	"workbench.editor.highlightModifiedTabs": true,
-	"window.titleBarStyle": "native",
-	"breadcrumbs.symbolPath": "on",
-	"diffEditor.ignoreTrimWhitespace": true,
-	"window.openWithoutArgumentsInNewWindow": "off",
-	"window.openFoldersInNewWindow": "off",
-	"files.autoSaveDelay": 1001,
-	"zenMode.centerLayout": false,
-	"zenMode.hideLineNumbers": false,
-	"workbench.activityBar.visible": true,
-	"diffEditor.renderSideBySide": false,
-	"explorer.autoReveal": false,
-	"terminal.integrated.fontWeight": "500",
-	"files.enableTrash": false,
-	"workbench.settings.editor": "json",
-	"zenMode.fullScreen": true,
-	"editor.cursorSmoothCaretAnimation": true,
-	"editor.cursorStyle": "line",
-	"editor.cursorBlinking": "phase"
+  "editor.fontFamily": "IBM Plex Mono Text, SF Mono, Consolas, Menlo, Source Code Pro",
+  "editor.fontSize": 15,
+  "editor.fontWeight": "400",
+  "terminal.integrated.fontSize": 15,
+  "editor.rulers": [],
+  "editor.formatOnType": true,
+  "editor.scrollBeyondLastLine": false,
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.wordWrap": "on",
+  "editor.wrappingIndent": "same",
+  "editor.tabSize": 8,
+  "editor.insertSpaces": false,
+  "editor.renderLineHighlight": "all",
+  "editor.renderControlCharacters": true,
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "afterDelay",
+  "editor.renderWhitespace": "none",
+  "editor.formatOnSave": false,
+  "files.associations": {
+    "*.clang-format": "yaml",
+    "autostart": "shellscript",
+    "*.npmrc": "ini",
+    "*.service": "ini",
+    "*.h": "c",
+    "*.ymp": "xml",
+    "*.network": "ini",
+    "*.link": "ini"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/._*": true,
+    "**/*.un~": true
+  },
+  "git.confirmSync": false,
+  "window.zoomLevel": 0,
+  "workbench.statusBar.visible": true,
+  "C_Cpp.formatting": "Disabled",
+  "window.menuBarVisibility": "toggle",
+  "editor.minimap.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "[html]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[jsonc]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "boundary",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.trimAutoWhitespace": false,
+    "files.trimTrailingWhitespace": false
+  },
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.renderWhitespace": "boundary"
+  },
+  "[scss]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[vue]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "workbench.settings.openDefaultSettings": false,
+  "clang-format.language.typescript.enable": true,
+  "clang-format.language.javascript.enable": false,
+  "editor.detectIndentation": true,
+  "typescript.tsserver.log": "verbose",
+  "debug.inlineValues": true,
+  "C_Cpp.autocomplete": "Default",
+  "C_Cpp.intelliSenseEngine": "Default",
+  "javascript.implicitProjectConfig.checkJs": true,
+  "extensions.autoUpdate": false,
+  "editor.renderIndentGuides": false,
+  "editor.autoIndent": true,
+  "window.restoreWindows": "all",
+  "git.enableSmartCommit": true,
+  "markdown.preview.fontSize": 18,
+  "workbench.startupEditor": "welcomePageInEmptyWorkbench",
+  "editor.smoothScrolling": true,
+  "git.enableCommitSigning": false,
+  "explorer.decorations.badges": false,
+  "git.autofetch": true,
+  "javascript.format.enable": false,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "standard.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "html",
+      "autoFix": true
+    },
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "standard.options": {
+    "plugins": ["vue", "html"]
+  },
+  "settings.cycle": [
+    {
+      "id": "colorTheme",
+      "overrideWorkspaceSettings": false,
+      "values": [
+        {
+          "workbench.colorTheme": "Qillqaq"
+        },
+        {
+          "workbench.colorTheme": "Ysgrifennwr"
+        }
+      ]
+    },
+    {
+      "id": "Drag and Drop support",
+      "overrideWorkspaceSettings": true,
+      "values": [
+        {
+          "editor.dragAndDrop": false
+        },
+        {
+          "editor.dragAndDrop": true
+        }
+      ]
+    }
+  ],
+  "search.smartCase": true,
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "standard.enable": true,
+  "standard.run": "onType",
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.ts": "vscode-typescript",
+  "vetur.validation.style": true,
+  "vetur.validation.template": true,
+  "debug.toolBarLocation": "docked",
+  "latex-workshop.message.update.show": false,
+  "workbench.list.keyboardNavigation": "filter",
+  "search.usePCRE2": true,
+  "workbench.useExperimentalGridLayout": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "breadcrumbs.enabled": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "window.titleBarStyle": "native",
+  "breadcrumbs.symbolPath": "on",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "window.openWithoutArgumentsInNewWindow": "off",
+  "window.openFoldersInNewWindow": "off",
+  "files.autoSaveDelay": 1001,
+  "zenMode.centerLayout": false,
+  "zenMode.hideLineNumbers": false,
+  "workbench.activityBar.visible": true,
+  "diffEditor.renderSideBySide": false,
+  "explorer.autoReveal": false,
+  "terminal.integrated.fontWeight": "500",
+  "files.enableTrash": false,
+  "workbench.settings.editor": "ui",
+  "zenMode.fullScreen": true,
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorStyle": "line",
+  "editor.cursorBlinking": "phase",
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoClosingQuotes": "beforeWhitespace",
+  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
+  "editor.fontLigatures": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "typescript.format.enable": false,
+  "terminal.external.linuxExec": "urxvtc",
+  "git.defaultCloneDirectory": "$HOME/src",
+  "terminal.integrated.cursorBlinking": true,
+  "editor.formatOnPaste": true,
+  "editor.minimap.showSlider": "always",
+  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)"
 }

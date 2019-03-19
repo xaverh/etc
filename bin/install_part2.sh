@@ -76,12 +76,10 @@ imagemagick \
 mpv \
 newsboat \
 nnn \
-notion \
 numlockx \
 pamixer \
 pavucontrol \
 playerctl \
-polkit-gnome \
 ponymix \
 rtorrent \
 slock \
@@ -106,6 +104,7 @@ zathura-djvu \
 zathura-pdf-poppler \
 zathura-ps
 pacman -S --asdeps --needed clipnotify \
+dzen2 \
 gst-libav \
 gst-plugins-good \
 hunspell-en_US \

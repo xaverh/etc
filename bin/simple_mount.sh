@@ -14,6 +14,5 @@ result="$(udisksctl mount --block-device $chosen)"
 notify-send "$(echo -n $result)"
 mountpoint="$(echo -n ${result} | awk '{print $4}')"
 mountpoint="${mountpoint::-1}"
-program="$(echo -e "nnn\nrxvt-unicode\nrxvt-unicode + tmux\nJust put it into the clipboard." | dmenu -p "Where do you want to open ${mountpoint}?" "$@")"
-$TERMINAL -e $program $mountpoint
-``
+program="$(echo -e ":\nurxvtc -e nnn -e\nurxvtc -cd\ncode" | dmenu -p "Where do you want to open ${mountpoint}?" "$@")"
+$program $mountpoint

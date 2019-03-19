@@ -71,7 +71,7 @@ const (
 
 var (
 	netDevs = map[string]struct{}{
-		"eno1:":      {},
+		"eno1:": {},
 		// "wlp2s0:":    {},
 		"enp0s20u1:": {},
 		"ppp0:":      {},
@@ -315,7 +315,7 @@ func updateMemUse(memChan chan<- string) {
 	}
 }
 
-func updateHerbstluftwmState(herbstluftwmChan chan<- string) {
+func updateHerbstluftwmState(herbstluftwmChan chan<- string, windowTitleChan chan<- string) {
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
 
@@ -327,6 +327,14 @@ func updateHerbstluftwmState(herbstluftwmChan chan<- string) {
 	for ok := true; ok; ok = scanner.Scan() {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
+		case "focus_changed":
+			fallthrough
+		case "window_title_changed":
+			if len(action) >= 2 {
+				windowTitleChan <- fieldSeparator + action[2]
+			} else {
+				windowTitleChan <- " "
+			}
 		default:
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
 			if err != nil {
@@ -350,8 +358,8 @@ func updateTime(timeChan chan<- string) {
 	}
 }
 
-func feedDzen2(status [6]string) {
-	rightTextOnly := strings.TrimSpace(strings.Join(status[1:], fieldSeparator))
+func feedDzen2(status [7]string) {
+	rightTextOnly := strings.TrimSpace(strings.Join(status[2:], fieldSeparator))
 	rightTextOnlyQuoted := strconv.Quote(rightTextOnly)
 	out, err := exec.Command("textwidth", os.Args[2], rightTextOnlyQuoted).CombinedOutput()
 	if err != nil {
@@ -360,7 +368,7 @@ func feedDzen2(status [6]string) {
 	textWidth, _ := strconv.Atoi(strings.TrimSuffix(string(out), "\n"))
 	panelWidth, _ := strconv.Atoi(os.Args[3])
 	// the magic number 5 below moves output slightly to right
-	output := status[0] + "^pa(" + strconv.Itoa(panelWidth-textWidth+5) + ")" + rightTextOnly
+	output := status[0] + fieldSeparator + "|" + fieldSeparator + status[1] + "^pa(" + strconv.Itoa(panelWidth-textWidth+5) + ")" + rightTextOnly
 	fmt.Println(output)
 }
 
@@ -372,6 +380,7 @@ func main() {
 	ipChan := make(chan string)
 	// powChan := make(chan string)
 	herbstluftwmChan := make(chan string)
+	windowTitleChan := make(chan string)
 	timeChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
@@ -379,21 +388,23 @@ func main() {
 	// go updateWIFI(wifiChan)
 	go updateIPAdress(ipChan)
 	// go updatePower(powChan)
-	go updateHerbstluftwmState(herbstluftwmChan)
+	go updateHerbstluftwmState(herbstluftwmChan, windowTitleChan)
 	go updateTime(timeChan)
-	var status [6]string
+	var status [7]string
 	for {
 		select {
 		case status[0] = <-herbstluftwmChan:
 			feedDzen2(status)
-		case status[5] = <-timeChan:
+		case status[1] = <-windowTitleChan:
 			feedDzen2(status)
-		case status[1] = <-memChan:
-		case status[2] = <-netChan:
-		case status[3] = <-tempChan:
+		case status[6] = <-timeChan:
+			feedDzen2(status)
+		case status[2] = <-memChan:
+		case status[3] = <-netChan:
+		case status[4] = <-tempChan:
 		// case status[4] = <-wifiChan:
-		case status[4] = <-ipChan:
-		// case status[6] = <-powChan:
+		case status[5] = <-ipChan:
+			// case status[6] = <-powChan:
 		}
 	}
 }
