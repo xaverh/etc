@@ -2,6 +2,8 @@
 # ~/.bash_profile
 #
 
+test -z "$PROFILEREAD" && . /etc/profile || true
+
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
