@@ -28,13 +28,15 @@ iwd
 pacman -S --asdeps --needed crda
 
 # Common:
+# ?
 pacman -S alsa-utils \
 asp \
+# ?
 bind-tools \
 exfat-utils \
 git \
 lzip \
-lzop \
+# not on suse
 mac \
 ncdu \
 neofetch \
@@ -43,18 +45,24 @@ openvpn \
 p7zip \
 pacman-contrib \
 pulseaudio \
+# ?
 pulseaudio-alsa \
+# not on SuSE
 rmlint \
+# not on SuSE
 rtmpdump \
 rsync \
+# ?
 speech-dispatcher \
-stow \
+# ?
 udisks2 \
 unrar \
 unzip \
+# ? anything cURL cannot do?
 wget
 pacman -S --asdeps --needed python-neovim \
 ntfs-3g \
+# ?
 x11-ssh-askpass
 
 # desktop:
@@ -64,80 +72,103 @@ adobe-source-han-serif-otc-fonts \
 adobe-source-sans-pro-fonts \
 adobe-source-serif-pro-fonts \
 autocutsel \
-bc \
+# not on suse
 clipmenu \
 dmenu \
 dunst \
 firefox-developer-edition \
 gimp \
 herbstluftwm \
-hsetroot \
 imagemagick \
 mpv \
 newsboat \
 nnn \
+# ?
 numlockx \
 pamixer \
 pavucontrol \
 playerctl \
-ponymix \
 rtorrent \
+# ?
 slock \
 sxiv \
 telegram-desktop \
+# not on SuSE
 ttf-ibm-plex \
+# ?
 ttf-linux-libertine \
 weechat \
+# ?
 wqy-microhei \
 xclip \
 xorg \
+# not on SuSE
 xorg-apps \
 xorg-fonts \
 xorg-server \
+# not on SuSE
 xorg-xfd \
+# not on SuSE
 xorg-xfontsel \
+# not on SuSE
 xorg-xinit \
+# not on SuSE
 xorg-xlsfonts \
 youtube-dl \
 zathura-cb \
 zathura-djvu \
 zathura-pdf-poppler \
 zathura-ps
+# not on SuSE
 pacman -S --asdeps --needed clipnotify \
 dzen2 \
+# ?
 gst-libav \
+# ?
 gst-plugins-good \
+# ?
 hunspell-en_US \
+# ?
 libheif \
+# ?
 libraw \
+# ?
 poppler-data \
+# ?
 python-pycryptodome \
+# ?
 ttf-opensans
-# autocutsel?
 
 # software development:
 pacman -S biber \
 clang \
 cmake \
+# ?
 gdb \
 go \
+# ?
 go-tools \
 llvm \
+# ?
 lua \
 nodejs \
 pandoc \
 texlive-most \
+# ?
 tokei \
+# ?
 valgrind
 pacman -S --asdeps --needed npm \
+# ?
 openmp \
-pandoc-citeproc \
+# ?
 pandoc-crossref
 
 # other:
 pacman -S mpc \
 mpd \
 ncmpcpp \
+# not on SuSE
 rawtherapee \
 steam
 pacman -S --asdeps --needed gst-plugins-bad \
@@ -149,6 +180,7 @@ steam-native-runtime
 
 # DVD?
 pacman -S dvd+rw-tools
+# not on SuSE
 pacman -S  --asdeps --needed libdvdcss
 
 localectl set-locale LANG=en_US.UTF-8
