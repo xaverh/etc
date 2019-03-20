@@ -133,6 +133,8 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
+  Freenode = { type = "IRC"; };
+  OFTC = { type = "IRC"; };
 };
 
 channels = (
