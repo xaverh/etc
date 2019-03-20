@@ -26,6 +26,7 @@
 .fehbg
 .gopath
 .gnupg
+.irssi/irssi.pem
 .lesshst
 lib/*
 !lib/jigglyroom
@@ -48,8 +49,5 @@ tmp
 *.un~
 var
 .vscode
-.weechat/certs/
-*.weechatlog
-.weechat/sec.conf
 .wget-hsts
 .Xauthority
