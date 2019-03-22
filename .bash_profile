@@ -18,14 +18,15 @@ export SSH_AUTH_SOCK
 GOPATH="$HOME/.gopath/"
 export GOPATH
 
+export MAN_POSIXLY_CORRECT=1
 export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
-export TERMINAL=urxvtc
+export TERMINAL=urxvtc-256color
 export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp > ~/.xorg.log 2>&1
 
-(( EUID != 0 )) && umask 0077
+# (( EUID != 0 )) && umask 0077
 

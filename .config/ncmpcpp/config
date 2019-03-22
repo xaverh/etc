@@ -96,7 +96,8 @@ visualizer_in_stereo = yes
 visualizer_type = wave
 #
 # visualizer_look = ♫█
-visualizer_look = ●█
+# visualizer_look = *█
+visualizer_look = "*#"
 progressbar_look = "██"
 #
 #progressbar_boldness = yes

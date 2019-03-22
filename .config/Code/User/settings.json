@@ -186,7 +186,7 @@
   "editor.cursorBlinking": "phase",
   "editor.autoClosingBrackets": "beforeWhitespace",
   "editor.autoClosingQuotes": "beforeWhitespace",
-  "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
+  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
   "editor.fontLigatures": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
@@ -198,5 +198,6 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Monokai Pro (Filter Machine)"
+  "workbench.colorTheme": "Qillqaq",
+  "C_Cpp.updateChannel": "Insiders"
 }
