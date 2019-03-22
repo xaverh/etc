@@ -6,7 +6,7 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-x11-ssh-askpass*font:                   -sgi-screen-medium-r-*-*-13-*-*-*-*-*-*-*
+x11-ssh-askpass*font:                   -sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1
 x11-ssh-askpass*background:             #000000
 x11-ssh-askpass*foreground:             #ffffff
 x11-ssh-askpass.Button*background:      #000000
@@ -16,47 +16,74 @@ x11-ssh-askpass*topShadowColor:         #000000
 x11-ssh-askpass*bottomShadowColor:      #000000
 x11-ssh-askpass.*borderWidth:           1
 
-URxvt.intensityStyles: true
+URxvt.intensityStyles: true2
 URxvt*geometry: 80x24
 URxvt*scrollBar: false
-! URxvt*letterSpace: -1
-URxvt*font: -sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1
-URxvt*boldFont: -sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1
-! URxvt*font: xft:IBM Plex Mono Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*italicFont: xft:IBM Plex Mono Text:style=Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*letterSpace: -1
+! URxvt*font: -sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1
+! URxvt*boldFont: -sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1
+URxvt*font: xft:IBM Plex Mono Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*italicFont: xft:IBM Plex Mono Text:style=Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
 URxvt.internalBorder:  15
 URxvt.inheritPixmap: false
 URxvt.transparent: false
 URxvt.visualBell: false
-URxvt.saveLines: 10000
+URxvt.saveLines: 0
 URxvt.fading: 10
 URxvt.cursorBlink: 1
 
 ! Qillqaq:
-URxvt.background:         #1E1E1E
-URxvt.color0:             #1E1E1E
-URxvt.color1:             #E32791
-URxvt.color2:             #30C798
-URxvt.color3:             #E3C472
-URxvt.color4:             #6769E6
-URxvt.color5:             #E59FDF
-URxvt.color6:             #81D8D0
-URxvt.color7:             #969696
-URxvt.color8:             #515151
-URxvt.color9:             #E466AD
-URxvt.color10:            #6CD1B2
-URxvt.color11:            #E4CF98
-URxvt.color12:            #9091E6
-URxvt.color13:            #E5B6E1
-URxvt.color14:            #A2DCD7
-URxvt.color15:            #E5E6E6
-URxvt.foreground:         #E5E6E6
-URxvt.cursorColor:        #20BBFC
-URxvt.cursorColor2:       #1E1E1E
-URxvt.highlightColor: [26]#E5E6E6
-URxvt.fadeColor:          #1E1E1E
+URxvt.background:             #1E1E1E
+URxvt.color0:                 #1E1E1E
+URxvt.color1:                 #E32791
+URxvt.color2:                 #30C798
+URxvt.color3:                 #E3C472
+URxvt.color4:                 #6769E6
+URxvt.color5:                 #E59FDF
+URxvt.color6:                 #81D8D0
+URxvt.color7:                 #969696
+URxvt.color8:                 #515151
+URxvt.color9:                 #E466AD
+URxvt.color10:                #6CD1B2
+URxvt.color11:                #E4CF98
+URxvt.color12:                #9091E6
+URxvt.color13:                #E5B6E1
+URxvt.color14:                #A2DCD7
+URxvt.color15:                #E5E6E6
+URxvt.foreground:             #E5E6E6
+URxvt.cursorColor:            #20BBFC
+URxvt.cursorColor2:           #1E1E1E
+URxvt.highlightColor:     [50]#E5E6E6
+URxvt.highlightTextColor: [80]#1E1E1E
+URxvt.fadeColor:              #1E1E1E
+
+
+! ! Ysgrifennwr:
+! URxvt.background:             #F9F8F4
+! URxvt.color0:                 #F9F8F4
+! URxvt.color1:                 #E32791
+! URxvt.color2:                 #488432
+! URxvt.color3:                 #A25D0E
+! URxvt.color4:                 #2C65B5
+! URxvt.color5:                 #B062A7
+! URxvt.color6:                 #27BBBE
+! URxvt.color7:                 #999999
+! URxvt.color8:                 #B8B8B8
+! URxvt.color9:                 #9F1B66
+! URxvt.color10:                #325D23
+! URxvt.color11:                #71410A
+! URxvt.color12:                #1F477F
+! URxvt.color13:                #7B4474
+! URxvt.color14:                #1B8486
+! URxvt.color15:                #424242
+! URxvt.foreground:             #424242
+! URxvt.cursorColor:            #20BBFC
+! URxvt.cursorColor2:           #424242
+! URxvt.highlightColor:     [80]#999999
+! URxvt.highlightTextColor: [80]#F9F8F4
+! URxvt.fadeColor:              #424242
 
 ! ! Ristretto
 ! *.background: #2c2525

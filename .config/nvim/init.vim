@@ -89,7 +89,7 @@ set smarttab
 set softtabstop=0
 set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ %l\ \ \ Column:\ %v\ \ \ %p%%
 set tabstop=4
-set textwidth=80
+set textwidth=0
 set timeoutlen=1000
 set title
 " set ttymouse=urxvt

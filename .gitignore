@@ -29,6 +29,7 @@
 .irssi/irssi.pem
 .lesshst
 lib/*
+!lib/bar
 !lib/jigglyroom
 .local/*
 !.local/share/applications/mimeapps.list

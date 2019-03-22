@@ -2,10 +2,7 @@
 
 herbstclient emit_hook reload
 
-
-
 test -x ~/.fehbg && ~/.fehbg &
-
 
 # remove all existing keybindings
 herbstclient keyunbind --all
@@ -16,7 +13,8 @@ dmenu_options=" -m 0 -f -i -fn "$bar_font" -nb \"#1E1E1E\" -nf \"#E5E6E6\" -sb \
 herbstclient keybind Mod4-Shift-q quit
 herbstclient keybind Mod4-Shift-r reload
 herbstclient keybind Mod4-q close_or_remove
-herbstclient keybind Mod4-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
+herbstclient keybind Mod4-Return spawn urxvtc-256color -e tmux
+herbstclient keybind Mod4-Shift-Return spawn ${TERMINAL:-xterm} # use your $TERMINAL with xterm as fallback
 herbstclient keybind Mod4-space spawn sh -c "dmenu_recent $dmenu_options"
 
 # windows
@@ -68,8 +66,8 @@ herbstclient keybind Mod4-t                                                     
 herbstclient set default_frame_layout 2
 
 # tags
-tag_names=( eins zwei drei vier fünf null )
-tag_keys=( {1..5} 0 )
+tag_names=( eins zwei drei vier fünf logs )
+tag_keys=( {1..9} 0 )
 
 herbstclient rename default "${tag_names[0]}" || true
 for i in ${!tag_names[@]} ; do
@@ -82,13 +80,14 @@ for i in ${!tag_names[@]} ; do
 done
 
 # herbstclient keybind Mod4-Shift-space spawn sh -c "command=herbstclient list_commands | dmenu  -p "Run herbstclient command:
-# Another idea: Create workspaces with dmenu
+# Another idea: Create workspaces and go there with dmenu
 
 herbstclient keybind Mod4-period use_index +1 --skip-visible
 herbstclient keybind Mod4-comma  use_index -1 --skip-visible
 
 # mouse
 herbstclient mouseunbind --all
+# why do these only work in floating mode?
 herbstclient mousebind Mod4-Button1 move
 herbstclient mousebind Mod4-Button2 zoom
 herbstclient mousebind Mod4-Button3 resize
@@ -140,10 +139,11 @@ herbstclient keybind XF86AudioRaiseVolume spawn sh -c 'pamixer --unmute && pamix
 herbstclient keybind XF86AudioLowerVolume spawn sh -c 'pamixer --unmute && pamixer --decrease 5 && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
 herbstclient keybind Mod4+KP_End spawn sh -c 'mpc pause-if-playing && notify-send -t 500 "pause" || (mpc play && notify-send -t 2000 "Playing: `mpc current`")'
 herbstclient keybind XF86AudioPlay spawn sh -c 'mpc pause-if-playing && notify-send -t 500 "pause" || (mpc play && notify-send -t 2000 "Playing: `mpc current`")'
-herbstclient keybind Mod4+KP_Multiply spawn sh -c 'mpc next && notify-send -t 1000 "Playing: `mpc current`"'
-herbstclient keybind XF86AudioNext spawn sh -c 'mpc next && notify-send -t 1000 "Playing: `mpc current`"'
-herbstclient keybind Mod4+KP_Divide spawn sh -c 'mpc prev && notify-send -t 1000 "Playing: `mpc current`"'
-herbstclient keybind XF86AudioPrev spawn sh -c 'mpc prev && notify-send -t 1000 "Playing: `mpc current`"'
+herbstclient keybind Mod4+KP_Multiply spawn sh -c 'mpc next && notify-send -t 1500 "Playing: `mpc current`"'
+herbstclient keybind XF86AudioNext spawn sh -c 'mpc next && notify-send -t 1500 "Playing: `mpc current`"'
+herbstclient keybind Mod4+KP_Divide spawn sh -c 'mpc prev && notify-send -t 1500 "Playing: `mpc current`"'
+herbstclient keybind XF86AudioPrev spawn sh -c 'mpc prev && notify-send -t 1500 "Playing: `mpc current`"'
+herbstclient keybind Mod4+KP_Begin spawn sh -c 'notify-send -t 3000 "Playing: `mpc current`"'
 
 herbstclient keybind Mod4+Insert spawn sh -c "clipmenu $dmenu_options"
 herbstclient keybind Mod4+Home spawn sh -c "clipmenu-url"
@@ -159,7 +159,7 @@ herbstclient rule focus=on # normally focus new clients
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-herbstclient rule class=URxvt instance=journalctl tag=null
+herbstclient rule class=URxvt instance=journalctl tag=logs
 herbstclient rule class=URxvt instance=ncmpcpp tag=vier
 
 herbstclient set tree_style '╾│ ├└╼─┐'
@@ -182,9 +182,9 @@ done
 
 # autostart stuff only once, not every reload
 if herbstclient silent new_attr bool my_not_first_autostart ; then
-    urxvtd -q -o -f
+    urxvtd-256color -q -o -f
     herbstclient spawn dunst
-    urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
+    urxvtc-256color -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
     # workaround (cf. https://herbstluftwm.org/faq.html#_q_i_set_default_frame_layout_to_my_favorite_layout_but_it_doesn_8217_t_work_with_the_root_frame_existing_frames)
     herbstclient split vertical 0.5; herbstclient remove
 fi

@@ -1,0 +1,36 @@
+{
+  "modules": [
+    "herbstluftwmStatus",
+    "memoryUsage",
+    "networkThroughput",
+    "cpuTemperature",
+    "ipAddress",
+    "dateAndTime"
+  ],
+  "bar": "lemonbar",
+  "networkDevices": ["eno1", "ppp0"],
+  "fahrenheit": false,
+  "thermalZone": 1,
+  "dateAndTimeFormat": "Mon 02 Jan 15:04:05 MST",
+  "font": "",
+  "panelWidth": 1920,
+  "separatorWorkspaces": "   ",
+  "separatorRight": "  ",
+  "separatorLeft": "   |   ",
+  "colors": {
+    "DefaultFg": "#E5E6E6",
+    "DefaultBg": "#1E1E1E",
+    "FreeFg": "#969696",
+    "FreeBg": "#1E1E1E",
+    "FocusedHereFg": "#E5E6E6",
+    "FocusedHereBg": "#005577",
+    "NotFocusedHereFg": "#E5E6E6",
+    "NotFocusedHereBg": "#81D8D0",
+    "FocusedNotHereFg": "#005577",
+    "FocusedNotHereBg": "#1E1E1E",
+    "NotFocusedNotHereFg": "#81D8D0",
+    "NotFocusedNotHereBg": "#1E1E1E",
+    "UrgentFg": "#E5E6E6",
+    "UrgentBg": "#E32791"
+  }
+}
