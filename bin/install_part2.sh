@@ -28,21 +28,24 @@ iwd
 pacman -S --asdeps --needed crda
 
 # Common:
-# ?
+# ? ## ?
 pacman -S alsa-utils \
+# not on openSUSE ## not on Fedora
 asp \
-# ?
+# ? ## not on Fedora
 bind-tools \
 exfat-utils \
 git \
+## ?
 lzip \
-# not on suse
+# not on suse ## ?
 mac \
 ncdu \
-neofetch \
 openssh \
 openvpn \
+## ?
 p7zip \
+# not on openSUSE ## not on Fedora
 pacman-contrib \
 pulseaudio \
 # ?
@@ -168,6 +171,7 @@ pandoc-crossref
 pacman -S mpc \
 mpd \
 ncmpcpp \
+neofetch \
 # not on SuSE
 rawtherapee \
 steam
