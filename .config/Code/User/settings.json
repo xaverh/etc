@@ -25,7 +25,8 @@
     "*.h": "c",
     "*.ymp": "xml",
     "*.network": "ini",
-    "*.link": "ini"
+    "*.link": "ini",
+    "fonts-config": "properties"
   },
   "files.exclude": {
     "**/.git": true,
@@ -186,7 +187,7 @@
   "editor.cursorBlinking": "phase",
   "editor.autoClosingBrackets": "beforeWhitespace",
   "editor.autoClosingQuotes": "beforeWhitespace",
-  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
+  "workbench.iconTheme": "Monokai Pro Icons",
   "editor.fontLigatures": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
@@ -198,6 +199,6 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
+  "workbench.colorTheme": "Monokai Pro",
   "C_Cpp.updateChannel": "Insiders"
 }

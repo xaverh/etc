@@ -316,6 +316,6 @@ settings = {
     nick = "hellauer";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { autolog = "yes"; theme = "weed"; };
+  "fe-common/core" = { autolog = "yes"; theme = " "; };
 };
 logs = { };
