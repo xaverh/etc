@@ -52,35 +52,43 @@ pulseaudio \
 pulseaudio-alsa \
 # not on SuSE
 rmlint \
-# not on SuSE
+# not on SuSE ## ?
 rtmpdump \
 rsync \
-# ?
+# ? ## ?
 speech-dispatcher \
-# ?
+# ? ## ?
 udisks2 \
 unrar \
 unzip \
-# ? anything cURL cannot do?
+# ? anything cURL cannot do? ## ?
 wget
+## ?
 pacman -S --asdeps --needed python-neovim \
 ntfs-3g \
-# ?
+# ? ## ?
 x11-ssh-askpass
 
 # desktop:
+## ?
 pacman -S adobe-source-code-pro-fonts \
+## ?
 adobe-source-han-sans-otc-fonts \
+## ?
 adobe-source-han-serif-otc-fonts \
+## ?
 adobe-source-sans-pro-fonts \
+## ?
 adobe-source-serif-pro-fonts \
+## ?
 autocutsel \
-# not on suse
+# not on suse ## ?
 clipmenu \
 dmenu \
 dunst \
-firefox-developer-edition \
+firefox \
 gimp \
+## ?
 herbstluftwm \
 imagemagick \
 mpv \
@@ -88,71 +96,63 @@ newsboat \
 nnn \
 # ?
 numlockx \
+## not on Fedora
 pamixer \
 pavucontrol \
+# not on Fedora
 playerctl \
 rtorrent \
-# ?
+# ? ## ?
 slock \
 sxiv \
 telegram-desktop \
-# not on SuSE
+# not on SuSE ## ?
 ttf-ibm-plex \
-# ?
+# ? ## ?
 ttf-linux-libertine \
 weechat \
-# ?
+# ? ## ?
 wqy-microhei \
 xclip \
 xorg \
-# not on SuSE
+# not on SuSE ## ?
 xorg-apps \
+## ?
 xorg-fonts \
+## ?
 xorg-server \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xfd \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xfontsel \
-# not on SuSE
+# not on SuSE ## ?
 xorg-xinit \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xlsfonts \
 youtube-dl \
 zathura-cb \
 zathura-djvu \
 zathura-pdf-poppler \
 zathura-ps
-# not on SuSE
+# not on SuSE ## ?
 pacman -S --asdeps --needed clipnotify \
-dzen2 \
-# ?
+# ? ## ?
 gst-libav \
-# ?
+# ? ## ?
 gst-plugins-good \
-# ?
+# ? ## ?
 hunspell-en_US \
-# ?
+# ? ## ?
 libheif \
-# ?
+# ? ## ?
 libraw \
-# ?
-poppler-data \
-# ?
-python-pycryptodome \
-# ?
-ttf-opensans
+# ? ## ?
+python-pycryptodome
 
 # software development:
 pacman -S biber \
 clang \
-cmake \
-# ?
-gdb \
 go \
-# ?
-go-tools \
-llvm \
-# ?
 lua \
 nodejs \
 pandoc \
@@ -162,16 +162,15 @@ tokei \
 # ?
 valgrind
 pacman -S --asdeps --needed npm \
-# ?
+# ? ## ?
 openmp \
-# ?
+# ? ## ?
 pandoc-crossref
 
 # other:
 pacman -S mpc \
 mpd \
 ncmpcpp \
-neofetch \
 # not on SuSE
 rawtherapee \
 steam
