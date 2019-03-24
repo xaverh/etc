@@ -22,7 +22,7 @@ export MAN_POSIXLY_CORRECT=1
 export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
-export TERMINAL=urxvtc-256color
+export TERMINAL=urxvt256c-mlc
 export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:

@@ -4,10 +4,10 @@
 
 # terminal emulator
 super + Return
-	urxvtc
+	$TERMINAL
 
 super + shift + Return
-	urxvtc -e tmux
+	$TERMINAL -e tmux
 
 # program launcher
 super + space

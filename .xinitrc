@@ -25,4 +25,4 @@ fi
 
 numlockx &
 
-exec herbstluftwm 2> /tmp/herbstluftwm.log
+exec bspwm
