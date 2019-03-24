@@ -28,56 +28,67 @@ iwd
 pacman -S --asdeps --needed crda
 
 # Common:
-# ?
+# ? ## ?
 pacman -S alsa-utils \
+# not on openSUSE ## not on Fedora
 asp \
-# ?
+# ? ## not on Fedora
 bind-tools \
 exfat-utils \
 git \
+## ?
 lzip \
-# not on suse
+# not on suse ## ?
 mac \
 ncdu \
-neofetch \
 openssh \
 openvpn \
+## ?
 p7zip \
+# not on openSUSE ## not on Fedora
 pacman-contrib \
 pulseaudio \
 # ?
 pulseaudio-alsa \
 # not on SuSE
 rmlint \
-# not on SuSE
+# not on SuSE ## ?
 rtmpdump \
 rsync \
-# ?
+# ? ## ?
 speech-dispatcher \
-# ?
+# ? ## ?
 udisks2 \
 unrar \
 unzip \
-# ? anything cURL cannot do?
+# ? anything cURL cannot do? ## ?
 wget
+## ?
 pacman -S --asdeps --needed python-neovim \
 ntfs-3g \
-# ?
+# ? ## ?
 x11-ssh-askpass
 
 # desktop:
+## ?
 pacman -S adobe-source-code-pro-fonts \
+## ?
 adobe-source-han-sans-otc-fonts \
+## ?
 adobe-source-han-serif-otc-fonts \
+## ?
 adobe-source-sans-pro-fonts \
+## ?
 adobe-source-serif-pro-fonts \
+## ?
 autocutsel \
-# not on suse
+# not on suse ## ?
 clipmenu \
 dmenu \
 dunst \
-firefox-developer-edition \
+firefox \
 gimp \
+## ?
 herbstluftwm \
 imagemagick \
 mpv \
@@ -85,71 +96,63 @@ newsboat \
 nnn \
 # ?
 numlockx \
+## not on Fedora
 pamixer \
 pavucontrol \
+# not on Fedora
 playerctl \
 rtorrent \
-# ?
+# ? ## ?
 slock \
 sxiv \
 telegram-desktop \
-# not on SuSE
+# not on SuSE ## ?
 ttf-ibm-plex \
-# ?
+# ? ## ?
 ttf-linux-libertine \
 weechat \
-# ?
+# ? ## ?
 wqy-microhei \
 xclip \
 xorg \
-# not on SuSE
+# not on SuSE ## ?
 xorg-apps \
+## ?
 xorg-fonts \
+## ?
 xorg-server \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xfd \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xfontsel \
-# not on SuSE
+# not on SuSE ## ?
 xorg-xinit \
-# not on SuSE
+# not on SuSE ## not on Fedora
 xorg-xlsfonts \
 youtube-dl \
 zathura-cb \
 zathura-djvu \
 zathura-pdf-poppler \
 zathura-ps
-# not on SuSE
+# not on SuSE ## ?
 pacman -S --asdeps --needed clipnotify \
-dzen2 \
-# ?
+# ? ## ?
 gst-libav \
-# ?
+# ? ## ?
 gst-plugins-good \
-# ?
+# ? ## ?
 hunspell-en_US \
-# ?
+# ? ## ?
 libheif \
-# ?
+# ? ## ?
 libraw \
-# ?
-poppler-data \
-# ?
-python-pycryptodome \
-# ?
-ttf-opensans
+# ? ## ?
+python-pycryptodome
 
 # software development:
 pacman -S biber \
 clang \
-cmake \
-# ?
-gdb \
 go \
-# ?
-go-tools \
-llvm \
-# ?
 lua \
 nodejs \
 pandoc \
@@ -159,9 +162,9 @@ tokei \
 # ?
 valgrind
 pacman -S --asdeps --needed npm \
-# ?
+# ? ## ?
 openmp \
-# ?
+# ? ## ?
 pandoc-crossref
 
 # other:
@@ -171,6 +174,7 @@ ncmpcpp \
 # not on SuSE
 rawtherapee \
 steam
+## ?
 pacman -S --asdeps --needed gst-plugins-bad \
 gst-plugins-base \
 lib32-libpulse \
@@ -178,8 +182,6 @@ steam-native-runtime
 
 # pacman -S aria2 cmatrix darktable iperf3 libopenraw lolcat ttyload
 
-# DVD?
-pacman -S dvd+rw-tools
 # not on SuSE
 pacman -S  --asdeps --needed libdvdcss
 
@@ -200,7 +202,7 @@ sudo cp $HOME/etc/nsswitch.conf /etc/nsswitch.conf
 
 systemctl enable --now systemd-resolved
 systemctl enable --now systemd-networkd
-systemctl enable --now avahi-daemon
+dvd+rw-toolssystemctl enable --now avahi-daemon
 
 # wireless?
 sudo cp $HOME/etc/systemd/network/wireless.network /etc/systemd/network/wireless.network
