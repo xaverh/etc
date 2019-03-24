@@ -1,3 +1,0 @@
-[submodule "lib/bar"]
-	path = lib/bar
-	url = git@github.com:krypt-n/bar.git
