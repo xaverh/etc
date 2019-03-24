@@ -174,6 +174,7 @@ ncmpcpp \
 # not on SuSE
 rawtherapee \
 steam
+## ?
 pacman -S --asdeps --needed gst-plugins-bad \
 gst-plugins-base \
 lib32-libpulse \
@@ -181,8 +182,6 @@ steam-native-runtime
 
 # pacman -S aria2 cmatrix darktable iperf3 libopenraw lolcat ttyload
 
-# DVD?
-pacman -S dvd+rw-tools
 # not on SuSE
 pacman -S  --asdeps --needed libdvdcss
 
@@ -203,7 +202,7 @@ sudo cp $HOME/etc/nsswitch.conf /etc/nsswitch.conf
 
 systemctl enable --now systemd-resolved
 systemctl enable --now systemd-networkd
-systemctl enable --now avahi-daemon
+dvd+rw-toolssystemctl enable --now avahi-daemon
 
 # wireless?
 sudo cp $HOME/etc/systemd/network/wireless.network /etc/systemd/network/wireless.network
