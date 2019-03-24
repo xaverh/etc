@@ -1,6 +1,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 test -d ~/.bash_hist/ || mkdir ~/.bash_hist/
 if [ ! -f ~/.bash_hist/`date +%Y-%m` ]; then
 	# https://stackoverflow.com/questions/13168463/using-date-command-to-get-previous-current-and-next-month
@@ -25,7 +30,9 @@ export HISTFILESIZE=""
 
 set +o braceexpand emacs hashall histexpand history interactive-comments monitor
 set -o allexport errexit errtrace functrace ignoreeof keyword noclobber noexec noglob nolog notify nounset physical pipefail posix privileged verbose vi xtrace
-shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 compat44 dirspell dotglob execfail extdebug failglob globasciiranges gnu_errfmt lastpipe inherit_errexit lithist localvar_inherit localvar_unset mailwarn no_empty_cmd_completion nocaseglob nocasematch nullglob progcomp_alias restricted_shell shift_verbose xpg_echo
+shopt -u checkhash compat31 compat32 compat40 compat41 compat42 compat43 dirspell dotglob execfail extdebug failglob globasciiranges gnu_errfmt lastpipe inherit_errexit lithist mailwarn no_empty_cmd_completion nocaseglob nocasematch nullglob restricted_shell shift_verbose xpg_echo
+## bash v5
+# shopt -u compat44 localvar_inherit localvar_unset progcomp_alias
 shopt -s autocd cdable_vars cdspell checkjobs checkwinsize cmdhist complete_fullquote direxpand expand_aliases extglob extquote force_fignore globstar histappend histreedit histverify hostcomplete interactive_comments progcomp promptvars sourcepath
 
 # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
