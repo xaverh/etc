@@ -1,22 +1,8 @@
-# COLOR needs one of these arguments: 'tty' colorizes output to ttys, but not
-# pipes. 'all' adds color characters to all output. 'none' shuts colorization
-# off.
 COLOR tty
 
-# Below, there should be one TERM entry for each termtype that is colorizable
 TERM ansi
-TERM color_xterm
-TERM color-xterm
-TERM con132x25
-TERM con132x30
-TERM con132x43
-TERM con132x60
-TERM con80x25
-TERM con80x28
-TERM con80x30
-TERM con80x43
-TERM con80x50
-TERM con80x60
+TERM *color*
+TERM con[0-9]*x[0-9]*
 TERM cons25
 TERM console
 TERM cygwin
@@ -28,381 +14,232 @@ TERM eterm-color
 TERM fbterm
 TERM gnome
 TERM gnome-256color
+TERM hurd
 TERM jfbterm
 TERM konsole
 TERM konsole-256color
 TERM kterm
 TERM linux
 TERM linux-c
-TERM mach-color
 TERM mlterm
-TERM nxterm
 TERM putty
 TERM putty-256color
-TERM rxvt
-TERM rxvt-256color
-TERM rxvt-cygwin
-TERM rxvt-cygwin-native
+TERM rxvt*
 TERM rxvt-unicode
+TERM rxvt-256color
 TERM rxvt-unicode256
-TERM rxvt-unicode-256color
-TERM screen
-TERM screen-16color
-TERM screen-16color-bce
-TERM screen-16color-s
-TERM screen-16color-bce-s
+TERM screen*
 TERM screen-256color
-TERM screen-256color-bce
-TERM screen-256color-s
-TERM screen-256color-bce-s
-TERM screen-bce
-TERM screen-w
-TERM screen.linux
-TERM screen.xterm-new
 TERM st
-TERM st-meta
 TERM st-256color
-TERM st-meta-256color
-TERM tmux
+TERM terminator
+TERM tmux*
 TERM tmux-256color
 TERM vt100
-TERM xterm
-TERM xterm-new
-TERM xterm-16color
-TERM xterm-256color
-TERM xterm-88color
+TERM xterm*
 TERM xterm-color
-TERM xterm-debian
-TERM xterm-termite
+TERM xterm-88color
+TERM xterm-256color
 
-# EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
-EIGHTBIT 1
-
-### By file type
-
-# global default
+#+-----------------+
+#+ Global Defaults +
+#+-----------------+
 NORMAL 00
-# normal file
+RESET 0
+
 FILE 00
-# directory
-DIR 36
-# symbolic link
-LINK 35
+DIR 01;34
+LINK 36
+MULTIHARDLINK 04;36
 
-# pipe, socket, block device, character device (blue bg)
-FIFO 31;100
-SOCK 35;100
-DOOR 35;100 # Solaris 2.5 and later
-BLK  33;100
-CHR  37;100
+FIFO 04;01;36
+SOCK 04;33
+DOOR 04;01;36
+BLK 01;33
+CHR 33
 
+ORPHAN 31
+MISSING 01;37;41
 
-#############################################################################
-### By file attributes
+EXEC 01;36
 
-# Orphaned symlinks (blinking white on red)
-# Blink may or may not work (works on iTerm dark or light, and Putty dark)
-ORPHAN  05;37;41
-# ... and the files that orphaned symlinks point to (blinking white on red)
-MISSING 05;37;41
+SETUID 01;04;37
+SETGID 01;04;37
+CAPABILITY 01;37
 
-# files with execute permission
-EXEC 01;31  # Unix
-.cmd 01;31  # Win
-.exe 01;31  # Win
-.com 01;31  # Win
-.bat 01;31  # Win
-.reg 01;31  # Win
-.app 01;31  # OSX
+STICKY_OTHER_WRITABLE 01;37;44
+OTHER_WRITABLE 01;04;34
+STICKY 04;37;44
 
-#############################################################################
-### By extension
+#+-------------------+
+#+ Extension Pattern +
+#+-------------------+
+#+--- Archives ---+
+.7z 01;32
+.ace 01;32
+.alz 01;32
+.arc 01;32
+.arj 01;32
+.bz 01;32
+.bz2 01;32
+.cab 01;32
+.cpio 01;32
+.deb 01;32
+.dz 01;32
+.ear 01;32
+.gz 01;32
+.jar 01;32
+.lha 01;32
+.lrz 01;32
+.lz 01;32
+.lz4 01;32
+.lzh 01;32
+.lzma 01;32
+.lzo 01;32
+.rar 01;32
+.rpm 01;32
+.rz 01;32
+.sar 01;32
+.t7z 01;32
+.tar 01;32
+.taz 01;32
+.tbz 01;32
+.tbz2 01;32
+.tgz 01;32
+.tlz 01;32
+.txz 01;32
+.tz 01;32
+.tzo 01;32
+.tzst 01;32
+.war 01;32
+.xz 01;32
+.z 01;32
+.Z 01;32
+.zip 01;32
+.zoo 01;32
+.zst 01;32
 
-# List any file extensions like '.gz' or '.tar' that you would like ls
-# to colorize below. Put the extension, a space, and the color init string.
-# (and any comments you want to add after a '#')
+#+--- Audio ---+
+.aac 32
+.au 32
+.flac 32
+.m4a 32
+.mid 32
+.midi 32
+.mka 32
+.mp3 32
+.mpa 32
+.mpeg 32
+.mpg 32
+.ogg 32
+.opus 32
+.ra 32
+.wav 32
 
-### Text formats
+#+--- Customs ---+
+.3des 01;35
+.aes 01;35
+.gpg 01;35
+.pgp 01;35
 
-# Text that we can edit with a regular editor
-.txt 31
-.org 31
-.md 31
-.mkd 31
-.markdown 31
-.tex 31
-.adoc 31
-.asciidoc 31
+#+--- Documents ---+
+.doc 32
+.docx 32
+.dot 32
+.odg 32
+.odp 32
+.ods 32
+.odt 32
+.otg 32
+.otp 32
+.ots 32
+.ott 32
+.pdf 32
+.ppt 32
+.pptx 32
+.xls 32
+.xlsx 32
 
-# Source text
-.h 31
-.H 31
-.hh 31
-.hpp 31
-.hxx 31
-.h++ 31
-.c 31
-.C 31
-.cc 31
-.cpp 31
-.cxx 31
-.c++ 31
-.objc 31
-.sh 31
-.csh 31
-.zsh 31
-.el 31
-.vim 31
-.java 31
-.pl 31
-.pm 31
-.py 31
-.rb 31
-.hs 31
-.php 31
-.htm 31
-.html 31
-.shtml 31
-.erb 31
-.haml 31
-.xml 31
-.rdf 31
-.css 31
-.sass 31
-.scss 31
-.less 31
-.js 31
-.es 31
-.coffee 31
-.man 31
-.0 31
-.1 31
-.2 31
-.3 31
-.4 31
-.5 31
-.6 31
-.7 31
-.8 31
-.9 31
-.l 31
-.n 31
-.p 31
-.pod 31
-.go 31
-.lua 31
-.lavim 31
+#+--- Executables ---+
+.app 01;36
+.bat 01;36
+.btm 01;36
+.cmd 01;36
+.com 01;36
+.exe 01;36
+.reg 01;36
 
-### Multimedia formats
+#+--- Ignores ---+
+*~ 02;37
+.bak 02;37
+.BAK 02;37
+.log 02;37
+.log 02;37
+.old 02;37
+.OLD 02;37
+.orig 02;37
+.ORIG 02;37
+.swo 02;37
+.swp 02;37
 
-# Image
-.bmp 34
-.cgm 34
-.dl 34
-.dvi 34
-.emf 34
-.eps 34
-.gif 34
-.jpeg 34
-.jpg 34
-.JPG 34
-.mng 34
-.pbm 34
-.pcx 34
-.pdf 34
-.pgm 34
-.png 34
-.PNG 34
-.ppm 34
-.pps 34
-.ppsx 34
-.ps 34
-.svg 34
-.svgz 34
-.tga 34
-.tif 34
-.tiff 34
-.xbm 34
-.xcf 34
-.xpm 34
-.xwd 34
-.xwd 34
-.yuv 34
+#+--- Images ---+
+.bmp 32
+.cgm 32
+.dl 32
+.dvi 32
+.emf 32
+.eps 32
+.gif 32
+.jpeg 32
+.jpg 32
+.JPG 32
+.mng 32
+.pbm 32
+.pcx 32
+.pgm 32
+.png 32
+.PNG 32
+.ppm 32
+.pps 32
+.ppsx 32
+.ps 32
+.svg 32
+.svgz 32
+.tga 32
+.tif 32
+.tiff 32
+.xbm 32
+.xcf 32
+.xpm 32
+.xwd 32
+.xwd 32
+.yuv 32
 
-# Audio
-.aac 34
-.au  34
-.flac 34
-.m4a 34
-.mid 34
-.midi 34
-.mka 34
-.mp3 34
-.mpa 34
-.mpeg 34
-.mpg 34
-.ogg  34
-.ra 34
-.wav 34
-
-# Video
-.anx 34
-.asf 34
-.avi 34
-.axv 34
-.flc 34
-.fli 34
-.flv 34
-.gl 34
-.m2v 34
-.m4v 34
-.mkv 34
-.mov 34
-.MOV 34
-.mp4 34
-.mp4v 34
-.mpeg 34
-.mpg 34
-.nuv 34
-.ogm 34
-.ogv 34
-.ogx 34
-.qt 34
-.rm 34
-.rmvb 34
-.swf 34
-.vob 34
-.webm 34
-.wmv 34
-
-### Misc
-
-# Binary document formats and multimedia source
-.doc 36
-.docx 36
-.rtf 36
-.dot 36
-.dotx 36
-.xls 36
-.xlsx 36
-.ppt 36
-.pptx 36
-.fla 36
-.psb 36
-.PSB 36
-.psd 36
-.PSD 36
-.dng 36
-.DNG 36
-.pef 36
-.PEF 36
-.cr2 36
-.CR2 36
-.nef 36
-.NEF 36
-.orf 36
-.ORF 36
-
-# Archives, compressed
-.7z   35
-.apk  35
-.arj  35
-.bin  35
-.bz   35
-.bz2  35
-.cab  35  # Win
-.deb  35
-.dmg  35  # OSX
-.gem  35
-.gpg  35
-.gz   35
-.iso  35
-.jar  35
-.msi  35  # Win
-.rar  35
-.rpm  35
-.tar  35
-.tbz  35
-.tbz2 35
-.tgz  35
-.tx   35
-.war  35
-.xpi  35
-.xz   35
-.z    35
-.Z    35
-.zip  35
-
-# For testing
-.ANSI-30-black 30
-.ANSI-01;30-brblack 01;30
-.ANSI-31-red 31
-.ANSI-01;31-brred 01;31
-.ANSI-32-green 32
-.ANSI-01;32-brgreen 01;32
-.ANSI-33-yellow 33
-.ANSI-01;33-bryellow 01;33
-.ANSI-34-blue 34
-.ANSI-01;34-brblue 01;34
-.ANSI-35-magenta 35
-.ANSI-01;35-brmagenta 01;35
-.ANSI-36-cyan 36
-.ANSI-01;36-brcyan 01;36
-.ANSI-37-white 37
-.ANSI-01;37-brwhite 01;37
-
-#############################################################################
-# Your customizations
-
-# Unimportant text files
-# For universal scheme, use brightgreen 01;32
-# For optimal on light bg (but too prominent on dark bg), use white 01;34
-# .log 01;32
-# *~ 01;32
-# *# 01;32
-# .aux 01;32
-# .toc 01;32
-# .idx 01;32
-# .out 01;32
-# *_lavim.tex 01;32
-.log 32
-*~ 32
-*# 32
-.aux 32
-.toc 32
-.idx 32
-.out 32
-*_lavim.tex 32
-
-# Unimportant non-text files
-# For universal scheme, use brightcyan 01;36
-# For optimal on dark bg (but too prominent on light bg), change to 01;33
-.bak 32
-.BAK 32
-.old 32
-.OLD 32
-.org_archive 32
-.off 32
-.OFF 32
-.dist 32
-.DIST 32
-.orig 32
-.ORIG 32
-.swp 32
-.swo 32
-*,v 32
-# .bak 01;33
-# .BAK 01;33
-# .old 01;33
-# .OLD 01;33
-# .org_archive 01;33
-# .off 01;33
-# .OFF 01;33
-# .dist 01;33
-# .DIST 01;33
-# .orig 01;33
-# .ORIG 01;33
-# .swp 01;33
-# .swo 01;33
-# *,v 01;33
-
+#+--- Video ---+
+.anx 32
+.asf 32
+.avi 32
+.axv 32
+.flc 32
+.fli 32
+.flv 32
+.gl 32
+.m2v 32
+.m4v 32
+.mkv 32
+.mov 32
+.MOV 32
+.mp4 32
+.mpeg 32
+.mpg 32
+.nuv 32
+.ogm 32
+.ogv 32
+.ogx 32
+.qt 32
+.rm 32
+.rmvb 32
+.swf 32
+.vob 32
+.webm 32
+.wmv 32

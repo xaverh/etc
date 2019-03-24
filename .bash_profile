@@ -6,7 +6,7 @@ test -z "$PROFILEREAD" && . /etc/profile || true
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
+PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin"
 export PATH
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -22,7 +22,7 @@ export MAN_POSIXLY_CORRECT=1
 export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
-export TERMINAL=urxvt256c-mlc
+export TERMINAL=urxvtc
 export AWS_REGION=eu-central-1
 
 # Following automatically calls "startx" when you login:
