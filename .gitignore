@@ -33,6 +33,7 @@ lib/*
 !lib/jigglyroom
 .local/*
 !.local/share/applications/mimeapps.list
+.luarocks
 .mozilla
 .npm
 .npm-packages

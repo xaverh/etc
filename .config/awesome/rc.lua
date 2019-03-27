@@ -6,18 +6,12 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
+require("awful.remote")
 local wibox = require("wibox")
--- Theme handling library
 local beautiful = require("beautiful")
--- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
-local vicious = require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -91,13 +85,11 @@ awful.layout.layouts = {
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- Vicious
--- vicious.register(widget, wtype, format, interval, warg)
-date_widget = wibox.widget.textbox()
-vicious.register(date_widget, vicious.widgets.date, "%a %d %b %X %Z", 1.001)
-
-ip_widget = wibox.widget.textbox()
-vicious.register(ip_widget, vicious.widgets.ipaddr, "$1", 11)
+-- Create a BLAH widget
+-- Initilize widget
+jigglyroom = wibox.widget.textbox()
+--Show stuff in widget
+jigglyroom.text = "If this text is showing for long, somethin derped."
 
 -- {{{ Wibar
 
@@ -317,8 +309,7 @@ awful.screen.connect_for_each_screen(
             {
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                ip_widget,
-                date_widget
+                jigglyroom
             }
         }
     end
@@ -880,4 +871,17 @@ client.connect_signal(
         c.border_color = beautiful.border_normal
     end
 )
+
+do
+    local autorunApps = {
+        "$HOME/data/src/jigglyroom/jigglyroom 0",
+        "urxvt-mld -q -o -f",
+        'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
+    }
+
+    for _, i in pairs(autorunApps) do
+        awful.util.spawn(i)
+    end
+end
+
 -- }}}
