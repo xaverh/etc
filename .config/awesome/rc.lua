@@ -874,7 +874,7 @@ client.connect_signal(
 
 do
     local autorunApps = {
-        "$HOME/data/src/jigglyroom/jigglyroom 0",
+        "$HOME/bin/jigglyroom 0",
         "urxvt-mld -q -o -f",
         'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
     }

@@ -17,6 +17,8 @@
 .config/Code/User/workspaceStorage/
 .config/configstore/
 .config/dconf/user
+.config/discord
+.config/google-chrome-unstable
 .config/GIMP
 .config/pulse/
 !.config/systemd/user
