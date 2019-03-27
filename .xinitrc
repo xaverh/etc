@@ -30,6 +30,4 @@ fi
 
 numlockx &
 
-urxvt-mld -q -o -f
-
 exec awesome

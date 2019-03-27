@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="needs_terminal" mtime="1553423857" type="bool" value="false"/>
-	<entry name="enabled" mtime="1553423857" type="bool" value="true"/>
-	<entry name="command" mtime="1553423857" type="string">
-		<stringvalue>firefox %s</stringvalue>
+	<entry name="needs_terminal" mtime="1553726490" type="bool" value="false"/>
+	<entry name="enabled" mtime="1553726490" type="bool" value="true"/>
+	<entry name="command" mtime="1553726490" type="string">
+		<stringvalue>//usr/bin/firefox %s</stringvalue>
 	</entry>
 </gconf>
