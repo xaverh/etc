@@ -5,7 +5,7 @@
 /* Move this many pixels when moving or resizing with keyboard unless the window has hints saying otherwise.
  *0)move step slow   1)move step fast
  *2)mouse slow       3)mouse fast     */
-static const uint16_t movements[] = {4,40,15,400};
+static const uint16_t movements[] = {20,40,15,400};
 /* resize by line like in mcwm -- jmbi */
 static const bool     resize_by_line          = true;
 /* the ratio used when resizing and keeping the aspect */
@@ -13,15 +13,18 @@ static const float    resize_keep_aspect_ratio= 1.03;
 ///---Offsets---///
 /*0)offsetx          1)offsety
  *2)maxwidth         3)maxheight */
-static const uint8_t offsets[] = {0,0,0,0};
+// 26 px for the bar, 10 px for aesthetics
+static const uint8_t offsets[] = {10,36,20,46};
 ///---Colors---///
 /*0)focuscol         1)unfocuscol
  *2)fixedcol         3)unkilcol
  *4)fixedunkilcol    5)outerbordercol
  *6)emptycol         */
-static const char *colors[] = {"#81D8D0","#515151","#E3C472","#E32791","#FC9520","#005577","#E5E6E6"};
+// static const char* colors[] = {"#81D8D0", "#515151", "#E3C472", "#E32791", "#FC9520", "#005577", "#E5E6E6"};
 /* if this is set to true the inner border and outer borders colors will be swapped */
-static const bool inverted_colors = true;
+static const char* colors[] = {"#B2CCD6", "#546E7A", "#C3E88D", "#F07178",
+			       "#F78C6C", "#263238", "#263238"};
+static const bool inverted_colors = false;
 ///---Cursor---///
 /* default position of the cursor:
  * correct values are:
@@ -32,41 +35,26 @@ static const bool inverted_colors = true;
 /*0) Outer border size. If you put this negative it will be a square.
  *1) Full borderwidth    2) Magnet border size
  *3) Resize border size  */
-static const uint8_t borders[] = {4,8,8,5};
+static const uint8_t borders[] = {5, 7, 2, 3};
 /* Windows that won't have a border.
  * It uses substring comparison with what is found in the WM_NAME
  * attribute of the window. You can test this using `xprop WM_NAME`
  */
 #define LOOK_INTO "WM_NAME"
-static const char *ignore_names[] = {"bar", "xclock"};
+static const char *ignore_names[] = {"bar","lemonbar", "xclock"};
 ///--Menus and Programs---///
-static const char *menucmd[]   = { "dmenu_recent", "-m", "0", "-fn", "InputSansCondensed:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1", "-nb", "#1e1e1e", "-nf", "#b8b8b8", "-sb", "#005577", "-sf", "#e5e6e6", NULL };
-static const char *termcmd[] = { "st", "-e", "tmux", NULL };
-static const char *vanillatermcmd[] = { "st", NULL };
-static const char *filemanagercmd[]  = { "fman", NULL };
-static const char *playpausecmd[] = {"playerctl", "play-pause", NULL};
-static const char *playnextcmd[] = {"playerctl", "next", NULL};
-static const char *playpreviouscmd[] = {"playerctl", "previous", NULL};
+static const char* menucmd[] = {"dmenu_recent", "-m", "0", "-fn", "IBM Plex Sans:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1", "-nb", "#1e1e1e", "-nf", "#b8b8b8", "-sb", "#005577", "-sf", "#e5e6e6", NULL};
 
-/* TODO: feedback to bar or dunst */
-static const char *mutecmd[] = { "/bin/sh", "-c", "ponymix mute\nponymix is-muted && xsetroot -name \"mute\" || xsetroot -name \"volume: \"`ponymix get-volume`\" %\"", NULL };
-static const char *raisevolumecmd[] = { "/bin/sh", "-c", "ponymix unmute\nponymix increase 5\nponymix is-muted && xsetroot -name \"mute\" || xsetroot -name \"volume: \"`ponymix get-volume`\" %\"", NULL };
-static const char *lowervolumecmd[] = { "/bin/sh", "-c", "ponymix unmute\nponymix decrease 5\nponymix is-muted && xsetroot -name \"mute\" || xsetroot -name \"volume: \"`ponymix get-volume`\" %\"", NULL };
-static const char *lockcmd[]  = { "slock", NULL };
-static const char *brightnessupcmd[] = { "xbacklight", "-inc", "7", NULL };
-static const char *brightnessdowncmd[] = { "xbacklight", "-dec", "7", NULL };
-static const char *connect_setubal[] = {"/bin/sh", "-c", "echo -e 'connect 88:C6:26:F4:8A:90\nquit' | bluetoothctl\nsleep 3\npactl set-card-profile bluez_card.88_C6_26_F4_8A_90 a2dp_sink", NULL };
-static const char *disconnect_setubal[] = {"/bin/sh", "-c", "echo -e 'disconnect 88:C6:26:F4:8A:90\nquit' | bluetoothctl", NULL };
-static const char *suspendcmd[] = { "systemctl", "suspend", NULL };
-static const char *screenshotcmd[] = { "/bin/sh", "-c", "import \"/home/xha/tmp/Screenshot_`date +%Y-%m-%d-%H-%M-%S`.png\"", NULL };
-static const char *screenshotallcmd[] = { "/bin/sh", "-c", "import -window root \"/home/xha/tmp/Screenshot_`date +%Y-%m-%d-%H-%M-%S`.png\"", NULL };
-static const char *tmuxcmd[] = {"/bin/sh", "-c", "st -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | dmenu -l 5 -p 'Attach to tmux session:' -m 0 -fn 'InputSansCondensed:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1' -nb '#1e1e1e' -nf '#b8b8b8' -sb '#005577' -sf '#e5e6e6')", NULL};
-static const char *urlcmd[]  = { "clipmenu-url", NULL };
-static const char *clipcmd[]  = { "clipmenu", "-m", "0", "-fn", "InputSansCondensed:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1", "-nb", "#1e1e1e", "-nf", "#b8b8b8", "-sb", "#005577", "-sf", "#e5e6e6", NULL };
-/*
-static const char *showclipboardcmd[] = {"/bin/sh", "-c", "tmptitle=\"`tail --lines=1 /tmp/clipmenu.3.xha/line_cache`\"\nxsetroot -name \"$tmptitle\"", NULL };
-bindsym $mod+ssharp exec "dunstify `tail --lines=1 $XDG_RUNTIME_DIR/clipmenu.5.$USER/line_cache` -t 1000"
-*/
+static const char* terminal[] = { "urxvtc", "-e", "tmux", NULL };
+static const char *vanillaterminal[] = { "urxvtc", NULL };
+
+static const char *louder[] = { "sh", "-c", "pamixer --unmute && pamixer --increase 5 && pamixer --get-mute && notify-send -t 200 \"mute\" || notify-send -t 200 \"volume: \"`pamixer --get-volume`\" \%\""};
+static const char *silenter[] = { "sh", "-c","pamixer --unmute && pamixer --decrease 5 && pamixer --get-mute && notify-send -t 200 \"mute\" || notify-send -t 200 \"volume: \"`pamixer --get-volume`\" \%\"" };
+static const char *togglevolume[] = { "sh", "-c","pamixer --mute && pamixer --get-mute && notify-send -t 200 \"mute\" || notify-send -t 200 \"volume: \"`pamixer --get-volume`\" %\"" };
+
+static const char* playpause[] = { "sh", "-c", "mpc pause-if-playing && notify-send -t 500 \"pause\" || (mpc play && notify-send -t 2000 \"Playing: `mpc current`\")" };
+static const char* playnext[] = { "sh", "-c", "mpc next && notify-send -t 1500 \"Playing: `mpc current`\""};
+static const char* playprev[] = { "sh", "-c", "mpc prev && notify-send -t 1500 \"Playing: `mpc current`\""};
 
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
@@ -76,7 +64,32 @@ static void halfandcentered(const Arg *arg)
 	Arg arg3 = {.i=TWOBWM_TELEPORT_CENTER};
 	teleport(&arg3);
 }
-
+///---Shortcuts---///
+/* Check /usr/include/X11/keysymdef.h for the list of all keys
+ * 0x000000 is for no modkey
+ * If you are having trouble finding the right keycode use the `xev` to get it
+ * For example:
+ * KeyRelease event, serial 40, synthetic NO, window 0x1e00001,
+ *  root 0x98, subw 0x0, time 211120530, (128,73), root:(855,214),
+ *  state 0x10, keycode 171 (keysym 0x1008ff17, XF86AudioNext), same_screen YES,
+ *  XLookupString gives 0 bytes:
+ *  XFilterEvent returns: False
+ *
+ *  The keycode here is keysym 0x1008ff17, so use  0x1008ff17
+ *
+ *
+ * For AZERTY keyboards XK_1...0 should be replaced by :
+ *      DESKTOPCHANGE(     XK_ampersand,                     0)
+ *      DESKTOPCHANGE(     XK_eacute,                        1)
+ *      DESKTOPCHANGE(     XK_quotedbl,                      2)
+ *      DESKTOPCHANGE(     XK_apostrophe,                    3)
+ *      DESKTOPCHANGE(     XK_parenleft,                     4)
+ *      DESKTOPCHANGE(     XK_minus,                         5)
+ *      DESKTOPCHANGE(     XK_egrave,                        6)
+ *      DESKTOPCHANGE(     XK_underscore,                    7)
+ *      DESKTOPCHANGE(     XK_ccedilla,                      8)
+ *      DESKTOPCHANGE(     XK_agrave,                        9)*
+ */
 #define DESKTOPCHANGE(K,N) \
 {  MOD ,             K,              changeworkspace, {.i=N}}, \
 {  MOD |SHIFT,       K,              sendtoworkspace, {.i=N}},
@@ -87,26 +100,26 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Tab,        focusnext,         {.i=TWOBWM_FOCUS_PREVIOUS}},
     // Kill a window
     {  MOD ,              XK_q,          deletewin,         {}},
-// Resize a window
-    {  MOD |SHIFT|CONTROL,XK_k,          resizestep,        {.i=TWOBWM_RESIZE_UP}},
-    {  MOD |SHIFT|CONTROL,XK_j,          resizestep,        {.i=TWOBWM_RESIZE_DOWN}},
-    {  MOD |SHIFT|CONTROL,XK_l,          resizestep,        {.i=TWOBWM_RESIZE_RIGHT}},
-    {  MOD |SHIFT|CONTROL,XK_h,          resizestep,        {.i=TWOBWM_RESIZE_LEFT}},
+    // Resize a window
+    {  MOD |SHIFT,        XK_k,          resizestep,        {.i=TWOBWM_RESIZE_UP}},
+    {  MOD |SHIFT,        XK_j,          resizestep,        {.i=TWOBWM_RESIZE_DOWN}},
+    {  MOD |SHIFT,        XK_l,          resizestep,        {.i=TWOBWM_RESIZE_RIGHT}},
+    {  MOD |SHIFT,        XK_h,          resizestep,        {.i=TWOBWM_RESIZE_LEFT}},
     // Resize a window slower
-    {  MOD |SHIFT,        XK_k,          resizestep,        {.i=TWOBWM_RESIZE_UP_SLOW}},
-    {  MOD |SHIFT,        XK_j,          resizestep,        {.i=TWOBWM_RESIZE_DOWN_SLOW}},
-    {  MOD |SHIFT,        XK_l,          resizestep,        {.i=TWOBWM_RESIZE_RIGHT_SLOW}},
-    {  MOD |SHIFT,        XK_h,          resizestep,        {.i=TWOBWM_RESIZE_LEFT_SLOW}},
+    {  MOD |SHIFT|CONTROL,XK_k,          resizestep,        {.i=TWOBWM_RESIZE_UP_SLOW}},
+    {  MOD |SHIFT|CONTROL,XK_j,          resizestep,        {.i=TWOBWM_RESIZE_DOWN_SLOW}},
+    {  MOD |SHIFT|CONTROL,XK_l,          resizestep,        {.i=TWOBWM_RESIZE_RIGHT_SLOW}},
+    {  MOD |SHIFT|CONTROL,XK_h,          resizestep,        {.i=TWOBWM_RESIZE_LEFT_SLOW}},
     // Move a window
-    {  MOD | CONTROL ,    XK_k,          movestep,          {.i=TWOBWM_MOVE_UP}},
-    {  MOD | CONTROL ,    XK_j,          movestep,          {.i=TWOBWM_MOVE_DOWN}},
-    {  MOD | CONTROL ,    XK_l,          movestep,          {.i=TWOBWM_MOVE_RIGHT}},
-    {  MOD | CONTROL ,    XK_h,          movestep,          {.i=TWOBWM_MOVE_LEFT}},
+    {  MOD ,              XK_k,          movestep,          {.i=TWOBWM_MOVE_UP}},
+    {  MOD ,              XK_j,          movestep,          {.i=TWOBWM_MOVE_DOWN}},
+    {  MOD ,              XK_l,          movestep,          {.i=TWOBWM_MOVE_RIGHT}},
+    {  MOD ,              XK_h,          movestep,          {.i=TWOBWM_MOVE_LEFT}},
     // Move a window slower
-    {  MOD ,              XK_k,          movestep,          {.i=TWOBWM_MOVE_UP_SLOW}},
-    {  MOD ,              XK_j,          movestep,          {.i=TWOBWM_MOVE_DOWN_SLOW}},
-    {  MOD ,              XK_l,          movestep,          {.i=TWOBWM_MOVE_RIGHT_SLOW}},
-    {  MOD ,              XK_h,          movestep,          {.i=TWOBWM_MOVE_LEFT_SLOW}},
+    {  MOD |CONTROL,      XK_k,          movestep,          {.i=TWOBWM_MOVE_UP_SLOW}},
+    {  MOD |CONTROL,      XK_j,          movestep,          {.i=TWOBWM_MOVE_DOWN_SLOW}},
+    {  MOD |CONTROL,      XK_l,          movestep,          {.i=TWOBWM_MOVE_RIGHT_SLOW}},
+    {  MOD |CONTROL,      XK_h,          movestep,          {.i=TWOBWM_MOVE_LEFT_SLOW}},
     // Teleport the window to an area of the screen.
     // Center:
     {  MOD ,              XK_g,          teleport,          {.i=TWOBWM_TELEPORT_CENTER}},
@@ -115,13 +128,13 @@ static key keys[] = {
     // Center x:
     {  MOD |CONTROL,      XK_g,          teleport,          {.i=TWOBWM_TELEPORT_CENTER_X}},
     // Top left:
-    {  MOD ,              XK_p,          teleport,          {.i=TWOBWM_TELEPORT_TOP_LEFT}},
+    {  MOD ,              XK_y,          teleport,          {.i=TWOBWM_TELEPORT_TOP_LEFT}},
     // Top right:
-    {  MOD ,              XK_udiaeresis, teleport,          {.i=TWOBWM_TELEPORT_TOP_RIGHT}},
+    {  MOD ,              XK_u,          teleport,          {.i=TWOBWM_TELEPORT_TOP_RIGHT}},
     // Bottom left:
-    {  MOD ,              XK_odiaeresis, teleport,          {.i=TWOBWM_TELEPORT_BOTTOM_LEFT}},
+    {  MOD ,              XK_b,          teleport,          {.i=TWOBWM_TELEPORT_BOTTOM_LEFT}},
     // Bottom right:
-    {  MOD ,              XK_adiaeresis, teleport,          {.i=TWOBWM_TELEPORT_BOTTOM_RIGHT}},
+    {  MOD ,              XK_n,          teleport,          {.i=TWOBWM_TELEPORT_BOTTOM_RIGHT}},
     // Resize while keeping the window aspect
     {  MOD ,              XK_Home,       resizestep_aspect, {.i=TWOBWM_RESIZE_KEEP_ASPECT_GROW}},
     {  MOD ,              XK_End,        resizestep_aspect, {.i=TWOBWM_RESIZE_KEEP_ASPECT_SHRINK}},
@@ -135,21 +148,21 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_m,          maxvert_hor,       {.i=TWOBWM_MAXIMIZE_HORIZONTALLY}},
     // Maximize and move
     // vertically left
-    {  MOD |SHIFT,        XK_p,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_LEFT}},
+    {  MOD |SHIFT,        XK_y,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_LEFT}},
     // vertically right
-    {  MOD |SHIFT,        XK_udiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_RIGHT}},
+    {  MOD |SHIFT,        XK_u,          maxhalf,           {.i=TWOBWM_MAXHALF_VERTICAL_RIGHT}},
     // horizontally left
-    {  MOD |SHIFT,        XK_odiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_HORIZONTAL_BOTTOM}},
+    {  MOD |SHIFT,        XK_b,          maxhalf,           {.i=TWOBWM_MAXHALF_HORIZONTAL_BOTTOM}},
     // horizontally right
-    {  MOD |SHIFT,        XK_adiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_HORIZONTAL_TOP}},
+    {  MOD |SHIFT,        XK_n,          maxhalf,           {.i=TWOBWM_MAXHALF_HORIZONTAL_TOP}},
     //fold half vertically
-    {  MOD |SHIFT|CONTROL,XK_p,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_VERTICAL}},
+    {  MOD |SHIFT|CONTROL,XK_y,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_VERTICAL}},
     //fold half horizontally
-    {  MOD |SHIFT|CONTROL,XK_odiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_HORIZONTAL}},
+    {  MOD |SHIFT|CONTROL,XK_b,          maxhalf,           {.i=TWOBWM_MAXHALF_FOLD_HORIZONTAL}},
     //unfold vertically
-    {  MOD |SHIFT|CONTROL,XK_udiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_UNFOLD_VERTICAL}},
+    {  MOD |SHIFT|CONTROL,XK_u,          maxhalf,           {.i=TWOBWM_MAXHALF_UNFOLD_VERTICAL}},
     //unfold horizontally
-    {  MOD |SHIFT|CONTROL,XK_adiaeresis, maxhalf,           {.i=TWOBWM_MAXHALF_UNFOLD_HORIZONTAL}},
+    {  MOD |SHIFT|CONTROL,XK_n,          maxhalf,           {.i=TWOBWM_MAXHALF_UNFOLD_HORIZONTAL}},
     // Next/Previous screen
     {  MOD ,              XK_comma,      changescreen,      {.i=TWOBWM_NEXT_SCREEN}},
     {  MOD ,              XK_period,     changescreen,      {.i=TWOBWM_PREVIOUS_SCREEN}},
@@ -185,29 +198,17 @@ static key keys[] = {
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
     {  MOD ,              XK_w,          halfandcentered,   {.i=0}},
-    {  MOD ,              XK_Return,     start,             {.com=termcmd}},
-    {  MOD | SHIFT,       XK_Return,     start,             {.com=vanillatermcmd}},
-    {  MOD ,              XK_e,          start,             {.com=filemanagercmd}},
-    {  0 ,                0x1008ff13,    start,             {.com=raisevolumecmd}},
-    {  0 ,                0x1008ff11,    start,             {.com=lowervolumecmd}},
-    {  0 ,                0x1008ff12,    start,             {.com=mutecmd}},
-    {  MOD ,              0xffab,        start,             {.com=raisevolumecmd}},
-    {  MOD ,              0xffad,        start,             {.com=lowervolumecmd}},
-    {  MOD ,              0xffaa,        start,             {.com=mutecmd}},
-    {  0 ,                0x1008ff17,    start,             {.com=playnextcmd}},
-    {  0 ,                0x1008ff14,    start,             {.com=playpausecmd}},
-    {  0 ,                0x1008ff16,    start,             {.com=playpreviouscmd}},
-    {  0 ,                0x1008ff02,    start,             {.com=brightnessupcmd}},
-    {  0 ,                0x1008ff03,    start,             {.com=brightnessdowncmd}},
-    {  MOD ,              XK_Escape,     start,             {.com=lockcmd}},
-    {  MOD | SHIFT ,      XK_Escape,     start,             {.com=suspendcmd}},
-    {  MOD ,              XK_o,          start,             {.com=urlcmd}},
-    {  MOD ,              XK_Insert,     start,             {.com=clipcmd}},
-    {  0 ,                XK_Print,      start,             {.com=screenshotallcmd}},
-    {  MOD ,              XK_Print,      start,             {.com=screenshotcmd}},
-    {  MOD ,              XK_minus,      start,             {.com=tmuxcmd}},
-    {  MOD ,              XK_F9,         start,             {.com=connect_setubal}},
-    {  MOD | SHIFT,       XK_F9,         start,             {.com=disconnect_setubal}},
+    {  MOD ,              XK_Return,     start,             {.com=terminal}},
+    {  MOD |SHIFT,        XK_Return,     start,             {.com=vanillaterminal}},
+    {  MOD ,              XK_KP_Add,     start,             {.com=louder}},
+    {  0 ,                0x1008ff13,     start,             {.com=louder}},
+    {  MOD ,              XK_KP_Subtract, start,             {.com=silenter}},
+    {  0 ,                0x1008ff11,     start,             {.com=silenter}},
+    {  MOD ,              XK_KP_Insert,     start,             {.com=togglevolume}},
+    {  0 ,                0x1008ff12,     start,             {.com=togglevolume}},
+    {  MOD ,              XK_KP_Multiply,     start,             {.com=playnext}},
+    {  MOD ,              XK_KP_Divide,     start,             {.com=playprev}},
+    {  MOD ,              XK_KP_End,     start,             {.com=playpause}},
     // Change current workspace
        DESKTOPCHANGE(     XK_1,                             0)
        DESKTOPCHANGE(     XK_2,                             1)

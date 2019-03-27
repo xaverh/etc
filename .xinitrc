@@ -30,4 +30,6 @@ fi
 
 numlockx &
 
-exec bspwm
+urxvt-mld -q -o -f
+
+exec awesome

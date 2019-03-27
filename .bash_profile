@@ -6,7 +6,7 @@ test -z "$PROFILEREAD" && . /etc/profile || true
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin"
+PATH="$PATH:/usr/local/bin:/usr/bin:$HOME/bin:$HOME/.npm-packages/bin:$HOME/.luarocks/bin"
 export PATH
 
 export XDG_CONFIG_HOME="$HOME/.config"

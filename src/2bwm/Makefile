@@ -5,14 +5,14 @@ PREFIX?=/usr/local
 LIB_SUFFIX?=lib
 MANPREFIX?=$(PREFIX)/share/man
 TWOBWM_PATH?=${PREFIX}/bin/2bwm
-X11_INCLUDE?=/usr/local/include
+X11_INCLUDE?=/usr/include
 
 #CC=clang
 DIST=2bwm-$(VERSION)
 SRC=2bwm.c list.h hidden.c config.h
 DISTFILES=Makefile README.md TODO 2bwm.man $(SRC)
 CFLAGS+=-Os -s -I${X11_INCLUDE} \
-		-DTWOBWM_PATH=\"${TWOBWM_PATH}\" 
+		-DTWOBWM_PATH=\"${TWOBWM_PATH}\"
 
 LDFLAGS+=-L${PREFIX}/${LIB_SUFFIX} -lxcb -lxcb-randr -lxcb-keysyms \
 		 -lxcb-icccm -lxcb-ewmh -lxcb-xrm

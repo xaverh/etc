@@ -6,7 +6,7 @@
   "editor.rulers": [],
   "editor.formatOnType": true,
   "editor.scrollBeyondLastLine": false,
-  "editor.acceptSuggestionOnEnter": "off",
+  "editor.acceptSuggestionOnEnter": "smart",
   "editor.wordWrap": "on",
   "editor.wrappingIndent": "same",
   "editor.tabSize": 8,
@@ -46,7 +46,7 @@
   "editor.minimap.renderCharacters": false,
   "[html]": {
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
   },
   "[json]": {
     "editor.tabSize": 2,
@@ -109,7 +109,7 @@
   "git.autofetch": true,
   "javascript.format.enable": false,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-  "standard.validate": [
+  "eslint.validate": [
     "javascript",
     "javascriptreact",
     {
@@ -121,7 +121,7 @@
       "autoFix": true
     }
   ],
-  "standard.options": {
+  "eslint.options": {
     "plugins": ["vue", "html"]
   },
   "settings.cycle": [
@@ -153,8 +153,8 @@
   "search.smartCase": true,
   "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
   "latex-workshop.view.pdf.viewer": "tab",
-  "standard.enable": true,
-  "standard.run": "onType",
+  "eslint.enable": true,
+  "eslint.run": "onType",
   "vetur.format.defaultFormatter.js": "vscode-typescript",
   "vetur.format.defaultFormatter.ts": "vscode-typescript",
   "vetur.validation.style": true,
@@ -176,7 +176,7 @@
   "zenMode.centerLayout": false,
   "zenMode.hideLineNumbers": false,
   "workbench.activityBar.visible": true,
-  "diffEditor.renderSideBySide": false,
+  "diffEditor.renderSideBySide": true,
   "explorer.autoReveal": false,
   "terminal.integrated.fontWeight": "500",
   "files.enableTrash": false,
@@ -187,7 +187,7 @@
   "editor.cursorBlinking": "phase",
   "editor.autoClosingBrackets": "beforeWhitespace",
   "editor.autoClosingQuotes": "beforeWhitespace",
-  "workbench.iconTheme": "Monokai Pro Icons",
+  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
   "editor.fontLigatures": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
@@ -199,6 +199,6 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Monokai Pro",
+  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
   "C_Cpp.updateChannel": "Insiders"
 }
