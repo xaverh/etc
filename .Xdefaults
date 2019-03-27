@@ -16,7 +16,7 @@ x11-ssh-askpass*topShadowColor:         #000000
 x11-ssh-askpass*bottomShadowColor:      #000000
 x11-ssh-askpass.*borderWidth:           1
 
-URxvt.intensityStyles: true2
+URxvt.intensityStyles: false
 URxvt*geometry: 80x24
 URxvt*scrollBar: false
 URxvt*letterSpace: -1

@@ -1,19 +1,19 @@
 {
   "modules": [
-    "herbstluftwmStatus",
+    "awesomeDummyOpen",
     "memoryUsage",
     "networkThroughput",
     "cpuTemperature",
     "ipAddress",
-    "dateAndTime"
+    "dateAndTime",
+    "awesomeDummyClose"
   ],
   "networkDevices": ["eno1"],
   "fahrenheit": false,
   "thermalZone": 2,
   "dateAndTimeFormat": "Mon 02 Jan 15:04:05 MST",
   "separatorWorkspaces": "    ",
-  "separatorRight": "  ",
-  "separatorLeft": "     ",
+  "separatorModules": "  ",
   "colors": {
     "defaultFg": "#E5E6E6",
     "defaultBg": "#1E1E1E",
