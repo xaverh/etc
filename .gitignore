@@ -1,13 +1,17 @@
 .bash_hist
+bin/jigglyroom
 **/.browse.VC.db*
 .cache
+.ccache
 .config/chromium
 .config/Code/Backups/
 .config/Code/Cache/
 .config/Code/CachedData/
 .config/Code/CachedExtensions/
 .config/Code/Cookies
+.config/Code/Cookies-journal
 .config/Code/GPUCache/
+.config/Code/Local Storage/
 .config/Code/machineid
 .config/Code/Network Persistent State
 .config/Code/rapid_render.json
@@ -18,8 +22,9 @@
 .config/configstore/
 .config/dconf/user
 .config/discord
-.config/google-chrome-unstable
 .config/GIMP
+.config/google-chrome-unstable
+.config/nvim/.netrwhist
 .config/pulse/
 !.config/systemd/user
 .config/systemd/user/*/
@@ -27,12 +32,12 @@ data
 .dotfiles
 .esd_auth
 .fehbg
+.gnupg/*
+!.gnupg/gpg.conf
 .gopath
-.gnupg
 .lesshst
 lib/*
 !lib/bar
-!lib/jigglyroom
 .local/*
 !.local/share/applications/mimeapps.list
 .luarocks
