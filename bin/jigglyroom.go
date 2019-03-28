@@ -123,11 +123,10 @@ var (
 
 // HerbstluftwmStatus gives the combined output of workspace names and window title of the currently opened window
 type HerbstluftwmStatus struct {
-	Output      chan string
-	colors      Colors
-	format      formatting
-	screen      string
-	doesRefresh bool
+	Output chan string
+	colors Colors
+	format formatting
+	screen string
 }
 
 func formatHerbstluftwmStatus(input string, colors Colors, format formatting, screen string) string {
@@ -217,9 +216,8 @@ func (herbstluftwmStatus HerbstluftwmStatus) getOutputChannel() chan string {
 // through reference time Mon Jan 2 15:04:05 MST 2006 =
 // 01/02 03:04:05PM '06 -0700 = Unix time 1136239445
 type DateAndTime struct {
-	Format      string
-	Output      chan string
-	doesRefresh bool
+	Format string
+	Output chan string
 }
 
 func (dateAndTime DateAndTime) printToChannel() {
@@ -250,8 +248,7 @@ func (alignRight AlignRight) getOutputChannel() chan string {
 
 // Memory gives the current usage of RAM accoring to /proc/meminfo
 type Memory struct {
-	Output      chan string
-	doesRefresh bool
+	Output chan string
 }
 
 func (memory Memory) printToChannel() {
@@ -298,7 +295,6 @@ type CPUTemperature struct {
 	Fahrenheit  bool
 	ThermalZone int
 	Output      chan string
-	doesRefresh bool
 }
 
 func (cpuTemperature CPUTemperature) printToChannel() {
@@ -324,9 +320,8 @@ func (cpuTemperature CPUTemperature) getOutputChannel() chan string {
 
 // WIFI returns the name of the current wifi (SSID) and the last 6 digits of its router's MAC address (BSSID)
 type WIFI struct {
-	Output      chan string
-	NetDev      string
-	doesRefresh bool
+	Output chan string
+	NetDev string
 }
 
 func (wifi WIFI) printToChannel() {
@@ -353,8 +348,7 @@ func (wifi WIFI) getOutputChannel() chan string {
 
 // IPAddress returns the current local IPv4 address used for accessing the internet
 type IPAddress struct {
-	Output      chan string
-	doesRefresh bool
+	Output chan string
 }
 
 func (ipAddress IPAddress) printToChannel() {
@@ -376,9 +370,8 @@ func (ipAddress IPAddress) getOutputChannel() chan string {
 
 // NetworkThroughput gives information about the up- and downstream of given network devices
 type NetworkThroughput struct {
-	NetDevs     []string
-	Output      chan string
-	doesRefresh bool
+	NetDevs []string
+	Output  chan string
 }
 
 func fixed(pre string, rate int) string {
@@ -413,6 +406,7 @@ func fixed(pre string, rate int) string {
 func (networkThroughput NetworkThroughput) printToChannel() {
 	rxOld := 0
 	txOld := 0
+	rate := 2
 	for {
 		file, err := os.Open("/proc/net/dev")
 		if err != nil {
@@ -434,9 +428,9 @@ func (networkThroughput NetworkThroughput) printToChannel() {
 			}
 		}
 		file.Close()
-		networkThroughput.Output <- fmt.Sprintf("%s %s", fixed(netReceivedSign, rxNow-rxOld), fixed(netTransmittedSign, txNow-txOld))
+		networkThroughput.Output <- fmt.Sprintf("%s %s", fixed(netReceivedSign, (rxNow-rxOld)/rate), fixed(netTransmittedSign, (txNow-txOld)/rate))
 		rxOld, txOld = rxNow, txNow
-		time.Sleep(time.Duration(2 * time.Second))
+		time.Sleep(time.Duration(2) * time.Second)
 	}
 }
 
@@ -449,7 +443,6 @@ type Power struct {
 	Output        chan string
 	unpluggedSign string
 	pluggedSign   string
-	doesRefresh   bool
 }
 
 func (power Power) printToChannel() {
@@ -518,52 +511,43 @@ func (power Power) getOutputChannel() chan string {
 func main() {
 	modules := make([]module, len(config.Modules))
 	for i, v := range config.Modules {
-	DontPrintYet:
 		switch v {
 		case "memoryUsage":
-			mod := Memory{Output: make(chan string), doesRefresh: false}
+			mod := Memory{Output: make(chan string)}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "networkThroughput":
-			mod := NetworkThroughput{Output: make(chan string), NetDevs: config.NetDevs, doesRefresh: false}
+			mod := NetworkThroughput{Output: make(chan string), NetDevs: config.NetDevs}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "cpuTemperature":
-			mod := CPUTemperature{Output: make(chan string), Fahrenheit: config.Fahrenheit, ThermalZone: config.ThermalZone, doesRefresh: false}
+			mod := CPUTemperature{Output: make(chan string), Fahrenheit: config.Fahrenheit, ThermalZone: config.ThermalZone}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "ipAddress":
-			mod := IPAddress{Output: make(chan string), doesRefresh: false}
+			mod := IPAddress{Output: make(chan string)}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "dateAndTime":
-			mod := DateAndTime{Output: make(chan string), Format: config.DateAndTimeFormat, doesRefresh: true}
+			mod := DateAndTime{Output: make(chan string), Format: config.DateAndTimeFormat}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "herbstluftwmStatus":
-			mod := HerbstluftwmStatus{Output: make(chan string), colors: config.Colors, format: format, screen: screen, doesRefresh: true}
+			mod := HerbstluftwmStatus{Output: make(chan string), colors: config.Colors, format: format, screen: screen}
 			go mod.printToChannel()
 			modules[i] = &mod
 		case "power":
-			mod := Power{Output: make(chan string), unpluggedSign: unpluggedSign, pluggedSign: pluggedSign, doesRefresh: false}
+			mod := Power{Output: make(chan string), unpluggedSign: unpluggedSign, pluggedSign: pluggedSign}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "wifi":
-			mod := WIFI{Output: make(chan string), NetDev: config.WifiDevice, doesRefresh: false}
+			mod := WIFI{Output: make(chan string), NetDev: config.WifiDevice}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		case "alignRight":
 			mod := AlignRight{Output: make(chan string)}
 			go mod.printToChannel()
 			modules[i] = &mod
-			goto DontPrintYet
 		}
 	}
 
