@@ -873,7 +873,12 @@ client.connect_signal(
 )
 
 awful.spawn "urxvt-mld -q -o -f"
-awful.spawn 'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
+awful.spawn(
+    'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"',
+    {
+        tag = "5"
+    }
+)
 awful.spawn.with_line_callback(
     "jigglyroom 0",
     {
