@@ -57,7 +57,7 @@ type Colors struct {
 }
 
 type configuration struct {
-	Modules             []string `json:"modules"` // values: memoryUsage, networkThroughput, cpuTemperature, ipAddress, dateAndTime, herbstluftwmStatus, power, wifi, alignRight, awesomeDummyOpen, awesomeDummyClose
+	Modules             []string `json:"modules"` // values: memoryUsage, networkThroughput, cpuTemperature, ipAddress, dateAndTime, herbstluftwmStatus, power, wifi, alignRight
 	NetDevs             []string `json:"networkDevices"`
 	Fahrenheit          bool     `json:"Fahrenheit"`
 	ThermalZone         int      `json:"thermalZone"`
@@ -248,32 +248,6 @@ func (alignRight AlignRight) getOutputChannel() chan string {
 	return alignRight.Output
 }
 
-// AwesomeDummyOpen prepares the content for awesome to be consumed
-type AwesomeDummyOpen struct {
-	Output chan string
-}
-
-func (awesomeDummyOpen AwesomeDummyOpen) printToChannel() {
-	awesomeDummyOpen.Output <- "jigglyroom.text=\""
-}
-
-func (awesomeDummyOpen AwesomeDummyOpen) getOutputChannel() chan string {
-	return awesomeDummyOpen.Output
-}
-
-// AwesomeDummyClose prepares the content for awesome to be consumed
-type AwesomeDummyClose struct {
-	Output chan string
-}
-
-func (awesomeDummyClose AwesomeDummyClose) printToChannel() {
-	awesomeDummyClose.Output <- "\""
-}
-
-func (awesomeDummyClose AwesomeDummyClose) getOutputChannel() chan string {
-	return awesomeDummyClose.Output
-}
-
 // Memory gives the current usage of RAM accoring to /proc/meminfo
 type Memory struct {
 	Output      chan string
@@ -311,7 +285,7 @@ func (memory Memory) printToChannel() {
 		}
 		file.Close()
 		memory.Output <- fmt.Sprintf("%s%d MB", memIcon, used/1000)
-		time.Sleep(time.Duration(2 * time.Second))
+		time.Sleep(time.Duration(5 * time.Second))
 	}
 }
 
@@ -340,7 +314,7 @@ func (cpuTemperature CPUTemperature) printToChannel() {
 		} else {
 			cpuTemperature.Output <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
 		}
-		time.Sleep(time.Duration(2 * time.Second))
+		time.Sleep(time.Duration(7 * time.Second))
 	}
 }
 
@@ -384,6 +358,7 @@ type IPAddress struct {
 }
 
 func (ipAddress IPAddress) printToChannel() {
+	time.Sleep(time.Duration(3 * time.Second))
 	for {
 		out, err := exec.Command("ip", "route", "get", "8.8.8.8").Output()
 		if err != nil {
@@ -461,7 +436,7 @@ func (networkThroughput NetworkThroughput) printToChannel() {
 		file.Close()
 		networkThroughput.Output <- fmt.Sprintf("%s %s", fixed(netReceivedSign, rxNow-rxOld), fixed(netTransmittedSign, txNow-txOld))
 		rxOld, txOld = rxNow, txNow
-		time.Sleep(time.Duration(time.Second))
+		time.Sleep(time.Duration(2 * time.Second))
 	}
 }
 
@@ -484,13 +459,13 @@ func (power Power) printToChannel() {
 		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
 		if err != nil {
 			power.Output <- ""
-			time.Sleep(time.Duration(1000 * time.Second))
+			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 		batts, err := ioutil.ReadDir(powerSupply)
 		if err != nil {
 			power.Output <- "no battery"
-			time.Sleep(time.Duration(1000 * time.Second))
+			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 
@@ -532,7 +507,7 @@ func (power Power) printToChannel() {
 		}
 
 		power.Output <- fmt.Sprintf("%d%%%s", enPerc, icon)
-		time.Sleep(time.Duration(10 * time.Second))
+		time.Sleep(time.Duration(13 * time.Second))
 	}
 }
 
@@ -543,27 +518,33 @@ func (power Power) getOutputChannel() chan string {
 func main() {
 	modules := make([]module, len(config.Modules))
 	for i, v := range config.Modules {
+	DontPrintYet:
 		switch v {
 		case "memoryUsage":
 			mod := Memory{Output: make(chan string), doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "networkThroughput":
 			mod := NetworkThroughput{Output: make(chan string), NetDevs: config.NetDevs, doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "cpuTemperature":
 			mod := CPUTemperature{Output: make(chan string), Fahrenheit: config.Fahrenheit, ThermalZone: config.ThermalZone, doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "ipAddress":
 			mod := IPAddress{Output: make(chan string), doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "dateAndTime":
 			mod := DateAndTime{Output: make(chan string), Format: config.DateAndTimeFormat, doesRefresh: true}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "herbstluftwmStatus":
 			mod := HerbstluftwmStatus{Output: make(chan string), colors: config.Colors, format: format, screen: screen, doesRefresh: true}
 			go mod.printToChannel()
@@ -572,22 +553,17 @@ func main() {
 			mod := Power{Output: make(chan string), unpluggedSign: unpluggedSign, pluggedSign: pluggedSign, doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "wifi":
 			mod := WIFI{Output: make(chan string), NetDev: config.WifiDevice, doesRefresh: false}
 			go mod.printToChannel()
 			modules[i] = &mod
+			goto DontPrintYet
 		case "alignRight":
 			mod := AlignRight{Output: make(chan string)}
 			go mod.printToChannel()
 			modules[i] = &mod
-		case "awesomeDummyOpen":
-			mod := AwesomeDummyOpen{Output: make(chan string)}
-			go mod.printToChannel()
-			modules[i] = &mod
-		case "awesomeDummyClose":
-			mod := AwesomeDummyClose{Output: make(chan string)}
-			go mod.printToChannel()
-			modules[i] = &mod
+			goto DontPrintYet
 		}
 	}
 
@@ -604,7 +580,7 @@ func main() {
 			cases = append(cases[:i], cases[i+1:]...)
 		} else {
 			results[i] = v.String()
-			exec.Command("/usr/bin/awesome-client",strings.Join(results, config.SeparatorModules)).Start()
+			fmt.Println(strings.Join(results, config.SeparatorModules))
 		}
 	}
 }
