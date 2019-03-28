@@ -1,6 +1,6 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
-pcall(require, "luarocks.loader")
+-- pcall(require, "luarocks.loader")
 
 -- Standard awesome library
 local gears = require("gears")
@@ -195,7 +195,7 @@ awful.screen.connect_for_each_screen(
         set_wallpaper(s)
 
         -- Each screen has its own tag table.
-        awful.tag({"eins", "zwei", "vier", "acht"}, s, awful.layout.layouts[1])
+        awful.tag({"eins", "zwei", "vier", "acht", "sechzehn"}, s, awful.layout.layouts[1])
 
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
@@ -528,8 +528,8 @@ clientkeys =
         {description = "toggle fullscreen", group = "client"}
     ),
     awful.key(
-        {modkey, "Shift"},
-        "c",
+        {modkey},
+        "q",
         function(c)
             c:kill()
         end,
@@ -872,16 +872,14 @@ client.connect_signal(
     end
 )
 
-do
-    local autorunApps = {
-        "$HOME/bin/jigglyroom 0",
-        "urxvt-mld -q -o -f",
-        'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
+awful.spawn "urxvt-mld -q -o -f"
+awful.spawn 'urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
+awful.spawn.with_line_callback(
+    "jigglyroom 0",
+    {
+        stdout = function(line)
+            jigglyroom.text = line
+        end
     }
-
-    for _, i in pairs(autorunApps) do
-        awful.util.spawn(i)
-    end
-end
-
--- }}}
+)
+awful.spawn "ssh-add.sh"

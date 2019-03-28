@@ -1,12 +1,10 @@
 {
   "modules": [
-    "awesomeDummyOpen",
     "memoryUsage",
     "networkThroughput",
     "cpuTemperature",
     "ipAddress",
-    "dateAndTime",
-    "awesomeDummyClose"
+    "dateAndTime"
   ],
   "networkDevices": ["eno1"],
   "fahrenheit": false,
