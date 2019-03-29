@@ -20,4 +20,4 @@ fi
 
 numlockx &
 
-exec awesome
+exec awesome 2> ~/.awesome.err.log
