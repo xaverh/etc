@@ -20,4 +20,11 @@ fi
 
 numlockx &
 
-exec awesome 2> ~/.awesome.err.log
+urxvt-mld -q -o -f
+
+tint2 &
+
+exec 2bwm 2> ~/.2bwm.err.log
+
+# exec urxvt-mlc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"
+
