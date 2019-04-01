@@ -1,6 +1,6 @@
 #! /bin/sh
 
-urxvtd -q -o -f
+urxvt-mld -q -o -f
 sxhkd &
 
 bspc monitor -d main work chat music logs
