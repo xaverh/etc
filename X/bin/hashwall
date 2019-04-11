@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#args
+res=40
+step=20
+bg="#6da741"
+fg="#173f4f"
+
+
+# calculate
+max=$((res*2+2))
+i=0
+lines=""
+while
+	lines="$lines line $i,-1 -1,$i"
+	i="$((i+step))"
+	[ "$i" -lt "$max" ]
+do :; done
+
+# generate
+convert -size ${res}x${res} xc:"#000000" -stroke "#ffffff" -draw "${lines}" /tmp/wall.xbm
+xsetroot -fg "$fg" -bg "$bg" -bitmap /tmp/wall.xbm
