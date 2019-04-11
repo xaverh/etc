@@ -1,0 +1,33 @@
+#! /bin/sh
+
+sxhkd &
+
+bspc monitor -d main work chat music dumpster logs
+
+bspc config border_width		2
+bspc config window_gap		 	12
+bspc config focus_follows_pointer	true
+bspc config split_ratio			0.61803398875
+bspc config borderless_monocle		true
+bspc config gapless_monocle		true
+bspc config single_monocle		true
+
+bspc rule -a 'discord' desktop='^3'
+bspc rule -a 'Chromium' desktop='^1'
+bspc rule -a 'URxvt:journalctl' desktop='^5'
+bspc rule -a '*:zathura' state=tiled
+bspc rule -a 'TelegramDesktop' desktop='^3'
+
+wid=$(xdo id -m -a "jigglyroom")
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+panel_height=23
+font="IBM Plex Sans:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+font2="IBM Plex Sans Hebrew Medium:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+font3="IBM Plex Thai Medium:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+font4="思源黑体 Medium:style=Medium,Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+font4="Noto Color Emoji:style=Regular:pixelsize=14"
+
+jigglyroom 0 | lemonbar -a 32 -u 2 -n jigglyroom -g x$panel_height  -f "$font" -f "$font2" -f "$font3" -f "$font4" -f "$font5" -F "#F5F6F6" -B "#1E1E1E" | sh &
+
+bspc wm --adopt-orphans

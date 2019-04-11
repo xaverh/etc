@@ -1,0 +1,15 @@
+#!/bin/sh
+
+9menu -warp -popup "$@" \
+"rxvt-unicode:urxvtc" \
+"Firefox:firefox" \
+"Google Chrome Dev:chrome" \
+"Visual Studio Code:code -n" \
+"mpv:mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
+"MuPDF:mupdf-gl" \
+"Strawberry:strawberry" \
+"GIMP:gimp" \
+"Steam:steam" \
+exit
+
+# "MμPDF:mupdf-gl" \
