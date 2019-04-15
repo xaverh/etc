@@ -13,7 +13,6 @@
   "editor.renderLineHighlight": "all",
   "editor.renderControlCharacters": true,
   "files.trimTrailingWhitespace": true,
-  "files.autoSave": "afterDelay",
   "editor.renderWhitespace": "none",
   "editor.formatOnSave": false,
   "files.associations": {
