@@ -10,6 +10,9 @@
 "Strawberry:strawberry" \
 "GIMP:gimp" \
 "Steam:steam" \
+"Change Wallpaper:change_wallpaper.sh" \
+"Connect UE Megaboom:bluetoothctl connect 88:C6:26:F4:8A:90" \
+"Screenshot:maim `date +%s`.png" \
 exit
 
 # "MμPDF:mupdf-gl" \
