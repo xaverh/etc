@@ -1,20 +1,21 @@
-#!/bin/sh
+#!/usr/bin/zsh
 
 herbstclient emit_hook reload
-
-herbstclient pad 0 19
-
 
 # remove all existing keybindings
 herbstclient keyunbind --all
 
+main_font="-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1"
+dmenu_options=" -m 0 -f -i -fn "$main_font" -nb \"#1E1E1E\" -nf \"#E5E6E6\" -sb \"#005577\" -sf \"#E5E6E6\""
+
 herbstclient keybind Mod4-Shift-q quit
 herbstclient keybind Mod4-Shift-r reload
-herbstclient keybind Mod4-Shift-c close
+herbstclient keybind Mod4-q close_or_remove
 herbstclient keybind Mod4-Return spawn urxvtc
+herbstclient keybind Mod4-Shift-Return spawn urxvtc -e tmux
+herbstclient keybind Mod4-space spawn sh -c "dmenu_recent $dmenu_options"
 
-# basic movement
-# focusing clients
+# windows
 herbstclient keybind Mod4-Left  focus left
 herbstclient keybind Mod4-Down  focus down
 herbstclient keybind Mod4-Up    focus up
@@ -23,8 +24,6 @@ herbstclient keybind Mod4-h     focus left
 herbstclient keybind Mod4-j     focus down
 herbstclient keybind Mod4-k     focus up
 herbstclient keybind Mod4-l     focus right
-
-# moving clients
 herbstclient keybind Mod4-Shift-Left  shift left
 herbstclient keybind Mod4-Shift-Down  shift down
 herbstclient keybind Mod4-Shift-Up    shift up
@@ -34,15 +33,11 @@ herbstclient keybind Mod4-Shift-j     shift down
 herbstclient keybind Mod4-Shift-k     shift up
 herbstclient keybind Mod4-Shift-l     shift right
 
-# splitting frames
-# create an empty frame at the specified direction
-herbstclient keybind Mod4-u       split   bottom  0.5
-herbstclient keybind Mod4-o       split   right   0.5
-# let the current frame explode into subframes
+# frames
+herbstclient keybind Mod4-u       split   bottom  0.6180339887
+herbstclient keybind Mod4-o       split   right   0.6180339887
 herbstclient keybind Mod4-Control-space split explode
-
-# resizing frames
-resizestep=0.05
+resizestep=0.01
 herbstclient keybind Mod4-Control-h       resize left +$resizestep
 herbstclient keybind Mod4-Control-j       resize down +$resizestep
 herbstclient keybind Mod4-Control-k       resize up +$resizestep
@@ -51,6 +46,22 @@ herbstclient keybind Mod4-Control-Left    resize left +$resizestep
 herbstclient keybind Mod4-Control-Down    resize down +$resizestep
 herbstclient keybind Mod4-Control-Up      resize up +$resizestep
 herbstclient keybind Mod4-Control-Right   resize right +$resizestep
+
+# layouts
+herbstclient keybind Mod4-s floating toggle
+herbstclient keybind Mod4-f fullscreen toggle
+herbstclient keybind Mod4-p pseudotile toggle
+herbstclient keybind Mod4-r rotate
+# The following cycles through the available layouts within a frame, but skips
+# layouts, if the layout change wouldn't affect the actual window positions.
+# I.e. if there are two windows within a frame, the grid layout is skipped.
+herbstclient keybind Mod4-t                                                     \
+            or , and . compare tags.focus.curframe_wcount = 2                   \
+                     . cycle_layout +1 vertical horizontal max vertical grid    \
+               , cycle_layout +1
+
+# max by default
+herbstclient set default_frame_layout 2
 
 # tags
 tag_names=( {1..9} 0 )
@@ -66,35 +77,23 @@ for i in ${!tag_names[@]} ; do
     fi
 done
 
-# cycle through tags
+# herbstclient keybind Mod4-Shift-space spawn sh -c "command=herbstclient list_commands | dmenu  -p "Run herbstclient command:
+# Another idea: Create workspaces and go there with dmenu
+
 herbstclient keybind Mod4-period use_index +1 --skip-visible
 herbstclient keybind Mod4-comma  use_index -1 --skip-visible
 
-# layouting
-herbstclient keybind Mod4-r remove
-herbstclient keybind Mod4-s floating toggle
-herbstclient keybind Mod4-f fullscreen toggle
-herbstclient keybind Mod4-p pseudotile toggle
-# The following cycles through the available layouts within a frame, but skips
-# layouts, if the layout change wouldn't affect the actual window positions.
-# I.e. if there are two windows within a frame, the grid layout is skipped.
-herbstclient keybind Mod4-space                                                           \
-            or , and . compare tags.focus.curframe_wcount = 2                   \
-                     . cycle_layout +1 vertical horizontal max vertical grid    \
-               , cycle_layout +1
-
 # mouse
 herbstclient mouseunbind --all
+# why do these only work in floating mode?
 herbstclient mousebind Mod4-Button1 move
 herbstclient mousebind Mod4-Button2 zoom
 herbstclient mousebind Mod4-Button3 resize
 
 # focus
 herbstclient keybind Mod4-BackSpace   cycle_monitor
-herbstclient keybind Mod4-Tab         cycle_all +1
-herbstclient keybind Mod4-Shift-Tab   cycle_all -1
-herbstclient keybind Mod4-c cycle
-herbstclient keybind Mod4-i jumpto urgent
+herbstclient keybind Mod4-Tab         cycle +1
+herbstclient keybind Mod4-Shift-Tab   cycle -1
 
 # theme
 herbstclient attr theme.tiling.reset 1
@@ -109,7 +108,7 @@ herbstclient set frame_bg_transparent 1
 herbstclient set frame_transparent_width 5
 herbstclient set frame_gap 4
 
-herbstclient attr theme.active.color '#9fbc00'
+herbstclient attr theme.active.color '#005577'
 herbstclient attr theme.normal.color '#454545'
 herbstclient attr theme.urgent.color orange
 herbstclient attr theme.inner_width 1
@@ -119,14 +118,33 @@ herbstclient attr theme.floating.border_width 4
 herbstclient attr theme.floating.outer_width 1
 herbstclient attr theme.floating.outer_color black
 herbstclient attr theme.active.inner_color '#3E4A00'
-herbstclient attr theme.active.outer_color '#3E4A00'
-herbstclient attr theme.background_color '#141414'
+herbstclient attr theme.active.outer_color '#005577'
+herbstclient attr theme.background_color '#1e1e1e'
 
-herbstclient set window_gap 12
+herbstclient set window_gap 0
 herbstclient set frame_padding 0
 herbstclient set smart_window_surroundings 0
 herbstclient set smart_frame_surroundings 1
 herbstclient set mouse_recenter_gap 0
+herbstclient set focus_follows_mouse 1
+
+herbstclient keybind Mod4+KP_Insert spawn sh -c 'pamixer --mute && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind Mod4+KP_Add spawn sh -c 'pamixer --unmute && pamixer --increase 5 && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind Mod4+KP_Subtract spawn sh -c 'pamixer --unmute && pamixer --decrease 5 && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind XF86AudioMute spawn sh -c 'pamixer --mute && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind XF86AudioRaiseVolume spawn sh -c 'pamixer --unmute && pamixer --increase 5 && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind XF86AudioLowerVolume spawn sh -c 'pamixer --unmute && pamixer --decrease 5 && pamixer --get-mute && notify-send -t 200 "mute" || notify-send -t 200 "volume: "`pamixer --get-volume`" %"'
+herbstclient keybind Mod4+KP_End spawn strawberry --play-pause --show-osd
+herbstclient keybind XF86AudioPlay spawn strawberry --play-pause --show-osd
+herbstclient keybind Mod4+KP_Multiply spawn strawberry --next --show-osd
+herbstclient keybind XF86AudioNext spawn strawberry --next --show-osd
+herbstclient keybind Mod4+KP_Divide spawn strawberry --previous --show-osd
+herbstclient keybind XF86AudioPrev spawn strawberry --previous --show-osd
+herbstclient keybind Mod4+KP_Begin spawn strawberry --show-osd
+
+herbstclient keybind Mod4+Insert spawn sh -c "clipmenu $dmenu_options"
+herbstclient keybind Mod4+Home spawn sh -c "clipmenu-url"
+# herbstclient keybind Mod4+Shift+m spawn sh -c "simple_mount.sh $dmenu_options"
 
 # rules
 herbstclient unrule -F
@@ -135,10 +153,11 @@ herbstclient rule focus=on # normally focus new clients
 #herbstclient rule focus=off # normally do not focus new clients
 # give focus to most common terminals
 #herbstclient rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
-herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' manage=off
+herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-herbstclient rule class=9menu manage=off
+herbstclient rule class=URxvt instance=journalctl tag=0
+herbstclient rule class=Strawberry tag=vier
 
 herbstclient set tree_style '╾│ ├└╼─┐'
 
@@ -151,10 +170,18 @@ herbstclient unlock
 # herbstclient detect_monitors
 
 # find the panel
-#panel=~/.config/herbstluftwm/panel.sh
-#[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-#for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-    ## start it on each monitor
-    #"$panel" $monitor &
-#done
-(jigglyroom 0 | lemonbar -g x19 -a 12 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1" -F "#E5E6E6" | /usr/bin/zsh) &
+panel=~/.config/herbstluftwm/panel.sh
+[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+    # start it on each monitor
+    "$panel" $monitor &
+done
+
+# autostart stuff only once, not every reload
+if herbstclient silent new_attr bool my_not_first_autostart ; then
+    urxvtd -q -o -f
+    # herbstclient spawn dunst
+    urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
+    # workaround (cf. https://herbstluftwm.org/faq.html#_q_i_set_default_frame_layout_to_my_favorite_layout_but_it_doesn_8217_t_work_with_the_root_frame_existing_frames)
+    herbstclient split vertical 0.5; herbstclient remove
+fi
