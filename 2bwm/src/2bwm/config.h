@@ -28,15 +28,16 @@ static const uint8_t offsets[] = {0,18,0,18};
  *2)fixedcol         3)unkilcol
  *4)fixedunkilcol    5)outerbordercol
  *6)emptycol         */
-static const char *colors[] = {"#8b9fa7",
-                               "#173f4f",
-                               "#35b9ab",
-                               "#73ba25",
-                               "#E32791",
-                               "#1E1E1E",
+static const char *colors[] = {
+                               "#cdd5d5",
+                               "#82a7c7",
+                               "#faf669",
+                               "#b6fa69",
+                               "#faad69",
+                               "#87737b",
                                "#1E1E1E"};
 /* if this is set to true the inner border and outer borders colors will be swapped */
-static const bool inverted_colors = false;
+static const bool inverted_colors = true;
 ///---Cursor---///
 /* default position of the cursor:
  * correct values are:
@@ -47,7 +48,7 @@ static const bool inverted_colors = false;
 /*0) Outer border size. If you put this negative it will be a square.
  *1) Full borderwidth    2) Magnet border size
  *3) Resize border size  */
-static const uint8_t borders[] = {4, 9, 10, 9};
+static const uint8_t borders[] = {3, 7, 10, 7};
 /* Windows that won't have a border.
  * It uses substring comparison with what is found in the WM_NAME
  * attribute of the window. You can test this using `xprop WM_NAME`
