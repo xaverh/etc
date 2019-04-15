@@ -62,9 +62,9 @@ fi
 #     synclient TapButton1=1 &
 # fi
 
-# xsetroot -bitmap $HOME/etc/backdrops/`ls $HOME/etc/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
+xsetroot -bitmap $HOME/etc/backdrops/`ls $HOME/etc/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
-~/.fehbg &
+# ~/.fehbg &
 
 numlockx &
 
@@ -72,11 +72,13 @@ urxvtd -q -o -f
 
 urxvt -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
 
-jigglyroom 0 | lemonbar -g x18 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"  -B "#1E1E1E" -F "#E5E6E6" | sh &!
+# (sleep 3 && jigglyroom 0 | lemonbar -a 11 -g x18 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"  -B "#1E1E1E" -F "#E5E6E6" | sh) &
 
-while true; do
-    2bwm >/dev/null 2>&1
-done
+#while true; do
+    #2bwm >/dev/null 2>&1
+#done
+
+exec herbstluftwm --locked
 
 # call failsafe
 exit 0

@@ -1,0 +1,160 @@
+#!/bin/sh
+
+herbstclient emit_hook reload
+
+herbstclient pad 0 19
+
+
+# remove all existing keybindings
+herbstclient keyunbind --all
+
+herbstclient keybind Mod4-Shift-q quit
+herbstclient keybind Mod4-Shift-r reload
+herbstclient keybind Mod4-Shift-c close
+herbstclient keybind Mod4-Return spawn urxvtc
+
+# basic movement
+# focusing clients
+herbstclient keybind Mod4-Left  focus left
+herbstclient keybind Mod4-Down  focus down
+herbstclient keybind Mod4-Up    focus up
+herbstclient keybind Mod4-Right focus right
+herbstclient keybind Mod4-h     focus left
+herbstclient keybind Mod4-j     focus down
+herbstclient keybind Mod4-k     focus up
+herbstclient keybind Mod4-l     focus right
+
+# moving clients
+herbstclient keybind Mod4-Shift-Left  shift left
+herbstclient keybind Mod4-Shift-Down  shift down
+herbstclient keybind Mod4-Shift-Up    shift up
+herbstclient keybind Mod4-Shift-Right shift right
+herbstclient keybind Mod4-Shift-h     shift left
+herbstclient keybind Mod4-Shift-j     shift down
+herbstclient keybind Mod4-Shift-k     shift up
+herbstclient keybind Mod4-Shift-l     shift right
+
+# splitting frames
+# create an empty frame at the specified direction
+herbstclient keybind Mod4-u       split   bottom  0.5
+herbstclient keybind Mod4-o       split   right   0.5
+# let the current frame explode into subframes
+herbstclient keybind Mod4-Control-space split explode
+
+# resizing frames
+resizestep=0.05
+herbstclient keybind Mod4-Control-h       resize left +$resizestep
+herbstclient keybind Mod4-Control-j       resize down +$resizestep
+herbstclient keybind Mod4-Control-k       resize up +$resizestep
+herbstclient keybind Mod4-Control-l       resize right +$resizestep
+herbstclient keybind Mod4-Control-Left    resize left +$resizestep
+herbstclient keybind Mod4-Control-Down    resize down +$resizestep
+herbstclient keybind Mod4-Control-Up      resize up +$resizestep
+herbstclient keybind Mod4-Control-Right   resize right +$resizestep
+
+# tags
+tag_names=( {1..9} 0 )
+tag_keys=( {1..9} 0 )
+
+herbstclient rename default "${tag_names[0]}" || true
+for i in ${!tag_names[@]} ; do
+    herbstclient add "${tag_names[$i]}"
+    key="${tag_keys[$i]}"
+    if ! [ -z "$key" ] ; then
+        herbstclient keybind "Mod4-$key" use_index "$i"
+        herbstclient keybind "Mod4-Shift-$key" move_index "$i"
+    fi
+done
+
+# cycle through tags
+herbstclient keybind Mod4-period use_index +1 --skip-visible
+herbstclient keybind Mod4-comma  use_index -1 --skip-visible
+
+# layouting
+herbstclient keybind Mod4-r remove
+herbstclient keybind Mod4-s floating toggle
+herbstclient keybind Mod4-f fullscreen toggle
+herbstclient keybind Mod4-p pseudotile toggle
+# The following cycles through the available layouts within a frame, but skips
+# layouts, if the layout change wouldn't affect the actual window positions.
+# I.e. if there are two windows within a frame, the grid layout is skipped.
+herbstclient keybind Mod4-space                                                           \
+            or , and . compare tags.focus.curframe_wcount = 2                   \
+                     . cycle_layout +1 vertical horizontal max vertical grid    \
+               , cycle_layout +1
+
+# mouse
+herbstclient mouseunbind --all
+herbstclient mousebind Mod4-Button1 move
+herbstclient mousebind Mod4-Button2 zoom
+herbstclient mousebind Mod4-Button3 resize
+
+# focus
+herbstclient keybind Mod4-BackSpace   cycle_monitor
+herbstclient keybind Mod4-Tab         cycle_all +1
+herbstclient keybind Mod4-Shift-Tab   cycle_all -1
+herbstclient keybind Mod4-c cycle
+herbstclient keybind Mod4-i jumpto urgent
+
+# theme
+herbstclient attr theme.tiling.reset 1
+herbstclient attr theme.floating.reset 1
+herbstclient set frame_border_active_color '#222222'
+herbstclient set frame_border_normal_color '#101010'
+herbstclient set frame_bg_normal_color '#565656'
+herbstclient set frame_bg_active_color '#345F0C'
+herbstclient set frame_border_width 1
+herbstclient set always_show_frame 1
+herbstclient set frame_bg_transparent 1
+herbstclient set frame_transparent_width 5
+herbstclient set frame_gap 4
+
+herbstclient attr theme.active.color '#9fbc00'
+herbstclient attr theme.normal.color '#454545'
+herbstclient attr theme.urgent.color orange
+herbstclient attr theme.inner_width 1
+herbstclient attr theme.inner_color black
+herbstclient attr theme.border_width 3
+herbstclient attr theme.floating.border_width 4
+herbstclient attr theme.floating.outer_width 1
+herbstclient attr theme.floating.outer_color black
+herbstclient attr theme.active.inner_color '#3E4A00'
+herbstclient attr theme.active.outer_color '#3E4A00'
+herbstclient attr theme.background_color '#141414'
+
+herbstclient set window_gap 12
+herbstclient set frame_padding 0
+herbstclient set smart_window_surroundings 0
+herbstclient set smart_frame_surroundings 1
+herbstclient set mouse_recenter_gap 0
+
+# rules
+herbstclient unrule -F
+#herbstclient rule class=XTerm tag=3 # move all xterms to tag 3
+herbstclient rule focus=on # normally focus new clients
+#herbstclient rule focus=off # normally do not focus new clients
+# give focus to most common terminals
+#herbstclient rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+herbstclient rule class=9menu manage=off
+
+herbstclient set tree_style '╾│ ├└╼─┐'
+
+# unlock, just to be sure
+herbstclient unlock
+
+# do multi monitor setup here, e.g.:
+# herbstclient set_monitors 1280x1024+0+0 1280x1024+1280+0
+# or simply:
+# herbstclient detect_monitors
+
+# find the panel
+#panel=~/.config/herbstluftwm/panel.sh
+#[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+#for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+    ## start it on each monitor
+    #"$panel" $monitor &
+#done
+(jigglyroom 0 | lemonbar -g x19 -a 12 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1" -F "#E5E6E6" | /usr/bin/zsh) &
