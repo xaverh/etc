@@ -427,7 +427,7 @@ type WIFI struct {
 func (wifi WIFI) printToChannel() {
 	sleepTime := 3 * time.Second
 	for {
-		iwOutput, err := exec.Command("iw", "dev", "wlp2s0", "link").Output()
+		iwOutput, err := exec.Command("/usr/sbin/iw", "dev", config.WifiDevice, "link").Output()
 		if err != nil {
 			wifi.Output <- ""
 		} else {

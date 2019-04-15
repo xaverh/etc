@@ -1,16 +1,17 @@
 {
   "modules": [
     "menuArea",
-    "workspacePager",
-    "windowTitle",
+    "herbstluftwmStatus",
     "alignRight",
     "memoryUsage",
     "networkThroughput",
     "cpuTemperature",
+    "wifi",
     "ipAddress",
     "dateAndTime"
   ],
-  "networkDevices": ["eno1"],
+  "networkDevices": ["eno1","wlp0s20u4"],
+  "wifiDevice": "wlp0s20u4",
   "fahrenheit": false,
   "thermalZone": 2,
   "dateAndTimeFormat": "Mon 2 Jan 15:04:05 MST",
