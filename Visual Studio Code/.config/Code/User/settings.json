@@ -51,6 +51,7 @@
   },
   "[jsonc]": {
     "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.tabSize": 2
@@ -78,6 +79,9 @@
   },
   "[vue]": {
     "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "workbench.settings.openDefaultSettings": false,
   "clang-format.language.typescript.enable": true,
@@ -188,13 +192,10 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
+  "workbench.colorTheme": "Night Owl",
   "C_Cpp.updateChannel": "Insiders",
   "terminal.integrated.lineHeight": 1.2,
-  "workbench.editor.showTabs": false,
   "editor.suggestSelection": "first",
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "terminal.integrated.rendererType": "canvas"
+  "terminal.integrated.rendererType": "canvas",
+  "workbench.editor.highlightModifiedTabs": true
 }
