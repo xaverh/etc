@@ -1,18 +1,16 @@
 #!/bin/sh
 
-9menu -warp -popup "$@" \
-"rxvt-unicode:urxvtc" \
-"Firefox:firefox" \
-"Google Chrome Dev:chrome" \
-"Visual Studio Code:code -n" \
-"mpv:mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
-"MuPDF:mupdf-gl" \
-"Strawberry:strawberry" \
-"GIMP:gimp" \
-"Steam:steam" \
-"Change Wallpaper:change_wallpaper.sh" \
-"Connect UE Megaboom:bluetoothctl connect 88:C6:26:F4:8A:90" \
-"Screenshot:maim `date +%s`.png" \
+9menu -font "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -bg "#1e1e1e" -fg "#f5f6f6" -warp -popup "$@" \
+"rxvt-unicode:exec urxvtc" \
+"Firefox:exec firefox" \
+"Google Chrome Dev:exec chrome" \
+"Visual Studio Code:exec code -n" \
+"mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
+"M"$'\xB5'"PDF:exec mupdf-gl" \
+"Strawberry:exec strawberry" \
+"GIMP:exec gimp" \
+"Steam:exec steam" \
+"Change Wallpaper:exec change_wallpaper.sh" \
+"Connect Set"$'\xFA'"bal:exec bluetoothctl connect 88:C6:26:F4:8A:90" \
+"Screenshot:exec maim `date +%s`.png" \
 exit
-
-# "MμPDF:mupdf-gl" \
