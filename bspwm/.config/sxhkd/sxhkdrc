@@ -3,31 +3,35 @@
 #
 
 # terminal emulator
-super + Return
-	$TERMINAL
-
-super + shift + Return
-	$TERMINAL -e tmux
+super + {_,shift + }Return
+	urxvtc {_, -e tmux}
 
 # program launcher
-super + space
-	dmenu_recent -f -i -m 0 -fn "IBM Plex Sans:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" -nb "#1E1E1E" -nf "#E5E6E6" -sb "#005577" -sf "#E5E6E6"
+super + @space
+	dmenu_recent
 
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# Strawberry Music Player
+super + {KP_Multiply,KP_Divide,KP_End}
+	strawberry --{next,restart-or-previous,play-pause}
+
+# PulseAudio Volume control
+super + {KP_Subtract,KP_Add,KP_Insert}
+	pamixer -{ud 5,ui 5,m}
+
 #
 # bspwm hotkeys
 #
 
-# quit bspwm
-super + alt + q
-	pkill -x panel; bspc quit
-
-# restart bspwm
+# quit/restart bspwm
 super + alt + r
 	bspc wm -r
+
+super + alt + q
+	pkill -x panel; bspc quit
 
 # close and kill
 super + {_,shift + }q
@@ -35,7 +39,7 @@ super + {_,shift + }q
 
 # alternate between the tiled and monocle layout
 super + m
-	bspc desktop -l next
+	bspc desktop focused --layout next
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -70,16 +74,20 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }c
+super + {_,shift + }Tab
 	bspc node -f {next,prev}.local
+
+# rotate the current node's parent
+super + r
+	bspc node @parent -R 90
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# focus the last node
+super + grave
+	bspc node -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -90,6 +98,10 @@ super + {o,i}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# demu focus
+super + backslash
+	dmenu_focus.lua
 
 #
 # preselect
@@ -126,51 +138,3 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
-
-#
-# media keys
-#
-
-# mute
-XF86AudioMute
-super + KP_Insert
-	ponymix mute && ponymix is-muted && dunstify -t 200 "mute" || dunstify -t 200 "volume: "`ponymix get-volume`" %"
-
-# Louder
-XF86AudioRaiseVolume
-super + KP_Add
-	ponymix unmute && ponymix increase 5 && ponymix is-muted && dunstify -t 200 "mute" || dunstify -t 200 "volume: "`ponymix get-volume`" %"
-
-# Silenter
-XF86AudioLowerVolume
-super + KP_Subtract
-	ponymix unmute && ponymix decrease 5 && ponymix is-muted && dunstify -t 200 "mute" || dunstify -t 200 "volume: "`ponymix get-volume`" %"
-
-# Play/Pause
-XF86AudioPlay
-super + KP_Delete
-	mpc toggle
-
-# Next song
-XF86AudioNext
-super + KP_Multiply
-	mpc next
-
-# Previous song
-XF86AudioPrev
-super + KP_Divide
-	mpc prev
-
-# Brightness
-XF86MonBrightnessUp
-	xbacklight -inc 7; dunstify -t 100 "backlight: `xbacklight -get`" -t 400
-
-XF86MonBrightnessDown
-	xbacklight -dec 7; dunstify -t 100 "backlight: `xbacklight -get`" -t 400
-
-super + Insert
-	clipmenu -m 0 -f -i -fn "IBM Plex Sans:style=Medium,Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1" -nb "#1E1E1E" -nf "#E5E6E6" -sb "#005577" -sf "#E5E6E6"
-
-# to be defined
-# clipmenu-url
-# showclipboardcmd
