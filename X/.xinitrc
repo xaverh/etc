@@ -68,17 +68,18 @@ xsetroot -bitmap $HOME/etc/backdrops/`ls $HOME/etc/backdrops | shuf -n 1 | tr -d
 
 numlockx &
 
-# urxvtd -q -o -f
+urxvtd -q -o -f
 
-# urxvt -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
+urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
 
 # (sleep 3 && jigglyroom 0 | lemonbar -a 11 -g x18 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"  -B "#1E1E1E" -F "#E5E6E6" | sh) &
 
 #while true; do
-    #2bwm >/dev/null 2>&1
+ #   i3 >/dev/null 2>&1
 #done
 
-exec herbstluftwm --locked
+sxhkd&
+exec bspwm
 
 # call failsafe
 exit 0
