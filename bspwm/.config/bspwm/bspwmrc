@@ -18,11 +18,12 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a discord desktop='^3'
 bspc rule -a Chromium desktop='^1'
-bspc rule -a URxvt:journalctl desktop=last
+bspc rule -a URxvt:journalctl desktop='^10'
 bspc rule -a TelegramDesktop desktop='^3'
 bspc rule -a Firefox:Browser state=floating
 
-
-
 [ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
 pgrep -x panel > /dev/null || panel &
+
+urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000" &
+
