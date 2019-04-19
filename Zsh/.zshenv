@@ -1,8 +1,4 @@
-fpath=($fpath $HOME/.zsh/func)
-typeset -U fpath
+typeset -U path
+path=($path ~/bin ~/.npm-packages/bin)
 
-GOPATH="$HOME/.gopath/"
-export GOPATH
-
-ANDROID_HOME="$HOME/.android-sdk"
-export ANDROID_HOME
+export GOPATH=~/.gopath/
