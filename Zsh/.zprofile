@@ -1,7 +1,6 @@
 SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_AUTH_SOCK
 
-export GOPATH=~/.gopath
 export MAN_POSIXLY_CORRECT=1
 export EDITOR=vim
 export VISUAL=vim
