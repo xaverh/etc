@@ -1,2 +1,2 @@
 typeset -U path
-path=($path ~/bin ~/.npm-packages/bin)
+path=(/usr/local/bin /usr/bin /usr/sbin /bin /sbin ~/.npm-packages/bin ~/bin $path)
