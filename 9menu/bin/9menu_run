@@ -1,16 +1,18 @@
 #!/bin/sh
 
-9menu -font "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -bg "#1e1e1e" -fg "#f5f6f6" -warp -popup "$@" \
+9menu -font "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -bg "#1e1e1e" -fg "#f5f6f6" -warp "$@" \
 "rxvt-unicode:exec urxvtc" \
 "Firefox:exec firefox" \
 "Google Chrome Dev:exec chrome" \
 "Visual Studio Code:exec code -n" \
-"mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
 "M"$'\xB5'"PDF:exec mupdf-gl" \
 "Strawberry:exec strawberry" \
+"VLC media player:exec vlc" \
 "GIMP:exec gimp" \
 "Steam:exec steam" \
 "Change Wallpaper:exec change_wallpaper.sh" \
 "Connect Set"$'\xFA'"bal:exec bluetoothctl connect 88:C6:26:F4:8A:90" \
 "Screenshot:exec maim `date +%s`.png" \
 exit
+
+# "mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
