@@ -18,6 +18,10 @@ super + Escape
 super + {KP_Multiply,KP_Divide,KP_End}
 	strawberry --{next,restart-or-previous,play-pause}
 
+# VLC media player
+super + KP_Begin
+	dbus-send --print-reply --session --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+
 # PulseAudio Volume control
 super + {KP_Subtract,KP_Add,KP_Insert}
 	pamixer -{ud 5,ui 5,m}
@@ -81,6 +85,14 @@ super + {_,shift + }Tab
 super + r
 	bspc node @parent -R 90
 
+# circulate the entire desktop
+super + c
+	bspc node @/ -C forward
+
+# flip vertical
+super + v
+	bspc node @/ -F vertical
+
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
@@ -101,7 +113,13 @@ super + {_,shift + }{1-9,0}
 
 # demu focus
 super + backslash
-	dmenu_focus.lua
+	dmenu_focus.lua --focus
+
+# dmenu swap
+super + bar
+	dmenu_focus.lua --swap
+
+# TODO: balance, equalize, flip
 
 #
 # preselect
