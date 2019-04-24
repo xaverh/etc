@@ -77,9 +77,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous node in the current desktop
-super + {_,shift + }Tab
-	bspc node -f {next,prev}.local
+# focus the next node in the current desktop
+super + shift + Tab
+	bspc node -f next.local
 
 # rotate the current node's parent
 super + r
@@ -98,8 +98,12 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node
+super + Tab
+	bspc node -f last.local
+
+# swap with last node
 super + grave
-	bspc node -f last
+	bspc node -f last.local && bspc node -s last.local
 
 # focus the older or newer node in the focus history
 super + {o,i}

@@ -5,7 +5,7 @@
   "editor.rulers": [],
   "editor.formatOnType": true,
   "editor.scrollBeyondLastLine": false,
-  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.acceptSuggestionOnEnter": "off",
   "editor.wordWrap": "on",
   "editor.wrappingIndent": "same",
   "editor.tabSize": 8,
@@ -192,10 +192,11 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "Ysgrifennwr",
   "C_Cpp.updateChannel": "Insiders",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
-  "workbench.editor.highlightModifiedTabs": true
+  "workbench.editor.highlightModifiedTabs": true,
+  "go.toolsGopath": "~/.gopath"
 }
