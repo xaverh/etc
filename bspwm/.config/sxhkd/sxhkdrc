@@ -77,9 +77,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next node in the current desktop
-super + shift + Tab
-	bspc node -f next.local
+# focus the next/previous node in the current desktop
+super + {_,shift + }Tab
+	bspc node -f {next,prev}.local
 
 # rotate the current node's parent
 super + r
@@ -98,11 +98,11 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node
-super + Tab
+super + backslash
 	bspc node -f last.local
 
 # swap with last node
-super + grave
+super + BackSpace
 	bspc node -f last.local && bspc node -s last.local
 
 # focus the older or newer node in the focus history
@@ -115,13 +115,9 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-# demu focus
-super + backslash
-	dmenu_focus.lua --focus
-
-# dmenu swap
-super + bar
-	dmenu_focus.lua --swap
+# demu focus/swap
+super + {grave,asciitilde}
+	dmenu_focus.lua {--focus,--swap}
 
 # TODO: balance, equalize, flip
 
