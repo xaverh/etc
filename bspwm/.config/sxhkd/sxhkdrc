@@ -26,6 +26,10 @@ super + KP_Begin
 super + {KP_Subtract,KP_Add,KP_Insert}
 	pamixer -{ud 5,ui 5,m}
 
+# present pdf manpage
+super + F1
+	mansplain.sh
+
 #
 # bspwm hotkeys
 #
