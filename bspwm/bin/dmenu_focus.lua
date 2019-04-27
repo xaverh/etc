@@ -1,6 +1,6 @@
 #!/usr/bin/lua
 
-local mode = {arg = arg[1] or "--focus", name = string.sub(arg[1],3)}
+local mode = string.sub(arg[1] or 'focus',3)
 
 local panel_fg_color = os.getenv("PANEL_FG_COLOR") or "#424242"
 local panel_bg_color = os.getenv("PANEL_BG_COLOR") or "#F9F8F4"
@@ -26,10 +26,17 @@ local dmenu_input = "/bin/sh -c 'echo \""
 for k, v in pairs(ids) do
 	dmenu_input = dmenu_input .. string.gsub(k, "'", "'\\''") .. '\n'
 end
-dmenu_input = dmenu_input .. "\" | dmenu -i -f -l 10 -p \"" .. mode.name .. "\" -fn \"" .. font .."\" -nb \"" .. panel_bg_color .. "\" -nf \"" .. panel_fg_color .. "\"'"
+dmenu_input = dmenu_input .. "\" | dmenu -i -f -l 10 -p \"" .. mode .. "\" -fn \"" .. font .."\" -nb \"" .. panel_bg_color .. "\" -nf \"" .. panel_fg_color .. "\"'"
 print(dmenu_input)
 
 local dmenu = io.popen(dmenu_input)
 local window_title = dmenu:read("l")
 dmenu:close()
-os.execute("bspc node " .. mode.arg .. " " .. ids[window_title])
+if mode == 'focus' then
+	os.execute("bspc node " .. ids[window_title] .. " --flag hidden=off --focus")
+	print (ids[window_title])
+elseif mode == 'swap' then
+	os.execute("bspc node " .. ids[window_title] .. " --flag hidden=off && bspc node --swap " .. ids[window_title])
+elseif mode == 'fetch' then
+	os.execute("bspc node " .. ids[window_title] .. " --flag hidden=off --to-desktop focused --focus")
+end
