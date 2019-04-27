@@ -28,7 +28,7 @@ super + {KP_Subtract,KP_Add,KP_Insert}
 
 # present pdf manpage
 super + F1
-	mansplain.sh
+	mansplain
 
 #
 # bspwm hotkeys
