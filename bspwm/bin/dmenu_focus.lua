@@ -24,7 +24,7 @@ query:close()
 
 local dmenu_input = "/bin/sh -c 'echo \""
 for k, v in pairs(ids) do
-	dmenu_input = dmenu_input .. k .. '\n'
+	dmenu_input = dmenu_input .. string.gsub(k, "'", "'\\''") .. '\n'
 end
 dmenu_input = dmenu_input .. "\" | dmenu -i -f -l 10 -p \"" .. mode.name .. "\" -fn \"" .. font .."\" -nb \"" .. panel_bg_color .. "\" -nf \"" .. panel_fg_color .. "\"'"
 print(dmenu_input)

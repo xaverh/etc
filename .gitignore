@@ -1,3 +1,6 @@
 Vim/.vim/plugged
 .vscode/ipch
 Vim/.vim/.netrwhist
+PGP/.gnupg/trustdb.gpg
+PGP/.gnupg/pubring.kbx~
+PGP/.gnupg/pubring.kbx
