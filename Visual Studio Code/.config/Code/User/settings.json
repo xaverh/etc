@@ -192,11 +192,11 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
+  "workbench.colorTheme": "Night Owl",
   "C_Cpp.updateChannel": "Insiders",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "go.toolsGopath": "~/.gopath"
+  "go.toolsGopath": "/home/xha/.gopath"
 }
