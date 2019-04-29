@@ -66,7 +66,7 @@ super + {t,shift + t,f,F11}
 	bspc node -t {tiled,pseudo_tiled,floating,\~fullscreen}
 
 # set the node flags
-super + {m,a,s,z,i}
+super + {shift + m,a,s,z,i}
 	bspc node -g {marked,locked,sticky,private,hidden}
 
 #
@@ -122,6 +122,13 @@ super + {_,shift + }{1-9,0}
 # demu focus/swap
 super + {dead_circumflex,ssharp,dead_acute}
 	dmenu_focus.lua {--focus,--swap,--fetch}
+
+# change gap size
+super + less
+	bspc config window_gap $(( `bspc config window_gap` + 5 ))
+
+super + shift + less
+	bspc config window_gap $(( (val=`bspc config window_gap`) > 5 ? val - 5 : 0 ))
 
 # TODO: balance, equalize, flip
 
