@@ -13,7 +13,8 @@ if [ ! -f ~/.bash_hist/`date +%Y-%m` ]; then
 fi
 
 # directory colors
-eval `dircolors $HOME/.dircolors 2> /dev/null` || eval `dircolors`
+eval `dircolors $HOME/.dir_colors 2> /dev/null` || eval `dircolors`
+
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
 export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
@@ -63,7 +64,6 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias file_count='find .//. ! -name . -print | grep -c //'
 alias ix="curl -F 'f:1=<-' ix.io"
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # https://superuser.com/questions/300316/set-ps1-differently-on-local-computer-and-in-ssh-session
 if [ -n "$SSH_CLIENT" ]; then
