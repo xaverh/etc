@@ -76,7 +76,7 @@ urxvtd -q -o -f
  #   i3 >/dev/null 2>&1
 #done
 
-sxhkd&
+sxhkd -m -1 &
 exec bspwm
 
 # call failsafe
