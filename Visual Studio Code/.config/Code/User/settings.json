@@ -192,7 +192,7 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "Night Owl Light",
   "C_Cpp.updateChannel": "Insiders",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",

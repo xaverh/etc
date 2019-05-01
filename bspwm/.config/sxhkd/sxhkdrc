@@ -11,7 +11,7 @@ super + @space
 	dmenu_recent
 
 # make sxhkd reload its configuration files:
-super + Escape
+super + shift + Escape
 	pkill -USR1 -x sxhkd
 
 # Strawberry Music Player
@@ -29,6 +29,10 @@ super + {KP_Subtract,KP_Add,KP_Insert}
 # present pdf manpage
 super + F1
 	mansplain
+
+# 9menu
+super + @Menu
+	9menu_run
 
 #
 # bspwm hotkeys
@@ -130,7 +134,9 @@ super + less
 super + shift + less
 	bspc config window_gap $(( (val=`bspc config window_gap`) > 5 ? val - 5 : 0 ))
 
-# TODO: balance, equalize, flip
+# balance/equalize
+super + {_,shift +} e
+	bspc node @/ -{E,B}
 
 #
 # preselect
@@ -145,7 +151,7 @@ super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-super + ctrl + space
+super + Escape
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
