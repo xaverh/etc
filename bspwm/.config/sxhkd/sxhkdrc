@@ -138,6 +138,10 @@ super + shift + less
 super + {_,shift +} e
 	bspc node @/ -{E,B}
 
+# equalize with new ratio
+super + numbersign
+	bspc config split_ratio $(( `bspc config split_ratio` == 0.618034 ? 0.5 : 0.618034 )) && bspc node @/ -E
+
 #
 # preselect
 #
