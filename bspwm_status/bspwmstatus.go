@@ -13,6 +13,11 @@ const (
 	foregrundColor  = "#f5f6f6"
 	gotoDesktop     = "bspc desktop -f "
 	multimonitor    = false
+	stickyText      = ""
+	markedText      = "*"
+	lockedText      = ""
+	monocleText     = "[]"
+	tilingText      = "##"
 )
 
 type button string
@@ -32,6 +37,7 @@ type statusItem struct {
 
 var markupMap = map[string]string{
 	"f": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
+	"f": makeClickable()
 	"o": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
 	"u": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
 	"F": "%q",
@@ -44,6 +50,10 @@ var markupMap = map[string]string{
 	"G": "",
 	// State, kann Tiled (T), Pseudotiled (P), Fullscreen (=), Floating (F), Parent Node (@) sein
 	"T": "",
+}
+
+func desktopButton(desktop string) string {
+	return makeClickable(desktop, "bspc desktop " + desktop + " --focus ", mouseLeft)
 }
 
 func makeClickable(txt string, cmd string, b button) string {
@@ -60,10 +70,6 @@ func circulateWithRightClick(txt string) string {
 
 func rotateWithMiddleClick(txt string) string {
 	return makeClickable(txt, "bspc node @focused:/ --rotate 90", mouseMiddle)
-}
-
-func trimW(str string) string {
-	return strings.TrimPrefix(str, "W")
 }
 
 func splitAtColon(str string) []string {
@@ -89,11 +95,11 @@ func applyMarkup(statusItems []statusItem) []string {
 // Layout can be "tiled" (T) or "monocle" (M)
 func formatLayout(format string) string {
 	if format == "T" {
-		return startLeftClickArea + "bspc desktop -l monocle" + clickAreaCmdNameSep + "##" + endClickArea
+		return startLeftClickArea + "bspc desktop -l monocle" + clickAreaCmdNameSep + tilingText + endClickArea
 	}
-	return startLeftClickArea + "bspc desktop focused -l tiled" + clickAreaCmdNameSep + "[]" + endClickArea
+	return startLeftClickArea + "bspc desktop focused -l tiled" + clickAreaCmdNameSep + monocleText + endClickArea
 }
 
 func main() {
-	fmt.Println(applyMarkup(makeItems(splitAtColon(trimW(testInput)))))
+	fmt.Println(applyMarkup(makeItems(splitAtColon(testInput))))
 }
