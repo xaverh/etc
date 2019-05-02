@@ -1,7 +1,8 @@
 {
   "modules": [
     "menuArea",
-    "herbstluftwmStatus",
+    "workspacePager",
+    "windowTitle",
     "alignRight",
     "memoryUsage",
     "networkThroughput",
