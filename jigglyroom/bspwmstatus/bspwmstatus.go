@@ -78,7 +78,7 @@ func desktopButton(text string, desktop string) string {
 }
 
 func makeClickable(txt string, cmd string, b button) string {
-	return "%%{A" + string(b) + ":" + cmd + ":}" + txt + "%%{A}"
+	return "%{A" + string(b) + ":" + cmd + ":}" + txt + "%{A}"
 }
 
 func toggleLayoutWithLeftClick(txt string) string {
