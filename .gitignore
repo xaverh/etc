@@ -5,3 +5,6 @@ PGP/.gnupg/trustdb.gpg
 PGP/.gnupg/pubring.kbx~
 PGP/.gnupg/pubring.kbx
 X/.fehbg
+jigglyroom/config/config.go
+jigglyroom/jigglyroom
+*.bak

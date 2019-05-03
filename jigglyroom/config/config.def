@@ -1,0 +1,120 @@
+package config
+
+// ColorScheme defines all colors required for the style of the bar
+type ColorScheme struct {
+	DefaultFg           string
+	DefaultBg           string
+	FreeFg              string
+	FreeBg              string
+	FocusedHereFg       string
+	FocusedHereBg       string
+	NotFocusedHereFg    string
+	NotFocusedHereBg    string
+	FocusedNotHereFg    string
+	FocusedNotHereBg    string
+	NotFocusedNotHereFg string
+	NotFocusedNotHereBg string
+	UrgentFg            string
+	UrgentBg            string
+	WindowTitleBg       string
+	WindowTitleFg       string
+	WorkspacePagerBg    string
+	WorkspacePagerFg    string
+}
+
+var (
+	// ThermalZone is '*' in filename /sys/class/thermal/thermal_zone/*/temp
+	ThermalZone = "1"
+
+	// Modules should not be strings but rather the modules themselves // XXX
+	Modules = []string{
+		"menuArea",
+		"bspwmStatus",
+		"windowTitle",
+		"alignRight",
+		"memoryUsage",
+		"networkThroughput",
+		"cpuTemperature",
+		"wifi",
+		"ipAddress",
+		"dateAndTime",
+	}
+
+	// NetworkDevices are all network devices whose up- and downstream should be monitored
+	NetworkDevices = []string{
+		"eno1",
+		"wlp2s0",
+	}
+
+	// WIFIDevice - the primary WIFI device
+	WIFIDevice = "wlp2s0"
+
+	// DateAndTimeFormat is 2007-01-02 15:04:05 +06 in the preferred Format
+	DateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
+
+	// DarkScheme ...
+	DarkScheme = ColorScheme{
+		DefaultFg:           "#E5E6E6",
+		DefaultBg:           "#1E1E1E",
+		FreeFg:              "#969696",
+		FreeBg:              "#1E1E1E",
+		FocusedHereFg:       "#E5E6E6",
+		FocusedHereBg:       "#005577",
+		NotFocusedHereFg:    "#E5E6E6",
+		NotFocusedHereBg:    "#81D8D0",
+		FocusedNotHereFg:    "#005577",
+		FocusedNotHereBg:    "#1E1E1E",
+		NotFocusedNotHereFg: "#81D8D0",
+		NotFocusedNotHereBg: "#1E1E1E",
+		UrgentFg:            "#E5E6E6",
+		UrgentBg:            "#E32791",
+		WindowTitleBg:       "#1E1E1E",
+		WindowTitleFg:       "#E5E6E6",
+		WorkspacePagerBg:    "#1E1E1E",
+		WorkspacePagerFg:    "#E5E6E6",
+	}
+
+	// LightScheme ...
+	LightScheme = ColorScheme{
+		DefaultFg:           "#424242",
+		DefaultBg:           "#E5E6E8",
+		FreeFg:              "#969696",
+		FreeBg:              "#1E1E1E",
+		FocusedHereFg:       "#E5E6E6",
+		FocusedHereBg:       "#005577",
+		NotFocusedHereFg:    "#E5E6E6",
+		NotFocusedHereBg:    "#81D8D0",
+		FocusedNotHereFg:    "#005577",
+		FocusedNotHereBg:    "#1E1E1E",
+		NotFocusedNotHereFg: "#81D8D0",
+		NotFocusedNotHereBg: "#1E1E1E",
+		UrgentFg:            "#E5E6E6",
+		UrgentBg:            "#E32791",
+		WindowTitleBg:       "#1E1E1E",
+		WindowTitleFg:       "#E5E6E6",
+		WorkspacePagerBg:    "#1E1E1E",
+		WorkspacePagerFg:    "#E5E6E6",
+	}
+
+	// CurrentColorScheme always points to the currently selected scheme
+	CurrentColorScheme = &DarkScheme
+
+	// UnpluggedSign indicates a discharging battery
+	UnpluggedSign = "!"
+	// PluggedSign indicates a loading/not-discharging battery
+	PluggedSign = ""
+	// MemIcon is how the used memory in MB should be displayed
+	MemIcon = ""
+	// BpsSign is the symbol for 10⁰ Bytes/s
+	BpsSign = "B/s"
+	// KbpsSign is the symbol for 10³ Bytes/s
+	KbpsSign = "kB/s"
+	// MbpsSign is the symbol for 10⁶ Bytes/s
+	MbpsSign = "MB/s"
+	// GbpsSign is the symbol for 10⁹ Bytes/s
+	GbpsSign = "GB/s"
+	// NetReceivedSign indicates downstream
+	NetReceivedSign = ""
+	// NetTransmittedSign indicates upstream
+	NetTransmittedSign = ""
+)
