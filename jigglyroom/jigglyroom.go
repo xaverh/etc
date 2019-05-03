@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"./bspwmstatus"
 )
 
 type formatting struct {
@@ -608,10 +610,28 @@ func (power Power) getOutputChannel() chan string {
 	return power.Output
 }
 
+// BSPWMStatus reports the status of bspwm window manager
+type BSPWMStatus struct {
+	Output         chan string
+	IsMultimonitor bool
+}
+
+func (bspwmStatus BSPWMStatus) printToChannel() {
+	bspwmStatus.Output <- bspwmstatus.FormatBSPWMStatus(`WMHDMI-1:OI:f{}:f3:oDéjà-vu:ffünf:fVI:fdie sieben:fVIII:oШОС:f0:LT:TT:GSPLM`, false)
+}
+
+func (bspwmStatus BSPWMStatus) getOutputChannel() chan string {
+	return bspwmStatus.Output
+}
+
 func main() {
 	modules := make([]module, len(config.Modules))
 	for i, v := range config.Modules {
 		switch v {
+		case "bspwmStatus":
+			mod := BSPWMStatus{Output: make(chan string)}
+			go mod.printToChannel()
+			modules[i] = &mod
 		case "memoryUsage":
 			mod := Memory{Output: make(chan string)}
 			go mod.printToChannel()

@@ -1,7 +1,6 @@
-package main
+package bspwmstatus
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -35,6 +34,7 @@ type statusItem struct {
 	Name string
 }
 
+/*
 var markupMap = map[string]string{
 	"f": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
 	"f": makeClickable()
@@ -51,9 +51,30 @@ var markupMap = map[string]string{
 	// State, kann Tiled (T), Pseudotiled (P), Fullscreen (=), Floating (F), Parent Node (@) sein
 	"T": "",
 }
+*/
 
-func desktopButton(desktop string) string {
-	return makeClickable(desktop, "bspc desktop " + desktop + " --focus ", mouseLeft)
+func markFocusedDesktop(s string) string {
+	return s + "*"
+}
+
+func markUnfocusedDesktop(s string) string {
+	return s
+}
+
+func markOccupiedDesktop(s string) string {
+	return s + "."
+}
+
+func markFreeDesktop(s string) string {
+	return s + "0"
+}
+
+func markUrgentDesktop(s string) string {
+	return s + "!"
+}
+
+func desktopButton(text string, desktop string) string {
+	return makeClickable(text, "bspc desktop "+desktop+" --focus ", mouseLeft)
 }
 
 func makeClickable(txt string, cmd string, b button) string {
@@ -84,22 +105,73 @@ func makeItems(rawItems []string) []statusItem {
 	return statusItems
 }
 
+// Layout can be "tiled" (T) or "monocle" (M)
+func formatLayout(format string) string {
+	if format == "T" {
+		return makeClickable(tilingText, "bspc desktop -l tiled", mouseLeft)
+	}
+	return makeClickable(monocleText, "bspc desktop -l monocle", mouseLeft)
+}
+
+// State can be tiled (T), pseudo-tiled (P), floating (F), fullscreen (=), and parent (@)
+func formatState(format string) string {
+	switch format {
+	case "T":
+		return "|"
+	case "P":
+		return "¦"
+	case "F":
+		return "><>"
+	case "=":
+		return "[F]"
+	case "@":
+		return "@"
+	}
+	return format
+}
+
+// Flag can be marked (M), private (P), sticky (S), and locked (L) in any combination
+func formatFlag(s string) string {
+	// TODO
+	return s
+}
+
 func applyMarkup(statusItems []statusItem) []string {
 	markupedStrings := make([]string, len(statusItems))
 	for i, v := range statusItems {
-		markupedStrings[i] = fmt.Sprintf(markupMap[v.Type], v.Name)
+		switch v.Type {
+		case "f":
+			markupedStrings[i] = desktopButton(markFreeDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+		case "o":
+			markupedStrings[i] = desktopButton(markOccupiedDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+		case "u":
+			markupedStrings[i] = desktopButton(markUrgentDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+		case "F":
+			markupedStrings[i] = desktopButton(markFreeDesktop(markFocusedDesktop(v.Name)), v.Name)
+		case "O":
+			markupedStrings[i] = desktopButton(markOccupiedDesktop(markFocusedDesktop(v.Name)), v.Name)
+		case "U":
+			markupedStrings[i] = desktopButton(markUrgentDesktop(markFocusedDesktop(v.Name)), v.Name)
+		case "L":
+			markupedStrings[i] = formatLayout(v.Name)
+		case "T":
+			markupedStrings[i] = formatState(v.Name)
+		case "G":
+			markupedStrings[i] = formatFlag(v.Name)
+		case "M":
+			if multimonitor {
+				markupedStrings[i] = v.Name
+			} else {
+				markupedStrings[i] = ""
+			}
+		case "m":
+			markupedStrings[i] = v.Name
+		}
 	}
 	return markupedStrings
 }
 
-// Layout can be "tiled" (T) or "monocle" (M)
-func formatLayout(format string) string {
-	if format == "T" {
-		return startLeftClickArea + "bspc desktop -l monocle" + clickAreaCmdNameSep + tilingText + endClickArea
-	}
-	return startLeftClickArea + "bspc desktop focused -l tiled" + clickAreaCmdNameSep + monocleText + endClickArea
-}
-
-func main() {
-	fmt.Println(applyMarkup(makeItems(splitAtColon(testInput))))
+// FormatBSPWMStatus returns the string given by `bspc subscribe report` in a format digestible by lemonbar
+func FormatBSPWMStatus(input string, multimonitor bool) string {
+	return strings.Join(applyMarkup(makeItems(splitAtColon(input))), " ")
 }
