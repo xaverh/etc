@@ -617,7 +617,18 @@ type BSPWMStatus struct {
 }
 
 func (bspwmStatus BSPWMStatus) printToChannel() {
-	bspwmStatus.Output <- bspwmstatus.FormatBSPWMStatus(`WMHDMI-1:OI:f{}:f3:oDéjà-vu:ffünf:fVI:fdie sieben:fVIII:oШОС:f0:LT:TT:GSPLM`, false)
+	cmd := exec.Command("bspc", "subscribe", "report")
+	out, err := cmd.StdoutPipe()
+
+	err = cmd.Start()
+	if err != nil {
+		bspwmStatus.Output <- fmt.Sprintf("Failed to start err=%v", err)
+	}
+	scanner := bufio.NewScanner(out)
+	scanner.Scan() // discard first empty Scan
+	for ok := true; ok; ok = scanner.Scan() {
+		bspwmStatus.Output <- bspwmstatus.FormatBSPWMStatus(scanner.Text(), false)
+	}
 }
 
 func (bspwmStatus BSPWMStatus) getOutputChannel() chan string {
