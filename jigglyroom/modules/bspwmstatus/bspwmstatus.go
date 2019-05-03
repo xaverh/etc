@@ -1,57 +1,36 @@
 package bspwmstatus
 
 import (
+	"bufio"
+	"fmt"
+	"os/exec"
 	"strings"
+
+	"../../lemonbar"
 )
 
 // monitor name only on multi-monitor, das muß irgendwo zwischen applyMarkup und makeItems angewandt werden
 // not sure how {} must be processed for lemonbar, % appears to be the only character that needs to be escaped, und zwar %%
 const (
-	testInput       = `WMHDMI-1:OI:f{}:f3:oDéjà-vu:ffünf:fVI:fdie sieben:fVIII:oШОС:f0:LT:TT:GSPLM`
-	backgroundColor = "#1e1e1e"
-	foregrundColor  = "#f5f6f6"
-	gotoDesktop     = "bspc desktop -f "
-	multimonitor    = false
-	stickyText      = ""
-	markedText      = "*"
-	lockedText      = ""
-	monocleText     = "[]"
-	tilingText      = "##"
+	tagTiled       = "|"
+	tagPseudoTiled = "¦"
+	tagFloating    = "><>"
+	tagFullscreen  = "[F]"
+	tagParent      = "@"
+	stickyText     = "~"
+	markedText     = "*"
+	lockedText     = "$"
+	privateText    = "p"
+	monocleText    = "[]"
+	tilingText     = "##"
 )
 
-type button string
-
-const (
-	mouseLeft   button = "1"
-	mouseMiddle button = "2"
-	mouseRight  button = "3"
-	mouseUp     button = "4"
-	mouseDown   button = "5"
-)
+var multimonitor = false
 
 type statusItem struct {
 	Type string
 	Name string
 }
-
-/*
-var markupMap = map[string]string{
-	"f": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
-	"f": makeClickable()
-	"o": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
-	"u": startLeftClickArea + gotoDesktop + "%q" + clickAreaCmdNameSep + "%[1]q" + endClickArea,
-	"F": "%q",
-	"O": "%q",
-	"U": "%q",
-	"m": "",
-	"M": "",
-	"L": "%q",
-	// Flag, kann beliebige Kombination von Sticky (S), Private (P), Locked (L) oder Marked (M) sein
-	"G": "",
-	// State, kann Tiled (T), Pseudotiled (P), Fullscreen (=), Floating (F), Parent Node (@) sein
-	"T": "",
-}
-*/
 
 func markFocusedDesktop(s string) string {
 	return s + "*"
@@ -74,23 +53,19 @@ func markUrgentDesktop(s string) string {
 }
 
 func desktopButton(text string, desktop string) string {
-	return makeClickable(text, "bspc desktop "+desktop+" --focus ", mouseLeft)
-}
-
-func makeClickable(txt string, cmd string, b button) string {
-	return "%{A" + string(b) + ":" + cmd + ":}" + txt + "%{A}"
+	return lemonbar.MakeClickable(text, "bspc desktop "+desktop+" --focus ", lemonbar.MouseLeft)
 }
 
 func toggleLayoutWithLeftClick(txt string) string {
-	return makeClickable(txt, "bspc desktop focused --layout next", mouseLeft)
+	return lemonbar.MakeClickable(txt, "bspc desktop focused --layout next", lemonbar.MouseLeft)
 }
 
 func circulateWithRightClick(txt string) string {
-	return makeClickable(txt, "bspc node @focused:/ --circulate forward", mouseRight)
+	return lemonbar.MakeClickable(txt, "bspc node @focused:/ --circulate forward", lemonbar.MouseRight)
 }
 
 func rotateWithMiddleClick(txt string) string {
-	return makeClickable(txt, "bspc node @focused:/ --rotate 90", mouseMiddle)
+	return lemonbar.MakeClickable(txt, "bspc node @focused:/ --rotate 90", lemonbar.MouseMiddle)
 }
 
 func splitAtColon(str string) []string {
@@ -108,32 +83,31 @@ func makeItems(rawItems []string) []statusItem {
 // Layout can be "tiled" (T) or "monocle" (M)
 func formatLayout(format string) string {
 	if format == "T" {
-		return makeClickable(tilingText, "bspc desktop -l tiled", mouseLeft)
+		return lemonbar.MakeClickable(tilingText, "bspc desktop -l tiled", lemonbar.MouseLeft)
 	}
-	return makeClickable(monocleText, "bspc desktop -l monocle", mouseLeft)
+	return lemonbar.MakeClickable(monocleText, "bspc desktop -l monocle", lemonbar.MouseLeft)
 }
 
 // State can be tiled (T), pseudo-tiled (P), floating (F), fullscreen (=), and parent (@)
 func formatState(format string) string {
 	switch format {
 	case "T":
-		return "|"
+		return tagTiled
 	case "P":
-		return "¦"
+		return tagPseudoTiled
 	case "F":
-		return "><>"
+		return tagFloating
 	case "=":
-		return "[F]"
+		return tagFullscreen
 	case "@":
-		return "@"
+		return tagParent
 	}
 	return format
 }
 
 // Flag can be marked (M), private (P), sticky (S), and locked (L) in any combination
 func formatFlag(s string) string {
-	// TODO
-	return s
+	return strings.Replace(strings.Replace(strings.Replace(strings.Replace(s, "P", privateText, 1), "S", stickyText, 1), "L", lockedText, 1), "M", markedText, 1)
 }
 
 func applyMarkup(statusItems []statusItem) []string {
@@ -171,7 +145,32 @@ func applyMarkup(statusItems []statusItem) []string {
 	return markupedStrings
 }
 
-// FormatBSPWMStatus returns the string given by `bspc subscribe report` in a format digestible by lemonbar
-func FormatBSPWMStatus(input string, multimonitor bool) string {
+func formatBSPWMStatus(input string, isMultimonitor bool) string {
+	multimonitor = isMultimonitor
 	return strings.Join(applyMarkup(makeItems(splitAtColon(input))), " ")
+}
+
+// BSPWMStatus reports the status of bspwm window manager
+type BSPWMStatus struct {
+	Output         chan string
+	IsMultimonitor bool
+}
+
+func (bspwmStatus BSPWMStatus) PrintToChannel() {
+	cmd := exec.Command("bspc", "subscribe", "report")
+	out, err := cmd.StdoutPipe()
+
+	err = cmd.Start()
+	if err != nil {
+		bspwmStatus.Output <- fmt.Sprintf("Failed to start err=%v", err)
+	}
+	scanner := bufio.NewScanner(out)
+	scanner.Scan() // discard first empty Scan
+	for ok := true; ok; ok = scanner.Scan() {
+		bspwmStatus.Output <- formatBSPWMStatus(scanner.Text(), false)
+	}
+}
+
+func (bspwmStatus BSPWMStatus) GetOutputChannel() chan string {
+	return bspwmStatus.Output
 }
