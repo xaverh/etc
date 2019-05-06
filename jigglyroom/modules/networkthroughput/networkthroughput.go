@@ -13,8 +13,7 @@ import (
 
 // NetworkThroughput gives information about the up- and downstream of given network devices
 type NetworkThroughput struct {
-	NetDevs []string
-	Output  chan string
+	Output chan string
 }
 
 func fixed(pre string, rate int) string {
@@ -63,7 +62,7 @@ func (networkThroughput NetworkThroughput) PrintToChannel() {
 			_, err = fmt.Sscanf(scanner.Text(), "%s %d %d %d %d %d %d %d %d %d",
 				&dev, &rx, &void, &void, &void, &void, &void, &void, &void, &tx)
 			dev = strings.TrimSuffix(dev, ":")
-			for _, val := range networkThroughput.NetDevs {
+			for _, val := range config.NetworkDevices {
 				if val == dev {
 					rxNow += rx
 					txNow += tx
