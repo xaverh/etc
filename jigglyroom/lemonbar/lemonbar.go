@@ -4,7 +4,7 @@ package lemonbar
 var SeparatorModules = "%{O12}"
 
 // SeparatorWorkspaces is the space within the modules
-var SeparatorWorkspaces = "%{O10}"
+var SeparatorWorkspaces = "%{O16}"
 
 // AlignRight switches the alignment to the right
 var AlignRight = "%{r}"
