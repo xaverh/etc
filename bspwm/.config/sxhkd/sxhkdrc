@@ -23,6 +23,9 @@ super + KP_Begin
 	dbus-send --print-reply --session --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
 # PulseAudio Volume control
+{XF86AudioLowerVolume,XF86AudioRaiseVolume,XF86AudioMute}
+	pamixer -{ud 5,ui 5,m}
+
 super + {KP_Subtract,KP_Add,KP_Insert}
 	pamixer -{ud 5,ui 5,m}
 

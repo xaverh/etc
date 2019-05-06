@@ -1,6 +1,10 @@
 package dateandtime
 
-import "time"
+import (
+	"time"
+
+	"../../config"
+)
 
 // DateAndTime gives the current time. Format is defined
 // through reference time Mon Jan 2 15:04:05 MST 2006 =
@@ -12,7 +16,7 @@ type DateAndTime struct {
 
 func (dateAndTime DateAndTime) PrintToChannel() {
 	for {
-		dateAndTime.Output <- time.Now().Local().Format(dateAndTime.Format)
+		dateAndTime.Output <- time.Now().Local().Format(config.DateAndTimeFormat)
 		// sleep until beginning of next second
 		var now = time.Now()
 		time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))

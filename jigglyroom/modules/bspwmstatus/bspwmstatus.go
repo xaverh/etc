@@ -45,7 +45,7 @@ func markOccupiedDesktop(s string) string {
 }
 
 func markFreeDesktop(s string) string {
-	return s + "0"
+	return s
 }
 
 func markUrgentDesktop(s string) string {

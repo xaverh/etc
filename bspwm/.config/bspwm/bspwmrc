@@ -25,7 +25,6 @@ bspc rule -a Firefox:Navigator desktop='^1' follow=on
 bspc rule -a strawberry desktop='^4' follow=on
 bspc rule -a Steam desktop='^5' follow=on
 
-[ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
 pgrep -x panel > /dev/null || panel &
 
 (pidof journalctl || urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000") &
