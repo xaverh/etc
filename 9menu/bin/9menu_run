@@ -2,12 +2,13 @@
 
 9menu -font "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -bg "#1e1e1e" -fg "#f5f6f6" -warp "$@" \
 "rxvt-unicode:exec urxvtc" \
+"nnn:exec urxvtc -e nnn" \
 "Firefox:exec firefox" \
 "Google Chrome Dev:exec chrome" \
 "Visual Studio Code:exec code -n" \
 "M"$'\xB5'"PDF:exec mupdf-gl" \
 "Strawberry:exec strawberry" \
-"VLC media player:exec vlc" \
+"mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
 "GIMP:exec gimp" \
 "Steam:exec steam" \
 "Change Wallpaper:exec change_wallpaper.sh" \
@@ -15,4 +16,3 @@
 "Screenshot:exec maim `date +%s`.png" \
 exit
 
-# "mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
