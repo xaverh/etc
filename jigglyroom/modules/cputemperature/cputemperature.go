@@ -3,19 +3,19 @@ package cputemperature
 import (
 	"fmt"
 	"io/ioutil"
-	"strconv"
 	"time"
+
+	"../../config"
 )
 
 // CPUTemperature returns the current temperature of the specified heat sink
 type CPUTemperature struct {
-	ThermalZone int
-	Output      chan string
+	Output chan string
 }
 
 func (cpuTemperature CPUTemperature) PrintToChannel() {
 	for {
-		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + strconv.Itoa(cpuTemperature.ThermalZone) + "/temp")
+		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + config.ThermalZone + "/temp")
 		if err != nil {
 			cpuTemperature.Output <- "temp unknown"
 		}

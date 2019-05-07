@@ -24,7 +24,7 @@ type ColorScheme struct {
 
 var (
 	// ThermalZone is '*' in filename /sys/class/thermal/thermal_zone/*/temp
-	ThermalZone = "1"
+	ThermalZone = "0"
 
 	// Modules should not be strings but rather the modules themselves // XXX
 	Modules = []string{

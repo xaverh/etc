@@ -33,7 +33,7 @@ func (windowTitle WindowTitle) PrintToChannel() {
 	scanner := bufio.NewScanner(out)
 	for ok := true; ok; ok = scanner.Scan() {
 		title = formatWindowTitle(string(scanner.Text()))
-		windowTitle.Output <- title
+		windowTitle.Output <- lemonbar.SeparatorWorkspaces + title + lemonbar.SeparatorWorkspaces
 	}
 }
 
