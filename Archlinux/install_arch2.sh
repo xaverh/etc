@@ -40,6 +40,8 @@ git \
 lzip \
 # not on suse ## ?
 mac \
+mupdf-gl \
+mupdf-tools \
 ncdu \
 openssh \
 openvpn \
