@@ -128,6 +128,8 @@ sx simple-extract () {
 	# zle -N zle-line-finish
 # fi
 
+autoload -U zmv
+
 autoload -U tetris
 zle -N tetris
 bindkey "^Xt" tetris
