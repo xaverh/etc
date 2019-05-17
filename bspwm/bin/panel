@@ -1,4 +1,6 @@
-#! /bin/sh
+#!/usr/bin/zsh
+
+PANEL_WM_NAME=bspwm_panel
 
 if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
 	printf "%s\n" "The panel is already running." >&2
@@ -12,7 +14,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 # TODO
 # num_mon=$(bspc query -M | wc -l)
 
-jigglyroom 0 | lemonbar -a 12 -u 2 -n "$PANEL_WM_NAME" -f "$PANEL_FONT" -f "$PANEL_FALLBACK_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+jigglyroom 0 | lemonbar -a 15 -u 2 -n "$PANEL_WM_NAME" -f "$PANEL_FONT" -f "$PANEL_FALLBACK_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" >> /tmp/lemonbar.log | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
