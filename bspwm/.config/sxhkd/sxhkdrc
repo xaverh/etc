@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + {_,shift + }Return
-	urxvtc {_, -e tmux}
+	urxvtc {-e tmux,_}
 
 # program launcher
 super + @space
@@ -60,9 +60,9 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest node
-super + g
-	bspc node -s biggest
+# send the current node to the newest marked node
+super + odiaeresis
+	bspc node -n newest.marked
 
 #
 # state/flags
@@ -73,7 +73,7 @@ super + {t,shift + t,f,F11}
 	bspc node -t {tiled,pseudo_tiled,floating,\~fullscreen}
 
 # set the node flags
-super + {shift + m,a,s,z,i}
+super + {g,a,s,z,i}
 	bspc node -g {marked,locked,sticky,private,hidden}
 
 #
