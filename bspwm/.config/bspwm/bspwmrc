@@ -25,8 +25,11 @@ bspc rule -a Firefox:Navigator desktop='^1' follow=on
 bspc rule -a strawberry desktop='^4' follow=on
 bspc rule -a Steam desktop='^5' follow=on
 bspc rule -a 9menu manage=off focus=on
+bspc rule -a mpv private=on locked=on
 
 bspc desktop '^7' --layout monocle
+
+bspc desktop 1 --layout monocle
 
 pgrep -x panel > /dev/null || panel &
 
