@@ -6,23 +6,25 @@ import (
 	"os/exec"
 	"strings"
 
+	"../../config"
+
 	"../../lemonbar"
 )
 
 // monitor name only on multi-monitor, das muß irgendwo zwischen applyMarkup und makeItems angewandt werden
 // not sure how {} must be processed for lemonbar, % appears to be the only character that needs to be escaped, und zwar %%
 const (
-	tagTiled       = "|"
-	tagPseudoTiled = "¦"
-	tagFloating    = "><>"
-	tagFullscreen  = "[F]"
-	tagParent      = "@"
-	stickyText     = "~"
-	markedText     = "*"
-	lockedText     = "$"
-	privateText    = "p"
-	monocleText    = "[]"
-	tilingText     = "##"
+	tagTiled       = "Τ"
+	tagPseudoTiled = "Ψ"
+	tagFloating    = "Φ"
+	tagFullscreen  = "Ω"
+	tagParent      = "א"
+	stickyText     = "*"
+	markedText     = "#"
+	lockedText     = "∞"
+	privateText    = "@"
+	monocleText    = "ม"
+	tilingText     = "ฏ"
 )
 
 var multimonitor = false
@@ -33,23 +35,23 @@ type statusItem struct {
 }
 
 func markFocusedDesktop(s string) string {
-	return s + "*"
+	return "%{B" + config.CurrentColorScheme.FocusedHereBg + "} " + s + " %{F-}%{B-}"
 }
 
 func markUnfocusedDesktop(s string) string {
-	return s
+	return " " + s + " "
 }
 
 func markOccupiedDesktop(s string) string {
-	return s + "."
-}
-
-func markFreeDesktop(s string) string {
 	return s
 }
 
+func markFreeDesktop(s string) string {
+	return "%{F" + config.CurrentColorScheme.FreeFg + "}" + s + "%{F-}"
+}
+
 func markUrgentDesktop(s string) string {
-	return s + "!"
+	return "%{B" + config.CurrentColorScheme.UrgentBg + "}" + s + "%{B-}"
 }
 
 func desktopButton(text string, desktop string) string {
@@ -115,17 +117,17 @@ func applyMarkup(statusItems []statusItem) []string {
 	for i, v := range statusItems {
 		switch v.Type {
 		case "f":
-			markupedStrings[i] = desktopButton(markFreeDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markUnfocusedDesktop(markFreeDesktop(v.Name)), v.Name)
 		case "o":
-			markupedStrings[i] = desktopButton(markOccupiedDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markUnfocusedDesktop(markOccupiedDesktop(v.Name)), v.Name)
 		case "u":
-			markupedStrings[i] = desktopButton(markUrgentDesktop(markUnfocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markUnfocusedDesktop(markUrgentDesktop(v.Name)), v.Name)
 		case "F":
-			markupedStrings[i] = desktopButton(markFreeDesktop(markFocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markFocusedDesktop(markFreeDesktop(v.Name)), v.Name)
 		case "O":
-			markupedStrings[i] = desktopButton(markOccupiedDesktop(markFocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markFocusedDesktop(markOccupiedDesktop(v.Name)), v.Name)
 		case "U":
-			markupedStrings[i] = desktopButton(markUrgentDesktop(markFocusedDesktop(v.Name)), v.Name)
+			markupedStrings[i] = desktopButton(markFocusedDesktop(markUrgentDesktop(v.Name)), v.Name)
 		case "L":
 			markupedStrings[i] = formatLayout(v.Name)
 		case "T":
