@@ -22,6 +22,10 @@ super + {KP_Multiply,KP_Divide,KP_End}
 super + KP_Begin
 	dbus-send --print-reply --session --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
+# Backlight Control
+XF86MonBrightness{Up,Down}
+	xbacklight -{inc,dec} 10
+
 # PulseAudio Volume control
 {XF86AudioLowerVolume,XF86AudioRaiseVolume,XF86AudioMute}
 	pamixer -{ud 5,ui 5,m}
@@ -73,7 +77,7 @@ super + {t,shift + t,f,F11}
 	bspc node -t {tiled,pseudo_tiled,floating,\~fullscreen}
 
 # set the node flags
-super + {g,a,s,z,i}
+super + {numbersign,a,s,z,i}
 	bspc node -g {marked,locked,sticky,private,hidden}
 
 #
@@ -142,7 +146,7 @@ super + {_,shift +} e
 	bspc node @/ -{E,B}
 
 # equalize with new ratio
-super + numbersign
+super + g
 	bspc config split_ratio $(( `bspc config split_ratio` == 0.618034 ? 0.5 : 0.618034 )) && bspc node @/ -E
 
 #
