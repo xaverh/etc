@@ -61,7 +61,7 @@ super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # send the current node to the newest marked node
-super + odiaeresis
+super + semicolon
 	bspc node -n newest.marked
 
 #
@@ -127,14 +127,14 @@ super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
 # demu focus/swap
-super + {dead_circumflex,ssharp,dead_acute}
+super + {dead_grave,minus,equal}
 	dmenu_focus.lua {--focus,--swap,--fetch}
 
 # change gap size
 super + less
 	bspc config window_gap $(( `bspc config window_gap` + 5 ))
 
-super + shift + less
+super + greater
 	bspc config window_gap $(( (val=`bspc config window_gap`) > 5 ? val - 5 : 0 ))
 
 # balance/equalize
@@ -142,7 +142,7 @@ super + {_,shift +} e
 	bspc node @/ -{E,B}
 
 # equalize with new ratio
-super + numbersign
+super + slash
 	bspc config split_ratio $(( `bspc config split_ratio` == 0.618034 ? 0.5 : 0.618034 )) && bspc node @/ -E
 
 #
