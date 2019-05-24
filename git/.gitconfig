@@ -1,7 +1,8 @@
 [user]
 	name = Xaver Hellauer
 	signingkey = 1119D14EB6DCAADB3669F8A80940C207E5E7CFEF
-	useConfigOnly = true
+	# useConfigOnly = true
+	email = xaver@hellauer.bayern
 [color]
 	ui = auto
 [core]
