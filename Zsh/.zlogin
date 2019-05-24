@@ -1,6 +1,8 @@
 export PANEL_FIFO=/tmp/panel-fifo
 export PANEL_HEIGHT=24
 export PANEL_FONT="IBM Plex Sans Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+export PANEL_FONT_2="IBM Plex Sans Hebrew Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
+export PANEL_FONT_3="IBM Plex Thai Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
 # export PANEL_FONT="-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1"
 export PANEL_XFT_FONT="IBM Plex Sans Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1"
 # export PANEL_XFT_FONT="SGI Screen:pixelsize=14"
