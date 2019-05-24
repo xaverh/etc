@@ -9,12 +9,10 @@ fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
-. panel_colors
-
 # TODO
 # num_mon=$(bspc query -M | wc -l)
 
-jigglyroom 0 | lemonbar -a 15 -u 2 -n "$PANEL_WM_NAME" -f "$PANEL_FONT" -f "$PANEL_FALLBACK_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" >> /tmp/lemonbar.log | sh &
+jigglyroom 0 | lemonbar -a 15 -g x23 -u 2 -n "$PANEL_WM_NAME" -f "$PANEL_FONT" -f "$PANEL_FONT_2" -f "$PANEL_FONT_3" -f "$PANEL_FALLBACK_FONT" -F "$PANEL_FG_COLOR" -B "$PANEL_BG_COLOR" >> /tmp/lemonbar.log | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"

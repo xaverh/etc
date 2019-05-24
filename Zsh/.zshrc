@@ -65,7 +65,7 @@ else
 	alias ll='ls -lh'
 fi
 
-alias dfh='df -H'
+alias dfh='df -H -T'
 alias -g G='|& grep -i --colour=auto'
 alias d='dirs -v'
 alias j='jobs -l'

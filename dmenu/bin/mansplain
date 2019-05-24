@@ -10,5 +10,5 @@ mkdir -p /tmp/mansplain/`date +"%G-%V"`
 manpage=`apropos . | dmenu -l 30 -i -f -fn "$font" -sf "$fgselcolor" -sb "$bgselcolor" -nb "$bgcolor" -nf "$fgcolor" | awk '{gsub(/[()]/,""); print $2" "$1}'`
 filename="/tmp/mansplain/`date +"%G-%V"`/${^manpage}.pdf"
 [[ -f "$filename" ]] || man -Tpdf ${=manpage} > "$filename"
-bspc rule --add \* --one-shot center=on state=floating
-mupdf-gl -r 96 "$filename"
+bspc rule --add Zathura --one-shot center=on state=floating
+zathura "$filename"
