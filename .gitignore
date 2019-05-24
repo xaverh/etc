@@ -8,3 +8,4 @@ X/.fehbg
 jigglyroom/config/config.go
 jigglyroom/jigglyroom
 *.bak
+mpv/.config/mpv/watch_later

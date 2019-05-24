@@ -10,7 +10,7 @@
 "Google Chrome Dev:exec chrome" \
 "WeeChat:exec urxvtc -name WeeChat -e weechat" \
 "Visual Studio Code:exec code -n" \
-"M"$'\xB5'"PDF:exec mupdf-gl" \
+"Zathura:exec zathura" \
 "Strawberry:exec strawberry" \
 "mpv:exec mpv --player-operation-mode=pseudo-gui --keep-open=yes" \
 "GIMP:exec gimp" \
