@@ -25,7 +25,7 @@ bspc rule -a Firefox:Navigator desktop='^1' follow=on
 bspc rule -a strawberry desktop='^4' follow=on
 bspc rule -a Steam desktop='^5' follow=on
 bspc rule -a 9menu manage=off focus=on
-bspc rule -a mpv private=on locked=on
+bspc rule -a mpv locked=on
 bspc rule -a Zathura state=pseudo_tiled
 bspc rule -a URxvt:\* locked=on
 
