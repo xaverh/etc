@@ -9,7 +9,9 @@ export PANEL_XFT_FONT="IBM Plex Sans Text:style=Regular:pixelsize=15:antialias=t
 export PANEL_FALLBACK_FONT="-misc-fixed-medium-r-normal--10-100-75-75-c-60-iso10646-1"
 # export PANEL_FALLBACK_FONT="-misc-fixed-medium-r-normal--10-100-75-75-c-60-iso10646-1"
 export PANEL_BG_COLOR="#1E1E1E"
+export PANEL_BG_SEL_COLOR="#005577"
 export PANEL_FG_COLOR="#F5F6F6"
+export PANEL_FG_SEL_COLOR="#F5F6F6"
 export TERMINAL=urxvtc
 # export MOZ_ENABLE_WAYLAND=1
 
