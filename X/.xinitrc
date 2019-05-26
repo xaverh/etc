@@ -30,13 +30,6 @@ fi
 . /etc/X11/xinit/xinitrc.common
 
 #
-# Uncomment next lines to activate asking for ssh passphrase
-#
-# if test -S "$SSH_AUTH_SOCK" -a -x "$SSH_ASKPASS"; then
-#       ssh-add < /dev/null
-# fi
-
-#
 # Add your own lines here...
 #
 
