@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Sample .xinitrc for SuSE Linux
 # This script is called from 'startx' when you start an X session
