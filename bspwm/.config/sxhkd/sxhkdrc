@@ -3,8 +3,8 @@
 #
 
 # terminal emulator
-super + {_,shift + }Return
-	urxvtc {-e tmux,_}
+super + {Return,shift + Return,n}
+	urxvtc {-e tmux,_,-e nnn}
 
 # program launcher
 super + @space
@@ -61,7 +61,7 @@ super + m
 	bspc desktop focused --layout next
 
 # send the newest marked node to the newest preselected node
-super + y
+super + shift + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # send the current node to the newest marked node
@@ -73,11 +73,11 @@ super + semicolon
 #
 
 # set the window state
-super + {t,shift + t,f,F11}
-	bspc node -t {tiled,pseudo_tiled,floating,\~fullscreen}
+super + {t,shift + t,f,shift + f}
+	bspc node -t {tiled,\~pseudo_tiled,\~floating,\~fullscreen}
 
 # set the node flags
-super + {numbersign,u,s,z,i}
+super + {y,u,s,z,i}
 	bspc node -g {marked,locked,sticky,private,hidden}
 
 #
@@ -107,6 +107,10 @@ super + {_,shift} + c
 # vertically flip the current node/desktop
 super + {_,shift} + v
 	bspc node {_,@/} -F vertical
+
+# horizontally flip the current node/desktop
+super + {_,shift} + apostrophe
+	bspc node {_,@/} -F horizontal
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}

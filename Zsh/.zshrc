@@ -133,3 +133,23 @@ autoload -U zmv
 autoload -U tetris
 zle -N tetris
 bindkey "^Xt" tetris
+
+#
+# nnn
+#
+
+
+export NNN_TMPFILE="/tmp/nnn"
+export NNN_USE_EDITOR=1
+
+n()
+{
+        nnn "$@"
+
+        if [ -f $NNN_TMPFILE ]; then
+                . $NNN_TMPFILE
+                rm $NNN_TMPFILE
+        fi
+}
+
+alias nnn=n
