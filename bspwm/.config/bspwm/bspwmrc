@@ -28,6 +28,7 @@ bspc rule -a 9menu manage=off focus=on
 bspc rule -a mpv locked=on
 bspc rule -a Zathura state=pseudo_tiled
 bspc rule -a URxvt:\* locked=on
+bspc rule -a Sxiv state=floating
 
 bspc desktop '^4' --layout monocle
 bspc desktop '^7' --layout monocle
