@@ -29,6 +29,13 @@ application/x-extension-xht=firefox.desktop
 text/plain=code.desktop
 x-scheme-handler/about=brave-browser.desktop
 x-scheme-handler/unknown=brave-browser.desktop
+image/jpeg=sxiv.desktop
+image/png=sxiv.desktop
+image/gif=sxiv.desktop
+image/tiff=sxiv.desktop
+application/vnd.comicbook-rar=org.pwmt.zathura.desktop
+application/vnd.comicbook+zip=org.pwmt.zathura.desktop
+application/x-cb7=org.pwmt.zathura.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;
