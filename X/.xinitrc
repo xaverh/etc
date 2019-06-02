@@ -37,7 +37,6 @@ fi
 # day planer deamon
 # pland &
 
-# xsetroot -solid "#1e1e1e"
 xset b off &
 xset s off &
 xset -dpms &
@@ -57,7 +56,7 @@ fi
 
 # xsetroot -bitmap $HOME/etc/backdrops/`ls $HOME/etc/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
-xsetroot -solid "#1e1e1e"
+xsetroot -solid "#57655a"
 
 # ~/.fehbg &
 
