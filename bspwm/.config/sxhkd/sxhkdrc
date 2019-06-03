@@ -37,6 +37,14 @@ super + {KP_Subtract,KP_Add,KP_Insert}
 super + F1
 	bspc rule --add Zathura --one-shot center=on state=floating rectangle=740x1039+0+0 && apropos . | dmenu -p "Man page: " -l 30 -i -fn "$PANEL_XFT_FONT" -sf "$PANEL_FG_SEL_COLOR" -sb "$PANEL_BG_SEL_COLOR" -nb "$PANEL_BG_COLOR" -nf "$PANEL_FG_COLOR" | awk -F "[ ()]+" "\{print \$2, \$1\}" | xargs -r man -Tpdf | zathura -
 
+# Screenshots
+Print
+	maim ~/var/screenshot$(date +%s).png
+
+super + Print
+	maim -s ~/var/screenshot$(date +%s).png
+
+
 # 9menu
 super + @Menu
 	9menu_run
