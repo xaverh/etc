@@ -18,9 +18,9 @@ super + shift + Escape
 super + {KP_Multiply,KP_Divide,KP_End}
 	strawberry --{next,restart-or-previous,play-pause}
 
-# VLC media player
+# mpv media player
 super + KP_Begin
-	dbus-send --print-reply --session --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+	 echo "cycle pause" | socat - /tmp/mpvsocket
 
 # Backlight Control
 XF86MonBrightness{Up,Down}
@@ -85,8 +85,8 @@ super + {t,shift + t,f,shift + f}
 	bspc node -t {tiled,\~pseudo_tiled,\~floating,\~fullscreen}
 
 # set the node flags
-super + {y,u,s,z,i}
-	bspc node -g {marked,locked,sticky,private,hidden}
+super + {y,u,s,z}
+	bspc node -g {marked,locked,sticky,private}
 
 #
 # focus/swap
