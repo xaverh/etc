@@ -69,7 +69,7 @@ func (power Power) PrintToChannel() {
 			icon = power.pluggedSign
 		}
 
-		power.Output <- fmt.Sprintf("%d%%%s", enPerc, icon)
+		power.Output <- fmt.Sprintf("%d%%%%%s", enPerc, icon)
 		time.Sleep(time.Duration(13 * time.Second))
 	}
 }
