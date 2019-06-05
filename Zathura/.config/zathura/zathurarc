@@ -13,3 +13,10 @@ set statusbar-bg "#005577"
 set recolor-keephue true
 set recolor-darkcolor "#e5e6e6"
 set recolor-lightcolor "#1e1e1e"
+set highlight-color "#20BBFC"
+set highlight-active-color "#fc9520"
+set scroll-page-aware true
+set smooth-scroll true
+set window-title-home-tilde true
+set window-title-page true
+set gui-options ""
