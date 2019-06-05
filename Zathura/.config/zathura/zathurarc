@@ -19,4 +19,4 @@ set scroll-page-aware true
 set smooth-scroll true
 set window-title-home-tilde true
 set window-title-page true
-set gui-options ""
+set guioptions ""
