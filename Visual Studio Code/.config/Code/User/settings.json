@@ -193,7 +193,6 @@
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
   "workbench.colorTheme": "Ysgrifennwr",
-  "C_Cpp.updateChannel": "Insiders",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
