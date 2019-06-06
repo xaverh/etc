@@ -16,7 +16,7 @@ type WindowTitle struct {
 }
 
 func formatWindowTitle(input string) string {
-	return lemonbar.ApplyColor(lemonbar.ApplyColor(input, config.CurrentColorScheme.FocusedHereBg, "B"), config.CurrentColorScheme.FocusedHereFg, "F")
+	return lemonbar.MakeClickable(lemonbar.MakeClickable(lemonbar.MakeClickable(lemonbar.ApplyColor(lemonbar.ApplyColor(input, config.CurrentColorScheme.FocusedHereBg, "B"), config.CurrentColorScheme.FocusedHereFg, "F"), "bspc desktop pointed\\:focused --layout next", lemonbar.MouseLeft), "bspc node -f next.local", lemonbar.MouseUp), "bspc node -f prev.local", lemonbar.MouseDown)
 }
 
 func (windowTitle WindowTitle) PrintToChannel() {
