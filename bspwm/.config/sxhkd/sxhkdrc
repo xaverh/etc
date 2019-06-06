@@ -19,8 +19,8 @@ super + {KP_Multiply,KP_Divide,KP_End}
 	strawberry --{next,restart-or-previous,play-pause}
 
 # mpv media player
-super + KP_Begin
-	 echo "cycle pause" | socat - /tmp/mpvsocket
+super + {KP_Left,KP_Right,KP_Begin}
+	 echo {"seek -10","seek 10","cycle pause"} | socat - /tmp/mpvsocket
 
 # Backlight Control
 XF86MonBrightness{Up,Down}
@@ -106,21 +106,21 @@ super + {a,p,b,comma,period}
 super + {_,shift + }Tab
 	bspc node -f {next,prev}.local
 
-# rotate the current node/desktop
+# rotate the current node or its parent if it's a leaf
 super + {_,shift} + r
-	bspc node {_,@/} -R 90
+	bspc node {focused.\!leaf,@/} -R 90 || bspc node @parent -R 90
 
-# circulate the current node/desktop
+# circulate the current node or its parent if it's a leaf
 super + {_,shift} + c
-	bspc node {_,@/} -C forward
+	bspc node {focused.\!leaf,@/} -C backward || bspc node @parent -C backward
 
-# vertically flip the current node/desktop
+# vertically flip the current node or its parent if it's a leaf
 super + {_,shift} + v
-	bspc node {_,@/} -F vertical
+	bspc node {focused.\!leaf,@/} -F vertical || bspc node @parent -F vertical
 
-# horizontally flip the current node/desktop
+# horizontally flip the current node or its parent if it's a leaf
 super + {_,shift} + apostrophe
-	bspc node {_,@/} -F horizontal
+	bspc node {focused.\!leaf,@/} -F horizontal || bspc node @parent -F horizontal
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -137,6 +137,12 @@ super + BackSpace
 # swap the current node and the biggest local node, if it is the biggest, take the last
 super + shift + BackSpace
 	bspc node -s biggest.local.\!hidden || bspc node -s last.local.\!hidden
+
+# swap the pointed node and the focused node
+button9
+	bspc wm -g | grep -q ':LT:' && (bspc node focused -s pointed || bspc node @/ -C backward )|| bspc node -f next.local
+button8
+	bspc wm -g | grep -q ':LT:' && (bspc node focused -s pointed || bspc node @/ -C forward )|| bspc node -f prev.local
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -202,18 +208,18 @@ super + alt + shift + {h,j,k,l}
 
 # move a floating window, swap a (pseudo-)tiling window
 super + shift + h
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v -20 0 || bspc node -s west
+	bspc wm -g | grep -q ':TF:' && bspc node -v -20 0 || bspc node -s west
 super + shift + j
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 0 20 || bspc node -s south
+	bspc wm -g | grep -q ':TF:' && bspc node -v 0 20 || bspc node -s south
 super + shift + k
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 0 -20 || bspc node -s north
+	bspc wm -g | grep -q ':TF:' && bspc node -v 0 -20 || bspc node -s north
 super + shift + l
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 20 0 || bspc node -s east
+	bspc wm -g | grep -q ':TF:' && bspc node -v 20 0 || bspc node -s east
 super + shift + Left
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v -20 0 || bspc node -s west
+	bspc wm -g | grep -q ':TF:' && bspc node -v -20 0 || bspc node -s west
 super + shift + Down
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 0 20 || bspc node -s south
+	bspc wm -g | grep -q ':TF:' && bspc node -v 0 20 || bspc node -s south
 super + shift + Up
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 0 -20 || bspc node -s north
+	bspc wm -g | grep -q ':TF:' && bspc node -v 0 -20 || bspc node -s north
 super + shift + Right
-	bspc subscribe report --count 1 | grep -q ':TF:' && bspc node -v 20 0 || bspc node -s east
+	bspc wm -g | grep -q ':TF:' && bspc node -v 20 0 || bspc node -s east
