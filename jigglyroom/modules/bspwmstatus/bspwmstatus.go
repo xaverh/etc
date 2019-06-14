@@ -85,22 +85,22 @@ func makeItems(rawItems []string) []statusItem {
 // Layout can be "tiled" (T) or "monocle" (M)
 func formatLayout(format string) string {
 	if format == "T" {
-		return lemonbar.MakeClickable(tilingText, "bspc desktop -l tiled", lemonbar.MouseLeft)
+		return lemonbar.MakeClickable(tilingText, "bspc desktop -l monocle", lemonbar.MouseLeft)
 	}
-	return lemonbar.MakeClickable(monocleText, "bspc desktop -l monocle", lemonbar.MouseLeft)
+	return lemonbar.MakeClickable(monocleText, "bspc desktop -l tiled", lemonbar.MouseLeft)
 }
 
 // State can be tiled (T), pseudo-tiled (P), floating (F), fullscreen (=), and parent (@)
 func formatState(format string) string {
 	switch format {
 	case "T":
-		return tagTiled
+		return lemonbar.MakeClickable(lemonbar.MakeClickable(tagTiled, "bspc node -t pseudo_tiled", lemonbar.MouseLeft), "bspc node -t fullscreen", lemonbar.MouseRight)
 	case "P":
-		return tagPseudoTiled
+		return lemonbar.MakeClickable(lemonbar.MakeClickable(tagPseudoTiled, "bspc node -t floating", lemonbar.MouseLeft), "bspc node -t fullscreen", lemonbar.MouseRight)
 	case "F":
-		return tagFloating
+		return lemonbar.MakeClickable(lemonbar.MakeClickable(tagFloating, "bspc node -t tiled", lemonbar.MouseLeft), "bspc node -t fullscreen", lemonbar.MouseRight)
 	case "=":
-		return tagFullscreen
+		return lemonbar.MakeClickable(lemonbar.MakeClickable(tagFullscreen, "bspc node -t ~fullscreen", lemonbar.MouseLeft), "bspc node -t ~fullscreen", lemonbar.MouseRight)
 	case "@":
 		return tagParent
 	}
