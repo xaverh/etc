@@ -1,31 +1,12 @@
 [Default Applications]
-x-scheme-handler/http=userapp-Firefox-IJZEZZ.desktop
-x-scheme-handler/https=userapp-Firefox-IJZEZZ.desktop
-x-scheme-handler/ftp=userapp-Firefox-IJZEZZ.desktop
-x-scheme-handler/chrome=userapp-Firefox-IJZEZZ.desktop
-text/html=userapp-Firefox-IJZEZZ.desktop
-application/x-extension-htm=userapp-Firefox-IJZEZZ.desktop
-application/x-extension-html=userapp-Firefox-IJZEZZ.desktop
-application/x-extension-shtml=userapp-Firefox-IJZEZZ.desktop
-application/xhtml+xml=userapp-Firefox-IJZEZZ.desktop
-application/x-extension-xhtml=userapp-Firefox-IJZEZZ.desktop
-application/x-extension-xht=userapp-Firefox-IJZEZZ.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+text/html=brave-browser.desktop
 text/plain=code.desktop
 
 inode/directory=nnn.desktop
 x-directory/normal=nnn.desktop
 [Default Applications]
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-x-scheme-handler/ftp=firefox.desktop
-x-scheme-handler/chrome=firefox.desktop
-text/html=firefox.desktop
-application/x-extension-htm=firefox.desktop
-application/x-extension-html=firefox.desktop
-application/x-extension-shtml=firefox.desktop
-application/xhtml+xml=firefox.desktop
-application/x-extension-xhtml=firefox.desktop
-application/x-extension-xht=firefox.desktop
 text/plain=code.desktop
 x-scheme-handler/about=brave-browser.desktop
 x-scheme-handler/unknown=brave-browser.desktop
@@ -39,8 +20,5 @@ application/x-cb7=org.pwmt.zathura.desktop
 audio/x-m4b=mpv.desktop
 
 [Added Associations]
-x-scheme-handler/http=firefox.desktop;
-x-scheme-handler/https=firefox.desktop;
-text/html=firefox.desktop;
 image/jpeg=sxiv.desktop;
 application/x-sh=code.desktop;
