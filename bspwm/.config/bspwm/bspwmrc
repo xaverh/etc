@@ -21,7 +21,11 @@ bspc rule -a URxvt:WeeChat desktop='^7' follow=on locked=on
 bspc rule -a TelegramDesktop desktop='^7' follow=on
 bspc rule -a Firefox:Browser state=floating
 bspc rule -a Firefox:Navigator follow=on locked=on
+bspc rule -a Brave-browser follow=on locked=on
+bspc rule -a Google-chrome-unstable follow=on locked=on
 bspc rule -a Firefox:Navigator -o private=on
+bspc rule -a Brave-browser -o private=on
+bspc rule -a Google-chrome-unstable -o private=on
 bspc rule -a strawberry desktop='^4' follow=on
 bspc rule -a Steam desktop='^5' follow=on
 bspc rule -a 9menu manage=off focus=on
