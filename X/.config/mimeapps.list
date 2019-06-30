@@ -1,9 +1,9 @@
 [Default Applications]
-text/html=google-chrome-unstable.desktop
-x-scheme-handler/http=google-chrome-unstable.desktop
-x-scheme-handler/https=google-chrome-unstable.desktop
-x-scheme-handler/about=google-chrome-unstable.desktop
-x-scheme-handler/unknown=google-chrome-unstable.desktop
+text/html=vivaldi-stable.desktop
+x-scheme-handler/http=vivaldi-stable.desktop
+x-scheme-handler/https=vivaldi-stable.desktop
+x-scheme-handler/about=vivaldi-stable.desktop
+x-scheme-handler/unknown=vivaldi-stable.desktop
 text/plain=code.desktop
 inode/directory=nnn.desktop
 x-directory/normal=nnn.desktop
