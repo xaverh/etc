@@ -1,4 +1,3 @@
-
 [Default Applications]
 text/html=google-chrome-unstable.desktop
 x-scheme-handler/http=google-chrome-unstable.desktop
@@ -17,6 +16,7 @@ application/vnd.comicbook-rar=org.pwmt.zathura.desktop
 application/vnd.comicbook+zip=org.pwmt.zathura.desktop
 application/x-cb7=org.pwmt.zathura.desktop
 audio/x-m4b=mpv.desktop
+application/pdf=org.pwmt.zathura.desktop
 
 [Added Associations]
 image/jpeg=sxiv.desktop;
