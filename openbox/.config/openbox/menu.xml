@@ -13,7 +13,7 @@
 		<menu id="terminals-menu"/>
 		<item label="rxvt-unicode">
 			<action name="Execute">
-				<command>urxvt-ml</command>
+				<command>urxvt-mlc</command>
 			</action>
 		</item>
 		<separator/>

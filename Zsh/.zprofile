@@ -1,5 +1,6 @@
 SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_AUTH_SOCK
+export SSH_ASKPASS="/usr/libexec/openssh/x11-ssh-askpass"
 
 export MAN_POSIXLY_CORRECT=1
 export EDITOR=vim
