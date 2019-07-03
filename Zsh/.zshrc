@@ -152,4 +152,9 @@ n()
         fi
 }
 
+ripsite()
+{
+	wkhtmltopdf --images --no-stop-slow-scripts "$@" `systemd-escape $@`".pdf"
+}
+
 alias nnn=n
