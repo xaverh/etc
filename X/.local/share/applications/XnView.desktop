@@ -1,0 +1,12 @@
+[Desktop Entry]
+Value=1.0
+Encoding=UTF-8
+Terminal=0
+Exec=/home/xha/.local/bin/XnView %F
+Icon=/home/xha/.local/share/icons/xnview.png
+Type=Application
+Categories=Graphics;
+StartupNotify=true
+Name=XnView Multi Platform
+GenericName=XnViewMP
+MimeType=image/bmp;image/jpeg;image/png;image/tiff;image/gif;

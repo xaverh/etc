@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+	<menu execute="/usr/libexec/openbox-xdg-menu applications" id="applications-menu" label="Applications"/>
+	<menu execute="/usr/libexec/openbox-xdg-menu preferences" id="preferences-menu" label="Preferences"/>
+	<menu execute="/usr/libexec/openbox-xdg-menu system-settings" id="administration-menu" label="Administration"/>
+	<menu execute="/usr/libexec/openbox-xdg-menu /etc/xdg/openbox/terminals" id="terminals-menu" label="Terminals"/>
+	<menu id="root-menu" label="Openbox 3">
+		<separator label="Openbox"/>
+		<menu id="applications-menu"/>
+		<menu id="preferences-menu"/>
+		<menu id="administration-menu"/>
+		<separator/>
+		<menu id="terminals-menu"/>
+		<item label="rxvt-unicode">
+			<action name="Execute">
+				<command>urxvt-mlc</command>
+			</action>
+		</item>
+		<separator/>
+		<item label="Reconfigure">
+			<action name="Reconfigure"/>
+		</item>
+		<item label="Exit">
+			<action name="Exit">
+				<prompt>yes</prompt>
+			</action>
+		</item>
+		<separator/>
+		<item label="Log Out">
+			<action name="SessionLogout">
+				<prompt>yes</prompt>
+			</action>
+		</item>
+	</menu>
+</openbox_menu>
