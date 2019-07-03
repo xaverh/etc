@@ -70,8 +70,9 @@ urxvtd -q -o -f
  #   i3 >/dev/null 2>&1
 #done
 
-sxhkd -m -1 &
-exec bspwm
+# sxhkd -m -1 &
+# exec bspwm
+exec openbox-session
 
 # call failsafe
 exit 0
