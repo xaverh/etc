@@ -11,3 +11,7 @@ jigglyroom/jigglyroom
 mpv/.config/mpv/watch_later
 XnView/.config/xnviewmp/Thumb.db
 XnView/.config/xnviewmp/XnView.db
+fluxbox/.fluxbox/fbrun_history
+fvwm/.fvwm/.FvwmConsole-History
+fvwm/.fvwm/cache/*
+fvwm/.fvwm/icons/*
