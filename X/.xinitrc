@@ -62,8 +62,6 @@ xsetroot -solid "#57655a"
 
 numlockx &
 
-urxvtd -q -o -f
-
 # (sleep 3 && jigglyroom 0 | lemonbar -a 11 -g x18 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"  -B "#1E1E1E" -F "#E5E6E6" | sh) &
 
 #while true; do
@@ -72,7 +70,8 @@ urxvtd -q -o -f
 
 # sxhkd -m -1 &
 # exec bspwm
-exec openbox-session
+# fvwm can replace other window managers via fvwm -r
+exec fvwm
 
 # call failsafe
 exit 0
