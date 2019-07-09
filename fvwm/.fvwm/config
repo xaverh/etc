@@ -29,7 +29,7 @@
 #
 # The following is used in various menus and also sets the terminal
 # that FvwmConsole uses. Change this to your terminal of choice
-InfoStoreAdd terminal urxvt256c-ml
+InfoStoreAdd terminal urxvt256c-mlc
 
 ###########
 # 1: Functions
@@ -62,6 +62,7 @@ AddToFunc   StartFunction
 + I Test (Init) Module FvwmBanner
 + I Module FvwmButtons RightPanel
 + I Module FvwmEvent EventNewDesk
++ I Test (Init) Exec urxvt256c-mld -q -o -f
 
 # Mouse Bindings Functions
 DestroyFunc RaiseMoveX
@@ -191,7 +192,7 @@ MoveThreshold 3
 Style * SloppyFocus, MouseFocusClickRaises
 
 # Default Font
-DefaultFont "xft:Sans:Bold:size=8:antialias=True"
+DefaultFont "xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1;-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"
 
 # Window Placement
 Style * MinOverlapPlacement, GrabFocusOff, !UsePPosition
@@ -274,7 +275,6 @@ MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8
 MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong
 MenuStyle * TrianglesSolid, TrianglesUseFore
 MenuStyle * ItemFormat "%|%3.1i%5.3l%5.3>%|"
-MenuStyle * Font "xft:Sans:Bold:size=8:antialias=True"
 
 # Root Menu
 #
@@ -284,7 +284,7 @@ DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "&Programs%icons/programs.png%" Popup MenuPrograms
 + "XDG &Menu%icons/apps.png%" Popup XDGMenu
-+ "&XTerm%icons/terminal.png%" Exec exec $[infostore.terminal]
++ "rxv&t-unicode%icons/terminal.png%" Exec exec $[infostore.terminal]
 + "" Nop
 + "Fvwm&Console%icons/terminal.png%" Module FvwmConsole -terminal $[infostore.terminal]
 + "&Wallpapers%icons/wallpaper.png%" Popup BGMenu
