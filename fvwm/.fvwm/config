@@ -29,7 +29,7 @@
 #
 # The following is used in various menus and also sets the terminal
 # that FvwmConsole uses. Change this to your terminal of choice
-InfoStoreAdd terminal xterm
+InfoStoreAdd terminal urxvt256c-ml
 
 ###########
 # 1: Functions
