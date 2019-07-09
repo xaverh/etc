@@ -1,6 +1,5 @@
 {
   "editor.fontFamily": "IBM Plex Mono Text, SF Mono, Consolas, Menlo, Source Code Pro",
-  "editor.fontSize": 15,
   "editor.fontWeight": "400",
   "editor.rulers": [],
   "editor.formatOnType": true,
@@ -161,7 +160,6 @@
   "workbench.useExperimentalGridLayout": true,
   "latex-workshop.latex.autoBuild.run": "never",
   "breadcrumbs.enabled": true,
-  "window.titleBarStyle": "native",
   "breadcrumbs.symbolPath": "on",
   "diffEditor.ignoreTrimWhitespace": true,
   "window.openWithoutArgumentsInNewWindow": "off",
@@ -191,10 +189,11 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Ysgrifennwr",
+  "workbench.colorTheme": "Qillqaq",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "go.toolsGopath": "/home/xha/.gopath"
+  "go.toolsGopath": "/home/xha/.gopath",
+  "editor.fontSize": 13
 }
