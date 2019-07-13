@@ -28,10 +28,10 @@ URxvt.internalBorder:  12
 URxvt.inheritPixmap: false
 URxvt.transparent: false
 URxvt.visualBell: false
-! URxvt.saveLines: 65536
-URxvt.saveLines: 0
+URxvt.saveLines: 65536
 ! URxvt.fading: 10
 URxvt.cursorBlink: 1
+URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/utilities-terminal.png
 
 !! Qillqaq:
 *.background:             #1E1E1E
