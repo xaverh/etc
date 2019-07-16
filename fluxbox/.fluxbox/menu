@@ -14,10 +14,11 @@
 # - To prevent any other app from overwriting your menu
 #   you can change the menu name in ~/.fluxbox/init to:
 #     session.menuFile: ~/.fluxbox/my-menu
-[begin] (Fluxbox-1.3.7)
+[begin] (Fluxbox Menu)
 [encoding] {UTF-8}
-      [exec] (xterm) {xterm}
-      [exec] (firefox) {}
+      [exec] (rxvt-unicode) {urxvt-mlc}
+      [exec] (rxvt-unicode + tmux) {urxvt-mlc -e tmux}
+      [exec] (Brave) {brave-browser}
 [submenu] (Fluxbox menu)
       [config] (Configure)
 [submenu] (System Styles) {Choose a style...}
