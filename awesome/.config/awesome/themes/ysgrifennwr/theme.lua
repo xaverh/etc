@@ -6,27 +6,32 @@ local theme_path = "/home/xha/.config/awesome/themes/ysgrifennwr/"
 
 local theme = {}
 
-theme.font          = "sans 8"
+theme.font          = ".Helvetica Neue DeskInterface 9"
 
-theme.bg_normal     = "#edece8"
-theme.bg_focus      = theme.bg_normal
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_normal     = "#1e1e1e"
+theme.bg_focus      = "#005577"
+theme.bg_urgent     = theme.bg_normal
+theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#868584"
-theme.fg_focus      = "#424242"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#e5e6e6"
+theme.fg_focus      = theme.fg_normal
+theme.fg_urgent     = "#E32791"
+theme.fg_minimize   = "#b8b8b8"
 
 theme.useless_gap   = dpi(5)
-theme.border_width  = dpi(2)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
-theme.border_marked = "#91231c"
+theme.border_width  = dpi(1)
+theme.border_normal = theme.fg_normal
+theme.border_focus  = theme.fg_focus
+theme.border_marked = "#A25D0E"
+
+theme.titlebar_bg_normal     = "#edece8"
+theme.titlebar_bg_focus      = theme.titlebar_bg_normal
+theme.titlebar_fg_normal     = "#868584"
+theme.titlebar_fg_focus      = "#424242"
 
 -- There are other variable sets
--- overriding the ysgrifennwr one when
+-- overriding the default one when
 -- defined, the sets are:
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
 -- tasklist_[bg|fg]_[focus|urgent]
