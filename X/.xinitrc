@@ -71,7 +71,7 @@ numlockx &
 # sxhkd -m -1 &
 # exec bspwm
 # fvwm can replace other window managers via fvwm -r
-exec fvwm
+exec awesome
 
 # call failsafe
 exit 0

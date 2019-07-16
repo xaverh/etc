@@ -17,7 +17,7 @@
 "Steam:exec steam" \
 "Change Wallpaper:exec change_wallpaper.sh" \
 "Connect Set"$'\xFA'"bal:exec bluetoothctl connect 88:C6:26:F4:8A:90" \
-"Screenshot:exec maim `date +%s`.png" \
+"Screenshot:exec maim ~/tmp/`date +%s`.png" \
 "---:true" \
 exit
 

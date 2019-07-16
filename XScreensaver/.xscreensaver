@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.42 for xha on Sun Jul 14 00:18:58 2019.
+# Written by xscreensaver-demo 5.42 for xha on Sun Jul 14 11:37:45 2019.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:10:00
@@ -31,8 +31,8 @@ dpmsSuspend:	2:00:00
 dpmsOff:	4:00:00
 grabDesktopImages:  True
 grabVideoFrames:    False
-chooseRandomImages: False
-imageDirectory:	/usr/share/backgrounds/images
+chooseRandomImages: True
+imageDirectory:	/home/xha/var/wallpapers
 
 mode:		random
 selected:	232
@@ -267,7 +267,8 @@ programs:								      \
   GL: 				hydrostat -root				    \n\
 - GL: 				raverhoop -root				    \n\
 - GL: 				splodesic -root				    \n\
-  GL: 				unicrud -root				    \n\
+  GL: 				unicrud -root -block			      \
+				  Latin1,Latin_Extended-A,Latin_Extended-B,Spacing_Modifier_Letters,Phonetic_Extensions,Latin_Extended_Additional,Greek_Extended,General_Punctuation,Superscripts_and_Subscripts,Currency_Symbols,Letterlike_Symbols,Number_Forms,Greek_and_Coptic,Mathematical_Operators,Miscellaneous_Symbols_and_Arrows \n\
 - GL: 				esper -root				    \n\
 - GL: 				vigilance -root				    \n\
 - GL: 				crumbler -root				    \n\
