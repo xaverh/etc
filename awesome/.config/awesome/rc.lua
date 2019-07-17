@@ -48,7 +48,7 @@ beautiful.init "/home/xha/.config/awesome/themes/ysgrifennwr/theme.lua"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt-mlc"
-editor = os.getenv "EDITOR"  or "vi"
+editor = os.getenv "EDITOR" or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -611,6 +611,46 @@ clientkeys =
 			c:raise()
 		end,
 		{description = "(un)maximize horizontally", group = "client"}
+	),
+	awful.key(
+		{},
+		"XF86MonBrightnessUp",
+		function()
+			awful.spawn "xbacklight -inc 10"
+		end,
+		{description = "increase brightness", group = "awesome"}
+	),
+	awful.key(
+		{},
+		"XF86MonBrightnessDown",
+		function()
+			awful.spawn "xbacklight -dec 10"
+		end,
+		{description = "decrease brightness", group = "awesome"}
+	),
+	awful.key(
+		{},
+		"XF86AudioRaiseVolume",
+		function()
+			awful.spawn.with_shell "amixer sset Master unmute && amixer sset Master 5%+"
+		end,
+		{description = "increase volume", group = "awesome"}
+	),
+	awful.key(
+		{},
+		"XF86AudioLowerVolume",
+		function()
+			awful.spawn.with_shell "amixer sset Master unmute && amixer sset Master 5%-"
+		end,
+		{description = "decrease volume", group = "awesome"}
+	),
+	awful.key(
+		{},
+		"XF86AudioMute",
+		function()
+			awful.spawn "amixer sset Master mute"
+		end,
+		{description = "mute", group = "awesome"}
 	)
 )
 
@@ -863,7 +903,7 @@ client.connect_signal(
 
 do
 	local cmds = {
-		"urxvt-mld -q -o -f",
+		"urxvt-mld -q -o -f"
 	}
 
 	for _, i in pairs(cmds) do
