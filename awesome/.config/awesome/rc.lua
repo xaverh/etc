@@ -44,11 +44,11 @@ end
 
 -- Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/home/xha/.config/awesome/themes/qillqaq/theme.lua")
+beautiful.init "/home/xha/.config/awesome/themes/ysgrifennwr/theme.lua"
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt256c-mlc"
-editor = os.getenv("EDITOR") or "vi"
+terminal = "urxvt-mlc"
+editor = os.getenv "EDITOR"  or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -60,6 +60,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+	awful.layout.suit.floating,
 	awful.layout.suit.tile,
 	-- awful.layout.suit.tile.left,
 	-- awful.layout.suit.tile.bottom,
@@ -68,7 +69,6 @@ awful.layout.layouts = {
 	-- awful.layout.suit.fair.horizontal,
 	-- awful.layout.suit.spiral,
 	awful.layout.suit.spiral.dwindle,
-	awful.layout.suit.floating,
 	awful.layout.suit.magnifier,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen
@@ -121,7 +121,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Wibar
 -- Create a textclock widget
-mytextclock = wibox.container.margin(wibox.widget.textclock("%a %-d %b %T %Z", 1),0,8,0,0)
+mytextclock = wibox.container.margin(wibox.widget.textclock("%a %-d %b %T %Z", 1), 0, 8, 0, 0)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -281,8 +281,8 @@ awful.screen.connect_for_each_screen(
 			style = {
 				disable_task_name = false,
 				shape_border_width = 1,
-				shape_border_color = '#808080',
-				shape  = gears.shape.rectangle,
+				shape_border_color = "#808080",
+				shape = gears.shape.rectangle,
 				spacing = 10
 			},
 			layout = {
@@ -291,7 +291,7 @@ awful.screen.connect_for_each_screen(
 		}
 
 		-- Create the wibox
-		s.mywibox = awful.wibar({height = 20, position = "top", screen = s})
+		s.mywibox = awful.wibar {height = 20, position = "top", screen = s}
 
 		-- Add widgets to the wibox
 		s.mywibox:setup {
@@ -860,3 +860,13 @@ client.connect_signal(
 		c.border_color = beautiful.border_normal
 	end
 )
+
+do
+	local cmds = {
+		"urxvt-mld -q -o -f",
+	}
+
+	for _, i in pairs(cmds) do
+		awful.util.spawn(i)
+	end
+end

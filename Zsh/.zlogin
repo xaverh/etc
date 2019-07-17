@@ -12,7 +12,7 @@ export PANEL_BG_COLOR="#1E1E1E"
 export PANEL_BG_SEL_COLOR="#005577"
 export PANEL_FG_COLOR="#F5F6F6"
 export PANEL_FG_SEL_COLOR="#F5F6F6"
-export TERMINAL=urxvt256c-mlc
+export TERMINAL=urxvt-mlc
 # export MOZ_ENABLE_WAYLAND=1
 
 # Following automatically calls "startx" when you login:

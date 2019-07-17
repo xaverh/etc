@@ -1,9 +1,5 @@
 #!/bin/zsh
 
-# Sample .xinitrc for SuSE Linux
-# This script is called from 'startx' when you start an X session
-#
-
 #
 # In case everything goes wrong, we at least fall back to a plain xterm
 #
