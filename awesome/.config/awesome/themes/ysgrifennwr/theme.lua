@@ -97,7 +97,10 @@ theme.titlebar_maximized_button_focus_inactive  = theme_path.."titlebar/maximize
 theme.titlebar_maximized_button_normal_active = theme_path.."titlebar/maximized_normal_active.svg"
 theme.titlebar_maximized_button_focus_active  = theme_path.."titlebar/maximized_focus_active.svg"
 
-theme.wallpaper = theme_path.."background.png"
+-- this should be in rc.lua
+theme.wallpaper = function ()
+    return "/home/xha/var/wallpapers/wp1895640.png"
+end
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = theme_path.."layouts/fair.svg"

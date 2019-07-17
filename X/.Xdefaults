@@ -17,14 +17,14 @@ x11-ssh-askpass*font:                   -xos4-terminus-medium-r-normal--14-140-7
 URxvt.intensityStyles: false
 URxvt*geometry: 80x24
 URxvt*scrollBar: false
-URxvt*font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
-URxvt*boldFont: -xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1
-! URxvt*letterSpace: -1
-! URxvt*font: xft:IBM Plex Mono Text:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*italicFont: xft:IBM Plex Mono Text:style=Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-! URxvt*boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.internalBorder:  12
+! URxvt*font: -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
+! URxvt*boldFont: -xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1
+URxvt*letterSpace: -1
+URxvt*font: xft:SF Mono:style=Regular:pixelsize=13:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldFont: xft:SF Mono:style=Bold:pixelsize=13:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*italicFont: xft:SF Mono:style=Italic:pixelsize=13:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt*boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=13:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.internalBorder:  13
 URxvt.inheritPixmap: false
 URxvt.transparent: false
 URxvt.visualBell: false
@@ -33,82 +33,53 @@ URxvt.saveLines: 65536
 URxvt.cursorBlink: 1
 URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/utilities-terminal.png
 
-!! Qillqaq:
-*.background:             #1E1E1E
-*.color0:                 #1E1E1E
-*.color1:                 #E32791
-*.color2:                 #30C798
-*.color3:                 #E3C472
-*.color4:                 #6769E6
-*.color5:                 #E59FDF
-*.color6:                 #81D8D0
-*.color7:                 #969696
-*.color8:                 #515151
-*.color9:                 #E466AD
-*.color10:                #6CD1B2
-*.color11:                #E4CF98
-*.color12:                #9091E6
-*.color13:                #E5B6E1
-*.color14:                #A2DCD7
-*.color15:                #E5E6E6
-*.foreground:             #E5E6E6
-URxvt.cursorColor:            #20BBFC
-URxvt.cursorColor2:           #1E1E1E
-URxvt.highlightColor:     [50]#E5E6E6
-URxvt.highlightTextColor: [80]#1E1E1E
-URxvt.fadeColor:              #1E1E1E
+! ! Qillqaq:
+! *.background:             #1E1E1E
+! *.color0:                 #1E1E1E
+! *.color1:                 #E32791
+! *.color2:                 #30C798
+! *.color3:                 #E3C472
+! *.color4:                 #6769E6
+! *.color5:                 #E59FDF
+! *.color6:                 #81D8D0
+! *.color7:                 #969696
+! *.color8:                 #515151
+! *.color9:                 #E466AD
+! *.color10:                #6CD1B2
+! *.color11:                #E4CF98
+! *.color12:                #9091E6
+! *.color13:                #E5B6E1
+! *.color14:                #A2DCD7
+! *.color15:                #E5E6E6
+! *.foreground:             #E5E6E6
+! URxvt.cursorColor:            #20BBFC
+! URxvt.cursorColor2:           #1E1E1E
+! URxvt.highlightColor:     [50]#E5E6E6
+! URxvt.highlightTextColor: [80]#1E1E1E
+! URxvt.fadeColor:              #1E1E1E
 
 
-! ! Ysgrifennwr:
-! URxvt.background:             #F9F8F4
-! URxvt.color0:                 #F9F8F4
-! URxvt.color1:                 #E32791
-! URxvt.color2:                 #488432
-! URxvt.color3:                 #A25D0E
-! URxvt.color4:                 #2C65B5
-! URxvt.color5:                 #B062A7
-! URxvt.color6:                 #27BBBE
-! URxvt.color7:                 #999999
-! URxvt.color8:                 #B8B8B8
-! URxvt.color9:                 #9F1B66
-! URxvt.color10:                #325D23
-! URxvt.color11:                #71410A
-! URxvt.color12:                #1F477F
-! URxvt.color13:                #7B4474
-! URxvt.color14:                #1B8486
-! URxvt.color15:                #424242
-! URxvt.foreground:             #424242
-! URxvt.cursorColor:            #FC9520
-! URxvt.cursorColor2:           #424242
-! URxvt.highlightColor:     [80]#999999
-! URxvt.highlightTextColor: [80]#F9F8F4
-! URxvt.fadeColor:              #424242
-
-
-! xscreensaver ---------------------------------------------------------------
-
-! !font settings
-! xscreensaver.Dialog.headingFont:        -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! xscreensaver.Dialog.bodyFont:           -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! xscreensaver.Dialog.labelFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! xscreensaver.Dialog.unameFont:          -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! xscreensaver.Dialog.buttonFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! xscreensaver.Dialog.dateFont:           -*-fixed-medium-r-*-*-12-*-*-*-*-*-*-*
-! xscreensaver.passwd.passwdFont:         -*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*
-! !general dialog box (affects main hostname, username, password text)
-! xscreensaver.Dialog.foreground:         #101010
-! xscreensaver.Dialog.background:         #D8D8D8
-! xscreensaver.Dialog.topShadowColor:     #D8D8D8
-! xscreensaver.Dialog.bottomShadowColor:  #D8D8D8
-! xscreensaver.Dialog.Button.foreground:  #101010
-! xscreensaver.Dialog.Button.background:  #E5E5E5
-! !username/password input box and date text colour
-! xscreensaver.Dialog.text.foreground:    #101010
-! xscreensaver.Dialog.text.background:    #E5E5E5
-! xscreensaver.Dialog.internalBorderWidth:24
-! xscreensaver.Dialog.borderWidth:        0
-! xscreensaver.Dialog.shadowThickness:    2
-! !timeout bar (background is actually determined by Dialog.text.background)
-! xscreensaver.passwd.thermometer.foreground:  #101010
-! xscreensaver.passwd.thermometer.background:  #2E2E2E
-! xscreensaver.passwd.thermometer.width:       8
+! Ysgrifennwr:
+URxvt.background:             #F9F8F4
+URxvt.color0:                 #F9F8F4
+URxvt.color1:                 #E32791
+URxvt.color2:                 #488432
+URxvt.color3:                 #A25D0E
+URxvt.color4:                 #2C65B5
+URxvt.color5:                 #B062A7
+URxvt.color6:                 #27BBBE
+URxvt.color7:                 #999999
+URxvt.color8:                 #B8B8B8
+URxvt.color9:                 #9F1B66
+URxvt.color10:                #325D23
+URxvt.color11:                #71410A
+URxvt.color12:                #1F477F
+URxvt.color13:                #7B4474
+URxvt.color14:                #1B8486
+URxvt.color15:                #424242
+URxvt.foreground:             #424242
+URxvt.cursorColor:            #FC9520
+URxvt.cursorColor2:           #424242
+URxvt.highlightColor:     [80]#999999
+URxvt.highlightTextColor: [80]#F9F8F4
+URxvt.fadeColor:              #424242
