@@ -30,6 +30,8 @@ theme.titlebar_bg_focus      = theme.titlebar_bg_normal
 theme.titlebar_fg_normal     = "#868584"
 theme.titlebar_fg_focus      = "#424242"
 
+theme.hotkeys_modifiers_fg = "#868584"
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
