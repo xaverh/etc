@@ -144,7 +144,7 @@ vmap  <expr>  <S-UP>     DVB_Drag('up')
 vmap  <expr>  D          DVB_Duplicate()
 
 " Colors & Fonts & Appearance
-set background=dark
+set background=light
 let c_comment_strings=1
 
 " Clang-Format & gofmt

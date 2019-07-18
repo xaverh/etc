@@ -14,6 +14,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- Vicious
+local vicious = require("vicious")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -122,6 +124,97 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Wibar
 -- Create a textclock widget
 mytextclock = wibox.container.margin(wibox.widget.textclock("%a %-d %b %T %Z", 1), 0, 8, 0, 0)
+
+local function nearest_si_suffix(bytes)
+	local bytes = math.tointeger(bytes)
+	local suffix = " B"
+	if bytes >= 1000000000 then
+		bytes = bytes // 100000000
+		bytes = bytes / 10
+		suffix = " GB"
+	elseif bytes >= 1000000 then
+		bytes = bytes // 100000
+		bytes = bytes / 10
+		suffix = " MB"
+	elseif bytes >= 1000 then
+		bytes = bytes // 100
+		bytes = bytes / 10
+		suffix = " kB"
+	else
+		return bytes .. suffix
+	end
+	return ("%.1f %s"):format(bytes, suffix)
+end
+
+memwidget = wibox.widget.textbox()
+vicious.register(
+	memwidget,
+	vicious.widgets.mem,
+	function(widget, args)
+		return nearest_si_suffix(args[2] * 1048576) .. "  "
+	end,
+	7
+)
+
+-- Vicious net widget
+netwidget = wibox.widget.textbox()
+vicious.register(
+	netwidget,
+	vicious.widgets.net,
+	function(widget, args)
+		local carrier = "eno1"
+		if args["{wlan0 carrier}"] then
+			carrier = "wlan0"
+		end
+		return nearest_si_suffix(args["{" .. carrier .. " down_b}"]) ..
+			"/s  " .. nearest_si_suffix(args["{" .. carrier .. " up_b}"]) .. "/s "
+	end,
+	2
+)
+
+-- Vicious wifi widget
+wifiwidget = wibox.widget.textbox()
+vicious.register(
+	wifiwidget,
+	vicious.widgets.wifiiw,
+	function(widget, args)
+		return ("%s %s"):format(args["{ssid}"], string.sub(args["{bssid}"], -8))
+	end,
+	11,
+	"wlan0"
+)
+
+-- Vicious battery widget
+batwidget = wibox.widget.progressbar()
+-- Create wibox with batwidget
+batbox =
+	wibox.layout.margin(
+	wibox.widget {
+		{
+			max_value = 1,
+			widget = batwidget,
+			border_width = 0.5,
+			border_color = "#000000",
+			color = {
+				type = "linear",
+				from = {0, 0},
+				to = {0, 30},
+				stops = {{0, "#AECF96"}, {1, "#FF5656"}}
+			}
+		},
+		forced_height = 10,
+		forced_width = 8,
+		direction = "east",
+		color = beautiful.fg_widget,
+		layout = wibox.container.rotate
+	},
+	1,
+	1,
+	3,
+	3
+)
+-- Register battery widget
+vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -299,7 +392,7 @@ awful.screen.connect_for_each_screen(
 			{
 				-- Left widgets
 				layout = wibox.layout.fixed.horizontal,
-				mylauncher,
+				s.mylayoutbox,
 				s.mytaglist,
 				s.mypromptbox
 			},
@@ -308,8 +401,12 @@ awful.screen.connect_for_each_screen(
 				-- Right widgets
 				layout = wibox.layout.fixed.horizontal,
 				wibox.widget.systray(),
+				memwidget,
+				netwidget,
+				wifiwidget,
+				batbox,
 				mytextclock,
-				s.mylayoutbox
+				mylauncher
 			}
 		}
 	end
