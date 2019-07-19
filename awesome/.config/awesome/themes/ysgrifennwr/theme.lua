@@ -21,8 +21,8 @@ theme.fg_minimize   = "#b8b8b8"
 
 theme.useless_gap   = dpi(5)
 theme.border_width  = dpi(1)
-theme.border_normal = theme.fg_normal
-theme.border_focus  = theme.fg_focus
+theme.border_normal = "#868584"
+theme.border_focus  = "#424242"
 theme.border_marked = "#A25D0E"
 
 theme.titlebar_bg_normal     = "#edece8"
@@ -46,7 +46,7 @@ theme.hotkeys_modifiers_fg = "#868584"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(5)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
@@ -64,7 +64,7 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = theme_path.."submenu.svg"
-theme.menu_height = dpi(15)
+theme.menu_height = dpi(20)
 theme.menu_width  = dpi(100)
 
 -- You can add as many variables as
