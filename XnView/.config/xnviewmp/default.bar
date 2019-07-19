@@ -6,6 +6,10 @@ cmd_rotate270
 cmd_rotate90
 cmd_losslessM
 _separator_
+cmd_rating1
+cmd_rating2
+cmd_rating0
+_separator_
 cmd_properties
 cmd_fileOpM
 cmd_search
@@ -32,8 +36,7 @@ cmd_redo
 _separator_
 cmd_crop
 cmd_resize
-cmd_rotate270
-cmd_rotate90
+cmd_losslessM
 cmd_adjustM
 cmd_curves
 _separator_
@@ -43,8 +46,9 @@ cmd_zoomOut
 _separator_
 cmd_filePrevious
 cmd_fileNext
-cmd_pagePrevious
-cmd_pageNext
+cmd_rating1m
+cmd_rating2m
+cmd_rating0m
 cmd_quickSlide
 cmd_properties
 cmd_filter
