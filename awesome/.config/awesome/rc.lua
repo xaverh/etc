@@ -3,23 +3,23 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
+local gears = require "gears"
+local awful = require "awful"
+require "awful.autofocus"
 -- Widget and layout library
-local wibox = require("wibox")
+local wibox = require "wibox"
 -- Theme handling library
-local beautiful = require("beautiful")
+local beautiful = require "beautiful"
 -- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
+local naughty = require "naughty"
+local menubar = require "menubar"
+local hotkeys_popup = require "awful.hotkeys_popup"
 -- Vicious
 local vicious = require "vicious"
 local cyclefocus = require "cyclefocus"
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+require "awful.hotkeys_popup.keys"
 
 -- Handle runtime errors after startup
 do
@@ -74,8 +74,8 @@ awful.layout.layouts = {
 	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.magnifier,
 	awful.layout.suit.max,
-	awful.layout.suit.max.fullscreen
-	-- awful.layout.suit.corner.nw,
+	awful.layout.suit.max.fullscreen,
+	awful.layout.suit.corner.nw
 	-- awful.layout.suit.corner.ne,
 	-- awful.layout.suit.corner.sw,
 	-- awful.layout.suit.corner.se,
@@ -374,9 +374,9 @@ awful.screen.connect_for_each_screen(
 			buttons = tasklist_buttons,
 			style = {
 				disable_task_name = false,
-				shape_border_width = 1,
-				shape_border_color = "#808080",
-				shape = gears.shape.rectangle,
+				-- shape_border_width = 1,
+				-- shape_border_color = "#808080",
+				-- shape = gears.shape.rectangle,
 				spacing = 10
 			},
 			layout = {
@@ -508,8 +508,6 @@ globalkeys =
 		function(c)
 			cyclefocus.cycle({modifier = "Super_L"})
 		end
-		end,
-		{description = "go back", group = "client"}
 	),
 	-- Standard program
 	awful.key(
@@ -519,6 +517,14 @@ globalkeys =
 			awful.spawn(terminal)
 		end,
 		{description = "open a terminal", group = "launcher"}
+	),
+	awful.key(
+		{modkey},
+		"e",
+		function()
+			awful.spawn("pcmanfm")
+		end,
+		{description = "open a file manager", group = "launcher"}
 	),
 	awful.key({modkey, "Control"}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
 	awful.key({modkey, "Shift"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
