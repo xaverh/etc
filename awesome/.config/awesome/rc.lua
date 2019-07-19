@@ -748,6 +748,30 @@ clientkeys =
 			awful.spawn "amixer sset Master mute"
 		end,
 		{description = "mute", group = "awesome"}
+	),
+	awful.key(
+		{},
+		"XF86AudioPlay",
+		function()
+			awful.spawn "strawberry --play-pause"
+		end,
+		{description = "Toggle play/pause", group = "strawberry"}
+	),
+	awful.key(
+		{},
+		"XF86AudioPrev",
+		function()
+			awful.spawn "strawberry --restart-or-previous"
+		end,
+		{description = "Restart current song or go to previous song", group = "strawberry"}
+	),
+	awful.key(
+		{},
+		"XF86AudioNext",
+		function()
+			awful.spawn "strawberry --next"
+		end,
+		{description = "Go to next song", group = "strawberry"}
 	)
 )
 
