@@ -1,4 +1,6 @@
 gtk-font-name=".Helvetica Neue DeskInterface 11"
+gtk-cursor-theme-name="DMZ-White"
+gtk-cursor-theme-size=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle="hintslight"
