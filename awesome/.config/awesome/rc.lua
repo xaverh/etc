@@ -147,6 +147,12 @@ local function nearest_si_suffix(bytes)
 	return ("%.1f %s"):format(bytes, suffix)
 end
 
+ipwidget = wibox.widget.textbox()
+vicious.register(ipwidget, vicious.widgets.ipaddr, "$1  ", 7)
+
+temperaturewidget = wibox.widget.textbox()
+vicious.register(temperaturewidget, vicious.widgets.hwmontemp, "$1 °C  ", 13, {"coretemp"})
+
 memwidget = wibox.widget.textbox()
 vicious.register(
 	memwidget,
@@ -168,7 +174,7 @@ vicious.register(
 			carrier = "wlan0"
 		end
 		return nearest_si_suffix(args["{" .. carrier .. " down_b}"]) ..
-			"/s  " .. nearest_si_suffix(args["{" .. carrier .. " up_b}"]) .. "/s "
+			"/s  " .. nearest_si_suffix(args["{" .. carrier .. " up_b}"]) .. "/s  "
 	end,
 	2
 )
@@ -179,43 +185,14 @@ vicious.register(
 	wifiwidget,
 	vicious.widgets.wifiiw,
 	function(widget, args)
-		return ("%s %s"):format(args["{ssid}"], string.sub(args["{bssid}"], -8))
+		return ("%s  %s  "):format(args["{ssid}"], string.sub(args["{bssid}"], -8))
 	end,
 	11,
 	"wlan0"
 )
 
--- Vicious battery widget
-batwidget = wibox.widget.progressbar()
--- Create wibox with batwidget
-batbox =
-	wibox.layout.margin(
-	wibox.widget {
-		{
-			max_value = 1,
-			widget = batwidget,
-			border_width = 0.5,
-			border_color = "#000000",
-			color = {
-				type = "linear",
-				from = {0, 0},
-				to = {0, 30},
-				stops = {{0, "#AECF96"}, {1, "#FF5656"}}
-			}
-		},
-		forced_height = 10,
-		forced_width = 8,
-		direction = "east",
-		color = beautiful.fg_widget,
-		layout = wibox.container.rotate
-	},
-	1,
-	1,
-	3,
-	3
-)
--- Register battery widget
-vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+batwidget = wibox.widget.textbox()
+vicious.register(batwidget, vicious.widgets.bat, "$2 %  ", 61, "BAT0")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -404,8 +381,10 @@ awful.screen.connect_for_each_screen(
 				wibox.widget.systray(),
 				memwidget,
 				netwidget,
+				temperaturewidget,
 				wifiwidget,
-				batbox,
+				ipwidget,
+				batwidget,
 				mytextclock,
 				mylauncher
 			}
