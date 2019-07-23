@@ -75,29 +75,69 @@ theme.menu_width  = dpi(100)
 -- Define the image to load
 theme.titlebar_close_button_normal = theme_path.."titlebar/close_normal.svg"
 theme.titlebar_close_button_focus  = theme_path.."titlebar/close_focus.svg"
+theme.titlebar_close_button_normal_hover = theme_path.."titlebar/close_hover.svg"
+theme.titlebar_close_button_focus_hover  = theme.titlebar_close_button_normal_hover
+theme.titlebar_close_button_normal_press = theme_path.."titlebar/close_press.svg"
+theme.titlebar_close_button_focus_press  = theme.titlebar_close_button_normal_press
 
 theme.titlebar_minimize_button_normal = theme_path.."titlebar/minimize_normal.svg"
 theme.titlebar_minimize_button_focus  = theme_path.."titlebar/minimize_focus.svg"
+theme.titlebar_minimize_button_normal_hover = theme_path.."titlebar/minimize_hover.svg"
+theme.titlebar_minimize_button_focus_hover  = theme.titlebar_minimize_button_normal_hover
+theme.titlebar_minimize_button_normal_press = theme_path.."titlebar/minimize_press.svg"
+theme.titlebar_minimize_button_focus_press  = theme.titlebar_minimize_button_normal_press
 
 theme.titlebar_ontop_button_normal_inactive = theme_path.."titlebar/ontop_normal_inactive.svg"
 theme.titlebar_ontop_button_focus_inactive  = theme_path.."titlebar/ontop_focus_inactive.svg"
 theme.titlebar_ontop_button_normal_active = theme_path.."titlebar/ontop_normal_active.svg"
 theme.titlebar_ontop_button_focus_active  = theme_path.."titlebar/ontop_focus_active.svg"
+theme.titlebar_ontop_button_normal_inactive_hover = theme_path.."titlebar/ontop_hover_inactive.svg"
+theme.titlebar_ontop_button_focus_inactive_hover  = theme.titlebar_ontop_button_normal_inactive_hover
+theme.titlebar_ontop_button_normal_active_hover = theme_path.."titlebar/ontop_hover_active.svg"
+theme.titlebar_ontop_button_focus_active_hover  = theme.titlebar_ontop_button_normal_active_hover
+theme.titlebar_ontop_button_normal_inactive_press = theme_path.."titlebar/ontop_press_inactive.svg"
+theme.titlebar_ontop_button_focus_inactive_press  = theme.titlebar_ontop_button_normal_inactive_press
+theme.titlebar_ontop_button_normal_active_press = theme_path.."titlebar/ontop_press_active.svg"
+theme.titlebar_ontop_button_focus_active_press  = theme.titlebar_ontop_button_normal_active_press
 
 theme.titlebar_sticky_button_normal_inactive = theme_path.."titlebar/sticky_normal_inactive.svg"
 theme.titlebar_sticky_button_focus_inactive  = theme_path.."titlebar/sticky_focus_inactive.svg"
 theme.titlebar_sticky_button_normal_active = theme_path.."titlebar/sticky_normal_active.svg"
 theme.titlebar_sticky_button_focus_active  = theme_path.."titlebar/sticky_focus_active.svg"
+theme.titlebar_sticky_button_normal_inactive_hover = theme_path.."titlebar/sticky_hover_inactive.svg"
+theme.titlebar_sticky_button_focus_inactive_hover  = theme.titlebar_sticky_button_normal_inactive_hover
+theme.titlebar_sticky_button_normal_active_hover = theme_path.."titlebar/sticky_hover_active.svg"
+theme.titlebar_sticky_button_focus_active_hover  = theme.titlebar_sticky_button_normal_active_hover
+theme.titlebar_sticky_button_normal_inactive_press = theme_path.."titlebar/sticky_press_inactive.svg"
+theme.titlebar_sticky_button_focus_inactive_press  = theme.titlebar_sticky_button_normal_inactive_press
+theme.titlebar_sticky_button_normal_active_press = theme_path.."titlebar/sticky_press_active.svg"
+theme.titlebar_sticky_button_focus_active_press  = theme.titlebar_sticky_button_normal_active_press
 
 theme.titlebar_floating_button_normal_inactive = theme_path.."titlebar/floating_normal_inactive.svg"
 theme.titlebar_floating_button_focus_inactive  = theme_path.."titlebar/floating_focus_inactive.svg"
 theme.titlebar_floating_button_normal_active = theme_path.."titlebar/floating_normal_active.svg"
 theme.titlebar_floating_button_focus_active  = theme_path.."titlebar/floating_focus_active.svg"
+theme.titlebar_floating_button_normal_inactive_hover = theme_path.."titlebar/floating_hover_inactive.svg"
+theme.titlebar_floating_button_focus_inactive_hover  = theme.titlebar_floating_button_normal_inactive_hover
+theme.titlebar_floating_button_normal_active_hover = theme_path.."titlebar/floating_hover_active.svg"
+theme.titlebar_floating_button_focus_active_hover  = theme.titlebar_floating_button_normal_active_hover
+theme.titlebar_floating_button_normal_inactive_press = theme_path.."titlebar/floating_press_inactive.svg"
+theme.titlebar_floating_button_focus_inactive_press  = theme.titlebar_floating_button_normal_inactive_press
+theme.titlebar_floating_button_normal_active_press = theme_path.."titlebar/floating_press_active.svg"
+theme.titlebar_floating_button_focus_active_press  = theme.titlebar_floating_button_normal_active_press
 
 theme.titlebar_maximized_button_normal_inactive = theme_path.."titlebar/maximized_normal_inactive.svg"
 theme.titlebar_maximized_button_focus_inactive  = theme_path.."titlebar/maximized_focus_inactive.svg"
 theme.titlebar_maximized_button_normal_active = theme_path.."titlebar/maximized_normal_active.svg"
 theme.titlebar_maximized_button_focus_active  = theme_path.."titlebar/maximized_focus_active.svg"
+theme.titlebar_maximized_button_normal_inactive_hover = theme_path.."titlebar/maximized_hover_inactive.svg"
+theme.titlebar_maximized_button_focus_inactive_hover  = theme.titlebar_maximized_button_normal_inactive_hover
+theme.titlebar_maximized_button_normal_active_hover = theme_path.."titlebar/maximized_hover_active.svg"
+theme.titlebar_maximized_button_focus_active_hover  = theme.titlebar_maximized_button_normal_active_hover
+theme.titlebar_maximized_button_normal_inactive_press = theme_path.."titlebar/maximized_press_inactive.svg"
+theme.titlebar_maximized_button_focus_inactive_press  = theme.titlebar_maximized_button_normal_inactive_press
+theme.titlebar_maximized_button_normal_active_press = theme_path.."titlebar/maximized_press_active.svg"
+theme.titlebar_maximized_button_focus_active_press  = theme.titlebar_maximized_button_normal_active_press
 
 -- this should be in rc.lua
 theme.wallpaper = function ()
