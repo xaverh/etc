@@ -16,7 +16,6 @@ local menubar = require "menubar"
 local hotkeys_popup = require "awful.hotkeys_popup"
 -- Vicious
 local vicious = require "vicious"
-local cyclefocus = require "cyclefocus"
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require "awful.hotkeys_popup.keys"
@@ -106,7 +105,8 @@ mymainmenu =
 	{
 		items = {
 			{"awesome", myawesomemenu, beautiful.awesome_icon},
-			{"open terminal", terminal}
+			{"open terminal", terminal},
+			{"Zathura", "zathura"}
 		}
 	}
 )
@@ -127,7 +127,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mytextclock = wibox.container.margin(wibox.widget.textclock("%a %-d %b %T %Z", 1), 0, 8, 0, 0)
 
 local function nearest_si_suffix(bytes)
-	local bytes = math.tointeger(bytes)
+	local bytes = math.tointeger(bytes) or 0
 	local suffix = " B"
 	if bytes >= 1000000000 then
 		bytes = bytes // 100000000
@@ -472,23 +472,6 @@ globalkeys =
 		{description = "focus the previous screen", group = "screen"}
 	),
 	awful.key({modkey}, "u", awful.client.urgent.jumpto, {description = "jump to urgent client", group = "client"}),
-	-- modkey+Tab: cycle through all clients.
-	awful.key(
-		{modkey},
-		"Tab",
-		function(c)
-			cyclefocus.cycle({modifier = "Super_L"})
-		end
-	),
-	-- modkey+Shift+Tab: backwards
-	awful.key(
-		{modkey, "Shift"},
-		"Tab",
-		function(c)
-			cyclefocus.cycle({modifier = "Super_L"})
-		end
-	),
-	-- Standard program
 	awful.key(
 		{modkey},
 		"Return",
@@ -994,6 +977,56 @@ client.connect_signal(
 			},
 			layout = wibox.layout.align.horizontal
 		}
+
+		awful.titlebar(c, {size = 3, position = "bottom"}):setup {
+			{
+				draw = draw_bottom_left,
+				fit = bottom_corner_fit,
+				widget = wibox.widget.base.make_widget,
+				buttons = awful.util.table.join(
+					awful.button(
+						{},
+						1,
+						function(geometry)
+							awful.mouse.client.resize(c)
+						end
+					)
+				)
+			},
+			{
+				draw = beautiful.titlebar_bottom_draw or draw_3_dots,
+				fit = function(self, w, h)
+					return w, h
+				end,
+				widget = wibox.widget.base.make_widget,
+				buttons = awful.util.table.join(
+					awful.button(
+						{},
+						1,
+						function(geometry)
+							c:raise()
+							awful.mouse.client.resize(c)
+						end
+					)
+				)
+			},
+			{
+				draw = draw_bottom_right,
+				fit = bottom_corner_fit,
+				widget = wibox.widget.base.make_widget,
+				buttons = awful.util.table.join(
+					awful.button(
+						{},
+						1,
+						function(geometry)
+							awful.mouse.client.resize(c)
+						end
+					)
+				)
+			},
+			id = "main_layout",
+			layout = wibox.layout.align.horizontal
+		}
 	end
 )
 
@@ -1015,12 +1048,4 @@ client.connect_signal(
 	end
 )
 
-do
-	local cmds = {
-		"urxvt-mld -q -o -f"
-	}
-
-	for _, i in pairs(cmds) do
-		awful.util.spawn(i)
-	end
-end
+awful.spawn.single_instance("urxvt-mld -q -o -f")
