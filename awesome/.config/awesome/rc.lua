@@ -153,6 +153,15 @@ vicious.register(ipwidget, vicious.widgets.ipaddr, "$1  ", 7)
 temperaturewidget = wibox.widget.textbox()
 vicious.register(temperaturewidget, vicious.widgets.hwmontemp, "$1 °C  ", 13, {"coretemp"})
 
+volwidget = wibox.widget.textbox()
+vicious.register(
+	volwidget,
+	vicious.widgets.volume,
+	"vol. $1 $2  ",
+	59,
+	{"Master", "-D", "pulse"}
+)
+
 memwidget = wibox.widget.textbox()
 vicious.register(
 	memwidget,
@@ -378,7 +387,7 @@ awful.screen.connect_for_each_screen(
 			{
 				-- Right widgets
 				layout = wibox.layout.fixed.horizontal,
-				wibox.widget.systray(),
+				volwidget,
 				memwidget,
 				netwidget,
 				temperaturewidget,
