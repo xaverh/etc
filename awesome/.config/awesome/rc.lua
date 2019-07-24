@@ -192,7 +192,7 @@ vicious.register(
 )
 
 batwidget = wibox.widget.textbox()
-vicious.register(batwidget, vicious.widgets.bat, "$2 %  ", 61, "BAT0")
+vicious.register(batwidget, vicious.widgets.bat, "$1$2%  ", 61, "BAT0")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
