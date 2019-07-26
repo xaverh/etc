@@ -2,11 +2,9 @@
 text/html=firefox.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
-x-scheme-handler/about=brave-browser.desktop
-x-scheme-handler/unknown=brave-browser.desktop
 text/plain=code.desktop
-inode/directory=nnn.desktop
-x-directory/normal=nnn.desktop
+inode/directory=pcmanfm.desktop
+x-directory/normal=pcmanfm.desktop
 text/plain=code.desktop
 image/jpeg=sxiv.desktop
 image/png=sxiv.desktop

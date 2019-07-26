@@ -1,3 +1,0 @@
-#!/bin/sh
-
-google-chrome-unstable --enable-checker-imaging --enable-font-antialiasing --enable-gpu-rasterization --force-gpu-rasterization --enable-native-gpu-memory-buffers --enable-zero-copy --ignore-gpu-blacklist --disable-gpu-driver-bug-workarounds --enable-skia-renderer

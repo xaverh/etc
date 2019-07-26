@@ -1,9 +1,5 @@
 #!/bin/zsh
 
-# Sample .xinitrc for SuSE Linux
-# This script is called from 'startx' when you start an X session
-#
-
 #
 # In case everything goes wrong, we at least fall back to a plain xterm
 #
@@ -48,31 +44,19 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-## Detect and configure touchpad. See 'man synclient' for more info.
-# if egrep -iq 'touchpad' /proc/bus/input/devices; then
-#     synclient VertEdgeScroll=1 &
-#     synclient TapButton1=1 &
-# fi
-
 # xsetroot -bitmap $HOME/etc/backdrops/`ls $HOME/etc/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
-xsetroot -solid "#57655a"
+# xsetroot -solid "#57655a"
 
 # ~/.fehbg &
 
-numlockx &
+# numlockx &
 
-urxvtd -q -o -f
-
-# (sleep 3 && jigglyroom 0 | lemonbar -a 11 -g x18 -f "-sgi-screen-medium-r-normal--14-140-72-72-m-70-iso8859-1" -f "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"  -B "#1E1E1E" -F "#E5E6E6" | sh) &
-
-#while true; do
- #   i3 >/dev/null 2>&1
-#done
+urxvt-mld -q -o -f
 
 # sxhkd -m -1 &
 # exec bspwm
-exec openbox-session
+exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
 
 # call failsafe
 exit 0

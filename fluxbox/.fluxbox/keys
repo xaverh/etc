@@ -1,0 +1,143 @@
+# click on the desktop to get menus
+OnDesktop Mouse1 :HideMenus
+OnDesktop Mouse2 :WorkspaceMenu
+OnDesktop Mouse3 :RootMenu
+
+# scroll on the desktop to change workspaces
+OnDesktop Mouse4 :PrevWorkspace
+OnDesktop Mouse5 :NextWorkspace
+
+# scroll on the toolbar to change current window
+OnToolbar Mouse4 :PrevWindow {static groups} (iconhidden=no)
+OnToolbar Mouse5 :NextWindow {static groups} (iconhidden=no)
+
+# win + left/right click to move/resize a window
+OnWindow Mod4 Mouse1 :MacroCmd {Raise} {Focus} {StartMoving}
+OnWindowBorder Move1 :StartMoving
+
+OnWindow Mod4 Mouse3 :MacroCmd {Raise} {Focus} {StartResizing bottomright}
+OnLeftGrip Move1 :StartResizing bottomleft
+OnRightGrip Move1 :StartResizing bottomright
+
+# win + middle click to lower the window
+OnWindow Mod4 Mouse2 :Lower
+
+# control-click a window's titlebar and drag to attach windows
+OnTitlebar Mouse2 :StartTabbing
+
+# double click on the titlebar to shade
+OnTitlebar Double Mouse1 :Shade
+
+# left click on the titlebar to move the window
+OnTitlebar Mouse1 :MacroCmd {Raise} {Focus} {ActivateTab}
+OnTitlebar Move1  :StartMoving
+
+# right click on the titlebar for a menu of options
+OnTitlebar Mouse3 :WindowMenu
+
+# scrollwheel for titlebar tab switching
+OnTab Mouse4 :PrevTab
+OnTab Mouse5 :NextTab
+OnWindow Mouse8 :NextTab
+OnWindow Mouse9 :PrevTab
+
+# win-tab
+Mod4 Tab :NextGroup (workspace=[current])
+Mod4 Shift Tab :PrevGroup (workspace=[current])
+
+# cycle through tabs in the current window
+Mod4 dead_circumflex :NextTab
+Mod4 asciicircum :NextTab
+Mod4 Shift dead_circumflex :PrevTab
+Mod4 Shift asciicircum :PrevTab
+
+# go to a specific tab in the current window
+Mod4 F1 :Tab 1
+Mod4 F2 :Tab 2
+Mod4 F3 :Tab 3
+Mod4 F4 :Tab 4
+Mod4 F5 :Tab 5
+Mod4 F6 :Tab 6
+Mod4 F7 :Tab 7
+Mod4 F8 :Tab 8
+Mod4 F9 :Tab 9
+Mod4 F10 :Tab 10
+Mod4 F11 :Tab 11
+Mod4 F12 :Tab 12
+
+# open a terminal
+Mod4 Return :Exec urxvt-mlc -e tmux
+Mod4 Shift Return :Exec urxvt-mlc
+
+# open a dialog to run programs
+Mod4 space :Exec fbrun
+
+# volume settings, using common keycodes
+# if these don't work, use xev to find out your real keycodes
+176 :Exec amixer sset Master,0 1+
+174 :Exec amixer sset Master,0 1-
+160 :Exec amixer sset Master,0 toggle
+
+# current window commands
+Mod4 q :Close
+Mod4 Shift q :Kill
+Mod4 f :Fullscreen
+
+# open the window menu
+Mod1 space :WindowMenu
+
+# exit fluxbox
+Control Mod1 Delete :Exit
+
+# change to previous/next workspace
+Mod4 Prior :PrevWorkspace
+Mod4 Next :NextWorkspace
+
+# # send the current window to previous/next workspace
+# Mod4 Left :SendToPrevWorkspace
+# Mod4 Right :SendToNextWorkspace
+
+# send the current window and follow it to previous/next workspace
+Mod4 Shift Prior :TakeToPrevWorkspace
+Mod4 Shift Next :TakeToNextWorkspace
+
+# change to a specific workspace
+Mod4 1 :Workspace 1
+Mod4 2 :Workspace 2
+Mod4 3 :Workspace 3
+Mod4 4 :Workspace 4
+Mod4 5 :Workspace 5
+
+# # send the current window to a specific workspace
+# Mod4 Shift 1 :SendToWorkspace 1
+# Mod4 Shift 2 :SendToWorkspace 2
+# Mod4 Shift 3 :SendToWorkspace 3
+# Mod4 Shift 4 :SendToWorkspace 4
+# Mod4 Shift 5 :SendToWorkspace 5
+
+# send the current window and change to a specific workspace
+Mod4 Shift 1 :TakeToWorkspace 1
+Mod4 Shift 2 :TakeToWorkspace 2
+Mod4 Shift 3 :TakeToWorkspace 3
+Mod4 Shift 4 :TakeToWorkspace 4
+Mod4 Shift 5 :TakeToWorkspace 5
+
+# Tiling & Moving
+Mod4 Left :MacroCmd {ResizeTo 50% 50%} {MoveTo 00 * Left}
+Mod4 Right :MacroCmd {ResizeTo 50% 50%} {MoveTo 00 * Right}
+Mod4 Down :MacroCmd {ResizeTo 50% 50%} {MoveTo * 00 Bottom}
+Mod4 Up :MacroCmd {ResizeTo 50% 50%} {MoveTo * 00 Top}
+Mod4 Shift Left :MacroCmd {ResizeTo 50% 100%} {MoveTo 00 00 Left}
+Mod4 6 :MacroCmd {ResizeTo 92% 92%} {MoveTo 00 00 Center}
+Mod4 7 :MacroCmd {ResizeTo 55% 100%} {MoveTo 00 00 Left}
+Mod4 8 :MacroCmd {ResizeTo 45% 50%} {MoveTo 00 00 TopRight}
+Mod4 9 :MacroCmd {ResizeTo 45% 50%} {MoveTo 00 00 BottomRight}
+Mod4 0 :Maximize
+Mod4 Shift Right :MacroCmd {ResizeTo 50% 100%} {MoveTo 00 00 Right}
+Mod4 Shift Up :ToggleCmd {Maximize} {Restore}
+Mod4 Shift Down :Minimize
+Mod4 h :MoveLeft 10
+Mod4 j :MoveDown 10
+Mod4 k :MoveUp 10
+Mod4 l :MoveRight 10
+Mod4 m :ToggleCmd {Maximize} {Shade} {Restore}

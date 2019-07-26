@@ -1,6 +1,5 @@
 {
-  "editor.fontFamily": "IBM Plex Mono Text, SF Mono, Consolas, Menlo, Source Code Pro",
-  "editor.fontSize": 15,
+  "editor.fontFamily": "SF Mono, IBM Plex Mono Text, Consolas, Menlo, Source Code Pro",
   "editor.fontWeight": "400",
   "editor.rulers": [],
   "editor.formatOnType": true,
@@ -161,7 +160,6 @@
   "workbench.useExperimentalGridLayout": true,
   "latex-workshop.latex.autoBuild.run": "never",
   "breadcrumbs.enabled": true,
-  "window.titleBarStyle": "native",
   "breadcrumbs.symbolPath": "on",
   "diffEditor.ignoreTrimWhitespace": true,
   "window.openWithoutArgumentsInNewWindow": "off",
@@ -196,5 +194,6 @@
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "go.toolsGopath": "/home/xha/.gopath"
+  "go.toolsGopath": "/home/xha/.gopath",
+  "editor.fontSize": 13
 }
