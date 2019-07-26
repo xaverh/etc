@@ -382,8 +382,8 @@ awful.screen.connect_for_each_screen(
 			}
 		}
 
-		-- Create the wibox
-		s.mywibox = awful.wibar {height = 24, position = "top", screen = s}
+		-- Create the horizontal wibox
+		s.mywibox = awful.wibar {height = 24, position = "top", screen = s, ontop = true}
 
 		-- Add widgets to the wibox
 		s.mywibox:setup {
@@ -432,9 +432,9 @@ root.buttons(
 -- Key bindings
 globalkeys =
 	gears.table.join(
-	awful.key({modkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
-	awful.key({modkey}, "Left", awful.tag.viewprev, {description = "view previous", group = "tag"}),
-	awful.key({modkey}, "Right", awful.tag.viewnext, {description = "view next", group = "tag"}),
+	awful.key({modkey}, "F1", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
+	awful.key({modkey}, "w", awful.tag.viewprev, {description = "view previous", group = "tag"}),
+	awful.key({modkey}, "s", awful.tag.viewnext, {description = "view next", group = "tag"}),
 	awful.key({modkey}, "Escape", awful.tag.history.restore, {description = "go back", group = "tag"}),
 	awful.key(
 		{modkey},
@@ -470,7 +470,7 @@ globalkeys =
 	),
 	awful.key(
 		{modkey},
-		"w",
+		"F9",
 		function()
 			mymainmenu:show()
 		end,
@@ -691,8 +691,8 @@ clientkeys =
 		{description = "toggle fullscreen layout", group = "layout"}
 	),
 	awful.key(
-		{modkey, "Shift"},
-		"c",
+		{modkey},
+		"q",
 		function(c)
 			c:kill()
 		end,
