@@ -6,20 +6,21 @@ local theme_path = "/home/xha/.config/awesome/themes/ysgrifennwr/"
 
 local theme = {}
 
-theme.font          = ".Helvetica Neue DeskInterface 9"
+theme.font          = ".Helvetica Neue DeskInterface 11"
+theme.taglist_font  = ".Helvetica Neue DeskInterface 12"
 
-theme.bg_normal     = "#1e1e1e"
-theme.bg_focus      = "#005577"
+theme.bg_focus      = "linear:0,0:0,12:0,#b6d4ef:1,#a3c3e3"
+theme.bg_normal     = "linear:0,0:0,12:0,#e5e5e4:1,#cdcdcd"
 theme.bg_urgent     = theme.bg_normal
 theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#e5e6e6"
+theme.fg_normal     = "#424242"
 theme.fg_focus      = theme.fg_normal
 theme.fg_urgent     = "#E32791"
-theme.fg_minimize   = "#b8b8b8"
+theme.fg_minimize   = "#868584"
 
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
 theme.border_normal = "#868584"
 theme.border_focus  = "#424242"
@@ -50,9 +51,9 @@ local taglist_square_size = dpi(5)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+--     taglist_square_size, theme.fg_normal
+-- )
 
 -- Variables set for theming notifications:
 -- notification_font
@@ -63,9 +64,15 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = theme_path.."submenu.svg"
-theme.menu_height = dpi(20)
-theme.menu_width  = dpi(100)
+theme.menu_submenu_icon  = theme_path.."submenu.svg"
+theme.menu_height        = dpi(22)
+theme.menu_width         = dpi(150)
+theme.menu_bg_focus      = "#aacae8"
+theme.menu_bg_normal     = "#d9d8d7"
+theme.menu_fg_focus      = "#424242"
+theme.menu_fg_normal     = "#424242"
+theme.menu_border_width  = 1
+theme.menu_border_color  = "#1e1e1e"
 
 -- You can add as many variables as
 -- you wish and access them by using
@@ -141,7 +148,7 @@ theme.titlebar_maximized_button_focus_active_press  = theme.titlebar_maximized_b
 
 -- this should be in rc.lua
 theme.wallpaper = function ()
-    return "/home/xha/var/wallpapers/wp1895640.png"
+    return "/home/xha/var/wallpapers/alena-aenami-1.png"
 end
 
 -- You can use your own layout icons like this:
@@ -164,7 +171,7 @@ theme.layout_cornerse = theme_path.."layouts/corner.svg"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
+    theme.menu_height, theme.bg_normal, theme.fg_normal
 )
 
 -- Define the icon theme for application icons. If not set then the icons
@@ -173,4 +180,3 @@ theme.icon_theme = nil
 
 return theme
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

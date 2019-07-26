@@ -62,7 +62,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-	awful.layout.suit.floating,
+	-- awful.layout.suit.floating, -- TODO: make available through shortkey only
 	awful.layout.suit.tile,
 	-- awful.layout.suit.tile.left,
 	-- awful.layout.suit.tile.bottom,
@@ -73,7 +73,7 @@ awful.layout.layouts = {
 	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.magnifier,
 	awful.layout.suit.max,
-	awful.layout.suit.max.fullscreen,
+	-- awful.layout.suit.max.fullscreen, -- TODO: make availabe to shortkey only
 	awful.layout.suit.corner.nw
 	-- awful.layout.suit.corner.ne,
 	-- awful.layout.suit.corner.sw,
@@ -90,6 +90,7 @@ myawesomemenu = {
 		end
 	},
 	{"manual", terminal .. " -e man awesome"},
+	{"lock screen", "slock", "/home/xha/.local/share/icons/deadpool.svg"},
 	{"edit config", editor_cmd .. " " .. awesome.conffile},
 	{"restart", awesome.restart},
 	{
@@ -105,8 +106,12 @@ mymainmenu =
 	{
 		items = {
 			{"awesome", myawesomemenu, beautiful.awesome_icon},
-			{"open terminal", terminal},
-			{"Zathura", "zathura"}
+			{"rxvt-unicode", terminal, "/usr/share/icons/gnome/22x22/apps/gnome-terminal.png"},
+			{"Setúbal", "bluetoothctl connect 88:C6:26:F4:8A:90", "/home/xha/.local/share/icons/speaker.svg"},
+			{"Mozilla Firefox", "firefox", "/home/xha/.local/share/icons/firefox.svg"},
+			{"PCManFM", "pcmanfm", "/home/xha/.local/share/icons/file-manager.svg"},
+			{"Strawberry", "strawberry", "/usr/share/icons/hicolor/scalable/apps/strawberry.svg"},
+			{"MµPDF", "mupdf-gl", "/home/xha/.local/share/icons/mupdf.svg"}
 		}
 	}
 )
@@ -124,22 +129,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Wibar
 -- Create a textclock widget
-mytextclock = wibox.container.margin(wibox.widget.textclock("%a %-d %b %T %Z", 1), 0, 8, 0, 0)
+mytextclock = wibox.widget.textclock("%a %-d %b %T %Z ", 1)
 
 local function nearest_si_suffix(bytes)
 	local bytes = math.tointeger(bytes) or 0
 	local suffix = " B"
 	if bytes >= 1000000000 then
-		bytes = bytes // 100000000
-		bytes = bytes / 10
+		bytes = bytes / 1000000000
 		suffix = " GB"
 	elseif bytes >= 1000000 then
-		bytes = bytes // 100000
-		bytes = bytes / 10
+		bytes = bytes / 1000000
 		suffix = " MB"
 	elseif bytes >= 1000 then
-		bytes = bytes // 100
-		bytes = bytes / 10
+		bytes = bytes / 1000
 		suffix = " kB"
 	else
 		return bytes .. suffix
@@ -154,13 +156,7 @@ temperaturewidget = wibox.widget.textbox()
 vicious.register(temperaturewidget, vicious.widgets.hwmontemp, "$1 °C  ", 13, {"coretemp"})
 
 volwidget = wibox.widget.textbox()
-vicious.register(
-	volwidget,
-	vicious.widgets.volume,
-	"vol. $1 $2  ",
-	59,
-	{"Master", "-D", "pulse"}
-)
+vicious.register(volwidget, vicious.widgets.volume, "vol. $1 $2  ", 59, {"Master", "-D", "pulse"})
 
 memwidget = wibox.widget.textbox()
 vicious.register(
@@ -305,7 +301,23 @@ awful.screen.connect_for_each_screen(
 		set_wallpaper(s)
 
 		-- Each screen has its own tag table.
-		awful.tag({"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[1])
+
+		-- 🚽 💩 🧻
+		awful.tag(
+			{"🏄", "☕", "🏝️", "🍓", "🍿", "🦄", "🎰", "🎱", "🗞️"},
+			s,
+			{
+				awful.layout.suit.floating,
+				awful.layout.suit.floating,
+				awful.layout.suit.floating,
+				awful.layout.suit.corner.nw,
+				awful.layout.suit.floating,
+				awful.layout.suit.max.fullscreen,
+				awful.layout.suit.fair,
+				awful.layout.suit.spiral.dwindle,
+				awful.layout.suit.max
+			}
+		)
 
 		-- Create a promptbox for each screen
 		s.mypromptbox = awful.widget.prompt()
@@ -348,7 +360,7 @@ awful.screen.connect_for_each_screen(
 		s.mytaglist =
 			awful.widget.taglist {
 			screen = s,
-			filter = awful.widget.taglist.filter.all,
+			filter = awful.widget.taglist.filter.noempty,
 			buttons = taglist_buttons
 		}
 
@@ -371,7 +383,7 @@ awful.screen.connect_for_each_screen(
 		}
 
 		-- Create the wibox
-		s.mywibox = awful.wibar {height = 20, position = "top", screen = s}
+		s.mywibox = awful.wibar {height = 24, position = "top", screen = s}
 
 		-- Add widgets to the wibox
 		s.mywibox:setup {
@@ -379,8 +391,10 @@ awful.screen.connect_for_each_screen(
 			{
 				-- Left widgets
 				layout = wibox.layout.fixed.horizontal,
-				s.mylayoutbox,
+				mylauncher,
 				s.mytaglist,
+				wibox.container.margin(s.mylayoutbox, 2, 2, 2, 3),
+				-- wibox.widget.systray(),
 				s.mypromptbox
 			},
 			s.mytasklist, -- Middle widget
@@ -394,8 +408,7 @@ awful.screen.connect_for_each_screen(
 				wifiwidget,
 				ipwidget,
 				batwidget,
-				mytextclock,
-				mylauncher
+				mytextclock
 			}
 		}
 	end
@@ -434,6 +447,22 @@ globalkeys =
 	awful.key(
 		{modkey},
 		"k",
+		function()
+			awful.client.focus.byidx(-1)
+		end,
+		{description = "focus previous by index", group = "client"}
+	),
+	awful.key(
+		{modkey},
+		"Tab",
+		function()
+			awful.client.focus.byidx(1)
+		end,
+		{description = "focus next by index", group = "client"}
+	),
+	awful.key(
+		{modkey, "Shift"},
+		"Tab",
 		function()
 			awful.client.focus.byidx(-1)
 		end,
@@ -549,17 +578,29 @@ globalkeys =
 	),
 	awful.key(
 		{modkey},
-		"space",
+		"t",
 		function()
-			awful.layout.inc(1)
+			local this_screen = awful.screen.focused()
+			local current_layout = awful.layout.get(this_screen)
+			if current_layout == awful.layout.suit.floating or current_layout == awful.layout.suit.max.fullscreen then
+				awful.layout.set(awful.layout.suit.tile)
+			else
+				awful.layout.inc(1, this_screen, awful.layout.layouts)
+			end
 		end,
 		{description = "select next", group = "layout"}
 	),
 	awful.key(
 		{modkey, "Shift"},
-		"space",
+		"t",
 		function()
-			awful.layout.inc(-1)
+			local this_screen = awful.screen.focused()
+			local current_layout = awful.layout.get(this_screen)
+			if current_layout == awful.layout.suit.floating or current_layout == awful.layout.suit.max.fullscreen then
+				awful.layout.set(awful.layout.suit.tile)
+			else
+				awful.layout.inc(-1, this_screen, awful.layout.layouts)
+			end
 		end,
 		{description = "select previous", group = "layout"}
 	),
@@ -578,7 +619,7 @@ globalkeys =
 	-- Prompt
 	awful.key(
 		{modkey},
-		"r",
+		"space",
 		function()
 			awful.screen.focused().mypromptbox:run()
 		end,
@@ -608,16 +649,46 @@ globalkeys =
 	)
 )
 
+local last_layout = awful.layout.suit.tile
+
 clientkeys =
 	gears.table.join(
 	awful.key(
 		{modkey},
-		"f",
+		"F11",
 		function(c)
 			c.fullscreen = not c.fullscreen
 			c:raise()
 		end,
 		{description = "toggle fullscreen", group = "client"}
+	),
+	awful.key(
+		{modkey},
+		"f",
+		function()
+			local this_screen = awful.screen.focused()
+			local current_layout = awful.layout.get(this_screen)
+			if current_layout ~= awful.layout.suit.floating then
+				last_layout = awful.layout.get(this_screen)
+			end
+			awful.layout.inc(1, this_screen, {awful.layout.suit.floating, last_layout})
+			awful.layout.arrange(this_screen)
+		end,
+		{description = "toggle floating layout", group = "layout"}
+	),
+	awful.key(
+		{modkey, "Shift"},
+		"f",
+		function()
+			local this_screen = awful.screen.focused()
+			local current_layout = awful.layout.get(this_screen)
+			if current_layout ~= awful.layout.suit.max.fullscreen then
+				last_layout = current_layout
+			end
+			awful.layout.inc(1, this_screen, {awful.layout.suit.max.fullscreen, last_layout})
+			awful.layout.arrange(this_screen)
+		end,
+		{description = "toggle fullscreen layout", group = "layout"}
 	),
 	awful.key(
 		{modkey, "Shift"},
@@ -757,6 +828,24 @@ clientkeys =
 			awful.spawn "strawberry --next"
 		end,
 		{description = "Go to next song", group = "strawberry"}
+	),
+	awful.key(
+		{modkey},
+		"Pause",
+		function()
+			awful.spawn "slock"
+		end,
+		{description = "Lock screen", group = "awesome"}
+	),
+	awful.key(
+		{"Mod1"},
+		"Tab",
+		function()
+			-- If you want to always position the menu on the same place set coordinates
+			awful.menu.menu_keys.down = {"Tab"}
+			awful.menu.clients({theme = {width = 250}}, {keygrabber = true, coords = {x = 525, y = 330}})
+		end,
+		{description = "switch task", group = "awesome"}
 	)
 )
 
@@ -910,11 +999,11 @@ awful.rules.rules = {
 			type = {"normal", "dialog"}
 		},
 		properties = {titlebars_enabled = true}
+	},
+	{
+		rule = {instance = "strawberry", class = "strawberry"},
+		properties = {tag = "🍓"}
 	}
-
-	-- Set Firefox to always map on the tag named "2" on screen 1.
-	-- { rule = { class = "Firefox" },
-	--   properties = { screen = 1, tag = "2" } },
 }
 
 -- Signals
@@ -972,7 +1061,8 @@ client.connect_signal(
 				{
 					-- Title
 					align = "center",
-					widget = awful.titlebar.widget.titlewidget(c)
+					widget = awful.titlebar.widget.titlewidget(c),
+					font = ".Helvetica Neue DeskInterface 9"
 				},
 				buttons = buttons,
 				layout = wibox.layout.flex.horizontal
@@ -1039,7 +1129,7 @@ client.connect_signal(
 	end
 )
 
- awful.titlebar.enable_tooltip = false
+awful.titlebar.enable_tooltip = false
 
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)
@@ -1058,5 +1148,3 @@ client.connect_signal(
 		c.border_color = beautiful.border_normal
 	end
 )
-
-awful.spawn.single_instance("urxvt-mld -q -o -f")
