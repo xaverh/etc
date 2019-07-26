@@ -1,0 +1,104 @@
+## ENVIRONTMENT
+
+## Set The Thumbnail Cache Folder
+SetEnv cache $[HOME]/.fvwm/cache/
+## Set The Scripts Folder
+SetEnv scripts $[HOME]/.fvwm/scripts
+
+
+## To Create a Thumbnail on Minimize
+# Call the script to create a thumbnail using ImageMagick & xwd
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I ThisWindow (Shaded) WindowShade
++ I PipeRead 'bash $[scripts]/crthumb "$[w.id]" "$[cache]"'
+# Restore the window
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead 'bash $[scripts]/dethumb "$[w.id]" "$[cache]"'
+*FvwmEvent: deiconify DeThumbnail
+
+# ## Window Snapping
+# # Snap left
+# DestroyFunc SnapLeft
+# AddToFunc SnapLeft
+# + I Move 0 0
+# + I Maximize True 50 100
+# + I Raise
+# # Snap right
+# DestroyFunc SnapRight
+# AddToFunc SnapRight
+# + I Maximize True 50 100
+# + I Move -0 0
+# + I Raise
+# # Zoom unmaximize large
+# DestroyFunc SnapHalf
+# AddToFunc SnapHalf
+# + I Maximize True 75 75
+# + I Move 50-50w 50-50w
+# + I Raise
+# # Zoom unmaximize small
+# DestroyFunc SnapQuarter
+# AddToFunc SnapQuarter
+# + I Maximize True 50 50
+# + I Move 50-50w 50-50w
+# + I Raise
+# # Zoom unmaximize tiny
+# DestroyFunc SnapTiny
+# AddToFunc SnapTiny
+# + I Maximize True 36 28
+# + I Move 50-50w 50-50w
+# + I Raise
+
+## Raising Window
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+DestroyFunc RaiseMove
+AddToFunc RaiseMove
++ I Raise
++ M $0
+
+## MOUSEBINDS
+
+## Titlebar Buttons
+Mouse 1 4 A Maximize
+Mouse 1 6 A Thumbnail
+Mouse 1 2 A Close
+
+## On minimized windows
+Mouse 1 I A Iconify off
+Mouse 3 I A Menu MenuIconOps
+
+
+## PAGER
+
+########################### Pager #########################################
+DestroyModuleConfig FvwmPager: *
+*FvwmPager: Back #908090
+*FvwmPager: Fore #484048
+#*FvwmPager: Font -adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-*-*
+# turn off desktop names for swallowing in above button bar example:
+*FvwmPager: Font none
+*FvwmPager: Hilight #cab3ca
+*FvwmPager: Geometry -1-1
+*FvwmPager: Label 0 Misc
+*FvwmPager: Label 1 Maker
+*FvwmPager: Label 2 Mail
+*FvwmPager: Label 3 Matlab
+*FvwmPager: SmallFont 5x8
+*FvwmPager: Balloons            All
+*FvwmPager: BalloonBack         Yellow
+*FvwmPager: BalloonFore         Black
+*FvwmPager: BalloonFont         lucidasanstypewriter-12
+*FvwmPager: BalloonYOffset      +2
+*FvwmPager: BalloonBorderWidth  1
+*FvwmPager: BalloonBorderColor  Black
+
+
+
+## Minimize to Thumbnail Placeholder
+Style * IconBox 400x600-20+48, IconGrid 1 4, \
+IconFill top right, !IconTitle, IconBackgroundRelief 0
