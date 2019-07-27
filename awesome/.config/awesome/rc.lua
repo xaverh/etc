@@ -107,8 +107,9 @@ mymainmenu =
 		items = {
 			{"awesome", myawesomemenu, beautiful.awesome_icon},
 			{"rxvt-unicode", terminal, "/usr/share/icons/gnome/22x22/apps/gnome-terminal.png"},
-			{"Setúbal", "bluetoothctl connect 88:C6:26:F4:8A:90", "/home/xha/.local/share/icons/speaker.svg"},
+			{"Setúbal", "bluetoothctl connect 88:C6:26:F4:8A:90", os.getenv("HOME") .. "/.config/awesome/icons/speakers.svg"},
 			{"Mozilla Firefox", "firefox", "/home/xha/.local/share/icons/firefox.svg"},
+			{"Visual Studio Code", "code -n", "/usr/share/code/resources/app/resources/linux/code.png"},
 			{"PCManFM", "pcmanfm", "/home/xha/.local/share/icons/file-manager.svg"},
 			{"Strawberry", "strawberry", "/usr/share/icons/hicolor/scalable/apps/strawberry.svg"},
 			{"MµPDF", "mupdf-gl", "/home/xha/.local/share/icons/mupdf.svg"}
@@ -366,21 +367,28 @@ awful.screen.connect_for_each_screen(
 
 		-- Create a tasklist widget
 		s.mytasklist =
+			wibox.container.margin(
 			awful.widget.tasklist {
-			screen = s,
-			filter = awful.widget.tasklist.filter.minimizedcurrenttags,
-			buttons = tasklist_buttons,
-			style = {
-				disable_task_name = false,
-				-- shape_border_width = 1,
-				-- shape_border_color = "#808080",
-				-- shape = gears.shape.rectangle,
-				spacing = 10
+				screen = s,
+				filter = awful.widget.tasklist.filter.minimizedcurrenttags,
+				buttons = tasklist_buttons,
+				style = {
+					tasklist_disable_icon = true,
+					disable_task_name = false,
+					-- shape_border_width = 1,
+					-- shape_border_color = "#808080",
+					-- shape = gears.shape.rectangle,
+					spacing = 10
+				},
+				layout = {
+					layout = wibox.layout.fixed.horizontal
+				}
 			},
-			layout = {
-				layout = wibox.layout.fixed.horizontal
-			}
-		}
+			10,
+			0,
+			0,
+			0
+		)
 
 		-- Create the horizontal wibox
 		s.mywibox = awful.wibar {height = 24, position = "top", screen = s, ontop = true}
@@ -1050,7 +1058,6 @@ client.connect_signal(
 		awful.titlebar(c, {size = 20}):setup {
 			{
 				-- Left
-				wibox.container.margin(awful.titlebar.widget.iconwidget(c), 2, 2, 2, 3),
 				wibox.container.margin(awful.titlebar.widget.floatingbutton(c), 2, 2, 2, 3),
 				wibox.container.margin(awful.titlebar.widget.ontopbutton(c), 2, 2, 2, 3),
 				wibox.container.margin(awful.titlebar.widget.stickybutton(c), 0, 0, 0, 4),
