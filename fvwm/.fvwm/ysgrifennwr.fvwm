@@ -1,8 +1,13 @@
 # Default Font
-DefaultFont "xft:Sans:Bold:size=8:antialias=True"
+DefaultFont "xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1;-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1"
+
+# # Decor Styles -- default
+# Style * BorderWidth 5, HandleWidth 5, MWMButtons, FvwmBorder, FirmBorder
+# Style * Colorset 1, HilightColorset 2
+# Style * BorderColorset 3, HilightBorderColorset 4
 
 # Decor Styles
-Style * BorderWidth 5, HandleWidth 5, MWMButtons, FvwmBorder, FirmBorder
+Style * HandleWidth 3, MWMButtons, FvwmBorder, DepressableBorder
 Style * Colorset 1, HilightColorset 2
 Style * BorderColorset 3, HilightBorderColorset 4
 
