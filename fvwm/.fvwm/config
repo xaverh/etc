@@ -1,6 +1,6 @@
 # InfoStoreAdd can be used to store variable data internal to fvwm.
 # The variable can then be used in the configuration as $[infostore.name].
-InfoStoreAdd terminal urxvt256c-mlc
+InfoStoreAdd terminal urxvt-mlc
 InfoStoreAdd horizontal_panel_height 20
 
 ###########
@@ -246,6 +246,7 @@ AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "" Nop
 + "Fvwm&Console%icons/terminal.png%" Module FvwmConsole -terminal $[infostore.terminal]
 Test (x pavucontrol) + "&Volume Control" Exec exec pavucontrol
+Test (x bluetoothctl) + "Connect Setúbal" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
 + "&Wallpapers%icons/wallpaper.png%" Popup BGMenu
 + "M&an Pages%icons/help.png%" Popup MenuFvwmManPages
 + "" Nop
@@ -293,6 +294,7 @@ AddToMenu   BGMenu "Wallpapers" Title
 + "Circles%bgicons/bg2.png%" SetBG bg2.png
 + "Space%bgicons/bg3.png%" SetBG bg3.png
 + SSD SetBG ssd.png
++ "aenami-001-1" SetBG aenami-001-1.png
 
 # Window Operations Menus
 DestroyMenu MenuWindowOps
