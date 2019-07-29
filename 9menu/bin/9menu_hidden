@@ -1,3 +1,0 @@
-#!/bin/sh
-
-hidden -c | xargs 9menu -popup -warp "$@"
