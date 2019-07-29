@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+[[ -n $1 ]] || exit 1
+[[ -n $2 ]] || exit 2
+
+xwd -silent -id "$1" | convert -scale 200 -border 1x1 -bordercolor black xwd:- png:"$2"/"$1".png
+
+cat <<END
+Raise
+WindowStyle IconOverride, Icon "$2"/"$1".png
+Iconify
+END
+
