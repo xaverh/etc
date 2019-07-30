@@ -3,48 +3,24 @@ Read ysgrifennwr.fvwm
 InfoStoreAdd terminal urxvt-mlc
 InfoStoreAdd auto_hide_steps 10
 
-###########
-# 1: Functions
-#
-# Fvwm can use custom functions for various tasks.
-# The syntax for defining a function named FunctionName is:
-#
-#   DestroyFunc FunctionName
-#   AddToFunc FunctionName
-#   + I [Action to do Immediately]
-#   + C [Action to do on a Mouse Click]
-#   + D [Action to do on a Mouse Double Click]
-#   + H [Action to do on a Mouse Hold]
-#   + M [Action to do on a Mouse Motion]
-###########
+############################### Start Function ################################
 
-# Start Function
-#
-# The start function is run right after fvwm is done reading
-# the config file. This function run after each restart
-# so using Test (Init) or Test (Restart) can further control
-# actions that are run during the first time run (Init) or
-# actions that are run after a restart.
 DestroyFunc StartFunction
 AddToFunc   StartFunction
-+ I Test (Init, f $[FVWM_USERDIR]/.BGdefault) \
-    Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
-+ I TestRc (NoMatch) Exec exec fvwm-root \
-    $[FVWM_DATADIR]/default-config/images/background/bg1.png
-+ I Test (Init) Module FvwmBanner
++ I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
++ I TestRc (NoMatch) Exec exec fvwm-root $[FVWM_DATADIR]/default-config/images/background/bg1.png
 + I Module FvwmButtons TopPanel
 + I Module FvwmEvent EventNewDesk
 + I Test (Init) Exec urxvt-mld -q -o -f
-+ I PipeRead 'zsh $[FVWM_USERDIR]/scripts/thumbnail-folder'
++ I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 
-*FvwmEvent: add_window AutoHidePlacementHandler
+##################### Functions: Thumbnailed window icons #####################
+# https://xha.ch/2MpnHSo
 
-# Functions: Thumbnailed window icons
-# http://www.fvwm.org/documentation/faq/#using-application-screenshots-as-icon-or-mini-icon-thumbnails
-#
 DestroyFunc Thumbnail
 AddToFunc Thumbnail
 	+ I ThisWindow (Shaded) WindowShade
+	+ I ThisWindow Raise
 	+ I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-create "$[w.id]" $[infostore.thumbsfolder]'
 
 DestroyFunc DeThumbnail
@@ -53,45 +29,8 @@ AddToFunc DeThumbnail
 
 *FvwmEvent: deiconify DeThumbnail
 
-# Mouse Bindings Functions
-DestroyFunc RaiseMoveX
-AddToFunc RaiseMoveX
-+ I Raise
-+ M $0
-+ D $1
+################################## Wallpaper ##################################
 
-DestroyFunc RaiseMove
-AddToFunc RaiseMove
-+ I Raise
-+ M $0
-
-DestroyFunc MoveToCurrent
-AddToFunc MoveToCurrent
-+ I ThisWindow MoveToPage
-+ I ThisWindow MoveToDesk
-
-DestroyFunc MoveOrLower
-AddToFunc MoveOrLower
- + C   Lower
- + M   Lower
- + M   Move
- + D   Lower
-
-# Function: ViewManPage $0
-#
-# This function loads the man page $0 in an terminal
-# and is used with the help menu.
-DestroyFunc ViewManPage
-AddToFunc   ViewManPage
-+ I Exec exec $[infostore.terminal] -g 80x40 \
-  -n "Manual Page - $0" -T "Manual Page - $0" -e man "$0"
-
-# Function: SetBG $0
-#
-# SetBG is used with the background menu to set the background
-# image and configure it to be loaded the next time fvwm is run.
-# Note, fvwm-root can't use .jpeg or resize images. Use something
-# like display, feh, etc.
 DestroyFunc SetBG
 AddToFunc   SetBG
 + I Test (f $[FVWM_USERDIR]/images/background/$0) \
@@ -104,112 +43,38 @@ AddToFunc   SetBG
 + I Exec exec ln -fs $[FVWM_DATADIR]/default-config/images/background/$0 \
     $[FVWM_USERDIR]/.BGdefault
 
+########################### Desktops and Pages ################################
 
-# Function: IconManClick
-#
-# This function is run from FvwmIconMan when the button is clicked.
-DestroyFunc IconManClick
-AddToFunc   IconManClick
-+ I ThisWindow (Raised, !Shaded, !Iconic, CurrentPage) Iconify
-+ I TestRc (Match) Break
-+ I ThisWindow WindowShade off
-+ I ThisWindow Iconify off
-+ I ThisWindow Raise
-+ I ThisWindow (AcceptsFocus) FlipFocus
-
-# Function: ToggleTitle
-#
-# This function will toggle if fvwm shows the TitleBar.
-DestroyFunc ToggleTitle
-AddToFunc   ToggleTitle
-+ I ThisWindow (State 1) WindowStyle Title
-+ I TestRc (Match) State 1 False
-+ I TestRc (Match) Break
-+ I WindowStyle !Title
-+ I State 1 True
-
-# Function: ChangeDesk
-#
-# This function is called by FvwmEvent every time the Desk is changed.
-DestroyFunc ChangeDesk
-AddToFunc   ChangeDesk
-+ I SendToModule FvwmButtons ChangeButton desk0 Colorset 10
-+ I SendToModule FvwmButtons ChangeButton desk1 Colorset 10
-+ I SendToModule FvwmButtons ChangeButton desk2 Colorset 10
-+ I SendToModule FvwmButtons ChangeButton desk3 Colorset 10
-+ I SendToModule FvwmButtons ChangeButton desk$0 Colorset 11
-
-
-#############
-# 2: Styles #
-#############
-
-# Desktops and Pages
-#
-# Fvwm has both Virtual Desktops and Pages. Each Desktop is built from
-# a grid of Pages. The following sets the name of four Desktops and then
-# divides each Desktop into a 2x2 grid of Pages that are positioned as
-#
-#   +---+---+
-#   |   |   |
-#   +---+---+
-#   |   |   |
-#   +---+---+
-#
 DesktopName 0 Main
 DesktopName 1 Desk1
 DesktopName 2 Desk2
 DesktopName 3 Desk3
 DesktopSize 3x2
 
-# EdgeScroll will move the view port between the Pages when the mouse
-# moves to the edge of the screen. This set the amount of distance to
-# scroll at 100% (full page) and the EdgeResistance which is a timer
-# for how long the mouse as at the edge before it scrolls.
-#
-# Set EdgeScroll 0 0 and/or EdgeResistance -1 to disable.
 EdgeScroll 0 0
 EdgeResistance -1
 EdgeThickness 0
-
-# EwmhBaseStruts [left] [right] [top] [bottom]
-# Reserves space along the edge(s) of the Screen that will not
-# be covered when maximizing or placing windows.
 EwmhBaseStruts 2 2 2 2
 
-# This sets the ClickTime and MoveThreshold used to determine
-# Double Clicks, Hold and Move for the mouse.
 ClickTime 250
 MoveThreshold 3
 
 Style * ClickToFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer
-
-# Window Placement
 Style * MinOverlapPlacement, GrabFocus, !UsePPosition
-
-# Sets all windows to OpaqueMove (vs a wired frame) and  windows will
-# snap to each other and the edge of the screen.
 OpaqueMoveSize unlimited
 Style * ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid
-
-# Transient Windows (such as open file windows)
 Style * DecorateTransient, StackTransientParent
 Style * !FPGrabFocusTransient, FPReleaseFocusTransient
-
-# WindowShade
 Style * WindowShadeScrolls, WindowShadeSteps 10
 
-# Ignore Numlock and other modifiers for bindings
-# See http://fvwm.org/documentation/faq/#why-do-numlock-capslock-and-scrolllock-interfere-with-clicktofocus-andor-my-mouse-bindings
-IgnoreModifiers L25
+
 
 # Disable Icons from appearing on desktop.
 # Comment this out or use Style * Icon to get the icons back.
 Style * !Icon
 
 # Window Specific Styles
-Style TopPanel !Title, Borders, Handles, Sticky, \
-                 WindowListSkip, NeverFocus
+
 Style ConfirmQuit !Title, PositionPlacement Center, WindowListSkip, Layer 6
 Style FvwmIdent WindowListSkip
 
@@ -237,9 +102,8 @@ AddToMenu   MenuFvwmRoot "Fvwm" Title
 + "" Nop
 + "Fvwm&Console%icons/terminal.png%" Module FvwmConsole -terminal $[infostore.terminal]
 Test (x pavucontrol) + "&Volume Control" Exec exec pavucontrol
-Test (x bluetoothctl) + "Connect Setúbal" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
-+ "&Wallpapers%icons/wallpaper.png%" Popup BGMenu
-+ "M&an Pages%icons/help.png%" Popup MenuFvwmManPages
+Test (x bluetoothctl) + "Connect Setúbal%icons/speakers.svg%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
++ "&Wallpapers%icons/screen.svg%" Popup BGMenu
 + "" Nop
 + "Re&fresh%icons/refresh.png%" Refresh
 + "&Restart%icons/restart.png%" Restart
@@ -301,6 +165,17 @@ AddToMenu   MenuWindowOps
 + "Close"     Close
 + "More…"   Menu MenuWindowOpsLong This 0 0
 
+# Function: ToggleTitle
+#
+# This function will toggle if fvwm shows the TitleBar.
+DestroyFunc ToggleTitle
+AddToFunc   ToggleTitle
++ I ThisWindow (State 1) WindowStyle Title
++ I TestRc (Match) State 1 False
++ I TestRc (Match) Break
++ I WindowStyle !Title
++ I State 1 True
+
 DestroyMenu MenuWindowOpsLong
 AddToMenu   MenuWindowOpsLong
 + "Move"                Move
@@ -345,6 +220,11 @@ AddToMenu   MenuIconOps
 + "" Nop
 + "Identify"            Module FvwmIdent
 
+DestroyFunc MoveToCurrent
+AddToFunc MoveToCurrent
++ I ThisWindow MoveToPage
++ I ThisWindow MoveToDesk
+
 DestroyMenu MenuSendTo
 AddToMenu MenuSendTo
 + "Current" MoveToCurrent
@@ -365,72 +245,50 @@ AddToMenu   MenuSendToPage
 + "Page (1,0)"	MoveToPage 1 0
 + "Page (1,1)"	MoveToPage 1 1
 
+################################# Keybindings #################################
 
-# Fvwm Man Pages (Help) Menu
-DestroyMenu MenuFvwmManPages
-AddToMenu   MenuFvwmManPages "Help" Title
-+ "fvwm"                ViewManPage fvwm
-+ "FvwmAnimate"         ViewManPage FvwmAnimate
-+ "FvwmAuto"            ViewManPage FvwmAuto
-+ "FvwmBacker"          ViewManPage FvwmBacker
-+ "FvwmBanner"          ViewManPage FvwmBanner
-+ "FvwmButtons"         ViewManPage FvwmButtons
-+ "FvwmCommand"         ViewManPage FvwmCommand
-+ "FvwmConsole"         ViewManPage FvwmConsole
-+ "FvwmEvent"           ViewManPage FvwmEvent
-+ "FvwmForm"            ViewManPage FvwmForm
-+ "FvwmIconMan"         ViewManPage FvwmIconMan
-+ "FvwmIdent"           ViewManPage FvwmIdent
-+ "FvwmPager"           ViewManPage FvwmPager
-+ "FvwmPerl"            ViewManPage FvwmPerl
-+ "FvwmProxy"           ViewManPage FvwmProxy
-+ "FvwmRearrange"       ViewManPage FvwmRearrange
-+ "FvwmScript"          ViewManPage FvwmScript
-+ "" Nop
-+ "fvwm-root"	        ViewManPage fvwm-root
-+ "fvwm-menu-desktop"   ViewManPage fvwm-menu-desktop
-+ "fvwm-menu-directory" ViewManPage fvwm-menu-directory
-+ "fvwm-menu-headlines" ViewManPage fvwm-menu-headlines
-+ "fvwm-menu-xlock"     ViewManPage fvwm-menu-xlock
-+ "fvwm-config"         ViewManPage fvwm-config
+# Ignore Numlock and other modifiers for bindings
+# See http://fvwm.org/documentation/faq/#why-do-numlock-capslock-and-scrolllock-interfere-with-clicktofocus-andor-my-mouse-bindings
+IgnoreModifiers L25
 
-#######
-# 5: Mouse and Key bindings
-#
-# Contexts:
-#     R = Root Window                 rrrrrrrrrrrrrrrrrrrrrr
-#     W = Application Window          rIrrrr<---------^rrrrr
-#     F = Frame Corners               rrrrrr[13TTTT642]rrrrr
-#     S = Frame Sides                 rIrrrr[wwwwwwwww]rrrrr
-#     T = Title Bar                   rrrrrr[wwwwwwwww]rrrrr
-#     I = Icon                        rIrrrrv_________>rrrrr
-#                                     rrrrrrrrrrrrrrrrrrrrrr
-#
-#     Numbers are buttons: [1 3 5 7 9  TTTTT  0 8 6 4 2]
-#
-# Modifiers: (A)ny, (C)ontrol, (S)hift, (M)eta, (N)othing
-#
-# Format: Key <X>  <Context> <Modifier> <Action>
-#         Mouse <X> <Context> <Modifier> <Action>
-####################
-
-# Alt-F1 or Menu to load the root menu and Alt-Tab for a WindowList.
-# Ctrl-F1/F2/F3/F4 will switch between the Virtual Desktops.
-#
-# Silent supresses any errors (such as keyboards with no Menu key).
-Silent Key F1 A M Menu MenuFvwmRoot
-Silent Key Menu A A Menu MenuFvwmRoot
-Silent Key Tab A M WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
-Silent Key F1 A C GotoDesk 0 0
-Silent Key F2 A C GotoDesk 0 1
-Silent Key F3 A C GotoDesk 0 2
-Silent Key F4 A C GotoDesk 0 3
-Silent Key Return A 4 Exec exec $[infostore.terminal]
-Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && amixer sset Master 5%+
-Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && amixer sset Master 5%-
+Key space A 4 Menu MenuFvwmRoot
+Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
+Key 1 A 4 GotoDesk 0 0
+Key 2 A 4 GotoDesk 0 1
+Key 3 A 4 GotoDesk 0 2
+Key 4 A 4 GotoDesk 0 3
+Key 1 A S4 MovetoDesk 0 0
+Key 2 A S4 MovetoDesk 0 1
+Key 3 A S4 MovetoDesk 0 2
+Key 4 A S4 MovetoDesk 0 3
+Key w A 4 GotoPage 0p -1p
+Key a A 4 GotoPage -1p 0p
+Key s A 4 GotoPage 0p +1p
+Key d A 4 GotoPage +1p 0p
+Key w A S4 MovetoPage 0p -1p
+Key a A S4 MovetoPage -1p 0p
+Key s A S4 MovetoPage 0p +1p
+Key d A S4 MovetoPage +1p 0p
+Key Left A 4 ResizeMoveMaximize frame 50wa 100wa 0 0
+Key Right A 4 ResizeMoveMaximize frame 50wa 100wa -0 0
+Key Up A 4 ResizeMoveMaximize frame 100wa 50wa 0 0
+Key Down A 4 ResizeMoveMaximize frame 100wa 50wa 0 -0
+Key Insert A 4 ResizeMove frame 50wa 50wa 0 0
+Key End A 4 ResizeMove frame 50wa 50wa -0 -0
+Key Home A 4  ResizeMove frame 50wa 50wa -0 0
+Key Delete A 4 ResizeMove frame 50wa 50wa 0 -0
+Key f A 4 Maximize Fullscreen
+Key 0 A 4 Thumbnail
+Key m A 4 ResizeMove frame 75wa 85wa 260p 100p
+Key 7 A 4 ResizeMoveMaximize frame 55wa 100wa 0 0
+Key 8 A 4 ResizeMoveMaximize frame 45wa 50wa -0 0
+Key 9 A 4 ResizeMoveMaximize frame 45wa 50wa -0 -0
+Key Return A 4 Exec exec $[infostore.terminal]
+Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
+Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key XF86AudioMute A N Exec exec amixer sset Master mute
-Silent Key KP_Add A 4 Exec amixer sset Master unmute && amixer sset Master 5%+
-Silent Key KP_Subtract A 4 Exec amixer sset Master unmute && amixer sset Master 5%-
+Silent Key KP_Add A 4 Exec amixer sset Master unmute && exec amixer sset Master 5%+
+Silent Key KP_Subtract A 4 Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key KP_Insert A 4 Exec exec amixer sset Master mute
 Silent Key XF86MonBrightnessDown A N Exec exec xbacklight -dec 10
 Silent Key XF86MonBrightnessUp A N Exec exec xbacklight -inc 10
@@ -441,69 +299,43 @@ Silent Key KP_End A 4 Exec exec strawberry --play-pause
 Silent Key KP_Divide A 4 Exec exec strawberry --restart-or-previous
 Silent Key KP_Multiply A 4 Exec exec strawberry --next
 
-# XXX
-# Key space A 4 Menu MenuFvwmRoot
-# Key Menu A 4 Menu MenuFvwmRoot
-# Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
-# # Key Tab A S4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd, ReverseOrder
-# Key 1 A 4 GotoDesk 0 0
-# Key 2 A 4 GotoDesk 0 1
-# Key 3 A 4 GotoDesk 0 2
-# Key 4 A 4 GotoDesk 0 3
-# Key 1 A S4 MovetoDesk 0 0
-# Key 2 A S4 MovetoDesk 0 1
-# Key 3 A S4 MovetoDesk 0 2
-# Key 4 A S4 MovetoDesk 0 3
-# Key Prior A 4 GotoPage 0p -1p
-# Key Next A 4 GotoPage 0p +1p
-# Key Prior A S4 MovetoPage 0p -1p
-# Key Next A S4 MovetoPage 0p +1p
-# Key m A 4 ResizeMove frame 78wa 89wa 85p 30p
-# Key f A 4 Maximize Fullscreen
-# Key Left A S4 ResizeMoveMaximize frame 50wa 100wa 0 0
-# Key Right A S4 ResizeMoveMaximize frame 50wa 100wa -0 0
-# Key Left A 4 ResizeMove frame 50wa 50wa 0 keep
-# Key Right A 4 ResizeMove frame 50wa 50wa -0 keep
-# Key Up A 4  ResizeMove frame 50wa 50wa keep 0
-# Key Down A 4 ResizeMove frame 50wa 50wa keep -0
-# # Mod4 Left :MacroCmd {ResizeTo 50% 50%} {MoveTo 00 * Left}
-# # Mod4 Right :MacroCmd {ResizeTo 50% 50%} {MoveTo 00 * Right}
-# # Mod4 Down :MacroCmd {ResizeTo 50% 50%} {MoveTo * 00 Bottom}
-# # Mod4 Up :MacroCmd {ResizeTo 50% 50%} {MoveTo * 00 Top}
-# # Mod4 Shift Left :MacroCmd {ResizeTo 50% 100%} {MoveTo 00 00 Left}
-# # Mod4 6 :MacroCmd {ResizeTo 92% 92%} {MoveTo 00 00 Center}
-# # Mod4 7 :MacroCmd {ResizeTo 55% 100%} {MoveTo 00 00 Left}
-# # Mod4 8 :MacroCmd {ResizeTo 45% 50%} {MoveTo 00 00 TopRight}
-# # Mod4 9 :MacroCmd {ResizeTo 45% 50%} {MoveTo 00 00 BottomRight}
-# # Mod4 0 :Maximize
-# # Mod4 Shift Right :MacroCmd {ResizeTo 50% 100%} {MoveTo 00 00 Right}
-# # Mod4 Shift Up :ToggleCmd {Maximize} {Restore}
-# # Mod4 Shift Down :Minimize
-
-# XXX
-# Key Pause WTSF1246 N Thumbnail
-
+################################### Mouse #####################################
 # Window Buttons: [1 3 5 7 9  TTTTT  0 8 6 4 2]
-#   1 - Open the WindowOps menu.
-#   2 - Close on single click, Destory on double click.
-#   4 - Maximize (right/middle button will only maximize vertical/horizontal)
-#   6 - Iconify (minimize)
+
+DestroyFunc ToggleLayer
+AddToFunc   ToggleLayer
++ I ThisWindow (Layer 6) Layer
++ I TestRc (NoMatch) Layer 0 6
++ I Raise
+
 Mouse 1 1 A Menu MenuWindowOps Delete
 Mouse 1 2 A Close
 Mouse 1 4 A Maximize 100 100
 Mouse 2 4 A Maximize 0 100
 Mouse 3 4 A Maximize 100 0
 Mouse 1 6 A Thumbnail
-# XXX
-# Mouse 1 I A Iconify off
+Mouse 1 3 A Stick
+Mouse 1 5 A ToggleLayer
 
-#   TitleBar: Click to Raise, Move, Double Click to Maximize
-#             Mouse Wheel Up/Down to WindowShade On/Off
-#   Borders: Click to raise, Move to Resize
-#   Root Window: Left Click - Main Menu
-#                Right Click - WindowOps Menu
-#                Middle Click - Window List Menu
-#   Right click TitleBar/Borders for WindowOps Menu
+DestroyFunc MoveOrLower
+AddToFunc MoveOrLower
+ + C   Lower
+ + M   Lower
+ + M   Move
+ + D   Lower
+
+# Mouse Bindings Functions
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+
+DestroyFunc RaiseMove
+AddToFunc RaiseMove
++ I Raise
++ M $0
+
 Mouse 1	T    A RaiseMoveX Move Maximize
 Mouse 1	FS   A RaiseMove Resize
 Mouse 4	T    A WindowShade True
@@ -516,39 +348,9 @@ Mouse 3	T    A Menu MenuWindowOps
 Mouse 3 I    A Menu MenuIconOps
 Mouse 2 T    A Function MoveOrLower
 
-############
-# 7: Modules
-#############
+########################### FvwmButtons - TopPanel ############################
 
-# FvwmIdent
-#
-# FvwmIdent is a module that can be used to get the various info about
-# a window. One use is getting the class/resource/name of a window.
-DestroyModuleConfig FvwmIdent:*
-*FvwmIdent: Colorset 10
-
-# FvwmBanner
-#
-# This displays the Fvwm Logo for 5 seconds. This is displayed
-# when fvwm starts.
-DestroyModuleConfig FvwmBanner:*
-*FvwmBanner: NoDecor
-*FvwmBanner: Timeout 5
-
-# FvwmScript
-#
-# FvwmScript is a module that allows one to write custom desktop
-# widgets and various other tools. This config uses two FvwmScripts.
-#   - DateTime - uses the output of "date" to display the date/time
-#     on the RightPanel.
-#   - Quit - This is a popup that asks for quit confirmation before
-#     quitting fvwm.
-DestroyModuleConfig FvwmScript:*
-*FvwmScript: DefaultColorset 10
-
-##########################
-# FvwmButtons - TopPanel #
-##########################
+Style TopPanel !Title, Borders, Handles, Sticky, WindowListSkip, NeverFocus
 
 AddToMenu bargraphicspopup "Graphics"	Title
  + "Gimp"		 Exec exec gimp
@@ -557,9 +359,6 @@ AddToMenu bargraphicspopup "Graphics"	Title
 
 AddToFunc barthiswmpopupfunc
  +	"I"	Popup THISWM_MENU_popup
-
-AddToFunc barsusepopupfunc
- +	"I"	Popup barsusepopup
 
 AddToFunc bargraphicspopupfunc
  +	"I"	Popup bargraphicspopup
@@ -571,22 +370,20 @@ AddToFunc barshellspopupfunc
  +	"I"	Popup barshellspopup
 
 DestroyModuleConfig TopPanel:*
-*TopPanel: Back	rgb:91/ae/d6
-*TopPanel: Geometry	700x66+0+0
+*TopPanel: BoxSize smart
+*TopPanel: ButtonGeometry 68x68+0+0
 *TopPanel: Rows	1
-*TopPanel: (2x1 Frame 0 Swallow(UseOld, Respawn, NoClose) "FvwmPager" "Module FvwmPager 0 0")
-*TopPanel: (Swallow FvwmXeyes 'Exec xeyes -name "FvwmXeyes" -geometry +0+0 -bg grey67 &')
-*TopPanel: (Swallow FvwmXclock 'Exec xclock -name "FvwmXclock" -geometry +0+0 -padding 1 -bg rgb:91/ae/d6 &')
-*TopPanel:(Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
+*TopPanel: (2x1 Frame 0 Swallow(UseOld, Respawn, NoClose) "FvwmPager" "Module FvwmPager *")
+*TopPanel: (Swallow FvwmXeyes 'Exec xeyes -name "FvwmXeyes" -bg grey67 &')
+*TopPanel: (Swallow(UseOld,NoClose,Respawn) bubblemon `Exec exec bubblemon`)
+# *TopPanel: (4x1 ActionIgnoresClientWindow, Swallow(UseOld,NoClose,Respawn) panelterm `Exec exec urxvt-mlc -name panelterm`)
 *TopPanel: (Title "openSUSE", Icon openSUSE.xpm, Action (Mouse 0) Function barsusepopupfunc)
+*TopPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
 *TopPanel: (Title "Graphics", Icon gimp.xpm, Action (Mouse 0) Function bargraphicspopupfunc)
-*TopPanel (Title "Tools", Icon toolbox.xpm, Action (Mouse 0) Function bartoolspopupfunc)
-*TopPanel (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
+*TopPanel: (Title "Tools", Icon icons/tiny.svg, Action (Mouse 0) Function bartoolspopupfunc)
+*TopPanel: (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
 
 # FvwmPager
-#
-# This module displays the location of the windows on the various Pages
-# and Desks. This is setup to show only the Pages on the current Desk.
 DestroyModuleConfig FvwmPager:*
 *FvwmPager: Colorset * 10
 *FvwmPager: HilightColorset * 13
@@ -599,6 +396,17 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: MiniIcons
 *FvwmPager: UseSkipList
 *FvwmPager: DeskHilight
+
+# Function: ChangeDesk
+#
+# This function is called by FvwmEvent every time the Desk is changed.
+DestroyFunc ChangeDesk
+AddToFunc   ChangeDesk
++ I SendToModule FvwmButtons ChangeButton desk0 Colorset 10
++ I SendToModule FvwmButtons ChangeButton desk1 Colorset 10
++ I SendToModule FvwmButtons ChangeButton desk2 Colorset 10
++ I SendToModule FvwmButtons ChangeButton desk3 Colorset 10
++ I SendToModule FvwmButtons ChangeButton desk$0 Colorset 11
 
 # FvwmEvent
 #
@@ -628,6 +436,8 @@ AddToFunc WindowListFunc
 # AutoHide                                                                       #
 # http://www.fvwm.org/documentation/faq/#autohiding-fvwmbuttons-or-other-windows #
 ##################################################################################
+
+*FvwmEvent: add_window AutoHidePlacementHandler
 
 DestroyFunc AutoHide
 AddToFunc AutoHide
