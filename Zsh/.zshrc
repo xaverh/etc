@@ -71,19 +71,10 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 
-# TODO: fallthrough statements in zsh? bsdtar, zstd, ouput folders
-# zle -N global-alias-space
-# bindkey ' ' global-alias-space
+chpwd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
+precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
+preexec () {print -Pn "\e]0;%n@%m: $2 ($TERM)\a"}
 
-# chpwd() {
-# 	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): %~ ($TERM)\a"
-# 	# [[ $TERM == (tmux*|screen*) ]] && echo -n "\033kzsh\033\\"
-# }
-#
-# preexec() {
-# 	[[ $TERM == (xterm*|*rxvt*|st*) ]] && print -Pn "\e]0;zsh%1(j|(%j)|): $2 ($TERM)\a"
-# 	# [[ $TERM == (tmux*|screen*) ]] && echo -n "\033k$1\033\\"
-# }
 sx simple-extract () {
 	for f in "$@"; do
 		if [[ -f "$f" ]]; then
@@ -115,10 +106,6 @@ sx simple-extract () {
 	done
 }
 
-# for c in shred rm wipe rmdir; do
-	# eval "alias $c=' $c'"
-# done
-
 # required for st
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
 # if [[ $TERM == (tmux*|st*) ]]; then
@@ -133,11 +120,6 @@ autoload -U zmv
 autoload -U tetris
 zle -N tetris
 bindkey "^Xt" tetris
-
-#
-# nnn
-#
-
 
 export NNN_TMPFILE="/tmp/nnn"
 export NNN_USE_EDITOR=1
