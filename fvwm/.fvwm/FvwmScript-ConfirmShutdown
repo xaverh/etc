@@ -1,14 +1,14 @@
-WindowTitle {ConfirmQuit}
-WindowSize  300 80
-Font "xft:Sans:style=Bold:size=10"
+WindowTitle {ConfirmShutdown}
+WindowSize  400 200
+Font "xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"
 Init
  Begin
  End
 
 Widget 1
 Property
- Title {Do you really want to quit Fvwm?}
- Size  200 30
+ Title {Do you really want to shutdown?}
+ Size  300 50
  Position 25 0
  Type ItemDraw
  Flags NoReliefString
@@ -21,8 +21,9 @@ End
 
 Widget 2
 Property
- Title {Quit}
- Size 60 28
+ Title {Yay!}
+ Icon icons/like.svg:50x0
+ Size 120 120
  Position 70 40
  Flags NoReliefString
  Type PushButton
@@ -31,15 +32,16 @@ Main
  Case message of
   SingleClic :
   Begin
-   Do {Quit}
+   Exec poweroff
   End
 End
 
 Widget 3
 Property
- Title {Cancel}
- Size 60 28
- Position 170 40
+ Title {Nay!}
+ Icon icons/dislike.svg:50x0
+ Size 120 120
+ Position 240 40
  Flags NoReliefString
  Type PushButton
  Value 1
