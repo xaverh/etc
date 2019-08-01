@@ -20,7 +20,9 @@ sharehistory \
 warncreateglobal
 # TODO: options from Input/Output in zshoptions(1) onward
 
-bindkey -e
+bindkey -v
+bindkey -M vicmd '/' history-incremental-search-backward
+bindkey -M vicmd '?' history-incremental-search-forward
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/xha/.zshrc'
 
