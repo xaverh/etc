@@ -27,14 +27,22 @@ URxvt.inheritPixmap: false
 URxvt.transparent: false
 URxvt.visualBell: false
 URxvt.saveLines: 65536
-! URxvt.fading: 10
-URxvt.cursorBlink: true
 URxvt.urgentOnBell: true
 URxvt.iso14755: false
 URxvt.depth: 24
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
 URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/utilities-terminal.png
+*.cursorBlink: true
+XTerm*faceSize: 10
+XTerm*faceName: SF Mono
+XTerm*scrollBar: false
+XTerm*saveLines: 32768
+XTerm*allowScrollLock: true
+XTerm*internalBorder:  13
+XTerm*boldColors: false
+XTerm*autoWrap: true
+XTerm*reverseWrap: true
 
 ! ! Qillqaq:
 ! *.background:             #1E1E1E
@@ -55,34 +63,35 @@ URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/utilities-terminal.png
 ! *.color14:                #A2DCD7
 ! *.color15:                #E5E6E6
 ! *.foreground:             #E5E6E6
-! URxvt.cursorColor:            #20BBFC
-! URxvt.cursorColor2:           #1E1E1E
+! XTerm*borderColor:        #E5E6E6
+! URxvt.cursorColor:        #20BBFC
+! URxvt.cursorColor2:       #1E1E1E
 ! URxvt.highlightColor:     [50]#E5E6E6
 ! URxvt.highlightTextColor: [80]#1E1E1E
-! URxvt.fadeColor:              #1E1E1E
 
 
 ! Ysgrifennwr:
-URxvt.background:             #F9F8F4
-URxvt.color0:                 #F9F8F4
-URxvt.color1:                 #E32791
-URxvt.color2:                 #488432
-URxvt.color3:                 #A25D0E
-URxvt.color4:                 #2C65B5
-URxvt.color5:                 #B062A7
-URxvt.color6:                 #27BBBE
-URxvt.color7:                 #999999
-URxvt.color8:                 #B8B8B8
-URxvt.color9:                 #9F1B66
-URxvt.color10:                #325D23
-URxvt.color11:                #71410A
-URxvt.color12:                #1F477F
-URxvt.color13:                #7B4474
-URxvt.color14:                #1B8486
-URxvt.color15:                #424242
-URxvt.foreground:             #424242
-URxvt.cursorColor:            #FC9520
-URxvt.cursorColor2:           #424242
+*.background:             #F9F8F4
+*.backgroundColor:        #F9F8F4
+*.color0:                 #F9F8F4
+*.color1:                 #E32791
+*.color2:                 #488432
+*.color3:                 #A25D0E
+*.color4:                 #2C65B5
+*.color5:                 #B062A7
+*.color6:                 #27BBBE
+*.color7:                 #999999
+*.color8:                 #B8B8B8
+*.color9:                 #9F1B66
+*.color10:                #325D23
+*.color11:                #71410A
+*.color12:                #1F477F
+*.color13:                #7B4474
+*.color14:                #1B8486
+*.color15:                #424242
+*.foreground:             #424242
+*.cursorColor:            #FC9520
+*.cursorColor2:           #424242
 URxvt.highlightColor:     [80]#999999
 URxvt.highlightTextColor: [80]#F9F8F4
-URxvt.fadeColor:              #424242
+XTerm*borderColor:        #424242
