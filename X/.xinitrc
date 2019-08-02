@@ -50,7 +50,7 @@ fi
 
 # ~/.fehbg &
 
-# numlockx &
+numlockx &
 
 urxvt-mld -q -o -f
 

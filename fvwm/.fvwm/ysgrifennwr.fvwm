@@ -6,7 +6,7 @@ InfoStoreAdd default_font '"xft:.Helvetica Neue DeskInterface:style=Regular:pixe
 DefaultFont $[infostore.default_font]
 
 Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FirmBorder, FirmBorder, HandleWidth 2
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8
+MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%|%3.1i%5.3l%5.3>%|", AutomaticHotkeys, Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation
 
 ################################## Colorsets ##################################
 # http://fvwm-themes.sourceforge.net/doc/colorsets
@@ -35,9 +35,9 @@ Colorset 8 fg #6b6b6c, bg #dddddd, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 9
 # modules, default             Button Bar, Pager, other modules
-# Colorset 10
+Colorset 10 fg black, bg rgb:80/A0/A0, Plain, NoShape
 # modules, default hilight     Button Bar
-# Colorset 11
+Colorset 11 fg black, bg white, Plain, NoShape
 # modules, special             gradient for IconMan/IconBox
 # Colorset 12
 # modules, swallowed apps      bg, fg, sh, hi for xclock/xload etc.
@@ -116,15 +116,6 @@ AddToFunc   FuncFvwmDecorBackground
 # II.1. Common Colorsets
 # ----------------------
 
-# default for modules
-# For FvwmButtons, FvwmPager, can be also used for FvwmIconMan, FvwmIconBox.
-#
-Colorset 10 fg black, bg rgb:80/A0/A0, Plain, NoShape
-
-# default hilight for modules
-# For hilighting a part of a button bar (some swallowed apps for example).
-#
-Colorset 11 fg black, bg white, Plain, NoShape
 
 # special or funny: a gradient or a pixmap
 # May be used in certain FvwmButtons, FvwmIconMan, FvwmIconBox.
@@ -230,9 +221,6 @@ Colorset 36 fg black, bg rgb:A0/C8/A0, Plain, NoShape
 # --------------------------------------------------
 # Colorsets 37 to 39 are reserved for the future use.
 
-# Colorset 8  fg #ffffff, bg #003c3c, hi, sh
-# Colorset 10 fg #e5e6e6, bg #1e1e1e
-# Colorset 11 fg #e5e6e6, bg #005577
 # Colorset 12 fg #424242, bg #edece8
 # Colorset 13 fg #e5e6e6, bg #f3d6d2, hi, sh
 # Colorset 14 fg #e5e6e6, bg #f3efd2, hi, sh
