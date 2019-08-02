@@ -66,21 +66,12 @@ OpaqueMoveSize unlimited
 Style ConfirmShutdown !Title, PositionPlacement Center, WindowListSkip, Layer 6
 Style FvwmIdent WindowListSkip
 
-#######
-# 4: Menus
-###########
-MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong
-MenuStyle * TrianglesSolid, TrianglesUseFore
-MenuStyle * ItemFormat "%|%3.1i%5.3l%5.3>%|"
-MenuStyle * AutomaticHotkeys
-MenuStyle * Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`
+#################################### Menus ####################################
 
 DestroyMenu MenuFvwmRoot
-AddToMenu   MenuFvwmRoot "Fvwm" Title
+AddToMenu   MenuFvwmRoot FVWM Title
 + "&Programs%icons/programs.png%" Popup MenuPrograms
-+ "rxv&t-unicode%icons/terminal.png%" Exec exec $[infostore.terminal]
 + "" Nop
-+ "Fvwm&Console%icons/terminal.png%" Module FvwmConsole -terminal $[infostore.terminal]
 Test (x pavucontrol) + "&Volume Control%icons/volume.svg:0x$[infostore.menu_icon_size]%" Exec exec pavucontrol
 Test (x bluetoothctl) + "Connect Setúbal%icons/speaker.svg:0x$[infostore.menu_icon_size]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
 + "&Wallpapers%icons/screen.svg:0x$[infostore.menu_icon_size]%" Popup BGMenu
@@ -93,7 +84,7 @@ Test (x bluetoothctl) + "Connect Setúbal%icons/speaker.svg:0x$[infostore.menu_i
 DestroyMenu MenuPrograms
 AddToMenu   MenuPrograms "Programs" Title
 Test (x pcmanfm) + "&File Manager%icons/computer.png%" Exec exec pcmanfm
-+ "rxv&t-unicode%icons/terminal.png%" Exec exec urxvt256c-mlc
++ "rxv&t-unicode%icons/terminal.png%" Exec exec $[infostore.terminal]
 Test (x firefox) + "Moz&illa Firefox%/usr/lib64/firefox/browser/chrome/icons/default/default32.png%" Exec exec firefox
 Test (x google-chrome) + "G&oogle Chrome Dev%/opt/google/chrome-unstable/product_logo_32_dev.png%" Exec exec google-chrome
 Test (x code) + "Visual Studio &Code%icons/code.png%" Exec exec code
@@ -105,6 +96,7 @@ Test (x steam) + "&Steam%/usr/share/icons/hicolor/32x32/apps/steam.png%" Exec ex
 Test (x strawberry) + "Stra&wberry%/usr/share/icons/hicolor/scalable/apps/strawberry.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry
 Test (x zathura) + "&Zathura" Exec exec zathura
 Test (x mupdf-gl) + "MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exec exec mupdf-gl
++ "Fvwm&Console%icons/terminal.png%" Module FvwmConsole -terminal $[infostore.terminal]
 
 # Background Menu
 #
