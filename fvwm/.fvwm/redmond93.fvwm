@@ -1,13 +1,13 @@
-ImagePath $[FVWM_USERDIR]/ysgrifennwr/images/:$[FVWM_USERDIR]/common/images/:+
+ImagePath $[FVWM_USERDIR]/redmond93/images/:$[FVWM_USERDIR]/common/images/:+
 
 InfoStoreAdd menu_icon_size 36
-InfoStoreAdd default_font '"xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"'
+InfoStoreAdd default_font '"xft:.Helvetica Neue DeskInterface:style=Medium:pixelsize=11:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"'
 
 DefaultFont $[infostore.default_font]
 
 EwmhBaseStruts 15 15 15 15
 
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FirmBorder, FirmBorder, HandleWidth 2, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
+Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FirmBorder, FirmBorder, HandleWidth 4, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
 MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%|%3.1i%5.3l%5.3>%|", AutomaticHotkeys, Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation
 
 ################################## Colorsets ##################################
@@ -19,13 +19,13 @@ CleanupColorsets
 # default                      feedback windows, FvwmScroll
 # Colorset 0 fg black, bg #70A0A0
 # inactive window              window/icon titles, windows in Pager
-Colorset 1  fg #868584, bg #edece8
+Colorset 1 HGradient 200 #700070 #066d73, fg #ffffff
 # active window                window/icon titles, windows in Pager
-Colorset 2  fg #424242, bg #edece8
+Colorset 2 HGradient 200 #ff00ff #00ffff, fg #ffffff
 # inactive borders             window borders (may copy 1)
-Colorset 3 bg #868584
+Colorset 3 fg white, bg #c3c3c3
 # active borders               window borders (may copy 2)
-Colorset 4 bg #424242
+Colorset 4 fg white, bg #c3c3c3
 # inactive menu item           menus (may have pixmap or gradient)
 Colorset 5 fg #555555, bg #f3f3f3, Plain, NoShape
 # active menu item             menus (only bg/fg used)
@@ -85,17 +85,13 @@ Colorset 36 fg black, bg rgb:A0/C8/A0, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 37-39
 
-BorderStyle -- Flat
-TitleStyle Centered Height 20 -- Flat
-ButtonStyle All -- Flat
-ButtonStyle 1 MiniIcon -- Flat
-AddButtonStyle 2 AllUp Vector 4 35x65@1 65x35@3 35x35@4 65x65@3
-AddButtonStyle 2 AllDown Vector 4 10x90@1 90x10@3 10x10@4 90x90@3
-AddButtonStyle 4 AllNormal Vector 6 50x65@1 35x65@3 35x50@3 50x35@4 65x35@3 65x50@3
-AddButtonStyle 4 AllToggled Vector 6 35x55@1 45x55@3 45x65@3 55x35@4 55x45@3 65x45@3
-AddButtonStyle 6 AllUp Vector 2 35x65@1 65x65@3
-AddButtonStyle 6 AllDown Vector 2 10x65@1 90x65@3
-AddButtonStyle 3 AllNormal Vector 6 25x25@4 75x25@3 25x45@4 75x45@3 25x65@4 75x65@3
-AddButtonStyle 3 AllToggled Vector 5 40x35@4 60x35@3 60x55@3 40x55@3 40x35@3
-AddButtonStyle 5 AllNormal Vector 3 25x50@1 50x25@3 75x50@3
-AddButtonStyle 5 AllToggled Vector 3 25x25@1 50x50@3 75x25@3
+BorderStyle Simple -- HiddenHandles NoInset Raised
+TitleStyle LeftJustified Height 20 Active (Colorset 2 -- Flat) Inactive (Colorset 1 -- Flat) ToggledActive (Colorset 2 -- Flat) ToggledInactive (Colorset 2 -- Flat)
+ButtonStyle Reset
+ButtonStyle All -- UseTitleStyle Flat
+AddButtonStyle Right AllDown Pixmap buttons/down.xpm
+AddButtonStyle Right AllUp Pixmap buttons/up.xpm
+ButtonStyle 1 MiniIcon -- UseTitleStyle Flat
+AddButtonStyle 2 (Pixmap buttons/close.xpm)
+AddButtonStyle 4 AllNormal (Pixmap buttons/maximize.xpm) AllToggled (Pixmap buttons/normalize.xpm)
+AddButtonStyle 6 (Pixmap buttons/minimize.xpm)
