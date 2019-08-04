@@ -85,22 +85,6 @@ Colorset 36 fg black, bg rgb:A0/C8/A0, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 37-39
 
-
-# background for window title, buttons and border
-#
-DestroyFunc FuncFvwmDecorBackground
-AddToFunc   FuncFvwmDecorBackground
-+ I TitleStyle ActiveUp   (Solid rgb:CC/BA/99 -- Raised)
-+ I TitleStyle ActiveDown (Solid rgb:CC/BA/99 -- Raised)
-+ I TitleStyle Inactive   (Solid rgb:88/7C/66 -- Raised)
-+ I TitleStyle ToggledActiveUp   (Solid rgb:CC/BA/99 -- Raised)
-+ I TitleStyle ToggledActiveDown (Solid rgb:CC/BA/99 -- Raised)
-+ I TitleStyle ToggledInactive   (Solid rgb:88/7C/66 -- Raised)
-
-+ I ButtonStyle All Pixmap 16x16/empty.xpm
-+ I ButtonStyle All -- UseTitleStyle
-
-
 BorderStyle -- Flat
 TitleStyle Centered Height 20 -- Flat
 ButtonStyle All -- Flat
