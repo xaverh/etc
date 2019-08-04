@@ -95,7 +95,3 @@ AddButtonStyle 4 AllNormal Vector 6 50x65@1 35x65@3 35x50@3 50x35@4 65x35@3 65x5
 AddButtonStyle 4 AllToggled Vector 6 35x55@1 45x55@3 45x65@3 55x35@4 55x45@3 65x45@3
 AddButtonStyle 6 AllUp Vector 2 35x65@1 65x65@3
 AddButtonStyle 6 AllDown Vector 2 10x65@1 90x65@3
-AddButtonStyle 3 AllNormal Vector 6 25x25@4 75x25@3 25x45@4 75x45@3 25x65@4 75x65@3
-AddButtonStyle 3 AllToggled Vector 5 40x35@4 60x35@3 60x55@3 40x55@3 40x35@3
-AddButtonStyle 5 AllNormal Vector 3 25x50@1 50x25@3 75x50@3
-AddButtonStyle 5 AllToggled Vector 3 25x25@1 50x50@3 75x25@3
