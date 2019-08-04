@@ -7,7 +7,7 @@ DefaultFont $[infostore.default_font]
 
 EwmhBaseStruts 15 15 15 15
 
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FirmBorder, FirmBorder, HandleWidth 4, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
+Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
 MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%|%3.1i%5.3l%5.3>%|", AutomaticHotkeys, Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation
 
 ################################## Colorsets ##################################
