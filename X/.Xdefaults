@@ -46,6 +46,7 @@ XTerm*reverseWrap: true
 
 ! ! Qillqaq:
 ! *.background:             #1E1E1E
+! *.backgroundColor:        #1E1E1E
 ! *.color0:                 #1E1E1E
 ! *.color1:                 #E32791
 ! *.color2:                 #30C798
@@ -64,7 +65,7 @@ XTerm*reverseWrap: true
 ! *.color15:                #E5E6E6
 ! *.foreground:             #E5E6E6
 ! XTerm*borderColor:        #E5E6E6
-! URxvt.cursorColor:        #20BBFC
+! *.cursorColor:            #20BBFC
 ! URxvt.cursorColor2:       #1E1E1E
 ! URxvt.highlightColor:     [50]#E5E6E6
 ! URxvt.highlightTextColor: [80]#1E1E1E
@@ -90,8 +91,8 @@ XTerm*reverseWrap: true
 *.color14:                #1B8486
 *.color15:                #424242
 *.foreground:             #424242
+XTerm*borderColor:        #424242
 *.cursorColor:            #FC9520
-*.cursorColor2:           #424242
+URxvt.cursorColor2:       #424242
 URxvt.highlightColor:     [80]#999999
 URxvt.highlightTextColor: [80]#F9F8F4
-XTerm*borderColor:        #424242

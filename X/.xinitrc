@@ -48,18 +48,11 @@ fi
 
 # xsetroot -solid "#57655a"
 
-# ~/.fehbg &
-
 numlockx &
 
 urxvt-mld -q -o -f
 
-# sxhkd -m -1 &
-# exec bspwm
-# exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
-# exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
-mkdir /tmp/fvwmout
-exec fvwm >> /tmp/fvwmout/stdout 2>> /tmp/fvwmout/stderr
+exec fvwm
 
 # call failsafe
 exit 0

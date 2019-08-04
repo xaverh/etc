@@ -1,4 +1,4 @@
-Read ysgrifennwr.fvwm
+Read redmond93.fvwm
 
 InfoStoreAdd terminal urxvt-mlc
 InfoStoreAdd auto_hide_steps 10
@@ -32,8 +32,8 @@ AddToFunc DeThumbnail
 
 DestroyFunc SetBG
 AddToFunc   SetBG
-+ I Test (f $[FVWM_USERDIR]/images/background/$0) \
-    Exec exec fvwm-root $[FVWM_USERDIR]/images/background/$0
++ I Test (f $[HOME]/var/wallpapers/$0) \
+    Exec exec fvwm-root $[HOME]/var/wallpapers/$0
 + I TestRc (Match) Exec exec ln -fs images/background/$0 \
     $[FVWM_USERDIR]/.BGdefault
 + I TestRc (Match) Break
@@ -53,7 +53,6 @@ DesktopSize 3x2
 EdgeScroll 0 0
 EdgeResistance -1
 EdgeThickness 0
-EwmhBaseStruts 2 2 2 2
 
 ClickTime 250
 MoveThreshold 3
@@ -70,7 +69,7 @@ Style FvwmIdent WindowListSkip
 
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot FVWM Title
-+ "&Programs%icons/programs.png%" Popup MenuPrograms
++ "&Applications%icons/programs.png%" Popup MenuApplications
 + "" Nop
 Test (x pavucontrol) + "&Volume Control%icons/volume.svg:0x$[infostore.menu_icon_size]%" Exec exec pavucontrol
 Test (x bluetoothctl) + "Connect Setúbal%icons/speaker.svg:0x$[infostore.menu_icon_size]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
@@ -81,8 +80,8 @@ Test (x bluetoothctl) + "Connect Setúbal%icons/speaker.svg:0x$[infostore.menu_i
 + "&Reboot%icons/reboot.svg:0x$[infostore.menu_icon_size]%" Module FvwmScript FvwmScript-ConfirmReboot
 + "&Shutdown%icons/shutdown.svg:0x$[infostore.menu_icon_size]%" Module FvwmScript FvwmScript-ConfirmShutdown
 
-DestroyMenu MenuPrograms
-AddToMenu   MenuPrograms "Programs" Title
+DestroyMenu MenuApplications
+AddToMenu   MenuApplications "Applications" Title
 Test (x pcmanfm) + "&File Manager%icons/computer.png%" Exec exec pcmanfm
 + "rxv&t-unicode%icons/terminal.png%" Exec exec $[infostore.terminal]
 Test (x firefox) + "Moz&illa Firefox%/usr/lib64/firefox/browser/chrome/icons/default/default32.png%" Exec exec firefox
@@ -240,9 +239,9 @@ Key Delete A 4 ResizeMove frame 50wa 50wa 0 -0
 Key f A 4 Maximize Fullscreen
 Key 0 A 4 Thumbnail
 Key m A 4 ResizeMove frame 75wa 85wa 260p 100p
-Key 7 A 4 ResizeMoveMaximize frame 60wa 100wa 0 0
-Key 8 A 4 ResizeMoveMaximize frame 40wa 60wa -0 0
-Key 9 A 4 ResizeMoveMaximize frame 40wa 40wa -0 -0
+Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
+Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
+Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
 Key Return A 4 Exec exec $[infostore.terminal]
 Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
 Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
