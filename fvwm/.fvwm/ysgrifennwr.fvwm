@@ -9,7 +9,7 @@ InfoStoreAdd volume_icon icons/volume.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd bluetoothspeaker_icon icons/speaker.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd wallpapers_icon icons/screen.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd restart_icon icons/restart.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd lock_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd lock_icon icons/lock.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
