@@ -1,15 +1,15 @@
-Credits for Icons
+# Credits for Icons
 
-Speaker icon ![Speaker](images/icons/speaker.svg) made by [FreePik](https://www.freepik.com/home) from [FlatIcon](https://www.flaticon.com).
+Speaker icon <img src="images/icons/speaker.svg" width="24" height="24" title="Speaker"> made by [FreePik](https://www.freepik.com/home) from [FlatIcon](https://www.flaticon.com).
 
-Meteor ![Meteor](images/icons/shutdown.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Deadpool ![Deadpool](images/icons/reboot.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Key ![Key](images/icons/lock.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Muscle ![Muslce](images/icons/restart.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Screen ![Screen](images/icons/screen.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Speakers ![Speakers](images/icons/volume.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
-Forward ![Forward](images/icons/forward.svg) made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
+Meteor <img src="images/icons/shutdown.svg" width="24" height="24" title="Meteor"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Deadpool <img src="images/icons/reboot.svg" width="24" height="24" title="Deadpool"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Key <img src="images/icons/lock.svg" width="24" height="24" title="Key"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Muscle <img src="images/icons/restart.svg" width="24" height="24" title="Muscle"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Screen <img src="images/icons/screen.svg" width="24" height="24" title="Screen"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Speakers <img src="images/icons/volume.svg" width="24" height="24" title="Speakers"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Forward <img src="images/icons/forward.svg" width="24" height="24" title="Forward"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
 
-Tape ![Tape](images/icons/tape.svg) made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).
-Rock ![Rock](images/icons/rock.svg) made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).
-Cheese ![Cheese](images/icons/cheese.svg) made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).
+Tape <img src="images/icons/tape.svg" width="24" height="24" title="Tape"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
+Rock <img src="images/icons/rock.svg" width="24" height="24" title="Rock"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
+Cheese <img src="images/icons/cheese.svg" width="24" height="24" title="Cheese"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
