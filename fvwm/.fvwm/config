@@ -108,19 +108,30 @@ AddToMenu   BGMenu "Wallpapers" Title
 # Window Operations Menus
 DestroyMenu MenuWindowOps
 AddToMenu   MenuWindowOps
-+ "Move"      Move
-+ "Resize"    Resize
-+ "Iconify"   Thumbnail
-+ "Maximize"  Maximize
-+ "Shade"     WindowShade
-+ "Stick"     Stick
-+ "Stick to Desk"     StickAcrossPages
-+ "Stick to Page"     StickAcrossDesks
-+ "Snap Left" ResizeMoveMaximize frame 50wa 100wa 0 0
-+ "Snap Right" ResizeMoveMaximize frame 50wa 100wa -0 0
-+ "" Nop
-+ "Close"     Close
-+ "More…"   Menu MenuWindowOpsLong This 0 0
++ "Move"                Move
++ "Resize"              Resize
++ "(De)Iconify"         Thumbnail
++ "(Un)Maximize"        Maximize
++ "Snap Left"           ResizeMoveMaximize frame 50wa 100wa 0 0
++ "Snap Right"          ResizeMoveMaximize frame 50wa 100wa -0 0
++ ""                    Nop
++ "(Un)Shade"           WindowShade
++ "(Un)Sticky"          Stick
++ "(No)TitleBar"        Pick (CirculateHit) ToggleTitle
++ "Stick to Desk"       StickAcrossPages
++ "Stick to Page"       StickAcrossDesks
++ ""                    Nop
++ "Send To"             Popup MenuSendTo
++ ""                    Nop
++ "Raise"               Raise
++ "Lower"               Lower
++ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
++ "StaysPut"            Pick (CirculateHit) Layer 0 4
++ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
++ ""                    Nop
++ "Identify"            Module FvwmIdent
++ "Close"               Close
++ "Destroy"             Destroy
 
 # Function: ToggleTitle
 #
@@ -132,50 +143,6 @@ AddToFunc   ToggleTitle
 + I TestRc (Match) Break
 + I WindowStyle !Title
 + I State 1 True
-
-DestroyMenu MenuWindowOpsLong
-AddToMenu   MenuWindowOpsLong
-+ "Move"                Move
-+ "Resize"              Resize
-+ "(De)Iconify"         Iconify
-+ "(Un)Maximize"        Maximize
-+ "(Un)Shade"           WindowShade
-+ "(Un)Sticky"		Stick
-+ "(No)TitleBar"	Pick (CirculateHit) ToggleTitle
-+ "Send To"             Popup MenuSendTo
-+ "" Nop
-+ "Close"               Close
-+ "Destroy"             Destroy
-+ "" Nop
-+ "Raise"		Raise
-+ "Lower"		Lower
-+ "" Nop
-+ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
-+ "StaysPut"            Pick (CirculateHit) Layer 0 4
-+ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
-+ "" Nop
-+ "Identify"            Module FvwmIdent
-
-DestroyMenu MenuIconOps
-AddToMenu   MenuIconOps
-+ "(De)Iconify"         Iconify
-+ "(Un)Maximize"        Maximize
-+ "(Un)Shade"           WindowShade
-+ "(Un)Sticky"		Stick
-+ "(No)TitleBar"	Pick (CirculateHit) ToggleTitle
-+ "Send To"             Popup MenuSendTo
-+ "" Nop
-+ "Close"               Close
-+ "Destroy"             Destroy
-+ "" Nop
-+ "Raise"		Raise
-+ "Lower"		Lower
-+ "" Nop
-+ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
-+ "StaysPut"            Pick (CirculateHit) Layer 0 4
-+ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
-+ "" Nop
-+ "Identify"            Module FvwmIdent
 
 DestroyFunc MoveToCurrent
 AddToFunc MoveToCurrent
@@ -305,10 +272,10 @@ Mouse 4	T    A WindowShade True
 Mouse 5	T    A WindowShade False
 Mouse 1	R    A Menu MenuFvwmRoot
 Mouse 2	R    A WindowList
-Mouse 3	R    A Menu MenuWindowOpsLong
+Mouse 3	R    A Menu MenuWindowOps
 Mouse 1	I    A RaiseMoveX Move "Iconify off"
 Mouse 3	T    A Menu MenuWindowOps
-Mouse 3 I    A Menu MenuIconOps
+Mouse 3 I    A Menu MenuWindowOps
 Mouse 2 T    A Function MoveOrLower
 
 ########################### FvwmButtons - TopPanel ############################
