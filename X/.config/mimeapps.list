@@ -12,6 +12,7 @@ image/gif=sxiv.desktop
 image/tiff=sxiv.desktop
 application/vnd.comicbook-rar=mupdf.desktop
 application/vnd.comicbook+zip=mupdf.desktop
+application/epub+zip=mupdf.desktop
 application/x-cb7=mupdf.desktop
 audio/x-m4b=mpv.desktop
 application/pdf=mupdf.desktop
