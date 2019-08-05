@@ -1,14 +1,24 @@
 ImagePath $[FVWM_USERDIR]/redmond93/images/:$[FVWM_USERDIR]/common/images/:+
 
-InfoStoreAdd menu_icon_size 36
-InfoStoreAdd default_font '"xft:.Helvetica Neue DeskInterface:style=Medium:pixelsize=11:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"'
+InfoStoreAdd menu_icon_size 24
+InfoStoreAdd default_font '"xft:px sans nouveaux:style=Regular:pixelsize=8:encoding=iso10646-1"'
+InfostoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^`
+
+InfoStoreAdd applications_icon icons/programs.png
+InfoStoreAdd volume_icon icons/volume.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd bluetoothspeaker_icon icons/speaker.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd wallpapers_icon icons/screen.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd restart_icon icons/restart.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd lock_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
 DefaultFont $[infostore.default_font]
 
 EwmhBaseStruts 15 15 15 15
 
 Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%|%3.1i%5.3l%5.3>%|", AutomaticHotkeys, Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation
+MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 6 6
 
 ################################## Colorsets ##################################
 # http://fvwm-themes.sourceforge.net/doc/colorsets
@@ -27,11 +37,11 @@ Colorset 3 fg white, bg #c3c3c3
 # active borders               window borders (may copy 2)
 Colorset 4 fg white, bg #c3c3c3
 # inactive menu item           menus (may have pixmap or gradient)
-Colorset 5 fg #555555, bg #f3f3f3, Plain, NoShape
+Colorset 5 fg #000000, bg #c0c0c0
 # active menu item             menus (only bg/fg used)
-Colorset 6 fg #0066bf, bg #d6ebff, Plain, NoShape
+Colorset 6 fg #ffffff, bg #0090e4
 # greyed menu item             menus (only fg used)
-Colorset 7 fg #868584, bg #ebebeb, Plain, NoShape
+Colorset 7 fg #747474
 # menu titles                  titles of menus
 Colorset 8 fg #6b6b6c, bg #dddddd, Plain, NoShape
 # reserved                     for the fvwm-themes future use
