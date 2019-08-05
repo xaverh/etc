@@ -82,7 +82,7 @@ Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" E
 
 DestroyMenu MenuApplications
 AddToMenu   MenuApplications "Applications" Title
-Test (x pcmanfm) + "&File Manager%icons/computer.png%" Exec exec pcmanfm
+Test (x pcmanfm) + "&File Manager%$[infostore.file_manager_icon]%" Exec exec pcmanfm
 + "rxv&t-unicode%icons/terminal.png%" Exec exec $[infostore.terminal]
 Test (x firefox) + "Moz&illa Firefox%/usr/lib64/firefox/browser/chrome/icons/default/default32.png%" Exec exec firefox
 Test (x google-chrome) + "G&oogle Chrome Dev%/opt/google/chrome-unstable/product_logo_32_dev.png%" Exec exec google-chrome

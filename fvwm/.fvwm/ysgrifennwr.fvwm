@@ -13,6 +13,8 @@ InfoStoreAdd lock_icon icons/lock.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
+InfoStoreAdd file_manager_icon icons/cabinet.svg:0x$[infostore.menu_icon_size]
+
 DefaultFont $[infostore.default_font]
 
 EwmhBaseStruts 15 15 15 15
