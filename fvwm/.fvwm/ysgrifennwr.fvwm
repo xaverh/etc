@@ -2,9 +2,9 @@ ImagePath $[FVWM_USERDIR]/ysgrifennwr/images/:$[FVWM_USERDIR]/common/images/:+
 
 InfoStoreAdd menu_icon_size 36
 InfoStoreAdd default_font `"xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"`
-InfoStoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^`
+InfoStoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^ FVWM Title`
 
-InfoStoreAdd applications_icon icons/programs.png
+InfoStoreAdd applications_icon icons/octopus.svg:-0x$[infostore.menu_icon_size]
 InfoStoreAdd volume_icon icons/volume.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd bluetoothspeaker_icon icons/speaker.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd wallpapers_icon icons/screen.svg:0x$[infostore.menu_icon_size]

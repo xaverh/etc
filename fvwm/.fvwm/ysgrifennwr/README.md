@@ -9,6 +9,7 @@ Muscle <img src="images/icons/restart.svg" width="24" height="24" title="Muscle"
 Screen <img src="images/icons/screen.svg" width="24" height="24" title="Screen"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
 Speakers <img src="images/icons/volume.svg" width="24" height="24" title="Speakers"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
 Forward <img src="images/icons/forward.svg" width="24" height="24" title="Forward"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.  
+Octopus <img src="images/icons/octopus.svg" width="24" height="24" title="Octopus"> made by [Anu Rocks](https://freeicons.io/profile/730) from from www.freeicons.io.
 
 Tape <img src="images/icons/tape.svg" width="24" height="24" title="Tape"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Rock <img src="images/icons/rock.svg" width="24" height="24" title="Rock"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
