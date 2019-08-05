@@ -1,4 +1,4 @@
-Read redmond93.fvwm
+Read ysgrifennwr.fvwm
 
 InfoStoreAdd terminal urxvt-mlc
 InfoStoreAdd auto_hide_steps 10
@@ -68,17 +68,17 @@ Style FvwmIdent WindowListSkip
 #################################### Menus ####################################
 
 DestroyMenu MenuFvwmRoot
-AddToMenu   MenuFvwmRoot FVWM Title
-+ "&Applications%icons/programs.png%" Popup MenuApplications
+AddToMenu   MenuFvwmRoot$[infostore.mainmenu_decoration]
++ "&Applications%$[infostore.applications_icon]%" Popup MenuApplications
 + "" Nop
-Test (x pavucontrol) + "&Volume Control%icons/volume.svg:0x$[infostore.menu_icon_size]%" Exec exec pavucontrol
-Test (x bluetoothctl) + "Connect Setúbal%icons/speaker.svg:0x$[infostore.menu_icon_size]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
-+ "&Wallpapers%icons/screen.svg:0x$[infostore.menu_icon_size]%" Popup BGMenu
+Test (x pavucontrol) + "&Volume Control%$[infostore.volume_icon]%" Exec exec pavucontrol
+Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
++ "&Wallpapers%$[infostore.wallpapers_icon]%" Popup BGMenu
 + "" Nop
-+ "&Restart FVWM%icons/restart.svg:0x$[infostore.menu_icon_size]%" Restart
-+ "&Lock Screen%icons/lock.svg:0x$[infostore.menu_icon_size]%" Exec slock
-+ "&Reboot%icons/reboot.svg:0x$[infostore.menu_icon_size]%" Module FvwmScript FvwmScript-ConfirmReboot
-+ "&Shutdown%icons/shutdown.svg:0x$[infostore.menu_icon_size]%" Module FvwmScript FvwmScript-ConfirmShutdown
++ "&Restart FVWM%$[infostore.restart_icon]%" Restart
++ "&Lock Screen%$[infostore.lock_icon]%" Exec slock
++ "&Reboot%$[infostore.reboot_icon]%" Module FvwmScript FvwmScript-ConfirmReboot
++ "&Shutdown%$[infostore.shutdown_icon]%" Module FvwmScript FvwmScript-ConfirmShutdown
 
 DestroyMenu MenuApplications
 AddToMenu   MenuApplications "Applications" Title
