@@ -21,12 +21,10 @@ warncreateglobal
 # TODO: options from Input/Output in zshoptions(1) onward
 
 bindkey -e
-# The following lines were added by compinstall
 zstyle :compinstall filename '/home/xha/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
 autoload -U colors && colors
 PROMPT='%B%~ %#%b '
@@ -37,6 +35,10 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # menu style completion
 zstyle ':completion:*:default' menu select=2
+
+# rehash commands all the time
+# https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
+zstyle ":completion:*:commands" rehash 1
 
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
