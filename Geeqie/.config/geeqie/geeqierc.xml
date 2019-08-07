@@ -54,7 +54,7 @@
             file_ops.confirm_delete = "true" 
             file_ops.confirm_move_to_trash = "true" 
             file_ops.enable_delete_key = "true" 
-            file_ops.use_system_trash = "false" 
+            file_ops.use_system_trash = "true" 
             file_ops.safe_delete_enable = "true" 
             file_ops.safe_delete_path = "/tmp/geeqie-trash" 
             file_ops.safe_delete_folder_maxsize = "128" 
@@ -336,7 +336,7 @@
         show_thumbnails = "true" 
         show_directory_date = "false" 
         home_path = "" 
-        last_path = "/home/xha/pix/2019/08/04" 
+        last_path = "/home/xha" 
         startup_path = "0" 
         exit_on_close = "false" 
 
