@@ -1,4 +1,5 @@
-export TERMINAL=urxvt-mlc
+export TERMINAL=urxvtc
+export XCURSOR_THEME="DMZ-White"
 # export MOZ_ENABLE_WAYLAND=1
 
 # Following automatically calls "startx" when you login:
