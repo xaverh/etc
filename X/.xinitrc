@@ -50,7 +50,7 @@ fi
 
 numlockx &
 
-urxvt-mld -q -o -f
+urxvtd -q -o -f
 
 exec fvwm
 
