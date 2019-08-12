@@ -1,11 +1,9 @@
+#!/bin/zsh
+
 # Installing openSUSE
 
 ## Requirements
-
-Live-Image
-
-networking
-
+sudo -s
 zypper in systemd-container
 
 ## Prepare disk
@@ -47,6 +45,8 @@ btrfs subvolume create /mnt/@/etc/kernel
 btrfs subvolume create /mnt/@/etc/systemd/network
 btrfs subvolume create /mnt/@/etc/systemd/resolved.conf.d
 btrfs subvolume create /mnt/@/etc/sudoers.d
+btrfs subvolume create /mnt/@/etc/systemd/system/getty@tty1.service.d
+btrfs subvolume create /mnt/@/etc/zypp/repos.d
 mkdir /mnt/@/var
 chattr +C /mnt/@/var
 mkdir /mnt/@/var/lib
@@ -62,6 +62,8 @@ mkdir /mnt/snapshots/etc-systemd-network
 mkdir /mnt/snapshots/etc-systemd-resolved.conf.d
 mkdir /mnt/snapshots/var-lib-iwd
 mkdir /mnt/snapshots/etc-sudoers.d
+mkdir /mnt/snapshots/etc-systemd-system-getty\x40tty1.service.d
+mkdir /mnt/snapshots/etc-zypp-repos.d
 
 btrfs subvolume set-default /mnt/@
 
@@ -187,15 +189,47 @@ systemctl enable iwd.service
 mkinitrd
 kernel-install add `uname -r` /boot/vmlinuz-`uname -r`
 
-# Add user in YaST
+# Add user in YaST, add to group wheel
 chsh -s /bin/zsh xha
 
-zypper in patterns-base-x11 fvwm2 rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac
+zypper in patterns-base-x11 fvwm2 rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11
+
+zypper al wicked xdm
 
 systemctl enable btrfs-trim.timer
 
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\npriority=150\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+cat > /etc/zypp/vscode.repo <<EOF
+[code]
+name=Visual Studio Code
+enabled=1
+autorefresh=1
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+type=rpm-md
+priority=150
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+
+EOF
+zypper in code
+
+rpm --import https://dl.google.com/linux/linux_signing_key.pub
+cat > /etc/zypp/repos.d/google-chrome.repo <<EOF
+[google-chrome]
+name=google-chrome
+enabled=1
+autorefresh=1
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+type=rpm-md
+priority=160
+keeppackages=0
+
+EOF
+zypper in google-chrome
+
+zypper ar --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
+
+zypper in clipmenu clipnotify
 
 # Intel: libvulkan_intel gstreamer-plugins-vaapi
 # NVIDIA:
@@ -203,3 +237,17 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 
 ### As user:
 systemctl --user enable ssh-agent.service
+
+cat > /tmp/local <<EOF
+Defaults insults
+Defaults !targetpw
+Defaults passwd_tries=2
+
+ALL    ALL=(:) ALL
+root   ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+
+EOF
+
+sudo visudo -c -f /tmp/local && sudo chown root:root /tmp/local && sudo chmod 440 /tmp/local && sudo mv /tmp/local /etc/sudoers.d/
+sudo passwd -l root
