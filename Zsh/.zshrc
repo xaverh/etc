@@ -72,6 +72,7 @@ alias -g G='|& grep -i --colour=auto'
 alias d='dirs -v'
 alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
+alias o='less'
 
 chpwd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
 precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
@@ -85,6 +86,7 @@ sx simple-extract () {
 				*.tar.gz)	tar -xvzf "$f"		;;
 				*.tar.lz)   	tar --lzip -xvf "$f"	;;
 				*.tar.xz)	tar -xvJf "$f"		;;
+				*.tar.zst)	tar --zstd -xvf "$f"	;;
 				*.7z)		7z x "$f"		;;
 				*.7z.001)	7z x "$f"		;;
 				*.lzma)		unlzma "$f"		;;
@@ -99,6 +101,7 @@ sx simple-extract () {
 				*.txz)		tar -xvJf "$f"		;;
 				*.xz)		7z x "$f"		;;
 				*.zip)		unzip "$f"		;;
+				*.zst)		unzstd "$f"		;;
 				*.Z)		uncompress "$f"		;;
 				*)		echo "'$f' Error: compression type unknown to sx." ;;
 			esac
