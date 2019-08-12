@@ -1,33 +1,36 @@
 WindowTitle {DateTime}
-WindowSize  120 35
-Font "xft:Sans:style=Bold:size=10" 
+WindowSize  64 64
 
 Init
  Begin
-  Set $Time = (GetOutput {exec date "+%H:%M"} 1 -1)
-  Set $Date = (GetOutput {exec date "+%a %b %d"} 1 -1)
+  Set $Time = (GetOutput {exec date "+%-H:%M %P"} 1 -1)
+  Set $Zone = (GetOutput {exec date "+%Z"} 1 -1)
+  Set $Date = (GetOutput {exec date "+%a %-d %b"} 1 -1)
 
-  ChangeTitle 1 $Time
-  ChangeTitle 2 $Date
+  ChangeTitle 1 $Date
+  ChangeTitle 2 $Time
+  ChangeTitle 3 $Zone
 End
 
 PeriodicTasks
- Begin 
+ Begin
   If (RemainderOfDiv (GetTime) 15)==0 Then
   Begin
-   Set $Time = (GetOutput {exec date "+%H:%M"} 1 -1)
-   Set $Date = (GetOutput {exec date "+%a %b %d"} 1 -1)
+   Set $Time = (GetOutput {exec date "+%-H:%M %P"} 1 -1)
+   Set $Zone = (GetOutput {exec date "+%Z"} 1 -1)
+   Set $Date = (GetOutput {exec date "+%a %-d %b"} 1 -1)
 
-   ChangeTitle 1 $Time
-   ChangeTitle 2 $Date
+   ChangeTitle 1 $Date
+   ChangeTitle 2 $Time
+   ChangeTitle 3 $Zone
   End
 End
 
 Widget 1
 Property
  Position 0 0
- Size 120 20
- Font "xft:Sans:style=Bold:size=11"
+ Size 64 20
+ Font `$[infostore.default_font]`
  Type ItemDraw
  Flags NoReliefString
  Title {}
@@ -40,9 +43,24 @@ End
 
 Widget 2
 Property
- Position 0 20
- Size 120 15
- Font "xft:Sans:style=Bold:size=8"
+ Position 0 24
+ Size 64 15
+ Font $[infostore.default_font]
+ Type ItemDraw
+ Flags NoReliefString
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End
+
+Widget 3
+Property
+ Position 0 40
+ Size 64 15
+ Font $[infostore.default_font]
  Type ItemDraw
  Flags NoReliefString
  Title {}

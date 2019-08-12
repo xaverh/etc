@@ -15,9 +15,7 @@ InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
 DefaultFont $[infostore.default_font]
 
-EwmhBaseStruts 15 15 15 15
-
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
+Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4
 MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 6 6
 
 ################################## Colorsets ##################################
@@ -46,7 +44,7 @@ Colorset 7 fg #747474
 Colorset 8 fg #6b6b6c, bg #dddddd, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 9
-# modules, default             Button Bar, Pager, other modules
+# modules, default             Button Bar, other modules
 Colorset 10 fg black, bg rgb:80/A0/A0, Plain, NoShape
 # modules, default hilight     Button Bar
 Colorset 11 fg black, bg white, Plain, NoShape

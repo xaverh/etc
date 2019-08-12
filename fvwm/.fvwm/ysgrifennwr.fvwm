@@ -18,9 +18,7 @@ InfoStoreAdd terminal_icon /usr/share/icons/gnome/32x32/apps/utilities-terminal.
 
 DefaultFont $[infostore.default_font]
 
-EwmhBaseStruts 15 15 15 15
-
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 2, IconBox screen w 15 15 -15 -5, IconFill left bottom, IconGrid 120 120
+Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 2
 MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation, BorderWidth 2, VerticalItemSpacing 0 0
 
 ################################## Colorsets ##################################
@@ -49,8 +47,8 @@ Colorset 7 fg #868584, bg #ebebeb, Plain, NoShape
 Colorset 8 fg #6b6b6c, bg #dddddd, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 9
-# modules, default             Button Bar, Pager, other modules
-Colorset 10 fg black, bg rgb:80/A0/A0, Plain, NoShape
+# modules, default             Button Bar, other modules
+Colorset 10 fg #e5e6e6, bg #1e1e1e, Plain, NoShape
 # modules, default hilight     Button Bar
 Colorset 11 fg black, bg white, Plain, NoShape
 # modules, special or funny    a gradient or a pixmap May be used in certain FvwmButtons, FvwmIconMan, FvwmIconBox
