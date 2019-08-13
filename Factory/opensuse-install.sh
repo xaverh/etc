@@ -47,6 +47,7 @@ btrfs subvolume create /mnt/@/etc/systemd/resolved.conf.d
 btrfs subvolume create /mnt/@/etc/sudoers.d
 btrfs subvolume create /mnt/@/etc/systemd/system/getty@tty1.service.d
 btrfs subvolume create /mnt/@/etc/zypp/repos.d
+btrfs subvolume create /mnt/@/etc/X11/xorg.conf.d
 mkdir /mnt/@/var
 chattr +C /mnt/@/var
 mkdir /mnt/@/var/lib
@@ -64,6 +65,7 @@ mkdir /mnt/snapshots/var-lib-iwd
 mkdir /mnt/snapshots/etc-sudoers.d
 mkdir /mnt/snapshots/etc-systemd-system-getty\x40tty1.service.d
 mkdir /mnt/snapshots/etc-zypp-repos.d
+mkdir /mnt/snapshots/etc-X11-xorg.conf.d
 
 btrfs subvolume set-default /mnt/@
 
@@ -189,12 +191,14 @@ systemctl enable iwd.service
 mkinitrd
 kernel-install add `uname -r` /boot/vmlinuz-`uname -r`
 
-# Add user in YaST, add to group wheel
+# Add user in YaST, add to groups wheel,systemd-journal
 chsh -s /bin/zsh xha
 
-zypper in patterns-base-x11 fvwm2 rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11
+zypper in patterns-base-x11 fvwm2 rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang libx265-176
 
 zypper al wicked xdm
+
+systemctl set-default graphical.target
 
 systemctl enable btrfs-trim.timer
 
@@ -251,3 +255,5 @@ EOF
 
 sudo visudo -c -f /tmp/local && sudo chown root:root /tmp/local && sudo chmod 440 /tmp/local && sudo mv /tmp/local /etc/sudoers.d/
 sudo passwd -l root
+
+reboot
