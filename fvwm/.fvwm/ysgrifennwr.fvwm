@@ -13,8 +13,8 @@ InfoStoreAdd lock_icon icons/lock.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
-InfoStoreAdd file_manager_icon icons/cabinet.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd terminal_icon /usr/share/icons/gnome/32x32/apps/utilities-terminal.png
+InfoStoreAdd file_manager_icon icons/file-manager.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd terminal_icon /usr/share/icons/elementary/apps/32/utilities-terminal.svg:0x$[infostore.menu_icon_size]
 
 DefaultFont $[infostore.default_font]
 
