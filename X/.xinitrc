@@ -50,8 +50,6 @@ fi
 
 numlockx &
 
-urxvtd -q -o -f
-
 exec fvwm
 
 # call failsafe
