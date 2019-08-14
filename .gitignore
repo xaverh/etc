@@ -1,4 +1,3 @@
-Vim/.vim/plugged
 .vscode/ipch
 Vim/.vim/.netrwhist
 PGP/.gnupg/trustdb.gpg
@@ -13,5 +12,6 @@ fvwm/.fvwm/cache/*
 fvwm/.fvwm/.BGdefault
 fvwm/.fvwm/images/background/
 weechat/.weechat/logs/
+weechat/.weechat.logs
 Geeqie/.config/geeqie/marks
 Geeqie/.config/geeqie/history
