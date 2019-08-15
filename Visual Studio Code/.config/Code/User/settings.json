@@ -155,7 +155,6 @@
   "debug.toolBarLocation": "docked",
   "latex-workshop.message.update.show": false,
   "workbench.list.keyboardNavigation": "filter",
-  "search.usePCRE2": true,
   "workbench.useExperimentalGridLayout": true,
   "latex-workshop.latex.autoBuild.run": "never",
   "breadcrumbs.enabled": true,
@@ -188,12 +187,13 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Ysgrifennwr",
+  "workbench.colorTheme": "Qillqaq",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
   "go.toolsGopath": "/home/xha/.gopath",
   "editor.fontSize": 13,
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "extensions.ignoreRecommendations": true
 }
