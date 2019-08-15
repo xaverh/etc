@@ -94,7 +94,7 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
-zypper -R /mnt al cantarell-fonts grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba
+zypper -R /mnt al \*cantarell\* grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba
 zypper -R /mnt ref
 
 zypper -R /mnt in --auto-agree-with-licenses patterns-base-minimal_base patterns-base-enhanced_base zsh tmux iw iwd
@@ -235,7 +235,11 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 fvwm2 xwd rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol code google-chrome-stable
+zypper in kernel-default patterns-base-x11 fvwm2 xwd rxvt-unicode strawberry steam steamtricks gimp geeqie mupdf youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm-qt elementary-icon-theme -wicked -xdm pcmanfm-qt ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset code google-chrome-stable
+
+## DVD?
+zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
+zypper in libdvdcss2
 
 zypper al wicked
 
