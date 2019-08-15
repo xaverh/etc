@@ -100,25 +100,25 @@ zypper -R /mnt ref
 zypper -R /mnt in --auto-agree-with-licenses patterns-base-minimal_base patterns-base-enhanced_base zsh tmux iw iwd
 
 ## enc?
-cat > /mnt/etc/dracut.conf.d/dracut.conf <<EOF
+cat > /mnt/etc/dracut.conf.d/dracut.conf <<"EOF"
 hostonly="yes"
 add_dracutmodules+="crypt"
 
 EOF
 
 ## enc?
-cat > /mnt/etc/kernel/cmdline <<EOF
+cat > /mnt/etc/kernel/cmdline <<"EOF"
 root=UUID=afe2d9f4-b15b-4f12-a7b0-758a160a5dec rd.luks.uuid=b4a1511b-6e52-4abe-9c45-8578752ac0d8 rd.luks.crypttab=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
 
 EOF
 ## else
-cat > /mnt/etc/kernel/cmdline <<EOF
+cat > /mnt/etc/kernel/cmdline <<"EOF"
 root=UUID=877002d8-f595-4ea6-89ef-a5caec033303 rd.luks=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
 
 EOF
 
 
-cat > /mnt/etc/systemd/network/10-wireless.network <<EOF
+cat > /mnt/etc/systemd/network/10-wireless.network <<"EOF"
 [Match]
 Name=wl*
 
@@ -139,13 +139,13 @@ EOF
 
 
 
-cat > /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf <<EOF
+cat > /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf <<"EOF"
 [Resolve]
 DNSSEC=false
 
 EOF
 
-cat > /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf <<EOF
+cat > /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf <<"EOF"
 [Resolve]
 DNS=1.1.1.1 2606:4700:4700::1111
 FallbackDNS=1.0.0.1 2606:4700:4700::1001
@@ -155,7 +155,7 @@ EOF
 ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
 
 
-cat > /mnt/usr/local/lib/systemd/system/tmp.mount <<EOF
+cat > /mnt/usr/local/lib/systemd/system/tmp.mount <<"EOF"
 [Unit]
 Description=Temporary Directory (/tmp)
 Documentation=man:hier(7)
@@ -174,14 +174,14 @@ Options=mode=1777,strictatime,nosuid,nodev
 
 EOF
 
-cat > /mnt/usr/local/lib/systemd/user/ssh-agent.service <<EOF
+cat > /mnt/usr/local/lib/systemd/user/ssh-agent.service <<"EOF"
 [Unit]
 Description=SSH key agent
 
 [Service]
 Type=simple
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
-ExecStart=/usr/bin/ssh-agent -D -a \$SSH_AUTH_SOCK
+ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
 
 [Install]
 WantedBy=default.target
@@ -209,7 +209,7 @@ systemctl enable --now systemd-timesyncd.service
 # Add user in YaST, add to groups wheel,systemd-journal, /bin/zsh as shell
 
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
-cat > /etc/zypp/repos.d/vscode.repo <<EOF
+cat > /etc/zypp/repos.d/vscode.repo <<"EOF"
 [code]
 name=Visual Studio Code
 enabled=1
@@ -223,7 +223,7 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 
 rpm --import https://dl.google.com/linux/linux_signing_key.pub
-cat > /etc/zypp/repos.d/google-chrome.repo <<EOF
+cat > /etc/zypp/repos.d/google-chrome.repo <<"EOF"
 [google-chrome]
 name=google-chrome
 enabled=1
@@ -265,7 +265,7 @@ zypper in clipmenu clipnotify wmbubble
 ### As user:
 systemctl --user enable ssh-agent.service
 
-cat > /tmp/local <<EOF
+cat > /tmp/local <<"EOF"
 Defaults insults
 Defaults !targetpw
 Defaults passwd_tries=2
