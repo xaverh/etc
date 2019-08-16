@@ -56,15 +56,15 @@ alias grep="grep --color=auto"
 alias ...='../..'
 alias ....='../../..'
 if ls --color=auto &> /dev/null; then
-	alias ls='ls --classify --color=auto'
-	alias la='ls -l --almost-all --human-readable --group-directories-first'
-	alias ll='ls -l --human-readable --group-directories-first'
-	alias l='ls -l --human-readable --almost-all'
+	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
+	alias ll='ls -l --human-readable --si '
+	alias la='ll --almost-all'
+	alias l='ll --group-directories-first'
 	alias lx='ll -X'
 else
 	alias ls='ls -GFp'
-	alias la='ls -lhA'
 	alias ll='ls -lh'
+	alias la='ll -A'
 fi
 
 alias dfh='df -H -T'
@@ -103,7 +103,7 @@ sx simple-extract () {
 				*.zip)		unzip "$f"		;;
 				*.zst)		unzstd "$f"		;;
 				*.Z)		uncompress "$f"		;;
-				*)		echo "'$f' Error: compression type unknown to sx." ;;
+				*)		echo "'$f' Error: compression type unknown to $0." ;;
 			esac
 		else
 			echo "Error: '$f' is not a valid file"
