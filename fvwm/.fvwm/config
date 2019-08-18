@@ -36,14 +36,8 @@ AddToFunc DeThumbnail
 
 DestroyFunc SetBG
 AddToFunc   SetBG
-+ I Test (f $[HOME]/var/wallpapers/$0) \
-    Exec exec fvwm-root $[HOME]/var/wallpapers/$0
-+ I TestRc (Match) Exec exec ln -fs $[HOME]/var/wallpapers/$0 $[FVWM_USERDIR]/.BGdefault
-+ I TestRc (Match) Break
-+ I Test (!f $[FVWM_DATADIR]/default-config/images/background/$0) Break
-+ I Exec exec fvwm-root $[FVWM_DATADIR]/default-config/images/background/$0
-+ I Exec exec ln -fs $[FVWM_DATADIR]/default-config/images/background/$0 \
-    $[FVWM_USERDIR]/.BGdefault
++ I Test (f $0) Exec exec fvwm-root $0
++ I TestRc (Match) Exec exec ln -fs $0 $[FVWM_USERDIR]/.BGdefault
 
 ########################### Desktops and Pages ################################
 
@@ -65,7 +59,7 @@ EdgeThickness 0
 ClickTime 250
 MoveThreshold 3
 
-Style * ClickToFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, GrabFocus, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+Style * ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
 
 OpaqueMoveSize unlimited
 
@@ -75,13 +69,21 @@ Style FvwmIdent WindowListSkip
 
 #################################### Menus ####################################
 
+AddToMenu WallpaperMenu foo title
++ DynamicPopupAction Function MakeWallpaperMenu
+
+AddToFunc MakeWallpaperMenu
++ I DestroyMenu recreate WallpaperMenu
++ I AddToMenu WallpaperMenu Pictures Title
++ I PipeRead '$[FVWM_USERDIR]/scripts/get-wallpapers $[infostore.thumbsfolder]'
+
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot$[infostore.mainmenu_decoration]
 + "&Applications%$[infostore.applications_icon]%" Popup MenuApplications
 + "" Nop
 Test (x pavucontrol) + "&Volume Control%$[infostore.volume_icon]%" Exec exec pavucontrol
 Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
-+ "&Wallpapers%$[infostore.wallpapers_icon]%" Popup BGMenu
++ "&Wallpapers%$[infostore.wallpapers_icon]%" Popup WallpaperMenu
 + "" Nop
 + "&Restart FVWM%$[infostore.restart_icon]%" Restart
 + "&Lock Screen%$[infostore.lock_icon]%" Exec slock
@@ -314,7 +316,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Columns 1
 *MainPanel: (Swallow FvwmXeyes 'Exec xeyes -name "FvwmXeyes" -bg grey67 &')
 *MainPanel: (1x3 Frame 0 Swallow(UseOld, Respawn, NoClose) "FvwmPager" "Module FvwmPager *")
-*MainPanel: (Swallow(UseOld,NoClose,Respawn) bubblemon `Exec exec bubblemon`)
+*MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
 *MainPanel: (Title "Tools", Icon icons/cheese.svg, Action (Mouse 0) Function bartoolspopupfunc)
 *MainPanel: (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
