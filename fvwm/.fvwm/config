@@ -100,6 +100,7 @@ Test (x google-chrome) + "G&oogle Chrome%/opt/google/chrome/product_logo_32.png%
 Test (x code) + "Visual Studio &Code%icons/code.png%" Exec exec code
 Test (x geeqie) + "Gee&qie%icons/geeqie.png%" Exec exec geeqie
 Test (x gimp) + "&Gimp%/usr/share/icons/hicolor/32x32/apps/gimp.png%" Exec exec gimp
+Test (x rawtherapee) + "&RawTherapee%icons/rawtherapee.png%" Exec exec rawtherapee
 Test (x vlc) + "VLC" Exec exec vlc
 Test (x mpv) + "mp&v%/usr/share/icons/hicolor/scalable/apps/mpv.svg:0x$[infostore.menu_icon_size]%" Exec exec mpv --player-operation-mode=pseudo-gui
 Test (x strawberry) + "Stra&wberry%icons/strawberry.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry
