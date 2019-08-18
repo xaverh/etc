@@ -29,6 +29,7 @@ fi
 # Add your own lines here...
 #
 
+xmodmap ~/.Xmodmap
 
 # day planer deamon
 # pland &
