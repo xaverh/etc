@@ -2,9 +2,10 @@
 
 resolution=$(xrandr --nograb --current | awk -F 'connected |\\+|\\(' '/ connected/ && $2 {printf $2, ", "}')
 
-for i in $(find $HOME/var/wallpapers -name "*$resolution.png")
+files=( $HOME/var/wallpapers/**/*$resolution.png )
+for i in $files
 do
-	thumbname="$1/$(basename $i).png"
-	[ -f "$thumbname" ] || convert -quality 0 -sample 64x64 "$i" png:"$thumbname"
-	echo AddToMenu WallpaperMenu "%$thumbname%$(basename $i)" SetBG "$i"
+	thumbname="$1/$(basename $i)"
+	[ -f "$thumbname" ] || convert -quality 0 -sample 64x64 "$i" "$thumbname"
+	echo AddToMenu WallpaperMenu "%'$thumbname'%'$(basename $i)'" SetBG "'$i'"
 done

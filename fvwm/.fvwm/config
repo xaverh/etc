@@ -36,8 +36,8 @@ AddToFunc DeThumbnail
 
 DestroyFunc SetBG
 AddToFunc   SetBG
-+ I Test (f $0) Exec exec fvwm-root $0
-+ I TestRc (Match) Exec exec ln -fs $0 $[FVWM_USERDIR]/.BGdefault
++ I Test (f "$0") Exec exec fvwm-root "$0"
++ I TestRc (Match) Exec exec ln -fs "$0" $[FVWM_USERDIR]/.BGdefault
 
 ########################### Desktops and Pages ################################
 
