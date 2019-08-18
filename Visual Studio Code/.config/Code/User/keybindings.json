@@ -5,7 +5,7 @@
 		"command": "workbench.action.openRecent"
 	},
 	{
-		"key": "F7",
+		"key": "ctrl+k t",
 		"command": "settings.cycle.colorTheme"
 	},
 	{
