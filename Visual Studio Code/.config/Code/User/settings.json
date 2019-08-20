@@ -192,7 +192,6 @@
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "go.toolsGopath": "/home/xha/.gopath",
   "editor.fontSize": 13,
   "editor.wordWrap": "on",
   "extensions.ignoreRecommendations": true
