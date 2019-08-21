@@ -34,9 +34,9 @@ Colorset 1  fg #868584, bg #edece8
 # active window                window/icon titles, windows in Pager
 Colorset 2  fg #424242, bg #edece8
 # inactive borders             window borders (may copy 1)
-Colorset 3 bg #868584
+Colorset 3 bg #424242
 # active borders               window borders (may copy 2)
-Colorset 4 bg #424242
+Colorset 4 bg #868584
 # inactive menu item           menus (may have pixmap or gradient)
 Colorset 5 fg #555555, bg #f3f3f3, Plain, NoShape
 # active menu item             menus (only bg/fg used)
