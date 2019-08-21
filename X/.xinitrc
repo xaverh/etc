@@ -7,19 +7,6 @@ failsafe="xterm -ls -T Failsafe -geometry 80x24-0-0"
 trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
 #
-# Some bash (1 and 2) settings to avoid trouble on a
-# failed program call.
-#
-set +e > /dev/null 2>&1
-set +u > /dev/null 2>&1
-set +o posix  > /dev/null 2>&1
-if type shopt > /dev/null 2>&1 ; then
-    shopt -s execfail
-else
-    no_exit_on_failed_exec=1
-fi
-
-#
 # Source common code shared between the
 # X session and X init scripts
 #
@@ -28,8 +15,6 @@ fi
 #
 # Add your own lines here...
 #
-
-xmodmap ~/.Xmodmap
 
 # day planer deamon
 # pland &
@@ -50,6 +35,7 @@ fi
 # xsetroot -solid "#57655a"
 
 numlockx &
+
 
 exec fvwm
 

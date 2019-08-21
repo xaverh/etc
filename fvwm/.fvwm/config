@@ -16,6 +16,7 @@ AddToFunc   StartFunction
 + I Module FvwmPager *
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
++ I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
 
 ##################### Functions: Thumbnailed window icons #####################
 # https://xha.ch/2MpnHSo
