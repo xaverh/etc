@@ -14,7 +14,7 @@ AddToFunc   StartFunction
 + I Module FvwmButtons MainPanel
 + I Module FvwmEvent EventNewDesk
 + I Module FvwmPager *
-+ I Test (Init) Exec urxvtd -q -o -f
++ I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 
 ##################### Functions: Thumbnailed window icons #####################
