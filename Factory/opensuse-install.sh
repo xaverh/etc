@@ -155,26 +155,6 @@ EOF
 
 ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
 
-
-cat > /mnt/usr/local/lib/systemd/system/tmp.mount <<"EOF"
-[Unit]
-Description=Temporary Directory (/tmp)
-Documentation=man:hier(7)
-Documentation=https://www.freedesktop.org/wiki/Software/systemd/APIFileSystems
-ConditionPathIsSymbolicLink=!/tmp
-DefaultDependencies=no
-Conflicts=umount.target
-Before=local-fs.target umount.target
-After=swap.target
-
-[Mount]
-What=tmpfs
-Where=/tmp
-Type=tmpfs
-Options=mode=1777,strictatime,nosuid,nodev
-
-EOF
-
 cat > /mnt/usr/local/lib/systemd/user/ssh-agent.service <<"EOF"
 [Unit]
 Description=SSH key agent
@@ -188,6 +168,8 @@ ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
 WantedBy=default.target
 
 EOF
+
+ln -s /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
 
 cd /
 systemd-nspawn -D /mnt passwd root
