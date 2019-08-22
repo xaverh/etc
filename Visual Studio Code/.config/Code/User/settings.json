@@ -194,5 +194,9 @@
   "workbench.editor.highlightModifiedTabs": true,
   "editor.fontSize": 13,
   "editor.wordWrap": "on",
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
+  "vetur.format.options.useTabs": true,
+  "vetur.format.options.tabSize": 8,
+  "prettier.useTabs": true,
+  "files.autoSave": "afterDelay"
 }
