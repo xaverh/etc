@@ -6,17 +6,45 @@ EwmhBaseStruts 83 40 15 15
 
 Style * IconBox screen w 100 15 -15 -5, IconFill bottom right, IconGrid 140 140
 
+########################### Desktops and Pages ################################
+
+DesktopSize 1x4
+
+EdgeScroll 0 0
+EdgeResistance -1
+EdgeThickness 0
+
+# Module FvwmAuto 256
+
+ClickTime 250
+MoveThreshold 3
+
+Style * ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+
+OpaqueMoveSize unlimited
+
+# Window Specific Styles
+Style ConfirmShutdown !Title, PositionPlacement Center, WindowListSkip, Layer 6
+Style FvwmIdent WindowListSkip
+
 ############################### Start Function ################################
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
++ I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Module FvwmButtons MainPanel
 + I Module FvwmEvent EventNewDesk
 + I Module FvwmPager *
-+ I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
-+ I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
+
+DestroyFunc InitFunction
+AddToFunc   InitFunction
++ I GotoDeskAndPage 0 0 0
++ I Test (f /usr/bin/urxvtc) Exec `exec urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"`
++ I Wait journalctl
++ I GotoDeskAndPage 1 0 1
++ I Exec xmodmap $[HOME]/.Xmodmap
 
 ##################### Functions: Thumbnailed window icons #####################
 # https://xha.ch/2MpnHSo
@@ -39,34 +67,6 @@ DestroyFunc SetBG
 AddToFunc   SetBG
 + I Test (f "$0") Exec exec fvwm-root "$0"
 + I TestRc (Match) Exec exec ln -fs "$0" $[FVWM_USERDIR]/.BGdefault
-
-########################### Desktops and Pages ################################
-
-InfoStoreAdd desktopname0 Null
-InfoStoreAdd desktopname1 Eins
-InfoStoreAdd desktopname2 Zwei
-DesktopName 0 $[infostore.desktopname0]
-DesktopName 1 $[infostore.desktopname1]
-DesktopName 2 $[infostore.desktopname2]
-
-DesktopSize 1x4
-
-EdgeScroll 0 0
-EdgeResistance -1
-EdgeThickness 0
-
-# Module FvwmAuto 256
-
-ClickTime 250
-MoveThreshold 3
-
-Style * ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
-
-OpaqueMoveSize unlimited
-
-# Window Specific Styles
-Style ConfirmShutdown !Title, PositionPlacement Center, WindowListSkip, Layer 6
-Style FvwmIdent WindowListSkip
 
 #################################### Menus ####################################
 
@@ -169,9 +169,9 @@ AddToMenu MenuSendTo
 
 DestroyMenu MenuSendToDesk
 AddToMenu   MenuSendToDesk
-+ $[infostore.desktopname0] MoveToDesk 0 0
-+ $[infostore.desktopname1] MoveToDesk 0 1
-+ $[infostore.desktopname2] MoveToDesk 0 2
++ '0' MoveToDesk 0 0
++ '1' MoveToDesk 0 1
++ '2' MoveToDesk 0 2
 
 DestroyMenu MenuSendToPage
 AddToMenu   MenuSendToPage
@@ -190,12 +190,12 @@ Key space A 4 Menu MenuFvwmRoot
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key Tab A 1 WindowList Root c c NoDeskSort, SelectOnRelease Alt_L, CurrentAtEnd, IconifiedAtEnd
 Key F4 A N WindowList Root c c NoDeskSort, SelectOnRelease F4, CurrentAtEnd, IconifiedAtEnd
-Key 1 A 4 GotoDesk 0 0
-Key 2 A 4 GotoDesk 0 1
-Key 3 A 4 GotoDesk 0 2
-Key 1 A S4 MovetoDesk 0 0
-Key 2 A S4 MovetoDesk 0 1
-Key 3 A S4 MovetoDesk 0 2
+Key 1 A 4 GotoDesk 0 1
+Key 2 A 4 GotoDesk 0 2
+Key 3 A 4 GotoDesk 0 3
+Key 1 A S4 MovetoDesk 0 1
+Key 2 A S4 MovetoDesk 0 2
+Key 3 A S4 MovetoDesk 0 3
 Key w A 4 GotoPage wrapy 0p -1p
 Key a A 4 GotoDesk -1
 Key s A 4 GotoPage wrapy 0p +1p
@@ -275,14 +275,17 @@ Mouse 1	FS   A RaiseMove Resize
 Mouse 4	T    A WindowShade True
 Mouse 5	T    A WindowShade False
 Mouse 1	R    A Menu MenuFvwmRoot
-Mouse 2	R    A WindowList
-Mouse 3	R    A Menu MenuWindowOps
-Mouse 4	R    A GotoPage wrapy 0p -1p
-Mouse 5	R    A GotoPage wrapy 0p +1p
+Mouse 3	R    A WindowList
+Mouse 2 R    A Scroll reverse
+# Mouse 3	R    A Menu MenuWindowOps
+Mouse 5 R    A Scroll 0 5
+Mouse 4 R    A Scroll 0 -5
 Mouse 1	I    A RaiseMoveX Move "Iconify off"
 Mouse 3	T    A Menu MenuWindowOps
 Mouse 3 I    A Menu MenuWindowOps
 Mouse 2 T    A Function MoveOrLower
+Silent Mouse 8	R    A GotoPage wrapy 0p +1p
+Silent Mouse 9	R    A GotoPage wrapy 0p -1p
 
 ButtonStyle All - Clear
 ButtonStyle 6 - MwmDecorMin
@@ -314,10 +317,11 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Font $[infostore.default_font]
 *MainPanel: BoxSize smart
 *MainPanel: Colorset 10
+*MainPanel: ActiveColorset 11
+*MainPanel: PressColorset 11
 *MainPanel: ButtonGeometry 68x68+0+68@p
 *MainPanel: Columns 1
-*MainPanel: (Swallow FvwmXeyes 'Exec xeyes -name "FvwmXeyes" -bg grey67 &')
-*MainPanel: (1x3 Frame 0 Swallow(UseOld, Respawn, NoClose) "FvwmPager" "Module FvwmPager *")
+*MainPanel: (1x3, Frame 2, Swallow(UseOld,Respawn,NoClose) "FvwmPager" "Module FvwmPager *")
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
 *MainPanel: (Title "Tools", Icon icons/cheese.svg, Action (Mouse 0) Function bartoolspopupfunc)
@@ -335,15 +339,13 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: Colorset * 14
 *FvwmPager: HilightColorset * 15
 *FvwmPager: BalloonColorset * 16
-*FvwmPager: WindowColorsets 1 2
-*FvwmPager: Balloons All
-*FvwmPager: BallonYOffset +2
-*FvwmPager: Window3dBorders
+*FvwmPager: WindowColorsets 16 15
 *FvwmPager: MiniIcons
 *FvwmPager: UseSkipList
 *FvwmPager: DeskHilight
 *FvwmPager: LabelsAbove
 *FvwmPager: Font $[infostore.default_font]
+*FvwmPager: SolidSeparators
 
 # # Function: ChangeDesk
 # #
