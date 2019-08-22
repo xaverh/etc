@@ -48,19 +48,19 @@ Colorset 8 fg #6b6b6c, bg #dddddd, Plain, NoShape
 # reserved                     for the fvwm-themes future use
 # Colorset 9
 # modules, default             Button Bar, other modules
-Colorset 10 fg #e5e6e6, bg #1e1e1e, Plain, NoShape
+Colorset 10 fg #adadad, bg #333333, Plain, NoShape
 # modules, default hilight     Button Bar
-Colorset 11 fg black, bg white, Plain, NoShape
+Colorset 11 fg #ffffff, bg #333333, Plain, NoShape
 # modules, special or funny    a gradient or a pixmap May be used in certain FvwmButtons, FvwmIconMan, FvwmIconBox
 Colorset 12 fg black, bg rgb:80/A0/A0, VGradient 20 rgb:80/A0/A0 rgb:C0/F0/F0, NoShape
 # modules, swallowed apps      bg, fg, sh, hi for xclock/xload etc. the hilight and shadow colors should be defined (-hd of xclock and -hl of xload use sh, and -hl of xclock uses hi)
 Colorset 13 fg black, bg rgb:70/8C/8C, hi black, sh gray40, Plain, NoShape
 # modules, default #2          FvwmPager or to get more colors in FvwmButtons, can be set to 10.
-Colorset 14 fg black, bg rgb:80/A0/A0, Plain, NoShape
+Colorset 14 TiledPixmap decorations/Dolphins.xbm, bg #005577, fg #007755
 # modules, default hilight #2  FvwmPager or to get more colors in FvwmButtons, can be set to 11.
-Colorset 15 fg black, bg rgb:C0/F0/F0, Plain, NoShape
+Colorset 15 YGradient 200 3 blue 1000 navy 1 blue 1000 navy
 # modules, balloons            tips/balloons (TaskBar and FvwmPager)
-Colorset 16 fg black, bg rgb:F0/F0/C0, Plain, NoShape
+Colorset 16 fg #ffffff, bg #000000
 # modules, winlist, standard   item of IconMan, WinList, TaskBar
 Colorset 17 fg black, bg rgb:80/A0/A0, Plain, NoShape
 # modules, winlist, active     --.--
