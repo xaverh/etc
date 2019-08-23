@@ -47,5 +47,9 @@
 	{
 		"key": "ctrl+[Backquote]",
 		"command": "workbench.action.toggleActivityBarVisibility"
+	},
+	{
+		"key": "alt+f12",
+		"command": "editor.action.toggleMinimap"
 	}
 ]
