@@ -8,6 +8,7 @@ export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 export AWS_REGION=eu-central-1
+export CM_LAUNCHER=rofi
 
 # (( EUID != 0 )) && umask 0077
 
