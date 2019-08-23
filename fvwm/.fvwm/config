@@ -69,8 +69,6 @@ AddToFunc   SetBG
 
 #################################### Menus ####################################
 
-AddToMenu "Module-Popup" "FvwmForm Defaults" FvwmForm FvwmForm-Form
-
 AddToMenu WallpaperMenu foo title
 + DynamicPopupAction Function MakeWallpaperMenu
 
@@ -82,8 +80,6 @@ AddToFunc MakeWallpaperMenu
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot$[infostore.mainmenu_decoration]
 + "&Applications%$[infostore.applications_icon]%" Popup MenuApplications
-+ "" Nop
-+ "Form" Popup "Module-Popup"
 + "" Nop
 Test (x pavucontrol) + "&Volume Control%$[infostore.volume_icon]%" Exec exec pavucontrol
 Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
@@ -378,6 +374,25 @@ DestroyModuleConfig FvwmPager:*
 # This sets the default colorsets.
 *FvwmFormDefault: Colorset 10
 *FvwmFormDefault: ItemColorset 13
+*FvwmFormDefault: Font xft:Helvetica Neue
+*FvwmFormDefault: InputFont xft:Helvetica Neue
+*FvwmFormDefault: ButtonFont xft:Helvetica Neue
+*FvwmFormDefault: TimeoutFont 8x13bold
+*FvwmFormDefault: Fore Wheat
+*FvwmFormDefault: Back Gray50
+*FvwmFormDefault: ItemFore Black
+*FvwmFormDefault: ItemBack Light Gray
+*FvwmFormDefault: ButtonPointer hand2
+*FvwmFormDefault: ButtonInPointer hand2
+*FvwmFormDefault: InputPointer xterm
+*FvwmFormDefault: ActivateOnPress off
+*FvwmFormDefault: ButtonPointerFore white
+*FvwmFormDefault: ButtonPointerBack black
+*FvwmFormDefault: ButtonInPointerFore black
+*FvwmFormDefault: ButtonInPointerBack white
+*FvwmFormDefault: InputPointerFore white
+*FvwmFormDefault: InputPointerBack black
+
 
 # redefine to not warp the cursor
 DestroyFunc WindowListFunc
