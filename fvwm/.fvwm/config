@@ -32,7 +32,6 @@ Style FvwmIdent WindowListSkip
 DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
-+ I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Module FvwmButtons MainPanel
 + I Module FvwmEvent EventNewDesk
 + I Module FvwmPager *
@@ -41,7 +40,7 @@ AddToFunc   StartFunction
 DestroyFunc InitFunction
 AddToFunc   InitFunction
 + I GotoDeskAndPage 0 0 0
-+ I Test (f /usr/bin/urxvtc) Exec `exec urxvtc -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"`
++ I Test (Init, f /usr/bin/urxvtd) Exec /bin/zsh -c 'urxvtd -q -o -f; urxvtc -geometry 170x50+100+40 -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
 + I Wait journalctl
 + I GotoDeskAndPage 1 0 1
 + I Exec xmodmap $[HOME]/.Xmodmap
@@ -70,6 +69,8 @@ AddToFunc   SetBG
 
 #################################### Menus ####################################
 
+AddToMenu "Module-Popup" "FvwmForm Defaults" FvwmForm FvwmForm-Form
+
 AddToMenu WallpaperMenu foo title
 + DynamicPopupAction Function MakeWallpaperMenu
 
@@ -81,6 +82,8 @@ AddToFunc MakeWallpaperMenu
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot$[infostore.mainmenu_decoration]
 + "&Applications%$[infostore.applications_icon]%" Popup MenuApplications
++ "" Nop
++ "Form" Popup "Module-Popup"
 + "" Nop
 Test (x pavucontrol) + "&Volume Control%$[infostore.volume_icon]%" Exec exec pavucontrol
 Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
@@ -219,6 +222,7 @@ Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
 Key Return A 4 Exec exec $[TERMINAL]
+Key Insert A 4 Exec clipmenu
 Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
 Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key XF86AudioMute A N Exec exec amixer sset Master mute
