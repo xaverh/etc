@@ -20,10 +20,10 @@ URxvt.intensityStyles: false
 URxvt.geometry: 92x24
 URxvt.scrollBar: false
 URxvt.letterSpace: -1
-URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
 URxvt.internalBorder:  13
 URxvt.inheritPixmap: false
 URxvt.transparent: false
