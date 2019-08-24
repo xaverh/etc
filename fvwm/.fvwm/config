@@ -107,7 +107,7 @@ Test (x strawberry) + "Stra&wberry%icons/strawberry.svg:0x$[infostore.menu_icon_
 Test (x steam) + "&Steam%/usr/share/icons/hicolor/32x32/apps/steam.png%" Exec exec steam
 Test (x discord) + "&Discord%icons/discord.svg:0x$[infostore.menu_icon_size]%" Exec exec discord
 Test (x telegram-desktop) + "Te&legram%/usr/share/icons/hicolor/32x32/apps/telegram.png%" Exec exec telegram-desktop
-Test (x zathura) + "&Zathura" Exec exec zathura
+Test (x zathura) + "&Zathura%/usr/share/icons/scalable/apps/org.pwmt.zathura.svg:0x$[infostore.menu_icon_size]%" Exec exec zathura
 Test (x mupdf-gl) + "&MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exec exec mupdf-gl
 + "FvwmConsole%$[infostore.terminal_icon]%" Module FvwmConsole -terminal $[TERMINAL]
 
