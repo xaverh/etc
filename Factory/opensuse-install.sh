@@ -257,5 +257,16 @@ sudo mount -o subvol=@.snapshots,compress-force=zstd:6,noatime /dev/sda2 /.snaps
 
 for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/.snapshots/}")" "$i"/`date -Is`
 
+xdg-mime default org.pwmt.zathura.desktop application/pdf
+xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook-rar
+xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook+zip
+xdg-mime default org.pwmt.zathura.desktop application/epub+zip
+xdg-mime default org.pwmt.zathura.desktop application/x-cb7
+xdg-mime default pcmanfm-qt.desktop inode/directory
+xdg-mime default sxiv.desktop image/jpeg
+xdg-mime default sxiv.desktop image/png
+xdg-mime default sxiv.desktop image/gif
+xdg-mime default sxiv.desktop image/tiff
+
 reboot
 
