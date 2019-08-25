@@ -16,12 +16,12 @@
 	"Include guards": {
 		"prefix": "once",
 		"body": [
-			"#ifndef ${FILENAME_H}",
-			"#define ${FILENAME_H}",
+			"#ifndef $1_H",
+			"#define $1_H",
 			"",
-			"$1",
+			"$2",
 			"",
-			"#endif /* ${FILENAME_H} */"
+			"#endif /* $1_H */"
 		],
 		"description": "C/C++ include guards"
 	}
