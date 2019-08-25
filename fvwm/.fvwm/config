@@ -1,25 +1,21 @@
 Read ysgrifennwr.fvwm
 
-InfoStoreAdd auto_hide_steps 10
-
-EwmhBaseStruts 83 40 15 15
-
-Style * IconBox screen w 100 15 -15 -5, IconFill bottom right, IconGrid 140 140
+EwmhBaseStruts 40 83 15 15
 
 ########################### Desktops and Pages ################################
 
-DesktopSize 1x4
+DesktopSize 3x3
 
 EdgeScroll 0 0
 EdgeResistance -1
 EdgeThickness 0
 
-# Module FvwmAuto 256
-
 ClickTime 250
 MoveThreshold 3
 
-Style * ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+Style * IconBox screen c 15 15 -15 -15, IconFill bottom right, IconGrid 25 25, ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+
+# TODO: focus styles to protect Terminal and VS Code from Focus Stealing
 
 OpaqueMoveSize unlimited
 
@@ -33,16 +29,15 @@ DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
 + I Module FvwmButtons MainPanel
-+ I Module FvwmEvent EventNewDesk
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 
 DestroyFunc InitFunction
 AddToFunc   InitFunction
-+ I GotoDeskAndPage 0 0 0
++ I GotoDeskAndPage 0 1 1
 + I Test (Init, f /usr/bin/urxvtd) Exec /bin/zsh -c 'urxvtd -q -o -f; urxvtc -geometry 170x50+100+40 -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
 + I Wait journalctl
-+ I GotoDeskAndPage 1 0 1
++ I GotoDeskAndPage 1 1 1
 + I Exec xmodmap $[HOME]/.Xmodmap
 
 ##################### Functions: Thumbnailed window icons #####################
@@ -110,6 +105,7 @@ Test (x telegram-desktop) + "Te&legram%/usr/share/icons/hicolor/32x32/apps/teleg
 Test (x zathura) + "&Zathura%/usr/share/icons/scalable/apps/org.pwmt.zathura.svg:0x$[infostore.menu_icon_size]%" Exec exec zathura
 Test (x mupdf-gl) + "&MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exec exec mupdf-gl
 + "FvwmConsole%$[infostore.terminal_icon]%" Module FvwmConsole -terminal $[TERMINAL]
++ "Identify"            Module FvwmIdent
 
 # Background Menu
 #
@@ -119,6 +115,7 @@ DestroyMenu BGMenu
 AddToMenu   BGMenu "Wallpapers" Title
 + "aenami-001-1920x1080" SetBG aenami-001-1920x1080.png
 
+# TODO: move important ones in Left Click Menu
 # Window Operations Menus
 DestroyMenu MenuWindowOps
 AddToMenu   MenuWindowOps
@@ -137,15 +134,15 @@ AddToMenu   MenuWindowOps
 + ""                    Nop
 + "Send To"             Popup MenuSendTo
 + ""                    Nop
-+ "Raise"               Raise
-+ "Lower"               Lower
 + "StaysOnTop"          Pick (CirculateHit) Layer 0 6
 + "StaysPut"            Pick (CirculateHit) Layer 0 4
 + "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
 + ""                    Nop
-+ "Identify"            Module FvwmIdent
+
 + "Close"               Close
 + "Destroy"             Destroy
+
+# TODO: never focus option for windows
 
 DestroyFunc ToggleTitle
 AddToFunc   ToggleTitle
@@ -196,13 +193,15 @@ Key 1 A S4 MovetoDesk 0 1
 Key 2 A S4 MovetoDesk 0 2
 Key 3 A S4 MovetoDesk 0 3
 Key w A 4 GotoPage wrapy 0p -1p
-Key a A 4 GotoDesk -1
+Key a A 4 GotoPage wrapx -1p 0p
+Key Prior A 4 GotoDesk -1
 Key s A 4 GotoPage wrapy 0p +1p
-Key d A 4 GotoDesk +1
+Key d A 4 GotoPage wrapx +1p 0p
+Key Next A 4 GotoDesk +1
 Key w A S4 MovetoPage 0p -1p
-Key a A S4 MovetoDesk -1
+Key a A S4 MovetoPage -1p 0p
 Key s A S4 MovetoPage 0p +1p
-Key d A S4 MovetoDesk +1
+Key d A S4 MovetoPage +1p 0p
 Key Left A 4 ResizeMoveMaximize frame 50wa 100wa 0 0
 Key Right A 4 ResizeMoveMaximize frame 50wa 100wa -0 0
 Key Up A 4 ResizeMoveMaximize frame 100wa 50wa 0 0
@@ -276,8 +275,8 @@ Mouse 1	FS   A RaiseMove Resize
 Mouse 4	T    A WindowShade True
 Mouse 5	T    A WindowShade False
 Mouse 1	R    A Menu MenuFvwmRoot
-Mouse 3	R    A WindowList
-Mouse 2 R    A Scroll reverse
+Mouse 2	R    A WindowList
+Mouse 3 R    A Scroll reverse
 # Mouse 3	R    A Menu MenuWindowOps
 Mouse 5 R    A Scroll 0 5
 Mouse 4 R    A Scroll 0 -5
@@ -295,7 +294,7 @@ ButtonStyle 1 - MwmDecorMenu
 
 ########################### FvwmButtons - MainPanel ############################
 
-Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, Layer 5, NeverFocus
+Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus
 
 AddToMenu bargraphicspopup "Graphics"	Title
  + "Gimp"		 Exec exec gimp
@@ -320,20 +319,23 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Colorset 10
 *MainPanel: ActiveColorset 11
 *MainPanel: PressColorset 11
-*MainPanel: ButtonGeometry 68x68+0+68@p
-*MainPanel: Columns 1
-*MainPanel: (1x3, Frame 2, Swallow(UseOld,Respawn,NoClose) "FvwmPager" "Module FvwmPager *")
+*MainPanel: ButtonGeometry 68x68+5+0@p
+*MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
 *MainPanel: (Title "Tools", Icon icons/cheese.svg, Action (Mouse 0) Function bartoolspopupfunc)
 *MainPanel: (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
-*MainPanel: (1x1,Container(Columns 2,Frame 1))
+*MainPanel: (1x1,Container(Rows 2,Frame 1))
 *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
 *MainPanel: (Icon icons/cheese.svg:24x0, Action `Exec exec strawberry --toggle-pretty-osd`)
 *MainPanel: (Icon icons/tape.svg:23x0, Action `Exec exec strawberry --stop-after-current`)
 *MainPanel: (Icon icons/rock.svg:23x0, Action `Exec exec strawberry --play-pause`)
 *MainPanel: (End)
+*MainPanel: (2x1,Container(Rows 2,Frame 1))
 *MainPanel: (Swallow DateTime 'Module FvwmScript FvwmScript-DateTime', Frame 0)
+*MainPanel: (End)
+
+################################## FvwmPager ##################################
 
 # FvwmPager
 DestroyModuleConfig FvwmPager:*
@@ -347,53 +349,11 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: LabelsAbove
 *FvwmPager: Font $[infostore.default_font]
 *FvwmPager: SolidSeparators
+*FvwmPager: Geometry 251x171-0+0
 
-# # Function: ChangeDesk
-# #
-# # This function is called by FvwmEvent every time the Desk is changed.
-# DestroyFunc ChangeDesk
-# AddToFunc   ChangeDesk
-# + I SendToModule FvwmButtons ChangeButton desk0 Colorset 10
-# + I SendToModule FvwmButtons ChangeButton desk1 Colorset 10
-# + I SendToModule FvwmButtons ChangeButton desk2 Colorset 10
-# + I SendToModule FvwmButtons ChangeButton desk3 Colorset 10
-# + I SendToModule FvwmButtons ChangeButton desk$0 Colorset 11
+Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, NeverFocus, WindowListSkip
 
-# # FvwmEvent
-# #
-# # FvwmEvent is a module that can run an action or function
-# # on specific events. This instance changes which desk number
-# # is highlighted when the desk is changed.
-# DestroyModuleConfig EventNewDesk:*
-# *EventNewDesk: PassID
-# *EventNewDesk: new_desk ChangeDesk
-
-# FvwmForm
-#
-# FvwmForm is a module that can be used to build a GUI
-# form. Used with fvwm-menu-desktop-config.fpl.
-# This sets the default colorsets.
-*FvwmFormDefault: Colorset 10
-*FvwmFormDefault: ItemColorset 13
-*FvwmFormDefault: Font xft:Helvetica Neue
-*FvwmFormDefault: InputFont xft:Helvetica Neue
-*FvwmFormDefault: ButtonFont xft:Helvetica Neue
-*FvwmFormDefault: TimeoutFont 8x13bold
-*FvwmFormDefault: Fore Wheat
-*FvwmFormDefault: Back Gray50
-*FvwmFormDefault: ItemFore Black
-*FvwmFormDefault: ItemBack Light Gray
-*FvwmFormDefault: ButtonPointer hand2
-*FvwmFormDefault: ButtonInPointer hand2
-*FvwmFormDefault: InputPointer xterm
-*FvwmFormDefault: ActivateOnPress off
-*FvwmFormDefault: ButtonPointerFore white
-*FvwmFormDefault: ButtonPointerBack black
-*FvwmFormDefault: ButtonInPointerFore black
-*FvwmFormDefault: ButtonInPointerBack white
-*FvwmFormDefault: InputPointerFore white
-*FvwmFormDefault: InputPointerBack black
-
+# TODO: raise Pager when changing desks and maybe when changing pages
 
 # redefine to not warp the cursor
 DestroyFunc WindowListFunc
@@ -407,7 +367,17 @@ AddToFunc WindowListFunc
 # http://www.fvwm.org/documentation/faq/#autohiding-fvwmbuttons-or-other-windows #
 ##################################################################################
 
-*FvwmEvent: add_window AutoHidePlacementHandler
+# If any window except FvwmButtons has
+# focus when calling this function
+# FvwmButtons are lowered
+DestroyFunc AutoLowerFunction
+AddToFunc AutoLowerFunction
++ I Current (!FvwmButtons) All (FvwmButtons) Lower
+
+# If FvwmButtons has focus when calling this function raise it
+DestroyFunc AutoRaiseFunction
+AddToFunc AutoRaiseFunction
++ I Current (FvwmButtons) Raise
 
 DestroyFunc AutoHide
 AddToFunc AutoHide
@@ -422,27 +392,12 @@ AddToFunc AutoHideHide
 
 DestroyFunc AutoHideEnter
 AddToFunc AutoHideEnter
+	+ I AutoHide FvwmPager 500 NE
 
-DestroyFunc AutoHidePlacementHandler
-AddToFunc AutoHidePlacementHandler
-
-AddToFunc AutoHideEnter
-	+ I AutoHide xload 500 E
-	+ I AutoHide log 500 S
-	+ I AutoHide clock.FvwmScript 500 S
-
-AddToFunc AutoHidePlacementHandler
-	+ I Schedule 1000 ThisWindow ("xclock") WindowShade E
-	+ I Schedule 1000 ThisWindow ("xload") WindowShade E
-	+ I Schedule 1000 ThisWindow ("log") WindowShade S
-	+ I Schedule 1000 ThisWindow ("clock.FvwmScript") WindowShade S
-
-Style "clock.FvwmScript" !Title, Sticky, NeverFocus, WindowListSkip, WindowShadeSteps $[infostore.auto_hide_steps], WindowShadeScrolls, WindowShadeBusy, !Borders, StaysOnBottom
-Style "log" !Title, Sticky, NeverFocus, WindowListSkip, WindowShadeSteps $[infostore.auto_hide_steps], WindowShadeScrolls, WindowShadeBusy
-Style "xclock" !Title, Sticky, NeverFocus, WindowListSkip, WindowShadeSteps $[infostore.auto_hide_steps], WindowShadeScrolls, WindowShadeBusy
-Style "xload" !Title, Sticky, NeverFocus, WindowListSkip, WindowShadeSteps $[infostore.auto_hide_steps], WindowShadeScrolls, WindowShadeBusy
+AddToFunc selective_raiselower
++ I WindowId $1 (FvwmButtons) $0
 
 DestroyModuleConfig FvwmAuto: *
-
 AddToFunc StartFunction
-	+ I Module FvwmAuto 0 -menter AutoHideEnter
+	+ I Module FvwmAuto 0 -menter "Silent AutoHideEnter"
+	+ I Module FvwmAuto 256 -passid -menter "Silent selective_raiselower raise" "Silent selective_raiselower lower"
