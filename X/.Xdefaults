@@ -16,6 +16,7 @@ Xcursor.theme: DMZ-White
 ! x11-ssh-askpass*bottomShadowColor:      #000000
 ! x11-ssh-askpass.*borderWidth:           0
 
+URxvt.perl-ext-common: selection-to-clipboard
 URxvt.intensityStyles: false
 URxvt.geometry: 92x24
 URxvt.scrollBar: false
