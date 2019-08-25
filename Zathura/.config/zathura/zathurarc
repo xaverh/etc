@@ -1,4 +1,4 @@
-set font "IBM Plex Sans 10"
+set font "\.Helvetica Neue DeskInterface 11"
 set adjust-open "width"
 set default-bg "#1e1e1e"
 set default-fg "#f9f8f4"
@@ -20,3 +20,4 @@ set smooth-scroll true
 set window-title-home-tilde true
 set window-title-page true
 set guioptions ""
+set selection-clipboard clipboard
