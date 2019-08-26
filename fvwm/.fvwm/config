@@ -2,6 +2,8 @@ Read ysgrifennwr.fvwm
 
 EwmhBaseStruts 40 83 15 15
 
+InfostoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
+
 ########################### Desktops and Pages ################################
 
 DesktopSize 3x3
@@ -13,7 +15,7 @@ EdgeThickness 0
 ClickTime 250
 MoveThreshold 3
 
-Style * IconBox screen c 15 15 -15 -15, IconFill bottom right, IconGrid 25 25, ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, IconBox screen c 15 15 -15 -15, IconFill bottom right, IconGrid 25 25, ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
 
 # TODO: focus styles to protect Terminal and VS Code from Focus Stealing
 
@@ -105,7 +107,6 @@ Test (x telegram-desktop) + "Te&legram%/usr/share/icons/hicolor/32x32/apps/teleg
 Test (x zathura) + "&Zathura%/usr/share/icons/scalable/apps/org.pwmt.zathura.svg:0x$[infostore.menu_icon_size]%" Exec exec zathura
 Test (x mupdf-gl) + "&MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exec exec mupdf-gl
 + "FvwmConsole%$[infostore.terminal_icon]%" Module FvwmConsole -terminal $[TERMINAL]
-+ "Identify"            Module FvwmIdent
 
 # Background Menu
 #
@@ -114,33 +115,6 @@ Test (x mupdf-gl) + "&MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exe
 DestroyMenu BGMenu
 AddToMenu   BGMenu "Wallpapers" Title
 + "aenami-001-1920x1080" SetBG aenami-001-1920x1080.png
-
-# TODO: move important ones in Left Click Menu
-# Window Operations Menus
-DestroyMenu MenuWindowOps
-AddToMenu   MenuWindowOps
-+ "Move"                Move
-+ "Resize"              Resize
-+ "(De)Iconify"         Thumbnail
-+ "(Un)Maximize"        Maximize
-+ "Snap Left"           ResizeMoveMaximize frame 50wa 100wa 0 0
-+ "Snap Right"          ResizeMoveMaximize frame 50wa 100wa -0 0
-+ ""                    Nop
-+ "(Un)Shade"           WindowShade
-+ "(Un)Sticky"          Stick
-+ "(No)TitleBar"        Pick (CirculateHit) ToggleTitle
-+ "Stick to Desk"       StickAcrossPages
-+ "Stick to Page"       StickAcrossDesks
-+ ""                    Nop
-+ "Send To"             Popup MenuSendTo
-+ ""                    Nop
-+ "StaysOnTop"          Pick (CirculateHit) Layer 0 6
-+ "StaysPut"            Pick (CirculateHit) Layer 0 4
-+ "StaysOnBottom"       Pick (CirculateHit) Layer 0 2
-+ ""                    Nop
-
-+ "Close"               Close
-+ "Destroy"             Destroy
 
 # TODO: never focus option for windows
 
@@ -152,19 +126,10 @@ AddToFunc   ToggleTitle
 + I WindowStyle !Title
 + I State 1 True
 
-DestroyFunc MoveToCurrent
-AddToFunc MoveToCurrent
-+ I ThisWindow MoveToPage
-+ I ThisWindow MoveToDesk
-
-DestroyMenu MenuSendTo
-AddToMenu MenuSendTo
-+ "Current" MoveToCurrent
-+ "Page" PopUp MenuSendToPage
-+ "Desk" PopUp MenuSendToDesk
-
 DestroyMenu MenuSendToDesk
 AddToMenu   MenuSendToDesk
++ 'right' MoveToDesk 1
++ 'left' MoveToDesk -1
 + '0' MoveToDesk 0 0
 + '1' MoveToDesk 0 1
 + '2' MoveToDesk 0 2
@@ -172,9 +137,14 @@ AddToMenu   MenuSendToDesk
 DestroyMenu MenuSendToPage
 AddToMenu   MenuSendToPage
 + "1"	MoveToPage 0 0
-+ "2"	MoveToPage 0 1
-+ "3"	MoveToPage 0 2
-+ "4"	MoveToPage 0 3
++ "2"	MoveToPage 1 0
++ "3"	MoveToPage 2 0
++ "4"	MoveToPage 0 1
++ "5"	MoveToPage 1 1
++ "6"	MoveToPage 2 1
++ "7"	MoveToPage 0 2
++ "8"	MoveToPage 1 2
++ "9"	MoveToPage 2 2
 
 ################################# Keybindings #################################
 
@@ -206,13 +176,13 @@ Key Left A 4 ResizeMoveMaximize frame 50wa 100wa 0 0
 Key Right A 4 ResizeMoveMaximize frame 50wa 100wa -0 0
 Key Up A 4 ResizeMoveMaximize frame 100wa 50wa 0 0
 Key Down A 4 ResizeMoveMaximize frame 100wa 50wa 0 -0
-Key Insert A 4 ResizeMove frame 50wa 50wa 0 0
-Key End A 4 ResizeMove frame 50wa 50wa -0 -0
-Key Home A 4  ResizeMove frame 50wa 50wa -0 0
-Key Delete A 4 ResizeMove frame 50wa 50wa 0 -0
+Key Insert A 4 ResizeMoveMaximize frame 50wa 50wa 0 0
+Key End A 4 ResizeMoveMaximize frame 50wa 50wa -0 -0
+Key Home A 4  ResizeMoveMaximize frame 50wa 50wa -0 0
+Key Delete A 4 ResizeMoveMaximize frame 50wa 50wa 0 -0
 Key f A 4 Maximize Fullscreen
 Key 0 A 4 Thumbnail
-Key m A 4 ResizeMove frame 75wa 85wa 260p 100p
+Key m A 4 $[infostore.centerwindow]
 Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
@@ -296,6 +266,40 @@ ButtonStyle 1 - MwmDecorMenu
 
 Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus
 
+DestroyMenu SnapWindowMenu
+AddToMenu SnapWindowMenu
++ "Snap Left%icons/right.svg:-0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 100wa 0 0
++ "Snap Right%icons/right.svg:0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 100wa -0 0
++ "Snap Top Left%icons/topright.svg:-0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa 0 0
++ "Snap Top Right%icons/topright.svg:0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa -0 0
++ "Snap Bottom Left%icons/topright.svg:!0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa 0 -0
++ "Snap Bottom Right%icons/topright.svg:0x-$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa -0 -0
+
+DestroyMenu MenuWindowOps
+AddToMenu MenuWindowOps "Window Options%icons/menu.svg:0x$[infostore.menu_icon_size]%" Title
++ "Move%icons/move.svg:0x$[infostore.menu_icon_size]%" Move
++ "Snap Window%icons/snap.svg:0x$[infostore.menu_icon_size]%" PopUp SnapWindowMenu
++ "" Nop
++ "Resize%icons/resize.svg:0x$[infostore.menu_icon_size]%" Resize
++ "Center%icons/center.svg:0x$[infostore.menu_icon_size]%" $[infostore.centerwindow]
++ "Maximize?%icons/maximize.svg:0x$[infostore.menu_icon_size]%" Maximize
++ "Zen%icons/fullscreen.svg:0x$[infostore.menu_icon_size]%"? (Win+f to leave)" Maximize Fullscreen
++ "Headless?%icons/bar.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) ToggleTitle
++ "" Nop
++ "Stick everywhere?%icons/stickeverywhere.svg:0x$[infostore.menu_icon_size]%" Stick
++ "Stick to desk?%icons/sticktodesk.svg:0x$[infostore.menu_icon_size]%" StickAcrossPages
++ "" Nop
++ "Send to page%icons/sendto.svg:0x$[infostore.menu_icon_size]%" Popup MenuSendToPage
++ "Send to desk%icons/sendtodesk.svg:0x$[infostore.menu_icon_size]%" Popup MenuSendToDesk
++ "" Nop
++ "Aboveground%icons/aboveground.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) Layer 0 6
++ "Groundlevel%icons/groundlevel.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) Layer 0 4
++ "Underground%icons/underground.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "Close Window%icons/kill.svg:0x$[infostore.menu_icon_size]%" Delete
++ "Destroy App%icons/destroy.svg:0x$[infostore.menu_icon_size]%" Destroy
+
+DestroyMenu strawberrymenu
 AddToMenu strawberrymenu "Strawberry%icons/forward.svg:0x$[infostore.menu_icon_size]%"	Title
 + "Next%icons/forward.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --next
 #+ "Next%icons/forward.svg:32x0+0-5%", Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
@@ -303,12 +307,11 @@ AddToMenu strawberrymenu "Strawberry%icons/forward.svg:0x$[infostore.menu_icon_s
 + "Stop%icons/tape.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --stop-after-current
 + "Play/Pause%icons/rock.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --play-pause
 
-AddToFunc barthiswmpopupfunc
- +	"I"	Popup THISWM_MENU_popup
+DestroyFunc MenuWindowOpsFunc
+AddToFunc MenuWindowOpsFunc
+ +	"I"	Popup MenuWindowOps
 
-AddToFunc bargraphicspopupfunc
- +	"I"	Popup bargraphicspopup
-
+DestroyFunc strawberrymenufunc
 AddToFunc strawberrymenufunc
  +	"I"	Popup strawberrymenu
 
@@ -321,9 +324,8 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: ButtonGeometry 68x68+5+0@p
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
-*MainPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
+*MainPanel: (Icon icons/menu.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
-*MainPanel: (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
 # *MainPanel: (Icon icons/cheese.svg:24x0, Action `Exec exec strawberry --toggle-pretty-osd`)
