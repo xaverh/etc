@@ -296,10 +296,12 @@ ButtonStyle 1 - MwmDecorMenu
 
 Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus
 
-AddToMenu bargraphicspopup "Graphics"	Title
- + "Gimp"		 Exec exec gimp
- + "Inkscape"    Exec exec inkscape
- + "XV"			 Exec exec xv
+AddToMenu strawberrymenu "Strawberry%icons/forward.svg:0x$[infostore.menu_icon_size]%"	Title
++ "Next%icons/forward.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --next
+#+ "Next%icons/forward.svg:32x0+0-5%", Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
++ "Show%icons/cheese.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --toggle-pretty-osd
++ "Stop%icons/tape.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --stop-after-current
++ "Play/Pause%icons/rock.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry --play-pause
 
 AddToFunc barthiswmpopupfunc
  +	"I"	Popup THISWM_MENU_popup
@@ -307,11 +309,8 @@ AddToFunc barthiswmpopupfunc
 AddToFunc bargraphicspopupfunc
  +	"I"	Popup bargraphicspopup
 
-AddToFunc bartoolspopupfunc
- +	"I"	Popup bartoolspopup
-
-AddToFunc barshellspopupfunc
- +	"I"	Popup barshellspopup
+AddToFunc strawberrymenufunc
+ +	"I"	Popup strawberrymenu
 
 DestroyModuleConfig MainPanel:*
 *MainPanel: Font $[infostore.default_font]
@@ -323,14 +322,14 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Title "Fvwm2", Icon fvwm.xpm, Action (Mouse 0) Function barthiswmpopupfunc)
-*MainPanel: (Title "Tools", Icon icons/cheese.svg, Action (Mouse 0) Function bartoolspopupfunc)
+*MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 *MainPanel: (Title "Shells", Icon xterm.xpm, Action (Mouse 0) Function barshellspopupfunc)
-*MainPanel: (1x1,Container(Rows 2,Frame 1))
-*MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
-*MainPanel: (Icon icons/cheese.svg:24x0, Action `Exec exec strawberry --toggle-pretty-osd`)
-*MainPanel: (Icon icons/tape.svg:23x0, Action `Exec exec strawberry --stop-after-current`)
-*MainPanel: (Icon icons/rock.svg:23x0, Action `Exec exec strawberry --play-pause`)
-*MainPanel: (End)
+# *MainPanel: (1x1,Container(Rows 2,Frame 1))
+# *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
+# *MainPanel: (Icon icons/cheese.svg:24x0, Action `Exec exec strawberry --toggle-pretty-osd`)
+# *MainPanel: (Icon icons/tape.svg:23x0, Action `Exec exec strawberry --stop-after-current`)
+# *MainPanel: (Icon icons/rock.svg:23x0, Action `Exec exec strawberry --play-pause`)
+# *MainPanel: (End)
 *MainPanel: (2x1,Container(Rows 2,Frame 1))
 *MainPanel: (Swallow DateTime 'Module FvwmScript FvwmScript-DateTime', Frame 0)
 *MainPanel: (End)
