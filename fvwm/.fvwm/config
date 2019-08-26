@@ -108,16 +108,6 @@ Test (x zathura) + "&Zathura%/usr/share/icons/scalable/apps/org.pwmt.zathura.svg
 Test (x mupdf-gl) + "&MµPDF%icons/mupdf.svg:0x$[infostore.menu_icon_size]%" Exec exec mupdf-gl
 + "FvwmConsole%$[infostore.terminal_icon]%" Module FvwmConsole -terminal $[TERMINAL]
 
-# Background Menu
-#
-# Backgrounds are located in ~/.fvwm/images/background/
-# Menu icons are located in ~/.fvwm/images/bgicons/
-DestroyMenu BGMenu
-AddToMenu   BGMenu "Wallpapers" Title
-+ "aenami-001-1920x1080" SetBG aenami-001-1920x1080.png
-
-# TODO: never focus option for windows
-
 DestroyFunc ToggleTitle
 AddToFunc   ToggleTitle
 + I ThisWindow (State 1) WindowStyle Title
@@ -247,7 +237,6 @@ Mouse 5	T    A WindowShade False
 Mouse 1	R    A Menu MenuFvwmRoot
 Mouse 2	R    A WindowList
 Mouse 3 R    A Scroll reverse
-# Mouse 3	R    A Menu MenuWindowOps
 Mouse 5 R    A Scroll 0 5
 Mouse 4 R    A Scroll 0 -5
 Mouse 1	I    A RaiseMoveX Move "Iconify off"
@@ -275,6 +264,7 @@ AddToMenu SnapWindowMenu
 + "Snap Bottom Left%icons/topright.svg:!0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa 0 -0
 + "Snap Bottom Right%icons/topright.svg:0x-$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa -0 -0
 
+# TODO: never focus option for windows
 DestroyMenu MenuWindowOps
 AddToMenu MenuWindowOps "Window Options%icons/menu.svg:0x$[infostore.menu_icon_size]%" Title
 + "Move%icons/move.svg:0x$[infostore.menu_icon_size]%" Move
@@ -283,11 +273,11 @@ AddToMenu MenuWindowOps "Window Options%icons/menu.svg:0x$[infostore.menu_icon_s
 + "Resize%icons/resize.svg:0x$[infostore.menu_icon_size]%" Resize
 + "Center%icons/center.svg:0x$[infostore.menu_icon_size]%" $[infostore.centerwindow]
 + "Maximize?%icons/maximize.svg:0x$[infostore.menu_icon_size]%" Maximize
-+ "Zen%icons/fullscreen.svg:0x$[infostore.menu_icon_size]%"? (Win+f to leave)" Maximize Fullscreen
++ "Zen? (Win+F to leave)%icons/fullscreen.svg:0x$[infostore.menu_icon_size]%" Maximize Fullscreen
 + "Headless?%icons/bar.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) ToggleTitle
 + "" Nop
-+ "Stick everywhere?%icons/stickeverywhere.svg:0x$[infostore.menu_icon_size]%" Stick
 + "Stick to desk?%icons/sticktodesk.svg:0x$[infostore.menu_icon_size]%" StickAcrossPages
++ "Stick everywhere?%icons/stickeverywhere.svg:0x$[infostore.menu_icon_size]%" Stick
 + "" Nop
 + "Send to page%icons/sendto.svg:0x$[infostore.menu_icon_size]%" Popup MenuSendToPage
 + "Send to desk%icons/sendtodesk.svg:0x$[infostore.menu_icon_size]%" Popup MenuSendToDesk
@@ -363,19 +353,12 @@ AddToFunc WindowListFunc
 + I FlipFocus
 + I Raise
 
-##################################################################################
-# AutoHide                                                                       #
-# http://www.fvwm.org/documentation/faq/#autohiding-fvwmbuttons-or-other-windows #
-##################################################################################
+################################## Autohide ######################################
 
-# If any window except FvwmButtons has
-# focus when calling this function
-# FvwmButtons are lowered
 DestroyFunc AutoLowerFunction
 AddToFunc AutoLowerFunction
 + I Current (!FvwmButtons) All (FvwmButtons) Lower
 
-# If FvwmButtons has focus when calling this function raise it
 DestroyFunc AutoRaiseFunction
 AddToFunc AutoRaiseFunction
 + I Current (FvwmButtons) Raise
