@@ -15,7 +15,7 @@ InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
 
 DefaultFont $[infostore.default_font]
 
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4
+Style * MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4
 MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 6 6
 
 ################################## Colorsets ##################################
