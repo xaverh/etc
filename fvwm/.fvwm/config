@@ -2,7 +2,7 @@ Read ysgrifennwr.fvwm
 
 EwmhBaseStruts 40 83 15 15
 
-InfostoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
+InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
 
 ########################### Desktops and Pages ################################
 
@@ -20,10 +20,6 @@ Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4
 # TODO: focus styles to protect Terminal and VS Code from Focus Stealing
 
 OpaqueMoveSize unlimited
-
-# Window Specific Styles
-Style ConfirmShutdown !Title, PositionPlacement Center, WindowListSkip, Layer 6
-Style FvwmIdent WindowListSkip
 
 ############################### Start Function ################################
 
@@ -314,7 +310,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: ButtonGeometry 68x68+5+0@p
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
-*MainPanel: (Icon icons/menu.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
+*MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
