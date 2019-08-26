@@ -266,7 +266,7 @@ AddToMenu SnapWindowMenu
 
 # TODO: never focus option for windows
 DestroyMenu MenuWindowOps
-AddToMenu MenuWindowOps "Window Options%icons/menu.svg:0x$[infostore.menu_icon_size]%" Title
+AddToMenu MenuWindowOps `Window Ops` Title
 + "Move%icons/move.svg:0x$[infostore.menu_icon_size]%" Move
 + "Snap Window%icons/snap.svg:0x$[infostore.menu_icon_size]%" PopUp SnapWindowMenu
 + "" Nop
