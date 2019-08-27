@@ -16,6 +16,7 @@ AddToFunc switchpageandfocus
 + I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus) FlipFocus NoWarp
 
 InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
+InfoStoreAdd mansplain `Exec exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $$$$2" "$$$$1}' | xargs -r man -Tpdf | zathura -`
 
 ############################## Focus Policy ###################################
 
@@ -54,7 +55,6 @@ Style * ResizeOpaque, \
 	StackTransientParent, \
 	WindowShadeScrolls, \
 	WindowShadeSteps 10, \
-	!Icon, \
 	StickyAcrossPagesIcon, \
 	!IconTitle, \
 	IconBackgroundRelief 0
@@ -212,6 +212,7 @@ Key m A 4 $[infostore.centerwindow]
 Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
+Key F1 A 4 $[infostore.mansplain]
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
 Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$$$1}' | xsel -ib`
