@@ -12,7 +12,11 @@ InfoStoreAdd restart_icon icons/restart.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd lock_icon icons/lock.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
-
+InfoStoreAdd maximize_icon icons/maximize.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd center_icon icons/center.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd fullscreen_icon icons/fullscreen.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd kill_icon icons/kill.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd destroy_icon icons/destroy.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd file_manager_icon icons/file-manager.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd terminal_icon /usr/share/icons/elementary/apps/32/utilities-terminal.svg:0x$[infostore.menu_icon_size]
 

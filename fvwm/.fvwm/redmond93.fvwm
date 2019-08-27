@@ -1,22 +1,29 @@
 ImagePath $[FVWM_USERDIR]/redmond93/images/:$[FVWM_USERDIR]/common/images/:+
 
-InfoStoreAdd menu_icon_size 24
+InfoStoreAdd menu_icon_size 32
 InfoStoreAdd default_font '"xft:px sans nouveaux:style=Regular:pixelsize=8:encoding=iso10646-1"'
 InfostoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^`
 
-InfoStoreAdd applications_icon icons/programs.png
-InfoStoreAdd volume_icon icons/volume.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd applications_icon icons/programs.xpm
+InfoStoreAdd volume_icon icons/volume.png
 InfoStoreAdd bluetoothspeaker_icon icons/speaker.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd wallpapers_icon icons/screen.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd restart_icon icons/restart.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd lock_icon icons/lock.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd wallpapers_icon icons/screen.png
+InfoStoreAdd restart_icon icons/restart.xpm
+InfoStoreAdd lock_icon icons/lock.xpm
 InfoStoreAdd reboot_icon icons/reboot.svg:0x$[infostore.menu_icon_size]
-InfoStoreAdd shutdown_icon icons/shutdown.svg:0x$[infostore.menu_icon_size]
+InfoStoreAdd shutdown_icon icons/shutdown.xpm
+InfoStoreAdd maximize_icon icons/maximize.png
+InfoStoreAdd center_icon icons/center.png
+InfoStoreAdd fullscreen_icon icons/fullscreen.png
+InfoStoreAdd kill_icon icons/kill.png
+InfoStoreAdd destroy_icon icons/destroy.xpm
+InfoStoreAdd file_manager_icon icons/file-manager.png
+InfoStoreAdd terminal_icon icons/terminal.png
 
 DefaultFont $[infostore.default_font]
 
 Style * MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 6 6
+MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 2 4
 
 ################################## Colorsets ##################################
 # http://fvwm-themes.sourceforge.net/doc/colorsets
