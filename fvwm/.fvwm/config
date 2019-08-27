@@ -267,7 +267,9 @@ Mouse 2 4    A Maximize 0 100
 Mouse 3 4    A Maximize 100 0
 Mouse 1 6    A Thumbnail
 Mouse 1	T    A RaiseMoveX Move Maximize
+Mouse 1 W    4 RaiseMoveX Move Maximize
 Mouse 1	FS   A RaiseMove Resize
+Mouse 3	W    4 RaiseMove `Resize warptoborder automatic`
 Mouse 4	T    A WindowShade True
 Mouse 5	T    A WindowShade False
 Mouse 3	R    A Menu MenuFvwmRoot
