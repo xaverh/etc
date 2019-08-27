@@ -157,7 +157,6 @@
 ; (gtk_accel_path "<Actions>/MenuActions/SelectAll" "<Primary>a")
 ; (gtk_accel_path "<Actions>/MenuActions/SelectMark6Alt1" "<Primary>KP_6")
 ; (gtk_accel_path "<Actions>/MenuActions/SlideShowPause" "p")
-; (gtk_accel_path "<Actions>/MenuActionsExternal/XnView.desktop" "")
 ; (gtk_accel_path "<Actions>/MenuActions/ConnectZoom300" "")
 ; (gtk_accel_path "<Actions>/MenuActions/HistogramChanB" "")
 ; (gtk_accel_path "<Actions>/MenuActions/ExifWin" "<Primary>e")
