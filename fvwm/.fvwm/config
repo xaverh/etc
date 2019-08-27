@@ -1,8 +1,36 @@
-Read ysgrifennwr.fvwm
+Read redmond93.fvwm
 
 EwmhBaseStruts 40 83 15 15
 
+Style * Colorset 1, \
+        HilightColorset 2, \
+	BorderColorset 3, \
+	HilightBorderColorset 4
+
+######################### Shared Functionality ################################
+
+DestroyFunc switchpageandfocus
+AddToFunc switchpageandfocus
++ I GotoPage $0 $1
++ I All (CurrentPage, Focused) FlipFocus NoWarp
++ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus) FlipFocus NoWarp
+
 InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
+
+############################## Focus Policy ###################################
+
+Style * ClickToFocus, \
+	FPFocusByFunctionWarpPointer, \
+	!FPGrabFocusTransient, \
+	FPReleaseFocusTransient
+
+Style Code OverrideGrabFocus
+Style URxvt OverrideGrabFocus
+
+################ Placement policy options and window stacking #################
+
+Style *	MinOverlapPercentPlacement, \
+	!UsePPosition
 
 ########################### Desktops and Pages ################################
 
@@ -15,9 +43,21 @@ EdgeThickness 0
 ClickTime 250
 MoveThreshold 3
 
-Style * Colorset 1, HilightColorset 2, BorderColorset 3, HilightBorderColorset 4, IconBox screen c 15 15 -15 -15, IconFill bottom right, IconGrid 25 25, ClickToFocus, FPGrabFocus, FPReleaseFocus, MouseFocusClickRaises, FPFocusByFunctionWarpPointer, MinOverlapPercentPlacement, !UsePPosition, ResizeOpaque, SnapAttraction 5 SameType ScreenAll, SnapGrid, DecorateTransient, StackTransientParent, !FPGrabFocusTransient, FPReleaseFocusTransient, WindowShadeScrolls, WindowShadeSteps 10, !Icon, StickyAcrossPagesIcon, !IconTitle, IconBackgroundRelief 0
+Style * IconBox screen c 15 15 -15 -15, \
+	IconFill bottom right, \
+	IconGrid 25 25
 
-# TODO: focus styles to protect Terminal and VS Code from Focus Stealing
+Style * ResizeOpaque, \
+	SnapAttraction 5 SameType ScreenAll, \
+	SnapGrid, \
+	DecorateTransient, \
+	StackTransientParent, \
+	WindowShadeScrolls, \
+	WindowShadeSteps 10, \
+	!Icon, \
+	StickyAcrossPagesIcon, \
+	!IconTitle, \
+	IconBackgroundRelief 0
 
 OpaqueMoveSize unlimited
 
@@ -148,11 +188,11 @@ Key 3 A 4 GotoDesk 0 3
 Key 1 A S4 MovetoDesk 0 1
 Key 2 A S4 MovetoDesk 0 2
 Key 3 A S4 MovetoDesk 0 3
-Key w A 4 GotoPage wrapy 0p -1p
-Key a A 4 GotoPage wrapx -1p 0p
+Key w A 4 switchpageandfocus 0p -1p
+Key a A 4 switchpageandfocus -1p 0p
 Key Prior A 4 GotoDesk -1
-Key s A 4 GotoPage wrapy 0p +1p
-Key d A 4 GotoPage wrapx +1p 0p
+Key s A 4 switchpageandfocus 0p +1p
+Key d A 4 switchpageandfocus +1p 0p
 Key Next A 4 GotoDesk +1
 Key w A S4 MovetoPage 0p -1p
 Key a A S4 MovetoPage -1p 0p
@@ -233,14 +273,14 @@ Mouse 5	T    A WindowShade False
 Mouse 3	R    A Menu MenuFvwmRoot
 Mouse 2	R    A WindowList
 Mouse 1 R    A Scroll reverse
-Mouse 5 R    A Scroll 0 5
-Mouse 4 R    A Scroll 0 -5
+# Mouse 5 R    A Scroll 0 5
+# Mouse 4 R    A Scroll 0 -5
 Mouse 1	I    A RaiseMoveX Move "Iconify off"
 Mouse 3	T    A Menu MenuWindowOps
 Mouse 3 I    A Menu MenuWindowOps
 Mouse 2 T    A Function MoveOrLower
-Silent Mouse 8	R    A GotoPage wrapy 0p +1p
-Silent Mouse 9	R    A GotoPage wrapy 0p -1p
+# Silent Mouse 8	R    A GotoPage wrapy 0p +1p
+# Silent Mouse 9	R    A GotoPage wrapy 0p -1p
 
 ButtonStyle All - Clear
 ButtonStyle 6 - MwmDecorMin
@@ -260,16 +300,16 @@ AddToMenu SnapWindowMenu
 + "Snap Bottom Left%icons/topright.svg:!0x$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa 0 -0
 + "Snap Bottom Right%icons/topright.svg:0x-$[infostore.menu_icon_size]%" ResizeMoveMaximize frame 50wa 50wa -0 -0
 
-# TODO: never focus option for windows
+# TODO: never focus and unkillable option for windows
 DestroyMenu MenuWindowOps
 AddToMenu MenuWindowOps `Window Ops` Title
 + "Move%icons/move.svg:0x$[infostore.menu_icon_size]%" Move
 + "Snap Window%icons/snap.svg:0x$[infostore.menu_icon_size]%" PopUp SnapWindowMenu
 + "" Nop
 + "Resize%icons/resize.svg:0x$[infostore.menu_icon_size]%" Resize
-+ "Center%icons/center.svg:0x$[infostore.menu_icon_size]%" $[infostore.centerwindow]
-+ "Maximize?%icons/maximize.svg:0x$[infostore.menu_icon_size]%" Maximize
-+ "Zen? (Win+F to leave)%icons/fullscreen.svg:0x$[infostore.menu_icon_size]%" Maximize Fullscreen
++ "Center%$[infostore.center_icon]%" $[infostore.centerwindow]
++ "Maximize?%$[infostore.maximize_icon]%" Maximize
++ "Zen? (Win+F to leave)%$[infostore.fullscreen_icon]%" Maximize Fullscreen
 + "Headless?%icons/bar.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) ToggleTitle
 + "" Nop
 + "Stick to desk?%icons/sticktodesk.svg:0x$[infostore.menu_icon_size]%" StickAcrossPages
@@ -282,8 +322,8 @@ AddToMenu MenuWindowOps `Window Ops` Title
 + "Groundlevel%icons/groundlevel.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) Layer 0 4
 + "Underground%icons/underground.svg:0x$[infostore.menu_icon_size]%" Pick (CirculateHit) Layer 0 2
 + "" Nop
-+ "Close Window%icons/kill.svg:0x$[infostore.menu_icon_size]%" Delete
-+ "Destroy App%icons/destroy.svg:0x$[infostore.menu_icon_size]%" Destroy
++ "Close Window%$[infostore.kill_icon]%" Delete
++ "Destroy App%$[infostore.destroy_icon]%" Destroy
 
 DestroyMenu strawberrymenu
 AddToMenu strawberrymenu "Strawberry%icons/forward.svg:0x$[infostore.menu_icon_size]%"	Title
