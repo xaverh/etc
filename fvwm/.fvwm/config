@@ -354,6 +354,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
+*MainPanel: (Icon $[infostore.mansplain_icon], Action $[infostore.mansplain])
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)

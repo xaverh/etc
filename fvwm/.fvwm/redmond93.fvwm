@@ -19,6 +19,7 @@ InfoStoreAdd kill_icon icons/kill.png
 InfoStoreAdd destroy_icon icons/destroy.xpm
 InfoStoreAdd file_manager_icon icons/file-manager.png
 InfoStoreAdd terminal_icon icons/terminal.png
+InfoStoreAdd mansplain_icon icons/xman.xpm
 
 DefaultFont $[infostore.default_font]
 
