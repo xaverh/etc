@@ -16,7 +16,10 @@ AddToFunc switchpageandfocus
 + I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus) FlipFocus NoWarp
 
 InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
-InfoStoreAdd mansplain `Exec exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $$$$2" "$$$$1}' | xargs -r man -Tpdf | zathura -`
+
+DestroyFunc mansplain
+AddToFunc mansplain
++ I Exec `exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $$$$2" "$$$$1}' | xargs -r man -Tpdf | zathura -`
 
 ############################## Focus Policy ###################################
 
@@ -212,7 +215,7 @@ Key m A 4 $[infostore.centerwindow]
 Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
-Key F1 A 4 $[infostore.mansplain]
+Key F1 A 4 mansplain
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
 Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$$$1}' | xsel -ib`
@@ -354,7 +357,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
-*MainPanel: (Icon $[infostore.mansplain_icon], Action $[infostore.mansplain])
+*MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
