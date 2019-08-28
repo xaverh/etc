@@ -13,8 +13,8 @@ Octopus <img src="images/icons/octopus.svg" width="24" height="24" title="Octopu
 
 Tape <img src="images/icons/tape.svg" width="24" height="24" title="Tape"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Rock <img src="images/icons/rock.svg" width="24" height="24" title="Rock"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
-Cheese <img src="images/icons/cheese.svg" width="24" height="24" title="Cheese"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
-Cheese <img src="images/icons/sticktodesk.svg" width="24" height="24" title="Cheese"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
+Cheese <img src="images/icons/cheese.svg" width="24" height="24" title="🧀🍓"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
+Cheese <img src="images/icons/sticktodesk.svg" width="24" height="24" title="🧀"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Fondue <img src="images/icons/stickeverywhere.svg" width="24" height="24" title="Fondue"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Halloween SVGs <img src="images/icons/kill.svg" width="24" height="24" title="Gravestone"> <img src="images/icons/mansplain.svg" width="24" height="24" title="Spellbook"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Sci-Fi SVGs <img src="images/icons/destroy.svg" width="24" height="24" title="Apocalypse"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
@@ -23,3 +23,4 @@ Road Signs SVGs <img src="images/icons/topright.svg" width="24" height="24" titl
 Utilities SVGs <img src="images/icons/resize.svg" width="24" height="24" title="Hand"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 China SVGs <img src="images/icons/fullscreen.svg" width="24" height="24" title="Gong"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
 Fast Food SVGs <img src="images/icons/maximize.svg" width="24" height="24" title="🍔"> <img src="images/icons/center.svg" width="24" height="24" title="🍩"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
+Tropical SVGs <img src="images/icons/dolphin.svg" width="24" height="24" title="🐬"> made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com).  
