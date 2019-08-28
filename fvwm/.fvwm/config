@@ -2,10 +2,23 @@ Read ysgrifennwr.fvwm
 
 EwmhBaseStruts 40 83 15 15
 
-Style * Colorset 1, \
-        HilightColorset 2, \
-	BorderColorset 3, \
-	HilightBorderColorset 4
+Style *     Colorset 1,              \
+            HilightColorset 2,       \
+	    BorderColorset 3,        \
+	    HilightBorderColorset 4
+	    
+MenuStyle * MenuColorset 5,          \
+            ActiveColorset 6,        \
+	    GreyedColorset 7,        \
+	    TitleColorset 8
+
+*FvwmFormDefault: Font $[infostore.default_font]
+*FvwmFormDefault: InputFont $[infostore.default_font]
+*FvwmFormDefault: ButtonFont $[infostore.default_font]
+*FvwmFormDefault: TimeoutFont $[infostore.default_font]
+*FvwmFormDefault: Colorset 36
+*FvwmFormDefault: ItemColorset 35
+*FvwmFormDefault: ActivateOnPress off
 
 ######################### Shared Functionality ################################
 
