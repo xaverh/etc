@@ -21,3 +21,5 @@ set window-title-home-tilde true
 set window-title-page true
 set guioptions ""
 set selection-clipboard clipboard
+set window-width 700
+set window-height 950
