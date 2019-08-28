@@ -24,7 +24,7 @@ InfoStoreAdd mansplain_icon icons/xman.xpm
 DefaultFont $[infostore.default_font]
 
 Style * MWMButtons, FvwmBorder, FirmBorder, HandleWidth 4
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 2 4
+MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Animation, BorderWidth 2, VerticalItemSpacing 2 4
 
 ################################## Colorsets ##################################
 # http://fvwm-themes.sourceforge.net/doc/colorsets

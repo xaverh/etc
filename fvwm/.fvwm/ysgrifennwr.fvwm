@@ -24,7 +24,7 @@ InfoStoreAdd mansplain_icon icons/mansplain.svg:50x0
 DefaultFont $[infostore.default_font]
 
 Style * MWMButtons, FvwmBorder, FirmBorder, HandleWidth 2
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8, Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation, BorderWidth 2, VerticalItemSpacing 6 20
+MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore, ItemFormat "%s%3.1i%5.3l%5.3>", Font `xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=16:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1`, Animation, BorderWidth 2, VerticalItemSpacing 6 20
 
 ################################## Colorsets ##################################
 # http://fvwm-themes.sourceforge.net/doc/colorsets
