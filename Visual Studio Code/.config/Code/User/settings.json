@@ -75,9 +75,6 @@
   "[vue]": {
     "editor.tabSize": 4
   },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
   "workbench.settings.openDefaultSettings": false,
   "clang-format.language.typescript.enable": true,
   "clang-format.language.javascript.enable": false,
@@ -197,5 +194,6 @@
   "vetur.format.options.tabSize": 4,
   "prettier.useTabs": true,
   "files.autoSave": "afterDelay",
-  "editor.minimap.enabled": true
+  "editor.minimap.enabled": true,
+  "go.useLanguageServer": true
 }
