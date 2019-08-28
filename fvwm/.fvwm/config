@@ -2,11 +2,13 @@ Read ysgrifennwr.fvwm
 
 EwmhBaseStruts 40 83 15 15
 
+ExecUseShell /bin/zsh
+
 Style *     Colorset 1,              \
             HilightColorset 2,       \
 	    BorderColorset 3,        \
 	    HilightBorderColorset 4
-	    
+
 MenuStyle * MenuColorset 5,          \
             ActiveColorset 6,        \
 	    GreyedColorset 7,        \
@@ -20,6 +22,8 @@ MenuStyle * MenuColorset 5,          \
 *FvwmFormDefault: ItemColorset 35
 *FvwmFormDefault: ActivateOnPress off
 
+InfoStoreAdd dolphin_command 'for i ($FVWM_USERDIR/backdrops/*) printf -- "*backdropform: Choice BACKDROP $i off \\"$(basename $i)\\"\\n"'
+
 ######################### Shared Functionality ################################
 
 DestroyFunc switchpageandfocus
@@ -32,7 +36,7 @@ InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
 
 DestroyFunc mansplain
 AddToFunc mansplain
-+ I Exec `exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $$$$2" "$$$$1}' | xargs -r man -Tpdf | zathura -`
++ I -Exec `exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $2" "$1}' | xargs -r man -Tpdf | zathura -`
 
 ############################## Focus Policy ###################################
 
@@ -86,10 +90,11 @@ AddToFunc   StartFunction
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 
+# better use StartonPage/StartOnDesk for journalctl
 DestroyFunc InitFunction
 AddToFunc   InitFunction
 + I GotoDeskAndPage 0 1 1
-+ I Test (Init, f /usr/bin/urxvtd) Exec /bin/zsh -c 'urxvtd -q -o -f; urxvtc -geometry 170x50+100+40 -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
++ I Test (Init, f /usr/bin/urxvtd) Exec 'urxvtd -q -o -f; urxvtc -geometry 170x50+100+40 -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
 + I Wait journalctl
 + I GotoDeskAndPage 1 1 1
 + I Exec xmodmap $[HOME]/.Xmodmap
@@ -231,7 +236,7 @@ Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
 Key F1 A 4 mansplain
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
-Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$$$1}' | xsel -ib`
+-Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
 Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
 Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key XF86AudioMute A N Exec exec amixer sset Master mute
@@ -354,11 +359,33 @@ AddToMenu strawberrymenu "Strawberry%icons/forward.svg:0x$[infostore.menu_icon_s
 
 DestroyFunc MenuWindowOpsFunc
 AddToFunc MenuWindowOpsFunc
- +	"I"	Popup MenuWindowOps
++ I Popup MenuWindowOps
 
 DestroyFunc strawberrymenufunc
 AddToFunc strawberrymenufunc
- +	"I"	Popup strawberrymenu
++ I Popup strawberrymenu
+
+DestroyModuleConfig  backdropform: *
+*backdropform: WarpPointer
+*backdropform: Title "Select Backdrop"
+*backdropform: Line center
+*backdropform: Text "Select Backdrop $ACTION"
+*backdropform: Line left
+*backdropform: Text "Pattern:"
+*backdropform: Input         Command 30 ""
+*backdropform: Line          center
+*backdropform: Selection     cmd single
+PipeRead `/bin/zsh -c 'for i ($FVWM_USERDIR/backdrops/*) printf -- "*backdropform: Choice BACKDROP $i off \\"$(basename $i)\\"\\n"'`
+*backdropform: Line          expand
+*backdropform: Button        quit "$[gt.Execute]" F2
+*backdropform: Command       $(TERM?exec xterm -hold -T "$(Command)" -n "$(Command)" -e $(Command))
+*backdropform: Command       exec $(Command)
+*backdropform: Button        quit "$[gt.Cancel]" ^M
+*backdropform: Command       Nop
+
+DestroyFunc backdropfunc
+AddToFunc backdropfunc
++ I PipeRead '$[FVWM_USERDIR]/scripts/set-backdrop'
 
 DestroyModuleConfig MainPanel:*
 *MainPanel: Font $[infostore.default_font]
@@ -371,6 +398,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain
+*MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) Function backdropfunc
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
