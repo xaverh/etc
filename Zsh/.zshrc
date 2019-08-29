@@ -79,6 +79,7 @@ precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
 preexec () {print -Pn "\e]0;%n@%m: $2 ($TERM)\a"}
 
 sx simple-extract () {
+	local f
 	for f in "$@"; do
 		if [[ -f "$f" ]]; then
 			case "$f" in
