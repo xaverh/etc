@@ -14,6 +14,30 @@ MenuStyle * MenuColorset 5,          \
 	    GreyedColorset 7,        \
 	    TitleColorset 8
 
+# TODO: functions to start these in tmux
+# like $[TERMINAL] -geometry 170x50+100+40 -name Journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
+Style Journalctl StartsOnPage 0 1 1
+Style Weechat StartsOnPage 1 1 2
+
+# TODO: tmux attach via rofi
+# TODO: screenshots via maim
+# TODO: journalctl button (check if running, start or attach...)
+# TODO: name desktops
+# TODO: scroll half viewports
+# TODO: iw power_save
+# TODO: rofi desktop by name (maybe grep them out of this config)
+# TODO: lemonbar
+# TODO: autohide FvwmButtons
+# TODO: shutdown menu
+# TODO: FvwmPager in FvwmButtons
+# TODO: Volume Button in FvwmButtons
+# TODO: glitchlock
+# TODO: rofi window fetcher
+# TODO: unkillable windows?
+# TODO: neverfocus windows?
+# TODO: theme switcher
+# TODO: redefine UrgencyFunc to prevent focus stealing
+
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
 *FvwmFormDefault: ButtonFont $[infostore.default_font]
@@ -22,15 +46,24 @@ MenuStyle * MenuColorset 5,          \
 *FvwmFormDefault: ItemColorset 35
 *FvwmFormDefault: ActivateOnPress off
 
-InfoStoreAdd dolphin_command 'for i ($FVWM_USERDIR/backdrops/*) printf -- "*backdropform: Choice BACKDROP $i off \\"$(basename $i)\\"\\n"'
-
 ######################### Shared Functionality ################################
 
-DestroyFunc switchpageandfocus
-AddToFunc switchpageandfocus
+DestroyFunc scrollandmove
+AddToFunc scrollandmove
++ I Scroll $0 $1
++ I Move w$0 w$1 ewmhiwa
+
+DestroyFunc switchpageandrefocus
+AddToFunc switchpageandrefocus
 + I GotoPage $0 $1
-+ I All (CurrentPage, Focused) FlipFocus NoWarp
-+ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus) FlipFocus NoWarp
++ I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
++ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
+
+DestroyFunc scrollandrefocus
+AddToFunc scrollandrefocus
++ I Scroll $0 $1
++ I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
++ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
 
 InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
 
@@ -58,8 +91,8 @@ Style *	MinOverlapPercentPlacement, \
 DesktopSize 3x3
 
 EdgeScroll 0 0
-EdgeResistance -1
-EdgeThickness 0
+EdgeResistance 100
+EdgeThickness 1
 
 ClickTime 250
 MoveThreshold 3
@@ -89,15 +122,11 @@ AddToFunc   StartFunction
 + I Module FvwmButtons MainPanel
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
++ I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
++ I Test (Init) GotoDeskAndPage 1 1 1
++ I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
 
-# better use StartonPage/StartOnDesk for journalctl
-DestroyFunc InitFunction
-AddToFunc   InitFunction
-+ I GotoDeskAndPage 0 1 1
-+ I Test (Init, f /usr/bin/urxvtd) Exec 'urxvtd -q -o -f; urxvtc -geometry 170x50+100+40 -name journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
-+ I Wait journalctl
-+ I GotoDeskAndPage 1 1 1
-+ I Exec xmodmap $[HOME]/.Xmodmap
+# TODO: ExitFunction?
 
 ##################### Functions: Thumbnailed window icons #####################
 # https://xha.ch/2MpnHSo
@@ -154,6 +183,7 @@ Test (x google-chrome) + "G&oogle Chrome%/opt/google/chrome/product_logo_32.png%
 Test (x code) + "Visual Studio &Code%icons/code.png%" Exec exec code
 Test (x geeqie) + "Gee&qie%icons/geeqie.png%" Exec exec geeqie
 Test (x gimp) + "&Gimp%/usr/share/icons/hicolor/32x32/apps/gimp.png%" Exec exec gimp
+Test (x grafx2) + "grafX&2%/usr/share/icons/hicolor/scalable/apps/grafx2.svg:0x$[infostore.menu_icon_size]%" Exec exec grafx2
 Test (x rawtherapee) + "&RawTherapee%icons/rawtherapee.png%" Exec exec rawtherapee
 Test (x vlc) + "VLC" Exec exec vlc
 Test (x mpv) + "mp&v%/usr/share/icons/hicolor/scalable/apps/mpv.svg:0x$[infostore.menu_icon_size]%" Exec exec mpv --player-operation-mode=pseudo-gui
@@ -209,16 +239,32 @@ Key 3 A 4 GotoDesk 0 3
 Key 1 A S4 MovetoDesk 0 1
 Key 2 A S4 MovetoDesk 0 2
 Key 3 A S4 MovetoDesk 0 3
-Key w A 4 switchpageandfocus 0p -1p
-Key a A 4 switchpageandfocus -1p 0p
+Key h A M4 switchpageandrefocus -1p 0p
+Key j A M4 switchpageandrefocus 0p +1p
+Key k A M4 switchpageandrefocus 0p -1p
+Key l A M4 switchpageandrefocus +1p 0p
+Key h A 4 scrollandrefocus -25 0
+Key j A 4 scrollandrefocus +0 +25
+Key k A 4 scrollandrefocus +0 -25
+Key l A 4 scrollandrefocus +25  +0
+Key h A SM4 MovetoPage -1p 0p
+Key j A SM4 MovetoPage 0p +1p
+Key k A SM4 MovetoPage 0p -1p
+Key l A SM4 MovetoPage +1p 0p
+Key h A S4 AnimatedMove w-25 keep ewmhiwa
+Key j A S4 AnimatedMove keep w25 ewmhiwa
+Key k A S4 AnimatedMove keep w-25 ewmhiwa
+Key l A S4 AnimatedMove w25 keep ewmhiwa
+Key h A C4 scrollandmove -25 0
+Key j A C4 scrollandmove +0 +25
+Key k A C4 scrollandmove +0 -25
+Key l A C4 scrollandmove +25  +0
+Key h A CM4 scrollandmove -100 0
+Key j A CM4 scrollandmove +0 +100
+Key k A CM4 scrollandmove +0 -100
+Key l A CM4 scrollandmove +100  +0
 Key Prior A 4 GotoDesk -1
-Key s A 4 switchpageandfocus 0p +1p
-Key d A 4 switchpageandfocus +1p 0p
 Key Next A 4 GotoDesk +1
-Key w A S4 MovetoPage 0p -1p
-Key a A S4 MovetoPage -1p 0p
-Key s A S4 MovetoPage 0p +1p
-Key d A S4 MovetoPage +1p 0p
 Key Left A 4 ResizeMoveMaximize frame 50wa 100wa 0 0
 Key Right A 4 ResizeMoveMaximize frame 50wa 100wa -0 0
 Key Up A 4 ResizeMoveMaximize frame 100wa 50wa 0 0
@@ -229,10 +275,12 @@ Key Home A 4  ResizeMoveMaximize frame 50wa 50wa -0 0
 Key Delete A 4 ResizeMoveMaximize frame 50wa 50wa 0 -0
 Key f A 4 Maximize Fullscreen
 Key 0 A 4 Thumbnail
-Key m A 4 $[infostore.centerwindow]
+Key m A 4 Maximize toggle
+Key c A 4 $[infostore.centerwindow]
+Key p A 4 PlaceAgain Anim
 Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
-Key 8 A 4 ResizeMoveMaximize frame 40wa 59wa -0 0
-Key 9 A 4 ResizeMoveMaximize frame 40wa 39wa -0 -0
+Key 8 A 4 ResizeMoveMaximize frame 40wa 39wa -0 0
+Key 9 A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
 Key F1 A 4 mansplain
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
@@ -369,23 +417,25 @@ DestroyModuleConfig  backdropform: *
 *backdropform: WarpPointer
 *backdropform: Title "Select Backdrop"
 *backdropform: Line center
-*backdropform: Text "Select Backdrop $ACTION"
-*backdropform: Line left
-*backdropform: Text "Pattern:"
-*backdropform: Input         Command 30 ""
-*backdropform: Line          center
-*backdropform: Selection     cmd single
+*backdropform: Text "Select Backdrop"
+*backdropform: Line center
+*backdropform: Text "Background Color:"
+*backdropform: Input BG 30 "$BG"
+*backdropform: Line center
+*backdropform: Text "Foreground Color:"
+*backdropform: Input FG 30 "$FG"
+*backdropform: Line center
+*backdropform: Selection BACKDROP single
 PipeRead `/bin/zsh -c 'for i ($FVWM_USERDIR/backdrops/*) printf -- "*backdropform: Choice BACKDROP $i off \\"$(basename $i)\\"\\n"'`
-*backdropform: Line          expand
-*backdropform: Button        quit "$[gt.Execute]" F2
-*backdropform: Command       $(TERM?exec xterm -hold -T "$(Command)" -n "$(Command)" -e $(Command))
-*backdropform: Command       exec $(Command)
-*backdropform: Button        quit "$[gt.Cancel]" ^M
-*backdropform: Command       Nop
-
-DestroyFunc backdropfunc
-AddToFunc backdropfunc
-+ I PipeRead '$[FVWM_USERDIR]/scripts/set-backdrop'
+*backdropform: Line expand
+*backdropform: Button quit "Cancel (Esc)" ^[
+*backdropform: Command Nop
+*backdropform: Button continue "Restore Wallpaper (F6)" F6
+*backdropform: Command Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
+*backdropform: Button continue "Apply (F5)" F5
+*backdropform: Command Exec exec xsetroot -bitmap "$(BACKDROP)" -fg "$(FG)" -bg "$(BG)"
+*backdropform: Button quit "OK (Return)" ^M
+*backdropform: Command Nop
 
 DestroyModuleConfig MainPanel:*
 *MainPanel: Font $[infostore.default_font]
@@ -397,8 +447,8 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Rows 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
-*MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain
-*MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) Function backdropfunc
+*MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
+*MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 # *MainPanel: (1x1,Container(Rows 2,Frame 1))
 # *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
