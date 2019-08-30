@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -15,7 +14,7 @@ import (
 
 const (
 	// thermalZone is '*' in filename /sys/class/thermal/thermal_zone/*/temp
-	thermalZone       = "1"
+	thermalZone       = "2"
 	wifiDevice        = "wlan0"
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
@@ -26,20 +25,11 @@ const (
 	mouseRight        = "3"
 	mouseUp           = "4"
 	mouseDown         = "5"
+	// fvwmFifo should be a commandline argument
+	fvwmFifo = "/tmp/fvwmtojigglyroom"
 )
 
 var (
-	// Modules should not be strings but rather the modules themselves // XXX
-	modules = []string{
-		"alignRight",
-		"memoryUsage",
-		"networkThroughput",
-		"cpuTemperature",
-		"wifi",
-		"ipAddress",
-		"dateAndTime",
-	}
-
 	networkDevices = []string{
 		"eno1",
 		"wlan0",
@@ -83,101 +73,63 @@ func fixed(rate int) string {
 	return fmt.Sprintf("%d %s", rate, suf)
 }
 
-type alignRight struct {
-	Output chan string
+func updateFvwm(fvwm chan<- string) {
+	for {
+		file, err := os.OpenFile(fvwmFifo, os.O_CREATE, os.ModeNamedPipe)
+		if err != nil {
+			fvwm <- "failed to open pipe"
+		}
+
+		scanner := bufio.NewScanner(file)
+
+		for ok := true; ok; ok = scanner.Scan() {
+			fvwm <- scanner.Text()
+		}
+	}
 }
 
-type cpuTemperature struct {
-	Output chan string
+func updateAlignRight(aR chan<- string) {
+	aR <- "%{r}"
 }
 
-type dateAndTime struct {
-	Output chan string
-}
-
-type ipv4Address struct {
-	Output chan string
-}
-
-type memory struct {
-	Output chan string
-}
-
-type networkThroughput struct {
-	Output chan string
-}
-
-type power struct {
-	Output chan string
-}
-
-type wifi struct {
-	Output chan string
-}
-
-type barModule interface {
-	printToChannel()
-	getOutputChannel() chan string
-}
-
-func (ar alignRight) printToChannel() {
-	ar.Output <- "%{r}"
-}
-
-func (ar alignRight) getOutputChannel() chan string {
-	return ar.Output
-}
-
-func (θ cpuTemperature) printToChannel() {
+func updateTemperature(θ chan<- string) {
 	for {
 		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
 		if err != nil {
-			θ.Output <- "temp unknown"
+			θ <- "temp unknown"
 		}
-		θ.Output <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
+		θ <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
 		time.Sleep(time.Duration(7 * time.Second))
 	}
 }
 
-func (θ cpuTemperature) getOutputChannel() chan string {
-	return θ.Output
-}
-
-func (d dateAndTime) printToChannel() {
+func updateTime(d chan<- string) {
 	for {
-		d.Output <- time.Now().Local().Format(dateAndTimeFormat)
+		d <- time.Now().Local().Format(dateAndTimeFormat)
 		// sleep until beginning of next second
 		var now = time.Now()
 		time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))
 	}
 }
 
-func (d dateAndTime) getOutputChannel() chan string {
-	return d.Output
-}
-
-func (ip ipv4Address) printToChannel() {
+func updateIPAdress(ipv4 chan<- string) {
 	time.Sleep(time.Duration(3 * time.Second))
 	for {
 		out, err := exec.Command("ip", "route", "get", "8.8.8.8").Output()
 		if err != nil {
-			ip.Output <- "offline"
+			ipv4 <- "offline"
 		} else {
-			ip.Output <- ipRegex.FindString(srcIPRegex.FindString(string(out)))
+			ipv4 <- ipRegex.FindString(srcIPRegex.FindString(string(out)))
 		}
 		time.Sleep(time.Duration(3 * time.Second))
 	}
 }
 
-func (ip ipv4Address) getOutputChannel() chan string {
-	return ip.Output
-}
-
-func (mem memory) printToChannel() {
+func updateMemUse(mem chan<- string) {
 	for {
 		var file, err = os.Open("/proc/meminfo")
 		if err != nil {
-			mem.Output <- "err"
+			mem <- "err"
 		}
 
 		// done must equal the flag combination (0001 | 0010 | 0100 | 1000) = 15
@@ -185,7 +137,7 @@ func (mem memory) printToChannel() {
 		for info := bufio.NewScanner(file); done != 15 && info.Scan(); {
 			var prop, val = "", 0
 			if _, err = fmt.Sscanf(info.Text(), "%s %d", &prop, &val); err != nil {
-				mem.Output <- "err"
+				mem <- "err"
 			}
 			switch prop {
 			case "MemTotal:":
@@ -203,23 +155,19 @@ func (mem memory) printToChannel() {
 			}
 		}
 		file.Close()
-		mem.Output <- fmt.Sprintf("%d MB", used/1000)
+		mem <- fmt.Sprintf("%d MB", used/1000)
 		time.Sleep(time.Duration(5 * time.Second))
 	}
 }
 
-func (mem memory) getOutputChannel() chan string {
-	return mem.Output
-}
-
-func (net networkThroughput) printToChannel() {
+func updateNetUse(net chan<- string) {
 	rxOld := 0
 	txOld := 0
 	rate := 2
 	for {
 		file, err := os.Open("/proc/net/dev")
 		if err != nil {
-			net.Output <- "err"
+			net <- "err"
 		}
 
 		var void = 0 // target for unused values
@@ -237,29 +185,25 @@ func (net networkThroughput) printToChannel() {
 			}
 		}
 		file.Close()
-		net.Output <- fmt.Sprintf("%s%s%s", fixed((rxNow-rxOld)/rate), separatorModules, fixed((txNow-txOld)/rate))
+		net <- fmt.Sprintf("%s%s%s", fixed((rxNow-rxOld)/rate), separatorModules, fixed((txNow-txOld)/rate))
 		rxOld, txOld = rxNow, txNow
 		time.Sleep(time.Duration(2) * time.Second)
 	}
 }
 
-func (net networkThroughput) getOutputChannel() chan string {
-	return net.Output
-}
-
-func (p power) printToChannel() {
+func updatePower(pow chan<- string) {
 	const powerSupply = "/sys/class/power_supply/"
 	var enFull, enNow, enPerc int = 0, 0, 0
 	for {
 		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
 		if err != nil {
-			p.Output <- ""
+			pow <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 		batts, err := ioutil.ReadDir(powerSupply)
 		if err != nil {
-			p.Output <- "no battery"
+			pow <- "no battery"
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
@@ -292,7 +236,7 @@ func (p power) printToChannel() {
 		}
 
 		if enFull == 0 {
-			p.Output <- "Battery found but no readable full file"
+			pow <- "Battery found but no readable full file"
 		}
 
 		enPerc = enNow * 100 / enFull
@@ -301,90 +245,66 @@ func (p power) printToChannel() {
 			icon = pluggedSign
 		}
 
-		p.Output <- fmt.Sprintf("%d%%%%%s", enPerc, icon)
+		pow <- fmt.Sprintf("%d%%%%%s", enPerc, icon)
 		time.Sleep(time.Duration(13 * time.Second))
 	}
 }
 
-func (p power) getOutputChannel() chan string {
-	return p.Output
-}
-
-func (w wifi) printToChannel() {
+func updateWIFI(wifi chan<- string) {
 	sleepTime := 3 * time.Second
 	for {
 		iwOutput, err := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
 		if err != nil {
-			w.Output <- ""
+			wifi <- ""
 		} else {
 			if string(iwOutput) != "Not connected.\n" {
 				ssidString := ssidRegex.FindStringSubmatch(string(iwOutput))[0]
-				w.Output <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
+				wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
 			} else {
-				w.Output <- "no WIFI"
+				wifi <- "no WIFI"
 			}
 		}
 		time.Sleep(time.Duration(sleepTime))
 	}
 }
 
-func (w wifi) getOutputChannel() chan string {
-	return w.Output
+func feedLemonbar(status [8]string) {
+	fmt.Println(status[0], status[1], status[5])
 }
 
 func main() {
-	mods := make([]barModule, len(modules))
-	for i, v := range modules {
-		switch v {
-		case "memoryUsage":
-			mod := memory{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "networkThroughput":
-			mod := networkThroughput{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "cpuTemperature":
-			mod := cpuTemperature{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "ipAddress":
-			mod := ipv4Address{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "dateAndTime":
-			mod := dateAndTime{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "power":
-			mod := power{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "wifi":
-			mod := wifi{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		case "alignRight":
-			mod := alignRight{Output: make(chan string)}
-			go mod.printToChannel()
-			mods[i] = &mod
-		}
-	}
-
-	// https://stackoverflow.com/questions/19992334/how-to-listen-to-n-channels-dynamic-select-statement#
-	cases := make([]reflect.SelectCase, len(modules))
-	for i, ch := range mods {
-		cases[i] = reflect.SelectCase{Dir: reflect.SelectRecv, Chan: reflect.ValueOf(ch.getOutputChannel())}
-	}
-
-	results := make([]string, len(modules))
+	memChan := make(chan string)
+	netChan := make(chan string)
+	tempChan := make(chan string)
+	wifiChan := make(chan string)
+	ipChan := make(chan string)
+	powChan := make(chan string)
+	timeChan := make(chan string)
+	fvwmChan := make(chan string)
+	alignRightChan := make(chan string)
+	go updateMemUse(memChan)
+	go updateNetUse(netChan)
+	go updateTemperature(tempChan)
+	go updateWIFI(wifiChan)
+	go updateIPAdress(ipChan)
+	go updatePower(powChan)
+	go updateTime(timeChan)
+	go updateFvwm(fvwmChan)
+	go updateAlignRight(alignRightChan)
+	var status [8]string
 	for {
-		i, v, ok := reflect.Select(cases)
-		if !ok {
-			cases = append(cases[:i], cases[i+1:]...)
-		} else {
-			results[i] = v.String()
-			fmt.Println(strings.Join(results, separatorModules))
+		select {
+		case status[0] = <-fvwmChan:
+			feedLemonbar(status)
+		case status[5] = <-timeChan:
+			feedLemonbar(status)
+		case status[2] = <-memChan:
+		case status[3] = <-netChan:
+		case status[4] = <-tempChan:
+		case status[5] = <-wifiChan:
+		case status[6] = <-ipChan:
+		case status[7] = <-powChan:
+		case status[1] = <-alignRightChan:
 		}
 	}
 }
