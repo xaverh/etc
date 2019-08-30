@@ -74,14 +74,13 @@ func fixed(rate int) string {
 }
 
 func updateFvwm(fvwm chan<- string) {
+	file, err := os.OpenFile(fvwmFifo, os.O_CREATE, os.ModeNamedPipe)
+	if err != nil {
+		fvwm <- "failed to open pipe"
+	}
+
 	for {
-		file, err := os.OpenFile(fvwmFifo, os.O_CREATE, os.ModeNamedPipe)
-		if err != nil {
-			fvwm <- "failed to open pipe"
-		}
-
 		scanner := bufio.NewScanner(file)
-
 		for ok := true; ok; ok = scanner.Scan() {
 			fvwm <- scanner.Text()
 		}
@@ -268,8 +267,8 @@ func updateWIFI(wifi chan<- string) {
 	}
 }
 
-func feedLemonbar(status [8]string) {
-	fmt.Println(status[0], status[1], status[5])
+func feedLemonbar(status []string) {
+	fmt.Println(strings.Join(status, separatorModules))
 }
 
 func main() {
@@ -291,12 +290,12 @@ func main() {
 	go updateTime(timeChan)
 	go updateFvwm(fvwmChan)
 	go updateAlignRight(alignRightChan)
-	var status [8]string
+	status := make([]string, 9)
 	for {
 		select {
 		case status[0] = <-fvwmChan:
 			feedLemonbar(status)
-		case status[5] = <-timeChan:
+		case status[8] = <-timeChan:
 			feedLemonbar(status)
 		case status[2] = <-memChan:
 		case status[3] = <-netChan:

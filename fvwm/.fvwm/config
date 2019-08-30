@@ -133,16 +133,17 @@ OpaqueMoveSize unlimited
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
++ I Exec mkfifo /tmp/fvwmtojigglyroom && sleep infinity > /tmp/fvwmtojigglyroom &
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
 + I Module FvwmButtons MainPanel
-+ I Module FvwmEvent desktopfifo
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
-+ I Test (!f /tmp/fvwmtojigglyroom) Exec mkfifo /tmp/fvwmtojigglyroom
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Test (Init) GotoDeskAndPage 1 1 1
 + I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
 + I Exec exec go run $[FVWM_USERDIR]/jigglyroom/jigglyroom.go | lemonbar -n Jigglyroom -f $[infostore.bitmap_font]
++ I Module FvwmEvent desktopfifo
++ I reportdeskname
 
 DestroyFunc ExitFunction
 AddToFunc ExitFunction
