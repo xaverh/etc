@@ -2,6 +2,7 @@ ImagePath $[FVWM_USERDIR]/redmond93/images/:$[FVWM_USERDIR]/common/images/:+
 
 InfoStoreAdd menu_icon_size 32
 InfoStoreAdd default_font '"xft:px sans nouveaux:style=Regular:pixelsize=8:encoding=iso10646-1"'
+InfoStoreAdd bitmap_font `-sgi-screen-medium-r-normal--12-120-72-72-m-70-iso8859-1`
 InfostoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^`
 
 InfoStoreAdd applications_icon icons/programs.xpm

@@ -1,6 +1,6 @@
 Read ysgrifennwr.fvwm
 
-EwmhBaseStruts 40 83 15 15
+EwmhBaseStruts 40 83 24 15
 
 ExecUseShell /bin/zsh
 
@@ -26,8 +26,6 @@ Style Weechat StartsOnPage 1 1 2
 # TODO: scroll half viewports
 # TODO: iw power_save
 # TODO: rofi desktop by name (maybe grep them out of this config)
-# TODO: lemonbar
-# TODO: autohide FvwmButtons
 # TODO: shutdown menu
 # TODO: FvwmPager in FvwmButtons
 # TODO: Volume Button in FvwmButtons
@@ -37,6 +35,7 @@ Style Weechat StartsOnPage 1 1 2
 # TODO: neverfocus windows?
 # TODO: theme switcher
 # TODO: redefine UrgencyFunc to prevent focus stealing
+# TODO: desktop switch buttons
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -58,6 +57,12 @@ AddToFunc switchpageandrefocus
 + I GotoPage $0 $1
 + I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
 + I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
+
+# do we need that, it refocuses anyway most of the time
+# DestroyFunc refocus
+# AddToFunc refocus
+# + I All (CurrentDesk, Focused, !Iconic) FlipFocus
+# + I TestRc (NoMatch) Prev (CurrentDesk, AcceptsFocus, !Iconic) FlipFocus
 
 DestroyFunc scrollandrefocus
 AddToFunc scrollandrefocus
@@ -91,7 +96,7 @@ Style *	MinOverlapPercentPlacement, \
 DesktopSize 3x3
 
 EdgeScroll 0 0
-EdgeResistance 100
+EdgeResistance -1
 EdgeThickness 1
 
 ClickTime 250
@@ -103,14 +108,24 @@ Style * IconBox screen c 15 15 -15 -15, \
 
 Style * ResizeOpaque, \
 	SnapAttraction 5 SameType ScreenAll, \
-	SnapGrid, \
 	DecorateTransient, \
 	StackTransientParent, \
 	WindowShadeScrolls, \
 	WindowShadeSteps 10, \
 	StickyAcrossPagesIcon, \
 	!IconTitle, \
-	IconBackgroundRelief 0
+	IconBackgroundRelief 0, \
+	EdgeMoveResistance 10, \
+	EdgeMoveDelay 128, \
+	EdgeResizeDelay -1
+
+Style Jigglyroom Layer 5,        \
+                 !Title,         \
+		 !Borders,       \
+		 !Handles,       \
+		 Sticky,         \
+		 WindowListSkip, \
+		 NeverFocus
 
 OpaqueMoveSize unlimited
 
@@ -120,13 +135,18 @@ DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
 + I Module FvwmButtons MainPanel
++ I Module FvwmEvent desktopfifo
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
++ I Test (!f /tmp/fvwmtojigglyroom) Exec mkfifo /tmp/fvwmtojigglyroom
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Test (Init) GotoDeskAndPage 1 1 1
 + I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
++ I Exec exec go run $[FVWM_USERDIR]/jigglyroom/jigglyroom.go | lemonbar -n Jigglyroom -f $[infostore.bitmap_font]
 
-# TODO: ExitFunction?
+DestroyFunc ExitFunction
+AddToFunc ExitFunction
++ I Exec pkill jigglyroom
 
 ##################### Functions: Thumbnailed window icons #####################
 # https://xha.ch/2MpnHSo
@@ -141,6 +161,7 @@ DestroyFunc DeThumbnail
 AddToFunc DeThumbnail
 	+ I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-destroy "$[w.id]" $[infostore.thumbsfolder]'
 
+# do we need this? does this need something else?
 *FvwmEvent: deiconify DeThumbnail
 
 ################################## Wallpaper ##################################
@@ -263,8 +284,10 @@ Key h A CM4 scrollandmove -100 0
 Key j A CM4 scrollandmove +0 +100
 Key k A CM4 scrollandmove +0 -100
 Key l A CM4 scrollandmove +100  +0
-Key Prior A 4 GotoDesk -1
-Key Next A 4 GotoDesk +1
+Key Prior A 4 GoToDesk +1
+Key Next A 4 GoToDesk -1
+Key Prior A S4 MoveToDesk +1
+Key Next A S4 MoveToDesk -1
 Key Left A 4 ResizeMoveMaximize frame 50wa 100wa 0 0
 Key Right A 4 ResizeMoveMaximize frame 50wa 100wa -0 0
 Key Up A 4 ResizeMoveMaximize frame 100wa 50wa 0 0
@@ -279,7 +302,7 @@ Key m A 4 Maximize toggle
 Key c A 4 $[infostore.centerwindow]
 Key p A 4 PlaceAgain Anim
 Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
-Key 8 A 4 ResizeMoveMaximize frame 40wa 39wa -0 0
+Key 8 A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
 Key F1 A 4 mansplain
 Key Return A 4 Exec exec $[TERMINAL]
@@ -361,7 +384,7 @@ ButtonStyle 1 - MwmDecorMenu
 
 ########################### FvwmButtons - MainPanel ############################
 
-Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus
+Style MainPanel !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus, StaysOnTop
 
 DestroyMenu SnapWindowMenu
 AddToMenu SnapWindowMenu
@@ -443,22 +466,13 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Colorset 10
 *MainPanel: ActiveColorset 11
 *MainPanel: PressColorset 11
-*MainPanel: ButtonGeometry 68x68+5+0@p
-*MainPanel: Rows 1
+*MainPanel: ButtonGeometry 68x68+0-5@p
+*MainPanel: Columns 1
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
 *MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
-# *MainPanel: (1x1,Container(Rows 2,Frame 1))
-# *MainPanel: (Icon icons/forward.svg:32x0+0-5, Action (Mouse 1) `Exec exec strawberry --next`, Action (Mouse 3) `Exec exec strawberry --restart-or-previous`)
-# *MainPanel: (Icon icons/cheese.svg:24x0, Action `Exec exec strawberry --toggle-pretty-osd`)
-# *MainPanel: (Icon icons/tape.svg:23x0, Action `Exec exec strawberry --stop-after-current`)
-# *MainPanel: (Icon icons/rock.svg:23x0, Action `Exec exec strawberry --play-pause`)
-# *MainPanel: (End)
-*MainPanel: (2x1,Container(Rows 2,Frame 1))
-*MainPanel: (Swallow DateTime 'Module FvwmScript FvwmScript-DateTime', Frame 0)
-*MainPanel: (End)
 
 ################################## FvwmPager ##################################
 
@@ -511,11 +525,22 @@ AddToFunc AutoHideHide
 DestroyFunc AutoHideEnter
 AddToFunc AutoHideEnter
 	+ I AutoHide FvwmPager 500 NE
+	+ I AutoHide MainPanel 800 W
 
-AddToFunc selective_raiselower
-+ I WindowId $1 (FvwmButtons) $0
+#AddToFunc selective_raiselower
+#+ I WindowId $1 (FvwmButtons) $0
 
 DestroyModuleConfig FvwmAuto: *
 AddToFunc StartFunction
 	+ I Module FvwmAuto 0 -menter "Silent AutoHideEnter"
-	+ I Module FvwmAuto 256 -passid -menter "Silent selective_raiselower raise" "Silent selective_raiselower lower"
+#	+ I Module FvwmAuto 256 -passid -menter "Silent selective_raiselower raise" "Silent selective_raiselower lower"
+
+############################### FvwmEvent #####################################
+
+DestroyFunc reportdeskname
+AddToFunc reportdeskname
++ I Exec echo $[desk.name$[desk.n]] > /tmp/fvwmtojigglyroom
+
+DestroyModuleConfig desktopfifo: *
+*desktopfifo: Cmd
+*desktopfifo: new_desk reportdeskname
