@@ -22,7 +22,9 @@
     "*.ymp": "xml",
     "*.network": "ini",
     "*.link": "ini",
-    "fonts-config": "properties"
+    "fonts-config": "properties",
+    "*.xbm": "c",
+    "*.xpm": "c"
   },
   "files.exclude": {
     "**/.git": true,
@@ -194,5 +196,10 @@
   "prettier.useTabs": true,
   "files.autoSave": "afterDelay",
   "editor.minimap.enabled": true,
-  "go.useLanguageServer": true
+  "go.useLanguageServer": true,
+  "cmake.configureOnOpen": true,
+  "explorer.incrementalNaming": "smart",
+  "editor.cursorSurroundingLines": 3,
+  "terminal.integrated.cwd": "${fileDirname}",
+  "terminal.integrated.automationShell.linux": "/bin/zsh"
 }
