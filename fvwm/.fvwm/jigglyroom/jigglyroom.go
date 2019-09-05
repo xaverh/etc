@@ -88,7 +88,7 @@ func updateFvwm(fvwm chan<- string) {
 }
 
 func updateAlignRight(aR chan<- string) {
-	aR <- "%{r}"
+	aR <- makeClickable("%{O2000}", "urxvtc", mouseLeft) + "%{r}"
 }
 
 func updateTemperature(θ chan<- string) {
