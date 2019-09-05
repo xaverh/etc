@@ -297,12 +297,12 @@ func main() {
 			feedLemonbar(status)
 		case status[8] = <-timeChan:
 			feedLemonbar(status)
-		case status[2] = <-memChan:
-		case status[3] = <-netChan:
-		case status[4] = <-tempChan:
-		case status[5] = <-wifiChan:
-		case status[6] = <-ipChan:
-		case status[7] = <-powChan:
+		case status[3] = <-memChan:
+		case status[4] = <-netChan:
+		case status[5] = <-tempChan:
+		case status[6] = <-wifiChan:
+		case status[7] = <-ipChan:
+		case status[2] = <-powChan:
 		case status[1] = <-alignRightChan:
 		}
 	}
