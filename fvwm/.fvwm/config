@@ -20,22 +20,20 @@ Style Journalctl StartsOnPage 0 1 1
 Style Weechat StartsOnPage 1 1 2
 
 # TODO: tmux attach via rofi
-# TODO: screenshots via maim
 # TODO: journalctl button (check if running, start or attach...)
-# TODO: name desktops
-# TODO: scroll half viewports
 # TODO: iw power_save
 # TODO: rofi desktop by name (maybe grep them out of this config)
 # TODO: shutdown menu
 # TODO: FvwmPager in FvwmButtons
 # TODO: Volume Button in FvwmButtons
 # TODO: glitchlock
-# TODO: rofi window fetcher
 # TODO: unkillable windows?
 # TODO: neverfocus windows?
 # TODO: theme switcher
 # TODO: redefine UrgencyFunc to prevent focus stealing
 # TODO: desktop switch buttons
+# TODO: geometry paging in the middle
+# TODO: screenshot button in FvwmButton
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -44,6 +42,8 @@ Style Weechat StartsOnPage 1 1 2
 *FvwmFormDefault: Colorset 36
 *FvwmFormDefault: ItemColorset 35
 *FvwmFormDefault: ActivateOnPress off
+
+*FvwmScript: Path $[FVWM_USERDIR]/scripts
 
 ######################### Shared Functionality ################################
 
@@ -95,6 +95,8 @@ Style *	MinOverlapPercentPlacement, \
 
 DesktopSize 3x3
 
+DesktopName 1 Main
+
 EdgeScroll 0 0
 EdgeResistance -1
 EdgeThickness 1
@@ -141,7 +143,7 @@ AddToFunc   StartFunction
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Test (Init) GotoDeskAndPage 1 1 1
 + I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
-+ I Exec exec go run $[FVWM_USERDIR]/jigglyroom/jigglyroom.go | lemonbar -n Jigglyroom -f $[infostore.bitmap_font]
++ I Exec exec go run $[FVWM_USERDIR]/jigglyroom/jigglyroom.go | lemonbar -n Jigglyroom -f $[infostore.bitmap_font] | /bin/zsh
 + I Module FvwmEvent desktopfifo
 + I reportdeskname
 
@@ -251,7 +253,9 @@ AddToMenu   MenuSendToPage
 # See http://fvwm.org/documentation/faq/#why-do-numlock-capslock-and-scrolllock-interfere-with-clicktofocus-andor-my-mouse-bindings
 IgnoreModifiers L25
 
-Key space A 4 Menu MenuFvwmRoot
+Key space A 4 Exec rofi -show run
+Key space A S4 Menu MenuFvwmRoot
+Key grave A 4 Exec rofi -show window
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key Tab A 1 WindowList Root c c NoDeskSort, SelectOnRelease Alt_L, CurrentAtEnd, IconifiedAtEnd
 Key F4 A N WindowList Root c c NoDeskSort, SelectOnRelease F4, CurrentAtEnd, IconifiedAtEnd
@@ -306,6 +310,7 @@ Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
 Key F1 A 4 mansplain
+Key r A S4 Restart
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
 -Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
@@ -323,6 +328,8 @@ Silent Key XF86AudioNext A N Exec exec strawberry --next
 Silent Key KP_End A 4 Exec exec strawberry --play-pause
 Silent Key KP_Divide A 4 Exec exec strawberry --restart-or-previous
 Silent Key KP_Multiply A 4 Exec exec strawberry --next
+Silent Key Print A N Exec mkdir -p $[HOME]/tmp/scr && maim -c 0.88671875,0.15294117647059,0.56862745098039 -u -s -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
+Silent Key Print A 4 Exec mkdir -p $[HOME]/tmp/scr && exec maim -u -d 3 -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
 
 ################################### Mouse #####################################
 # Window Buttons: [1 3 5 7 9  TTTTT  0 8 6 4 2]
@@ -459,7 +466,7 @@ PipeRead `/bin/zsh -c 'for i ($FVWM_USERDIR/backdrops/*) printf -- "*backdropfor
 *backdropform: Button continue "Apply (F5)" F5
 *backdropform: Command Exec exec xsetroot -bitmap "$(BACKDROP)" -fg "$(FG)" -bg "$(BG)"
 *backdropform: Button quit "OK (Return)" ^M
-*backdropform: Command Nop
+*backdropform: Command Exec exec xsetroot -bitmap "$(BACKDROP)" -fg "$(FG)" -bg "$(BG)"
 
 DestroyModuleConfig MainPanel:*
 *MainPanel: Font $[infostore.default_font]
@@ -474,6 +481,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
 *MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
+*MainPanel: (Swallow volumebutton 'Module FvwmScript volumebutton', Frame 0)
 
 ################################## FvwmPager ##################################
 
@@ -489,7 +497,7 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: LabelsAbove
 *FvwmPager: Font $[infostore.default_font]
 *FvwmPager: SolidSeparators
-*FvwmPager: Geometry 251x171-0+0
+*FvwmPager: Geometry 251x171+0+0
 
 Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, NeverFocus, WindowListSkip
 
@@ -525,7 +533,7 @@ AddToFunc AutoHideHide
 
 DestroyFunc AutoHideEnter
 AddToFunc AutoHideEnter
-	+ I AutoHide FvwmPager 500 NE
+	+ I AutoHide FvwmPager 800 NW
 	+ I AutoHide MainPanel 800 W
 
 #AddToFunc selective_raiselower
