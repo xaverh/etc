@@ -23,6 +23,7 @@ InfoStoreAdd terminal_icon icons/terminal.png
 InfoStoreAdd mansplain_icon icons/xman.xpm
 InfoStoreAdd dolphin_icon icons/dolphin.png
 InfoStoreAdd journalctlattach_icon icons/journal.xpm
+InfoStoreAdd strawberrymenu_icon icons/strawberry.png
 
 DefaultFont $[infostore.default_font]
 

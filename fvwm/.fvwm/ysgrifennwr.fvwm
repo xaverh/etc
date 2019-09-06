@@ -23,6 +23,7 @@ InfoStoreAdd terminal_icon /usr/share/icons/elementary/apps/32/utilities-termina
 InfoStoreAdd mansplain_icon icons/mansplain.svg:50x0
 InfoStoreAdd journalctlattach_icon icons/journal.svg:50x0
 InfoStoreAdd dolphin_icon icons/dolphin.svg:50x0
+InfoStoreAdd strawberrymenu_icon icons/cheese.svg:50x0
 
 DefaultFont $[infostore.default_font]
 
