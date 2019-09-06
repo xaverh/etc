@@ -15,12 +15,10 @@ MenuStyle * MenuColorset 5,          \
 	    TitleColorset 8
 
 # TODO: functions to start these in tmux
-# like $[TERMINAL] -geometry 170x50+100+40 -name Journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"'
-Style Journalctl StartsOnPage 0 1 1
-Style Weechat StartsOnPage 1 1 2
+Style Journalctl StartsOnPage 0 0 0
+Style Weechat StartsOnPage 1 0 1
 
 # TODO: tmux attach via rofi
-# TODO: journalctl button (check if running, start or attach...)
 # TODO: iw power_save
 # TODO: rofi desktop by name (maybe grep them out of this config)
 # TODO: shutdown menu
@@ -34,6 +32,7 @@ Style Weechat StartsOnPage 1 1 2
 # TODO: desktop switch buttons
 # TODO: geometry paging in the middle
 # TODO: screenshot button in FvwmButton
+# TODO: goto journalctl if already open
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -46,6 +45,10 @@ Style Weechat StartsOnPage 1 1 2
 *FvwmScript: Path $[FVWM_USERDIR]/scripts
 
 ######################### Shared Functionality ################################
+
+DestroyFunc journalctlattach
+AddToFunc journalctlattach
++ I Exec `exec $[TERMINAL] -geometry 170x50+100+40 -name Journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000"`
 
 DestroyFunc scrollandmove
 AddToFunc scrollandmove
@@ -74,7 +77,7 @@ InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
 
 DestroyFunc mansplain
 AddToFunc mansplain
-+ I -Exec `exec apropos . | rofi -dmenu -i | awk '{gsub(/[()]/,""); print $2" "$1}' | xargs -r man -Tpdf | zathura -`
++ I -Exec `exec apropos . | rofi -dmenu -p mansplain -i | awk '{gsub(/[()]/,""); print $2" "$1}' | xargs -r man -Tpdf | zathura -`
 
 ############################## Focus Policy ###################################
 
@@ -93,9 +96,10 @@ Style *	MinOverlapPercentPlacement, \
 
 ########################### Desktops and Pages ################################
 
-DesktopSize 3x3
+DesktopSize 2x2
 
-DesktopName 1 Main
+DesktopName 0 journalctl
+DesktopName 1 main
 
 EdgeScroll 0 0
 EdgeResistance -1
@@ -141,8 +145,8 @@ AddToFunc   StartFunction
 + I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
-+ I Test (Init) GotoDeskAndPage 1 1 1
-+ I Test (Init) Exec xmodmap $[HOME]/.Xmodmap
++ I Test (Init) GotoDeskAndPage 1 0 0
++ I Test Exec xmodmap $[HOME]/.Xmodmap
 + I Exec exec go run $[FVWM_USERDIR]/jigglyroom/jigglyroom.go | lemonbar -n Jigglyroom -f $[infostore.bitmap_font] | /bin/zsh
 + I Module FvwmEvent desktopfifo
 + I reportdeskname
@@ -258,7 +262,7 @@ Key space A S4 Menu MenuFvwmRoot
 Key grave A 4 Exec rofi -show window
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key Tab A 1 WindowList Root c c NoDeskSort, SelectOnRelease Alt_L, CurrentAtEnd, IconifiedAtEnd
-Key F4 A N WindowList Root c c NoDeskSort, SelectOnRelease F4, CurrentAtEnd, IconifiedAtEnd
+# Key F4 A N WindowList Root c c NoDeskSort, SelectOnRelease F4, CurrentAtEnd, IconifiedAtEnd
 Key 1 A 4 GotoDesk 0 1
 Key 2 A 4 GotoDesk 0 2
 Key 3 A 4 GotoDesk 0 3
@@ -310,6 +314,7 @@ Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
 Key F1 A 4 mansplain
+Key F12 A 4 journalctlattach
 Key r A S4 Restart
 Key Return A 4 Exec exec $[TERMINAL]
 Key Insert A 4 Exec clipmenu
@@ -479,6 +484,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
+*MainPanel: (Icon $[infostore.journalctlattach_icon], Action Function journalctlattach)
 *MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
 *MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
 *MainPanel: (Swallow volumebutton 'Module FvwmScript volumebutton', Frame 0)
@@ -497,7 +503,7 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: LabelsAbove
 *FvwmPager: Font $[infostore.default_font]
 *FvwmPager: SolidSeparators
-*FvwmPager: Geometry 251x171+0+0
+*FvwmPager: Geometry 169x100+0+0
 
 Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, NeverFocus, WindowListSkip
 
