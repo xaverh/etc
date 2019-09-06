@@ -21,6 +21,7 @@ InfoStoreAdd destroy_icon icons/destroy.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd file_manager_icon icons/file-manager.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd terminal_icon /usr/share/icons/elementary/apps/32/utilities-terminal.svg:0x$[infostore.menu_icon_size]
 InfoStoreAdd mansplain_icon icons/mansplain.svg:50x0
+InfoStoreAdd journalctlattach_icon icons/journal.svg:50x0
 InfoStoreAdd dolphin_icon icons/dolphin.svg:50x0
 
 DefaultFont $[infostore.default_font]
