@@ -486,7 +486,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
 *MainPanel: (Icon $[infostore.journalctlattach_icon], Action Function journalctlattach)
 *MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
-*MainPanel: (Icon icons/cheese.svg:32x0, Action (Mouse 0) Function strawberrymenufunc)
+*MainPanel: (Icon $[infostore.strawberrymenu_icon], Action (Mouse 0) Function strawberrymenufunc)
 *MainPanel: (Swallow volumebutton 'Module FvwmScript volumebutton', Frame 0)
 
 ################################## FvwmPager ##################################
