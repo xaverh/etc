@@ -187,7 +187,7 @@ systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
 
 
-# Add user in YaST, add to groups wheel,systemd-journal, /bin/zsh as shell
+# Add user in YaST, add to groups wheel,systemd-journal, systemd-resolve(?) /bin/zsh as shell
 
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat > /etc/zypp/repos.d/vscode.repo <<"EOF"
@@ -260,9 +260,9 @@ for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/
 xdg-mime default org.pwmt.zathura.desktop application/pdf
 xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook-rar
 xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook+zip
-xdg-mime default org.pwmt.zathura.desktop application/epub+zip
+xdg-mime default mupdf.desktop application/epub+zip
 xdg-mime default org.pwmt.zathura.desktop application/x-cb7
-xdg-mime default pcmanfm-qt.desktop inode/directory
+xdg-mime default pcmanfm.desktop inode/directory
 xdg-mime default sxiv.desktop image/jpeg
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
