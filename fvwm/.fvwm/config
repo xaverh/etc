@@ -33,6 +33,7 @@ Style Weechat StartsOnPage 1 0 1
 # TODO: geometry paging in the middle
 # TODO: screenshot button in FvwmButton
 # TODO: goto journalctl if already open
+# TODO: rofi-based Qillqaq/Ysgrifennwr color chooser
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -213,7 +214,7 @@ Test (x geeqie) + "Gee&qie%icons/geeqie.png%" Exec exec geeqie
 Test (x gimp) + "&Gimp%/usr/share/icons/hicolor/32x32/apps/gimp.png%" Exec exec gimp
 Test (x grafx2) + "grafX&2%/usr/share/icons/hicolor/scalable/apps/grafx2.svg:0x$[infostore.menu_icon_size]%" Exec exec grafx2
 Test (x rawtherapee) + "&RawTherapee%icons/rawtherapee.png%" Exec exec rawtherapee
-Test (x vlc) + "VLC" Exec exec vlc
+Test (x vlc) + "&VLC media player%/usr/share/icons/hicolor/32x32/apps/vlc.xpm%" Exec exec vlc
 Test (x mpv) + "mp&v%/usr/share/icons/hicolor/scalable/apps/mpv.svg:0x$[infostore.menu_icon_size]%" Exec exec mpv --player-operation-mode=pseudo-gui
 Test (x strawberry) + "Stra&wberry%icons/strawberry.svg:0x$[infostore.menu_icon_size]%" Exec exec strawberry
 Test (x steam) + "&Steam%/usr/share/icons/hicolor/32x32/apps/steam.png%" Exec exec steam
