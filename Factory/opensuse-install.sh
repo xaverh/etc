@@ -216,7 +216,7 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 fvwm2 lemonbar xwd xrandr ImageMagick rxvt-unicode rofi xclip strawberry steam steamtricks gimp geeqie zathura zathura-plugin\* youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox vlc git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable
+zypper in kernel-default patterns-base-x11 fvwm2 lemonbar xwd xrandr ImageMagick rxvt-unicode rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp geeqie zathura zathura-plugin\* youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox vlc git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable
 
 ## DVD?
 zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
