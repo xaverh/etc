@@ -1,6 +1,6 @@
 ImagePath $[FVWM_USERDIR]/ysgrifennwr/images/:$[FVWM_USERDIR]/common/images/:+
 
-InfoStoreAdd menu_icon_size 36
+InfoStoreAdd menu_icon_size 32
 InfoStoreAdd default_font `"xft:.Helvetica Neue DeskInterface:style=Regular:pixelsize=12:antialias=true:hintstyle=1:lcdfilter=1:rgba=1:encoding=iso10646-1"`
 InfoStoreAdd bitmap_font `-sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1`
 InfoStoreAdd mainmenu_decoration `@decorations/linux-menu.xpm@^#808080^ FVWM Title`
@@ -24,6 +24,7 @@ InfoStoreAdd mansplain_icon icons/mansplain.svg:50x0
 InfoStoreAdd journalctlattach_icon icons/journal.svg:50x0
 InfoStoreAdd dolphin_icon icons/dolphin.svg:50x0
 InfoStoreAdd strawberrymenu_icon icons/cheese.svg:50x0
+InfoStoreAdd screenshot_icon icons/screenshot.svg:50x0
 
 DefaultFont $[infostore.default_font]
 
