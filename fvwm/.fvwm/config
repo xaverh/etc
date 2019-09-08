@@ -153,7 +153,6 @@ AddToFunc   StartFunction
 + I Exec mkfifo /tmp/fvwmtojigglyroom && sleep infinity > /tmp/fvwmtojigglyroom &
 + I Test (Init, f $[FVWM_USERDIR]/.BGdefault) Exec exec fvwm-root $[FVWM_USERDIR]/.BGdefault
 + I Module FvwmButtons MainPanel
-+ I Module FvwmPager *
 + I PipeRead '$[FVWM_USERDIR]/scripts/thumbnail-folder'
 + I Test (Init, f /usr/bin/urxvtd) Exec urxvtd -q -o -f
 + I Test (Init) GotoDeskAndPage 1 0 0
@@ -491,8 +490,8 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: Colorset 10
 *MainPanel: ActiveColorset 11
 *MainPanel: PressColorset 11
-*MainPanel: ButtonGeometry 68x68+0-5@p
-*MainPanel: Columns 1
+*MainPanel: ButtonGeometry 68x68+0-0@p
+*MainPanel: Columns 2
 *MainPanel: (Padding 3, Swallow(UseOld,NoClose,Respawn) wmbubble `Exec exec wmbubble`)
 *MainPanel: (Icon icons/window-options.svg:50x0, Action (Mouse 0) Function MenuWindowOpsFunc)
 *MainPanel: (Icon $[infostore.mansplain_icon], Action Function mansplain)
@@ -501,6 +500,9 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Icon $[infostore.strawberrymenu_icon], Action (Mouse 0) Function strawberrymenufunc)
 *MainPanel: (Icon $[infostore.screenshot_icon], Action (Mouse 1) Function screenshot_selection, Action (Mouse 3) Function screenshot_all)
 *MainPanel: (Swallow volumebutton 'Module FvwmScript volumebutton', Frame 0)
+*MainPanel: (2x2, Frame 5, Padding 2 2, Container(Frame 1))
+*MainPanel: (Swallow FvwmPager 'Module FvwmPager *', Frame 0)
+*MainPanel: (End)
 
 ################################## FvwmPager ##################################
 
@@ -516,11 +518,8 @@ DestroyModuleConfig FvwmPager:*
 *FvwmPager: LabelsAbove
 *FvwmPager: Font $[infostore.default_font]
 *FvwmPager: SolidSeparators
-*FvwmPager: Geometry 169x100+0+0
 
 Style FvwmPager !Title, !Borders, StaysOnTop, Sticky, NeverFocus, WindowListSkip
-
-# TODO: raise Pager when changing desks and maybe when changing pages
 
 # redefine to not warp the cursor
 DestroyFunc WindowListFunc
@@ -552,7 +551,6 @@ AddToFunc AutoHideHide
 
 DestroyFunc AutoHideEnter
 AddToFunc AutoHideEnter
-	+ I AutoHide FvwmPager 800 NW
 	+ I AutoHide MainPanel 800 W
 
 #AddToFunc selective_raiselower
