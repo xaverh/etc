@@ -1,0 +1,7 @@
+include "%L"
+
+<Multi_key> <less> <a> : "<a href=''></a>" # Compose < a
+<Multi_key> <8> <equal> <c> : "🍆" # Eggplant
+<Multi_key> <c> <equal> <8> : "🍆" # Eggplant
+<Multi_key> <x> <h> : "Xaver Hellauer"
+<Multi_key> <X> <H> : "xaver@hellauer.bayern"
