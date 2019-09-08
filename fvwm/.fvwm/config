@@ -4,6 +4,8 @@ EwmhBaseStruts 40 83 24 15
 
 ExecUseShell /bin/zsh
 
+InfoStoreAdd filemanager pcmanfm
+
 Style *     Colorset 1,              \
             HilightColorset 2,       \
 	    BorderColorset 3,        \
@@ -31,8 +33,9 @@ Style Weechat StartsOnPage 1 0 1
 # TODO: redefine UrgencyFunc to prevent focus stealing
 # TODO: desktop switch buttons
 # TODO: geometry paging in the middle
-# TODO: screenshot button in FvwmButton
 # TODO: goto journalctl if already open
+# TODO: WeeChat starter
+# TODO: consistency in starters (what is in FvwmButtons, what is in menu?)
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -78,6 +81,14 @@ InfoStoreAdd centerwindow `ResizeMoveMaximize frame 75wa 85wa 260p 100p`
 DestroyFunc mansplain
 AddToFunc mansplain
 + I -Exec `exec apropos . | rofi -dmenu -p mansplain -i | awk '{gsub(/[()]/,""); print $2" "$1}' | xargs -r man -Tpdf | zathura -`
+
+DestroyFunc screenshot_selection
+AddToFunc screenshot_selection
++ I Exec mkdir -p $[HOME]/tmp/scr && maim -c 0.88671875,0.15294117647059,0.56862745098039 -u -s -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
+
+DestroyFunc screenshot_all
+AddToFunc screenshot_all
++ I Exec mkdir -p $[HOME]/tmp/scr && exec maim -u -d 3 -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
 
 ############################## Focus Policy ###################################
 
@@ -203,8 +214,7 @@ Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" E
 
 DestroyMenu MenuApplications
 AddToMenu   MenuApplications "Applications" Title
-Test (x pcmanfm) + "Fil&e Manager%$[infostore.file_manager_icon]%" Exec exec pcmanfm
-Test (x pcmanfm-qt) + "Fil&e Manager%$[infostore.file_manager_icon]%" Exec exec pcmanfm-qt
++ "Fil&e Manager%$[infostore.file_manager_icon]%" Exec exec $[infostore.filemanager]
 + "rxv&t-unicode%$[infostore.terminal_icon]%" Exec exec $[TERMINAL]
 Test (x firefox) + "Mozilla &Firefox%/usr/lib64/firefox/browser/chrome/icons/default/default32.png%" Exec exec firefox
 Test (x google-chrome) + "G&oogle Chrome%/opt/google/chrome/product_logo_32.png%" Exec exec google-chrome
@@ -314,6 +324,7 @@ Key 7 A 4 ResizeMoveMaximize frame 59wa 100wa 0 0
 Key 8 A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
 Key 9 A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
 Key F1 A 4 mansplain
+Key e A 4 Exec exec $[infostore.filemanager]
 Key F12 A 4 journalctlattach
 Key r A S4 Restart
 Key Return A 4 Exec exec $[TERMINAL]
@@ -334,8 +345,8 @@ Silent Key XF86AudioNext A N Exec exec strawberry --next
 Silent Key KP_End A 4 Exec exec strawberry --play-pause
 Silent Key KP_Divide A 4 Exec exec strawberry --restart-or-previous
 Silent Key KP_Multiply A 4 Exec exec strawberry --next
-Silent Key Print A N Exec mkdir -p $[HOME]/tmp/scr && maim -c 0.88671875,0.15294117647059,0.56862745098039 -u -s -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
-Silent Key Print A 4 Exec mkdir -p $[HOME]/tmp/scr && exec maim -u -d 3 -m 10 > $[HOME]/tmp/scr/"screenshot-$$(date --iso-8601=ns).png"
+Silent Key Print A N screenshot_selection
+Silent Key Print A 4 screenshot_all
 
 ################################### Mouse #####################################
 # Window Buttons: [1 3 5 7 9  TTTTT  0 8 6 4 2]
@@ -488,6 +499,7 @@ DestroyModuleConfig MainPanel:*
 *MainPanel: (Icon $[infostore.journalctlattach_icon], Action Function journalctlattach)
 *MainPanel: (Icon $[infostore.dolphin_icon], Action (Mouse 1) -PipeRead `/bin/zsh -c 'printf -- "Module FvwmForm backdropform FG=#%06x BG=#%06x\\n" $(shuf -i0-16777215 -n2)'`)
 *MainPanel: (Icon $[infostore.strawberrymenu_icon], Action (Mouse 0) Function strawberrymenufunc)
+*MainPanel: (Icon $[infostore.screenshot_icon], Action (Mouse 1) Function screenshot_selection, Action (Mouse 3) Function screenshot_all)
 *MainPanel: (Swallow volumebutton 'Module FvwmScript volumebutton', Frame 0)
 
 ################################## FvwmPager ##################################
