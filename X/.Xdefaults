@@ -47,33 +47,6 @@ XTerm*boldColors: false
 XTerm*autoWrap: true
 XTerm*reverseWrap: true
 
-! ! Qillqaq:
-! *.background:             #1E1E1E
-! *.backgroundColor:        #1E1E1E
-! *.color0:                 #1E1E1E
-! *.color1:                 #E32791
-! *.color2:                 #30C798
-! *.color3:                 #E3C472
-! *.color4:                 #6769E6
-! *.color5:                 #E59FDF
-! *.color6:                 #81D8D0
-! *.color7:                 #969696
-! *.color8:                 #515151
-! *.color9:                 #E466AD
-! *.color10:                #6CD1B2
-! *.color11:                #E4CF98
-! *.color12:                #9091E6
-! *.color13:                #E5B6E1
-! *.color14:                #A2DCD7
-! *.color15:                #E5E6E6
-! *.foreground:             #E5E6E6
-! XTerm*borderColor:        #E5E6E6
-! *.cursorColor:            #20BBFC
-! URxvt.cursorColor2:       #1E1E1E
-! URxvt.highlightColor:     [50]#E5E6E6
-! URxvt.highlightTextColor: [80]#1E1E1E
-
-
 ! Ysgrifennwr:
 *.background:             #F9F8F4
 *.backgroundColor:        #F9F8F4
@@ -99,3 +72,53 @@ XTerm*borderColor:        #424242
 URxvt.cursorColor2:       #424242
 URxvt.highlightColor:     [80]#999999
 URxvt.highlightTextColor: [80]#F9F8F4
+
+! Ysgrifennwr:
+Ysgrifennwr*background:             #F9F8F4
+Ysgrifennwr*backgroundColor:        #F9F8F4
+Ysgrifennwr*color0:                 #F9F8F4
+Ysgrifennwr*color1:                 #E32791
+Ysgrifennwr*color2:                 #488432
+Ysgrifennwr*color3:                 #A25D0E
+Ysgrifennwr*color4:                 #2C65B5
+Ysgrifennwr*color5:                 #B062A7
+Ysgrifennwr*color6:                 #27BBBE
+Ysgrifennwr*color7:                 #999999
+Ysgrifennwr*color8:                 #B8B8B8
+Ysgrifennwr*color9:                 #9F1B66
+Ysgrifennwr*color10:                #325D23
+Ysgrifennwr*color11:                #71410A
+Ysgrifennwr*color12:                #1F477F
+Ysgrifennwr*color13:                #7B4474
+Ysgrifennwr*color14:                #1B8486
+Ysgrifennwr*color15:                #424242
+Ysgrifennwr*foreground:             #424242
+Ysgrifennwr*cursorColor:            #FC9520
+Ysgrifennwr*cursorColor2:       #424242
+Ysgrifennwr*highlightColor:     [80]#999999
+Ysgrifennwr*highlightTextColor: [80]#F9F8F4
+
+! ! Qillqaq:
+Qillqaq*background:             #1E1E1E
+Qillqaq*backgroundColor:        #1E1E1E
+Qillqaq*color0:                 #1E1E1E
+Qillqaq*color1:                 #E32791
+Qillqaq*color2:                 #30C798
+Qillqaq*color3:                 #E3C472
+Qillqaq*color4:                 #6769E6
+Qillqaq*color5:                 #E59FDF
+Qillqaq*color6:                 #81D8D0
+Qillqaq*color7:                 #969696
+Qillqaq*color8:                 #515151
+Qillqaq*color9:                 #E466AD
+Qillqaq*color10:                #6CD1B2
+Qillqaq*color11:                #E4CF98
+Qillqaq*color12:                #9091E6
+Qillqaq*color13:                #E5B6E1
+Qillqaq*color14:                #A2DCD7
+Qillqaq*color15:                #E5E6E6
+Qillqaq*foreground:             #E5E6E6
+Qillqaq*cursorColor:            #20BBFC
+Qillqaq*cursorColor2:       #1E1E1E
+Qillqaq*highlightColor:     [50]#E5E6E6
+Qillqaq*highlightTextColor: [80]#1E1E1E
