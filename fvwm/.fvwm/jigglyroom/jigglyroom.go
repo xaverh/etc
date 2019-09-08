@@ -14,7 +14,6 @@ import (
 
 const (
 	// thermalZone is '*' in filename /sys/class/thermal/thermal_zone/*/temp
-	thermalZone       = "2"
 	wifiDevice        = "wlan0"
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
@@ -30,6 +29,7 @@ const (
 )
 
 var (
+	thermalZone    = "2"
 	networkDevices = []string{
 		"eno1",
 		"wlan0",
@@ -272,6 +272,9 @@ func feedLemonbar(status []string) {
 }
 
 func main() {
+	if os.Getenv("HOSTNAME") == "andermatt" {
+		thermalZone = "2"
+	}
 	memChan := make(chan string)
 	netChan := make(chan string)
 	tempChan := make(chan string)
