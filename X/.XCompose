@@ -1,7 +1,17 @@
 include "%L"
 
-<Multi_key> <less> <a> : "<a href=''></a>" # Compose < a
-<Multi_key> <8> <equal> <c> : "🍆" # Eggplant
-<Multi_key> <c> <equal> <8> : "🍆" # Eggplant
-<Multi_key> <x> <h> : "Xaver Hellauer"
-<Multi_key> <X> <H> : "xaver@hellauer.bayern"
+<Multi_key> <8> <equal> <c>               : "🍆" # Eggplant
+<Multi_key> <c> <equal> <8>               : "🍆" # Eggplant
+<Multi_key> <x> <h>                       : "Xaver Hellauer"
+<Multi_key> <X> <H>                       : "xaver@hellauer.bayern"
+<Multi_key> <greater> <greater>           : "ʻ"   U02BB # Okina
+<Multi_key> <colon> <colon>               : "‘"   leftsinglequotemark # LEFT SINGLE QUOTATION MARK
+<Multi_key> <quotedbl> <quotedbl>         : "’"   rightsinglequotemark # RIGHT SINGLE QUOTATION MARK
+<Multi_key> <semicolon> <semicolon>       : "“"   leftdoublequotemark # LEFT DOUBLE QUOTATION MARK
+<Multi_key> <apostrophe> <apostrophe>     : "”"   rightdoublequotemark # RIGHT DOUBLE QUOTATION MARK
+<Multi_key> <less> <less>                 : "‚"   singlelowquotemark # SINGLE LOW-9 QUOTATION MARK
+<Multi_key> <comma> <comma>               : "„"   doublelowquotemark # DOUBLE LOW-9 QUOTATION MARK
+<Multi_key> <bracketleft> <bracketleft>   : "«"   guillemotleft # LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+<Multi_key> <bracketright> <bracketright> : "»"   guillemotright # RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+<Multi_key> <braceleft> <braceleft>       : "‹"   # LEFT-POINTING SINGLE ANGLE QUOTATION MARK
+<Multi_key> <braceright> <braceright>     : "›"   # RIGHT-POINTING SINGLE ANGLE QUOTATION MARK
