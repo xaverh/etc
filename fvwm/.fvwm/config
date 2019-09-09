@@ -143,8 +143,7 @@ Style Jigglyroom Layer 5,        \
 
 OpaqueMoveSize unlimited
 
-# "Geometry Window" in the middle of the screen
-Emulate Mwm
+HideGeometryWindow
 
 ############################### Start Function ################################
 
