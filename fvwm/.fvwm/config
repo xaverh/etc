@@ -21,10 +21,8 @@ Style Journalctl StartsOnPage 0 0 0
 Style Weechat StartsOnPage 1 0 1
 
 # TODO: tmux attach via rofi
-# TODO: iw power_save
 # TODO: rofi desktop by name (maybe grep them out of this config)
 # TODO: shutdown menu
-# TODO: FvwmPager in FvwmButtons
 # TODO: Volume Button in FvwmButtons
 # TODO: glitchlock
 # TODO: unkillable windows?
@@ -32,7 +30,6 @@ Style Weechat StartsOnPage 1 0 1
 # TODO: theme switcher
 # TODO: redefine UrgencyFunc to prevent focus stealing
 # TODO: desktop switch buttons
-# TODO: geometry paging in the middle
 # TODO: goto journalctl if already open
 # TODO: WeeChat starter
 # TODO: consistency in starters (what is in FvwmButtons, what is in menu?)
@@ -145,6 +142,9 @@ Style Jigglyroom Layer 5,        \
 		 NeverFocus
 
 OpaqueMoveSize unlimited
+
+# "Geometry Window" in the middle of the screen
+Emulate Mwm
 
 ############################### Start Function ################################
 
