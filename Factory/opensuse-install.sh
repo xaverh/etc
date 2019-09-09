@@ -238,6 +238,7 @@ systemctl enable iwd.service
 systemctl enable btrfs-trim.timer
 systemctl enable firewalld.service
 
+iw dev wlan0 set power_save off
 
 
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
