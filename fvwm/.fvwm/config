@@ -285,22 +285,22 @@ Key h A 4 scrollandrefocus -25 0
 Key j A 4 scrollandrefocus +0 +25
 Key k A 4 scrollandrefocus +0 -25
 Key l A 4 scrollandrefocus +25  +0
-Key h A SM4 MovetoPage -1p 0p
-Key j A SM4 MovetoPage 0p +1p
-Key k A SM4 MovetoPage 0p -1p
-Key l A SM4 MovetoPage +1p 0p
-Key h A S4 AnimatedMove w-25 keep ewmhiwa
-Key j A S4 AnimatedMove keep w25 ewmhiwa
-Key k A S4 AnimatedMove keep w-25 ewmhiwa
-Key l A S4 AnimatedMove w25 keep ewmhiwa
-Key h A C4 scrollandmove -25 0
-Key j A C4 scrollandmove +0 +25
-Key k A C4 scrollandmove +0 -25
-Key l A C4 scrollandmove +25  +0
-Key h A CM4 scrollandmove -100 0
-Key j A CM4 scrollandmove +0 +100
-Key k A CM4 scrollandmove +0 -100
-Key l A CM4 scrollandmove +100  +0
+Key h A CM4 MovetoPage -1p 0p
+Key j A CM4 MovetoPage 0p +1p
+Key k A CM4 MovetoPage 0p -1p
+Key l A CM4 MovetoPage +1p 0p
+Key h A C4 AnimatedMove w-25 keep ewmhiwa
+Key j A C4 AnimatedMove keep w25 ewmhiwa
+Key k A C4 AnimatedMove keep w-25 ewmhiwa
+Key l A C4 AnimatedMove w25 keep ewmhiwa
+Key h A S4 scrollandmove -25 0
+Key j A S4 scrollandmove +0 +25
+Key k A S4 scrollandmove +0 -25
+Key l A S4 scrollandmove +25  +0
+Key h A SM4 scrollandmove -100 0
+Key j A SM4 scrollandmove +0 +100
+Key k A SM4 scrollandmove +0 -100
+Key l A SM4 scrollandmove +100  +0
 Key Prior A 4 GoToDesk +1
 Key Next A 4 GoToDesk -1
 Key Prior A S4 MoveToDesk +1
