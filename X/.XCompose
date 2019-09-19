@@ -36,3 +36,5 @@ include "%L"
 <Multi_key> <7> <slash> <8>               : "⅞"   # VULGAR FRACTION SEVEN EIGHTHS
 <Multi_key> <1> <slash> <space>           : "⅟"   # FRACTION NUMERATOR ONE
 <Multi_key> <0> <slash> <3>               : "↉"   # VULGAR FRACTION ZERO THIRDS
+<Multi_key> <bar> <b>                     : "฿"   # THAI CURRENCY SYMBOL BAHT
+<Multi_key> <bar> <B>                     : "₿"   # BITCOIN SIGN
