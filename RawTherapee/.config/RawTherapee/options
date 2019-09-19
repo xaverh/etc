@@ -2,7 +2,7 @@
 TabbedEditor=false
 StoreLastProfile=true
 StartupDirectory=last
-StartupPath=/home/xha/pix/2019/08/17
+StartupPath=/home/xha/pix/2019/09/11
 DateFormat=%y-%m-%d
 AdjusterMinDelay=100
 AdjusterMaxDelay=200
@@ -10,7 +10,7 @@ MultiUser=true
 Language=English (US)
 LanguageAutoDetect=true
 Theme=TooWaGrey - Dark-GTK3-20_
-Version=5.6
+Version=5.7
 DarkFramesPath=
 FlatFieldsPath=
 Verbose=false
@@ -52,7 +52,7 @@ menuGroupFileOperations=true
 menuGroupProfileOperations=true
 menuGroupExtProg=true
 MaxRecentFolders=15
-RecentFolders=/home/xha/pix/2019/08/17;/home/xha/pix/2019/08/31;/home/xha/pix/2019/09/03;/home/xha/pix/2019/07/15;/home/xha/pix/2019/07/17;/home/xha/pix/2019/07/18;/home/xha/pix/2019/07/19;/home/xha/pix/2019/07/20;/home/xha/pix/2019/07/21;/home/xha/pix/2019/07/23;/home/xha/pix/2019/07/24;/home/xha/pix/2019/07/25;/home/xha/pix/2019/08/03;/home/xha/pix/2019/08/04;/home/xha/pix/2019/08/10;
+RecentFolders=/home/xha/pix/2019/09/11;/home/xha/pix/2019/09/12;/home/xha/pix/2019/09/09;/home/xha/pix/2019/09/08;/home/xha/pix/2019/09/07;/home/xha/pix/2019/09/05;/home/xha/pix/2019/09/04;/home/xha/pix/2019/09/02;/home/xha/pix/2019/09/01;/home/xha/pix/2019/09/10;/home/xha/pix/2019/09/03;/home/xha/pix/2019/08/31;/home/xha/pix/2019/08/30;/home/xha/pix/2019;/home/xha/pix;
 
 [Clipping Indication]
 HighlightThreshold=253
@@ -115,10 +115,10 @@ CustomProfileBuilderKeys=0
 
 [GUI]
 Favorites=
-WindowWidth=1434
-WindowHeight=984
-WindowX=244
-WindowY=52
+WindowWidth=1276
+WindowHeight=1004
+WindowX=-149
+WindowY=41
 WindowMonitor=0
 MeowMonitor=-1
 MeowFullScreen=false
@@ -130,7 +130,7 @@ MeowY=30
 WindowMaximized=false
 DetailWindowWidth=-1
 DetailWindowHeight=-1
-DirBrowserWidth=260
+DirBrowserWidth=250
 DirBrowserHeight=350
 SortType=0
 PreferencesWidth=1061
@@ -138,7 +138,7 @@ PreferencesHeight=863
 SaveAsDialogWidth=920
 SaveAsDialogHeight=680
 ToolPanelWidth=432
-BrowserToolPanelWidth=120
+BrowserToolPanelWidth=-38
 BrowserToolPanelHeight=600
 BrowserToolPanelOpened=false
 EditorFilmStripOpened=true
@@ -299,6 +299,7 @@ LastVibranceCurvesDir=/home/xha/.config/RawTherapee/profiles
 LastProfilingReferenceDir=/home/xha/.config/RawTherapee/profiles
 LastLensProfileDir=
 LastICCProfCreatorDir=/home/xha/.config/RawTherapee/profiles
+LastCopyMovePath=
 GimpPluginShowInfoDialog=true
 
 [Lensfun]
