@@ -273,7 +273,7 @@ func feedLemonbar(status []string) {
 
 func main() {
 	if os.Getenv("HOSTNAME") == "andermatt" {
-		thermalZone = "2"
+		thermalZone = "1"
 	}
 	memChan := make(chan string)
 	netChan := make(chan string)
