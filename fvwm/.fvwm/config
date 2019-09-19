@@ -24,7 +24,6 @@ Style Weechat StartsOnPage 1 0 1
 # TODO: rofi desktop by name (maybe grep them out of this config)
 # TODO: shutdown menu
 # TODO: Volume Button in FvwmButtons
-# TODO: glitchlock
 # TODO: unkillable windows?
 # TODO: neverfocus windows?
 # TODO: theme switcher
@@ -45,6 +44,10 @@ Style Weechat StartsOnPage 1 0 1
 *FvwmScript: Path $[FVWM_USERDIR]/scripts
 
 ######################### Shared Functionality ################################
+
+DestroyFunc glitchlock
+AddToFunc glitchlock
++ I Exec exec '$[FVWM_USERDIR]/scripts/glitchlock'
 
 DestroyFunc journalctlattach
 AddToFunc journalctlattach
@@ -206,7 +209,7 @@ Test (x bluetoothctl) + "Connect Setúbal%$[infostore.bluetoothspeaker_icon]%" E
 + "&Wallpapers%$[infostore.wallpapers_icon]%" Popup WallpaperMenu
 + "" Nop
 + "&Restart FVWM%$[infostore.restart_icon]%" Restart
-+ "&Lock Screen%$[infostore.lock_icon]%" Exec slock
++ "&Lock Screen%$[infostore.lock_icon]%" glitchlock
 + "&Reboot%$[infostore.reboot_icon]%" Module FvwmScript FvwmScript-ConfirmReboot
 + "&Shutdown%$[infostore.shutdown_icon]%" Module FvwmScript FvwmScript-ConfirmShutdown
 
@@ -345,6 +348,7 @@ Silent Key KP_Divide A 4 Exec exec strawberry --restart-or-previous
 Silent Key KP_Multiply A 4 Exec exec strawberry --next
 Silent Key Print A N screenshot_selection
 Silent Key Print A 4 screenshot_all
+Silent Key Pause A 4 glitchlock
 
 ################################### Mouse #####################################
 # Window Buttons: [1 3 5 7 9  TTTTT  0 8 6 4 2]
