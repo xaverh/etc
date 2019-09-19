@@ -1,0 +1,64 @@
+#/bin/sh
+
+# Glichting screen lock script by xzvf
+# https://www.reddit.com/r/unixporn/comments/cuk1v4/i3lock_glitched_screenlock_with_imagemagick_and/
+# modified by Xaver Hellauer
+
+thumbsfolder=$(mktemp -d -t glitchlock-XXXXXXXXXX)
+
+pngfile="${thumbsfolder}/image.png"
+bmpfile="${thumbsfolder}/image.bmp"
+glitchedfile="${thumbsfolder}/image_g.bmp"
+
+maim $pngfile
+
+# convert to bmp and pixelate
+magick convert -rotate -90 $pngfile $bmpfile
+
+
+for a in {1,2,4,5,10}
+do
+    # Glitch it with sox FROM: https://maryknize.com/blog/glitch_art_with_sox_imagemagick_and_vim/
+    sox -t ul -c 1 -r 48k $bmpfile -t ul $glitchedfile trim 0 90s : echo 1 1 $((a*2)) 0.1
+    # Rotate it by 90 degrees
+    magick convert -scale $((100/(a)))% -scale $((100*(a)))% -rotate 90 $glitchedfile $bmpfile
+done
+
+
+# Add lock icon, pixelate and convert back to png
+magick convert -font "Times-New-Roman" -pointsize 26 -draw "text 0,0 '
+    Hello!
+
+    I hacked your device, because I sent you this message from your account. If you have already changed your password, my malware will be intercepts it every time.
+
+    You may not know me, and you are most likely wondering why you are receiving this email, right?
+    In fact, I posted a malicious program on adults (pornography) of some websites, and you know that you visited these websites to enjoy (you know what I mean).
+
+    While you were watching video clips, my trojan started working as a RDP (remote desktop) with a keylogger that gave me access to your screen as well as a webcam.
+
+    Immediately after this, my program gathered all your contacts from messenger, social networks, and also by e-mail.
+
+    What I’ve done?
+    I made a double screen video. The first part shows the video you watched (you have good taste, yes … but strange for me and other normal people), and the second part
+    shows the recording of your webcam.
+
+    What should you do?
+
+    Well, I think \$ 672 (USD dollars) is a fair price for our little secret. You will make a bitcoin payment (if you don’t know, look for „how to buy bitcoins“ on Google).
+
+    ₿ Address: 1MosZ3uk9smgWQn3FCF1Miw7apF6r9TWjH
+    (This is CASE sensitive, please copy and paste it)
+
+    Remarks:
+    You have 2 days (48 hours) to pay. (I have a special code, and at the moment I know that you have read this email).
+
+    If I don’t get bitcoins, I will send your video to all your contacts, including family members, colleagues, etc.
+    However, if I am paid, I will immediately destroy the video, and my trojan will be destruct someself.
+
+    If you want to get proof, answer „Yes!“ and resend this letter to youself. And I will definitely send your video to your any 11 contacts.
+
+    This is a non-negotiable offer, so please do not waste my personal and other people’s time by replying to this email.
+
+    Bye!'" -channel RGBA -fill '#ff00ff' $bmpfile $pngfile
+
+i3lock -e -i $pngfile
