@@ -245,7 +245,7 @@ zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/h
 
 zypper in clipmenu clipnotify wmbubble
 
-# Intel: libvulkan_intel gstreamer-plugins-vaapi
+# Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
 # NVIDIA:
 # AMD:
 
