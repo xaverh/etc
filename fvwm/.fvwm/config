@@ -332,6 +332,7 @@ Key Return A 4 Exec exec $[TERMINAL]
 Key Return A S4 Exec exec $[TERMINAL] -name Qillqaq
 Key Insert A 4 Exec clipmenu
 -Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
+-Key ssharp A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
 Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
 Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key XF86AudioMute A N Exec exec amixer sset Master mute
