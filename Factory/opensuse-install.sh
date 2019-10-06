@@ -216,7 +216,7 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 fvwm2 lemonbar xwd xrandr ImageMagick sox i3lock rxvt-unicode rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp zathura zathura-plugin\* youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable
+zypper in kernel-default patterns-base-x11 fvwm2 lemonbar xwd xrandr ImageMagick sox i3lock rxvt-unicode rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp zathura zathura-plugin\* youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts
 
@@ -262,7 +262,7 @@ for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/
 
 xdg-mime default org.pwmt.zathura.desktop application/pdf
 xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook-rar
-xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook+zip
+xdg-mime default mupdf.desktop application/vnd.comicbook+zip
 xdg-mime default mupdf.desktop application/epub+zip
 xdg-mime default org.pwmt.zathura.desktop application/x-cb7
 xdg-mime default pcmanfm.desktop inode/directory
