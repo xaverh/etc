@@ -1,5 +1,5 @@
 /* XPM */
-static char * linux-menu_xpm[] = {
+static char * linux_menu_xpm[] = {
 "25 135 4 1",
 " 	c None s None",
 ".	c white",
