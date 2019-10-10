@@ -272,7 +272,7 @@ func main() {
 	for {
 		select {
 		case status[6] = <-timeChan:
-			setStatus(C.CString(strings.Join(status[:], separatorModules)))
+			setStatus(C.CString(" " + strings.Join(status[:], separatorModules)))
 		case status[1] = <-memChan:
 		case status[2] = <-netChan:
 		case status[3] = <-tempChan:
