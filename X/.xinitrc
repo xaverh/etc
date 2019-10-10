@@ -40,8 +40,16 @@ export XMODIFIERS="@im=none"
 
 numlockx &
 
+go run $HOME/etc/suckless/jigglyroom/jigglyroom.go &
 
-exec fvwm
+urxvtd -q -o -f
+
+while true; do
+    # Log stderror to a file
+    dwm 2> ~/.dwm.log
+    # No error logging
+    #dwm >/dev/null 2>&1
+done
 
 # call failsafe
 exit 0
