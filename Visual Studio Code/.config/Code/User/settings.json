@@ -128,14 +128,14 @@
       ]
     },
     {
-      "id": "Drag and Drop support",
+      "id": "multiCursorPaste",
       "overrideWorkspaceSettings": true,
       "values": [
         {
-          "editor.dragAndDrop": false
+          "editor.multiCursorPaste": "spread"
         },
         {
-          "editor.dragAndDrop": true
+          "editor.multiCursorPaste": "full"
         }
       ]
     }
@@ -152,7 +152,6 @@
   "debug.toolBarLocation": "docked",
   "latex-workshop.message.update.show": false,
   "workbench.list.keyboardNavigation": "filter",
-  "workbench.useExperimentalGridLayout": true,
   "latex-workshop.latex.autoBuild.run": "never",
   "breadcrumbs.enabled": true,
   "breadcrumbs.symbolPath": "on",
@@ -183,7 +182,7 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
+  "workbench.colorTheme": "Ysgrifennwr",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
@@ -197,9 +196,11 @@
   "files.autoSave": "afterDelay",
   "editor.minimap.enabled": true,
   "go.useLanguageServer": true,
-  "cmake.configureOnOpen": true,
   "explorer.incrementalNaming": "smart",
   "editor.cursorSurroundingLines": 3,
   "terminal.integrated.cwd": "${fileDirname}",
-  "terminal.integrated.automationShell.linux": "/bin/zsh"
+  "terminal.integrated.automationShell.linux": "/bin/zsh",
+  "scm.defaultViewMode": "tree",
+  "editor.multiCursorModifier": "alt",
+  "editor.multiCursorPaste": "spread"
 }
