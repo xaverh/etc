@@ -9,6 +9,7 @@ export VISUAL=vim
 export PAGER=less
 export AWS_REGION=eu-central-1
 export CM_LAUNCHER=rofi
+export CM_DIR=$XDG_RUNTIME_DIR
 
 # (( EUID != 0 )) && umask 0077
 
