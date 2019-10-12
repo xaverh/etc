@@ -1,12 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char* fonts[] = {
-    "SGI Screen:size=11"};
+static const unsigned int borderpx = 1; /* border pixel of windows */
+static const unsigned int snap = 32;    /* snap pixel */
+static const int showbar = 1;           /* 0 means no bar */
+static const int topbar = 1;            /* 0 means bottom bar */
+static const char* fonts[] = {"sans-serif:size=11"};
 static const char col_gray1[] = "#1e1e1e";
 // static const char col_gray2[] = "#424242";
 static const char col_gray3[] = "#b8b8b8";
@@ -20,61 +19,76 @@ static const char* colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char* tags[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
 static const Rule rules[] = {
     /* xprop(1):
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class            instance    title         tags mask     isfloating   monitor */
-    { "brave",           NULL,         NULL,         1 << 0,       0,           -1 },
-    // { "Code",                       NULL,       NULL,         1 << 1,       0, -1 },
-    { "discord",         NULL,         NULL,         1 << 2,       0,           -1 },
-    { "Firefox",         NULL,         NULL,         1 << 0,       0,           -1 },
-    { "Firefox",         "Places",     "Library",    0,            1,           -1 },
-    { "Google-chrome",   NULL,         NULL,         1 << 0,       0,           -1 },
-    /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1 },*/
-    { "Opera",           NULL,         NULL,         1 << 0,       0,           -1 },
-    { "presenter",       "sent",       "sent",       0,            1,           -1 },
-    { "Spotify",         NULL,         NULL,         1 << 5,       0,           -1 },
-    { "strawberry",      NULL,         NULL,         1 << 5,       0,           -1 },
-    { NULL,              "Journalctl", NULL,         1 << 8,       0,           -1 },
-    { "Steam",           NULL,         NULL,         1 << 7,       0,           -1 },
-    { "TelegramDesktop", NULL,         NULL,         1 << 2,       0,           -1 }
-};
+    /* class            instance    title         tags mask     isfloating
+       monitor */
+    {"brave", NULL, NULL, 1 << 0, 0, -1},
+    // { "Code",                       NULL,       NULL,         1 << 1, 0, -1
+    // },
+    {"discord", NULL, NULL, 1 << 2, 0, -1},
+    {"Firefox", NULL, NULL, 1 << 0, 0, -1},
+    {"Firefox", "Places", "Library", 0, 1, -1},
+    {"Google-chrome", NULL, NULL, 1 << 0, 0, -1},
+    /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1
+       },*/
+    {"Opera", NULL, NULL, 1 << 0, 0, -1},
+    {"presenter", "sent", "sent", 0, 1, -1},
+    {"Spotify", NULL, NULL, 1 << 5, 0, -1},
+    {"strawberry", NULL, NULL, 1 << 5, 0, -1},
+    {NULL, "Journalctl", NULL, 1 << 8, 0, -1},
+    {"Steam", NULL, NULL, 1 << 7, 0, -1},
+    {"TelegramDesktop", NULL, NULL, 1 << 2, 0, -1}};
 
 /* layout(s) */
-static const float mfact = 0.6666666f; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const float mfact =
+    0.6666666f;               /* factor of master area size [0.05..0.95] */
+static const int nmaster = 1; /* number of clients in master area */
+static const int resizehints =
+    1; /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+    /* symbol     arrange function */
+    {"[]=", tile}, /* first entry is default */
+    {"><>", NULL}, /* no layout function means floating behavior */
+    {"[M]", monocle},
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define TAGKEYS(KEY, TAG)                                                      \
+	{MODKEY, KEY, view, {.ui = 1 << TAG}},                                 \
+	    {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},         \
+	    {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                  \
+	    {MODKEY | ControlMask | ShiftMask,                                 \
+	     KEY,                                                              \
+	     toggletag,                                                        \
+	     {.ui = 1 << TAG}},
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/zsh", "-c", cmd, NULL } }
+#define SHCMD(cmd)                                                             \
+	{                                                                      \
+		.v = (const char*[])                                           \
+		{                                                              \
+			"/bin/zsh", "-c", cmd, NULL                            \
+		}                                                              \
+	}
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "run", NULL };
-static const char *termcmd[]  = { "urxvtc", "-name", "Qillqaq", NULL };
+static char dmenumon[2] =
+    "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
+static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
 static const char* alttermcmd[] = {"urxvtc", "-name", "Ysgrifennwr", NULL};
 static const char* emojicmd[] = {
     "/bin/zsh", "-c",
-    "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf $1}' | xsel -ib",
+    "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf "
+    "$1}' | xsel -ib",
     NULL};
 static const char* mansplaincmd[] = {
     "/bin/zsh", "-c",
@@ -85,13 +99,14 @@ static const char* mansplaincmd[] = {
     "${=manpage} > \"$filename\"\nmupdf-gl \"$filename\""};
 static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
-static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous", NULL};
+static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
+                                        NULL};
 static const char* raisevolumecmd[] = {
-    "/bin/zsh", "-c", "amixer sset Master unmute && exec amixer sset Master 5%+",
-    NULL};
+    "/bin/zsh", "-c",
+    "amixer sset Master unmute && exec amixer sset Master 5%+", NULL};
 static const char* lowervolumecmd[] = {
-    "/bin/zsh", "-c", "amixer sset Master unmute && exec amixer sset Master 5%-",
-    NULL};
+    "/bin/zsh", "-c",
+    "amixer sset Master unmute && exec amixer sset Master 5%-", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
@@ -103,7 +118,8 @@ static const char* brightnessupcmd[] = {"xbacklight", "-inc", "7", NULL};
 static const char* brightnessdowncmd[] = {"xbacklight", "-dec", "7", NULL};
 static const char* screenshotcmd[] = {
     "/bin/zsh", "-c",
-    "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
+    "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date "
+    "--iso-8601=ns).png\"",
     NULL};
 static const char* screenshotselectioncmd[] = {
     "/bin/zsh", "-c",
@@ -112,22 +128,31 @@ static const char* screenshotselectioncmd[] = {
     "-s -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
     NULL};
 static const char* urlcmd[] = {"clipmenu-url", NULL};
-static const char* clipcmd[] = { "clipmenu", "-p", "Clipboard", NULL};
-static const char* showclipboardcmd[] = { "/bin/zsh", "-c", "xsetroot -name \"$(tail --lines=1 $CM_DIR/clipmenu.5.$(whoami)/line_cache_clipboard)\"", NULL};
+static const char* clipcmd[] = {"clipmenu", "-p", "Clipboard", NULL};
+static const char* showclipboardcmd[] = {
+    "/bin/zsh", "-c",
+    "xsetroot -name \"$(tail --lines=1 "
+    "$CM_DIR/clipmenu.5.$(whoami)/line_cache_clipboard)\"",
+    NULL};
 static const char* tmuxcmd[] = {
     "/bin/zsh", "-c",
-    "urxvtc -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'Attach to tmux session:')", NULL};
-static const char* connect_setubal[] = { "bluetoothctl", "connect", "88:C6:26:F4:8A:90", NULL};
-static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect", "88:C6:26:F4:8A:90", NULL};
+    "urxvtc -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
+    "-dmenu -i -p 'Attach to tmux session:')",
+    NULL};
+static const char* connect_setubal[] = {"bluetoothctl", "connect",
+                                        "88:C6:26:F4:8A:90", NULL};
+static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
+                                           "88:C6:26:F4:8A:90", NULL};
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
-static const char* filemanagercmd[] = { "pcmanfm", NULL };
+static const char* filemanagercmd[] = {"pcmanfm", NULL};
 static const char* backdropcmd[] = {
     "/bin/zsh", "-c",
-    "xsetroot -bitmap ~/.fvwm/backdrops/`ls ~/.fvwm/backdrops | shuf -n 1 | tr -d "
+    "xsetroot -bitmap ~/.fvwm/backdrops/`ls ~/.fvwm/backdrops | shuf -n 1 | tr "
+    "-d "
     "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
     "$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`",
     NULL};
-static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL };
+static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -170,31 +195,24 @@ static Key keys[] = {
     {0, 0x1008ff12, spawn, {.v = mutecmd}},
     {MODKEY, 0xffab, spawn, {.v = raisevolumecmd}},
     {MODKEY, 0xffad, spawn, {.v = lowervolumecmd}},
-    {MODKEY, 0xffaa, spawn, {.v = mutecmd}},
+    {MODKEY, 0xff9e, spawn, {.v = mutecmd}},
     {0, 0x1008ff17, spawn, {.v = playnextcmd}},
     {0, 0x1008ff14, spawn, {.v = playpausecmd}},
     {0, 0x1008ff16, spawn, {.v = playpreviouscmd}},
-    {MODKEY, 0xff56, spawn, {.v = playnextcmd}},
-    {MODKEY, 0xff13, spawn, {.v = playpausecmd}},
-    {MODKEY, 0xff55, spawn, {.v = playpreviouscmd}},
+    {MODKEY, 0xffaa, spawn, {.v = playnextcmd}},
+    {MODKEY, 0xff9c, spawn, {.v = playpausecmd}},
+    {MODKEY, 0xffaf, spawn, {.v = playpreviouscmd}},
     {MODKEY, XK_a, spawn, {.v = tmuxcmd}},
-    {MODKEY|ShiftMask, XK_w, spawn, {.v = backdropcmd}},
+    {MODKEY | ShiftMask, XK_w, spawn, {.v = backdropcmd}},
     {MODKEY, XK_w, spawn, {.v = nowallpapercmd}},
+    {MODKEY, XK_F9, spawn, {.v = connect_setubal}},
+    {MODKEY | ShiftMask, XK_F9, spawn, {.v = disconnect_setubal}},
+    {MODKEY, XK_o, spawn, {.v = urlcmd}},
+    {0, 0x1008ff02, spawn, {.v = brightnessupcmd}},
+    {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
+    {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
+    {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
 };
-
-/*
-	{ MODKEY,                       XK_Escape,	spawn,		{.v = lockcmd } },
-	{ MODKEY|ShiftMask,		XK_Escape,	spawn,		{.v = suspendcmd } },
-	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
-	{ 0,				0x1008ff02,    spawn,          {.v = brightnessupcmd} },
-	{ 0,				0x1008ff03,    spawn,          {.v = brightnessdowncmd} },
-	{ MODKEY,                    	XK_o,          spawn,          {.v = urlcmd } },
-	{ MODKEY,			XK_ssharp,      spawn,          {.v = showclipboardcmd}},
-	{ MODKEY,                       XK_Prior,      	shiftview,      {.i = -1 } },
-	{ MODKEY,                       XK_Next,      	shiftview,      {.i = +1 } },
-	{ MODKEY,			XK_F9,		spawn,		{.v = connect_setubal }},
-	{ MODKEY|ShiftMask,		XK_F9,		spawn,		{.v = disconnect_setubal }},
-*/
 
 #define Button6 6
 #define Button7 7
@@ -202,42 +220,47 @@ static Key keys[] = {
 #define Button9 9
 
 /* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+ * ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    /* click                event mask      button          function argument
+     */
+    {ClkLtSymbol, 0, Button1, setlayout, {0}},
+    {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
+    {ClkWinTitle, 0, Button2, zoom, {0}},
+    {ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
+    {ClkClientWin, MODKEY, Button1, movemouse, {0}},
+    {ClkClientWin, MODKEY, Button2, togglefloating, {0}},
+    {ClkClientWin, MODKEY, Button3, resizemouse, {0}},
+    {ClkTagBar, 0, Button1, view, {0}},
+    {ClkTagBar, 0, Button3, toggleview, {0}},
+    {ClkTagBar, MODKEY, Button1, tag, {0}},
+    {ClkTagBar, MODKEY, Button3, toggletag, {0}},
 };
 
 /*
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button1,        swapfocus,      {0} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkWinTitle,          0,              Button3,        focusstack,     {.i = +1 } },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	// { ClkClientWin,         0,              Button9,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	// { ClkClientWin,         0,              Button8,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkClientWin,         0,              Button9,        zoom,           {0} },
-	{ ClkClientWin,         0,              Button8,        view,           {0} },
-	{ ClkRootWin,           0,              Button8,        view,           {0} },
-	// { ClkClientWin,         0,              Button8,        shiftview,      {.i = +1 } },
-	{ ClkClientWin,         MODKEY,         Button6,        setmfact,       {.f = -0.05} },
-	{ ClkClientWin,         MODKEY,         Button7,        setmfact,       {.f = +0.05} },
-	*/
+        { ClkLtSymbol,          0,              Button1,        setlayout, {0}
+   }, { ClkLtSymbol,          0,              Button3,        setlayout, {.v =
+   &layouts[2]} }, { ClkWinTitle,          0,              Button1, swapfocus,
+   {0} }, { ClkWinTitle,          0,              Button2,        zoom, {0} },
+        { ClkWinTitle,          0,              Button3,        focusstack, {.i
+   = +1 } }, { ClkStatusText,        0,              Button2,        spawn, {.v
+   = termcmd } }, { ClkClientWin,         MODKEY,         Button1, movemouse,
+   {0} },
+        // { ClkClientWin,         0,              Button9,        movemouse,
+   {0} }, { ClkClientWin,         MODKEY,         Button2, togglefloating, {0}
+   }, { ClkClientWin,         MODKEY,         Button3,        resizemouse, {0}
+   },
+        // { ClkClientWin,         0,              Button8,        resizemouse,
+   {0} }, { ClkTagBar,            0,              Button1,        view, {0} },
+        { ClkTagBar,            0,              Button3,        toggleview, {0}
+   }, { ClkTagBar,            MODKEY,         Button1,        tag, {0} }, {
+   ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+        { ClkClientWin,         0,              Button9,        zoom, {0} }, {
+   ClkClientWin,         0,              Button8,        view,           {0} },
+        { ClkRootWin,           0,              Button8,        view, {0} },
+        // { ClkClientWin,         0,              Button8,        shiftview,
+   {.i = +1 } }, { ClkClientWin,         MODKEY,         Button6, setmfact, {.f
+   = -0.05} }, { ClkClientWin,         MODKEY,         Button7,        setmfact,
+   {.f = +0.05} },
+        */
