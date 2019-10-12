@@ -121,63 +121,65 @@ static const char* connect_setubal[] = { "bluetoothctl", "connect", "88:C6:26:F4
 static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect", "88:C6:26:F4:8A:90", NULL};
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* filemanagercmd[] = { "pcmanfm", NULL };
+static const char* backdropcmd[] = {
+    "/bin/zsh", "-c",
+    "xsetroot -bitmap ~/.fvwm/backdrops/`ls ~/.fvwm/backdrops | shuf -n 1 | tr -d "
+    "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
+    "$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`",
+    NULL};
+static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY,			XK_ssharp, spawn,          {.v = emojicmd}},
-	{ MODKEY|Mod1Mask,              XK_Return, spawn,          {.v = alttermcmd } },
-	{ MODKEY,                       XK_F1, spawn,          {.v = mansplaincmd } },
-	{ MODKEY,                       XK_Insert,     spawn,          {.v = clipcmd } },
-	{ MODKEY,                       XK_acute,     spawn,          {.v = showclipboardcmd } },
-	{ MODKEY,                       XK_e,          spawn,          {.v = filemanagercmd } },
-	{ 0, 				0xff61,        spawn,          {.v = screenshotcmd} },
-	{ MODKEY,			0xff61,        spawn,          {.v = screenshotselectioncmd} },
-	{ 0,                            0x1008ff13,    spawn,          {.v = raisevolumecmd } },
-	{ 0,                            0x1008ff11,    spawn,          {.v = lowervolumecmd } },
-	{ 0,                            0x1008ff12,    spawn,          {.v = mutecmd } },
-	{ MODKEY,                       0xffab,        spawn,          {.v = raisevolumecmd } },
-	{ MODKEY,                       0xffad,        spawn,          {.v = lowervolumecmd } },
-	{ MODKEY,                       0xffaa,        spawn,          {.v = mutecmd } },
-	{ 0,                            0x1008ff17,    spawn,          {.v = playnextcmd } },
-	{ 0,                            0x1008ff14,    spawn,          {.v = playpausecmd } },
-	{ 0,                            0x1008ff16,    spawn,          {.v = playpreviouscmd } },
-	{ MODKEY,                       0xff56,        spawn,          {.v = playnextcmd } },
-	{ MODKEY,                       0xff13,        spawn,          {.v = playpausecmd } },
-	{ MODKEY,                       0xff55,        spawn,          {.v = playpreviouscmd } },
-	{ MODKEY,			XK_a,	       spawn,          {.v = tmuxcmd }},
+    /* modifier                     key        function        argument */
+    {MODKEY, XK_p, spawn, {.v = dmenucmd}},
+    {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY, XK_b, togglebar, {0}},
+    {MODKEY, XK_j, focusstack, {.i = +1}},
+    {MODKEY, XK_k, focusstack, {.i = -1}},
+    {MODKEY, XK_i, incnmaster, {.i = +1}},
+    {MODKEY, XK_d, incnmaster, {.i = -1}},
+    {MODKEY, XK_h, setmfact, {.f = -0.05}},
+    {MODKEY, XK_l, setmfact, {.f = +0.05}},
+    {MODKEY, XK_Return, zoom, {0}},
+    {MODKEY, XK_Tab, view, {0}},
+    {MODKEY | ShiftMask, XK_c, killclient, {0}},
+    {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
+    {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
+    {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_space, setlayout, {0}},
+    {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
+    {MODKEY, XK_0, view, {.ui = ~0}},
+    {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
+    {MODKEY, XK_comma, focusmon, {.i = -1}},
+    {MODKEY, XK_period, focusmon, {.i = +1}},
+    {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
+    {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
+    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
+        TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
+            TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
+    {MODKEY, XK_ssharp, spawn, {.v = emojicmd}},
+    {MODKEY | Mod1Mask, XK_Return, spawn, {.v = alttermcmd}},
+    {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
+    {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
+    {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
+    {MODKEY, XK_e, spawn, {.v = filemanagercmd}},
+    {0, 0xff61, spawn, {.v = screenshotcmd}},
+    {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
+    {0, 0x1008ff13, spawn, {.v = raisevolumecmd}},
+    {0, 0x1008ff11, spawn, {.v = lowervolumecmd}},
+    {0, 0x1008ff12, spawn, {.v = mutecmd}},
+    {MODKEY, 0xffab, spawn, {.v = raisevolumecmd}},
+    {MODKEY, 0xffad, spawn, {.v = lowervolumecmd}},
+    {MODKEY, 0xffaa, spawn, {.v = mutecmd}},
+    {0, 0x1008ff17, spawn, {.v = playnextcmd}},
+    {0, 0x1008ff14, spawn, {.v = playpausecmd}},
+    {0, 0x1008ff16, spawn, {.v = playpreviouscmd}},
+    {MODKEY, 0xff56, spawn, {.v = playnextcmd}},
+    {MODKEY, 0xff13, spawn, {.v = playpausecmd}},
+    {MODKEY, 0xff55, spawn, {.v = playpreviouscmd}},
+    {MODKEY, XK_a, spawn, {.v = tmuxcmd}},
+    {MODKEY|ShiftMask, XK_w, spawn, {.v = backdropcmd}},
+    {MODKEY, XK_w, spawn, {.v = nowallpapercmd}},
 };
 
 /*
