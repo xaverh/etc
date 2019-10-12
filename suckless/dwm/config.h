@@ -6,9 +6,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char* fonts[] = {
-    "sans-serif:size=11"};
-static const char dmenufont[] =
-    "sans-serif:size=11";
+    "SGI Screen:size=11"};
 static const char col_gray1[] = "#1e1e1e";
 // static const char col_gray2[] = "#424242";
 static const char col_gray3[] = "#b8b8b8";
@@ -29,24 +27,21 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class       instance    title        tags mask     isfloating   monitor
-     */
-    {"brave", NULL, NULL, 1 << 0, 0, -1},
-    // { "Code",           NULL,       NULL,        1 << 1,       0, -1 },
-    {"discord", NULL, NULL, 1 << 2, 0, -1},
-    {"Firefox", NULL, NULL, 1 << 0, 0, -1},
-    {"Firefox", "Places", "Library", 0, 1, -1},
-    /*	{ "Gimp",           NULL,       NULL,        1 << 6,       0, -1 },*/
-    {"Google-chrome", NULL, NULL, 1 << 0, 0, -1},
-    /*	{ "mpv",            NULL,       NULL,        0xFFFF,       0, -1 },*/
-    {"Opera", NULL, NULL, 1 << 0, 0, -1},
-    {"presenter", "sent", "sent", 0, 1, -1},
-    {"Spotify", NULL, NULL, 1 << 5, 0, -1},
-    {"st-256color", NULL, "journalctl", 1 << 8, 0, -1},
-    {"URxvt", NULL, "journalctl", 1 << 8, 0, -1},
-    /*	{ "Steam",          NULL,       NULL,        1 << 3,       0, -1 },*/
-    {"TelegramDesktop", NULL, NULL, 1 << 2, 0, -1}
-    // { "Zathura",        NULL,       NULL,        1 << 3,       0, -1 }
+    /* class            instance    title         tags mask     isfloating   monitor */
+    { "brave",           NULL,         NULL,         1 << 0,       0,           -1 },
+    // { "Code",                       NULL,       NULL,         1 << 1,       0, -1 },
+    { "discord",         NULL,         NULL,         1 << 2,       0,           -1 },
+    { "Firefox",         NULL,         NULL,         1 << 0,       0,           -1 },
+    { "Firefox",         "Places",     "Library",    0,            1,           -1 },
+    { "Google-chrome",   NULL,         NULL,         1 << 0,       0,           -1 },
+    /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1 },*/
+    { "Opera",           NULL,         NULL,         1 << 0,       0,           -1 },
+    { "presenter",       "sent",       "sent",       0,            1,           -1 },
+    { "Spotify",         NULL,         NULL,         1 << 5,       0,           -1 },
+    { "strawberry",      NULL,         NULL,         1 << 5,       0,           -1 },
+    { NULL,              "Journalctl", NULL,         1 << 8,       0,           -1 },
+    { "Steam",           NULL,         NULL,         1 << 7,       0,           -1 },
+    { "TelegramDesktop", NULL,         NULL,         1 << 2,       0,           -1 }
 };
 
 /* layout(s) */
@@ -74,80 +69,58 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "urxvtc", NULL };
-static const char* vanillatermcmd[] = {"st", NULL};
-static const char* filemanagercmd[] = {"fman", NULL};
-static const char* playpausecmd[] = {"playerctl", "play-pause", NULL};
-static const char* playnextcmd[] = {"playerctl", "next", NULL};
-static const char* playpreviouscmd[] = {"playerctl", "previous", NULL};
-// static const char *mpdpausecmd[] = {"mpc", "toggle", NULL};
-// static const char *mpdnextcmd[] = {"mpc", "next", NULL};
-// static const char *mpdpreviouscmd[] = {"mpc", "prev", NULL};
-// static const char *raisevolumecmd[] = { "/bin/sh", "-c", "pactl --
-// set-sink-mute 0 false\npactl -- set-sink-volume 0 +5%\nxsetroot -name \"vol.
-// `pamixer --get-volume` %\"", NULL }; static const char *lowervolumecmd[] = {
-// "/bin/sh", "-c", "pactl -- set-sink-mute 0 false\npactl -- set-sink-volume 0
-// -5%\nxsetroot -name \"vol. `pamixer --get-volume` %\"", NULL }; static const
-// char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0 true\nif [
-// \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\"; else
-// xsetroot -name \"NOT MUTE\"; fi", NULL };
-static const char* mutecmd[] = {
-    "/bin/sh", "-c",
-    "ponymix mute\nponymix is-muted && xsetroot -name \"mute\" || xsetroot "
-    "-name \"volume: \"`ponymix get-volume`\" %\"",
+static const char *dmenucmd[] = { "rofi", "-show", "run", NULL };
+static const char *termcmd[]  = { "urxvtc", "-name", "Qillqaq", NULL };
+static const char* alttermcmd[] = {"urxvtc", "-name", "Ysgrifennwr", NULL};
+static const char* emojicmd[] = {
+    "/bin/zsh", "-c",
+    "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf $1}' | xsel -ib",
     NULL};
+static const char* mansplaincmd[] = {
+    "/bin/zsh", "-c",
+    "mkdir -p /tmp/mansplain-`date +\"%G-%V\"`\nmanpage=`apropos . | rofi "
+    "-dmenu -i | awk '{gsub(/[()]/,\"\"); print $2\" "
+    "\"$1}'`\nfilename=\"/tmp/mansplain-`date "
+    "+\"%G-%V\"`/${^manpage}.pdf\"\n[[ -f \"$filename\" ]] || man -Tpdf "
+    "${=manpage} > \"$filename\"\nmupdf-gl \"$filename\""};
+static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
+static const char* playnextcmd[] = {"strawberry", "--next", NULL};
+static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous", NULL};
 static const char* raisevolumecmd[] = {
-    "/bin/sh", "-c",
-    "ponymix unmute\nponymix increase 5\nponymix is-muted && xsetroot -name "
-    "\"mute\" || xsetroot -name \"volume: \"`ponymix get-volume`\" %\"",
+    "/bin/zsh", "-c", "amixer sset Master unmute && exec amixer sset Master 5%+",
     NULL};
 static const char* lowervolumecmd[] = {
-    "/bin/sh", "-c",
-    "ponymix unmute\nponymix decrease 5\nponymix is-muted && xsetroot -name "
-    "\"mute\" || xsetroot -name \"volume: \"`ponymix get-volume`\" %\"",
+    "/bin/zsh", "-c", "amixer sset Master unmute && exec amixer sset Master 5%-",
     NULL};
+static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
+// char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
+// true\nif [
+// \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
+// else
+// xsetroot -name \"NOT MUTE\"; fi", NULL };
 static const char* lockcmd[] = {"slock", NULL};
 static const char* brightnessupcmd[] = {"xbacklight", "-inc", "7", NULL};
 static const char* brightnessdowncmd[] = {"xbacklight", "-dec", "7", NULL};
 static const char* screenshotcmd[] = {
-    "/bin/sh", "-c", "scrot \"$HOME/tmp/Screenshot_%Y-%m-%d-%H-%M-%S.png\"",
+    "/bin/zsh", "-c",
+    "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
     NULL};
-static const char* nodeadkeyscmd[] = {"setxkbmap", "-variant", "nodeadkeys",
-                                      NULL};
-static const char* deadtildecmd[] = {"setxkbmap", "-variant", "deadtilde",
-                                     NULL};
+static const char* screenshotselectioncmd[] = {
+    "/bin/zsh", "-c",
+    "mkdir -p ~/tmp/scr && maim -c "
+    "0.88671875,0.15294117647059,0.56862745098039 -u "
+    "-s -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
+    NULL};
 static const char* urlcmd[] = {"clipmenu-url", NULL};
-static const char* clipcmd[] = {
-    "clipmenu", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
-    "-nf",      col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char* showclipboardcmd[] = {
-    "/bin/sh", "-c",
-    "tmptitle=\"`tail --lines=1 /tmp/clipmenu.3.xha/line_cache`\"\nxsetroot "
-    "-name \"$tmptitle\"",
-    NULL};
+static const char* clipcmd[] = { "clipmenu", "-p", "Clipboard", NULL};
+static const char* showclipboardcmd[] = { "/bin/zsh", "-c", "xsetroot -name \"$(tail --lines=1 $CM_DIR/clipmenu.5.$(whoami)/line_cache_clipboard)\"", NULL};
 static const char* tmuxcmd[] = {
-    "/bin/sh", "-c",
-    "st -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | dmenu -l 5 "
-    "-p 'Attach to tmux session:' -m 0 -fn "
-    "'InputSansCondensed:style=Regular:pixelsize=15:antialias=true:hintstyle=1:"
-    "lcdfilter=1:rgba=1' -nb '#1e1e1e' -nf '#b8b8b8' -sb '#005577' -sf "
-    "'#e5e6e6')",
-    NULL};
-// static const char *tmuxcmd[] = {"/bin/sh", "-c", "st -e tmux new-session -A
-// -s $(tmux list-clients -F \"#S\" | dmenu -l 5 -p 'Attach to tmux session:' -m
-// 0 -fn 'IBM Plex
-// Mono:style=Regular:pixelsize=15:antialias=true:hintstyle=1:lcdfilter=1:rgba=1'
-// -nb '#1e1e1e' -nf '#b8b8b8' -sb '#005577' -sf '#e5e6e6')", NULL};
-static const char* connect_setubal[] = {
-    "/bin/sh", "-c",
-    "echo -e 'connect 88:C6:26:F4:8A:90\nquit' | bluetoothctl\nsleep 3\npactl "
-    "set-card-profile bluez_card.88_C6_26_F4_8A_90 a2dp_sink",
-    NULL};
-static const char* disconnect_setubal[] = {
-    "/bin/sh", "-c",
-    "echo -e 'disconnect 88:C6:26:F4:8A:90\nquit' | bluetoothctl", NULL};
+    "/bin/zsh", "-c",
+    "urxvtc -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'Attach to tmux session:')", NULL};
+static const char* connect_setubal[] = { "bluetoothctl", "connect", "88:C6:26:F4:8A:90", NULL};
+static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect", "88:C6:26:F4:8A:90", NULL};
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
+static const char* filemanagercmd[] = { "pcmanfm", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -184,13 +157,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-};
-
-/*
-	{ MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_Return,     spawn,          {.v = vanillatermcmd } },
+	{ MODKEY,			XK_ssharp, spawn,          {.v = emojicmd}},
+	{ MODKEY|Mod1Mask,              XK_Return, spawn,          {.v = alttermcmd } },
+	{ MODKEY,                       XK_F1, spawn,          {.v = mansplaincmd } },
+	{ MODKEY,                       XK_Insert,     spawn,          {.v = clipcmd } },
+	{ MODKEY,                       XK_acute,     spawn,          {.v = showclipboardcmd } },
 	{ MODKEY,                       XK_e,          spawn,          {.v = filemanagercmd } },
+	{ 0, 				0xff61,        spawn,          {.v = screenshotcmd} },
+	{ MODKEY,			0xff61,        spawn,          {.v = screenshotselectioncmd} },
 	{ 0,                            0x1008ff13,    spawn,          {.v = raisevolumecmd } },
 	{ 0,                            0x1008ff11,    spawn,          {.v = lowervolumecmd } },
 	{ 0,                            0x1008ff12,    spawn,          {.v = mutecmd } },
@@ -200,61 +174,24 @@ static Key keys[] = {
 	{ 0,                            0x1008ff17,    spawn,          {.v = playnextcmd } },
 	{ 0,                            0x1008ff14,    spawn,          {.v = playpausecmd } },
 	{ 0,                            0x1008ff16,    spawn,          {.v = playpreviouscmd } },
-	// { MODKEY,                       0xff56,        spawn,          {.v = mpdnextcmd } },
-	// { MODKEY,                       0xff13,        spawn,          {.v = mpdpausecmd } },
-	// { MODKEY,                       0xff55,        spawn,          {.v = mpdpreviouscmd } },
-	// { MODKEY,                       XK_numbersign, spawn,          {.v = ncmpcppcmd } },
-	{ MODKEY,                       XK_b,          togglebar,      {0} },
-	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,          incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,          incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_odiaeresis, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,        swapfocus,      {0} },
-	{ MODKEY,                       XK_adiaeresis, view,           {0} },
-	{ MODKEY,                       XK_q,          killclient,     {0} },
-	{ MODKEY,                       XK_c,          setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[3]} },
-	{ MODKEY|ShiftMask,             XK_f,          togglefloating, {0} },
-	{ MODKEY,                       XK_0,          view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,          tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,      focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period,     focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                          0)
-	TAGKEYS(                        XK_2,                          1)
-	TAGKEYS(                        XK_3,                          2)
-	TAGKEYS(                        XK_4,                          3)
-	TAGKEYS(                        XK_5,                          4)
-	TAGKEYS(                        XK_6,                          5)
-	TAGKEYS(                        XK_7,                          6)
-	TAGKEYS(                        XK_8,                          7)
-	TAGKEYS(                        XK_9,                          8)
+	{ MODKEY,                       0xff56,        spawn,          {.v = playnextcmd } },
+	{ MODKEY,                       0xff13,        spawn,          {.v = playpausecmd } },
+	{ MODKEY,                       0xff55,        spawn,          {.v = playpreviouscmd } },
+	{ MODKEY,			XK_a,	       spawn,          {.v = tmuxcmd }},
+};
+
+/*
 	{ MODKEY,                       XK_Escape,	spawn,		{.v = lockcmd } },
 	{ MODKEY|ShiftMask,		XK_Escape,	spawn,		{.v = suspendcmd } },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ 0,				0x1008ff02,    spawn,          {.v = brightnessupcmd} },
 	{ 0,				0x1008ff03,    spawn,          {.v = brightnessdowncmd} },
-	{ 0, 				0xff61,        spawn,          {.v = screenshotcmd} },
-	{ MODKEY,                       XK_Insert,     spawn,          {.v = clipcmd } },
 	{ MODKEY,                    	XK_o,          spawn,          {.v = urlcmd } },
-	{ MODKEY|Mod1Mask|ShiftMask,	XK_ssharp,	spawn,         {.v = deadtildecmd}},
-	{ MODKEY|Mod1Mask,		XK_ssharp,	spawn,	       {.v = nodeadkeyscmd}},
 	{ MODKEY,			XK_ssharp,      spawn,          {.v = showclipboardcmd}},
 	{ MODKEY,                       XK_Prior,      	shiftview,      {.i = -1 } },
 	{ MODKEY,                       XK_Next,      	shiftview,      {.i = +1 } },
-	{ MODKEY,                       XK_dead_acute, 	togglescratch,  {.v = scratchpadcmd }},
-	{ MODKEY,			XK_a,		spawn,		{.v = tmuxcmd }},
 	{ MODKEY,			XK_F9,		spawn,		{.v = connect_setubal }},
 	{ MODKEY|ShiftMask,		XK_F9,		spawn,		{.v = disconnect_setubal }},
-	{ MODKEY,                       XK_numbersign,  runorraise,     {.v = firefox }},
-	{ MODKEY,                       XK_plus,        runorraise,     {.v = fman }},
-	{ MODKEY,                       XK_udiaeresis,  runorraise,     {.v = vscode }},
 */
 
 #define Button6 6
