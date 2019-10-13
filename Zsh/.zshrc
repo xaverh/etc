@@ -66,6 +66,9 @@ else
 	alias ll='ls -lh'
 	alias la='ll -A'
 fi
+alias lss='ls -S'
+alias las='la -S'
+alias lls='ll -S'
 
 alias dfh='df -H -T'
 alias -g G='|& grep -i --colour=auto'
