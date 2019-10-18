@@ -5,7 +5,7 @@ SAVEHIST=$HISTSIZE
 setopt appendhistory \
 autocd \
 autopushd \
-nobeep \
+beep \
 extendedglob \
 globstarshort \
 histignorealldups \
