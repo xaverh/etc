@@ -40,15 +40,8 @@ numlockx &
 
 go run $HOME/etc/suckless/jigglyroom/jigglyroom.go &
 
-urxvtd -q -o -f
-
-(sleep 3 && urxvtc -name Journalctl -e tmux new-session -A -s journalctl "journalctl -b -f -n 1000") &
-
 while true; do
-    # Log stderror to a file
     dwm 2> ~/.dwm.log
-    # No error logging
-    #dwm >/dev/null 2>&1
 done
 
 # call failsafe
