@@ -14,7 +14,7 @@ static const char col_cyan[] = "#005577";
 static const char col_cerise[] = "#e32791";
 static const char* colors[][3] = {
     /*               fg         bg         border   */
-    [SchemeNorm] = {col_gray3, col_gray1, col_cyan},
+    [SchemeNorm] = {col_gray3, col_gray1, col_gray1},
     [SchemeSel] = {col_gray4, col_cyan, col_cerise},
 };
 
@@ -26,28 +26,29 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class            instance    title         tags mask     isfloating
-       monitor */
+    /* class  instance  title  tags mask  isfloating monitor */
     {"brave", NULL, NULL, 1 << 0, 0, -1},
     // { "Code",                       NULL,       NULL,         1 << 1, 0, -1
     // },
-    {"discord", NULL, NULL, 1 << 2, 0, -1},
+    {"discord", NULL, NULL, 1 << 6, 0, -1},
     {"Firefox", NULL, NULL, 1 << 0, 0, -1},
     {"Firefox", "Places", "Library", 0, 1, -1},
     {"Google-chrome", NULL, NULL, 1 << 0, 0, -1},
     /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1
        },*/
+    {"lxqt-openssh-askpass", NULL, NULL, 0, 1, -1},
     {"Opera", NULL, NULL, 1 << 0, 0, -1},
     {"presenter", "sent", "sent", 0, 1, -1},
     {"Spotify", NULL, NULL, 1 << 5, 0, -1},
     {"strawberry", NULL, NULL, 1 << 5, 0, -1},
-    {NULL, "Journalctl", NULL, 1 << 8, 0, -1},
+    {NULL, "journalctl", NULL, 1 << 8, 0, -1},
     {"Steam", NULL, NULL, 1 << 7, 0, -1},
-    {"TelegramDesktop", NULL, NULL, 1 << 2, 0, -1}};
+    {"TelegramDesktop", NULL, NULL, 1 << 6, 0, -1},
+    {"Vivaldi-stable", NULL, NULL, 1 << 0, 0, -1}};
 
 /* layout(s) */
 static const float mfact =
-    0.6666666f;               /* factor of master area size [0.05..0.95] */
+    0.6180339887f;            /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1; /* number of clients in master area */
 static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
@@ -83,8 +84,9 @@ static const Layout layouts[] = {
 static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
-static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
-static const char* alttermcmd[] = {"urxvtc", "-name", "Ysgrifennwr", NULL};
+static const char* termcmd[] = {"kitty", "-1", NULL};
+// static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
+// static const char* alttermcmd[] = {"urxvtc", "-name", "Ysgrifennwr", NULL};
 static const char* emojicmd[] = {
     "/bin/zsh", "-c",
     "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf "
@@ -136,7 +138,7 @@ static const char* showclipboardcmd[] = {
     NULL};
 static const char* tmuxcmd[] = {
     "/bin/zsh", "-c",
-    "urxvtc -e tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
+    "kitty -1 -- tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
     "-dmenu -i -p 'Attach to tmux session:')",
     NULL};
 static const char* connect_setubal[] = {"bluetoothctl", "connect",
@@ -153,6 +155,11 @@ static const char* backdropcmd[] = {
     "$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`",
     NULL};
 static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL};
+static const char* journalctlcmd[] = {
+    "/bin/zsh", "-c",
+    "pidof journalctl || kitty -1 --class journalctl -T journalctl -- "
+    "journalctl -b -f -n 1000",
+    NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -183,7 +190,7 @@ static Key keys[] = {
         TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_ssharp, spawn, {.v = emojicmd}},
-    {MODKEY | Mod1Mask, XK_Return, spawn, {.v = alttermcmd}},
+    // {MODKEY | Mod1Mask, XK_Return, spawn, {.v = alttermcmd}},
     {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
     {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
     {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
@@ -212,7 +219,7 @@ static Key keys[] = {
     {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
-};
+    {MODKEY, XK_9, spawn, {.v = journalctlcmd}}};
 
 #define Button6 6
 #define Button7 7
