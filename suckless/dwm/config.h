@@ -48,8 +48,9 @@ static const Rule rules[] = {
     {"Vivaldi-stable", NULL, NULL, 1 << 0, 0, -1}};
 
 /* layout(s) */
+#define DEFAULT_MFACT 0.5688140392f
 static const float mfact =
-    0.5688140392f;            /* factor of master area size [0.05..0.95] */
+    DEFAULT_MFACT;            /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1; /* number of clients in master area */
 static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
@@ -89,6 +90,7 @@ static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
 static const char* termcmd[] = {"kitty", "-1", NULL};
+static const char* nnncmd[] = {"kitty", "-1", "nnn", NULL};
 static const char* alttermcmd[] = {"kitty",
                                    "-1",
                                    "--instance-group",
@@ -149,13 +151,10 @@ static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
                                         NULL};
-static const char* raisevolumecmd[] = {
-    "/bin/zsh", "-c",
-    "amixer sset Master unmute && exec amixer sset Master 5%+", NULL};
-static const char* lowervolumecmd[] = {
-    "/bin/zsh", "-c",
-    "amixer sset Master unmute && exec amixer sset Master 5%-", NULL};
+static const char* raisevolumecmd[] = {"amixer", "sset Master 5%+", NULL};
+static const char* lowervolumecmd[] = {"amixer", "sset Master 5%-", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
+static const char* unmutecmd[] = {"amixer", "sset", "Master", "unmute", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
@@ -192,7 +191,6 @@ static const char* connect_setubal[] = {"bluetoothctl", "connect",
 static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
                                            "88:C6:26:F4:8A:90", NULL};
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
-static const char* filemanagercmd[] = {"pcmanfm", NULL};
 static const char* backdropcmd[] = {
     "/bin/zsh", "-c",
     "xsetroot -bitmap ~/.fvwm/backdrops/`ls ~/.fvwm/backdrops | shuf -n 1 | tr "
@@ -206,6 +204,8 @@ static const char* journalctlcmd[] = {
     "pidof journalctl || kitty -1 --class journalctl -T journalctl -- "
     "journalctl -b -f -n 1000",
     NULL};
+static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
+                                   NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -240,13 +240,16 @@ static Key keys[] = {
     {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
     {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
     {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
-    {MODKEY, XK_e, spawn, {.v = filemanagercmd}},
     {0, 0xff61, spawn, {.v = screenshotcmd}},
     {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
+    {0, 0x1008ff13, spawn, {.v = unmutecmd}},
     {0, 0x1008ff13, spawn, {.v = raisevolumecmd}},
+    {0, 0x1008ff11, spawn, {.v = unmutecmd}},
     {0, 0x1008ff11, spawn, {.v = lowervolumecmd}},
     {0, 0x1008ff12, spawn, {.v = mutecmd}},
+    {MODKEY, 0xffab, spawn, {.v = unmutecmd}},
     {MODKEY, 0xffab, spawn, {.v = raisevolumecmd}},
+    {MODKEY, 0xffad, spawn, {.v = unmutecmd}},
     {MODKEY, 0xffad, spawn, {.v = lowervolumecmd}},
     {MODKEY, 0xff9e, spawn, {.v = mutecmd}},
     {0, 0x1008ff17, spawn, {.v = playnextcmd}},
@@ -266,6 +269,8 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = alttermcmd}},
+    {MODKEY, XK_n, spawn, {.v = nnncmd}},
+    {MODKEY, XK_u, spawn, {.v = abridorcmd}},
     {MODKEY, XK_9, spawn, {.v = journalctlcmd}}};
 
 #define Button6 6
@@ -277,47 +282,28 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-    /* click                event mask      button          function argument
-     */
-    {ClkLtSymbol, 0, Button1, setlayout, {0}},
+    /* click  event mask button  function argument */
+    {ClkLtSymbol, 0, Button1, setlayout, {.v = &layouts[0]}},
+    {ClkLtSymbol, 0, Button2, setlayout, {.v = &layouts[1]}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
-    {ClkWinTitle, 0, Button2, zoom, {0}},
-    {ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
+    {ClkWinTitle, 0, Button1, setmfact, {.f = -0.02}},
+    {ClkWinTitle, 0, Button2, setlayout, {.v = &layouts[0]}},
+    {ClkWinTitle, 0, Button2, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
+    {ClkWinTitle, 0, Button2, incnmaster, {.i = INT_MIN}},
+    {ClkWinTitle, 0, Button2, incnmaster, {.i = +1}},
+    {ClkWinTitle, 0, Button3, incnmaster, {.i = +1}},
+    {ClkStatusText, 0, Button1, setmfact, {.f = +0.02}},
+    {ClkStatusText, 0, Button2, zoom, {0}},
+    {ClkStatusText, 0, Button3, incnmaster, {.i = -1}},
     {ClkClientWin, MODKEY, Button1, movemouse, {0}},
     {ClkClientWin, MODKEY, Button2, togglefloating, {0}},
     {ClkClientWin, MODKEY, Button3, resizemouse, {0}},
+    {ClkClientWin, MODKEY, Button4, setmfact, {.f = +0.02}},
+    {ClkClientWin, MODKEY, Button5, setmfact, {.f = -0.02}},
     {ClkTagBar, 0, Button1, view, {0}},
-    {ClkTagBar, 0, Button3, toggleview, {0}},
-    {ClkTagBar, MODKEY, Button1, tag, {0}},
-    {ClkTagBar, MODKEY, Button3, toggletag, {0}},
+    {ClkTagBar, 0, Button2, toggleview, {0}},
+    {ClkTagBar, 0, Button3, tag, {0}},
 };
-
-/*
-        { ClkLtSymbol,          0,              Button1,        setlayout, {0}
-   }, { ClkLtSymbol,          0,              Button3,        setlayout, {.v =
-   &layouts[2]} }, { ClkWinTitle,          0,              Button1, swapfocus,
-   {0} }, { ClkWinTitle,          0,              Button2,        zoom, {0} },
-        { ClkWinTitle,          0,              Button3,        focusstack, {.i
-   = +1 } }, { ClkStatusText,        0,              Button2,        spawn, {.v
-   = termcmd } }, { ClkClientWin,         MODKEY,         Button1, movemouse,
-   {0} },
-        // { ClkClientWin,         0,              Button9,        movemouse,
-   {0} }, { ClkClientWin,         MODKEY,         Button2, togglefloating, {0}
-   }, { ClkClientWin,         MODKEY,         Button3,        resizemouse, {0}
-   },
-        // { ClkClientWin,         0,              Button8,        resizemouse,
-   {0} }, { ClkTagBar,            0,              Button1,        view, {0} },
-        { ClkTagBar,            0,              Button3,        toggleview, {0}
-   }, { ClkTagBar,            MODKEY,         Button1,        tag, {0} }, {
-   ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-        { ClkClientWin,         0,              Button9,        zoom, {0} }, {
-   ClkClientWin,         0,              Button8,        view,           {0} },
-        { ClkRootWin,           0,              Button8,        view, {0} },
-        // { ClkClientWin,         0,              Button8,        shiftview,
-   {.i = +1 } }, { ClkClientWin,         MODKEY,         Button6, setmfact, {.f
-   = -0.05} }, { ClkClientWin,         MODKEY,         Button7,        setmfact,
-   {.f = +0.05} },
-        */
 
 void focusmaster()
 {
