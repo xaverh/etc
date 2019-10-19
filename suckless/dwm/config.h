@@ -36,19 +36,20 @@ static const Rule rules[] = {
     {"Google-chrome", NULL, NULL, 1 << 0, 0, -1},
     /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1
        },*/
+    {NULL, "journalctl", NULL, 1 << 8, 0, -1},
     {"lxqt-openssh-askpass", NULL, NULL, 0, 1, -1},
     {"Opera", NULL, NULL, 1 << 0, 0, -1},
+    {NULL, NULL, "Picture in picture", (1 << 8) - 1, 0, -1},
     {"presenter", "sent", "sent", 0, 1, -1},
     {"Spotify", NULL, NULL, 1 << 5, 0, -1},
     {"strawberry", NULL, NULL, 1 << 5, 0, -1},
-    {NULL, "journalctl", NULL, 1 << 8, 0, -1},
     {"Steam", NULL, NULL, 1 << 7, 0, -1},
     {"TelegramDesktop", NULL, NULL, 1 << 6, 0, -1},
     {"Vivaldi-stable", NULL, NULL, 1 << 0, 0, -1}};
 
 /* layout(s) */
 static const float mfact =
-    0.6180339887f;            /* factor of master area size [0.05..0.95] */
+    0.5688140392f;            /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1; /* number of clients in master area */
 static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
@@ -60,10 +61,13 @@ static const Layout layouts[] = {
     {"[M]", monocle},
 };
 
+void focusmaster();
+
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY, TAG)                                                      \
 	{MODKEY, KEY, view, {.ui = 1 << TAG}},                                 \
+	    {MODKEY, KEY, focusmaster, {0}},                                   \
 	    {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},         \
 	    {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                  \
 	    {MODKEY | ControlMask | ShiftMask,                                 \
@@ -85,8 +89,50 @@ static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
 static const char* termcmd[] = {"kitty", "-1", NULL};
+static const char* alttermcmd[] = {"kitty",
+                                   "-1",
+                                   "--instance-group",
+                                   "Ysgrifennwr",
+                                   "--override",
+                                   "foreground=#424242",
+                                   "--override",
+                                   "background=#f9f8f4",
+                                   "--override",
+                                   "color0=#f9f8f4",
+                                   "--override",
+                                   "color1=#e32791",
+                                   "--override",
+                                   "color2=#488432",
+                                   "--override",
+                                   "color3=#a25d0e",
+                                   "--override",
+                                   "color4=#2c65b5",
+                                   "--override",
+                                   "color5=#B062A7",
+                                   "--override",
+                                   "color6=#27BBBE",
+                                   "--override",
+                                   "color7=#999999",
+                                   "--override",
+                                   "color8=#B8B8B8",
+                                   "--override",
+                                   "color9=#9F1B66",
+                                   "--override",
+                                   "color10=#325D23",
+                                   "--override",
+                                   "color11=#71410A",
+                                   "--override",
+                                   "color12=#1F477F",
+                                   "--override",
+                                   "color13=#7B4474",
+                                   "--override",
+                                   "color14=#1B8486",
+                                   "--override",
+                                   "color15=#424242",
+                                   "--override",
+                                   "cursor=#FC9520",
+                                   NULL};
 // static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
-// static const char* alttermcmd[] = {"urxvtc", "-name", "Ysgrifennwr", NULL};
 static const char* emojicmd[] = {
     "/bin/zsh", "-c",
     "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf "
@@ -164,7 +210,7 @@ static const char* journalctlcmd[] = {
 static Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
-    {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
@@ -172,9 +218,10 @@ static Key keys[] = {
     {MODKEY, XK_d, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
-    {MODKEY, XK_Return, zoom, {0}},
+    {MODKEY, XK_BackSpace, zoom, {0}},
     {MODKEY, XK_Tab, view, {0}},
-    {MODKEY | ShiftMask, XK_c, killclient, {0}},
+    {MODKEY, XK_Tab, focusmaster, {0}},
+    {MODKEY, XK_q, killclient, {0}},
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
     {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
@@ -190,7 +237,6 @@ static Key keys[] = {
         TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_ssharp, spawn, {.v = emojicmd}},
-    // {MODKEY | Mod1Mask, XK_Return, spawn, {.v = alttermcmd}},
     {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
     {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
     {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
@@ -219,6 +265,7 @@ static Key keys[] = {
     {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
+    {MODKEY | ShiftMask, XK_Return, spawn, {.v = alttermcmd}},
     {MODKEY, XK_9, spawn, {.v = journalctlcmd}}};
 
 #define Button6 6
@@ -271,3 +318,11 @@ static Button buttons[] = {
    = -0.05} }, { ClkClientWin,         MODKEY,         Button7,        setmfact,
    {.f = +0.05} },
         */
+
+void focusmaster()
+{
+	Client* i = selmon->clients;
+	while (!ISVISIBLE(i)) i = i->next;
+	focus(i);
+	restack(selmon);
+}
