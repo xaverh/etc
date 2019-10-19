@@ -182,7 +182,7 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
+  "workbench.colorTheme": "Ysgrifennwr",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
@@ -202,5 +202,6 @@
   "terminal.integrated.automationShell.linux": "/bin/zsh",
   "scm.defaultViewMode": "tree",
   "editor.multiCursorModifier": "alt",
-  "editor.multiCursorPaste": "spread"
+  "editor.multiCursorPaste": "spread",
+  "lua.format.singleQuote": true
 }

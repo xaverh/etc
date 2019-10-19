@@ -245,7 +245,7 @@ iw dev wlan0 set power_save off
 
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
-zypper in clipmenu clipnotify wmbubble
+zypper in clipmenu clipnotify
 
 # Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
 # NVIDIA:
@@ -263,11 +263,10 @@ sudo mount -o subvol=@.snapshots,compress-force=zstd:6,noatime /dev/sda2 /.snaps
 for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/.snapshots/}")" "$i"/`date -Is`
 
 xdg-mime default mupdf-gl.desktop application/pdf
-xdg-mime default org.pwmt.zathura.desktop application/vnd.comicbook-rar
-xdg-mime default mupdf.desktop application/vnd.comicbook+zip
-xdg-mime default mupdf.desktop application/epub+zip
-xdg-mime default org.pwmt.zathura.desktop application/x-cb7
-xdg-mime default pcmanfm.desktop inode/directory
+xdg-mime default mupdf-gl.desktop application/vnd.comicbook-rar
+xdg-mime default mupdf-gl.desktop application/vnd.comicbook+zip
+xdg-mime default mupdf-gl.desktop application/epub+zip
+xdg-mime default mupdf-gl.desktop application/x-cb7
 xdg-mime default sxiv.desktop image/jpeg
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
