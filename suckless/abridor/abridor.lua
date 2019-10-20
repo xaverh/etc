@@ -14,13 +14,14 @@ function filter_for_pattern(str, ...)
 end
 
 ::recurse::
-ls_file = io.popen('ls -1 --group-directories-first -B -p -X "' .. filename .. '"')
+ls_file = io.popen('ls -1 --group-directories-first -B -p "' .. filename .. '"')
 ls = {'../', './'}
 for line in ls_file:lines('l') do
 	table.insert(ls, line)
 end
 
-local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -i')
+local filename_file =
+	io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -i -p "' .. filename .. '"')
 local filename_new = string.sub(filename_file:read('a'), 1, -2)
 
 if filename_new == '' then
