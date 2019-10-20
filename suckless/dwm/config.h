@@ -151,8 +151,8 @@ static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
                                         NULL};
-static const char* raisevolumecmd[] = {"amixer", "sset Master 5%+", NULL};
-static const char* lowervolumecmd[] = {"amixer", "sset Master 5%-", NULL};
+static const char* raisevolumecmd[] = {"amixer", "sset", "Master", "5%+", NULL};
+static const char* lowervolumecmd[] = {"amixer", "sset", "Master", "5%-", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 static const char* unmutecmd[] = {"amixer", "sset", "Master", "unmute", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
@@ -307,8 +307,15 @@ static Button buttons[] = {
 
 void focusmaster()
 {
-	Client* i = selmon->clients;
-	while (!ISVISIBLE(i)) i = i->next;
-	focus(i);
-	restack(selmon);
+	Client* c = NULL;
+
+	if (!selmon->sel)
+		return;
+	c = selmon->clients;
+	if (c && !ISVISIBLE(c))
+		c = c->next;
+	if (c) {
+		focus(c);
+		restack(selmon);
+	}
 }
