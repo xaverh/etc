@@ -79,7 +79,7 @@ elseif
 		'%.FLAC$'
 	)
  then
-	os.execute('mpv "' .. filename .. '"')
+	os.execute('mpv --force-window=yes "' .. filename .. '"')
 elseif
 	filter_for_pattern(
 		filename,
