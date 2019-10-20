@@ -20,18 +20,6 @@ MenuStyle * MenuColorset 5,          \
 Style Journalctl StartsOnPage 0 0 0
 Style Weechat StartsOnPage 1 0 1
 
-# TODO: tmux attach via rofi
-# TODO: rofi desktop by name (maybe grep them out of this config)
-# TODO: shutdown menu
-# TODO: Volume Button in FvwmButtons
-# TODO: unkillable windows?
-# TODO: neverfocus windows?
-# TODO: theme switcher
-# TODO: redefine UrgencyFunc to prevent focus stealing
-# TODO: desktop switch buttons
-# TODO: goto journalctl if already open
-# TODO: WeeChat starter
-# TODO: consistency in starters (what is in FvwmButtons, what is in menu?)
 
 *FvwmFormDefault: Font $[infostore.default_font]
 *FvwmFormDefault: InputFont $[infostore.default_font]
@@ -331,8 +319,8 @@ Key r A S4 Restart
 Key Return A 4 Exec exec $[TERMINAL]
 Key Return A S4 Exec exec $[TERMINAL] -name Qillqaq
 Key Insert A 4 Exec clipmenu
--Key backslash A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
--Key ssharp A 4 Exec `cat $[FVWM_USERDIR]/assets/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
+-Key backslash A 4 Exec `cat $[HOME]/.local/share/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
+Silent Key ssharp A 4 Exec `cat $[HOME]/.local/share/emoji.txt | rofi -dmenu -i -font ".Helvetica Neue DeskInterface 14" -p Emoji | awk '{printf "%s", $$1}' | xsel -ib`
 Silent Key XF86AudioRaiseVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%+
 Silent Key XF86AudioLowerVolume A N Exec amixer sset Master unmute && exec amixer sset Master 5%-
 Silent Key XF86AudioMute A N Exec exec amixer sset Master mute
