@@ -58,8 +58,8 @@ static const int resizehints =
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"[]=", tile}, /* first entry is default */
-    {"><>", NULL}, /* no layout function means floating behavior */
     {"[M]", monocle},
+    {"><>", NULL}, /* no layout function means floating behavior */
 };
 
 void focusmaster();
@@ -223,12 +223,12 @@ static Key keys[] = {
     {MODKEY, XK_Tab, focusmaster, {0}},
     {MODKEY, XK_q, killclient, {0}},
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
-    {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
-    {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_f, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_m, setlayout, {.v = &layouts[1]}},
     {MODKEY, XK_space, setlayout, {0}},
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
-    {MODKEY, XK_0, view, {.ui = ~0}},
-    {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
+    {MODKEY, XK_0, view, {.ui = 0xff}},
+    {MODKEY | ShiftMask, XK_0, tag, {.ui = 0xff}},
     {MODKEY, XK_comma, focusmon, {.i = -1}},
     {MODKEY, XK_period, focusmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
@@ -271,7 +271,12 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = alttermcmd}},
     {MODKEY, XK_n, spawn, {.v = nnncmd}},
     {MODKEY, XK_u, spawn, {.v = abridorcmd}},
-    {MODKEY, XK_9, spawn, {.v = journalctlcmd}}};
+    {MODKEY, XK_9, spawn, {.v = journalctlcmd}},
+    {MODKEY, XK_F3, tag, {.ui = 0x07}},
+    {MODKEY | ShiftMask, XK_F12, setlayout, {.v = &layouts[0]}},
+    {MODKEY | ShiftMask, XK_F12, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
+    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = INT_MIN}},
+    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = +1}}};
 
 #define Button6 6
 #define Button7 7
@@ -286,14 +291,11 @@ static Button buttons[] = {
     {ClkLtSymbol, 0, Button1, setlayout, {.v = &layouts[0]}},
     {ClkLtSymbol, 0, Button2, setlayout, {.v = &layouts[1]}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
-    {ClkWinTitle, 0, Button1, setmfact, {.f = -0.02}},
-    {ClkWinTitle, 0, Button2, setlayout, {.v = &layouts[0]}},
-    {ClkWinTitle, 0, Button2, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
-    {ClkWinTitle, 0, Button2, incnmaster, {.i = INT_MIN}},
-    {ClkWinTitle, 0, Button2, incnmaster, {.i = +1}},
-    {ClkWinTitle, 0, Button3, incnmaster, {.i = +1}},
-    {ClkStatusText, 0, Button1, setmfact, {.f = +0.02}},
-    {ClkStatusText, 0, Button2, zoom, {0}},
+    {ClkWinTitle, 0, Button1, focusstack, {.i = +1}},
+    {ClkWinTitle, 0, Button2, setmfact, {.f = -0.02}},
+    {ClkWinTitle, 0, Button3, setmfact, {.f = +0.02}},
+    {ClkStatusText, 0, Button1, zoom, {0}},
+    {ClkStatusText, 0, Button2, incnmaster, {.i = +1}},
     {ClkStatusText, 0, Button3, incnmaster, {.i = -1}},
     {ClkClientWin, MODKEY, Button1, movemouse, {0}},
     {ClkClientWin, MODKEY, Button2, togglefloating, {0}},
