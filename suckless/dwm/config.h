@@ -38,6 +38,7 @@ static const Rule rules[] = {
        },*/
     {NULL, "journalctl", NULL, 1 << 8, 0, -1},
     {"lxqt-openssh-askpass", NULL, NULL, 0, 1, -1},
+    {"mpv", "FM0", NULL, 1 << 7, 0, -1},
     {"Opera", NULL, NULL, 1 << 0, 0, -1},
     {NULL, NULL, "Picture in picture", (1 << 8) - 1, 0, -1},
     {"presenter", "sent", "sent", 0, 1, -1},
@@ -206,9 +207,10 @@ static const char* journalctlcmd[] = {
     NULL};
 static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
+static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
 
 static Key keys[] = {
-    /* modifier                     key        function        argument */
+    /* modifier  key  function  argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_b, togglebar, {0}},
@@ -276,7 +278,8 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_F12, setlayout, {.v = &layouts[0]}},
     {MODKEY | ShiftMask, XK_F12, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
     {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = INT_MIN}},
-    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = +1}}};
+    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = +1}},
+    {MODKEY, XK_F11, spawn, {.v = fm0cmd}}};
 
 #define Button6 6
 #define Button7 7
