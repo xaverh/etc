@@ -31,8 +31,15 @@ end
 ::recurse::
 ls_file = io.popen('ls -1 --group-directories-first -B -p "' .. filename .. '"')
 ls = {'../', './'}
+local ARG_MAX = 100000 -- echo crashes if list of args is too long
+local arg_length = 7 -- ../\n./\n, so far
 for line in ls_file:lines('l') do
-	table.insert(ls, line)
+	arg_length = arg_length + #line
+	if arg_length < ARG_MAX then
+		table.insert(ls, line)
+	else
+		break
+	end
 end
 
 local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -i -p "' .. filename .. '"')
@@ -44,9 +51,7 @@ end
 
 filename = filename .. filename_new
 
--- TODO: pick how to open the folder: sxiv, Visual Studio Code, nnn, mpv
 if filter_for_pattern(filename, '/%./$') then
-	-- os.execute('sxiv -t ' .. filename)
 	open_folder(filename)
 elseif filter_for_pattern(filename, '/$') then
 	goto recurse
