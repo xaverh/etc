@@ -35,7 +35,6 @@ URxvt.iso14755: false
 URxvt.depth: 24
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
-URxvt.iconFile: /usr/share/icons/elementary/apps/32/utilities-terminal.svg
 *.cursorBlink: true
 XTerm*faceSize: 10
 XTerm*faceName: SF Mono
