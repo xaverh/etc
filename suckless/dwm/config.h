@@ -152,15 +152,17 @@ static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
                                         NULL};
-static const char* raisevolumecmd[] = {"amixer", "sset", "Master", "5%+", "unmute", NULL};
-static const char* lowervolumecmd[] = {"amixer", "sset", "Master", "5%-", "unmute", NULL};
+static const char* raisevolumecmd[] = {"amixer", "sset",   "Master",
+                                       "5%+",    "unmute", NULL};
+static const char* lowervolumecmd[] = {"amixer", "sset",   "Master",
+                                       "5%-",    "unmute", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
 // else
 // xsetroot -name \"NOT MUTE\"; fi", NULL };
-static const char* lockcmd[] = {"slock", NULL};
+static const char* lockcmd[] = {"i3lock", "-c", "1e1e1e", NULL};
 static const char* brightnessupcmd[] = {"xbacklight", "-inc", "7", NULL};
 static const char* brightnessdowncmd[] = {"xbacklight", "-dec", "7", NULL};
 static const char* screenshotcmd[] = {
