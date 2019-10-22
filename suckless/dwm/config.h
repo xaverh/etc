@@ -152,10 +152,9 @@ static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
                                         NULL};
-static const char* raisevolumecmd[] = {"amixer", "sset", "Master", "5%+", NULL};
-static const char* lowervolumecmd[] = {"amixer", "sset", "Master", "5%-", NULL};
+static const char* raisevolumecmd[] = {"amixer", "sset", "Master", "5%+", "unmute", NULL};
+static const char* lowervolumecmd[] = {"amixer", "sset", "Master", "5%-", "unmute", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
-static const char* unmutecmd[] = {"amixer", "sset", "Master", "unmute", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
@@ -244,14 +243,10 @@ static Key keys[] = {
     {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
     {0, 0xff61, spawn, {.v = screenshotcmd}},
     {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
-    {0, 0x1008ff13, spawn, {.v = unmutecmd}},
     {0, 0x1008ff13, spawn, {.v = raisevolumecmd}},
-    {0, 0x1008ff11, spawn, {.v = unmutecmd}},
     {0, 0x1008ff11, spawn, {.v = lowervolumecmd}},
     {0, 0x1008ff12, spawn, {.v = mutecmd}},
-    {MODKEY, 0xffab, spawn, {.v = unmutecmd}},
     {MODKEY, 0xffab, spawn, {.v = raisevolumecmd}},
-    {MODKEY, 0xffad, spawn, {.v = unmutecmd}},
     {MODKEY, 0xffad, spawn, {.v = lowervolumecmd}},
     {MODKEY, 0xff9e, spawn, {.v = mutecmd}},
     {0, 0x1008ff17, spawn, {.v = playnextcmd}},
