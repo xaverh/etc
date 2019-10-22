@@ -27,26 +27,21 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class  instance  title  tags mask  isfloating monitor */
-    {"brave", NULL, NULL, 1 << 0, 0, -1},
     // { "Code",                       NULL,       NULL,         1 << 1, 0, -1
     // },
     {"discord", NULL, NULL, 1 << 6, 0, -1},
-    {"Firefox", NULL, NULL, 1 << 0, 0, -1},
     {"Firefox", "Places", "Library", 0, 1, -1},
-    {"Google-chrome", NULL, NULL, 1 << 0, 0, -1},
     /*	{ "mpv",              NULL,         NULL,         0xFFFF,       0, -1
        },*/
     {NULL, "journalctl", NULL, 1 << 8, 0, -1},
     {"lxqt-openssh-askpass", NULL, NULL, 0, 1, -1},
     {"mpv", "FM0", NULL, 1 << 7, 0, -1},
-    {"Opera", NULL, NULL, 1 << 0, 0, -1},
     {NULL, NULL, "Picture in picture", (1 << 8) - 1, 0, -1},
     {"presenter", "sent", "sent", 0, 1, -1},
     {"Spotify", NULL, NULL, 1 << 5, 0, -1},
     {"strawberry", NULL, NULL, 1 << 5, 0, -1},
     {"Steam", NULL, NULL, 1 << 7, 0, -1},
-    {"TelegramDesktop", NULL, NULL, 1 << 6, 0, -1},
-    {"Vivaldi-stable", NULL, NULL, 1 << 0, 0, -1}};
+    {"TelegramDesktop", NULL, NULL, 1 << 6, 0, -1}};
 
 /* layout(s) */
 #define DEFAULT_MFACT 0.5688140392f
