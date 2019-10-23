@@ -190,7 +190,7 @@ static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* backdropcmd[] = {
     "/bin/zsh", "-c",
-    "xsetroot -bitmap ~/.fvwm/backdrops/`ls ~/.fvwm/backdrops | shuf -n 1 | tr "
+    "xsetroot -bitmap ~/etc/suckless/backdrops/`ls ~/etc/suckless/backdrops | shuf -n 1 | tr "
     "-d "
     "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
     "$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`",
