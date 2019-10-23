@@ -158,8 +158,8 @@ static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 // else
 // xsetroot -name \"NOT MUTE\"; fi", NULL };
 static const char* lockcmd[] = {"i3lock", "-c", "1e1e1e", NULL};
-static const char* brightnessupcmd[] = {"xbacklight", "-inc", "7", NULL};
-static const char* brightnessdowncmd[] = {"xbacklight", "-dec", "7", NULL};
+static const char* brightnessupcmd[] = {"/bin/zsh", "-c", "brightness=$(</sys/class/backlight/intel_backlight/brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\nnew_brightness=$(($max_brightness/10+$brightness))\necho $(($new_brightness < $max_brightness ? $new_brightness : $max_brightness)) > /sys/class/backlight/intel_backlight/brightness", NULL};
+static const char* brightnessdowncmd[] = {"/bin/zsh", "-c", "brightness=$(</sys/class/backlight/intel_backlight/brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\nnew_brightness=$((-$max_brightness/10+$brightness))\necho $(($new_brightness > 0 ? $new_brightness : 0)) > /sys/class/backlight/intel_backlight/brightness", NULL};
 static const char* screenshotcmd[] = {
     "/bin/zsh", "-c",
     "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date "

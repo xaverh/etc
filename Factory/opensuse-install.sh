@@ -167,6 +167,12 @@ WantedBy=default.target
 
 EOF
 
+cat > /etc/udev/rules.d/backlight.rules <<"EOF"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+
+EOF
+
 ln -s /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
 
 cd /
@@ -187,7 +193,7 @@ systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
 
 
-# Add user in YaST, add to groups wheel,systemd-journal, systemd-resolve(?) /bin/zsh as shell
+# Add user in YaST, add to groups wheel,systemd-journal,video, systemd-resolve(?) /bin/zsh as shell
 
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat > /etc/zypp/repos.d/vscode.repo <<"EOF"
