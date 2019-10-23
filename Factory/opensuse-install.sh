@@ -195,6 +195,26 @@ EndSection
 
 EOF
 
+cat > /etc/X11/xorg.conf.d/30-touchpad.conf <<"EOF"
+Section "InputClass"
+	Identifier "devname"
+	Driver "libinput"
+	MatchIsTouchpad "on"
+	Option "NaturalScrolling" "true"
+EndSection
+
+EOF
+
+cat > /etc/X11/xorg.conf.d/31-pointer.conf <<"EOF"
+Section "InputClass"
+	Identifier "devname"
+	Driver "libinput"
+	MatchIsPointer "on"
+	Option "NaturalScrolling" "false"
+EndSection
+
+EOF
+
 ln -s /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
 
 cd /
