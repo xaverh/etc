@@ -1,7 +1,0 @@
-#!/bin/zsh
-
-thumbsfolder=$(mktemp -d -t fvwm-thumbs-XXXXXXXXXX)
-
-cat <<END
-InfoStoreAdd thumbsfolder "$thumbsfolder"
-END
