@@ -142,7 +142,8 @@ static const char* mansplaincmd[] = {
     "-dmenu -i | awk '{gsub(/[()]/,\"\"); print $2\" "
     "\"$1}'`\nfilename=\"/tmp/mansplain-`date "
     "+\"%G-%V\"`/${^manpage}.pdf\"\n[[ -f \"$filename\" ]] || man -Tpdf "
-    "${=manpage} > \"$filename\"\nmupdf-gl \"$filename\""};
+    "${=manpage} > \"$filename\"\n[[ -s \"$filename\" ]] && mupdf-gl "
+    "\"$filename\""};
 static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
@@ -158,8 +159,22 @@ static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 // else
 // xsetroot -name \"NOT MUTE\"; fi", NULL };
 static const char* lockcmd[] = {"i3lock", "-c", "1e1e1e", NULL};
-static const char* brightnessupcmd[] = {"/bin/zsh", "-c", "brightness=$(</sys/class/backlight/intel_backlight/brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\nnew_brightness=$(($max_brightness/10+$brightness))\necho $(($new_brightness < $max_brightness ? $new_brightness : $max_brightness)) > /sys/class/backlight/intel_backlight/brightness", NULL};
-static const char* brightnessdowncmd[] = {"/bin/zsh", "-c", "brightness=$(</sys/class/backlight/intel_backlight/brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\nnew_brightness=$((-$max_brightness/10+$brightness))\necho $(($new_brightness > 0 ? $new_brightness : 0)) > /sys/class/backlight/intel_backlight/brightness", NULL};
+static const char* brightnessupcmd[] = {
+    "/bin/zsh", "-c",
+    "brightness=$(</sys/class/backlight/intel_backlight/"
+    "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
+    "max_brightness)\nnew_brightness=$(($max_brightness/10+$brightness))\necho "
+    "$(($new_brightness < $max_brightness ? $new_brightness : "
+    "$max_brightness)) > /sys/class/backlight/intel_backlight/brightness",
+    NULL};
+static const char* brightnessdowncmd[] = {
+    "/bin/zsh", "-c",
+    "brightness=$(</sys/class/backlight/intel_backlight/"
+    "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
+    "max_brightness)\nnew_brightness=$((-$max_brightness/"
+    "10+$brightness))\necho $(($new_brightness > 0 ? $new_brightness : 0)) > "
+    "/sys/class/backlight/intel_backlight/brightness",
+    NULL};
 static const char* screenshotcmd[] = {
     "/bin/zsh", "-c",
     "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date "
@@ -190,7 +205,8 @@ static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* backdropcmd[] = {
     "/bin/zsh", "-c",
-    "xsetroot -bitmap ~/etc/suckless/backdrops/`ls ~/etc/suckless/backdrops | shuf -n 1 | tr "
+    "xsetroot -bitmap ~/etc/suckless/backdrops/`ls ~/etc/suckless/backdrops | "
+    "shuf -n 1 | tr "
     "-d "
     "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
     "$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`",
@@ -299,8 +315,7 @@ static Button buttons[] = {
     {ClkClientWin, MODKEY, Button5, setmfact, {.f = -0.02}},
     {ClkTagBar, 0, Button1, view, {0}},
     {ClkTagBar, 0, Button2, toggleview, {0}},
-    {ClkTagBar, 0, Button3, tag, {0}},
-};
+    {ClkTagBar, 0, Button3, tag, {0}}};
 
 void focusmaster()
 {
