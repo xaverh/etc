@@ -173,17 +173,19 @@ ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/ch
 
 EOF
 
-cat > /usr/local/lib/systemd/service/i3lock.service <<"EOF"
+cat > /usr/local/lib/systemd/service/i3lock@.service <<"EOF"
 [Unit]
-Description=Lock X session using i3lock
+Description=Lock X session using i3lock for user %i
+Before=sleep.target
 
 [Service]
-User=xha
+User=%i
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/i3lock -c 1e1e1e
+ExecStartPre=/usr/bin/xset dpms force suspend
+ExecStart=/usr/bin/i3lock -n -c 1e1e1e
 
 [Install]
-WantedBy=suspend.target
+WantedBy=sleep.target
 
 EOF
 
@@ -233,9 +235,10 @@ timedatectl set-timezone Europe/Berlin
 hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
-systemctl enable --now i3lock.service
 
 # Add user in YaST, add to groups wheel,systemd-journal,video, systemd-resolve(?) /bin/zsh as shell
+
+systemctl enable --now i3lock@xha.service
 
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat > /etc/zypp/repos.d/vscode.repo <<"EOF"
