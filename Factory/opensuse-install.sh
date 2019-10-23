@@ -173,6 +173,28 @@ ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/ch
 
 EOF
 
+cat > /usr/local/lib/systemd/service/i3lock.service <<"EOF"
+[Unit]
+Description=Lock X session using i3lock
+
+[Service]
+User=xha
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/i3lock -c 1e1e1e
+
+[Install]
+WantedBy=suspend.target
+
+EOF
+
+cat > /etc/X11/xorg.conf.d/20-dontzap.conf <<"EOF"
+Section "ServerFlags"
+             Option "DontVTSwitch" "True"
+             Option "DontZap"      "True"
+EndSection
+
+EOF
+
 ln -s /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
 
 cd /
@@ -191,7 +213,7 @@ timedatectl set-timezone Europe/Berlin
 hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
-
+systemctl enable --now i3lock.service
 
 # Add user in YaST, add to groups wheel,systemd-journal,video, systemd-resolve(?) /bin/zsh as shell
 
