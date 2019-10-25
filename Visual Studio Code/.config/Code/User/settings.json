@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "SF Mono, IBM Plex Mono Text, Consolas, Menlo, Source Code Pro",
+  "editor.fontFamily": "IBM Plex Mono Text, SF Mono, Consolas, Menlo, Source Code Pro",
   "editor.fontWeight": "400",
   "editor.rulers": [],
   "editor.formatOnType": true,
@@ -41,7 +41,8 @@
   "C_Cpp.formatting": "Disabled",
   "window.menuBarVisibility": "toggle",
   "[html]": {
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.tabSize": 4,
