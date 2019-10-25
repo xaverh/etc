@@ -139,7 +139,7 @@ static const char* emojicmd[] = {
 static const char* mansplaincmd[] = {
     "/bin/zsh", "-c",
     "mkdir -p /tmp/mansplain-`date +\"%G-%V\"`\nmanpage=`apropos . | rofi "
-    "-dmenu -i | awk '{gsub(/[()]/,\"\"); print $2\" "
+    "-dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" "
     "\"$1}'`\nfilename=\"/tmp/mansplain-`date "
     "+\"%G-%V\"`/${^manpage}.pdf\"\n[[ -f \"$filename\" ]] || man -Tpdf "
     "${=manpage} > \"$filename\"\n[[ -s \"$filename\" ]] && mupdf-gl "
@@ -186,12 +186,19 @@ static const char* screenshotselectioncmd[] = {
     "0.88671875,0.15294117647059,0.56862745098039 -u "
     "-s -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
     NULL};
-static const char* urlcmd[] = {"clipmenu-url", NULL};
+static const char* urlcmd[] = {
+    "/bin/zsh", "-c",
+    "xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | "
+    "grep "
+    "--only-matching --perl-regexp "
+    "\"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq |rofi -dmenu -i -p "
+    "'open URL')",
+    NULL};
 static const char* clipcmd[] = {"clipmenu", "-p", "Clipboard", NULL};
 static const char* showclipboardcmd[] = {
     "/bin/zsh", "-c",
-    "xsetroot -name \"$(tail --lines=1 "
-    "$CM_DIR/clipmenu.5.$(whoami)/line_cache_clipboard)\"",
+    "xsetroot -name \"$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | "
+    "tail --lines=1 | cut -d ' ' -f 2- -- -)\"",
     NULL};
 static const char* tmuxcmd[] = {
     "/bin/zsh", "-c",
@@ -205,7 +212,7 @@ static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* backdropcmd[] = {
     "/bin/zsh", "-c",
-    "xsetroot -bitmap ~/etc/suckless/backdrops/`ls ~/etc/suckless/backdrops | "
+    "xsetroot -bitmap ~/etc/suckless/backdrops/`\\ls ~/etc/suckless/backdrops | "
     "shuf -n 1 | tr "
     "-d "
     "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
@@ -220,6 +227,10 @@ static const char* journalctlcmd[] = {
 static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
 static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
+static const char* sshaddcmd[] = {
+    "/bin/zsh", "-c",
+    "SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null", NULL};
+static const char* sshdelcmd[] = {"ssh-add", "-d", NULL};
 
 static Key keys[] = {
     /* modifier  key  function  argument */
@@ -228,7 +239,7 @@ static Key keys[] = {
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
-    {MODKEY, XK_i, incnmaster, {.i = +1}},
+    {MODKEY, XK_s, incnmaster, {.i = +1}},
     {MODKEY, XK_d, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
@@ -252,7 +263,7 @@ static Key keys[] = {
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_ssharp, spawn, {.v = emojicmd}},
     {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
-    {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
+    {MODKEY, XK_i, spawn, {.v = clipcmd}},
     {MODKEY, XK_acute, spawn, {.v = showclipboardcmd}},
     {0, 0xff61, spawn, {.v = screenshotcmd}},
     {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
@@ -273,14 +284,17 @@ static Key keys[] = {
     {MODKEY, XK_w, spawn, {.v = nowallpapercmd}},
     {MODKEY, XK_F9, spawn, {.v = connect_setubal}},
     {MODKEY | ShiftMask, XK_F9, spawn, {.v = disconnect_setubal}},
-    {MODKEY, XK_o, spawn, {.v = urlcmd}},
+    {MODKEY, XK_u, spawn, {.v = urlcmd}},
     {0, 0x1008ff02, spawn, {.v = brightnessupcmd}},
     {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
+    {MODKEY, XK_F6, spawn, {.v = sshaddcmd}},
+    {MODKEY | ShiftMask, XK_F6, spawn, {.v = sshdelcmd}},
+    {MODKEY, XK_Escape, spawn, {.v = sshdelcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = alttermcmd}},
     {MODKEY, XK_n, spawn, {.v = nnncmd}},
-    {MODKEY, XK_u, spawn, {.v = abridorcmd}},
+    {MODKEY, XK_o, spawn, {.v = abridorcmd}},
     {MODKEY, XK_9, spawn, {.v = journalctlcmd}},
     {MODKEY, XK_F3, tag, {.ui = 0x07}},
     {MODKEY | ShiftMask, XK_F12, setlayout, {.v = &layouts[0]}},
@@ -321,7 +335,7 @@ void focusmaster()
 {
 	Client* c = NULL;
 
-	if (!selmon->sel)
+	if (!selmon->sel || selmon->lt[selmon->sellt] != &layouts[0])
 		return;
 	c = selmon->clients;
 	if (c && !ISVISIBLE(c))
