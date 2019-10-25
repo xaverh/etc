@@ -29,7 +29,7 @@ function filter_for_pattern(str, ...)
 end
 
 ::recurse::
-ls_file = io.popen('ls -1 --group-directories-first -B -p "' .. filename .. '"')
+ls_file = io.popen('\\ls -1 --group-directories-first -B -p "' .. filename .. '"')
 ls = {'../', './'}
 local ARG_MAX = 100000 -- echo crashes if list of args is too long
 local arg_length = 7 -- ../\n./\n, so far
