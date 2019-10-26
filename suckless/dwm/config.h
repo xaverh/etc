@@ -156,6 +156,11 @@ static const char* raisevolumecmd[] = {"amixer", "sset",   "Master",
 static const char* lowervolumecmd[] = {"amixer", "sset",   "Master",
                                        "5%-",    "unmute", NULL};
 static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
+#define GETVOLUME                                                              \
+	"$(amixer get Master | awk 'END{gsub(/[\\[\\]]/,\"\"); print $6\" "    \
+	"\"$5}')"
+static const char* printvolumecmd[] = {
+    SHELL, "-c", "xsetroot -name \"" GETVOLUME "\"", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
@@ -330,11 +335,17 @@ static Key keys[] = {
     {0, 0xff61, spawn, {.v = screenshotcmd}},
     {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
     {0, 0x1008ff13, spawn, {.v = raisevolumecmd}},
+    {0, 0x1008ff13, spawn, {.v = printvolumecmd}},
     {0, 0x1008ff11, spawn, {.v = lowervolumecmd}},
+    {0, 0x1008ff11, spawn, {.v = printvolumecmd}},
     {0, 0x1008ff12, spawn, {.v = mutecmd}},
+    {0, 0x1008ff12, spawn, {.v = printvolumecmd}},
     {MODKEY, 0xffab, spawn, {.v = raisevolumecmd}},
+    {MODKEY, 0xffab, spawn, {.v = printvolumecmd}},
     {MODKEY, 0xffad, spawn, {.v = lowervolumecmd}},
+    {MODKEY, 0xffad, spawn, {.v = printvolumecmd}},
     {MODKEY, 0xff9e, spawn, {.v = mutecmd}},
+    {MODKEY, 0xff9e, spawn, {.v = printvolumecmd}},
     {0, 0x1008ff17, spawn, {.v = playnextcmd}},
     {0, 0x1008ff14, spawn, {.v = playpausecmd}},
     {0, 0x1008ff16, spawn, {.v = playpreviouscmd}},
