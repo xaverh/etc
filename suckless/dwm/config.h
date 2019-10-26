@@ -6,9 +6,11 @@ static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 static const char* fonts[] = {"sans-serif:size=11"};
-static const char col_gray1[] = "#1e1e1e";
+#define COL_GRAY1 "#1e1e1e"
+static const char col_gray1[] = COL_GRAY1;
 // static const char col_gray2[] = "#424242";
-static const char col_gray3[] = "#b8b8b8";
+#define COL_GRAY3 "#b8b8b8"
+static const char col_gray3[] = COL_GRAY3;
 static const char col_gray4[] = "#e5e6e6";
 static const char col_cyan[] = "#005577";
 static const char col_cerise[] = "#e32791";
@@ -72,12 +74,13 @@ void focusmaster();
 	     toggletag,                                                        \
 	     {.ui = 1 << TAG}},
 
+#define SHELL "/bin/zsh"
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd)                                                             \
 	{                                                                      \
 		.v = (const char*[])                                           \
 		{                                                              \
-			"/bin/zsh", "-c", cmd, NULL                            \
+			SHELL, "-c", cmd, NULL                                 \
 		}                                                              \
 	}
 
@@ -132,12 +135,12 @@ static const char* alttermcmd[] = {"kitty",
                                    NULL};
 // static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
 static const char* emojicmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf "
     "$1}' | xsel -ib",
     NULL};
 static const char* mansplaincmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "mkdir -p /tmp/mansplain-`date +\"%G-%V\"`\nmanpage=`apropos . | rofi "
     "-dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" "
     "\"$1}'`\nfilename=\"/tmp/mansplain-`date "
@@ -158,9 +161,9 @@ static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
 // else
 // xsetroot -name \"NOT MUTE\"; fi", NULL };
-static const char* lockcmd[] = {"i3lock", "-c", "1e1e1e", NULL};
+static const char* lockcmd[] = {"i3lock", "-c", col_gray1, NULL};
 static const char* brightnessupcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/"
     "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
     "max_brightness)\nnew_brightness=$(($max_brightness/10+$brightness))\necho "
@@ -168,7 +171,7 @@ static const char* brightnessupcmd[] = {
     "$max_brightness)) > /sys/class/backlight/intel_backlight/brightness",
     NULL};
 static const char* brightnessdowncmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/"
     "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
     "max_brightness)\nnew_brightness=$((-$max_brightness/"
@@ -176,18 +179,18 @@ static const char* brightnessdowncmd[] = {
     "/sys/class/backlight/intel_backlight/brightness",
     NULL};
 static const char* screenshotcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date "
     "--iso-8601=ns).png\"",
     NULL};
 static const char* screenshotselectioncmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "mkdir -p ~/tmp/scr && maim -c "
     "0.88671875,0.15294117647059,0.56862745098039 -u "
     "-s -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
     NULL};
 static const char* urlcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | "
     "grep "
     "--only-matching --perl-regexp "
@@ -196,12 +199,12 @@ static const char* urlcmd[] = {
     NULL};
 static const char* clipcmd[] = {"clipmenu", "-p", "Clipboard", NULL};
 static const char* showclipboardcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "xsetroot -name \"$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | "
     "tail --lines=1 | cut -d ' ' -f 2- -- -)\"",
     NULL};
 static const char* tmuxcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "kitty -1 -- tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
     "-dmenu -i -p 'Attach to tmux session:')",
     NULL};
@@ -211,8 +214,9 @@ static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
                                            "88:C6:26:F4:8A:90", NULL};
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* backdropcmd[] = {
-    "/bin/zsh", "-c",
-    "xsetroot -bitmap ~/etc/suckless/backdrops/`\\ls ~/etc/suckless/backdrops | "
+    SHELL, "-c",
+    "xsetroot -bitmap ~/etc/suckless/backdrops/`\\ls ~/etc/suckless/backdrops "
+    "| "
     "shuf -n 1 | tr "
     "-d "
     "'\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" "
@@ -220,7 +224,7 @@ static const char* backdropcmd[] = {
     NULL};
 static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL};
 static const char* journalctlcmd[] = {
-    "/bin/zsh", "-c",
+    SHELL, "-c",
     "pidof journalctl || kitty -1 --class journalctl -T journalctl -- "
     "journalctl -b -f -n 1000",
     NULL};
@@ -228,9 +232,67 @@ static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
 static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
 static const char* sshaddcmd[] = {
-    "/bin/zsh", "-c",
-    "SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null", NULL};
+    SHELL, "-c", "SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null",
+    NULL};
 static const char* sshdelcmd[] = {"ssh-add", "-d", NULL};
+#define FONT_9MENU                                                             \
+	"-adobe-helvetica-medium-r-normal--14-140-75-75-p-77-iso10646-1"
+static const char* strawberry9menucmd[] = {
+    "9menu",
+    "-font",
+    FONT_9MENU,
+    "-shell",
+    SHELL,
+    "-bg",
+    col_gray1,
+    "-fg",
+    col_gray3,
+    "-popup",
+    "-teleport",
+    "-label",
+    "9music",
+    "9music",
+    "---:true",
+    "play/pause:strawberry -t",
+    "stop:strawberry -s",
+    "stop after current:strawberry -q",
+    "previous:strawberry  -r",
+    "next:strawberry -f",
+    "restart or prev:strawberry --restart-or-previous",
+    "what's playing?:strawberry -y",
+    "---:true",
+    "exit",
+    NULL};
+
+static const char* main9menucmd[] = {
+    "9menu",
+    "-font",
+    FONT_9MENU,
+    "-shell",
+    SHELL,
+    "-bg",
+    col_gray1,
+    "-fg",
+    col_gray3,
+    "-popup",
+    "-teleport",
+    "9menu:false",
+    "---:true",
+    "Connect Set\372bal:bluetoothctl connect 88:C6:26:F4:8A:90",
+    "Disconnect Set\372bal:bluetoothctl disconnect 88:C6:26:F4:8A:90",
+    "---:true",
+    "Quit:9menu -font '" FONT_9MENU "' -shell " SHELL " -bg '" COL_GRAY1
+    "' -fg '" COL_GRAY3 "' -popup -teleport -label 'Quit?' 'Quit?:true' 'Lock "
+    "screen:i3lock -c \"" COL_GRAY1 "\"' 'Restart dwm:killall -USR1 dwm' "
+    "'---:true' "
+    "'Suspend:systemctl suspend' "
+    "'Reboot:systemctl reboot' "
+    "'Poweroff:systemctl poweroff'"
+    " '---:true'"
+    " 'Cancel:false'",
+    "---:true",
+    "Cancel:false",
+    NULL};
 
 static Key keys[] = {
     /* modifier  key  function  argument */
@@ -320,8 +382,8 @@ static Button buttons[] = {
     {ClkWinTitle, 0, Button2, setmfact, {.f = -0.02}},
     {ClkWinTitle, 0, Button3, setmfact, {.f = +0.02}},
     {ClkStatusText, 0, Button1, zoom, {0}},
-    {ClkStatusText, 0, Button2, incnmaster, {.i = +1}},
-    {ClkStatusText, 0, Button3, incnmaster, {.i = -1}},
+    {ClkStatusText, 0, Button2, spawn, {.v = strawberry9menucmd}},
+    {ClkStatusText, 0, Button3, spawn, {.v = main9menucmd}},
     {ClkClientWin, MODKEY, Button1, movemouse, {0}},
     {ClkClientWin, MODKEY, Button2, togglefloating, {0}},
     {ClkClientWin, MODKEY, Button3, resizemouse, {0}},
