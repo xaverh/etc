@@ -93,7 +93,7 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al \*cantarell\* grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* texlive-\*-doc e16 fluxbox fvwm2 openssh-askpass-gnome texlive-plex\* liberation-fonts
+zypper -R /mnt al \*cantarell\* grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* texlive-\*-doc e16 fluxbox fvwm2 openssh-askpass-gnome texlive-plex\* liberation-fonts maim
 zypper -R /mnt ref
 
 zypper -R /mnt in --auto-agree-with-licenses patterns-base-minimal_base patterns-base-enhanced_base zsh tmux iw iwd
