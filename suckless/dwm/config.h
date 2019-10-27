@@ -141,12 +141,8 @@ static const char* emojicmd[] = {
     NULL};
 static const char* mansplaincmd[] = {
     SHELL, "-c",
-    "mkdir -p /tmp/mansplain-`date +\"%G-%V\"`\nmanpage=`apropos . | rofi "
-    "-dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" "
-    "\"$1}'`\nfilename=\"/tmp/mansplain-`date "
-    "+\"%G-%V\"`/${^manpage}.pdf\"\n[[ -f \"$filename\" ]] || man -Tpdf "
-    "${=manpage} > \"$filename\"\n[[ -s \"$filename\" ]] && mupdf-gl "
-    "\"$filename\""};
+    "mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk "
+    "'{gsub(/[()]/,\"\"); print $2\" \"$1}'))"};
 static const char* playpausecmd[] = {"strawberry", "--play-pause", NULL};
 static const char* playnextcmd[] = {"strawberry", "--next", NULL};
 static const char* playpreviouscmd[] = {"strawberry", "--restart-or-previous",
@@ -169,23 +165,26 @@ static const char* printvolumecmd[] = {
 static const char* lockcmd[] = {"i3lock", "-c", col_gray1, NULL};
 static const char* brightnessupcmd[] = {
     SHELL, "-c",
-    "brightness=$(</sys/class/backlight/intel_backlight/"
-    "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
-    "max_brightness)\nnew_brightness=$(($max_brightness/"
-    "10+$brightness))\nxsetroot -name \"brightness: $((100*$(echo "
-    "$(($new_brightness < "
-    "$max_brightness ? $new_brightness : $max_brightness)) | tee "
-    "/sys/class/backlight/intel_backlight/brightness) / $max_brightness)) %\"",
+    "brightness=$(</sys/class/backlight/intel_backlight/brightness)\n"
+    "max_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\n"
+    "new_brightness=$(($max_brightness/10+$brightness))\n"
+    "actual_brightness=$(($new_brightness < $max_brightness ? $new_brightness "
+    ": $max_brightness))\n"
+    "echo $actual_brightness > "
+    "/sys/class/backlight/intel_backlight/brightness\n"
+    "xsetroot -name \"brightness: $((100 * $actual_brightness / "
+    "$max_brightness)) %\"",
     NULL};
 static const char* brightnessdowncmd[] = {
     SHELL, "-c",
-    "brightness=$(</sys/class/backlight/intel_backlight/"
-    "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
-    "max_brightness)\nnew_brightness=$((-$max_brightness/"
-    "10+$brightness))\nxsetroot -name \"brightness: $((100*$(echo "
-    "$(($new_brightness > 0 ? "
-    "$new_brightness : 0)) | tee "
-    "/sys/class/backlight/intel_backlight/brightness) / $max_brightness)) %\"",
+    "brightness=$(</sys/class/backlight/intel_backlight/brightness)\n"
+    "max_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\n"
+    "new_brightness=$((-$max_brightness/10+$brightness))\n"
+    "actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0))\n"
+    "echo $actual_brightness > "
+    "/sys/class/backlight/intel_backlight/brightness\n"
+    "xsetroot -name \"brightness: $((100 * $actual_brightness / "
+    "$max_brightness)) %\"",
     NULL};
 static const char* screenshotcmd[] = {"flameshot", "screen", "-c",
                                       "-p",        "/tmp",   NULL};
