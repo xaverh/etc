@@ -77,6 +77,8 @@ elseif
 		'%.opus$',
 		'%.m4a$',
 		'%.flac$',
+		'%.m3u$',
+		'%.m3u8$',
 		'%.MOV$',
 		'%.MP4$',
 		'%.MKV$',
@@ -87,7 +89,9 @@ elseif
 		'%.MP3$',
 		'%.OPUS$',
 		'%.M4A$',
-		'%.FLAC$'
+		'%.FLAC$',
+		'%.m3u$',
+		'%.M3U8$'
 	)
  then
 	os.execute('mpv --force-window=yes "' .. filename .. '"')
