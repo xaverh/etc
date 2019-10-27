@@ -183,17 +183,10 @@ static const char* brightnessdowncmd[] = {
     "10+$brightness))\necho $(($new_brightness > 0 ? $new_brightness : 0)) > "
     "/sys/class/backlight/intel_backlight/brightness",
     NULL};
-static const char* screenshotcmd[] = {
-    SHELL, "-c",
-    "mkdir -p ~/tmp/scr && maim -u -d 3 -m 10 > ~/tmp/scr/\"screenshot-$(date "
-    "--iso-8601=ns).png\"",
-    NULL};
-static const char* screenshotselectioncmd[] = {
-    SHELL, "-c",
-    "mkdir -p ~/tmp/scr && maim -c "
-    "0.88671875,0.15294117647059,0.56862745098039 -u "
-    "-s -m 10 > ~/tmp/scr/\"screenshot-$(date --iso-8601=ns).png\"",
-    NULL};
+static const char* screenshotcmd[] = {"flameshot", "screen", "-c",
+                                      "-p",        "/tmp",   NULL};
+static const char* screenshotselectioncmd[] = {"flameshot", "gui", "-p", "/tmp",
+                                               NULL};
 static const char* urlcmd[] = {
     SHELL, "-c",
     "xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | "
@@ -288,6 +281,9 @@ static const char* main9menucmd[] = {
     "---:true",
     "Connect Set\372bal:bluetoothctl connect 88:C6:26:F4:8A:90",
     "Disconnect Set\372bal:bluetoothctl disconnect 88:C6:26:F4:8A:90",
+    "---:true",
+    "Screenshot (full):flameshot full -p /tmp -c -d 10",
+    "Screenshot (selection):flameshot gui -p /tmp -d 10",
     "---:true",
     "Quit:9menu -font '" FONT_9MENU "' -shell " SHELL " -bg '" COL_GRAY1
     "' -fg '" COL_GRAY3 "' -popup -teleport -label 'Quit?' 'Quit?:true' 'Lock "
