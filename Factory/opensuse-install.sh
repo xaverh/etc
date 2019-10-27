@@ -93,7 +93,7 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al \*cantarell\* grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* texlive-\*-doc e16 fluxbox fvwm2 openssh-askpass-gnome texlive-plex\*
+zypper -R /mnt al \*cantarell\* grub2 lightdm plymouth syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts google-droid-fonts google-roboto-fonts awesome WindowMaker noto-sans-fonts compiz snapper xdm \*-lang screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* texlive-\*-doc e16 fluxbox fvwm2 openssh-askpass-gnome texlive-plex\* liberation-fonts
 zypper -R /mnt ref
 
 zypper -R /mnt in --auto-agree-with-licenses patterns-base-minimal_base patterns-base-enhanced_base zsh tmux iw iwd
@@ -267,9 +267,9 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 xwd xrandr ImageMagick sox i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar texlive-scheme-minimal nnn kitty simple-mtpfs
+zypper in kernel-default patterns-base-x11 xwd xrandr ImageMagick sox i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar texlive-scheme-minimal nnn kitty simple-mtpfs
 
-zypper rm fvwm2 zathura\*  pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme lemonbar wmbubble rtorrent dmenu openssh-askpass-gnome lxqt-openssh-askpass rxvt-unicode
+zypper rm fvwm2 zathura\*  pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme lemonbar wmbubble rtorrent dmenu openssh-askpass-gnome lxqt-openssh-askpass rxvt-unicode liberation-fonts
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts
 
