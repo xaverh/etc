@@ -171,17 +171,21 @@ static const char* brightnessupcmd[] = {
     SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/"
     "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
-    "max_brightness)\nnew_brightness=$(($max_brightness/10+$brightness))\necho "
-    "$(($new_brightness < $max_brightness ? $new_brightness : "
-    "$max_brightness)) > /sys/class/backlight/intel_backlight/brightness",
+    "max_brightness)\nnew_brightness=$(($max_brightness/"
+    "10+$brightness))\nxsetroot -name \"brightness: $((100*$(echo "
+    "$(($new_brightness < "
+    "$max_brightness ? $new_brightness : $max_brightness)) | tee "
+    "/sys/class/backlight/intel_backlight/brightness) / $max_brightness)) %\"",
     NULL};
 static const char* brightnessdowncmd[] = {
     SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/"
     "brightness)\nmax_brightness=$(</sys/class/backlight/intel_backlight/"
     "max_brightness)\nnew_brightness=$((-$max_brightness/"
-    "10+$brightness))\necho $(($new_brightness > 0 ? $new_brightness : 0)) > "
-    "/sys/class/backlight/intel_backlight/brightness",
+    "10+$brightness))\nxsetroot -name \"brightness: $((100*$(echo "
+    "$(($new_brightness > 0 ? "
+    "$new_brightness : 0)) | tee "
+    "/sys/class/backlight/intel_backlight/brightness) / $max_brightness)) %\"",
     NULL};
 static const char* screenshotcmd[] = {"flameshot", "screen", "-c",
                                       "-p",        "/tmp",   NULL};
