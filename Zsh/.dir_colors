@@ -124,6 +124,7 @@ STICKY 04;37;44
 .au 32
 .flac 32
 .m4a 32
+.m4b 32
 .mid 32
 .midi 32
 .mka 32
