@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
-static const unsigned int snap = 32;    /* snap pixel */
+static const unsigned int snap = 8;     /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 static const char* fonts[] = {"sans-serif:size=11"};
@@ -237,9 +237,12 @@ static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
 static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
 static const char* sshaddcmd[] = {
-    SHELL, "-c", "SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass ssh-add < /dev/null",
+    SHELL, "-c",
+    "export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass\n[[ '256 "
+    "SHA256:1uG7O27tlFijVrOw9wW5taw+5lcNsS7ItGC4k+6doJI xaver@hellauer.bayern "
+    "(ED25519)' = `ssh-add -l` ]] || ssh-add < /dev/null",
     NULL};
-static const char* sshdelcmd[] = {"ssh-add", "-d", NULL};
+static const char* sshdelcmd[] = {"ssh-add", "-D", NULL};
 #define FONT_9MENU                                                             \
 	"-adobe-helvetica-medium-r-normal--14-140-75-75-p-77-iso10646-1"
 static const char* strawberry9menucmd[] = {
@@ -406,15 +409,8 @@ static Button buttons[] = {
 
 void focusmaster()
 {
-	Client* c = NULL;
-
+	Client* c = nexttiled(selmon->clients);
 	if (!selmon->sel || selmon->lt[selmon->sellt] != &layouts[0])
 		return;
-	c = selmon->clients;
-	if (c && !ISVISIBLE(c))
-		c = c->next;
-	if (c) {
-		focus(c);
-		restack(selmon);
-	}
+	focus(c);
 }
