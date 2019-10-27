@@ -3,66 +3,113 @@
 local music_player = 'mpv --force-window=yes --x11-name FM0 -- '
 
 local radio_stations = {
-	['BBC Radio 1'] = {
-		url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p',
-		backup_url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q'
+	['🇬🇧 🔥\tBBC Radio 1'] = {
+		-- X
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_one.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_one.m3u8'
 	},
-	['BBC Radio 1Xtra'] = {
-		url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p',
-		backup_url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_q'
+	['🇬🇧 👨🏿‍🎤\tBBC Radio 1Xtra'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_1xtra.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_1xtra.m3u8'
 	},
-	['BBC Radio 2'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p'},
-	['BBC Radio 3'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio3_mf_p'},
-	['BBC Radio 4'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p'},
-	['BBC Radio 4 Extra'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4extra_mf_p'},
-	['BBC Radio 5 Live'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p'},
-	['BBC Radio 5 Live Sports Extra'] = {
-		url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5extra_mf_p'
+	['🇬🇧 🎸\tBBC Radio 2'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_two.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_two.m3u8'
 	},
-	['BBC Radio 6 Music'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_6music_mf_p'},
-	['BBC Asian Networks'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_asianet_mf_p'},
-	['BBC Radio Scotland'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_scotlandfm_mf_p'},
-	['BBC Radio nan Gàidheal'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_nangaidheal_mf_p'},
-	['BBC Radio Wales'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_walesmw_mf_p'},
-	['BBC Radio Cymru'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_cymru_mf_p'},
-	['BBC Radio Ulster'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_ulster_mf_p'},
-	['BBC Local Radio London'] = {url = 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_lrldn_mf_p'},
-	['BBC World Service 24 Hour News'] = {
+	['🇬🇧 🎻\tBBC Radio 3'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_three.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_three.m3u8'
+	},
+	['🇬🇧 🎙️\tBBC Radio 4'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_fourfm.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_fourfm.m3u8'
+	},
+	['🇬🇧 🎙️\tRadio 4 Extra'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_four_extra.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_four_extra.m3u8'
+	},
+	['🇬🇧 ⚽\tBBC Radio 5 Live'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_five_live.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_five_live.m3u8'
+	},
+	['🇬🇧 🏏\tBBC Radio 5 Live Sports Extra'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_five_live_sports_extra.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_five_live_sports_extra.m3u8'
+	},
+	['🇬🇧 🥑\tBBC Radio 6 Music'] = {
+		-- X
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_6music.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_6music.m3u8'
+	},
+	['🇬🇧 🛕\tBBC Asian Networks'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_asian_network.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_asian_network.m3u8'
+	},
+	['🇬🇧 🏴󠁧󠁢󠁳󠁣󠁴󠁿\tBBC Radio Scotland'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_scotland_fm.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_scotland_fm.m3u8'
+	},
+	['🇬🇧 🏴󠁧󠁢󠁷󠁬󠁳󠁿\tBBC Radio Wales'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_wales_fm.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_wales_fm.m3u8'
+	},
+	['🇬🇧 🏴󠁧󠁢󠁥󠁮󠁧󠁿\tBBC Local Radio London'] = {
+		url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_london.m3u8',
+		backup_url = 'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_london.m3u8'
+	},
+	['🇬🇧 🌍\tBBC World Service'] = {
 		url = 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-einws',
 		backup_url = 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-einws_backup'
 	},
-	['BBC World Service English Radio'] = {
-		url = 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk',
-		backup_url = 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk_backup'
+	['🇺🇸 🪕\tWDVX – East Tennessee’s Own'] = {
+		url = 'https://wdvx.streamguys1.com/live.xspf',
+		backup_url = 'https://wdvx.streamguys1.com/live.m3u'
 	},
-	["WDVX – East Tennessee's Own"] = {url = 'http://wdvx.stream.egihosting.com:8000/?type=http'},
-	['Country Radio Switzerland'] = {url = 'http://rs3.radiostreamer.com:9330'},
-	['Radio FM4'] = {
-		url = 'http://mp3stream1.apasf.apa.at',
-		backup_url = 'mms://apasf.apa.at/fm4_live_worldwide'
+	['🇨🇭 🪕\tCountry Radio Switzerland'] = {
+		url = 'http://rs4.radiostreamer.com:8000', -- 128 k
+		backup_url = 'https://www.countryradio.ch/crs-64.pls' -- 64 k
 	},
-	['X 96.3 Nueva York'] = {
-		url = 'http://54.235.35.44/univision-wxnyfmmp3-ibc1',
-		backup_url = 'http://54.81.225.107/univision-wxnyfmmp3-ibc1'
+	['🇦🇹 🥑\tRadio FM4'] = {
+		url = 'https://fm4shoutcast.sf.apa.at/listen.pls',
+		backup_url = 'http://mp3stream1.apasf.apa.at'
 	},
-	['KISS 100 London'] = {url = 'http://listenapi.bauerradio.com/api8/sharpstream/?i=kissnational.aac'},
-	['Lush 99.5'] = {url = 'http://mediacorp.rastream.com/995fm'},
-	['Gold 905'] = {url = 'http://mediacorp.rastream.com/905fm'},
-	['Ria 89.7'] = {url = 'http://mediacorp.rastream.com/897fm'},
-	['91.3 Hot FM'] = {url = 'http://sph.rastream.com/913fm'},
-	['Kiss 92.0'] = {url = 'http://sph.rastream.com/sph-kiss92'},
-	['Symphony 92.4'] = {url = 'http://mediacorp.rastream.com/924fm'},
-	['Yes 93.3'] = {url = 'http://mediacorp.rastream.com/933fm'},
-	['93.8 Live'] = {url = 'http://mediacorp.rastream.com/938fm'},
-	['Warna 94.2'] = {url = 'http://mediacorp.rastream.com/942fm'},
-	['Class 95.0'] = {url = 'http://mediacorp.rastream.com/950fm'},
-	['95.8 Capital'] = {url = 'http://mediacorp.rastream.com/958fm'},
-	['XFM 96.3'] = {url = 'http://mediacorp.rastream.com/963fm'},
-	['Love 97.2'] = {url = 'http://mediacorp.rastream.com/972fm'},
-	['Power 98 FM'] = {url = 'http://provisioning.streamtheworld.c...POWER98aac.pls'},
-	['98.7 FM'] = {url = 'http://mediacorp.rastream.com/987fm'},
-	['UFM 100.3'] = {url = 'http://sph.rastream.com/1003fm'},
-	['Plaza One'] = {url = 'http://radio.plaza.one/opus', backup_url = 'http://radio.plaza.one/ogg'}
+	['🇺🇸 💃🏽\tWXNY – X 96.3 Nueva York'] = {
+		url = 'https://prod-107-23-202-222.wostreaming.net/univision-wxnyfmaac-imc1',
+		backup_url = 'http://in.icy2.abacast.com/univision-wxnyfmaac-im.m3u'
+	},
+	['🇬🇧 🔥\tKISS 100 London'] = {
+		url = 'http://listenapi.bauerradio.com/api8/sharpstream/?i=kissnational.aac',
+		backup_url = 'http://tx.whatson.com/http_live_bauer.php?i=kissnational.aac'
+	},
+	['🇸🇬 🎸\tClass 95'] = {
+		url = 'http://playerservices.streamtheworld.com/api/livestream-redirect/CLASS95_PREM.m3u8',
+		backup_url = 'http://mediacorp.rastream.com/950fm'
+	},
+	['🇺🇸 🦄\tNightwave Plaza'] = {url = 'http://radio.plaza.one/opus', backup_url = 'http://radio.plaza.one/ogg'},
+	['🇩🇪 🥑\tDeutschlandfunk Nova'] = {url = 'http://st03.dlf.de/dlf/03/104/ogg/stream.ogg'},
+	['🇩🇪 🎙️\tDeutschlandfunk'] = {
+		url = 'http://st01.dlf.de/dlf/01/104/ogg/stream.ogg',
+		backup_url = 'https://www.deutschlandradio.de/streaming/dlf_hq_ogg.m3u'
+	},
+	['🇪🇸 🔥\tLos 40'] = {
+		url = 'https://20873.live.streamtheworld.com/LOS40AAC.aac'
+	},
+	['🇪🇸 💃🏽\tLos 40 Latin'] = {
+		url = 'https://20853.live.streamtheworld.com/LOS40_03AAC.aac'
+	},
+	['🇨🇴 💃🏽\tLos 40 Medellín'] = {
+		url = 'https://14073.live.streamtheworld.com/LOS40COL_MEDAAC.aac'
+	},
+	['🇺🇸 🤘🏻\tKLOS — 95.5 Southern California’s Classic Rock'] = {
+		url = 'http://19273.live.streamtheworld.com/KLOSFMAAC.aac'
+	},
+	['🇨🇭 🍺\tRadio Melody'] = {
+		url = 'https://fm1melody.ice.infomaniak.ch/fm1melody-128.mp3'
+	},
+	['🇩🇪 🍺\tHeimatradio Melodie'] = {
+		url = 'http://212.77.178.166:8020/',
+		backup_url = 'http://212.77.178.166/listen.pls'
+	}
 }
 
 local function play(id)
