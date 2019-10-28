@@ -156,7 +156,7 @@ static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 	"$(amixer get Master | awk 'END{gsub(/[\\[\\]]/,\"\"); print $6\" "    \
 	"\"$5}')"
 static const char* printvolumecmd[] = {
-    SHELL, "-c", "xsetroot -name \"" GETVOLUME "\"", NULL};
+    SHELL, "-c", "sleep 0.1 && xsetroot -name \"" GETVOLUME "\"", NULL};
 // char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
 // true\nif [
 // \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
@@ -391,7 +391,7 @@ static Button buttons[] = {
     {ClkLtSymbol, 0, Button1, setlayout, {.v = &layouts[0]}},
     {ClkLtSymbol, 0, Button2, setlayout, {.v = &layouts[1]}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
-    {ClkWinTitle, 0, Button1, focusstack, {.i = +1}},
+    {ClkWinTitle, 0, Button1, zoom, {0}},
     {ClkWinTitle, 0, Button2, setmfact, {.f = -0.02}},
     {ClkWinTitle, 0, Button3, setmfact, {.f = +0.02}},
     {ClkStatusText, 0, Button1, zoom, {0}},
