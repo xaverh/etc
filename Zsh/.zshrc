@@ -70,12 +70,13 @@ alias lss='ls -S'
 alias las='la -S'
 alias lls='ll -S'
 
-alias dfh='df -H -T'
+alias f='df -H -T'
 alias -g G='|& grep -i --colour=auto'
 alias d='dirs -v'
 alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias o='less'
+alias u='du -s --si'
 
 chpwd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
 precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
