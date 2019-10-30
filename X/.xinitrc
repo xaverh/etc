@@ -38,7 +38,7 @@ xsetroot -bitmap $HOME/etc/suckless/backdrops/`ls $HOME/etc/suckless/backdrops |
 
 numlockx &
 
-go run $HOME/etc/suckless/jigglyroom/jigglyroom.go &
+jigglyroom &
 
 while true; do
     dwm 2> ~/.dwm.log
