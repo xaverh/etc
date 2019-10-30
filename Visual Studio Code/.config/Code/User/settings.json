@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "IBM Plex Mono Text, SF Mono, Consolas, Menlo, Source Code Pro",
+  "editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
   "editor.fontWeight": "400",
   "editor.rulers": [],
   "editor.formatOnType": true,
@@ -24,7 +24,8 @@
     "*.link": "ini",
     "fonts-config": "properties",
     "*.xbm": "c",
-    "*.xpm": "c"
+    "*.xpm": "c",
+    "_service": "xml"
   },
   "files.exclude": {
     "**/.git": true,
@@ -188,7 +189,6 @@
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "editor.fontSize": 13,
   "editor.wordWrap": "on",
   "extensions.ignoreRecommendations": true,
   "vetur.format.options.useTabs": true,
