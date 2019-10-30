@@ -297,7 +297,7 @@ iw dev wlan0 set power_save off
 
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
-zypper in clipmenu clipnotify openssh-askpass 9menu
+zypper in clipmenu clipnotify 9menu dwm jigglyroom
 
 # Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
 # NVIDIA:
