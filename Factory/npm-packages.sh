@@ -1,1 +1,0 @@
-npm -g i @vue/cli prettier gulp vsce yo eslint eslint-config-prettier eslint-plugin-prettier
