@@ -1,0 +1,13 @@
+[Unit]
+Description=Change colorscheme to light every morning and dark every evening
+
+[Timer]
+OnCalendar=*-*-* 9:00:00
+OnCalendar=*-*-* 17:00:00
+Persistent=true
+AccuracySec=600s
+OnClockChange=true
+
+[Install]
+WantedBy=timers.target
+

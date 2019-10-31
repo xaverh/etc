@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "SF Mono, IBM Plex Mono Text, Consolas, Menlo, Source Code Pro",
+  "editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
   "editor.fontWeight": "400",
   "editor.rulers": [],
   "editor.formatOnType": true,
@@ -24,7 +24,9 @@
     "*.link": "ini",
     "fonts-config": "properties",
     "*.xbm": "c",
-    "*.xpm": "c"
+    "*.xpm": "c",
+    "_service": "xml",
+    "*.timer": "ini"
   },
   "files.exclude": {
     "**/.git": true,
@@ -41,7 +43,8 @@
   "C_Cpp.formatting": "Disabled",
   "window.menuBarVisibility": "toggle",
   "[html]": {
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.tabSize": 4,
@@ -128,14 +131,14 @@
       ]
     },
     {
-      "id": "Drag and Drop support",
+      "id": "multiCursorPaste",
       "overrideWorkspaceSettings": true,
       "values": [
         {
-          "editor.dragAndDrop": false
+          "editor.multiCursorPaste": "spread"
         },
         {
-          "editor.dragAndDrop": true
+          "editor.multiCursorPaste": "full"
         }
       ]
     }
@@ -152,7 +155,6 @@
   "debug.toolBarLocation": "docked",
   "latex-workshop.message.update.show": false,
   "workbench.list.keyboardNavigation": "filter",
-  "workbench.useExperimentalGridLayout": true,
   "latex-workshop.latex.autoBuild.run": "never",
   "breadcrumbs.enabled": true,
   "breadcrumbs.symbolPath": "on",
@@ -188,18 +190,21 @@
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
   "workbench.editor.highlightModifiedTabs": true,
-  "editor.fontSize": 13,
   "editor.wordWrap": "on",
   "extensions.ignoreRecommendations": true,
   "vetur.format.options.useTabs": true,
   "vetur.format.options.tabSize": 4,
   "prettier.useTabs": true,
   "files.autoSave": "afterDelay",
-  "editor.minimap.enabled": true,
+  "editor.minimap.enabled": false,
   "go.useLanguageServer": true,
-  "cmake.configureOnOpen": true,
   "explorer.incrementalNaming": "smart",
   "editor.cursorSurroundingLines": 3,
   "terminal.integrated.cwd": "${fileDirname}",
-  "terminal.integrated.automationShell.linux": "/bin/zsh"
+  "terminal.integrated.automationShell.linux": "/bin/zsh",
+  "scm.defaultViewMode": "tree",
+  "editor.multiCursorModifier": "alt",
+  "editor.multiCursorPaste": "spread",
+  "lua.format.singleQuote": true,
+  "search.location": "panel"
 }
