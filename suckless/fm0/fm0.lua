@@ -73,6 +73,9 @@ local radio_stations = {
 		url = 'https://fm4shoutcast.sf.apa.at/listen.pls',
 		backup_url = 'http://mp3stream1.apasf.apa.at'
 	},
+	['🇦🇹 🎸\tÖ3'] = {
+		url = 'https://oe3shoutcast.sf.apa.at/'
+	},
 	['🇺🇸 💃🏽\tWXNY – X 96.3 Nueva York'] = {
 		url = 'https://prod-107-23-202-222.wostreaming.net/univision-wxnyfmaac-imc1',
 		backup_url = 'http://in.icy2.abacast.com/univision-wxnyfmaac-im.m3u'
@@ -109,6 +112,42 @@ local radio_stations = {
 	['🇩🇪 🍺\tHeimatradio Melodie'] = {
 		url = 'http://212.77.178.166:8020/',
 		backup_url = 'http://212.77.178.166/listen.pls'
+	},
+	['🇩🇪 ✌🏻\tBayern 1 Oberbayern'] = {
+		url = 'http://streams.br.de/bayern1obb_2.m3u',
+		backup_url = 'http://streams.br.de/bayern1obb_1.m3u'
+	},
+	['🇩🇪 🎙️\tBayern 2 Süd'] = {
+		url = 'http://streams.br.de/bayern2sued_2.m3u',
+		backup_url = 'http://streams.br.de/bayern2sued_1.m3u'
+	},
+	['🇩🇪 🎸\tBayern 3'] = {
+		url = 'http://streams.br.de/bayern3_2.m3u',
+		backup_url = 'http://streams.br.de/bayern3_1.m3u'
+	},
+	['🇩🇪 🎻\tBR Klassik'] = {
+		url = 'http://streams.br.de/br-klassik_2.m3u',
+		backup_url = 'http://streams.br.de/br-klassik_1.m3u'
+	},
+	['🇩🇪 📰\tB5 aktuell'] = {
+		url = 'http://streams.br.de/b5aktuell_2.m3u',
+		backup_url = 'http://streams.br.de/b5aktuell_1.m3u'
+	},
+	['🇩🇪 ⚽\tB5 plus'] = {
+		url = 'http://streams.br.de/b5plus_2.m3u',
+		backup_url = 'http://streams.br.de/b5plus_1.m3u'
+	},
+	['🇩🇪 🍺\tBayern plus'] = {
+		url = 'http://streams.br.de/bayernplus_2.m3u',
+		backup_url = 'http://streams.br.de/bayernplus_1.m3u'
+	},
+	['🇩🇪 🥑\tPuls'] = {
+		url = 'http://streams.br.de/puls_2.m3u',
+		backup_url = 'http://streams.br.de/puls_1.m3u'
+	},
+	['🇩🇪 🏔️\tBR Heimat'] = {
+		url = 'http://streams.br.de/brheimat_2.m3u',
+		backup_url = 'http://streams.br.de/brheimat_1.m3u'
 	}
 }
 
