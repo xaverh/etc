@@ -21,14 +21,14 @@ static const char* colors[][3] = {
 };
 
 /* tagging */
-static const char* tags[] = {"0", "1", "2",  "3",  "4",
-                             "5", "6", "¬7", "¬8", "¬9"};
-#define HOME_TAGS        0x1U
-#define NONTOGGABLE_TAGS 0x7FU
+static const char* tags[] = {"¬0", "1",  "2",  "3",  "4",
+                             "5",  "¬6", "¬7", "¬8", "¬9"};
+#define NONTOGGABLE_TAGS 0x3EU
+#define TERMINALTAG      1U
 #define BROWSERTAG       2U
 #define CODINGTAG        4U
+#define CHATTAG          8U
 #define PDFTAG           16U
-#define CHATTAG          32U
 #define MOVIETAG         128U
 #define DUMPSTERTAG      256U
 #define MUSICTAG         256U
@@ -45,6 +45,8 @@ static const Rule rules[] = {
     {"Code", NULL, NULL, CODINGTAG, 0, -1},
     {"discord", NULL, NULL, CHATTAG, 0, -1},
     {"Firefox", NULL, NULL, BROWSERTAG, 0, -1},
+    {"kitty", NULL, NULL, TERMINALTAG, 0, -1},
+    {"Kittyaskpass", NULL, NULL, TAGMASK, 1, -1},
     {"mpv", "gl", NULL, MOVIETAG, 0, -1},
     {NULL, "journalctl", NULL, JOURNALTAG, 0, -1},
     {"mpv", "FM0", NULL, MUSICTAG, 0, -1},
@@ -77,7 +79,7 @@ static const Layout layouts[] = {
     {"><>", NULL}, /* no layout function means floating behavior */
 };
 
-// void focusmaster();
+void focusmaster();
 void viewortoggleview(const Arg* arg);
 
 /* key definitions */
@@ -85,6 +87,7 @@ void viewortoggleview(const Arg* arg);
 #define TAGKEYS(KEY, TAG)                                                      \
 	{MODKEY, KEY, viewortoggleview, {.ui = 1 << TAG}},                     \
 	    {MODKEY | ControlMask, KEY, view, {.ui = 1 << TAG}},               \
+	    {MODKEY | Mod1Mask, KEY, toggleview, {.ui = 1 << TAG}},            \
 	    {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                  \
 	{                                                                      \
 		MODKEY | ControlMask | ShiftMask, KEY, toggletag,              \
@@ -107,56 +110,13 @@ void viewortoggleview(const Arg* arg);
 static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
-static const char* termcmd[] = {"kitty", "-1", NULL};
-// static const char* alttermcmd[] = {"kitty",
-//                                    "-1",
-//                                    "--instance-group",
-//                                    "Ysgrifennwr",
-//                                    "--override",
-//                                    "foreground=#424242",
-//                                    "--override",
-//                                    "background=#f9f8f4",
-//                                    "--override",
-//                                    "color0=#f9f8f4",
-//                                    "--override",
-//                                    "color1=#e32791",
-//                                    "--override",
-//                                    "color2=#488432",
-//                                    "--override",
-//                                    "color3=#a25d0e",
-//                                    "--override",
-//                                    "color4=#2c65b5",
-//                                    "--override",
-//                                    "color5=#B062A7",
-//                                    "--override",
-//                                    "color6=#27BBBE",
-//                                    "--override",
-//                                    "color7=#999999",
-//                                    "--override",
-//                                    "color8=#B8B8B8",
-//                                    "--override",
-//                                    "color9=#9F1B66",
-//                                    "--override",
-//                                    "color10=#325D23",
-//                                    "--override",
-//                                    "color11=#71410A",
-//                                    "--override",
-//                                    "color12=#1F477F",
-//                                    "--override",
-//                                    "color13=#7B4474",
-//                                    "--override",
-//                                    "color14=#1B8486",
-//                                    "--override",
-//                                    "color15=#424242",
-//                                    "--override",
-//                                    "cursor=#FC9520",
-//                                    NULL};
-// static const char* termcmd[] = {"urxvtc", "-name", "Qillqaq", NULL};
-static const char* emojicmd[] = {
-    SHELL, "-c",
-    "rofi -dmenu -i -p Emoji -input ~/.local/share/emoji.txt | awk '{printf "
-    "$1}' | xsel -ib",
-    NULL};
+static const char* termcmd[] = {"kitty", "-1", "--listen-on", "unix:@mykitty",
+                                NULL};
+static const char* emojicmd[] = {SHELL, "-c",
+                                 "rofi -dmenu -i -p Emoji -input "
+                                 "~/.local/share/emoji.txt | awk '{printf "
+                                 "$1}' | xsel -ib",
+                                 NULL};
 static const char* mansplaincmd[] = {
     SHELL, "-c",
     "mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk "
@@ -175,18 +135,15 @@ static const char* mutecmd[] = {"amixer", "sset", "Master", "mute", NULL};
 	"\"$5}')"
 static const char* printvolumecmd[] = {
     SHELL, "-c", "sleep 0.1 && xsetroot -name \"" GETVOLUME "\"", NULL};
-// char *mutecmd[] = { "/bin/sh", "-c", "pactl -- set-sink-mute 0
-// true\nif [
-// \"`pamixer --get-mute`\" == \"true\" ]; then xsetroot -name \"mute\";
-// else
-// xsetroot -name \"NOT MUTE\"; fi", NULL };
 static const char* lockcmd[] = {"i3lock", "-c", col_gray1, NULL};
 static const char* brightnessupcmd[] = {
     SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/brightness)\n"
-    "max_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\n"
+    "max_brightness=$(</sys/class/backlight/intel_backlight/"
+    "max_brightness)\n"
     "new_brightness=$(($max_brightness/10+$brightness))\n"
-    "actual_brightness=$(($new_brightness < $max_brightness ? $new_brightness "
+    "actual_brightness=$(($new_brightness < $max_brightness ? "
+    "$new_brightness "
     ": $max_brightness))\n"
     "echo $actual_brightness > "
     "/sys/class/backlight/intel_backlight/brightness\n"
@@ -196,7 +153,8 @@ static const char* brightnessupcmd[] = {
 static const char* brightnessdowncmd[] = {
     SHELL, "-c",
     "brightness=$(</sys/class/backlight/intel_backlight/brightness)\n"
-    "max_brightness=$(</sys/class/backlight/intel_backlight/max_brightness)\n"
+    "max_brightness=$(</sys/class/backlight/intel_backlight/"
+    "max_brightness)\n"
     "new_brightness=$((-$max_brightness/10+$brightness))\n"
     "actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0))\n"
     "echo $actual_brightness > "
@@ -210,7 +168,8 @@ static const char* screenshotselectioncmd[] = {"flameshot", "gui", "-p", "/tmp",
                                                NULL};
 static const char* urlcmd[] = {
     SHELL, "-c",
-    "xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | "
+    "xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 "
+    "| "
     "grep "
     "--only-matching --perl-regexp "
     "\"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq |rofi -dmenu -i -p "
@@ -219,12 +178,14 @@ static const char* urlcmd[] = {
 static const char* clipcmd[] = {"clipmenu", "-p", "Clipboard", NULL};
 static const char* showclipboardcmd[] = {
     SHELL, "-c",
-    "xsetroot -name \"$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | "
+    "xsetroot -name \"$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | "
+    "sort | "
     "tail --lines=1 | cut -d ' ' -f 2- -- -)\"",
     NULL};
 static const char* tmuxcmd[] = {
     SHELL, "-c",
-    "kitty -1 -- tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
+    "kitty --listen-on unix:@mykitty -1 -- tmux new-session -A -s $(tmux "
+    "list-clients -F \"#S\" | rofi "
     "-dmenu -i -p 'Attach to tmux session:')",
     NULL};
 static const char* connect_setubal[] = {"bluetoothctl", "connect",
@@ -234,7 +195,8 @@ static const char* disconnect_setubal[] = {"bluetoothctl", "disconnect",
 static const char* suspendcmd[] = {"systemctl", "suspend", NULL};
 static const char* backdropcmd[] = {
     SHELL, "-c",
-    "xsetroot -bitmap ~/etc/suckless/backdrops/`\\ls ~/etc/suckless/backdrops "
+    "xsetroot -bitmap ~/etc/suckless/backdrops/`\\ls "
+    "~/etc/suckless/backdrops "
     "| "
     "shuf -n 1 | tr "
     "-d "
@@ -244,18 +206,25 @@ static const char* backdropcmd[] = {
 static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL};
 static const char* journalctlcmd[] = {
     SHELL, "-c",
-    "pidof journalctl || kitty -1 --class journalctl -T journalctl -- "
+    "pidof journalctl || kitty --listen-on unix:@mykitty -1 --class "
+    "journalctl -T journalctl -- "
     "journalctl -b -f -n 1000",
     NULL};
 static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
 static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
-// static const char* sshaddcmd[] = {
-// SHELL, "-c",
-// "export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass\n[[ '256 "
-// "SHA256:1uG7O27tlFijVrOw9wW5taw+5lcNsS7ItGC4k+6doJI xaver@hellauer.bayern "
-// "(ED25519)' = `ssh-add -l` ]] || ssh-add < /dev/null",
-// NULL};
+
+#define SSHADDKEYCMD                                                           \
+	"kitty -1 --listen-on=unix:@mykitty --class=Kittyaskpass "             \
+	"--override 'initial_window_width=56c' --override "                    \
+	"'initial_window_height=5c' -- /bin/zsh -c ssh-add </dev/null"
+
+static const char* sshaddcmd[] = {
+    SHELL, "-c",
+    "[[ '256 SHA256:1uG7O27tlFijVrOw9wW5taw+5lcNsS7ItGC4k+6doJI "
+    "xaver@hellauer.bayern (ED25519)' = `ssh-add -l` ]] || " SSHADDKEYCMD,
+    NULL};
+
 static const char* sshdelcmd[] = {"ssh-add", "-D", NULL};
 #define FONT_9MENU                                                             \
 	"-adobe-helvetica-medium-r-normal--14-140-75-75-p-77-iso10646-1"
@@ -306,6 +275,9 @@ static const char* main9menucmd[] = {
     "Screenshot (full):flameshot full -p /tmp -c -d 10",
     "Screenshot (selection):flameshot gui -p /tmp -d 10",
     "---:true",
+    "Add SSH key 'xaver@hellauer.bayern (ED25519)':" SSHADDKEYCMD,
+    "Remove all SSH keys:/usr/bin/ssh-add -D",
+    "---:true",
     "Quit:9menu -font '" FONT_9MENU "' -shell " SHELL " -bg '" COL_GRAY1
     "' -fg '" COL_GRAY3 "' -popup -teleport -label 'Quit?' 'Quit?:true' 'Lock "
     "screen:i3lock -c \"" COL_GRAY1 "\"' 'Restart dwm:killall -USR1 dwm' "
@@ -319,21 +291,35 @@ static const char* main9menucmd[] = {
     "Cancel:false",
     NULL};
 
+static char const* kittybrightcmd[] = {
+    "/bin/zsh", "-c",
+    "kitty @ --to unix:@mykitty get-colors | grep -q '#1e1e1e' && kitty @ --to "
+    "unix:@mykitty set-colors -a -c foreground='#424242' background='#f9f8f4' "
+    "color0='#f9f8f4' color1='#e32791' color2='#488432' color3='#a25d0e' "
+    "color4='#2c65b5' color5='#B062A7' color6='#27BBBE' color7='#999999' "
+    "color8='#B8B8B8' color9='#9F1B66' color10='#325D23' color11='#71410A' "
+    "color12='#1F477F' color13='#7B4474' color14='#1B8486' color15='#424242' "
+    "cursor='#FC9520' || kitty @ --to unix:@mykitty set-colors -a -c "
+    "foreground='#e5e6e6' background='#1e1e1e' color0='#1e1e1e' "
+    "color8='#515151' color1='#e32791' color9='#e566ad' color2='#30c798' "
+    "color10='#6cd1b2' color3='#e3c472' color11='#e4cf98' color4='#6769e6' "
+    "color12='#9091e6' color5='#e59fdf' color13='#e5b6e1' color6='#81d8d0' "
+    "color14='#a2dcd7' color7='#969696' color15='#e5e6e6' cursor='#20bbfc'",
+    NULL};
+
 static Key keys[] = {
     /* modifier  key  function  argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
-    {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY, XK_BackSpace, spawn, {.v = termcmd}},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
-    {MODKEY, XK_Tab, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
-    {MODKEY | ShiftMask, XK_Tab, focusstack, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}},
     {MODKEY, XK_d, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
     {MODKEY, XK_Return, zoom, {0}},
-    {MODKEY, XK_BackSpace, view, {0}},
+    {MODKEY, XK_Tab, view, {0}},
     {MODKEY, XK_q, killclient, {0}},
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[2]}},
@@ -388,8 +374,8 @@ static Key keys[] = {
     {0, 0x1008ff02, spawn, {.v = brightnessupcmd}},
     {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
-    // {MODKEY, XK_F6, spawn, {.v = sshaddcmd}},
-    // {MODKEY | ShiftMask, XK_F6, spawn, {.v = sshdelcmd}},
+    {MODKEY, XK_F6, spawn, {.v = sshaddcmd}},
+    {MODKEY | ShiftMask, XK_F6, spawn, {.v = sshdelcmd}},
     {MODKEY, XK_Escape, spawn, {.v = sshdelcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
     {MODKEY, XK_o, spawn, {.v = abridorcmd}},
@@ -398,7 +384,8 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_F12, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
     {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = INT_MIN}},
     {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = +1}},
-    {MODKEY, XK_F11, spawn, {.v = fm0cmd}}};
+    {MODKEY, XK_F11, spawn, {.v = fm0cmd}},
+    {MODKEY, XK_F8, spawn, {.v = kittybrightcmd}}};
 
 #define Button6 6
 #define Button7 7
@@ -425,7 +412,7 @@ static Button buttons[] = {
     {ClkClientWin, MODKEY, Button4, setmfact, {.f = +0.02}},
     {ClkClientWin, MODKEY, Button5, setmfact, {.f = -0.02}},
     {ClkTagBar, 0, Button1, viewortoggleview, {0}},
-    {ClkTagBar, 0, Button2, toggletag, {0}},
+    {ClkTagBar, 0, Button2, toggleview, {0}},
     {ClkTagBar, 0, Button3, view, {0}}};
 
 void focusmaster()
@@ -437,24 +424,20 @@ void focusmaster()
 
 void viewortoggleview(const Arg* arg)
 {
-	unsigned int newtagset = 0U;
-	if (arg->ui & HOME_TAGS) {
-		if (selmon->tagset[selmon->seltags] & ~HOME_TAGS & TAGMASK) {
-			newtagset = HOME_TAGS & TAGMASK;
-		}
-		selmon->seltags ^= 1;
-	} else if (arg->ui & NONTOGGABLE_TAGS) {
+	unsigned int newtagset;
+	if (arg->ui & NONTOGGABLE_TAGS) {
 		newtagset =
-		    TAGMASK &
-		    (arg->ui ^ (HOME_TAGS | selmon->tagset[selmon->seltags] &
-		                                ~NONTOGGABLE_TAGS));
+		    selmon->tagset[selmon->seltags] & TAGMASK &
+		        ~NONTOGGABLE_TAGS |
+		    (((selmon->tagset[selmon->seltags] & NONTOGGABLE_TAGS &
+		       TAGMASK) != (arg->ui & TAGMASK)) ?
+		         arg->ui & TAGMASK :
+		         0);
 		selmon->seltags ^= 1;
 	} else {
-		newtagset =
-		    selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK) |
-		    HOME_TAGS;
+		newtagset = selmon->tagset[selmon->seltags] ^ arg->ui & TAGMASK;
 	}
-	if (newtagset) selmon->tagset[selmon->seltags] = newtagset;
+	selmon->tagset[selmon->seltags] = newtagset;
 	focus(NULL);
 	arrange(selmon);
 	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
