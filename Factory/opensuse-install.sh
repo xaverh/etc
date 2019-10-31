@@ -218,7 +218,7 @@ EOF
 
 zypper in kernel-default patterns-base-x11 fvwm2 lemonbar xwd xrandr ImageMagick sox i3lock rxvt-unicode rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp geeqie zathura zathura-plugin\* youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch maim zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go1.12 pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable
 
-zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts
+zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
 
 ## DVD?
 zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
@@ -270,6 +270,8 @@ xdg-mime default sxiv.desktop image/jpeg
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
 xdg-mime default sxiv.desktop image/tiff
+
+curl https://launchpadlibrarian.net/435337097/chromium-codecs-ffmpeg-extra_76.0.3809.87-0ubuntu0.16.04.1_amd64.deb | tail -c+1075 | tar JxC ~ --wildcards \*libffmpeg.so --xform 's,.*/,.local/lib/vivaldi/,'
 
 reboot
 
