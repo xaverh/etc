@@ -93,7 +93,7 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion openssh-askpass-gnome
+zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion openssh-askpass-gnome xdm
 
 zypper -R /mnt ref
 
@@ -168,13 +168,13 @@ WantedBy=default.target
 
 EOF
 
-cat > /etc/udev/rules.d/backlight.rules <<"EOF"
+cat > /mnt/etc/udev/rules.d/backlight.rules <<"EOF"
 ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
 ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
 
 EOF
 
-cat > /usr/local/lib/systemd/service/i3lock@.service <<"EOF"
+cat > /mnt/usr/local/lib/systemd/system/i3lock@.service <<"EOF"
 [Unit]
 Description=Lock X session using i3lock for user %i
 Before=sleep.target
@@ -190,7 +190,7 @@ WantedBy=sleep.target
 
 EOF
 
-cat > /etc/X11/xorg.conf.d/20-dontzap.conf <<"EOF"
+cat > /mnt/etc/X11/xorg.conf.d/20-dontzap.conf <<"EOF"
 Section "ServerFlags"
              Option "DontVTSwitch" "True"
              Option "DontZap"      "True"
@@ -198,7 +198,7 @@ EndSection
 
 EOF
 
-cat > /etc/X11/xorg.conf.d/30-touchpad.conf <<"EOF"
+cat > /mnt/etc/X11/xorg.conf.d/30-touchpad.conf <<"EOF"
 Section "InputClass"
 	Identifier "devname"
 	Driver "libinput"
@@ -208,7 +208,7 @@ EndSection
 
 EOF
 
-cat > /etc/X11/xorg.conf.d/31-pointer.conf <<"EOF"
+cat > /mnt/etc/X11/xorg.conf.d/31-pointer.conf <<"EOF"
 Section "InputClass"
 	Identifier "devname"
 	Driver "libinput"
@@ -218,7 +218,7 @@ EndSection
 
 EOF
 
-ln -s /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
+ln -s /mnt/usr/share/systemd/tmp.mount /mnt/etc/systemd/system/tmp.mount
 
 cd /
 systemd-nspawn -D /mnt passwd root
@@ -270,9 +270,7 @@ EOF
 
 zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar texlive-scheme-minimal nnn kitty simple-mtpfs flameshot
 
-zypper rm fvwm2 zathura\*  pcmanfm ffmpegthumbnailer gnome-epub-thumbnailer raw-thumbnailer elementary-icon-theme lemonbar wmbubble rtorrent dmenu openssh-askpass-gnome lxqt-openssh-askpass rxvt-unicode liberation-fonts maim fvwm2 zypper-aptitude xwd adobe-source\*-fonts \*-bash-completion
-
-zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts
+zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
 
 ## DVD?
 zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
@@ -323,6 +321,8 @@ xdg-mime default sxiv.desktop image/jpeg
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
 xdg-mime default sxiv.desktop image/tiff
+
+curl https://launchpadlibrarian.net/435337097/chromium-codecs-ffmpeg-extra_76.0.3809.87-0ubuntu0.16.04.1_amd64.deb | tail -c+1075 | tar JxC ~ --wildcards \*libffmpeg.so --xform 's,.*/,.local/lib/vivaldi/,'
 
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
