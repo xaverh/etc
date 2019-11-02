@@ -101,6 +101,7 @@ void activatetag(const Arg* arg);
 #define TAGKEYS(MYMODKEY, KEY, TAG, TAGBUDDIES)                                \
 	{MYMODKEY, KEY, viewortoggleview, {.ui = TAG}},                        \
 	    {MYMODKEY | ShiftMask, KEY, tag, {.ui = TAGBUDDIES}},              \
+	    {MYMODKEY | ShiftMask, KEY, activatetag, {.ui = TAG}},             \
 	{                                                                      \
 		MYMODKEY | ControlMask, KEY, toggletag,                        \
 		{                                                              \
@@ -452,20 +453,15 @@ void focusmaster()
 
 void viewortoggleview(const Arg* arg)
 {
-	unsigned int newtagset;
 	if (arg->ui & NONTOGGABLE_TAGS) {
-		newtagset =
-		    selmon->tagset[selmon->seltags] & TAGMASK &
-		        ~NONTOGGABLE_TAGS |
-		    (((selmon->tagset[selmon->seltags] & NONTOGGABLE_TAGS &
-		       TAGMASK) != (arg->ui & TAGMASK)) ?
-		         arg->ui & TAGMASK :
-		         0);
+		unsigned int newtagset = selmon->tagset[selmon->seltags] &
+		                             TAGMASK & ~NONTOGGABLE_TAGS |
+		                         arg->ui & TAGMASK;
 		selmon->seltags ^= 1;
+		selmon->tagset[selmon->seltags] = newtagset;
 	} else {
-		newtagset = selmon->tagset[selmon->seltags] ^ arg->ui & TAGMASK;
+		selmon->tagset[selmon->seltags] ^= arg->ui & TAGMASK;
 	}
-	selmon->tagset[selmon->seltags] = newtagset;
 	focus(NULL);
 	arrange(selmon);
 	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
