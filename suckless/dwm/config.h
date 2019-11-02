@@ -21,28 +21,30 @@ static const char* colors[][3] = {
 };
 
 /* tagging */
-static const char* tags[] = {"1:www",  "2:www",  "3:∞",     "4:๛",    "5:etc",
-                             "F2:www", "F3:∞",   "F4:๛",    "F6:Ω",   "F7:irc",
-                             "F8:mov", "F9:tty", "F10:mp3", "F12:log"};
+static const char* tags[] = {"1", "2",  "3",  "4",  "5",
+                             "6", "F7", "F8", "F9", "F10"};
 
-#define BROWSERTAG         1U
+#define F7TAG              1U
+#define BROWSERTAG         F7TAG
 #define BROWSERTAG2_FIXED  2U
-#define BROWSERTAG2_TOGGLE 32U
-#define BROWSERTAG2        BROWSERTAG2_FIXED | BROWSERTAG2_TOGGLE
-#define ETCTAG             16U
-#define CODINGTAG_FIXED    4U
-#define CODINGTAG_TOGGLE   64U
-#define CODINGTAG          CODINGTAG_FIXED | CODINGTAG_TOGGLE
-#define CHATTAG            512U
-#define PDFTAG_FIXED       8U
-#define PDFTAG_TOGGLE      128U
-#define PDFTAG             PDFTAG_FIXED | PDFTAG_TOGGLE
-#define DUMPSTERTAG        256U
-#define JOURNALTAG         8192U
+#define BROWSERTAG2_TOGGLE 4U
+#define BROWSERTAG2        (BROWSERTAG2_FIXED | BROWSERTAG2_TOGGLE)
+#define CODINGTAG_FIXED    8U
+#define CODINGTAG_TOGGLE   16U
+#define CODINGTAG          (CODINGTAG_FIXED | CODINGTAG_TOGGLE)
+#define PDFTAG_FIXED       32U
+#define PDFTAG_TOGGLE      64U
+#define PDFTAG             (PDFTAG_FIXED | PDFTAG_TOGGLE)
+#define ETCTAG             128U
+#define CHATTAG            256U
+#define DUMPSTERTAG        512U
 #define MOVIETAG           1024U
 #define TERMINALTAG        2048U
 #define MUSICTAG           4096U
-#define NONTOGGABLE_TAGS   0x1FU
+#define JOURNALTAG         8192U
+#define NONTOGGABLE_TAGS                                                       \
+	(BROWSERTAG | BROWSERTAG2_FIXED | CODINGTAG_FIXED | PDFTAG_FIXED |     \
+	 ETCTAG)
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -362,7 +364,6 @@ static Key keys[] = {
     TAGKEYS(0, XK_F6, DUMPSTERTAG, DUMPSTERTAG),
     TAGKEYS(0, XK_F7, CHATTAG, CHATTAG),
     TAGKEYS(0, XK_F8, MOVIETAG, MOVIETAG),
-    TAGKEYS(0, XK_F9, TERMINALTAG, TERMINALTAG),
     TAGKEYS(0, XK_F10, MUSICTAG, MUSICTAG),
     TAGKEYS(0, XK_F12, JOURNALTAG, JOURNALTAG),
     {MODKEY, XK_0, view, {.ui = ~0}},
@@ -453,7 +454,7 @@ void focusmaster()
 
 void viewortoggleview(const Arg* arg)
 {
-	if (arg->ui & NONTOGGABLE_TAGS) {
+	if (arg->ui & NONTOGGABLE_TAGS & TAGMASK) {
 		unsigned int newtagset = selmon->tagset[selmon->seltags] &
 		                             TAGMASK & ~NONTOGGABLE_TAGS |
 		                         arg->ui & TAGMASK;
@@ -464,7 +465,7 @@ void viewortoggleview(const Arg* arg)
 	}
 	focus(NULL);
 	arrange(selmon);
-	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
+	if (arg->ui & NONTOGGABLE_TAGS & TAGMASK) focusmaster();
 }
 
 void activatetag(const Arg* arg)
@@ -472,5 +473,5 @@ void activatetag(const Arg* arg)
 	selmon->tagset[selmon->seltags] |= arg->ui & TAGMASK;
 	focus(NULL);
 	arrange(selmon);
-	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
+	if (arg->ui & NONTOGGABLE_TAGS & TAGMASK) focusmaster();
 }
