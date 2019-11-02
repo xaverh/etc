@@ -206,5 +206,62 @@
   "editor.multiCursorModifier": "alt",
   "editor.multiCursorPaste": "spread",
   "lua.format.singleQuote": true,
-  "search.location": "panel"
+  "search.location": "panel",
+  "gremlins.characters": {
+    "0003": {
+      "description": "end of text",
+      "level": "warning"
+    },
+    "00a0": {
+      "description": "non breaking space",
+      "level": "info"
+    },
+    "2009": {
+      "description": "thin space",
+      "level": "info"
+    },
+    "200b": {
+      "zeroWidth": true,
+      "description": "zero width space",
+      "level": "error"
+    },
+    "200c": {
+      "zeroWidth": true,
+      "description": "zero width non-joiner",
+      "level": "warning"
+    },
+    "200e": {
+      "zeroWidth": true,
+      "description": "left-to-right mark",
+      "level": "error"
+    },
+    "201c": {
+      "description": "left double quotation mark",
+      "level": "warning"
+    },
+    "201d": {
+      "description": "right double quotation mark",
+      "level": "warning"
+    },
+    "202c": {
+      "zeroWidth": true,
+      "description": "pop directional formatting",
+      "level": "error"
+    },
+    "202d": {
+      "zeroWidth": true,
+      "description": "left-to-right override",
+      "level": "error"
+    },
+    "202e": {
+      "zeroWidth": true,
+      "description": "right-to-left override",
+      "level": "error"
+    },
+    "fffc": {
+      "zeroWidth": true,
+      "description": "object replacement character",
+      "level": "error"
+    }
+  }
 }
