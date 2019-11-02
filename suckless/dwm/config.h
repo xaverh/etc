@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 2; /* border pixel of windows */
-static const unsigned int snap = 8;     /* snap pixel */
+static const unsigned int snap = 4;     /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 static const char* fonts[] = {"sans-serif:size=11"};
@@ -21,18 +21,28 @@ static const char* colors[][3] = {
 };
 
 /* tagging */
-static const char* tags[] = {"¬0", "1",  "2",  "3",  "4",
-                             "5",  "¬6", "¬7", "¬8", "¬9"};
-#define NONTOGGABLE_TAGS 0x3EU
-#define TERMINALTAG      1U
-#define BROWSERTAG       2U
-#define CODINGTAG        4U
-#define CHATTAG          8U
-#define PDFTAG           16U
-#define MOVIETAG         128U
-#define DUMPSTERTAG      256U
-#define MUSICTAG         256U
-#define JOURNALTAG       512U
+static const char* tags[] = {"1:www",  "2:www",  "3:∞",     "4:๛",    "5:etc",
+                             "F2:www", "F3:∞",   "F4:๛",    "F6:Ω",   "F7:irc",
+                             "F8:mov", "F9:tty", "F10:mp3", "F12:log"};
+
+#define BROWSERTAG         1U
+#define BROWSERTAG2_FIXED  2U
+#define BROWSERTAG2_TOGGLE 32U
+#define BROWSERTAG2        BROWSERTAG2_FIXED | BROWSERTAG2_TOGGLE
+#define ETCTAG             16U
+#define CODINGTAG_FIXED    4U
+#define CODINGTAG_TOGGLE   64U
+#define CODINGTAG          CODINGTAG_FIXED | CODINGTAG_TOGGLE
+#define CHATTAG            512U
+#define PDFTAG_FIXED       8U
+#define PDFTAG_TOGGLE      128U
+#define PDFTAG             PDFTAG_FIXED | PDFTAG_TOGGLE
+#define DUMPSTERTAG        256U
+#define JOURNALTAG         8192U
+#define MOVIETAG           1024U
+#define TERMINALTAG        2048U
+#define MUSICTAG           4096U
+#define NONTOGGABLE_TAGS   0x1FU
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -44,7 +54,7 @@ static const Rule rules[] = {
     {"presenter", "sent", "sent", 0, 1, -1},
     {"Code", NULL, NULL, CODINGTAG, 0, -1},
     {"discord", NULL, NULL, CHATTAG, 0, -1},
-    {"Firefox", NULL, NULL, BROWSERTAG, 0, -1},
+    {"Firefox", NULL, NULL, BROWSERTAG2, 0, -1},
     {"Google-chrome", NULL, NULL, BROWSERTAG, 0, -1},
     {"kitty", NULL, NULL, TERMINALTAG, 0, -1},
     {"Kittyaskpass", NULL, NULL, TAGMASK, 1, -1},
@@ -59,12 +69,13 @@ static const Rule rules[] = {
     {NULL, NULL, ".PDF -", PDFTAG, 0, -1},
     {NULL, NULL, ".CBZ -", PDFTAG, 0, -1},
     {NULL, NULL, "Picture in picture", MOVIETAG, 0, -1},
-    {"Rawtherapee", NULL, NULL, PDFTAG, 0, -1},
     {"Spotify", NULL, NULL, MUSICTAG, 0, -1},
     {"strawberry", NULL, NULL, MUSICTAG, 0, -1},
     {"Steam", NULL, NULL, DUMPSTERTAG, 0, -1},
     {"TelegramDesktop", NULL, NULL, CHATTAG, 0, -1},
-    {"Vivaldi-stable", NULL, NULL, BROWSERTAG, 0, -1}};
+    {"Vivaldi-stable", NULL, NULL, BROWSERTAG2, 0, -1},
+    {NULL, "weechat", NULL, CHATTAG, 0, -1},
+};
 
 /* layout(s) */
 #define DEFAULT_MFACT 0.5688140392f
@@ -83,18 +94,17 @@ static const Layout layouts[] = {
 
 void focusmaster();
 void viewortoggleview(const Arg* arg);
+void activatetag(const Arg* arg);
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY, TAG)                                                      \
-	{MODKEY, KEY, viewortoggleview, {.ui = 1 << TAG}},                     \
-	    {MODKEY | ControlMask, KEY, view, {.ui = 1 << TAG}},               \
-	    {MODKEY | Mod1Mask, KEY, toggleview, {.ui = 1 << TAG}},            \
-	    {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                  \
+#define TAGKEYS(MYMODKEY, KEY, TAG, TAGBUDDIES)                                \
+	{MYMODKEY, KEY, viewortoggleview, {.ui = TAG}},                        \
+	    {MYMODKEY | ShiftMask, KEY, tag, {.ui = TAGBUDDIES}},              \
 	{                                                                      \
-		MODKEY | ControlMask | ShiftMask, KEY, toggletag,              \
+		MYMODKEY | ControlMask, KEY, toggletag,                        \
 		{                                                              \
-			.ui = 1 << TAG                                         \
+			.ui = TAGBUDDIES                                       \
 		}                                                              \
 	}
 
@@ -114,6 +124,10 @@ static char dmenumon[2] =
 static const char* dmenucmd[] = {"rofi", "-show", "run", NULL};
 static const char* termcmd[] = {"kitty", "-1", "--listen-on", "unix:@mykitty",
                                 NULL};
+#define TERMCMD "kitty -1 --listen-on unix:@mykitty"
+static const char* termifnotrunningcmd[] = {
+    SHELL, "-c",
+    "[[ `wmctrl -lx | grep kitty.kitty &> /dev/null` ]] && " TERMCMD, NULL};
 static const char* emojicmd[] = {SHELL, "-c",
                                  "rofi -dmenu -i -p Emoji -input "
                                  "~/.local/share/emoji.txt | awk '{printf "
@@ -186,9 +200,8 @@ static const char* showclipboardcmd[] = {
     NULL};
 static const char* tmuxcmd[] = {
     SHELL, "-c",
-    "kitty --listen-on unix:@mykitty -1 -- tmux new-session -A -s $(tmux "
-    "list-clients -F \"#S\" | rofi "
-    "-dmenu -i -p 'Attach to tmux session:')",
+    TERMCMD " -- tmux new-session -A -s $(tmux list-clients -F \"#S\" | rofi "
+            "-dmenu -i -p 'Attach to tmux session:')",
     NULL};
 static const char* connect_setubal[] = {"bluetoothctl", "connect",
                                         "88:C6:26:F4:8A:90", NULL};
@@ -208,18 +221,20 @@ static const char* backdropcmd[] = {
 static const char* nowallpapercmd[] = {"xsetroot", "-solid", col_gray1, NULL};
 static const char* journalctlcmd[] = {
     SHELL, "-c",
-    "pidof journalctl || kitty --listen-on unix:@mykitty -1 --class "
-    "journalctl -T journalctl -- "
-    "journalctl -b -f -n 1000",
+    "pidof journalctl || " TERMCMD
+    " --class journalctl -T journalctl -- journalctl -b -f -n 1000",
     NULL};
+static const char* irccmd[] = {
+    SHELL, "-c",
+    "pidof weechat || " TERMCMD " --class weechat -T weechat -- weechat", NULL};
 static const char* abridorcmd[] = {"/home/xha/etc/suckless/abridor/abridor.lua",
                                    NULL};
 static const char* fm0cmd[] = {"/home/xha/etc/suckless/fm0/fm0.lua", NULL};
 
 #define SSHADDKEYCMD                                                           \
-	"kitty -1 --listen-on=unix:@mykitty --class=Kittyaskpass "             \
-	"--override 'initial_window_width=56c' --override "                    \
-	"'initial_window_height=5c' -- /bin/zsh -c ssh-add </dev/null"
+	TERMCMD " --class=Kittyaskpass --override 'initial_window_width=56c' " \
+	        "--override 'initial_window_height=5c' -- /bin/zsh -c "        \
+	        "ssh-add </dev/null"
 
 static const char* sshaddcmd[] = {
     SHELL, "-c",
@@ -312,7 +327,10 @@ static char const* kittybrightcmd[] = {
 static Key keys[] = {
     /* modifier  key  function  argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
-    {MODKEY, XK_BackSpace, spawn, {.v = termcmd}},
+    {MODKEY, XK_Return, spawn, {.v = termifnotrunningcmd}},
+    {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY, XK_Return, activatetag, {.ui = TERMINALTAG}},
+    {MODKEY | ShiftMask, XK_Return, activatetag, {.v = TERMINALTAG}},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
@@ -320,33 +338,41 @@ static Key keys[] = {
     {MODKEY, XK_d, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
-    {MODKEY, XK_Return, zoom, {0}},
+    {MODKEY, XK_space, zoom, {0}},
     {MODKEY, XK_Tab, view, {0}},
     {MODKEY, XK_q, killclient, {0}},
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[2]}},
     {MODKEY, XK_m, setlayout, {.v = &layouts[1]}},
-    {MODKEY, XK_space, setlayout, {0}},
+    {MODKEY, XK_BackSpace, setlayout, {0}},
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
     {MODKEY, XK_comma, focusmon, {.i = -1}},
     {MODKEY, XK_period, focusmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-    TAGKEYS(XK_0, 0),
-    TAGKEYS(XK_1, 1),
-    TAGKEYS(XK_2, 2),
-    TAGKEYS(XK_3, 3),
-    TAGKEYS(XK_4, 4),
-    TAGKEYS(XK_5, 5),
-    TAGKEYS(XK_6, 6),
-    TAGKEYS(XK_7, 7),
-    TAGKEYS(XK_8, 8),
-    TAGKEYS(XK_9, 9),
+    TAGKEYS(MODKEY, XK_1, BROWSERTAG, BROWSERTAG),
+    TAGKEYS(MODKEY, XK_2, BROWSERTAG2_FIXED, BROWSERTAG2),
+    TAGKEYS(MODKEY, XK_3, CODINGTAG_FIXED, CODINGTAG),
+    TAGKEYS(MODKEY, XK_4, PDFTAG_FIXED, PDFTAG),
+    TAGKEYS(MODKEY, XK_5, ETCTAG, ETCTAG),
+    TAGKEYS(0, XK_F2, BROWSERTAG2_TOGGLE, BROWSERTAG2),
+    TAGKEYS(0, XK_F3, CODINGTAG_TOGGLE, CODINGTAG),
+    TAGKEYS(0, XK_F4, PDFTAG_TOGGLE, PDFTAG),
+    TAGKEYS(0, XK_F6, DUMPSTERTAG, DUMPSTERTAG),
+    TAGKEYS(0, XK_F7, CHATTAG, CHATTAG),
+    TAGKEYS(0, XK_F8, MOVIETAG, MOVIETAG),
+    TAGKEYS(0, XK_F9, TERMINALTAG, TERMINALTAG),
+    TAGKEYS(0, XK_F10, MUSICTAG, MUSICTAG),
+    TAGKEYS(0, XK_F12, JOURNALTAG, JOURNALTAG),
+    {MODKEY, XK_0, view, {.ui = ~0}},
     {MODKEY | ShiftMask, XK_q, quit, {0}},
-    {MODKEY, XK_e, spawn, {.v = emojicmd}},
+    {MODKEY, XK_dead_acute, spawn, {.v = emojicmd}},
+    {MODKEY, XK_acute, spawn, {.v = emojicmd}},
+    {MODKEY, XK_equal, spawn, {.v = emojicmd}},
     {MODKEY, XK_F1, spawn, {.v = mansplaincmd}},
     {MODKEY, XK_Insert, spawn, {.v = clipcmd}},
-    {MODKEY, XK_s, spawn, {.v = showclipboardcmd}},
+    {MODKEY, XK_ssharp, spawn, {.v = showclipboardcmd}},
+    {MODKEY, XK_minus, spawn, {.v = showclipboardcmd}},
     {0, 0xff61, spawn, {.v = screenshotcmd}},
     {MODKEY, 0xff61, spawn, {.v = screenshotselectioncmd}},
     {0, 0x1008ff13, spawn, {.v = raisevolumecmd}},
@@ -370,24 +396,24 @@ static Key keys[] = {
     {MODKEY, XK_a, spawn, {.v = tmuxcmd}},
     {MODKEY | ShiftMask, XK_w, spawn, {.v = backdropcmd}},
     {MODKEY, XK_w, spawn, {.v = nowallpapercmd}},
-    {MODKEY, XK_F9, spawn, {.v = connect_setubal}},
-    {MODKEY | ShiftMask, XK_F9, spawn, {.v = disconnect_setubal}},
+    {MODKEY, XK_c, spawn, {.v = connect_setubal}},
+    {MODKEY | ShiftMask, XK_c, spawn, {.v = disconnect_setubal}},
     {MODKEY, XK_u, spawn, {.v = urlcmd}},
     {0, 0x1008ff02, spawn, {.v = brightnessupcmd}},
     {0, 0x1008ff03, spawn, {.v = brightnessdowncmd}},
     {MODKEY | ShiftMask, XK_Escape, spawn, {.v = suspendcmd}},
-    {MODKEY, XK_F6, spawn, {.v = sshaddcmd}},
-    {MODKEY | ShiftMask, XK_F6, spawn, {.v = sshdelcmd}},
+    {MODKEY, XK_s, spawn, {.v = sshaddcmd}},
+    {MODKEY | ShiftMask, XK_s, spawn, {.v = sshdelcmd}},
     {MODKEY, XK_Escape, spawn, {.v = sshdelcmd}},
     {MODKEY, XK_Escape, spawn, {.v = lockcmd}},
     {MODKEY, XK_o, spawn, {.v = abridorcmd}},
-    {MODKEY, XK_F7, spawn, {.v = journalctlcmd}},
-    {MODKEY | ShiftMask, XK_F12, setlayout, {.v = &layouts[0]}},
-    {MODKEY | ShiftMask, XK_F12, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
-    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = INT_MIN}},
-    {MODKEY | ShiftMask, XK_F12, incnmaster, {.i = +1}},
-    {MODKEY, XK_F11, spawn, {.v = fm0cmd}},
-    {MODKEY, XK_F8, spawn, {.v = kittybrightcmd}}};
+    {0, XK_F12, spawn, {.v = journalctlcmd}},
+    {MODKEY | ShiftMask, XK_Delete, setlayout, {.v = &layouts[0]}},
+    {MODKEY | ShiftMask, XK_Delete, setmfact, {.f = 1.0f + DEFAULT_MFACT}},
+    {MODKEY | ShiftMask, XK_Delete, incnmaster, {.i = INT_MIN}},
+    {MODKEY | ShiftMask, XK_Delete, incnmaster, {.i = +1}},
+    {MODKEY, XK_r, spawn, {.v = fm0cmd}},
+    {MODKEY, XK_y, spawn, {.v = kittybrightcmd}}};
 
 #define Button6 6
 #define Button7 7
@@ -440,6 +466,14 @@ void viewortoggleview(const Arg* arg)
 		newtagset = selmon->tagset[selmon->seltags] ^ arg->ui & TAGMASK;
 	}
 	selmon->tagset[selmon->seltags] = newtagset;
+	focus(NULL);
+	arrange(selmon);
+	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
+}
+
+void activatetag(const Arg* arg)
+{
+	selmon->tagset[selmon->seltags] |= arg->ui & TAGMASK;
 	focus(NULL);
 	arrange(selmon);
 	if (arg->ui & NONTOGGABLE_TAGS) focusmaster();
