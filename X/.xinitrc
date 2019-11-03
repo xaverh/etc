@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# https://www.uninformativ.de/blog/postings/2018-06-02/0/POSTING-de.html
+# [[ "$1" != logging ]] && exec systemd-cat "$0" logging
+
 #
 # In case everything goes wrong, we at least fall back to a plain xterm
 #
@@ -38,11 +41,9 @@ xsetroot -bitmap $HOME/etc/suckless/backdrops/`ls $HOME/etc/suckless/backdrops |
 
 numlockx &
 
-jigglyroom &
+# jigglyroom &
 
-while true; do
-    dwm 2> ~/.dwm.log
-done
+exec herbstluftwm --locked 2> /tmp/herbstlog
 
 # call failsafe
 exit 0
