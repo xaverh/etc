@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/zsh
 
 # https://www.uninformativ.de/blog/postings/2018-06-02/0/POSTING-de.html
 # [[ "$1" != logging ]] && exec systemd-cat "$0" logging
