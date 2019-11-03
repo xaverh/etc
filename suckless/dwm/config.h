@@ -5,7 +5,7 @@ static const unsigned int borderpx = 2; /* border pixel of windows */
 static const unsigned int snap = 4;     /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
-static const char* fonts[] = {"sans-serif:size=11"};
+static const char* fonts[] = {"SGI Screen:size=9"};
 #define COL_GRAY1 "#1e1e1e"
 static const char col_gray1[] = COL_GRAY1;
 static const char col_gray2[] = "#424242";
@@ -366,7 +366,7 @@ static Key keys[] = {
     TAGKEYS(0, XK_F8, MOVIETAG, MOVIETAG),
     TAGKEYS(0, XK_F10, MUSICTAG, MUSICTAG),
     TAGKEYS(0, XK_F12, JOURNALTAG, JOURNALTAG),
-    {MODKEY, XK_0, view, {.ui = ~0}},
+    {MODKEY, XK_0, toggleview, {.ui = ~NONTOGGABLE_TAGS}},
     {MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_dead_acute, spawn, {.v = emojicmd}},
     {MODKEY, XK_acute, spawn, {.v = emojicmd}},
