@@ -66,41 +66,45 @@ func formatHerbstluftwmStatus(input string, screen string) string {
 	result := ""
 	fg := "#f9f8f4"
 	bg := "#e1e1e1"
+	attr := ""
 	for _, v := range items {
 		switch v[:1] {
-		// focused = reverse
-		// here = yellow #e3c472
-		// here, viewed = green #30c798
-		// viewed =  aqua #81d8d0
 		case ".":
 			bg = "#1e1e1e"
 			fg = "#f9f8f4"
+			attr = ""
 		case ":":
 			// occupied tag = !viewed, !here, !focused
 			bg = "#1e1e1e"
-			fg = "#e3c472"
+			fg = "#f9f8f4"
+			attr = ""
 		case "+":
 			// viewed, here, !focused
 			bg = "#1e1e1e"
 			fg = "#30c798"
+			attr = ""
 		case "-":
 			// viewed, !here, !focused
 			bg = "#1e1e1e"
 			fg = "#81d8d0"
+			attr = ""
 		case "%":
 			// viewed, !here, focused
 			bg = "#81d8d0"
 			fg = "#f9f8f4"
+			attr = ""
 		case "#":
 			// viewed, here, focused
-			bg = "#30c798"
-			fg = "#f9f8f4"
+			bg = "#1e1e1e"
+			fg = "#e3c472"
+			attr = "%{+u}"
 		case "!":
 			// urgent
 			bg = "#e32791"
 			fg = "#f9f8f4"
+			attr = ""
 		}
-		result = result + "%{B" + bg + "}%{F" + fg + "}%{A:" + "herbstclient focus_monitor " + string(screen) + " && herbstclient use " + v[1:] + ":}  " + v[1:] + "  %{A}"
+		result = result + attr + "%{B" + bg + "}%{F" + fg + "}%{A:" + "herbstclient focus_monitor " + string(screen) + " && herbstclient use " + v[1:] + ":}  " + v[1:] + "  %{A}%{-u}%{B-}%{F-}"
 	}
 	return result + "%{B-}%{F-}"
 }
@@ -123,7 +127,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			fallthrough
 		case "window_title_changed":
 			if len(action) >= 2 {
-				windowTitle = "%{F#f9f8f4}%{B#005577}  " + action[2] + "                                                                                                              "
+				windowTitle = "%{F#f9f8f4}%{B#005577}  " + action[2]
 			} else {
 				windowTitle = " "
 			}
@@ -319,7 +323,7 @@ func updateWIFI(wifi chan<- string) {
 }
 
 func alignRightDummy(channel chan<- string) {
-	channel <- "%{r}%{F-}%{B-}"
+	channel <- "                                                                                                                                                                                                                   %{r}%{F-}%{B-}"
 }
 
 func main() {
@@ -349,9 +353,9 @@ func main() {
 	for {
 		select {
 		case status[0] = <-hlwmChan:
-			fmt.Println((" " + strings.Join(status[:], separatorModules)))
+			fmt.Println(strings.Join(status[:], separatorModules))
 		case status[8] = <-timeChan:
-			fmt.Println((" " + strings.Join(status[:], separatorModules)))
+			fmt.Println(strings.Join(status[:], separatorModules))
 		case status[3] = <-memChan:
 		case status[4] = <-netChan:
 		case status[5] = <-tempChan:
