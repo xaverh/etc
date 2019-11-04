@@ -64,49 +64,61 @@ func fixed(rate int) string {
 func formatHerbstluftwmStatus(input string, screen string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
 	result := ""
-	fg := "#f9f8f4"
+	fg := "#e5e6e6"
 	bg := "#e1e1e1"
-	attr := ""
 	for _, v := range items {
 		switch v[:1] {
 		case ".":
 			bg = "#1e1e1e"
-			fg = "#f9f8f4"
-			attr = ""
+			fg = "#969696"
 		case ":":
 			// occupied tag = !viewed, !here, !focused
 			bg = "#1e1e1e"
-			fg = "#f9f8f4"
-			attr = ""
+			fg = "#e5e6e6"
 		case "+":
 			// viewed, here, !focused
 			bg = "#1e1e1e"
-			fg = "#30c798"
-			attr = ""
+			fg = "#e3c472"
 		case "-":
 			// viewed, !here, !focused
 			bg = "#1e1e1e"
-			fg = "#81d8d0"
-			attr = ""
+			fg = "#bdbebe"
 		case "%":
 			// viewed, !here, focused
-			bg = "#81d8d0"
-			fg = "#f9f8f4"
-			attr = ""
+			bg = "#1e1e1e"
+			fg = "#81d8d0"
 		case "#":
 			// viewed, here, focused
 			bg = "#1e1e1e"
-			fg = "#e3c472"
-			attr = "%{+u}"
+			fg = "#30c798"
+			// attr = "%{+u}"
 		case "!":
 			// urgent
-			bg = "#e32791"
-			fg = "#f9f8f4"
-			attr = ""
+			bg = "#1e1e1e"
+			fg = "#e32791"
 		}
-		result = result + attr + "%{B" + bg + "}%{F" + fg + "}%{A:" + "herbstclient focus_monitor " + string(screen) + " && herbstclient use " + v[1:] + ":}  " + v[1:] + "  %{A}%{-u}%{B-}%{F-}"
+		result = result + "%{B" + bg + "}%{F" + fg + "}%{A:herbstclient focus_monitor " + string(screen) + " && herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{B-}%{F-}"
 	}
-	return result + "%{B-}%{F-}"
+	return result
+}
+
+func getCurFrameWCount() string {
+	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
+	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
+	if err != nil || err2 != nil {
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[?] %{F-}%{B-}"
+	} else {
+		clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
+		clientNumber := string(out)[:len(out)-1]
+		if clientNumber == "0" || clientNumber == "1" {
+			return "%{O1000}%{r}%{F-}%{B-}"
+		}
+		if err == nil {
+			return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F-}%{B-}"
+		}
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[?] %{F-}%{B-}"
+
+	}
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
@@ -114,6 +126,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	out, err := cmd.StdoutPipe()
 	var workspaces string
 	var windowTitle string
+	var curFrameWCount string = "0"
 
 	err = cmd.Start()
 	if err != nil {
@@ -124,14 +137,16 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
 		case "focus_changed":
+			curFrameWCount = getCurFrameWCount()
 			fallthrough
 		case "window_title_changed":
 			if len(action) >= 2 {
-				windowTitle = "%{F#f9f8f4}%{B#005577}  " + action[2]
+				windowTitle = "%{F#e5e6e6}%{B#005577}  " + action[2]
 			} else {
 				windowTitle = " "
 			}
 		default:
+			curFrameWCount = getCurFrameWCount()
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
 			if err != nil {
 				workspaces = "ERROR: Failed to display tags."
@@ -139,7 +154,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 				workspaces = formatHerbstluftwmStatus(string(out), screen)
 			}
 		}
-		hlwmStatus <- workspaces + windowTitle
+		hlwmStatus <- workspaces + windowTitle + curFrameWCount
 	}
 	if err := scanner.Err(); err != nil {
 		workspaces = fmt.Sprintf("reading standard input: %v", err)
@@ -322,10 +337,6 @@ func updateWIFI(wifi chan<- string) {
 	}
 }
 
-func alignRightDummy(channel chan<- string) {
-	channel <- "                                                                                                                                                                                                                   %{r}%{F-}%{B-}"
-}
-
 func main() {
 	screen := os.Args[1:]
 	if os.Getenv("HOSTNAME") == "andermatt" {
@@ -339,7 +350,6 @@ func main() {
 	powChan := make(chan string)
 	timeChan := make(chan string)
 	hlwmChan := make(chan string)
-	alignRightChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan)
@@ -348,21 +358,19 @@ func main() {
 	go updatePower(powChan)
 	go updateTime(timeChan)
 	go updateHerbstluftStatus(hlwmChan, screen[0])
-	go alignRightDummy(alignRightChan)
-	status := make([]string, 9)
+	status := make([]string, 8)
 	for {
 		select {
 		case status[0] = <-hlwmChan:
 			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[8] = <-timeChan:
+		case status[7] = <-timeChan:
 			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[3] = <-memChan:
-		case status[4] = <-netChan:
-		case status[5] = <-tempChan:
-		case status[6] = <-wifiChan:
-		case status[7] = <-ipChan:
-		case status[2] = <-powChan:
-		case status[1] = <-alignRightChan:
+		case status[2] = <-memChan:
+		case status[3] = <-netChan:
+		case status[4] = <-tempChan:
+		case status[5] = <-wifiChan:
+		case status[6] = <-ipChan:
+		case status[1] = <-powChan:
 		}
 	}
 }
