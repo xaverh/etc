@@ -2,6 +2,8 @@
 
 herbstclient emit_hook reload
 
+herbstclient set default_frame_layout 2
+
 herbstclient keyunbind --all
 
 herbstclient keybind Mod4-Shift-q quit
@@ -89,7 +91,6 @@ herbstclient keybind Mod4-period use_index +1 --skip-visible
 herbstclient keybind Mod4-comma  use_index -1 --skip-visible
 
 # layouting
-herbstclient set default_frame_layout 2
 herbstclient keybind Mod4-w remove
 herbstclient keybind Mod4-e split explode
 herbstclient keybind Mod4-s split explode 0.356
