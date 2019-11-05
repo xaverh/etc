@@ -119,18 +119,6 @@
   },
   "settings.cycle": [
     {
-      "id": "colorTheme",
-      "overrideWorkspaceSettings": false,
-      "values": [
-        {
-          "workbench.colorTheme": "Qillqaq"
-        },
-        {
-          "workbench.colorTheme": "Ysgrifennwr"
-        }
-      ]
-    },
-    {
       "id": "multiCursorPaste",
       "overrideWorkspaceSettings": true,
       "values": [
@@ -185,7 +173,7 @@
   "terminal.integrated.cursorBlinking": true,
   "editor.formatOnPaste": true,
   "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Ysgrifennwr",
+  "workbench.colorTheme": "Qillqaq",
   "terminal.integrated.lineHeight": 1.2,
   "editor.suggestSelection": "first",
   "terminal.integrated.rendererType": "canvas",
@@ -201,7 +189,7 @@
   "explorer.incrementalNaming": "smart",
   "editor.cursorSurroundingLines": 3,
   "terminal.integrated.cwd": "${fileDirname}",
-  "terminal.integrated.automationShell.linux": "/bin/zsh",
+  "terminal.integrated.automationShell.linux": "/usr/bin/zsh",
   "scm.defaultViewMode": "tree",
   "editor.multiCursorModifier": "alt",
   "editor.multiCursorPaste": "spread",

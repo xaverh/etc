@@ -18,3 +18,18 @@ Geeqie/.config/geeqie/timezone21.bin
 RawTherapee/.config/RawTherapee/batch/queue.csv
 kitty/.local/share/systemd/timers
 suckless/schwammerl/schwammerl
+Visual Studio Code/.config/Code/Backups
+Visual Studio Code/.config/Code/Cache
+Visual Studio Code/.config/Code/CachedData
+Visual Studio Code/.config/Code/CachedExtensions
+Visual Studio Code/.config/Code/GPUCache
+Visual Studio Code/.config/Code/Local Storage/leveldb
+Visual Studio Code/.config/Code/User/globalStorage
+Visual Studio Code/.config/Code/User/workspaceStorage
+Visual Studio Code/.config/Code/Cookies
+Visual Studio Code/.config/Code/Cookies-journal
+Visual Studio Code/.config/Code/machineid
+Visual Studio Code/.config/Code/Network Persistent State
+Visual Studio Code/.config/Code/rapid_render.json
+Visual Studio Code/.config/Code/Preferences
+Visual Studio Code/.config/Code/storage.json
