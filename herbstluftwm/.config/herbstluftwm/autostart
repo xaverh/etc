@@ -177,6 +177,8 @@ herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 herbstclient rule class=mpv instance=gl tag='@' index='10' focus='on' switchtag='on'
 herbstclient rule once class='Google-chrome' tag='@' index='00' focus='on' switchtag='on'
+herbstclient rule class='discord' tag='^'
+herbstclient rule class='TelegramDesktop' tag='^'
 
 # unlock, just to be sure
 herbstclient unlock
