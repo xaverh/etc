@@ -5,10 +5,6 @@
 		"command": "workbench.action.openRecent"
 	},
 	{
-		"key": "ctrl+k t",
-		"command": "settings.cycle.colorTheme"
-	},
-	{
 		"key": "ctrl+shift+j",
 		"command": "editor.action.joinLines"
 	},
