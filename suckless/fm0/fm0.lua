@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-local music_player = 'mpv --force-window=yes --x11-name FM0 -- '
+local music_player = 'alacritty --class FM0 -e mpv --mute=no --x11-name FM0 -- '
 
 local radio_stations = {
 	['🇬🇧 🔥\tBBC Radio 1'] = {

@@ -174,18 +174,19 @@ herbstclient keybind Mod4-Shift-Tab cycle -1
 
 # rules
 herbstclient unrule -F
-#herbstclient rule class=XTerm tag=3 # move all xterms to tag 3
-herbstclient rule focus=on # normally focus new clients
-#herbstclient rule focus=off # normally do not focus new clients
-# give focus to most common terminals
-#herbstclient rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+herbstclient rule focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-herbstclient rule class=mpv instance=gl tag='@' index='10' focus='on' switchtag='on'
-herbstclient rule once class='Google-chrome' tag='@' index='00' focus='on' switchtag='on'
-herbstclient rule class='discord' tag='^'
-herbstclient rule class='TelegramDesktop' tag='^'
+herbstclient rule class=mpv instance=gl tag='@' index='10' focus=on switchtag=on
+herbstclient rule class=Alacritty instance=FM0 tag='#' focus=off switchtag=off
+herbstclient rule once class=Google-chrome tag='@' index='00' focus=on switchtag=on
+herbstclient rule once class=Code tag='@' index='00' focus=on switchtag=on
+herbstclient rule class=discord tag='^'
+herbstclient rule class=TelegramDesktop tag='^'
+herbstclient rule class=Steam tag='^'
+herbstclient rule class=presenter title=sent instance=sent fullscreen=true
+herbstclient rule class=strawberry tag='$' focus=on switchtag=off
 
 # unlock, just to be sure
 herbstclient unlock
