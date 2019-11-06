@@ -106,19 +106,17 @@ func getCurFrameWCount() string {
 	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
 	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
 	if err != nil || err2 != nil {
-		return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[?] %{F-}%{B-}"
-	} else {
-		clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
-		clientNumber := string(out)[:len(out)-1]
-		if clientNumber == "0" || clientNumber == "1" {
-			return "%{O1000}%{r}%{F-}%{B-}"
-		}
-		if err == nil {
-			return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F-}%{B-}"
-		}
-		return "%{F#e5e6e6}%{B#005577}%{O1000}%{r}[?] %{F-}%{B-}"
-
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[?] %{F-}%{B-}"
 	}
+	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
+	clientNumber := string(out)[:len(out)-1]
+	if clientNumber == "0" || clientNumber == "1" {
+		return "%{O1000}%{A}%{r}%{F-}%{B-}"
+	}
+	if err == nil {
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F-}%{B-}"
+	}
+	return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[?] %{F-}%{B-}"
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
@@ -154,7 +152,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 				workspaces = formatHerbstluftwmStatus(string(out), screen)
 			}
 		}
-		hlwmStatus <- workspaces + windowTitle + curFrameWCount
+		hlwmStatus <- workspaces + "%{A:herbstclient cycle:}" + windowTitle + curFrameWCount
 	}
 	if err := scanner.Err(); err != nil {
 		workspaces = fmt.Sprintf("reading standard input: %v", err)
