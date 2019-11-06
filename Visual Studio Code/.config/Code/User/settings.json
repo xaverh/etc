@@ -263,5 +263,6 @@
       "description": "object replacement character",
       "level": "error"
     }
-  }
+  },
+  "workbench.editor.showTabs": false
 }

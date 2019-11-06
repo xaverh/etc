@@ -38,11 +38,7 @@ xsetroot -bitmap $HOME/etc/suckless/backdrops/`ls $HOME/etc/suckless/backdrops |
 
 numlockx &
 
-jigglyroom &
-
-while true; do
-    dwm 2> ~/.dwm.log
-done
+exec herbstluftwm --locked
 
 # call failsafe
 exit 0
