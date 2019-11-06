@@ -7,7 +7,6 @@ su
 zypper in systemd-container
 
 ## Prepare disk
-
 ### SSD?
 blkdiscard /dev/sda
 
@@ -42,39 +41,14 @@ mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
 mount -o compress-force=zstd:6,noatime /dev/sda2 /mnt
 
 btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@.snapshots
 btrfs subvolume create /mnt/@/home
-mkdir /mnt/@/usr
-btrfs subvolume create /mnt/@/usr/local
-mkdir -p /mnt/@/usr/local/lib/systemd/{system,user}
-mkdir -p /mnt/@/etc/systemd/system
-mkdir -p /mnt/@/etc/zypp
-mkdir -p /mnt/@/etc/X11
-btrfs subvolume create /mnt/@/etc/dracut.conf.d
-btrfs subvolume create /mnt/@/etc/kernel
-btrfs subvolume create /mnt/@/etc/systemd/network
-btrfs subvolume create /mnt/@/etc/systemd/resolved.conf.d
-btrfs subvolume create /mnt/@/etc/systemd/system/getty@tty1.service.d
-btrfs subvolume create /mnt/@/etc/zypp/repos.d
-btrfs subvolume create /mnt/@/etc/X11/xorg.conf.d
 mkdir /mnt/@/var
 chattr +C /mnt/@/var
-mkdir /mnt/@/var/lib
-btrfs subvolume create /mnt/@/var/lib/iwd
+mkdir -p /mnt/@/var/lib/iwd
 mkdir -p /mnt/@/efi
+mkdir -p /mnt/@/zypp/repos.d
 
-mkdir /mnt/@/.snapshots
-mkdir -p /mnt/@.snapshots/-
-mkdir /mnt/@.snapshots/home
-mkdir /mnt/@.snapshots/usr-local
-mkdir /mnt/@.snapshots/etc-dracut.conf.d
-mkdir /mnt/@.snapshots/etc-kernel
-mkdir /mnt/@.snapshots/etc-systemd-network
-mkdir /mnt/@.snapshots/etc-systemd-resolved.conf.d
-mkdir /mnt/@.snapshots/var-lib-iwd
-mkdir /mnt/@.snapshots/etc-systemd-system-getty\\x40tty1.service.d
-mkdir /mnt/@.snapshots/etc-zypp-repos.d
-mkdir /mnt/@.snapshots/etc-X11-xorg.conf.d
+# TODO: import zypp.conf
 
 btrfs subvolume set-default /mnt/@
 
@@ -273,7 +247,7 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin
+zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
 
@@ -300,7 +274,6 @@ systemctl enable firewalld.service
 
 iw dev wlan0 set power_save off
 
-
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
 zypper in clipmenu clipnotify sent schwammerl
@@ -315,11 +288,6 @@ systemctl --user enable clipmenud.service
 
 # Set up wireless
 
-# first snapshots
-sudo mount -o subvol=@.snapshots,compress-force=zstd:6,noatime /dev/sda2 /.snapshots
-
-for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/.snapshots/}")" "$i"/`date -Is`
-
 xdg-mime default mupdf-gl.desktop application/pdf
 xdg-mime default mupdf-gl.desktop application/vnd.comicbook-rar
 xdg-mime default mupdf-gl.desktop application/vnd.comicbook+zip
@@ -330,9 +298,6 @@ xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
 xdg-mime default sxiv.desktop image/tiff
 
-curl https://launchpadlibrarian.net/435337097/chromium-codecs-ffmpeg-extra_76.0.3809.87-0ubuntu0.16.04.1_amd64.deb | tail -c+1075 | tar JxC ~ --wildcards \*libffmpeg.so --xform 's,.*/,.local/lib/vivaldi/,'
-
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
 reboot
-
