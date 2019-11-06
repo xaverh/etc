@@ -1,11 +1,5 @@
 package main
 
-/*
-#cgo LDFLAGS: -lX11
-#include <X11/Xlib.h>
-*/
-import "C"
-
 import (
 	"bufio"
 	"fmt"
@@ -19,7 +13,6 @@ import (
 )
 
 const (
-	// thermalZone is '*' in filename /sys/class/thermal/thermal_zone/*/temp
 	wifiDevice        = "wlan0"
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
@@ -34,7 +27,6 @@ var (
 		"wlan0",
 	}
 
-	dpy        = C.XOpenDisplay(nil)
 	ipRegex    = regexp.MustCompilePOSIX("[0-9.]+")
 	srcIPRegex = regexp.MustCompilePOSIX("src [0-9.]+")
 	ssidRegex  = regexp.MustCompile("SSID: (.*?)\n")
@@ -67,6 +59,104 @@ func fixed(rate int) string {
 
 	}
 	return fmt.Sprintf("%d %s", rate, suf)
+}
+
+func formatHerbstluftwmStatus(input string, screen string) string {
+	items := strings.Split(strings.TrimSpace(input), "\t")
+	result := ""
+	fg := "#e5e6e6"
+	bg := "#e1e1e1"
+	for _, v := range items {
+		switch v[:1] {
+		case ".":
+			bg = "#1e1e1e"
+			fg = "#969696"
+		case ":":
+			// occupied tag = !viewed, !here, !focused
+			bg = "#1e1e1e"
+			fg = "#e5e6e6"
+		case "+":
+			// viewed, here, !focused
+			bg = "#1e1e1e"
+			fg = "#e3c472"
+		case "-":
+			// viewed, !here, !focused
+			bg = "#1e1e1e"
+			fg = "#bdbebe"
+		case "%":
+			// viewed, !here, focused
+			bg = "#1e1e1e"
+			fg = "#81d8d0"
+		case "#":
+			// viewed, here, focused
+			bg = "#1e1e1e"
+			fg = "#30c798"
+			// attr = "%{+u}"
+		case "!":
+			// urgent
+			bg = "#1e1e1e"
+			fg = "#e32791"
+		}
+		result = result + "%{B" + bg + "}%{F" + fg + "}%{A:herbstclient focus_monitor " + string(screen) + " && herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{B-}%{F-}"
+	}
+	return result
+}
+
+func getCurFrameWCount() string {
+	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
+	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
+	if err != nil || err2 != nil {
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[?] %{F-}%{B-}"
+	}
+	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
+	clientNumber := string(out)[:len(out)-1]
+	if clientNumber == "0" || clientNumber == "1" {
+		return "%{O1000}%{A}%{r}%{F-}%{B-}"
+	}
+	if err == nil {
+		return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F-}%{B-}"
+	}
+	return "%{F#e5e6e6}%{B#005577}%{O1000}%{A}%{r}[?] %{F-}%{B-}"
+}
+
+func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
+	cmd := exec.Command("herbstclient", "--idle")
+	out, err := cmd.StdoutPipe()
+	var workspaces string
+	var windowTitle string
+	var curFrameWCount string = "0"
+
+	err = cmd.Start()
+	if err != nil {
+		workspaces = fmt.Sprintf("Failed to start err=%v", err)
+	}
+	scanner := bufio.NewScanner(out)
+	for ok := true; ok; ok = scanner.Scan() {
+		action := strings.Split(scanner.Text(), "\t")
+		switch action[0] {
+		case "focus_changed":
+			curFrameWCount = getCurFrameWCount()
+			fallthrough
+		case "window_title_changed":
+			if len(action) >= 2 {
+				windowTitle = "%{F#e5e6e6}%{B#005577}  " + action[2]
+			} else {
+				windowTitle = " "
+			}
+		default:
+			curFrameWCount = getCurFrameWCount()
+			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
+			if err != nil {
+				workspaces = "ERROR: Failed to display tags."
+			} else {
+				workspaces = formatHerbstluftwmStatus(string(out), screen)
+			}
+		}
+		hlwmStatus <- workspaces + "%{A:herbstclient cycle:}" + windowTitle + curFrameWCount
+	}
+	if err := scanner.Err(); err != nil {
+		workspaces = fmt.Sprintf("reading standard input: %v", err)
+	}
 }
 
 func updateTemperature(θ chan<- string) {
@@ -245,12 +335,8 @@ func updateWIFI(wifi chan<- string) {
 	}
 }
 
-func setStatus(s *C.char) {
-	C.XStoreName(dpy, C.XDefaultRootWindow(dpy), s)
-	C.XSync(dpy, 1)
-}
-
 func main() {
+	screen := os.Args[1:]
 	if os.Getenv("HOSTNAME") == "andermatt" {
 		thermalZone = "1"
 	}
@@ -261,6 +347,7 @@ func main() {
 	ipChan := make(chan string)
 	powChan := make(chan string)
 	timeChan := make(chan string)
+	hlwmChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan)
@@ -268,17 +355,20 @@ func main() {
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
 	go updateTime(timeChan)
-	status := make([]string, 7)
+	go updateHerbstluftStatus(hlwmChan, screen[0])
+	status := make([]string, 8)
 	for {
 		select {
-		case status[6] = <-timeChan:
-			setStatus(C.CString(" " + strings.Join(status[:], separatorModules)))
-		case status[1] = <-memChan:
-		case status[2] = <-netChan:
-		case status[3] = <-tempChan:
-		case status[4] = <-wifiChan:
-		case status[5] = <-ipChan:
-		case status[0] = <-powChan:
+		case status[0] = <-hlwmChan:
+			fmt.Println(strings.Join(status[:], separatorModules))
+		case status[7] = <-timeChan:
+			fmt.Println(strings.Join(status[:], separatorModules))
+		case status[2] = <-memChan:
+		case status[3] = <-netChan:
+		case status[4] = <-tempChan:
+		case status[5] = <-wifiChan:
+		case status[6] = <-ipChan:
+		case status[1] = <-powChan:
 		}
 	}
 }

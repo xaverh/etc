@@ -6,6 +6,7 @@ setopt appendhistory \
 autocd \
 autopushd \
 beep \
+noclobber \
 extendedglob \
 globstarshort \
 histignorealldups \
@@ -27,7 +28,7 @@ autoload -Uz compinit
 compinit
 
 autoload -U colors && colors
-PROMPT='%B%~ %#%b '
+PROMPT="${SSH_CONNECTION:+$fg[green]}%B%~ %#%b %{$reset_color%}"
 RPROMPT="%(?..%{$fg[red]%}%?%{$reset_color%})"
 
 # use colored filenames in completion

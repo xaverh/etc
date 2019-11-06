@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/zsh
 
 # Installing openSUSE
 
@@ -7,7 +7,6 @@ su
 zypper in systemd-container
 
 ## Prepare disk
-
 ### SSD?
 blkdiscard /dev/sda
 
@@ -42,39 +41,14 @@ mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
 mount -o compress-force=zstd:6,noatime /dev/sda2 /mnt
 
 btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@.snapshots
 btrfs subvolume create /mnt/@/home
-mkdir /mnt/@/usr
-btrfs subvolume create /mnt/@/usr/local
-mkdir -p /mnt/@/usr/local/lib/systemd/{system,user}
-mkdir -p /mnt/@/etc/systemd/system
-mkdir -p /mnt/@/etc/zypp
-mkdir -p /mnt/@/etc/X11
-btrfs subvolume create /mnt/@/etc/dracut.conf.d
-btrfs subvolume create /mnt/@/etc/kernel
-btrfs subvolume create /mnt/@/etc/systemd/network
-btrfs subvolume create /mnt/@/etc/systemd/resolved.conf.d
-btrfs subvolume create /mnt/@/etc/systemd/system/getty@tty1.service.d
-btrfs subvolume create /mnt/@/etc/zypp/repos.d
-btrfs subvolume create /mnt/@/etc/X11/xorg.conf.d
 mkdir /mnt/@/var
 chattr +C /mnt/@/var
-mkdir /mnt/@/var/lib
-btrfs subvolume create /mnt/@/var/lib/iwd
+mkdir -p /mnt/@/var/lib/iwd
 mkdir -p /mnt/@/efi
+mkdir -p /mnt/@/zypp/repos.d
 
-mkdir /mnt/@/.snapshots
-mkdir -p /mnt/@.snapshots/-
-mkdir /mnt/@.snapshots/home
-mkdir /mnt/@.snapshots/usr-local
-mkdir /mnt/@.snapshots/etc-dracut.conf.d
-mkdir /mnt/@.snapshots/etc-kernel
-mkdir /mnt/@.snapshots/etc-systemd-network
-mkdir /mnt/@.snapshots/etc-systemd-resolved.conf.d
-mkdir /mnt/@.snapshots/var-lib-iwd
-mkdir /mnt/@.snapshots/etc-systemd-system-getty\\x40tty1.service.d
-mkdir /mnt/@.snapshots/etc-zypp-repos.d
-mkdir /mnt/@.snapshots/etc-X11-xorg.conf.d
+# TODO: import zypp.conf
 
 btrfs subvolume set-default /mnt/@
 
@@ -93,7 +67,10 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion openssh-askpass-gnome xdm
+zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk\*-immodule\* gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi
+zypper -R /mnt al -t pattern fonts_opt
+zypper -R /mnt al numlockx dvd+rw-tools
+
 
 zypper -R /mnt ref
 
@@ -204,6 +181,8 @@ Section "InputClass"
 	Driver "libinput"
 	MatchIsTouchpad "on"
 	Option "NaturalScrolling" "true"
+	Option "HorizontalScrolling" "0"
+        Option "Tapping" "off"
 EndSection
 
 EOF
@@ -223,7 +202,7 @@ ln -s /mnt/usr/share/systemd/tmp.mount /mnt/etc/systemd/system/tmp.mount
 cd /
 systemd-nspawn -D /mnt passwd root
 
-systemd-nspawn -D /mnt chsh -s /bin/zsh
+systemd-nspawn -D /mnt chsh -s /usr/bin/zsh
 
 systemd-nspawn -bD /mnt
 
@@ -268,13 +247,16 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar texlive-scheme-minimal nnn kitty simple-mtpfs flameshot opus-tools wmctrl
+zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
 
 ## DVD?
 zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
 zypper in libdvdcss2
+
+# Numlock Key?
+zypper in numlockx
 
 bootctl install
 
@@ -292,10 +274,9 @@ systemctl enable firewalld.service
 
 iw dev wlan0 set power_save off
 
-
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
-zypper in clipmenu clipnotify 9menu dwm jigglyroom sent
+zypper in clipmenu clipnotify sent schwammerl
 
 # Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
 # NVIDIA:
@@ -307,11 +288,6 @@ systemctl --user enable clipmenud.service
 
 # Set up wireless
 
-# first snapshots
-sudo mount -o subvol=@.snapshots,compress-force=zstd:6,noatime /dev/sda2 /.snapshots
-
-for i in /.snapshots/*; btrfs subvolume snapshot -r "$(systemd-escape -pu "${i#/.snapshots/}")" "$i"/`date -Is`
-
 xdg-mime default mupdf-gl.desktop application/pdf
 xdg-mime default mupdf-gl.desktop application/vnd.comicbook-rar
 xdg-mime default mupdf-gl.desktop application/vnd.comicbook+zip
@@ -322,9 +298,6 @@ xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
 xdg-mime default sxiv.desktop image/tiff
 
-curl https://launchpadlibrarian.net/435337097/chromium-codecs-ffmpeg-extra_76.0.3809.87-0ubuntu0.16.04.1_amd64.deb | tail -c+1075 | tar JxC ~ --wildcards \*libffmpeg.so --xform 's,.*/,.local/lib/vivaldi/,'
-
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
 reboot
-
