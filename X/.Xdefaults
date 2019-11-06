@@ -8,14 +8,6 @@ Xft.lcdfilter: lcddefault
 
 Xcursor.theme: DMZ-White
 
-! x11-ssh-askpass*font:                   -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
-! x11-ssh-askpass.Button*background:      #000000
-! x11-ssh-askpass.Indicator*foreground:   #ff9900
-! x11-ssh-askpass.Indicator*background:   #090909
-! x11-ssh-askpass*topShadowColor:         #000000
-! x11-ssh-askpass*bottomShadowColor:      #000000
-! x11-ssh-askpass.*borderWidth:           0
-
 URxvt.perl-ext-common: selection-to-clipboard
 URxvt.intensityStyles: false
 URxvt.geometry: 92x24
@@ -122,27 +114,11 @@ Qillqaq*cursorColor2:       #1E1E1E
 Qillqaq*highlightColor:     [50]#E5E6E6
 Qillqaq*highlightTextColor: [80]#1E1E1E
 
-! Journalctl:
-Journalctl*background:             #1E1E1E
-Journalctl*backgroundColor:        #1E1E1E
-Journalctl*color0:                 #1E1E1E
-Journalctl*color1:                 #E32791
-Journalctl*color2:                 #30C798
-Journalctl*color3:                 #E3C472
-Journalctl*color4:                 #6769E6
-Journalctl*color5:                 #E59FDF
-Journalctl*color6:                 #81D8D0
-Journalctl*color7:                 #969696
-Journalctl*color8:                 #515151
-Journalctl*color9:                 #E466AD
-Journalctl*color10:                #6CD1B2
-Journalctl*color11:                #E4CF98
-Journalctl*color12:                #9091E6
-Journalctl*color13:                #E5B6E1
-Journalctl*color14:                #A2DCD7
-Journalctl*color15:                #E5E6E6
-Journalctl*foreground:             #E5E6E6
-Journalctl*cursorColor:            #20BBFC
-Journalctl*cursorColor2:           #1E1E1E
-Journalctl*highlightColor:         [50]#E5E6E6
-Journalctl*highlightTextColor:     [80]#1E1E1E
+rofi.modi:                           window,run,drun
+rofi.lines:                          15
+rofi.font:                           mono 12
+rofi.fixed-num-lines:                true
+rofi.separator-style:                none
+rofi.hide-scrollbar:                 true
+rofi.kb-row-tab:                     
+rofi.kb-row-select:                  Tab
