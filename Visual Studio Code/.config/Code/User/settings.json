@@ -252,5 +252,6 @@
       "level": "error"
     }
   },
-  "workbench.editor.showTabs": false
+  "workbench.editor.showTabs": false,
+  "editor.fontSize": 13
 }

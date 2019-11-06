@@ -93,7 +93,10 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm
+zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk\*-immodule\* gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi
+zypper -R /mnt al -t pattern fonts_opt
+zypper -R /mnt al numlockx dvd+rw-tools
+
 
 zypper -R /mnt ref
 
@@ -204,6 +207,8 @@ Section "InputClass"
 	Driver "libinput"
 	MatchIsTouchpad "on"
 	Option "NaturalScrolling" "true"
+	Option "HorizontalScrolling" "0"
+        Option "Tapping" "off"
 EndSection
 
 EOF
@@ -268,13 +273,18 @@ keeppackages=0
 
 EOF
 
-zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol numlockx xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar texlive-scheme-minimal nnn kitty simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty
+zypper in kernel-default patterns-base-x11 xrandr ImageMagick i3lock rofi xclip gtk2-immodule-xim gtk3-immodule-xim strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs neofetch zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav lame -xdm ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
+
+zypper rm 9menu jigglyroom dwm kitty xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts distribution-logos-openSUSE-Tumbleweed mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE sound-theme-freedesktop joe gtk\*-immodule\* libqt5-qtbase-platformtheme-gtk3 libqt5-qtstyleplugins-platformtheme-gtk2 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi
 
 ## DVD?
 zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
 zypper in libdvdcss2
+
+# Numlock Key?
+zypper in numlockx
 
 bootctl install
 
@@ -295,7 +305,7 @@ iw dev wlan0 set power_save off
 
 zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
-zypper in clipmenu clipnotify 9menu dwm jigglyroom sent schwammerl
+zypper in clipmenu clipnotify sent schwammerl
 
 # Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
 # NVIDIA:
