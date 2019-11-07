@@ -41,8 +41,6 @@ xsetroot -bitmap $HOME/etc/suckless/backdrops/`ls $HOME/etc/suckless/backdrops |
 
 numlockx &
 
-# jigglyroom &
-
 exec herbstluftwm --locked 2> /tmp/herbstlog
 
 # call failsafe
