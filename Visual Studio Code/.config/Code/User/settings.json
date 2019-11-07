@@ -162,7 +162,7 @@
   "editor.cursorStyle": "line",
   "editor.cursorBlinking": "phase",
   "editor.autoClosingQuotes": "never",
-  "editor.fontLigatures": true,
+  "editor.fontLigatures": "'liga','calt','ss03'",
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
   "prettier.singleQuote": true,
@@ -194,7 +194,6 @@
   "editor.multiCursorModifier": "alt",
   "editor.multiCursorPaste": "spread",
   "lua.format.singleQuote": true,
-  "search.location": "panel",
   "gremlins.characters": {
     "0003": {
       "description": "end of text",
@@ -253,5 +252,5 @@
     }
   },
   "workbench.editor.showTabs": false,
-  "editor.fontSize": 13
+  "editor.fontSize": 14
 }
