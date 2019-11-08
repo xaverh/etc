@@ -20,7 +20,8 @@ mkfs.fat -F32 /dev/sda1
 ## encrytption?
 cryptsetup benchmark
 ### SSD?
---align-payload=8192
+cryptsetup --align-payload=8192 --type luks2 --OPTIONS luksFormat /dev/sda2
+### else
 cryptsetup --type luks2 --OPTIONS luksFormat /dev/sda2
 ### SSD?
 cryptsetup --allow-discards --persistent open /dev/sda2 cryptroot
@@ -67,7 +68,8 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk\*-immodule\* gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi
+zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk\*-immodule\* gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi yast2-online-update-configuration
+
 zypper -R /mnt al -t pattern fonts_opt
 zypper -R /mnt al numlockx dvd+rw-tools
 
