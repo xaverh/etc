@@ -30,7 +30,13 @@ autoload -Uz compinit
 compinit
 
 autoload -U colors && colors
-PROMPT="${SSH_CONNECTION:+$fg[green]}%B%~ %#%b %{$reset_color%}"
+
+if [[ -n $SSH_CONNECTION ]]; then
+PROMPT="%F{green}%m: %B%~%f %#%b "
+else
+PROMPT="%B%~ %#%b "
+fi
+
 RPROMPT="%(?..%{$fg[red]%}%?%{$reset_color%})"
 
 # use colored filenames in completion
