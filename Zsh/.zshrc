@@ -5,6 +5,7 @@ SAVEHIST=$HISTSIZE
 setopt appendhistory \
 autocd \
 autopushd \
+cbases \
 beep \
 noclobber \
 extendedglob \
@@ -14,6 +15,7 @@ histignorespace \
 histreduceblanks \
 histsavenodups \
 longlistjobs \
+nolistbeep \
 nomatch \
 nonotify \
 pushdignoredups \
