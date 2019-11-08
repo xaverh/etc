@@ -12,6 +12,7 @@ fvwm/.fvwm/cache/*
 fvwm/.fvwm/.BGdefault
 fvwm/.fvwm/images/background/
 weechat/.weechat/logs/
+weechat/.weechat/certs/
 Geeqie/.config/geeqie/marks
 Geeqie/.config/geeqie/history
 Geeqie/.config/geeqie/timezone21.bin
