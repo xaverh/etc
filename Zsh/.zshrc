@@ -32,7 +32,7 @@ compinit
 autoload -U colors && colors
 
 if [[ -n $SSH_CONNECTION ]]; then
-PROMPT="%F{green}%m: %B%~%f %#%b "
+PROMPT="%F{green}%m:%B%/ %#%b%f "
 else
 PROMPT="%B%~ %#%b "
 fi
