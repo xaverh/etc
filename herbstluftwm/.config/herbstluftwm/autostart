@@ -2,17 +2,17 @@
 
 herbstclient emit_hook reload
 
-herbstclient set frame_gap 4
+herbstclient set frame_gap 5
 herbstclient set frame_padding 0
 herbstclient set window_gap 0
 herbstclient set snap_distance 10
 herbstclient set snap_gap 0
 herbstclient set mouse_recenter_gap 0
-herbstclient set frame_border_active_color '#1e1e1e'
-herbstclient set frame_border_normal_color '#1e1e1e'
-herbstclient set frame_border_inner_color '#1e1e1e'
-herbstclient set frame_bg_active_color '#e3c472'
-herbstclient set frame_bg_normal_color '#424242'
+herbstclient set frame_border_active_color "$QI_W"
+herbstclient set frame_border_normal_color "$QI_W"
+herbstclient set frame_border_inner_color "$QI_W"
+herbstclient set frame_bg_active_color "$QI_G"
+herbstclient set frame_bg_normal_color "$QI_B_W"
 herbstclient set frame_bg_transparent 1
 herbstclient set frame_transparent_width 5
 herbstclient set frame_border_width 1
@@ -23,10 +23,10 @@ herbstclient set raise_on_focus_temporarily 0
 herbstclient set raise_on_click 1
 herbstclient set window_border_width 3
 herbstclient set window_border_inner_width 1
-herbstclient set window_border_active_color '#30c798'
-herbstclient set window_border_normal_color '#424242'
-herbstclient set window_border_urgent_color '#e32791'
-herbstclient set window_border_inner_color '#1e1e1e'
+herbstclient set window_border_active_color "$QI_G"
+herbstclient set window_border_normal_color "$QI_B_W"
+herbstclient set window_border_urgent_color "$QI_R"
+herbstclient set window_border_inner_color "$QI_W"
 herbstclient set always_show_frame 0
 herbstclient set frame_normal_opacity 100
 herbstclient set frame_active_opacity 100
@@ -39,7 +39,8 @@ herbstclient set focus_follows_mouse 0
 herbstclient set focus_stealing_prevention 0
 herbstclient set swap_monitors_to_get_tag 1
 herbstclient set auto_detect_monitors 0 ### TODO
-herbstclient set tree_style '├│ ├└──┬'
+# herbstclient set tree_style '├│ ├└──┬'
+herbstclient set tree_style "-| |\`--."
 herbstclient set update_dragged_clients 1
 
 herbstclient keyunbind --all
@@ -52,9 +53,8 @@ TERMINALCMD=(alacritty --live-config-reload)
 MAX_BRIGHTNESS=$(</sys/class/backlight/intel_backlight/max_brightness)
 
 herbstclient keybind Mod4-Return spawn $TERMINALCMD
-herbstclient keybind Mod4-p spawn rofi -show run
-herbstclient keybind Mod4-Shift-p spawn rofi -show drun
-herbstclient keybind Mod4-l spawn rofi -show window
+herbstclient keybind Mod4-Shift-Return spawn $TERMINALCMD -e tmux
+herbstclient keybind Mod4-p spawn rofi -combi-modi window,drun,run -show combi -modi combi
 herbstclient keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p Emoji -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib"
 herbstclient keybind Mod4+F1 spawn $SHELL -c "mupdf-gl =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))"
 herbstclient keybind XF86AudioRaiseVolume spawn amixer sset Master 5%+ unmute
@@ -78,11 +78,11 @@ herbstclient keybind Print spawn flameshot gui -p /tmp
 herbstclient keybind Mod4+Print spawn flameshot screen -c -p /tmp
 herbstclient keybind Mod4+i spawn clipmenu -p Clipboard
 herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
-herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINALCMD -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'Attach to tmux session:')"
-herbstclient keybind Mod4+Shift+F6 spawn xsetroot -solid '#1e1e1e'
-herbstclient keybind Mod4+F6 spawn $SHELL -c "xsetroot -bitmap $HOME/etc/suckless/backdrops/\`\\ls $HOME/etc/suckless/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`"
+herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINALCMD -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')"
+herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
+herbstclient keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/etc/suckless/backdrops/\`\\ls $HOME/etc/suckless/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`"
 herbstclient keybind Mod4+numbersign toggle always_show_frame
-herbstclient keybind Mod4+7 or , and . compare settings.window_border_active_color = '#30c798' . and \; set window_border_active_color '#e3c472' \; set frame_bg_active_color '#e3c472' , and . compare settings.window_border_active_color = '#e3c472' . and \; set window_border_active_color '#81d8d0' \; set frame_bg_active_color '#81d8d0' , and . compare settings.window_border_active_color = '#81d8d0' . and \; set window_border_active_color '#6769e6' \; set frame_bg_active_color '#6769e6' , and . compare settings.window_border_active_color = '#6769e6' . and \; set window_border_active_color '#e59fdf' \; set frame_bg_active_color '#e59fdf' , and \; set window_border_active_color '#30c798' \; set frame_bg_active_color '#30c798'
+herbstclient keybind Mod4+7 and 🥨 cycle_value window_border_active_color "$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B" 🥨 substitute 🖼️ settings.window_border_active_color set frame_bg_active_color 🖼️
 herbstclient keybind Mod4+F6 chain . spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml . spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json"
 herbstclient keybind Mod4+Shift+F6 chain . spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml . spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
 
@@ -147,8 +147,9 @@ herbstclient keybind Mod4-Control-4 load '(clients max:0)'
 herbstclient keybind Mod4-Control-5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
 
 # cycle through tags
-herbstclient keybind Mod4-period use_index +1 --skip-visible
-herbstclient keybind Mod4-comma  use_index -1 --skip-visible
+herbstclient keybind Mod4-period            use_index +1 --skip-visible
+herbstclient keybind Mod4-comma             use_index -1 --skip-visible
+herbstclient keybind Mod4-asciicircum       use_previous
 
 # layouting
 herbstclient keybind Mod4-Shift-c remove
@@ -166,11 +167,11 @@ herbstclient mousebind Mod4-Button2 zoom
 herbstclient mousebind Mod4-Button3 resize
 
 # focus
-herbstclient keybind Mod4-BackSpace cycle_monitor
-herbstclient keybind Mod4-j         cycle_all --skip-invisible +1
-herbstclient keybind Mod4-k         cycle_all --skip-invisible -1
-herbstclient keybind Mod4-Tab       cycle +1
-herbstclient keybind Mod4-Shift-Tab cycle -1
+herbstclient keybind Mod4-BackSpace         cycle_monitor
+herbstclient keybind Mod4-j                 cycle_all --skip-invisible +1
+herbstclient keybind Mod4-k                 cycle_all --skip-invisible -1
+herbstclient keybind Mod4-Tab               cycle +1
+herbstclient keybind Mod4-Shift-Tab         cycle -1
 
 # rules
 herbstclient unrule -F
@@ -179,6 +180,7 @@ herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseud
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 herbstclient rule class=mpv instance=gl tag='@' index='10' focus=on switchtag=on
+herbstclient rule title='Picture in picture' tag='@' index='10' focus=off
 herbstclient rule class=Alacritty instance=FM0 tag='#' focus=off switchtag=off
 herbstclient rule once class=Google-chrome tag='@' index='00' focus=on switchtag=on
 herbstclient rule once class=Code tag='@' index='00' focus=on switchtag=on
@@ -187,8 +189,16 @@ herbstclient rule class=TelegramDesktop tag='^'
 herbstclient rule class=Steam tag='^'
 herbstclient rule class=presenter title=sent instance=sent fullscreen=true
 herbstclient rule class=strawberry tag='$' focus=on switchtag=off
+herbstclient rule class=Spotify tag='$' focus=on switchtag=off
+herbstclient rule title~'MuPDF: .*' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.epub - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.pdf - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.cbz - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.EPUB - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.PDF - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
+herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 
-# unlock, just to be sure
+
 herbstclient unlock
 
 # do multi monitor setup here, e.g.:

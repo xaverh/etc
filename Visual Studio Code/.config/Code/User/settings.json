@@ -1,257 +1,257 @@
 {
-  "editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
-  "editor.fontWeight": "400",
-  "editor.rulers": [],
-  "editor.formatOnType": true,
-  "editor.scrollBeyondLastLine": false,
-  "editor.acceptSuggestionOnEnter": "off",
-  "editor.wrappingIndent": "indent",
-  "editor.tabSize": 8,
-  "editor.insertSpaces": false,
-  "editor.renderLineHighlight": "all",
-  "editor.renderControlCharacters": true,
-  "files.trimTrailingWhitespace": true,
-  "editor.renderWhitespace": "none",
-  "editor.formatOnSave": false,
-  "files.associations": {
-    "*.clang-format": "yaml",
-    "autostart": "shellscript",
-    "*.npmrc": "ini",
-    "*.service": "ini",
-    "*.h": "c",
-    "*.ymp": "xml",
-    "*.network": "ini",
-    "*.link": "ini",
-    "fonts-config": "properties",
-    "*.xbm": "c",
-    "*.xpm": "c",
-    "_service": "xml",
-    "*.timer": "ini"
-  },
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/._*": true,
-    "**/*.un~": true
-  },
-  "git.confirmSync": false,
-  "window.zoomLevel": 0,
-  "workbench.statusBar.visible": true,
-  "C_Cpp.formatting": "Disabled",
-  "window.menuBarVisibility": "toggle",
-  "[html]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.tabSize": 4
-  },
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": true,
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4,
-    "editor.renderWhitespace": "boundary",
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.trimAutoWhitespace": false,
-    "files.trimTrailingWhitespace": false
-  },
-  "[python]": {
-    "editor.tabSize": 4,
-    "editor.renderWhitespace": "boundary"
-  },
-  "[scss]": {
-    "editor.tabSize": 4
-  },
-  "[typescript]": {
-    "editor.tabSize": 4
-  },
-  "[vue]": {
-    "editor.tabSize": 4
-  },
-  "workbench.settings.openDefaultSettings": false,
-  "clang-format.language.typescript.enable": true,
-  "clang-format.language.javascript.enable": false,
-  "editor.detectIndentation": true,
-  "typescript.tsserver.log": "verbose",
-  "debug.inlineValues": true,
-  "C_Cpp.autocomplete": "Default",
-  "C_Cpp.intelliSenseEngine": "Default",
-  "javascript.implicitProjectConfig.checkJs": true,
-  "extensions.autoUpdate": false,
-  "editor.renderIndentGuides": false,
-  "editor.autoIndent": true,
-  "window.restoreWindows": "all",
-  "git.enableSmartCommit": true,
-  "markdown.preview.fontSize": 18,
-  "workbench.startupEditor": "welcomePageInEmptyWorkbench",
-  "editor.smoothScrolling": true,
-  "git.enableCommitSigning": false,
-  "explorer.decorations.badges": false,
-  "git.autofetch": true,
-  "javascript.format.enable": false,
-  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    {
-      "language": "html",
-      "autoFix": true
-    },
-    {
-      "language": "vue",
-      "autoFix": true
-    }
-  ],
-  "eslint.options": {
-    "plugins": ["vue", "html"]
-  },
-  "settings.cycle": [
-    {
-      "id": "multiCursorPaste",
-      "overrideWorkspaceSettings": true,
-      "values": [
-        {
-          "editor.multiCursorPaste": "spread"
-        },
-        {
-          "editor.multiCursorPaste": "full"
-        }
-      ]
-    }
-  ],
-  "search.smartCase": true,
-  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-  "latex-workshop.view.pdf.viewer": "tab",
-  "eslint.enable": true,
-  "eslint.run": "onType",
-  "vetur.format.defaultFormatter.js": "vscode-typescript",
-  "vetur.format.defaultFormatter.ts": "vscode-typescript",
-  "vetur.validation.style": true,
-  "vetur.validation.template": true,
-  "debug.toolBarLocation": "docked",
-  "latex-workshop.message.update.show": false,
-  "workbench.list.keyboardNavigation": "filter",
-  "latex-workshop.latex.autoBuild.run": "never",
-  "breadcrumbs.enabled": true,
-  "breadcrumbs.symbolPath": "on",
-  "diffEditor.ignoreTrimWhitespace": true,
-  "window.openWithoutArgumentsInNewWindow": "off",
-  "window.openFoldersInNewWindow": "off",
-  "files.autoSaveDelay": 1001,
-  "zenMode.centerLayout": false,
-  "zenMode.hideLineNumbers": false,
-  "workbench.activityBar.visible": true,
-  "diffEditor.renderSideBySide": true,
-  "explorer.autoReveal": false,
-  "files.enableTrash": false,
-  "workbench.settings.editor": "ui",
-  "zenMode.fullScreen": true,
-  "editor.cursorSmoothCaretAnimation": true,
-  "editor.cursorStyle": "line",
-  "editor.cursorBlinking": "phase",
-  "editor.autoClosingQuotes": "never",
-  "editor.fontLigatures": true,
-  "javascript.preferences.quoteStyle": "single",
-  "typescript.preferences.quoteStyle": "single",
-  "prettier.singleQuote": true,
-  "prettier.jsxSingleQuote": true,
-  "typescript.format.enable": false,
-  "terminal.external.linuxExec": "urxvtc",
-  "git.defaultCloneDirectory": "$HOME/src",
-  "terminal.integrated.cursorBlinking": true,
-  "editor.formatOnPaste": true,
-  "editor.minimap.showSlider": "always",
-  "workbench.colorTheme": "Qillqaq",
-  "terminal.integrated.lineHeight": 1.2,
-  "editor.suggestSelection": "first",
-  "terminal.integrated.rendererType": "canvas",
-  "workbench.editor.highlightModifiedTabs": true,
-  "editor.wordWrap": "on",
-  "extensions.ignoreRecommendations": true,
-  "vetur.format.options.useTabs": true,
-  "vetur.format.options.tabSize": 4,
-  "prettier.useTabs": true,
-  "files.autoSave": "afterDelay",
-  "editor.minimap.enabled": false,
-  "go.useLanguageServer": true,
-  "explorer.incrementalNaming": "smart",
-  "editor.cursorSurroundingLines": 3,
-  "terminal.integrated.cwd": "${fileDirname}",
-  "terminal.integrated.automationShell.linux": "/usr/bin/zsh",
-  "scm.defaultViewMode": "tree",
-  "editor.multiCursorModifier": "alt",
-  "editor.multiCursorPaste": "spread",
-  "lua.format.singleQuote": true,
-  "search.location": "panel",
-  "gremlins.characters": {
-    "0003": {
-      "description": "end of text",
-      "level": "warning"
-    },
-    "00a0": {
-      "description": "non breaking space",
-      "level": "info"
-    },
-    "2009": {
-      "description": "thin space",
-      "level": "info"
-    },
-    "200b": {
-      "zeroWidth": true,
-      "description": "zero width space",
-      "level": "error"
-    },
-    "200c": {
-      "zeroWidth": true,
-      "description": "zero width non-joiner",
-      "level": "warning"
-    },
-    "200e": {
-      "zeroWidth": true,
-      "description": "left-to-right mark",
-      "level": "error"
-    },
-    "201c": {
-      "description": "left double quotation mark",
-      "level": "warning"
-    },
-    "201d": {
-      "description": "right double quotation mark",
-      "level": "warning"
-    },
-    "202c": {
-      "zeroWidth": true,
-      "description": "pop directional formatting",
-      "level": "error"
-    },
-    "202d": {
-      "zeroWidth": true,
-      "description": "left-to-right override",
-      "level": "error"
-    },
-    "202e": {
-      "zeroWidth": true,
-      "description": "right-to-left override",
-      "level": "error"
-    },
-    "fffc": {
-      "zeroWidth": true,
-      "description": "object replacement character",
-      "level": "error"
-    }
-  },
-  "workbench.editor.showTabs": false,
-  "editor.fontSize": 13
+	"editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
+	"editor.fontWeight": "400",
+	"editor.rulers": [],
+	"editor.formatOnType": true,
+	"editor.scrollBeyondLastLine": false,
+	"editor.acceptSuggestionOnEnter": "off",
+	"editor.wrappingIndent": "indent",
+	"editor.tabSize": 8,
+	"editor.insertSpaces": false,
+	"editor.renderLineHighlight": "all",
+	"editor.renderControlCharacters": true,
+	"files.trimTrailingWhitespace": true,
+	"editor.renderWhitespace": "none",
+	"editor.formatOnSave": false,
+	"files.associations": {
+		"*.clang-format": "yaml",
+		"autostart": "shellscript",
+		"*.npmrc": "ini",
+		"*.service": "ini",
+		"*.h": "c",
+		"*.ymp": "xml",
+		"*.network": "ini",
+		"*.link": "ini",
+		"fonts-config": "properties",
+		"*.xbm": "c",
+		"*.xpm": "c",
+		"_service": "xml",
+		"*.timer": "ini"
+	},
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/._*": true,
+		"**/*.un~": true
+	},
+	"git.confirmSync": false,
+	"window.zoomLevel": 0,
+	"workbench.statusBar.visible": true,
+	"C_Cpp.formatting": "Disabled",
+	"window.menuBarVisibility": "toggle",
+	"[html]": {
+		"editor.tabSize": 4,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.tabSize": 4,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.tabSize": 4,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.tabSize": 4
+	},
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.quickSuggestions": true,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4,
+		"editor.renderWhitespace": "boundary",
+		"diffEditor.ignoreTrimWhitespace": false,
+		"editor.trimAutoWhitespace": false,
+		"files.trimTrailingWhitespace": false
+	},
+	"[python]": {
+		"editor.tabSize": 4,
+		"editor.renderWhitespace": "boundary"
+	},
+	"[scss]": {
+		"editor.tabSize": 4
+	},
+	"[typescript]": {
+		"editor.tabSize": 4
+	},
+	"[vue]": {
+		"editor.tabSize": 4
+	},
+	"workbench.settings.openDefaultSettings": false,
+	"clang-format.language.typescript.enable": true,
+	"clang-format.language.javascript.enable": false,
+	"editor.detectIndentation": true,
+	"typescript.tsserver.log": "verbose",
+	"debug.inlineValues": true,
+	"C_Cpp.autocomplete": "Default",
+	"C_Cpp.intelliSenseEngine": "Default",
+	"javascript.implicitProjectConfig.checkJs": true,
+	"extensions.autoUpdate": false,
+	"editor.renderIndentGuides": false,
+	"editor.autoIndent": true,
+	"window.restoreWindows": "all",
+	"git.enableSmartCommit": true,
+	"markdown.preview.fontSize": 18,
+	"workbench.startupEditor": "welcomePageInEmptyWorkbench",
+	"editor.smoothScrolling": true,
+	"explorer.decorations.badges": false,
+	"git.autofetch": true,
+	"javascript.format.enable": false,
+	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		{
+			"language": "html",
+			"autoFix": true
+		},
+		{
+			"language": "vue",
+			"autoFix": true
+		}
+	],
+	"eslint.options": {
+		"plugins": ["vue", "html"]
+	},
+	"settings.cycle": [
+		{
+			"id": "multiCursorPaste",
+			"overrideWorkspaceSettings": true,
+			"values": [
+				{
+					"editor.multiCursorPaste": "spread"
+				},
+				{
+					"editor.multiCursorPaste": "full"
+				}
+			]
+		}
+	],
+	"search.smartCase": true,
+	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+	"latex-workshop.view.pdf.viewer": "tab",
+	"eslint.enable": true,
+	"eslint.run": "onType",
+	"vetur.format.defaultFormatter.js": "vscode-typescript",
+	"vetur.format.defaultFormatter.ts": "vscode-typescript",
+	"vetur.validation.style": true,
+	"vetur.validation.template": true,
+	"debug.toolBarLocation": "docked",
+	"latex-workshop.message.update.show": false,
+	"workbench.list.keyboardNavigation": "filter",
+	"latex-workshop.latex.autoBuild.run": "never",
+	"breadcrumbs.enabled": true,
+	"breadcrumbs.symbolPath": "on",
+	"diffEditor.ignoreTrimWhitespace": true,
+	"window.openWithoutArgumentsInNewWindow": "off",
+	"window.openFoldersInNewWindow": "off",
+	"files.autoSaveDelay": 1001,
+	"zenMode.centerLayout": false,
+	"zenMode.hideLineNumbers": false,
+	"workbench.activityBar.visible": true,
+	"diffEditor.renderSideBySide": false,
+	"explorer.autoReveal": false,
+	"files.enableTrash": false,
+	"workbench.settings.editor": "ui",
+	"zenMode.fullScreen": true,
+	"editor.cursorSmoothCaretAnimation": true,
+	"editor.cursorStyle": "line",
+	"editor.cursorBlinking": "phase",
+	"editor.autoClosingQuotes": "never",
+	"editor.fontLigatures": "'liga','calt','ss03'",
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.preferences.quoteStyle": "single",
+	"prettier.singleQuote": true,
+	"prettier.jsxSingleQuote": true,
+	"typescript.format.enable": false,
+	"terminal.external.linuxExec": "urxvtc",
+	"git.defaultCloneDirectory": "$HOME/src",
+	"terminal.integrated.cursorBlinking": true,
+	"editor.formatOnPaste": true,
+	"editor.minimap.showSlider": "always",
+	"workbench.colorTheme": "Qillqaq",
+	"terminal.integrated.lineHeight": 1.2,
+	"editor.suggestSelection": "first",
+	"terminal.integrated.rendererType": "canvas",
+	"workbench.editor.highlightModifiedTabs": true,
+	"editor.wordWrap": "on",
+	"extensions.ignoreRecommendations": true,
+	"vetur.format.options.useTabs": true,
+	"vetur.format.options.tabSize": 4,
+	"prettier.useTabs": true,
+	"files.autoSave": "afterDelay",
+	"editor.minimap.enabled": false,
+	"go.useLanguageServer": true,
+	"explorer.incrementalNaming": "smart",
+	"editor.cursorSurroundingLines": 3,
+	"terminal.integrated.cwd": "${fileDirname}",
+	"terminal.integrated.automationShell.linux": "/usr/bin/zsh",
+	"scm.defaultViewMode": "tree",
+	"editor.multiCursorModifier": "alt",
+	"editor.multiCursorPaste": "spread",
+	"lua.format.singleQuote": true,
+	"gremlins.characters": {
+		"0003": {
+			"description": "end of text",
+			"level": "warning"
+		},
+		"00a0": {
+			"description": "non breaking space",
+			"level": "info"
+		},
+		"2009": {
+			"description": "thin space",
+			"level": "info"
+		},
+		"200b": {
+			"zeroWidth": true,
+			"description": "zero width space",
+			"level": "error"
+		},
+		"200c": {
+			"zeroWidth": true,
+			"description": "zero width non-joiner",
+			"level": "warning"
+		},
+		"200e": {
+			"zeroWidth": true,
+			"description": "left-to-right mark",
+			"level": "error"
+		},
+		"201c": {
+			"description": "left double quotation mark",
+			"level": "warning"
+		},
+		"201d": {
+			"description": "right double quotation mark",
+			"level": "warning"
+		},
+		"202c": {
+			"zeroWidth": true,
+			"description": "pop directional formatting",
+			"level": "error"
+		},
+		"202d": {
+			"zeroWidth": true,
+			"description": "left-to-right override",
+			"level": "error"
+		},
+		"202e": {
+			"zeroWidth": true,
+			"description": "right-to-left override",
+			"level": "error"
+		},
+		"fffc": {
+			"zeroWidth": true,
+			"description": "object replacement character",
+			"level": "error"
+		}
+	},
+	"workbench.editor.showTabs": false,
+	"editor.fontSize": 14,
+	"git.untrackedChanges": "separate",
+	"git.enableCommitSigning": false
 }
