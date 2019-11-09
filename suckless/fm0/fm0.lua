@@ -98,7 +98,9 @@ local radio_stations = {
 		url = 'https://20873.live.streamtheworld.com/LOS40AAC.aac'
 	},
 	['🇪🇸 💃🏽\tLos 40 Latin'] = {
-		url = 'https://20853.live.streamtheworld.com/LOS40_03AAC.aac'
+		-- url = 'https://20853.live.streamtheworld.com/LOS40_03AAC.aac',
+		url = 'https://17873.live.streamtheworld.com/LOS40AAC.aac',
+		backup_url = 'https://20103.live.streamtheworld.com/LOS40_03AAC.aac'
 	},
 	['🇨🇴 💃🏽\tLos 40 Medellín'] = {
 		url = 'https://14073.live.streamtheworld.com/LOS40COL_MEDAAC.aac'
