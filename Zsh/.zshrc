@@ -2,24 +2,34 @@ HISTFILE=~/.history
 HISTSIZE=2147483647
 SAVEHIST=$HISTSIZE
 
-setopt appendhistory \
+setopt noaliasfuncdef \
+appendcreate \
+appendhistory \
 autocd \
 autopushd \
 cbases \
 beep \
 noclobber \
 extendedglob \
+noflowcontrol \
 globstarshort \
 histignorealldups \
 histignorespace \
 histreduceblanks \
 histsavenodups \
+interactivecomments \
 longlistjobs \
+nomultifuncdef \
 nolistbeep \
 nomatch \
 nonotify \
+octalzeroes \
+promptpercent \
 pushdignoredups \
+norcquotes \
+normstarsilent \
 sharehistory \
+transientrprompt \
 warncreateglobal
 # TODO: options from Input/Output in zshoptions(1) onward
 
@@ -91,7 +101,7 @@ chpwd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
 precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
 preexec () {print -Pn "\e]0;%n@%m: $2 ($TERM)\a"}
 
-sx simple-extract () {
+function sx () {
 	local f
 	for f in "$@"; do
 		if [[ -f "$f" ]]; then
@@ -125,14 +135,14 @@ sx simple-extract () {
 	done
 }
 
-# required for st
-# http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
-# if [[ $TERM == (tmux*|st*) ]]; then
-	# function zle-line-init () { echoti smkx }
-	# function zle-line-finish () { echoti rmkx }
-	# zle -N zle-line-init
-	# zle -N zle-line-finish
-# fi
+function clinton_server () {
+	local i
+	for i in "$@"; do
+		sed -i "/$i/d" $HISTFILE
+	done
+}
+
+alias clinton_server=" clinton_server"
 
 autoload -U zmv
 
@@ -143,7 +153,7 @@ bindkey "^Xt" tetris
 export NNN_TMPFILE="/tmp/nnn"
 export NNN_USE_EDITOR=1
 
-n()
+function n ()
 {
         nnn "$@"
 
@@ -153,9 +163,9 @@ n()
         fi
 }
 
-ripsite()
+alias nnn=n
+
+function ripsite()
 {
 	wkhtmltopdf --images --no-stop-slow-scripts "$@" `systemd-escape $@`".pdf"
 }
-
-alias nnn=n
