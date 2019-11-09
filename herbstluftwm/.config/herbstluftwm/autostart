@@ -1,6 +1,9 @@
 #!/usr/bin/zsh
 
 herbstclient emit_hook reload
+herbstclient keyunbind --all
+herbstclient mouseunbind --all
+herbstclient unrule --all
 
 herbstclient set frame_gap 5
 herbstclient set frame_padding 0
@@ -43,91 +46,62 @@ herbstclient set auto_detect_monitors 0 ### TODO
 herbstclient set tree_style "-| |\`--."
 herbstclient set update_dragged_clients 1
 
-herbstclient keyunbind --all
+herbstclient keybind Mod4-Control-Shift-q quit
+herbstclient keybind Mod4-Shift-q reload
+herbstclient keybind Mod4-F4 close
+herbstclient keybind Mod4-Return spawn ${TERMINAL:-xterm}
 
-herbstclient keybind Mod4-Shift-q quit
-herbstclient keybind Mod4-Shift-r reload
-herbstclient keybind Mod4-q close
-
-TERMINALCMD=(alacritty --live-config-reload)
-MAX_BRIGHTNESS=$(</sys/class/backlight/intel_backlight/max_brightness)
-
-herbstclient keybind Mod4-Return spawn $TERMINALCMD
-herbstclient keybind Mod4-Shift-Return spawn $TERMINALCMD -e tmux
-herbstclient keybind Mod4-p spawn rofi -combi-modi window,drun,run -show combi -modi combi
-herbstclient keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p Emoji -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib"
-herbstclient keybind Mod4+F1 spawn $SHELL -c "mupdf-gl =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))"
-herbstclient keybind XF86AudioRaiseVolume spawn amixer sset Master 5%+ unmute
-herbstclient keybind XF86AudioLowerVolume spawn amixer sset Master 5%- unmute
-herbstclient keybind XF86AudioMute spawn amixer sset Master mute
-herbstclient keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$MAX_BRIGHTNESS/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
-# TODO alter new brightness like: xsetroot -name \"brightness: \$((100 * \$actual_brightness / $MAX_BRIGHTNESS)) %\""
-herbstclient keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($MAX_BRIGHTNESS/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $MAX_BRIGHTNESS ? \$new_brightness : $MAX_BRIGHTNESS)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
-herbstclient keybind Mod4+Escape and , spawn ssh-add -D , spawn i3lock -c \#000000
-herbstclient keybind Mod4+o spawn $HOME/etc/suckless/abridor/abridor.lua
-# TODO find running journalctl instance
-herbstclient keybind Mod4+F12 spawn $TERMINALCMD --class journalctl -T journalctl -e journalctl -b -f -n 1000
-# TODO: bind weechat like "$TERMINALCMD --class weechat -T weechat -- weechat"
-herbstclient keybind Mod4+0 spawn $HOME/etc/suckless/fm0/fm0.lua
-herbstclient keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90
-herbstclient keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90
-herbstclient keybind XF86AudioPlay spawn strawberry --play-pause
-herbstclient keybind XF86AudioNext spawn strawberry --next
-herbstclient keybind XF86AudioPrev spawn strawberry --restart-or-previous
-herbstclient keybind Print spawn flameshot gui -p /tmp
-herbstclient keybind Mod4+Print spawn flameshot screen -c -p /tmp
-herbstclient keybind Mod4+i spawn clipmenu -p Clipboard
-herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
-herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINALCMD -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')"
-herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
-herbstclient keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/etc/suckless/backdrops/\`\\ls $HOME/etc/suckless/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`"
-herbstclient keybind Mod4+numbersign toggle always_show_frame
-herbstclient keybind Mod4+7 and 🥨 cycle_value window_border_active_color "$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B" 🥨 substitute 🖼️ settings.window_border_active_color set frame_bg_active_color 🖼️
-herbstclient keybind Mod4+F6 chain . spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml . spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json"
-herbstclient keybind Mod4+Shift+F6 chain . spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml . spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
-
-# TODO xsetroot -name "$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | tail --lines=1 | cut -d ' ' -f 2- -- -)"
+# basic movement
+# focusing clients
+herbstclient keybind Mod4-Left  focus left
+herbstclient keybind Mod4-Down  focus down
+herbstclient keybind Mod4-Up    focus up
+herbstclient keybind Mod4-Right focus right
+herbstclient keybind Mod4-h     focus left
+herbstclient keybind Mod4-j     focus down
+herbstclient keybind Mod4-k     focus up
+herbstclient keybind Mod4-l     focus right
 
 # moving clients
-herbstclient keybind Mod4-Left  shift left
-herbstclient keybind Mod4-Down  shift down
-herbstclient keybind Mod4-Up    shift up
-herbstclient keybind Mod4-Right shift right
-herbstclient keybind Mod4-a     shift left
-herbstclient keybind Mod4-s     shift down
-herbstclient keybind Mod4-w     shift up
-herbstclient keybind Mod4-d     shift right
+herbstclient keybind Mod4-Shift-Left  shift left
+herbstclient keybind Mod4-Shift-Down  shift down
+herbstclient keybind Mod4-Shift-Up    shift up
+herbstclient keybind Mod4-Shift-Right shift right
+herbstclient keybind Mod4-Shift-h     shift left
+herbstclient keybind Mod4-Shift-j     shift down
+herbstclient keybind Mod4-Shift-k     shift up
+herbstclient keybind Mod4-Shift-l     shift right
 
 # splitting frames
 # create an empty frame at the specified direction
-herbstclient keybind Mod4-b       split   bottom  0.5
-herbstclient keybind Mod4-r       split   right   0.5
+herbstclient keybind Mod4-r split right 0.5
+herbstclient keybind Mod4-b split bottom 0.5
 # let the current frame explode into subframes
-herbstclient keybind Mod4-Control-space split explode
+herbstclient keybind Mod4-x split explode
 
 # resizing frames
-resizestep=0.03
-herbstclient keybind Mod4-Shift-a       resize left +$resizestep
-herbstclient keybind Mod4-Shift-s       resize down +$resizestep
-herbstclient keybind Mod4-Shift-w       resize up +$resizestep
-herbstclient keybind Mod4-Shift-d       resize right +$resizestep
-herbstclient keybind Mod4-Shift-Left    resize left +$resizestep
-herbstclient keybind Mod4-Shift-Down    resize down +$resizestep
-herbstclient keybind Mod4-Shift-Up      resize up +$resizestep
-herbstclient keybind Mod4-Shift-Right   resize right +$resizestep
+resizestep=0.02
+herbstclient keybind Mod4-Control-h       resize left +$resizestep
+herbstclient keybind Mod4-Control-j       resize down +$resizestep
+herbstclient keybind Mod4-Control-k       resize up +$resizestep
+herbstclient keybind Mod4-Control-l       resize right +$resizestep
+herbstclient keybind Mod4-Control-Left    resize left +$resizestep
+herbstclient keybind Mod4-Control-Down    resize down +$resizestep
+herbstclient keybind Mod4-Control-Up      resize up +$resizestep
+herbstclient keybind Mod4-Control-Right   resize right +$resizestep
 
-herbstclient rename default '!'
-herbstclient add '!'
-herbstclient load '!' '(clients max:0)'
+# tags
+herbstclient rename default '!' || true
 herbstclient add '@'
-herbstclient load '@' '(split horizontal:0.638200:0 (clients max:1) (split vertical:0.380500:1 (clients max:0) (clients max:0)))'
 herbstclient add '#'
-herbstclient load '#' '(clients grid:0)'
 herbstclient add '$'
-herbstclient load '$' '(clients max:0)'
 herbstclient add '%'
-herbstclient load '%' '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
 herbstclient add '^'
+herbstclient load '!' '(clients max:0)'
+herbstclient load '@' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))'
+herbstclient load '#' '(clients grid:0)'
+herbstclient load '$' '(clients max:0)'
+herbstclient load '%' '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
 herbstclient keybind Mod4-1 use_index 0
 herbstclient keybind Mod4-2 use_index 1
 herbstclient keybind Mod4-3 use_index 2
@@ -140,41 +114,122 @@ herbstclient keybind Mod4-Shift-3 move_index 2
 herbstclient keybind Mod4-Shift-4 move_index 3
 herbstclient keybind Mod4-Shift-5 move_index 4
 herbstclient keybind Mod4-Shift-6 move_index 5
-herbstclient keybind Mod4-Control-1 load '(clients max:0)'
-herbstclient keybind Mod4-Control-2 load '(split horizontal:0.638200:0 (clients max:1) (split vertical:0.380500:1 (clients max:0) (clients max:0)))'
-herbstclient keybind Mod4-Control-3 load '(clients grid:0)'
-herbstclient keybind Mod4-Control-4 load '(clients max:0)'
-herbstclient keybind Mod4-Control-5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
-
-# cycle through tags
-herbstclient keybind Mod4-period            use_index +1 --skip-visible
-herbstclient keybind Mod4-comma             use_index -1 --skip-visible
-herbstclient keybind Mod4-asciicircum       use_previous
+case "$HOSTNAME" in
+andermatt)
+	herbstclient keybind Mod4-asciicircum use_previous
+	;;
+airolo)
+	herbstclient keybind Mod4-dead_grave use_previous
+	;;
+esac
 
 # layouting
-herbstclient keybind Mod4-Shift-c remove
-herbstclient keybind Mod4-x split explode
-herbstclient keybind Mod4-f floating toggle
-herbstclient keybind Mod4-m fullscreen toggle
-herbstclient keybind Mod4-v pseudotile toggle
-
-herbstclient keybind Mod4-space or , and . compare tags.focus.curframe_wcount = 2 . cycle_layout +1 max grid max horizontal vertical , cycle_layout +1 max grid horizontal
+herbstclient keybind Mod4-Shift-r remove
+herbstclient keybind Mod4-Shift-f floating toggle
+herbstclient keybind Mod4-f fullscreen toggle
+herbstclient keybind Mod4-Control-Shift-f pseudotile toggle
+# YYY XXX
+herbstclient keybind Mod4-BackSpace or 🔙 and 🥨 compare tags.focus.curframe_wcount \!= 2 🥨 cycle_layout +1 max grid horizontal 🔙 cycle_layout +1 max grid
 
 # mouse
-herbstclient mouseunbind --all
 herbstclient mousebind Mod4-Button1 move
 herbstclient mousebind Mod4-Button2 zoom
 herbstclient mousebind Mod4-Button3 resize
 
 # focus
-herbstclient keybind Mod4-BackSpace         cycle_monitor
-herbstclient keybind Mod4-j                 cycle_all --skip-invisible +1
-herbstclient keybind Mod4-k                 cycle_all --skip-invisible -1
-herbstclient keybind Mod4-Tab               cycle +1
-herbstclient keybind Mod4-Shift-Tab         cycle -1
+# YYY
+herbstclient keybind Mod4-j cycle_all --skip-invisible +1
+# YYY
+herbstclient keybind Mod4-k cycle_all --skip-invisible -1
+herbstclient keybind Mod4-Tab cycle +1
+herbstclient keybind Mod4-Shift-Tab cycle -1
+
+mutecmd=(amixer sset Master mute)
+lowervolumecmd=(amixer sset Master 5%- unmute)
+raisevolumecmd=(amixer sset Master 5%+ unmute)
+strawberryplaycmd=(strawberry --play-pause)
+strawberrynextcmd=(strawberry --next)
+strawberryprevcmd=(strawberry --restart-or-previous)
+
+# YYY
+herbstclient keybind Mod4+numbersign toggle always_show_frame
+
+# TODO alter new brightness like: xsetroot -name \"brightness: \$((100 * \$actual_brightness / $maxbrightness)) %\""
+# TODO find running journalctl instance
+# TODO xsetroot -name "$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | tail --lines=1 | cut -d ' ' -f 2- -- -)"
+# herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
+
+herbstclient keybind Mod4+F1 spawn $SHELL -c "mupdf-gl =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))"
+herbstclient keybind Mod4+o spawn $HOME/etc/suckless/abridor/abridor.lua
+herbstclient keybind Mod4-space spawn rofi -combi-modi window,drun,run -show combi -modi combi
+herbstclient keybind Print spawn flameshot gui -p /tmp
+herbstclient keybind Mod4+Print spawn flameshot screen -c -p /tmp
+herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
+
+case "$HOSTNAME" in
+andermatt)
+	herbstclient keybind Mod4+acute spawn clipmenu -p clipboard
+	;;
+airolo)
+	herbstclient keybind Mod4+equal spawn clipmenu -p clipboard
+	;;
+esac
+
+herbstclient keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p Emoji -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib"
+herbstclient keybind Mod4+0 spawn $HOME/etc/suckless/fm0/fm0.lua
+herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINAL -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')"
+herbstclient keybind Mod4+Escape and 🥨 spawn ssh-add -D 🥨 spawn i3lock -c \#000000
+herbstclient keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90
+herbstclient keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90
+
+herbstclient keybind Mod4-Shift-Return spawn "$TERMINAL" -e tmux
+herbstclient keybind Mod4-c "$TERMINAL" --class Weechat -e weechat
+herbstclient keybind Mod4+F12 spawn "$TERMINAL" --class Journalctl -e journalctl -b -f -n 1000
+
+herbstclient keybind Mod4+F6 chain ⛓️ spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml ⛓️ spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json"
+herbstclient keybind Mod4+8 and 🥨 cycle_value window_border_active_color "$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B" 🥨 substitute 🖼️ settings.window_border_active_color set frame_bg_active_color 🖼️
+herbstclient keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/etc/suckless/backdrops/\`\\ls $HOME/etc/suckless/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`"
+herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
+herbstclient keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
+
+case "$HOSTNAME" in
+andermatt)
+	herbstclient keybind XF86AudioMute spawn $mutecmd
+	herbstclient keybind XF86AudioLowerVolume spawn $lowervolumecmd
+	herbstclient keybind XF86AudioRaiseVolume spawn $raisevolumecmd
+	herbstclient keybind XF86AudioPlay spawn $strawberryplaycmd
+	herbstclient keybind XF86AudioNext spawn $strawberrynextcmd
+	herbstclient keybind XF86AudioPrev spawn $strawberryprevcmd
+	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
+	herbstclient keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
+	herbstclient keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
+	herbstclient new_attr bool my_touchpad_enabled
+	herbstclient set_attr my_touchpad_enabled true
+	herbstclient keybind XF86TouchpadToggle or 🔙 and 🥨 compare my_touchpad_enabled = true 🥨 spawn xinput disable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled false 🔙 and 🥨 spawn xinput enable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled true
+	;;
+airolo)
+	herbstclient keybind Mod4+KP_Insert $mutecmd
+	herbstclient keybind Mod4+KP_Subtract spawn $lowervolumecmd
+	herbstclient keybind Mod4+KP_Add spawn $raisevolumecmd
+	herbstclient keybind Mod4+KP_End spawn $strawberryplaycmd
+	herbstclient keybind Mod4+KP_Multiply spawn $strawberrynextcmd
+	herbstclient keybind Mod4+KP_Divide spawn $strawberryprevcmd
+	;;
+esac
+
+
+# IDEA: store layouts in z/y
+herbstclient keybind Mod4-Control-1 load '(clients max:0)'
+herbstclient keybind Mod4-Control-2 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))'
+herbstclient keybind Mod4-Control-3 load '(clients grid:0)'
+herbstclient keybind Mod4-Control-4 load '(clients max:0)'
+herbstclient keybind Mod4-Control-5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
+
+# multi-monitor
+herbstclient keybind Mod4-Shift-p detect_monitors
+herbstclient keybind Mod4-p cycle_monitor
 
 # rules
-herbstclient unrule -F
 herbstclient rule focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
@@ -182,11 +237,13 @@ herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' m
 herbstclient rule class=mpv instance=gl tag='@' index='10' focus=on switchtag=on
 herbstclient rule title='Picture in picture' tag='@' index='10' focus=off
 herbstclient rule class=Alacritty instance=FM0 tag='#' focus=off switchtag=off
+herbstclient rule class=Alacritty instance=Journalctl tag='#' focus=off switchtag=off
 herbstclient rule once class=Google-chrome tag='@' index='00' focus=on switchtag=on
 herbstclient rule once class=Code tag='@' index='00' focus=on switchtag=on
 herbstclient rule class=discord tag='^'
 herbstclient rule class=TelegramDesktop tag='^'
 herbstclient rule class=Steam tag='^'
+herbstclient rule class=Alacritty instance=Weechat tag='^'
 herbstclient rule class=presenter title=sent instance=sent fullscreen=true
 herbstclient rule class=strawberry tag='$' focus=on switchtag=off
 herbstclient rule class=Spotify tag='$' focus=on switchtag=off
@@ -198,18 +255,10 @@ herbstclient rule title~'.*.EPUB - \d+ / \d+' tag='%' index=01 focus=on switchta
 herbstclient rule title~'.*.PDF - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 
+for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+	local panel_height=17
+	(schwammerl "$monitor" | lemonbar -a 13 -g x"$panel_height" -f -sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1 -f -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1 -B '$QI_K' -F '$QI_W' | $SHELL) &
+	herbstclient pad "$monitor" "$panel_height"
+done
 
 herbstclient unlock
-
-# do multi monitor setup here, e.g.:
-# herbstclient set_monitors 1280x1024+0+0 1280x1024+1280+0
-# or simply:
-# herbstclient detect_monitors
-
-# find the panel
-panel=~/.config/herbstluftwm/panel.sh
-[[ -x "$panel" ]] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-    # start it on each monitor
-    "$panel" $monitor &
-done
