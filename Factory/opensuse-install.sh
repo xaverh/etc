@@ -27,9 +27,9 @@ cryptsetup --type luks2 --OPTIONS luksFormat /dev/sda2
 cryptsetup --allow-discards --persistent open /dev/sda2 cryptroot
 ### else
 cryptsetup open /dev/sda2 cryptroot
-cryptsetup luksDump /dev/sda2
+cryptsetup luksDump /dev/sda2 | grep UUID > ~/cryptdump.txt
 #### save UUID: b4a1511b-6e52-4abe-9c45-8578752ac0d8
-mkfs.btrfs /dev/mapper/cryptroot
+mkfs.btrfs /dev/mapper/cryptroot | grep UUID > ~/btrfsdump.txt
 #### save UUID: 3c6f94ed-f4c6-49f8-a71f-d9fdb6b5d005
 
 ## else
@@ -67,6 +67,37 @@ zypper -R /mnt ar -c /etc/zypp/repos.d/repo-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-non-oss.repo
 zypper -R /mnt ar -c /etc/zypp/repos.d/repo-update.repo
 zypper -R /mnt ar -c -p 50 -f http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/packman.repo
+rpm --root /mnt --import https://packages.microsoft.com/keys/microsoft.asc
+cat > /mnt/etc/zypp/repos.d/vscode.repo <<"EOF"
+[code]
+name=Visual Studio Code
+enabled=1
+autorefresh=1
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+type=rpm-md
+priority=150
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+
+EOF
+
+rpm --root /mnt --import https://dl.google.com/linux/linux_signing_key.pub
+cat > /mnt/etc/zypp/repos.d/google-chrome.repo <<"EOF"
+[google-chrome]
+name=google-chrome
+enabled=1
+autorefresh=1
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+type=rpm-md
+priority=160
+keeppackages=0
+
+EOF
+
+# DVD ?
+zypper -R /mnt ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
+zypper -R /mnt ar -f -p 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
+
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
 zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi yast2-online-update-configuration git-gui
 
@@ -222,39 +253,15 @@ systemctl enable --now systemd-timesyncd.service
 
 systemctl enable --now i3lock@xha.service
 
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-cat > /etc/zypp/repos.d/vscode.repo <<"EOF"
-[code]
-name=Visual Studio Code
-enabled=1
-autorefresh=1
-baseurl=https://packages.microsoft.com/yumrepos/vscode
-type=rpm-md
-priority=150
-gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 
-EOF
 
-rpm --import https://dl.google.com/linux/linux_signing_key.pub
-cat > /etc/zypp/repos.d/google-chrome.repo <<"EOF"
-[google-chrome]
-name=google-chrome
-enabled=1
-autorefresh=1
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
-type=rpm-md
-priority=160
-keeppackages=0
 
-EOF
 
 zypper in --auto-agree-with-licenses kernel-default patterns-base-x11 xrandr i3lock rofi xclip strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin gtk\?-immodule-xim xinput
 
 zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
 
 ## DVD?
-zypper ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumbleweed/SuSE.repo"
 zypper in libdvdcss2
 
 # Numlock Key?
@@ -276,7 +283,6 @@ systemctl enable firewalld.service
 
 iw dev wlan0 set power_save off
 
-zypper ar --refresh --priority 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
 zypper in clipmenu clipnotify sent schwammerl
 
