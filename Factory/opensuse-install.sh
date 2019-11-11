@@ -20,9 +20,9 @@ mkfs.fat -F32 /dev/sda1
 ## encrytption?
 cryptsetup benchmark
 ### SSD?
-cryptsetup --align-payload=8192 --type luks2 --OPTIONS luksFormat /dev/sda2
+cryptsetup -y -v --use-random --align-payload=8192 --type luks2 --OPTIONS luksFormat /dev/sda2
 ### else
-cryptsetup --type luks2 --OPTIONS luksFormat /dev/sda2
+cryptsetup -y -v --use-random --type luks2 --OPTIONS luksFormat /dev/sda2
 ### SSD?
 cryptsetup --allow-discards --persistent open /dev/sda2 cryptroot
 ### else
@@ -99,35 +99,113 @@ zypper -R /mnt ar -c -f -p 200 "http://download.videolan.org/pub/vlc/SuSE/Tumble
 zypper -R /mnt ar -f -p 120 "https://download.opensuse.org/repositories/home:/xha/openSUSE_Tumbleweed/home:xha.repo"
 
 # btrfsmaintenance: https://bugzilla.suse.com/show_bug.cgi?id=1063638#c73
-zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi yast2-online-update-configuration git-gui
+zypper -R /mnt al texlive-\*-doc \*-lang \*cantarell\* grub2 lightdm plymouth google-droid-fonts google-roboto-fonts adobe-source\*-fonts texlive-plex\* liberation-fonts syslinux wireless-tools ucode-amd tigervnc gnome-online-accounts noto-sans-fonts snapper screen samba nano btrfsmaintenance smartmontools PackageKit\* wicked\* maim zypper-aptitude \*-bash-completion xdm dejavu-fonts google-noto-fonts-doc gnu-free-fonts stix-fonts tcsh texlive\*fonts ghostscript-fonts\* patterns-fonts-fonts_opt opensuse-welcome xorg-x11-fonts intlfonts-euro-bitmap-fonts xorg-x11-Xvnc graphviz-gnome yast2-fonts  distribution-logos-openSUSE-Tumbleweed systemd-icon-branding-openSUSE yast2-fonts mpv-plugin-mpris wallpaper-branding-openSUSE hicolor-icon-theme-branding-openSUSE gtk2-branding-openSUSE soundtheme-freedesktop joe gtk2-branding-upstream libqt5-qtstyleplugins-platformtheme-gtk2 libqt5-qtbase-platformtheme-gtk3 gtk3-branding-upstream w3m weechat-spell poppler\* wol inxi yast2-online-update-configuration git-gui yast2 yast2-users btrfs-progs
+
+zypper in -t pattern yast2_basis
 
 zypper -R /mnt al -t pattern fonts_opt
 zypper -R /mnt al numlockx dvd+rw-tools
 
-
 zypper -R /mnt ref
 
-zypper -R /mnt in --auto-agree-with-licenses patterns-base-minimal_base patterns-base-enhanced_base zsh tmux iw iwd
+zypper -R /mnt in --auto-agree-with-licenses \
+AdobeICCProfiles \
+alacritty \
+bluez-auto-enable-devices \
+bluez-firmware \
+clang \
+clipmenu \
+clipnotify \
+cmake \
+code \
+discord \
+dmz-icon-theme-cursors \
+flac \
+flameshot \
+gimp \
+git-core \
+go \
+google-chrome-stable \
+gstreamer-plugins-bad \
+gstreamer-plugins-good \
+gstreamer-plugins-libav \
+gstreamer-plugins-ugly \
+gstreamer-plugins-ugly-orig-addon \
+gtk\?-immodule-xim \
+herbstluftwm \
+i3lock \
+kernel-default \
+lemonbar \
+lua53 \
+MozillaFirefox \
+mpv \
+mupdf \
+ncdu \
+nnn \
+nodejs \
+noto-coloremoji-fonts \
+noto-sans-balinese-fonts \
+noto-sans-bengali-fonts \
+noto-sans-bengali-ui-fonts \
+noto-sans-cuneiform-fonts \
+noto-sans-deseret-fonts \
+noto-sans-khmer-fonts \
+noto-sans-myanmar-fonts \
+noto-sans-shavian-fonts \
+noto-sans-sinhala-fonts \
+noto-sans-symbols-fonts \
+noto-sans-taitham-fonts \
+noto-sans-tamil-fonts \
+noto-serif-bengali-fonts \
+noto-serif-khmer-fonts \
+noto-serif-myanmar-fonts \
+noto-serif-sinhala-fonts \
+noto-serif-tamil-fonts \
+openssh-askpass-gnome \
+opus-tools \
+patterns-base-enhanced_base \
+patterns-base-minimal_base \
+patterns-base-x11 \
+patterns-base-x11_enhanced \
+patterns-desktop-multimedia \
+pavucontrol \
+permissions-zypp-plugin \
+pulseaudio \
+pulseaudio \
+pulseaudio-module-bluetooth \
+pulseaudio-module-x11 \
+rofi \
+schwammerl \
+sent \
+sgi-bitmap-fonts \
+simple-mtpfs \
+steam \
+steamtricks \
+stow \
+strawberry \
+sxiv \
+systemd-container \
+telegram-desktop \
+tmux \
+unrar \
+unzip \
+weechat \
+wmctrl \
+xclip \
+xev \
+xf86-video-intel \
+xinit \
+xinput \
+xrandr \
+xset \
+youtube-dl \
+zip \
+zsh \
+zstd
 
-## enc?
-cat > /mnt/etc/dracut.conf.d/dracut.conf <<"EOF"
-hostonly="yes"
-add_dracutmodules+="crypt"
+zypper -R /mnt in --auto-agree-with-licenses iw iwd libvulkan_intel gstreamer-plugins-vaapi intel-media-driver libdvdcss2 numlockx abcde broadcom-wl
 
-EOF
-
-## enc?
-cat > /mnt/etc/kernel/cmdline <<"EOF"
-root=UUID=afe2d9f4-b15b-4f12-a7b0-758a160a5dec rd.luks.uuid=b4a1511b-6e52-4abe-9c45-8578752ac0d8 rd.luks.crypttab=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
-
-EOF
-## else
-cat > /mnt/etc/kernel/cmdline <<"EOF"
-root=UUID=877002d8-f595-4ea6-89ef-a5caec033303 rd.luks=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
-
-EOF
-
-
+mkdir -p /mnt/etc/systemd/network/
 cat > /mnt/etc/systemd/network/10-wireless.network <<"EOF"
 [Match]
 Name=wl*
@@ -148,7 +226,7 @@ UseDNS=false
 EOF
 
 
-
+mkdir -p /mnt/etc/systemd/resolved.conf.d
 cat > /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf <<"EOF"
 [Resolve]
 DNSSEC=false
@@ -163,6 +241,27 @@ FallbackDNS=1.0.0.1 2606:4700:4700::1001
 EOF
 
 ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
+
+ln -s /mnt/usr/share/systemd/tmp.mount /mnt/etc/systemd/system/tmp.mount
+
+## enc?
+cat > /mnt/etc/dracut.conf.d/dracut.conf <<"EOF"
+hostonly="yes"
+add_dracutmodules+="crypt"
+
+EOF
+
+mkdir -p /mnt/etc/kernel
+## enc?
+cat > /mnt/etc/kernel/cmdline <<"EOF"
+root=UUID=3c6f94ed-f4c6-49f8-a71f-d9fdb6b5d005 rd.luks.uuid=b4a1511b-6e52-4abe-9c45-8578752ac0d8 rd.luks.crypttab=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
+
+EOF
+## else
+cat > /mnt/etc/kernel/cmdline <<"EOF"
+root=UUID=877002d8-f595-4ea6-89ef-a5caec033303 rd.luks=0 rw rd.lvm=0 rd.dm=0 rd.md=0 rootflags=defaults,noatime,compress-force=zstd:6,ssd i915.fastboot=1
+
+EOF
 
 cat > /mnt/usr/local/lib/systemd/user/ssh-agent.service <<"EOF"
 [Unit]
@@ -230,8 +329,6 @@ EndSection
 
 EOF
 
-ln -s /mnt/usr/share/systemd/tmp.mount /mnt/etc/systemd/system/tmp.mount
-
 cd /
 systemd-nspawn -D /mnt passwd root
 
@@ -243,29 +340,17 @@ systemd-nspawn -bD /mnt
 
 localectl set-locale LANG=en_US.UTF-8
 localectl set-x11-keymap us pc104 altgr-intl "compose:menu"
+localectl set-x11-keymap de apple_laptop mac_nodeadkeys compose:rwin-altgr
 timedatectl set-ntp true
 timedatectl set-timezone Europe/Berlin
 hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
 
-# Add user in YaST, add to groups wheel,systemd-journal,video, systemd-resolve(?) /bin/zsh as shell
+# Add user in YaST, add to groups wheel,systemd-journal,video; /usr/bin/zsh as shell
+useradd -m -N -g users -G video,systemd-journal -s /usr/bin/zsh
 
 systemctl enable --now i3lock@xha.service
-
-
-
-
-
-zypper in --auto-agree-with-licenses kernel-default patterns-base-x11 xrandr i3lock rofi xclip strawberry steam steamtricks gimp youtube-dl telegram-desktop discord weechat lua53 nodejs zip stow MozillaFirefox mpv git-core sxiv gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav ncdu patterns-desktop-multimedia flac pulseaudio pulseaudio-module-x11 xev clang cmake libx265-176 go pulseaudio pulseaudio-module-bluetooth bluez-auto-enable-devices bluez-firmware pavucontrol xset sgi-bitmap-fonts systemd-container noto-coloremoji-fonts code google-chrome-stable zstd unrar nnn simple-mtpfs flameshot opus-tools wmctrl openssh-askpass-gnome dmz-icon-theme-cursors alacritty permissions-zypp-plugin gtk\?-immodule-xim xinput
-
-zypper in noto-sans-balinese-fonts noto-sans-bengali-fonts noto-sans-bengali-ui-fonts noto-sans-cuneiform-fonts noto-sans-deseret-fonts noto-sans-khmer-fonts noto-sans-myanmar-fonts noto-sans-shavian-fonts noto-sans-taitham-fonts noto-sans-tamil-fonts noto-serif-bengali-fonts noto-serif-khmer-fonts noto-serif-myanmar-fonts noto-serif-tamil-fonts noto-sans-symbols-fonts noto-sans-sinhala-fonts noto-serif-sinhala-fonts
-
-## DVD?
-zypper in libdvdcss2
-
-# Numlock Key?
-zypper in numlockx
 
 bootctl install
 
@@ -282,13 +367,6 @@ systemctl enable btrfs-trim.timer
 systemctl enable firewalld.service
 
 iw dev wlan0 set power_save off
-
-
-zypper in clipmenu clipnotify sent schwammerl
-
-# Intel: libvulkan_intel gstreamer-plugins-vaapi intel-media-driver
-# NVIDIA:
-# AMD:
 
 ### As user:
 systemctl --user enable ssh-agent.service
