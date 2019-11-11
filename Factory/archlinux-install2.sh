@@ -38,69 +38,47 @@ vim /mnt/etc/pacman.conf
 
 vim /etc/pacman.d/mirrorlist
 
-pacstrap -c -C /mnt/etc/pacman.conf /mnt base linux linux-firmware vim zsh tmux man-db man-pages sudo less alsa-utils exfat-utils git mupdf-gl ncdu openssh p7zip x11-ssh-askpass pulseaudio{,-alsa} rmlint unrar unzip clipmenu gimp herbstluftwm rofi clipnotify mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg xorg-xinit xorg-xfd nodejs lua npm stow zip git gst-plugins-{base,bad,good,ugly} gst-libav gstreamer-vaapi btrfs-progs strawberry discord firefox weechat alacritty
-pacstrap  -c -C /mnt/etc/pacman.conf /mnt cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd xf86-video-intel bluez bluez-utils numlockx libva-intel-driver libdvdcss pulseaudio-bluetooth steam
+pacstrap -c -C /mnt/etc/pacman.conf /mnt base linux linux-firmware vim zsh tmux man-db man-pages sudo less exfat-utils git mupdf-gl ncdu openssh p7zip x11-ssh-askpass pulseaudio{,-alsa} rmlint unrar unzip clipmenu gimp herbstluftwm rofi clipnotify mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg xorg-xinit xorg-xfd nodejs lua npm stow zip git gst-plugins-{base,bad,good,ugly} gst-libav gstreamer-vaapi btrfs-progs strawberry discord firefox weechat alacritty noto-fonts-emoji chromium
 
-# as-deps: linux-headers
+pacstrap -c -C /mnt/etc/pacman.conf /mnt cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd xf86-video-intel bluez bluez-utils numlockx libva-intel-driver libdvdcss pulseaudio-bluetooth steam light rawtherapee
 
-# differences: pamixer slock ttf-ibm-plex xorg-xfd
+# as-deps: linux-headers alacritty-terminfo
+
+sudo pacman -Rddns adobe-source-code-pro-fonts cantarell-fonts adwaita-icon-theme gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts
+
+# Essentials
+# usr-local-lib-systemd-system-slock\x40.service
+# etc-systemd-network-05\x2dwired.network
+# etc-systemd-resolved.conf.d-10\x2dDNSSEC.conf
+# etc-systemd-resolved.conf.d-20\x2d1.1.1.1.conf
+# etc-X11-xorg.conf.d-20\x2ddontzap.conf
+# boot-loader-loader.conf
+# boot-loader-entries-arch.conf
+echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+
+# As needed
+# etc-systemd-network-10\x2dwireless.network
+# usr-local-lib-systemd-user-ssh\x2dagent.service
+# etc-X11-xorg.conf.d-15\x2dintel.conf
+# etc-X11-xorg.conf.d-30\x2dinput.conf
+
+/etc/mkinitcpio.conf
+# HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
+# sd-encrypt only needed if hd is encrypted
 
 echo pts/0  >> /mnt/securetty
 
 systemd-nspawn -D /mnt passwd root
-
 systemd-nspawn -D /mnt chsh -s /usr/bin/zsh
 
-cat > /mnt/etc/systemd/network/10-wireless.network <<"EOF"
-[Match]
-Name=wl*
-
-[Network]
-DHCP=true
-IPv6AcceptRA=true
-IPv6PrivacyExtensions=true
-
-[DHCP]
-UseDNS=false
-UseNTP=false
-RouteMetric=10
-
-[IPv6AcceptRA]
-UseDNS=false
-
-EOF
-
-mkdir -p /mnt/etc/systemd/resolved.conf.d
-cat > /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf <<"EOF"
-[Resolve]
-DNSSEC=false
-
-EOF
-
-cat > /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf <<"EOF"
-[Resolve]
-DNS=1.1.1.1 2606:4700:4700::1111
-FallbackDNS=1.0.0.1 2606:4700:4700::1001
-
-EOF
-
-ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
-
-vim /etc/mkinitcpio.conf
-# HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
-# sd-encrypt only needed if hd is encrypted
 
 systemd-nspawn -D /mnt useradd -m -N -g users -s /usr/bin/zsh xha
 systemd-nspawn -D /mnt passwd xha
-
-echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-
 systemd-nspawn -D /mnt locale-gen
 
 cp /mnt/etc/sudoers /mnt/etc/sudoers.d/sudoers
 
 systemd-nspawn -D /mnt --setenv=EDITOR=vim visudo /etc/sudoers.d/sudoers
-
 
 systemd-nspawn -bD /mnt
 
@@ -114,17 +92,59 @@ systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-networkd.service
 systemctl enable --now systemd-timesyncd.service
 systemctl enable --now iwd.service
+systemctl enable slock@xha.service
+
+systemctl edit getty@tty1
+# [Service]
+# ExecStart=
+# ExecStart=-/sbin/agetty --autologin xha --noclear %I $TERM
 
 bootctl install
-
-vim /boot/loader/loader.conf
-
-timeout 1
-default arch
-
-vim /boot/loader/entries/arch.conf
 
 mkinitcpio -p linux
 
 exit
 reboot
+
+ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
+
+# As user
+xdg-mime default mupdf-gl.desktop application/pdf
+xdg-mime default mupdf-gl.desktop application/vnd.comicbook-rar
+xdg-mime default mupdf-gl.desktop application/vnd.comicbook+zip
+xdg-mime default mupdf-gl.desktop application/epub+zip
+xdg-mime default mupdf-gl.desktop application/x-cb7
+xdg-mime default sxiv.desktop image/jpeg
+xdg-mime default sxiv.desktop image/png
+xdg-mime default sxiv.desktop image/gif
+xdg-mime default sxiv.desktop image/tiff
+
+npm -g i @vue/cli generator-code gulp-cli sass vsce yo
+
+code \
+--install-extension bierner.markdown-checkbox \
+--install-extension bierner.markdown-footnotes \
+--install-extension bierner.markdown-mermaid \
+--install-extension dbaeumer.vscode-eslint \
+--install-extension eg2.vscode-npm-script \
+--install-extension esbenp.prettier-vscode \
+--install-extension James-Yu.latex-workshop \
+--install-extension ms-vscode.cpptools \
+--install-extension ms-vscode.Go \
+--install-extension ms-vscode.vscode-typescript-tslint-plugin \
+--install-extension msjsdiag.debugger-for-chrome \
+--install-extension nhoizey.gremlins \
+--install-extension octref.vetur \
+--install-extension pflannery.vscode-versionlens \
+--install-extension sdras.night-owl \
+--install-extension sdras.vue-vscode-snippets \
+--install-extension trixnz.vscode-lua \
+--install-extension twxs.cmake \
+--install-extension VisualStudioExptTeam.vscodeintellicode \
+--install-extension wmaurer.change-case \
+--install-extension xaver.clang-format \
+--install-extension xaver.theme-qillqaq \
+--install-extension xaver.theme-ysgrifennwr
+
+systemctl --user enable --now ssh-agent.service
+systemctl --user enable --now clipmenud.service

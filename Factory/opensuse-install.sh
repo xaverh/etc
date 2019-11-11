@@ -263,6 +263,7 @@ root=UUID=877002d8-f595-4ea6-89ef-a5caec033303 rd.luks=0 rw rd.lvm=0 rd.dm=0 rd.
 
 EOF
 
+sudo mkdir -p /mnt/usr/local/lib/systemd/user/
 cat > /mnt/usr/local/lib/systemd/user/ssh-agent.service <<"EOF"
 [Unit]
 Description=SSH key agent
