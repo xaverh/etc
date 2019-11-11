@@ -21,7 +21,7 @@ const (
 )
 
 var (
-	thermalZone    = "2"
+	thermalZone    = "1"
 	networkDevices = []string{
 		"eno1",
 		"wlan0",
@@ -164,8 +164,9 @@ func updateTemperature(θ chan<- string) {
 		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
 		if err != nil {
 			θ <- "temp unknown"
+		} else {
+			θ <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
 		}
-		θ <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
 		time.Sleep(time.Duration(7 * time.Second))
 	}
 }
@@ -337,8 +338,8 @@ func updateWIFI(wifi chan<- string) {
 
 func main() {
 	screen := os.Args[1:]
-	if os.Getenv("HOSTNAME") == "andermatt" {
-		thermalZone = "1"
+	if os.Getenv("HOSTNAME") == "airolo" {
+		thermalZone = "2"
 	}
 	memChan := make(chan string)
 	netChan := make(chan string)
