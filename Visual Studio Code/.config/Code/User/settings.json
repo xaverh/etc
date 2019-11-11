@@ -116,20 +116,7 @@
 	"eslint.options": {
 		"plugins": ["vue", "html"]
 	},
-	"settings.cycle": [
-		{
-			"id": "multiCursorPaste",
-			"overrideWorkspaceSettings": true,
-			"values": [
-				{
-					"editor.multiCursorPaste": "spread"
-				},
-				{
-					"editor.multiCursorPaste": "full"
-				}
-			]
-		}
-	],
+	"editor.multiCursorPaste": "spread",
 	"search.smartCase": true,
 	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
 	"latex-workshop.view.pdf.viewer": "tab",
@@ -164,8 +151,6 @@
 	"editor.fontLigatures": "'liga','calt','ss03'",
 	"javascript.preferences.quoteStyle": "single",
 	"typescript.preferences.quoteStyle": "single",
-	"prettier.singleQuote": true,
-	"prettier.jsxSingleQuote": true,
 	"typescript.format.enable": false,
 	"terminal.external.linuxExec": "urxvtc",
 	"git.defaultCloneDirectory": "$HOME/src",
@@ -181,7 +166,6 @@
 	"extensions.ignoreRecommendations": true,
 	"vetur.format.options.useTabs": true,
 	"vetur.format.options.tabSize": 4,
-	"prettier.useTabs": true,
 	"files.autoSave": "afterDelay",
 	"editor.minimap.enabled": false,
 	"go.useLanguageServer": true,
@@ -191,7 +175,6 @@
 	"terminal.integrated.automationShell.linux": "/usr/bin/zsh",
 	"scm.defaultViewMode": "tree",
 	"editor.multiCursorModifier": "alt",
-	"editor.multiCursorPaste": "spread",
 	"lua.format.singleQuote": true,
 	"gremlins.characters": {
 		"0003": {
