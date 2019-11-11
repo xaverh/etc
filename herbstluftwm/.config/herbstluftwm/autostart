@@ -238,7 +238,8 @@ herbstclient rule class=mpv instance=gl tag='@' index='10' focus=on switchtag=on
 herbstclient rule title='Picture in picture' tag='@' index='10' focus=off
 herbstclient rule class=Alacritty instance=FM0 tag='#' focus=off switchtag=off
 herbstclient rule class=Alacritty instance=Journalctl tag='#' focus=off switchtag=off
-herbstclient rule once class=Google-chrome tag='@' index='00' focus=on switchtag=on
+herbstclient rule once class=Google-chrome tag='!' index='00' focus=on switchtag=on
+herbstclient rule once class=Firefox instance=Navigator tag='!' index='00' focus=on switchtag=on
 herbstclient rule once class=Code tag='@' index='00' focus=on switchtag=on
 herbstclient rule class=discord tag='^'
 herbstclient rule class=TelegramDesktop tag='^'
