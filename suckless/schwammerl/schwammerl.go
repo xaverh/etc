@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"os"
 	"os/exec"
 	"regexp"
@@ -13,7 +14,6 @@ import (
 )
 
 const (
-	wifiDevice        = "wlan0"
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
 	pluggedSign       = ""
@@ -21,11 +21,9 @@ const (
 )
 
 var (
-	thermalZone    = "1"
-	networkDevices = []string{
-		"eno1",
-		"wlan0",
-	}
+	networkDevices, _ = net.Interfaces()
+	wifiDevice        = ""
+	thermalZone       = "1"
 
 	ipRegex    = regexp.MustCompilePOSIX("[0-9.]+")
 	srcIPRegex = regexp.MustCompilePOSIX("src [0-9.]+")
@@ -246,7 +244,7 @@ func updateNetUse(net chan<- string) {
 				&dev, &rx, &void, &void, &void, &void, &void, &void, &void, &tx)
 			dev = strings.TrimSuffix(dev, ":")
 			for _, val := range networkDevices {
-				if val == dev {
+				if val.Name == dev {
 					rxNow += rx
 					txNow += tx
 				}
@@ -319,18 +317,18 @@ func updatePower(pow chan<- string) {
 }
 
 func updateWIFI(wifi chan<- string) {
-	sleepTime := 3 * time.Second
+	sleepTime := 4500 * time.Millisecond
 	for {
-		iwOutput, err := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
-		if err != nil {
-			wifi <- ""
-		} else {
+		if wifiDevice != "" {
+			iwOutput, _ := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
 			if string(iwOutput) != "Not connected.\n" {
 				ssidString := ssidRegex.FindStringSubmatch(string(iwOutput))[0]
 				wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
 			} else {
-				wifi <- "no WIFI"
+				wifi <- "%{F#e32791}no WiFi%{F-}"
 			}
+		} else {
+			wifi <- "%{F#969696}no WiFi%{F-}"
 		}
 		time.Sleep(time.Duration(sleepTime))
 	}
@@ -340,6 +338,12 @@ func main() {
 	screen := os.Args[1:]
 	if os.Getenv("HOSTNAME") == "airolo" {
 		thermalZone = "2"
+	}
+	for _, v := range networkDevices {
+		if v.Name[0] == 'w' {
+			wifiDevice = v.Name
+			break
+		}
 	}
 	memChan := make(chan string)
 	netChan := make(chan string)
