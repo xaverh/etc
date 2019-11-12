@@ -5,6 +5,7 @@ lsblk
 ping google.com
 ls /sys/firmware/efi/efivars
 
+# efibootmgr
 blkdiscard /dev/sdX
 sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sda
 mkfs.fat -F32 /dev/sda1
@@ -36,13 +37,15 @@ vim ~/pacman.conf
 
 vim /etc/pacman.d/mirrorlist
 
-pacstrap -c -C /mnt/etc/pacman.conf /mnt base linux linux-firmware vim zsh tmux man-db man-pages sudo less exfat-utils git mupdf-gl ncdu openssh p7zip x11-ssh-askpass pulseaudio{,-alsa} rmlint unrar unzip clipmenu gimp herbstluftwm rofi clipnotify mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg xorg-xinit xorg-xfd nodejs lua npm stow zip git gst-plugins-{base,bad,good,ugly} gst-libav gstreamer-vaapi btrfs-progs strawberry discord firefox weechat alacritty noto-fonts-emoji chromium
+pacstrap -c -C /mnt/etc/pacman.conf /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-xinit nodejs lua stow strawberry discord firefox weechat alacritty noto-fonts-emoji chromium opus-tools go
 
-pacstrap -c -C /mnt/etc/pacman.conf /mnt cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd xf86-video-intel bluez bluez-utils numlockx libva-intel-driver libdvdcss pulseaudio-bluetooth steam light rawtherapee
+pacstrap -c -C /mnt/etc/pacman.conf /mnt cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd xf86-video-intel bluez bluez-utils numlockx libva-intel-driver libdvdcss pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde
 
-# as-deps: linux-headers alacritty-terminfo
+# as-deps: linux-headers alacritty-terminfo gst-plugins-{bad,ugly} gst-libav x11-ssh-askpass pulseaudio-alsa clipnotify xorg-xsetroot npm
+# as-explicit: less curl
+# disect: xorg xorg-apps
 
-sudo pacman -Rddns adobe-source-code-pro-fonts cantarell-fonts adwaita-icon-theme gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts
+sudo pacman -Rddns adobe-source-code-pro-fonts cantarell-fonts adwaita-icon-theme gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts dmenu xorg-xfd xorg-xwud xorg-xvinfo lvm2 xorg-xpr xorg-xwd
 
 # Essentials
 # usr-local-lib-systemd-system-slock\x40.service
