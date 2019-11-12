@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Visual Studio Code - URL Handler
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=/home/xha/.local/share/VSCode-linux-x64/bin/code --open-url %U
+Icon=/home/xha/.local/share/VSCode-linux-x64/resources/app/resources/linux/code.png
+Type=Application
+NoDisplay=true
+StartupNotify=true
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=x-scheme-handler/vscode;
+Keywords=vscode;

@@ -114,8 +114,8 @@ herbstclient keybind Mod4-Shift-3 move_index 2
 herbstclient keybind Mod4-Shift-4 move_index 3
 herbstclient keybind Mod4-Shift-5 move_index 4
 herbstclient keybind Mod4-Shift-6 move_index 5
-case "$HOSTNAME" in
-andermatt)
+case "$HOST" in
+andermatt|gotthard)
 	herbstclient keybind Mod4-asciicircum use_previous
 	;;
 airolo)
@@ -166,8 +166,8 @@ herbstclient keybind Print spawn flameshot gui -p /tmp
 herbstclient keybind Mod4+Print spawn flameshot screen -c -p /tmp
 herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
 
-case "$HOSTNAME" in
-andermatt)
+case "$HOST" in
+andermatt|gotthard)
 	herbstclient keybind Mod4+acute spawn clipmenu -p clipboard
 	;;
 airolo)
@@ -178,7 +178,11 @@ esac
 herbstclient keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p Emoji -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib"
 herbstclient keybind Mod4+0 spawn $HOME/etc/suckless/fm0/fm0.lua
 herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINAL -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')"
-herbstclient keybind Mod4+Escape and 🥨 spawn ssh-add -D 🥨 spawn i3lock -c \#000000
+if [[ $HOST = gotthard ]]; then;
+	herbstclient keybind Mod4+Escape spawn slock ssh-add -D
+else
+	herbstclient keybind Mod4+Escape and 🥨 spawn ssh-add -D 🥨 spawn i3lock -c \#000000
+fi
 herbstclient keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90
 herbstclient keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90
 
@@ -192,20 +196,33 @@ herbstclient keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/etc/suckles
 herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
 herbstclient keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
 
-case "$HOSTNAME" in
+case "$HOST" in
+gotthard)
+	herbstclient keybind XF86MonBrightnessDown spawn light -U 10 -s 'sysfs/backlight/intel_backlight'
+	herbstclient keybind XF86MonBrightnessUp spawn light -A 10 -s 'sysfs/backlight/intel_backlight'
+	herbstclient keybind XF86KbdBrightnessDown spawn light -U 10 -s 'sysfs/leds/smc::kbd_backlight'
+	herbstclient keybind XF86KbdBrightnessUp spawn light -A 10 -s 'sysfs/leds/smc::kbd_backlight'
+	herbstclient keybind XF86LaunchA spawn rofi -show window
+	herbstclient keybind XF86LaunchB spawn rofi -show drun
+	herbstclient keybind XF86AudioMute spawn pamixer -m
+	herbstclient keybind XF86AudioLowerVolume spawn pamixer -ud 10
+	herbstclient keybind XF86AudioRaiseVolume spawn pamixer -ui 10
+	;|
 andermatt)
-	herbstclient keybind XF86AudioMute spawn $mutecmd
-	herbstclient keybind XF86AudioLowerVolume spawn $lowervolumecmd
-	herbstclient keybind XF86AudioRaiseVolume spawn $raisevolumecmd
-	herbstclient keybind XF86AudioPlay spawn $strawberryplaycmd
-	herbstclient keybind XF86AudioNext spawn $strawberrynextcmd
-	herbstclient keybind XF86AudioPrev spawn $strawberryprevcmd
-	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
-	herbstclient keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
-	herbstclient keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
 	herbstclient new_attr bool my_touchpad_enabled
 	herbstclient set_attr my_touchpad_enabled true
 	herbstclient keybind XF86TouchpadToggle or 🔙 and 🥨 compare my_touchpad_enabled = true 🥨 spawn xinput disable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled false 🔙 and 🥨 spawn xinput enable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled true
+	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
+	herbstclient keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
+	herbstclient keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness"
+	herbstclient keybind XF86AudioMute spawn $mutecmd
+	herbstclient keybind XF86AudioLowerVolume spawn $lowervolumecmd
+	herbstclient keybind XF86AudioRaiseVolume spawn $raisevolumecmd
+	;&
+gotthard)
+	herbstclient keybind XF86AudioPlay spawn $strawberryplaycmd
+	herbstclient keybind XF86AudioNext spawn $strawberrynextcmd
+	herbstclient keybind XF86AudioPrev spawn $strawberryprevcmd
 	;;
 airolo)
 	herbstclient keybind Mod4+KP_Insert $mutecmd
@@ -232,6 +249,7 @@ herbstclient keybind Mod4-p cycle_monitor
 # rules
 herbstclient rule focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+herbstclient rule class=SshAskpass pseudotile=on
 herbstclient rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 herbstclient rule class=mpv instance=gl tag='@' index='10' focus=on switchtag=on
@@ -258,7 +276,7 @@ herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag
 
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
 	local panel_height=17
-	(schwammerl "$monitor" | lemonbar -a 13 -g x"$panel_height" -f -sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1 -f -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1 -B '$QI_K' -F '$QI_W' | $SHELL) &
+	(schwammerl "$monitor" | lemonbar -a 13 -g x"$panel_height" -B "$QI_W" -F "$QI_B_K" | $SHELL) &
 	herbstclient pad "$monitor" "$panel_height"
 done
 
