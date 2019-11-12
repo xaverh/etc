@@ -1,10 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/zsh
 
 localectl set-keymap de
 lsblk
 ping google.com
 ls /sys/firmware/efi/efivars
-timedatectl set-ntp true
 
 blkdiscard /dev/sdX
 sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sda
@@ -16,7 +15,7 @@ cryptsetup -y --use-random -v --type luks2 --align-payload=8192 luksFormat /dev/
 
 cryptsetup open /dev/sdX2 cryptroot
 # SSD?
-cryptsetup --allow-discards --persistent open /dev/sda2 cryptroot
+cryptsetup --allow-discards --persistent open /dev/sdX2 cryptroot
 
 mkfs.btrfs /dev/mapper/cryptroot
 mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
@@ -32,9 +31,8 @@ umount /mnt
 mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
 mount /dev/sda1 /mnt/boot
 
-cp /etc/pacman.conf /mnt/etc/pacman.conf
-
-vim /mnt/etc/pacman.conf
+cp /etc/pacman.conf ~
+vim ~/pacman.conf
 
 vim /etc/pacman.d/mirrorlist
 
