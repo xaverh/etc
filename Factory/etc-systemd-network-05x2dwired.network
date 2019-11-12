@@ -1,0 +1,16 @@
+[Match]
+Name=e*
+
+[Network]
+DHCP=true
+IPv6AcceptRA=true
+IPv6PrivacyExtensions=true
+
+[DHCP]
+UseDNS=false
+UseNTP=false
+RouteMetric=5
+
+[IPv6AcceptRA]
+UseDNS=false
+

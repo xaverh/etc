@@ -34,8 +34,10 @@ warncreateglobal
 # TODO: options from Input/Output in zshoptions(1) onward
 
 bindkey -e
-zstyle :compinstall filename '/home/xha/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
+vscodecompdir="$HOME"/.local/share/VSCode-linux-x64/resources/completions/zsh
+[[ -d $vscodecompdir && -x $vscodecompdir ]] && fpath=($fpath $vscodecompdir)
 autoload -Uz compinit
 compinit
 
@@ -168,4 +170,10 @@ alias nnn=n
 function ripsite()
 {
 	wkhtmltopdf --images --no-stop-slow-scripts "$@" `systemd-escape $@`".pdf"
+}
+
+function Install-VSCode()
+{
+	rm -r "$HOME/.local/share/VSCode-linux-x64/" || mkdir -p "$HOME/.local/share"
+	curl -L 'https://update.code.visualstudio.com/latest/linux-x64/stable' | tar xz -C "$HOME/.local/share/"
 }
