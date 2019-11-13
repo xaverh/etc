@@ -275,8 +275,8 @@ herbstclient rule title~'.*.PDF - \d+ / \d+' tag='%' index=01 focus=on switchtag
 herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-	local panel_height=20
-	(schwammerl "$monitor" | lemonbar -g x20 -f -gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1 -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL) &
+	local panel_height=18
+	(schwammerl "$monitor" | lemonbar -g x18 -f -uw-ttyp0-medium-r-normal--14-130-75-75-c-70-iso10646-1 -f "-wenquanyi-wenquanyi bitmap song-medium-r-normal--12-120-75-75-p-119-iso10646-1"   -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL) &
 	herbstclient pad "$monitor" "$panel_height"
 done
 
