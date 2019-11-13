@@ -163,7 +163,7 @@ herbstclient keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | r
 herbstclient keybind Mod4+o spawn abridor.lua
 herbstclient keybind Mod4-space spawn rofi -combi-modi window,drun,run -show combi -modi combi
 herbstclient keybind Print spawn flameshot gui -p /tmp
-herbstclient keybind Mod4+Print spawn flameshot screen -c -p /tmp
+herbstclient keybind Mod4+Print spawn flameshot full -c -p /tmp
 herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
 
 case "$HOST" in
@@ -275,8 +275,8 @@ herbstclient rule title~'.*.PDF - \d+ / \d+' tag='%' index=01 focus=on switchtag
 herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-	local panel_height=17
-	(schwammerl "$monitor" | lemonbar -a 13 -g x"$panel_height" -B "$QI_W" -F "$QI_B_K" | $SHELL) &
+	local panel_height=20
+	(schwammerl "$monitor" | lemonbar -g x20 -f -gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1 -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL) &
 	herbstclient pad "$monitor" "$panel_height"
 done
 
