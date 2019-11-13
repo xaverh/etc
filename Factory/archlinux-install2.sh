@@ -46,26 +46,28 @@ pacstrap /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-prog
 
 # Essentials
 mkdir -p /mnt/usr/local/lib/systemd/system
-cp ~/etc/Factory/usr-local-lib-systemd-system-slock\x40.service /mnt/usr/local/lib/systemd/slock@.service
-cp ~/etc/Factory/etc-systemd-network-05\x2dwired.network /mnt/etc/systemd/network/05-wired.network
+cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/lib/systemd/slock@.service
+cp ~/etc/Factory/etc-systemd-network-05\\x2dwired.network /mnt/etc/systemd/network/05-wired.network
 mkdir /mnt/etc/systemd/resolved.conf.d
-cp ~/etc/Factory/etc-systemd-resolved.conf.d-10\x2dDNSSEC.conf /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf
-cp ~/etc/Factory/etc-systemd-resolved.conf.d-20\x2d1.1.1.1.conf /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf
+cp ~/etc/Factory/etc-systemd-resolved.conf.d-10\\x2dDNSSEC.conf /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf
+cp ~/etc/Factory/etc-systemd-resolved.conf.d-20\\x2d1.1.1.1.conf /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf
 mkdir -p /mnt/etc/X11/xorg.conf.d
-cp ~/etc/Factory/etc-X11-xorg.conf.d-20\x2ddontzap.conf /mnt/etc/X11/xorg.conf.d/20-dontzap.conf
+cp ~/etc/Factory/etc-X11-xorg.conf.d-20\\x2ddontzap.conf /mnt/etc/X11/xorg.conf.d/20-dontzap.conf
 mkdir -p /mnt/boot/loader/entries
 cp ~/etc/Factory/boot-loader-loader.conf /mnt/boot/loader/loader.conf
 cp ~/etc/Factory/boot-loader-entries-arch.conf /mnt/boot/loader/entries/arch.conf
+mkdir -p /mnt/etc/pacman.d/hooks
+cp ~/etc/Factory/etc-pacman.d-hooks-100\\x2dsystemd\\x2dboot.hook /mnt/etc/pacman.d/hooks/100-systemd-boot.hook
 cp /etc/pacman.conf /mnt/etc/pacman.conf
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo pts/0  >> /mnt/etc/securetty
 
 # As needed
-cp ~/etc/Factory/etc-systemd-network-10\x2dwireless.network /mnt/etc/systemd/network/10-wireless.network
+cp ~/etc/Factory/etc-systemd-network-10\\x2dwireless.network /mnt/etc/systemd/network/10-wireless.network
 mkdir -p /mnt/usr/local/lib/systemd/user
-cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
-cp ~/etc/Factory/etc-X11-xorg.conf.d-15\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
-cp ~/etc/Factory/etc-X11-xorg.conf.d-30\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
+cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
+cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 /etc/mkinitcpio.conf
 # HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
 # sd-encrypt only needed if hd is encrypted
