@@ -46,7 +46,7 @@ fi
 xset b off &
 xset s off &
 xset -dpms &
-
+xset fp+ /usr/share/fonts/wenquanyi &
 
 # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#Key_combinations
 export GTK_IM_MODULE="xim"
