@@ -181,7 +181,12 @@ func updateIPAdress(ipv4 chan<- string) {
 		if err != nil {
 			ipv4 <- "offline"
 		} else {
-			ipv4 <- strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")[0]
+			localAddr := strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")
+			if len(localAddr) > 0 {
+				ipv4 <- localAddr[0]
+			} else {
+				ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
+			}
 			defer conn.Close()
 		}
 		time.Sleep(time.Duration(3 * time.Second))
