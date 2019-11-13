@@ -185,7 +185,8 @@ func updateIPAdress(ipv4 chan<- string) {
 			if len(localAddr) > 0 {
 				ipv4 <- localAddr[0]
 			} else {
-				ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
+				ipv4 <- "%{F#ff00ff} ERROR %{F-}"
+				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
 			}
 			defer conn.Close()
 		}
@@ -324,8 +325,11 @@ func updateWIFI(wifi chan<- string) {
 		if wifiDevice != "" {
 			iwOutput, _ := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
 			if string(iwOutput) != "Not connected.\n" {
-				ssidString := ssidRegex.FindStringSubmatch(string(iwOutput))[0]
-				wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
+				ssidStrings := ssidRegex.FindStringSubmatch(string(iwOutput))
+				if len(ssidStrings) > 0 {
+					ssidString := ssidStrings[0]
+					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
+				}
 			} else {
 				wifi <- "%{F#e32791}no WiFi%{F-}"
 			}
