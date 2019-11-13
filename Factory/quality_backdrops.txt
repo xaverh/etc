@@ -1,1 +1,4 @@
-Paver.xbm -fg #0d0918 -bg #1c5b2aCrochet.xbm -fg #41ea19 -bg #e93a99
+Paver.xbm -fg #0d0918 -bg #1c5b2a
+Crochet.xbm -fg #41ea19 -bg #e93a99
+Lattice.xbm -fg #464695 -bg #a4546d
+Miniweave.xbm -fg #1c027f -bg #877f22
