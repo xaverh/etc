@@ -32,56 +32,62 @@ umount /mnt
 mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
 mount /dev/sda1 /mnt/boot
 
-cp /etc/pacman.conf ~
-vim ~/pacman.conf
+vim /etc/pacman.conf
+# IgnorePkg = adobe-source-code-pro-fonts cantarell-fonts gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts dmenu xorg-xfd xorg-xwud xorg-xvinfo lvm2 xorg-xpr xorg-xwd jack
+# multilib
+# ILoveCandy
+# Color
+# VerbosePkgLists
 
 vim /etc/pacman.d/mirrorlist
 
-pacstrap -c -C /mnt/etc/pacman.conf /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-xinit nodejs lua stow strawberry discord firefox weechat alacritty noto-fonts-emoji chromium opus-tools go
-
-pacstrap -c -C /mnt/etc/pacman.conf /mnt cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd xf86-video-intel bluez bluez-utils numlockx libva-intel-driver libdvdcss pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde
-
-# as-deps: linux-headers alacritty-terminfo gst-plugins-{bad,ugly} gst-libav x11-ssh-askpass pulseaudio-alsa clipnotify xorg-xsetroot npm
-# as-explicit: less curl
-# disect: xorg xorg-apps
-
-sudo pacman -Rddns adobe-source-code-pro-fonts cantarell-fonts adwaita-icon-theme gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts dmenu xorg-xfd xorg-xwud xorg-xvinfo lvm2 xorg-xpr xorg-xwd
+pacstrap /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo
+# cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw wpa_supplicant
 
 # Essentials
-# usr-local-lib-systemd-system-slock\x40.service
-# etc-systemd-network-05\x2dwired.network
-# etc-systemd-resolved.conf.d-10\x2dDNSSEC.conf
-# etc-systemd-resolved.conf.d-20\x2d1.1.1.1.conf
-# etc-X11-xorg.conf.d-20\x2ddontzap.conf
-# boot-loader-loader.conf
-# boot-loader-entries-arch.conf
+mkdir -p /mnt/usr/local/lib/systemd/system
+cp ~/etc/Factory/usr-local-lib-systemd-system-slock\x40.service /mnt/usr/local/lib/systemd/slock@.service
+cp ~/etc/Factory/etc-systemd-network-05\x2dwired.network /mnt/etc/systemd/network/05-wired.network
+mkdir /mnt/etc/systemd/resolved.conf.d
+cp ~/etc/Factory/etc-systemd-resolved.conf.d-10\x2dDNSSEC.conf /mnt/etc/systemd/resolved.conf.d/10-DNSSEC.conf
+cp ~/etc/Factory/etc-systemd-resolved.conf.d-20\x2d1.1.1.1.conf /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf
+mkdir -p /mnt/etc/X11/xorg.conf.d
+cp ~/etc/Factory/etc-X11-xorg.conf.d-20\x2ddontzap.conf /mnt/etc/X11/xorg.conf.d/20-dontzap.conf
+mkdir -p /mnt/boot/loader/entries
+cp ~/etc/Factory/boot-loader-loader.conf /mnt/boot/loader/loader.conf
+cp ~/etc/Factory/boot-loader-entries-arch.conf /mnt/boot/loader/entries/arch.conf
+cp /etc/pacman.conf /mnt/etc/pacman.conf
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+echo pts/0  >> /mnt/etc/securetty
 
 # As needed
-# etc-systemd-network-10\x2dwireless.network
-# usr-local-lib-systemd-user-ssh\x2dagent.service
-# etc-X11-xorg.conf.d-15\x2dintel.conf
-# etc-X11-xorg.conf.d-30\x2dinput.conf
-
+cp ~/etc/Factory/etc-systemd-network-10\x2dwireless.network /mnt/etc/systemd/network/10-wireless.network
+mkdir -p /mnt/usr/local/lib/systemd/user
+cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+cp ~/etc/Factory/etc-X11-xorg.conf.d-15\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
+cp ~/etc/Factory/etc-X11-xorg.conf.d-30\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 /etc/mkinitcpio.conf
 # HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
 # sd-encrypt only needed if hd is encrypted
 
-echo pts/0  >> /mnt/securetty
-
 systemd-nspawn -D /mnt passwd root
 systemd-nspawn -D /mnt chsh -s /usr/bin/zsh
-
-
-systemd-nspawn -D /mnt useradd -m -N -g users -s /usr/bin/zsh xha
+systemd-nspawn -D /mnt useradd -m -N -g users -G video,wheel -s /usr/bin/zsh xha
 systemd-nspawn -D /mnt passwd xha
 systemd-nspawn -D /mnt locale-gen
-
 cp /mnt/etc/sudoers /mnt/etc/sudoers.d/sudoers
-
 systemd-nspawn -D /mnt --setenv=EDITOR=vim visudo /etc/sudoers.d/sudoers
 
 systemd-nspawn -bD /mnt
+
+pacman -D --asexplicit curl less
+
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=lvm3 --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go
+
+pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde weechat opus-tools
+
+pacman -S --needed --asdeps alacritty-terminfo gst-plugins-ugly gst-libav x11-ssh-askpass pulseaudio-alsa clipnotify xorg-xsetroot npm rtmpdump
+# as-deps: libdvdcss libva-intel-driver linux-headers
 
 localectl set-locale LANG=en_US.UTF-8
 localectl set-x11-keymap us pc104 altgr-intl "compose:menu"
@@ -92,13 +98,12 @@ hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-networkd.service
 systemctl enable --now systemd-timesyncd.service
-systemctl enable --now iwd.service
 systemctl enable slock@xha.service
 
 systemctl edit getty@tty1
 # [Service]
 # ExecStart=
-# ExecStart=-/sbin/agetty --autologin xha --noclear %I $TERM
+# ExecStart=-/usr/bin/agetty --autologin xha --noclear %I $TERM
 
 bootctl install
 
