@@ -24,10 +24,7 @@ var (
 	networkDevices, _ = net.Interfaces()
 	wifiDevice        = ""
 	thermalZone       = "1"
-
-	ipRegex    = regexp.MustCompilePOSIX("[0-9.]+")
-	srcIPRegex = regexp.MustCompilePOSIX("src [0-9.]+")
-	ssidRegex  = regexp.MustCompile("SSID: (.*?)\n")
+	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 )
 
 func fixed(rate int) string {
@@ -179,14 +176,14 @@ func updateTime(d chan<- string) {
 }
 
 func updateIPAdress(ipv4 chan<- string) {
-	time.Sleep(time.Duration(3 * time.Second))
 	for {
-		out, err := exec.Command("ip", "route", "get", "8.8.8.8").Output()
+		conn, err := net.Dial("udp", "8.8.8.8:80")
 		if err != nil {
 			ipv4 <- "offline"
 		} else {
-			ipv4 <- ipRegex.FindString(srcIPRegex.FindString(string(out)))
+			ipv4 <- strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")[0]
 		}
+		defer conn.Close()
 		time.Sleep(time.Duration(3 * time.Second))
 	}
 }
