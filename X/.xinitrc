@@ -43,12 +43,6 @@ if [[ -d /etc/X11/xinit/xinitrc.d ]] ; then
 	unset f
 fi
 
-#
-# Source common code shared between the
-# X session and X init scripts
-#
-
-
 xset b off &
 xset s off &
 xset -dpms &
@@ -58,7 +52,7 @@ xset -dpms &
 export GTK_IM_MODULE="xim"
 export XMODIFIERS="@im=none"
 
-xsetroot -bitmap $HOME/etc/suckless/backdrops/`ls $HOME/etc/suckless/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
+xsetroot -bitmap $HOME/.local/share/backdrops/`ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
 ([[ -x /usr/bin/numlockx ]] && numlockx) &
 
