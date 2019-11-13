@@ -87,7 +87,7 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=lvm3 --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pamixer slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=lvm3 --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl alsa-utils pavucontrol slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput
 
 pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde weechat opus-tools
 
@@ -103,6 +103,7 @@ hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-networkd.service
 systemctl enable --now systemd-timesyncd.service
+systemctl enable bluetooth.service
 systemctl enable slock@xha.service
 
 systemctl edit getty@tty1

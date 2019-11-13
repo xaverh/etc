@@ -197,17 +197,6 @@ herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
 herbstclient keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/" $HOME/.config/alacritty/alacritty.yml ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
 
 case "$HOST" in
-gotthard)
-	herbstclient keybind XF86MonBrightnessDown spawn light -U 10 -s 'sysfs/backlight/intel_backlight'
-	herbstclient keybind XF86MonBrightnessUp spawn light -A 10 -s 'sysfs/backlight/intel_backlight'
-	herbstclient keybind XF86KbdBrightnessDown spawn light -U 10 -s 'sysfs/leds/smc::kbd_backlight'
-	herbstclient keybind XF86KbdBrightnessUp spawn light -A 10 -s 'sysfs/leds/smc::kbd_backlight'
-	herbstclient keybind XF86LaunchA spawn rofi -show window
-	herbstclient keybind XF86LaunchB spawn rofi -show drun
-	herbstclient keybind XF86AudioMute spawn pamixer -m
-	herbstclient keybind XF86AudioLowerVolume spawn pamixer -ud 10
-	herbstclient keybind XF86AudioRaiseVolume spawn pamixer -ui 10
-	;|
 andermatt)
 	herbstclient new_attr bool my_touchpad_enabled
 	herbstclient set_attr my_touchpad_enabled true
@@ -218,14 +207,12 @@ andermatt)
 	herbstclient keybind XF86AudioMute spawn $mutecmd
 	herbstclient keybind XF86AudioLowerVolume spawn $lowervolumecmd
 	herbstclient keybind XF86AudioRaiseVolume spawn $raisevolumecmd
-	;&
-gotthard)
 	herbstclient keybind XF86AudioPlay spawn $strawberryplaycmd
 	herbstclient keybind XF86AudioNext spawn $strawberrynextcmd
 	herbstclient keybind XF86AudioPrev spawn $strawberryprevcmd
 	;;
 airolo)
-	herbstclient keybind Mod4+KP_Insert $mutecmd
+	herbstclient keybind Mod4+KP_Insert spawn $mutecmd
 	herbstclient keybind Mod4+KP_Subtract spawn $lowervolumecmd
 	herbstclient keybind Mod4+KP_Add spawn $raisevolumecmd
 	herbstclient keybind Mod4+KP_End spawn $strawberryplaycmd
