@@ -35,7 +35,7 @@ mount /dev/sda1 /mnt/boot
 vim /etc/pacman.d/mirrorlist
 
 pacstrap /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo
-# cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw wpa_supplicant
+# cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd
 
 # Essentials
 mkdir -p /mnt/usr/local/lib/systemd/system
@@ -96,8 +96,10 @@ hostnamectl set-hostname andermatt
 systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-networkd.service
 systemctl enable --now systemd-timesyncd.service
+systemctl enable iwd.service
 systemctl enable bluetooth.service
 systemctl enable slock@xha.service
+systemctl mask lvm2.service
 
 systemctl edit getty@tty1
 # [Service]
