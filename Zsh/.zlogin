@@ -12,7 +12,6 @@ export YS_M="#b062a7" # Violet Blue, R=176, G=98, B=167
 export YS_C="#27bbbe" # Light Sea Green, R=39, G=187, B=190
 export YS_K="#999999" # Grey 60%, R=153, G=153, B=153
 export YS_B_W="#b8b8b8" # Grey 70%, R=184, G=184, B=184
-export YS_B_W_80="#acaca9" # Grey 70%, R=172, G=172, B=169
 export YS_B_R="#9f1b66" # Jazzberry Jam, R=159, G=27, B=102
 export YS_B_G="#325d23" # Parsley, R=50, G=93, B=35
 export YS_B_Y="#71410a" # Raw Umber, R=113, G=65, B=10
@@ -37,7 +36,6 @@ export QI_B_B="#91b0e6" # Jordy Blue, R=145, G=181, B=230
 export QI_B_M="#e5b6e1" # French Lilac, R=229, G=182, B=225
 export QI_B_C="#a2dcd7" # Sinbad, R=162, G=220, B=215
 export QI_B_K="#e5e6e6" # Grey 90%, R=229, G=230, B=230
-export QI_B_K_80="#f2f2f2" # Grey 90%, R=242, G=242, B=242
 export CURSOR_COLOR="#20bbfc" # Deep Sky Blue, R=32, G=187, B=252
 
 
