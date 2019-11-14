@@ -170,7 +170,7 @@ for k in pairs(radio_stations) do
 	stations = stations .. k .. '\n'
 end
 
-local station_file = io.popen('echo "' .. stations .. '" | rofi -dmenu -i -p "Play …"')
+local station_file = io.popen('echo "' .. stations .. '" | rofi -dmenu -i -no-custom -p "Play …"')
 local station_name = string.sub(station_file:read('a'), 1, -2)
 
 play(station_name)
