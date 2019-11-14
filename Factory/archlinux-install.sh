@@ -32,13 +32,6 @@ umount /mnt
 mount -o compress-force=zstd:6,noatime /dev/mapper/cryptroot /mnt
 mount /dev/sda1 /mnt/boot
 
-vim /etc/pacman.conf
-# IgnorePkg = adobe-source-code-pro-fonts cantarell-fonts gnu-free-fonts xorg-fonts-100dpi xorg-fonts-75dpi gsfonts dmenu xorg-xfd xorg-xwud xorg-xvinfo lvm2 xorg-xpr xorg-xwd jack
-# multilib
-# ILoveCandy
-# Color
-# VerbosePkgLists
-
 vim /etc/pacman.d/mirrorlist
 
 pacstrap /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo
