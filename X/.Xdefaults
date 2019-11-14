@@ -123,4 +123,4 @@ rofi.kb-row-tab:
 rofi.kb-row-select:                  Tab
 rofi.opacity:                        100
 rofi.show-icons:                     true
-rofi.window-command:                 /usr/bin/zsh -c "herbstclient bring \`printf 0x%x {window}\`"
+rofi.window-command:                 herbstclient bring {window}
