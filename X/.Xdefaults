@@ -115,7 +115,6 @@ Qillqaq*highlightColor:     [50]#E5E6E6
 Qillqaq*highlightTextColor: [80]#1E1E1E
 
 rofi.modi:                           window,run,drun
-rofi.lines:                          15
 rofi.font:                           mono 12
 rofi.fixed-num-lines:                true
 rofi.separator-style:                none
@@ -124,3 +123,4 @@ rofi.kb-row-tab:
 rofi.kb-row-select:                  Tab
 rofi.opacity:                        100
 rofi.show-icons:                     true
+rofi.window-command:                 /usr/bin/zsh -c "herbstclient bring \`printf 0x%x {window}\`"
