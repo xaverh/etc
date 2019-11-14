@@ -1,7 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
 static char* fontfallbacks[] = {
-    "sans-serif",
+    "IBM Plex Sans",
+    "IBM Plex Sans Hebrew",
+    "IBM Plex Sans Thai Looped",
+    "IBM Plex Sans Devanagari",
 };
 #define NUMFONTSCALES 42
 #define FONTSZ(x)                                                              \

@@ -113,6 +113,8 @@ elseif
 	)
  then
 	os.execute('sxiv "' .. filename .. '"')
+elseif filter_for_pattern(filename, '%.sent$') then
+	os.execute('sent "' .. filename .. '"')
 else
 	os.execute('xdg-open "' .. filename .. '"')
 end
