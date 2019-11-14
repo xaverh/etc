@@ -120,5 +120,7 @@ rofi.font:                           mono 12
 rofi.fixed-num-lines:                true
 rofi.separator-style:                none
 rofi.hide-scrollbar:                 true
-rofi.kb-row-tab:                     
+rofi.kb-row-tab:
 rofi.kb-row-select:                  Tab
+rofi.opacity:                        100
+rofi.show-icons:                     true
