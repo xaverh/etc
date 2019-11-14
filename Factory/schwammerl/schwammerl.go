@@ -188,7 +188,6 @@ func updateIPAdress(ipv4 chan<- string) {
 				ipv4 <- "%{F#ff00ff} ERROR %{F-}"
 				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
 			}
-			defer conn.Close()
 		}
 		time.Sleep(time.Duration(3 * time.Second))
 	}
