@@ -160,6 +160,7 @@ herbstclient keybind Mod4+numbersign toggle always_show_frame
 # herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
 
 herbstclient keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))"
+herbstclient keybind Mod4+F2 spawn herbstadler
 herbstclient keybind Mod4+o spawn abridor.lua
 herbstclient keybind Mod4-space spawn rofi -combi-modi window,drun,run -show combi -modi combi
 herbstclient keybind Print spawn flameshot gui -p /tmp
