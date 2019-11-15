@@ -1,9 +1,9 @@
 #!/usr/bin/zsh
 
 resizestep=0.02
-mutecmd=(amixer sset Master mute)
-lowervolumecmd=(amixer sset Master 5%- unmute)
-raisevolumecmd=(amixer sset Master 5%+ unmute)
+mutecmd=(and 🥨 spawn /usr/bin/zsh -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
+lowervolumecmd=(and 🥨 spawn /usr/bin/zsh -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\"" 🥨 spawn /usr/bin/zsh -c "notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
+raisevolumecmd=(and 🥨 spawn /usr/bin/zsh -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\"" 🥨 spawn /usr/bin/zsh -c "notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
 strawberryplaycmd=(strawberry --play-pause)
 strawberrynextcmd=(strawberry --next)
 strawberryprevcmd=(strawberry --restart-or-previous)
@@ -15,9 +15,9 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind XF86TouchpadToggle or 🔙 and 🥨 compare my_touchpad_enabled = true 🥨 spawn xinput disable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled false 🔙 and 🥨 spawn xinput enable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled true \
 	🍂 keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" \
 	🍂 keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" \
-	🍂 keybind XF86AudioMute spawn $mutecmd \
-	🍂 keybind XF86AudioLowerVolume spawn $lowervolumecmd \
-	🍂 keybind XF86AudioRaiseVolume spawn $raisevolumecmd \
+	🍂 keybind XF86AudioMute $mutecmd \
+	🍂 keybind XF86AudioLowerVolume $lowervolumecmd \
+	🍂 keybind XF86AudioRaiseVolume $raisevolumecmd \
 	🍂 keybind XF86AudioPlay spawn $strawberryplaycmd \
 	🍂 keybind XF86AudioNext spawn $strawberrynextcmd \
 	🍂 keybind XF86AudioPrev spawn $strawberryprevcmd)
@@ -169,9 +169,9 @@ herbstclient chain \
 🍂 keybind Mod4+Control+Shift+q quit \
 🍂 keybind Mod4+Shift+q reload \
 🍂 keybind Mod4+F4 close \
-🍂 keybind Mod4+KP_Insert spawn $mutecmd \
-🍂 keybind Mod4+KP_Subtract spawn $lowervolumecmd \
-🍂 keybind Mod4+KP_Add spawn $raisevolumecmd \
+🍂 keybind Mod4+KP_Insert $mutecmd \
+🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
+🍂 keybind Mod4+KP_Add $raisevolumecmd \
 🍂 keybind Mod4+KP_End spawn $strawberryplaycmd \
 🍂 keybind Mod4+KP_Multiply spawn $strawberrynextcmd \
 🍂 keybind Mod4+KP_Divide spawn $strawberryprevcmd \
