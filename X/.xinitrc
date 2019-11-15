@@ -9,6 +9,8 @@
 failsafe="xterm -ls -T Failsafe -geometry 80x24-0-0"
 trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
+mons -e left
+
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources

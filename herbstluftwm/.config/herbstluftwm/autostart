@@ -34,24 +34,20 @@ herbstclient set always_show_frame 0
 herbstclient set frame_normal_opacity 100
 herbstclient set frame_active_opacity 100
 herbstclient set default_frame_layout 3
-herbstclient set default_direction_external_only 0 ### TODO
+herbstclient set default_direction_external_only 0
 herbstclient set gapless_grid 1
-herbstclient set smart_frame_surroundings 1
+herbstclient set smart_frame_surroundings 0
 herbstclient set smart_window_surroundings 0
 herbstclient set focus_follows_mouse 0
 herbstclient set focus_stealing_prevention 0
 herbstclient set swap_monitors_to_get_tag 1
-herbstclient set auto_detect_monitors 0 ### TODO
+herbstclient set auto_detect_monitors 0
 # herbstclient set tree_style '├│ ├└──┬'
 herbstclient set tree_style "-| |\`--."
 herbstclient set update_dragged_clients 1
 
-herbstclient keybind Mod4-Control-Shift-q quit
-herbstclient keybind Mod4-Shift-q reload
-herbstclient keybind Mod4-F4 close
 herbstclient keybind Mod4-Return spawn ${TERMINAL:-xterm}
 
-# basic movement
 # focusing clients
 herbstclient keybind Mod4-Left  focus left
 herbstclient keybind Mod4-Down  focus down
@@ -114,14 +110,8 @@ herbstclient keybind Mod4-Shift-3 move_index 2
 herbstclient keybind Mod4-Shift-4 move_index 3
 herbstclient keybind Mod4-Shift-5 move_index 4
 herbstclient keybind Mod4-Shift-6 move_index 5
-case "$HOST" in
-andermatt|gotthard)
-	herbstclient keybind Mod4-asciicircum use_previous
-	;;
-airolo)
-	herbstclient keybind Mod4-dead_grave use_previous
-	;;
-esac
+herbstclient keybind Mod4-asciicircum use_previous
+herbstclient keybind Mod4-grave use_previous
 
 # layouting
 herbstclient keybind Mod4-Shift-r remove
@@ -167,23 +157,13 @@ herbstclient keybind Print spawn flameshot gui -p /tmp
 herbstclient keybind Mod4+Print spawn flameshot full -c -p /tmp
 herbstclient keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')"
 
-case "$HOST" in
-andermatt|gotthard)
-	herbstclient keybind Mod4+acute spawn clipmenu -p clipboard
-	;;
-airolo)
-	herbstclient keybind Mod4+equal spawn clipmenu -p clipboard
-	;;
-esac
+herbstclient keybind Mod4+acute spawn clipmenu -p clipboard
+herbstclient keybind Mod4+equal spawn clipmenu -p clipboard
 
 herbstclient keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p Emoji -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib"
 herbstclient keybind Mod4+0 spawn fm0.lua
 herbstclient keybind Mod4+t spawn $SHELL -c "$TERMINAL -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')"
-if [[ $HOST = gotthard ]]; then;
-	herbstclient keybind Mod4+Escape spawn slock ssh-add -D
-else
-	herbstclient keybind Mod4+Escape and 🥨 spawn ssh-add -D 🥨 spawn i3lock -c \#000000
-fi
+herbstclient keybind Mod4+Escape spawn slock ssh-add -D
 herbstclient keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90
 herbstclient keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90
 
@@ -192,7 +172,7 @@ herbstclient keybind Mod4-c "$TERMINAL" --class Weechat -e weechat
 herbstclient keybind Mod4+F12 spawn "$TERMINAL" --class Journalctl -e journalctl -b -f -n 1000
 
 herbstclient keybind Mod4+F6 chain ⛓️ spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json"
-herbstclient keybind Mod4+8 and 🥨 cycle_value window_border_active_color "$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B" 🥨 substitute 🖼️ settings.window_border_active_color set frame_bg_active_color 🖼️
+herbstclient keybind Mod4+F8 and 🥨 cycle_value window_border_active_color "$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B" 🥨 substitute 🖼️ settings.window_border_active_color set frame_bg_active_color 🖼️
 herbstclient keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`"
 herbstclient keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W"
 herbstclient keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json"
@@ -211,7 +191,7 @@ andermatt)
 	herbstclient keybind XF86AudioPlay spawn $strawberryplaycmd
 	herbstclient keybind XF86AudioNext spawn $strawberrynextcmd
 	herbstclient keybind XF86AudioPrev spawn $strawberryprevcmd
-	;;
+	;&
 airolo)
 	herbstclient keybind Mod4+KP_Insert spawn $mutecmd
 	herbstclient keybind Mod4+KP_Subtract spawn $lowervolumecmd
@@ -231,8 +211,17 @@ herbstclient keybind Mod4-Control-4 load '(clients max:0)'
 herbstclient keybind Mod4-Control-5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))'
 
 # multi-monitor
+# XXX
 herbstclient keybind Mod4-Shift-p detect_monitors
-herbstclient keybind Mod4-p cycle_monitor
+herbstclient keybind Mod4+comma focus_monitor -l
+herbstclient keybind Mod4+period focus_monitor -r
+herbstclient keybind Mod4+Shift+comma shift_to_monitor -l
+herbstclient keybind Mod4+Shift+period shift_to_monitor -r
+
+
+herbstclient keybind Mod4-Control-Shift-q quit
+herbstclient keybind Mod4-Shift-q reload
+herbstclient keybind Mod4-F4 close
 
 # rules
 herbstclient rule focus=on
@@ -262,10 +251,17 @@ herbstclient rule title~'.*.EPUB - \d+ / \d+' tag='%' index=01 focus=on switchta
 herbstclient rule title~'.*.PDF - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 herbstclient rule title~'.*.CBZ - \d+ / \d+' tag='%' index=01 focus=on switchtag=on
 
+herbstclient unlock
+
+herbstclient detect_monitors --no-disjoin
+
+pidof lemonbar && kill `pidof lemonbar`
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
 	local panel_height=18
-	(schwammerl "$monitor" | lemonbar -g x18 -f -uw-ttyp0-medium-r-normal--14-130-75-75-c-70-iso10646-1 -f "-wenquanyi-wenquanyi bitmap song-medium-r-normal--12-120-75-75-p-119-iso10646-1"   -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL) &
+	geometry=( $(herbstclient monitor_rect "$monitor") )
+	x=${geometry[1]}
+	y=${geometry[2]}
+	width="${geometry[3]}"
+	(schwammerl "$monitor" | lemonbar -u 2 -g "$(printf '%dx%d%+d%+d' $width $panel_height $x $y)" -f -uw-ttyp0-medium-r-normal--14-130-75-75-c-70-iso10646-1 -f "-wenquanyi-wenquanyi bitmap song-medium-r-normal--12-120-75-75-p-119-iso10646-1"   -a 13 -B "$QI_W" -F "$QI_G" -U "$QI_G" | $SHELL) &
 	herbstclient pad "$monitor" "$panel_height"
 done
-
-herbstclient unlock
