@@ -6,113 +6,14 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
+SshAskpass*font:                   -uw-ttyp0-*-*-*-*-*-*-*-*-*-*-*-*
+SshAskpass.Indicator*foreground:   #e3c472
+SshAskpass.Indicator*background:   #515151
+SshAskpass*topShadowColor:         #1e1e1e
+SshAskpass*bottomShadowColor:      #1e1e1e
+SshAskpass.*borderWidth:           1
+
 Xcursor.theme: DMZ-White
-
-URxvt.perl-ext-common: selection-to-clipboard
-URxvt.intensityStyles: false
-URxvt.geometry: 92x24
-URxvt.scrollBar: false
-URxvt.letterSpace: -1
-URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:DejaVu Sans Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.internalBorder:  13
-URxvt.inheritPixmap: false
-URxvt.transparent: false
-URxvt.visualBell: false
-URxvt.saveLines: 65536
-URxvt.urgentOnBell: true
-URxvt.iso14755: false
-URxvt.depth: 24
-URxvt.underlineURLs: true
-URxvt.urlButton: 1
-*.cursorBlink: true
-XTerm*faceSize: 10
-XTerm*faceName: SF Mono
-XTerm*scrollBar: false
-XTerm*saveLines: 32768
-XTerm*allowScrollLock: true
-XTerm*internalBorder:  13
-XTerm*boldColors: false
-XTerm*autoWrap: true
-XTerm*reverseWrap: true
-
-! Ysgrifennwr:
-*.background:             #F9F8F4
-*.backgroundColor:        #F9F8F4
-*.color0:                 #F9F8F4
-*.color1:                 #E32791
-*.color2:                 #488432
-*.color3:                 #A25D0E
-*.color4:                 #2C65B5
-*.color5:                 #B062A7
-*.color6:                 #27BBBE
-*.color7:                 #999999
-*.color8:                 #B8B8B8
-*.color9:                 #9F1B66
-*.color10:                #325D23
-*.color11:                #71410A
-*.color12:                #1F477F
-*.color13:                #7B4474
-*.color14:                #1B8486
-*.color15:                #424242
-*.foreground:             #424242
-XTerm*borderColor:        #424242
-*.cursorColor:            #FC9520
-URxvt.cursorColor2:       #424242
-URxvt.highlightColor:     [80]#999999
-URxvt.highlightTextColor: [80]#F9F8F4
-
-! Ysgrifennwr:
-Ysgrifennwr*background:             #F9F8F4
-Ysgrifennwr*backgroundColor:        #F9F8F4
-Ysgrifennwr*color0:                 #F9F8F4
-Ysgrifennwr*color1:                 #E32791
-Ysgrifennwr*color2:                 #488432
-Ysgrifennwr*color3:                 #A25D0E
-Ysgrifennwr*color4:                 #2C65B5
-Ysgrifennwr*color5:                 #B062A7
-Ysgrifennwr*color6:                 #27BBBE
-Ysgrifennwr*color7:                 #999999
-Ysgrifennwr*color8:                 #B8B8B8
-Ysgrifennwr*color9:                 #9F1B66
-Ysgrifennwr*color10:                #325D23
-Ysgrifennwr*color11:                #71410A
-Ysgrifennwr*color12:                #1F477F
-Ysgrifennwr*color13:                #7B4474
-Ysgrifennwr*color14:                #1B8486
-Ysgrifennwr*color15:                #424242
-Ysgrifennwr*foreground:             #424242
-Ysgrifennwr*cursorColor:            #FC9520
-Ysgrifennwr*cursorColor2:       #424242
-Ysgrifennwr*highlightColor:     [80]#999999
-Ysgrifennwr*highlightTextColor: [80]#F9F8F4
-
-! Qillqaq:
-Qillqaq*background:             #1E1E1E
-Qillqaq*backgroundColor:        #1E1E1E
-Qillqaq*color0:                 #1E1E1E
-Qillqaq*color1:                 #E32791
-Qillqaq*color2:                 #30C798
-Qillqaq*color3:                 #E3C472
-Qillqaq*color4:                 #6769E6
-Qillqaq*color5:                 #E59FDF
-Qillqaq*color6:                 #81D8D0
-Qillqaq*color7:                 #969696
-Qillqaq*color8:                 #515151
-Qillqaq*color9:                 #E466AD
-Qillqaq*color10:                #6CD1B2
-Qillqaq*color11:                #E4CF98
-Qillqaq*color12:                #9091E6
-Qillqaq*color13:                #E5B6E1
-Qillqaq*color14:                #A2DCD7
-Qillqaq*color15:                #E5E6E6
-Qillqaq*foreground:             #E5E6E6
-Qillqaq*cursorColor:            #20BBFC
-Qillqaq*cursorColor2:       #1E1E1E
-Qillqaq*highlightColor:     [50]#E5E6E6
-Qillqaq*highlightTextColor: [80]#1E1E1E
 
 rofi.modi:                           window,run,drun
 rofi.font:                           mono 12
@@ -121,6 +22,40 @@ rofi.separator-style:                none
 rofi.hide-scrollbar:                 true
 rofi.kb-row-tab:
 rofi.kb-row-select:                  Tab
-rofi.opacity:                        100
 rofi.show-icons:                     true
 rofi.window-command:                 herbstclient bring {window}
+
+! Grey 10%, R=30, G=30, B=30
+*.color0: #1e1e1e
+*.background: #1e1e1e
+! Deep Cerise, R=227, G=39, B=145
+*.color1: #e32791
+! Shamrock, R=48, G=199, B=152
+*.color2: #30c798
+! Chenin, R=227, G=196, B=114
+*.color3: #e3c472
+! Cornflower Blue, R=103, G=150, B=230
+*.color4: #6796e6
+! Plum, R=229, G=159, B=223
+*.color5: #e59fdf
+! Riptide, R=129, G=216, B=208
+*.color6: #81d8d0
+! Grey 60%, R=150, G=150, B=150
+*.color7: #969696
+! Grey 30%, R=81, G=81, B=81
+*.color8: #515151
+! Hot Pink, R=228, G=102, B=173
+*.color9: #e466ad
+! Medium Aquamarine, R=108, G=209, B=178
+*.color10: #6cd1b2
+! Double Colonial White, R=228, G=207, B=152
+*.color11: #e4cf98
+! Jordy Blue, R=145, G=181, B=230
+*.color12: #91b0e6
+! French Lilac, R=229, G=182, B=225
+*.color13: #e5b6e1
+! Sinbad, R=162, G=220, B=215
+*.color14: #a2dcd7
+! Grey 90%, R=229, G=230, B=230
+*.color15: #e5e6e6
+*.foreground: #e5e6e6
