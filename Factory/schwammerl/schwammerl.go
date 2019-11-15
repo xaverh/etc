@@ -18,6 +18,7 @@ const (
 	unpluggedSign     = "!"
 	pluggedSign       = ""
 	separatorModules  = "  "
+	realFg            = "#e5e6e6" // because we 'abuse' lemonbar's F for theming color
 )
 
 var (
@@ -58,41 +59,37 @@ func fixed(rate int) string {
 
 func formatHerbstluftwmStatus(input string, screen string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
-	result := ""
-	fg := "#e5e6e6"
-	bg := "#e1e1e1"
+	var result, attr, fg, attrClose string
 	for _, v := range items {
 		switch v[:1] {
 		case ".":
-			bg = "#1e1e1e"
-			fg = "#969696"
+			fg = "#515151"
 		case ":":
 			// occupied tag = !viewed, !here, !focused
-			bg = "#1e1e1e"
-			fg = "#e5e6e6"
+			fg = "#969696"
 		case "+":
 			// viewed, here, !focused
-			bg = "#1e1e1e"
-			fg = "#e3c472"
+			fg = realFg
+			attr = "%{U" + realFg + "}%{+u}"
+			attrClose = "%{-u}%{U-}"
 		case "-":
 			// viewed, !here, !focused
-			bg = "#1e1e1e"
-			fg = "#bdbebe"
+			fg = realFg
 		case "%":
 			// viewed, !here, focused
-			bg = "#1e1e1e"
-			fg = "#81d8d0"
+			fg = "-"
 		case "#":
 			// viewed, here, focused
-			bg = "#1e1e1e"
-			fg = "#30c798"
-			// attr = "%{+u}"
+			fg = "-"
+			attr = "%{+u}"
+			attrClose = "%{-u}"
 		case "!":
 			// urgent
-			bg = "#1e1e1e"
 			fg = "#e32791"
 		}
-		result = result + "%{B" + bg + "}%{F" + fg + "}%{A:herbstclient focus_monitor " + string(screen) + " && herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{B-}%{F-}"
+		result = result + "%{F" + fg + "}" + attr + "%{A:herbstclient focus_monitor " + string(screen) + " && herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}" + attrClose + "%{U-}"
+		attr = ""
+		attrClose = ""
 	}
 	return result
 }
@@ -101,17 +98,17 @@ func getCurFrameWCount() string {
 	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
 	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
 	if err != nil || err2 != nil {
-		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F-}%{B-}"
+		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F" + realFg + "}%{B-}"
 	}
 	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
 	clientNumber := string(out)[:len(out)-1]
 	if clientNumber == "0" || clientNumber == "1" {
-		return "%{O1500}%{A}%{r}%{F-}%{B-}"
+		return "%{O1500}%{A}%{r}%{F" + realFg + "}%{B-}"
 	}
 	if err == nil {
-		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F-}%{B-}"
+		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F" + realFg + "}%{B-}"
 	}
-	return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F-}%{B-}"
+	return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F" + realFg + "}%{B-}"
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
