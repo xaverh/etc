@@ -80,11 +80,11 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl alsa-utils pavucontrol slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent mons
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent mons dunst
 
 pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde weechat opus-tools vulkan-intel
 
-pacman -S --needed --asdeps alacritty-terminfo gst-plugins-ugly gst-libav x11-ssh-askpass pulseaudio-alsa clipnotify xorg-xsetroot npm rtmpdump lemonbar
+pacman -S --needed --asdeps alacritty-terminfo gst-plugins-ugly gst-libav x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar
 # as-deps: libdvdcss libva-intel-driver linux-headers
 
 localectl set-locale LANG=en_US.UTF-8
