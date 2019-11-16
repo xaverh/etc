@@ -57,7 +57,7 @@ func fixed(rate int) string {
 	return fmt.Sprintf("%d %s", rate, suf)
 }
 
-func formatHerbstluftwmStatus(input string, screen string) string {
+func formatHerbstluftwmStatus(input string, screen string, linePosition string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
 	var result string
 	for _, v := range items {
@@ -69,7 +69,7 @@ func formatHerbstluftwmStatus(input string, screen string) string {
 			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "+":
 			// viewed, here, !focused
-			result += "%{F" + realFg + "}%{U" + realFg + "}%{+u}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-u}%{U-}"
+			result += "%{F" + realFg + "}%{U" + realFg + "}%{+" + linePosition + "}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-" + linePosition + "}%{U-}"
 		case "-":
 			// viewed, !here, !focused
 			result += "%{F" + realFg + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
@@ -78,7 +78,7 @@ func formatHerbstluftwmStatus(input string, screen string) string {
 			result += "%{F-}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "#":
 			// viewed, here, focused
-			result += "%{F-}%{+u}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-u}"
+			result += "%{F-}%{+" + linePosition + "}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-" + linePosition + "}"
 		case "!":
 			// urgent
 			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
@@ -107,10 +107,14 @@ func getCurFrameWCount() string {
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
-	var workspaces string
-	var windowTitle string
+	var workspaces, windowTitle, linePosition string
 	var curFrameWCount string = "0"
-
+	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
+	if err1 == nil && string(isLockedQuery) == "true\n" {
+		linePosition = "o"
+	} else {
+		linePosition = "u"
+	}
 	err = cmd.Start()
 	if err != nil {
 		workspaces = fmt.Sprintf("Failed to start err=%v", err)
@@ -120,23 +124,40 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
 		case "focus_changed":
-			curFrameWCount = getCurFrameWCount()
 			fallthrough
 		case "window_title_changed":
-			if len(action) >= 2 {
-				windowTitle = "%{F#e5e6e6}%{B#005577}  " + action[2]
-			} else {
-				windowTitle = " "
+			isHereQuery, err := exec.Command("herbstclient", "get_attr", "monitors.focus.index").Output()
+			if err == nil && (string(isHereQuery))[:len(isHereQuery)-1] == screen {
+				if len(action) >= 2 {
+					windowTitle = "%{F#e5e6e6}%{B#005577}  " + action[2]
+				} else {
+					windowTitle = " "
+				}
 			}
-		default:
-			curFrameWCount = getCurFrameWCount()
+			goto SendStatus
+		case "🔒":
+			if len(action) >= 1 {
+				if action[1] == screen {
+					linePosition = "o"
+				}
+			}
+		case "🔓":
+			if len(action) >= 1 {
+				if action[1] == screen {
+					linePosition = "u"
+				}
+			}
+		}
+		curFrameWCount = getCurFrameWCount()
+		{
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
 			if err != nil {
 				workspaces = "ERROR: Failed to display tags."
 			} else {
-				workspaces = formatHerbstluftwmStatus(string(out), screen)
+				workspaces = formatHerbstluftwmStatus(string(out), screen, linePosition)
 			}
 		}
+	SendStatus:
 		hlwmStatus <- workspaces + "%{A:herbstclient cycle:}" + windowTitle + curFrameWCount
 	}
 	if err := scanner.Err(); err != nil {
@@ -330,7 +351,7 @@ func updateWIFI(wifi chan<- string) {
 }
 
 func main() {
-	screen := os.Args[1:]
+	screen := os.Args[1]
 	if os.Getenv("HOSTNAME") == "airolo" {
 		thermalZone = "2"
 	}
@@ -355,7 +376,7 @@ func main() {
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
 	go updateTime(timeChan)
-	go updateHerbstluftStatus(hlwmChan, screen[0])
+	go updateHerbstluftStatus(hlwmChan, screen)
 	status := make([]string, 8)
 	for {
 		select {
