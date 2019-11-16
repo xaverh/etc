@@ -236,5 +236,6 @@
 	"workbench.editor.showTabs": false,
 	"editor.fontSize": 14,
 	"git.untrackedChanges": "separate",
-	"git.enableCommitSigning": false
+	"git.enableCommitSigning": false,
+	"git.openDiffOnClick": false
 }
