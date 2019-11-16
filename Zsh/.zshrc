@@ -40,6 +40,7 @@ vscodecompdir="$HOME"/.local/share/VSCode-linux-x64/resources/completions/zsh
 [[ -d $vscodecompdir && -x $vscodecompdir ]] && fpath=($fpath $vscodecompdir)
 autoload -Uz compinit
 compinit
+[[ -r "$HOME"/.npm-packages/lib/node_modules/gulp-cli/completion/zsh  ]] && . "$HOME"/.npm-packages/lib/node_modules/gulp-cli/completion/zsh
 
 autoload -U colors && colors
 
@@ -90,6 +91,7 @@ fi
 alias lss='ls -S'
 alias las='la -S'
 alias lls='ll -S'
+alias mv='mv -i'
 
 alias f='df -H -T'
 alias -g G='|& grep -i --colour=auto'
