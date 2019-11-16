@@ -59,37 +59,30 @@ func fixed(rate int) string {
 
 func formatHerbstluftwmStatus(input string, screen string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
-	var result, attr, fg, attrClose string
+	var result string
 	for _, v := range items {
 		switch v[:1] {
 		case ".":
-			fg = "#515151"
+			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case ":":
 			// occupied tag = !viewed, !here, !focused
-			fg = "#969696"
+			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "+":
 			// viewed, here, !focused
-			fg = realFg
-			attr = "%{U" + realFg + "}%{+u}"
-			attrClose = "%{-u}%{U-}"
+			result += "%{F" + realFg + "}%{U" + realFg + "}%{+u}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-u}%{U-}"
 		case "-":
 			// viewed, !here, !focused
-			fg = realFg
+			result += "%{F" + realFg + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "%":
 			// viewed, !here, focused
-			fg = "-"
+			result += "%{F-}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "#":
 			// viewed, here, focused
-			fg = "-"
-			attr = "%{+u}"
-			attrClose = "%{-u}"
+			result += "%{F-}%{+u}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-u}"
 		case "!":
 			// urgent
-			fg = "#e32791"
+			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		}
-		result = result + "%{F" + fg + "}" + attr + "%{A:herbstclient focus_monitor " + string(screen) + " && herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}" + attrClose + "%{U-}"
-		attr = ""
-		attrClose = ""
 	}
 	return result
 }
