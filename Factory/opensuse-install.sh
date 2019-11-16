@@ -278,9 +278,11 @@ WantedBy=default.target
 
 EOF
 
-cat > /mnt/etc/udev/rules.d/backlight.rules <<"EOF"
-ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+cat > /mnt/etc/udev/rules.d/90-backlight.rules <<"EOF"
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp video /sys/class/leds/%k/brightness"
+ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
 
 EOF
 

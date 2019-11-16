@@ -61,6 +61,7 @@ mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
+cp ~/etc/Factory/etc-udev-rules.d-90x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
 /etc/mkinitcpio.conf
 # HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
 # sd-encrypt only needed if hd is encrypted
@@ -82,7 +83,7 @@ pacman-key --lsign-key home
 
 pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=ttf-font unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua stow strawberry discord firefox alacritty noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent mons dunst
 
-pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam light rawtherapee gstreamer-vaapi abcde weechat opus-tools vulkan-intel
+pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee gstreamer-vaapi abcde weechat opus-tools vulkan-intel
 
 pacman -S --needed --asdeps alacritty-terminfo gst-plugins-ugly gst-libav x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar
 # as-deps: libdvdcss libva-intel-driver linux-headers
