@@ -43,6 +43,7 @@ herbstclient chain \
 🍂 set frame_border_normal_color "$QI_W" \
 🍂 set frame_border_inner_color "$QI_W" \
 🍂 set frame_bg_active_color "$accentcolor" \
+🍂 set emit_hook 🖌️ \
 🍂 set frame_bg_normal_color "$QI_B_W" \
 🍂 set frame_bg_transparent 1 \
 🍂 set frame_transparent_width 5 \
@@ -52,7 +53,7 @@ herbstclient chain \
 🍂 set raise_on_focus 0 \
 🍂 set raise_on_focus_temporarily 0 \
 🍂 set raise_on_click 1 \
-🍂 set window_border_width 3 \
+🍂 set window_border_width 4 \
 🍂 set window_border_inner_width 1 \
 🍂 set window_border_active_color "$accentcolor" \
 🍂 set window_border_normal_color "$QI_B_W" \
@@ -154,7 +155,7 @@ herbstclient chain \
 🍂 keybind Mod4+F12 spawn "$TERMINAL" --class Journalctl -e journalctl -b -f -n 1000 \
 🍂 keybind Mod4+F5 cycle_value frame_gap 0 5 10 15 20 \
 🍂 keybind Mod4+F6 chain ⛓️ spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json" \
-🍂 keybind Mod4+F8 and 🥨 cycle_value window_border_active_color $accentcolors 🥨 substitute 🖼️ settings.window_border_active_color chain 🏩 set frame_bg_active_color 🖼️ 🏩 spawn "$HOME/.config/herbstluftwm/restartpanel.sh" 🖼️ \
+🍂 keybind Mod4+F8 and 🥨 cycle_value window_border_active_color $accentcolors 🥨 substitute 🖼️ settings.window_border_active_color chain ⛓️ set frame_bg_active_color 🖼️ ⛓️ emit_hook 🖌️ 🖼️ \
 🍂 keybind Mod4+F7 $backdropcmd \
 🍂 keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W" \
 🍂 keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \
