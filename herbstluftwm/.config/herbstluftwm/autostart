@@ -166,6 +166,7 @@ herbstclient chain \
 🍂 keybind Mod4+Control+4 load '(clients max:0)' \
 🍂 keybind Mod4+Control+5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
 🍂 keybind Mod4+p spawn $HOME/.config/herbstluftwm/herbstschau.sh \
+🍂 keybind Mod4+m or 🖕 and 🥨 compare monitors.focus.lock_tag  = false 🥨 lock_tag "" 🥨 substitute 🖥️ monitors.focus.index emit_hook 🔒 🖥️ 🖕 and 🥨 unlock_tag "" 🥨 substitute 💻 monitors.focus.index emit_hook 🔓 💻 \
 🍂 keybind Mod4+comma focus_monitor -l \
 🍂 keybind Mod4+period focus_monitor -r \
 🍂 keybind Mod4+Shift+comma shift_to_monitor -l \
