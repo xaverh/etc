@@ -145,6 +145,7 @@ herbstclient chain \
 🍂 keybind Mod4+Print spawn flameshot full -c -p /tmp \
 🍂 keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')" \
 🍂 keybind Mod4+i spawn clipmenu -p clipboard \
+🍂 keybind Mod4+equal spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
 🍂 keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p '¯\\_(ツ)_/¯' -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+t spawn $SHELL -c "$TERMINAL -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')" \
