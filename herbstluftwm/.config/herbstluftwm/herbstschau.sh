@@ -1,56 +1,53 @@
 #!/usr/bin/zsh
 
 function external_right() {
-cat <<EOF
-┌───────┐ ┏━━━━┓
-│   I   │ ┃ II ┃   2nd monitor to the right
-│       │ ┗━━━━┛
-└───────┘
-EOF
+	<<-EOF
+	┌───────┐ ┏━━━━┓
+	│   I   │ ┃ II ┃   2nd monitor to the right
+	│       │ ┗━━━━┛
+	└───────┘
+	EOF
 }
 
 function external_left() {
-cat <<EOF
- ┏━━━━┓ ┌───────┐
- ┃ II ┃ │   I   │  2nd monitor to the left
- ┗━━━━┛ │       │
-        └───────┘
-EOF
+	<<-EOF
+	 ┏━━━━┓ ┌───────┐
+	 ┃ II ┃ │   I   │  2nd monitor to the left
+	 ┗━━━━┛ │       │
+	        └───────┘
+	EOF
 }
 
 function external_off() {
-cat <<EOF
-┌───────┐ ╭┄┄┄┄╮
-│   II  │ ┆ ☠️ ┆   2nd monitor disabled
-│       │ ╰┄┄┄┄╯
-└───────┘
-EOF
+	<<-EOF
+	┌───────┐ ╭┄┄┄┄╮
+	│   II  │ ┆ ☠️ ┆   2nd monitor disabled
+	│       │ ╰┄┄┄┄╯
+	└───────┘
+	EOF
 }
 
 function internal_off() {
-cat <<EOF
-╭┄┄┄┄┄┄┄╮ ┏━━━━┓
-┆  ☠️   ┆ ┃ II ┃   1st monitor disabled
-┆       ┆ ┗━━━━┛
-╰┄┄┄┄┄┄┄╯
-EOF
+	<<-EOF
+	╭┄┄┄┄┄┄┄╮ ┏━━━━┓
+	┆  ☠️   ┆ ┃ II ┃   1st monitor disabled
+	┆       ┆ ┗━━━━┛
+	╰┄┄┄┄┄┄┄╯
+	EOF
 }
 
 
 function print_menu() {
 	external_left
-	echo -e '\0'
+	print -n '\0'
 	external_right
-	echo -e '\0'
+	print -n '\0'
 	external_off
-	echo -e '\0'
+	print -n '\0'
 	internal_off
 }
 
-element_height=5
-element_count=4
-
-res=$(print_menu | rofi -dmenu -sep '\0' -lines "$element_count" -eh "$element_height" -p '' -no-custom -format d)
+res=$(print_menu | rofi -dmenu -p 'Display layout' -sep '\0' -lines 4 -eh 4 -no-custom -format d)
 
 if [[ -z "$res" ]] ; then
 	exit
