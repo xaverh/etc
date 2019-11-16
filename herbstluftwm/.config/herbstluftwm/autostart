@@ -3,9 +3,9 @@
 resizestep=0.02
 accentcolors=("$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B")
 accentcolor="$accentcolors[RANDOM % $#accentcolors + 1]"
-mutecmd=(and 🥨 spawn /usr/bin/zsh -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
-lowervolumecmd=(and 🥨 spawn /usr/bin/zsh -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\"" 🥨 spawn /usr/bin/zsh -c "notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
-raisevolumecmd=(and 🥨 spawn /usr/bin/zsh -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\"" 🥨 spawn /usr/bin/zsh -c "notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
+mutecmd=(and 🥨 spawn $SHELL -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
+lowervolumecmd=(and 🥨 spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\"" 🥨 spawn $SHELL -c "notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
+raisevolumecmd=(and 🥨 spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\"" 🥨 spawn $SHELL -c "notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
 strawberryplaycmd=(strawberry --play-pause)
 strawberrynextcmd=(strawberry --next)
 strawberryprevcmd=(strawberry --restart-or-previous)
@@ -15,8 +15,8 @@ if [[ $HOST = andermatt ]] ; then;
 	localbinds=(🍂 or 🔙 silent get_attr my_touchpad_enabled 🔙 new_attr bool my_touchpad_enabled \
 	🍂 set_attr my_touchpad_enabled true \
 	🍂 keybind XF86TouchpadToggle or 🔙 and 🥨 compare my_touchpad_enabled = true 🥨 spawn xinput disable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled false 🔙 and 🥨 spawn xinput enable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled true \
-	🍂 keybind XF86MonBrightnessDown spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" \
-	🍂 keybind XF86MonBrightnessUp spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" \
+	🍂 keybind XF86MonBrightnessDown and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔅 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness ))%\"" \
+	🍂 keybind XF86MonBrightnessUp and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔆 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness ))%\"" \
 	🍂 keybind XF86AudioMute $mutecmd \
 	🍂 keybind XF86AudioLowerVolume $lowervolumecmd \
 	🍂 keybind XF86AudioRaiseVolume $raisevolumecmd \
@@ -208,7 +208,6 @@ $localbinds \
 # 🍂 keybind Mod4-k cycle_all --skip-invisible -1 \
 # 🍂 keybind Mod4-j cycle_all --skip-invisible +1 \
 # 🍂 keybind Mod4+numbersign toggle always_show_frame
-# TODO alter new brightness like: xsetroot -name \"brightness: \$((100 * \$actual_brightness / $maxbrightness)) %\""
 # TODO find running journalctl instance
 # TODO xsetroot -name "$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | tail --lines=1 | cut -d ' ' -f 2- -- -)"
 # herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
