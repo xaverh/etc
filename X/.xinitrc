@@ -9,8 +9,6 @@
 failsafe="xterm -ls -T Failsafe -geometry 80x24-0-0"
 trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
-mons -e left
-
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -53,10 +51,6 @@ xset fp+ /usr/share/fonts/wenquanyi &
 # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#Key_combinations
 export GTK_IM_MODULE="xim"
 export XMODIFIERS="@im=none"
-
-xsetroot -bitmap $HOME/.local/share/backdrops/`ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
-
-([[ -x /usr/bin/numlockx ]] && numlockx) &
 
 exec herbstluftwm --locked 2> /tmp/herbstlog
 
