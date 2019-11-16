@@ -61,7 +61,7 @@ herbstclient chain \
 🍂 set always_show_frame 0 \
 🍂 set frame_normal_opacity 100 \
 🍂 set frame_active_opacity 100 \
-🍂 set default_frame_layout 3 \
+🍂 set default_frame_layout 2 \
 🍂 set default_direction_external_only 0 \
 🍂 set gapless_grid 1 \
 🍂 set smart_frame_surroundings 0 \
@@ -105,10 +105,8 @@ herbstclient chain \
 🍂 add '$' \
 🍂 add '%' \
 🍂 add '^' \
-🍂 load '!' '(clients max:0)' \
 🍂 load '@' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' \
 🍂 load '#' '(clients grid:0)' \
-🍂 load '$' '(clients max:0)' \
 🍂 load '%' '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
 🍂 keybind Mod4+1 use_index 0 \
 🍂 keybind Mod4+2 use_index 1 \
@@ -184,7 +182,6 @@ herbstclient chain \
 $localbinds \
 🍂 rule focus=on \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on \
-🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' class~'Gimp.*' manage=off \
 🍂 rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off \
 🍂 rule class=SshAskpass pseudotile=on \
@@ -215,7 +212,5 @@ $localbinds \
 # 🍂 keybind Mod4-j cycle_all --skip-invisible +1 \
 # 🍂 keybind Mod4+numbersign toggle always_show_frame
 # TODO find running journalctl instance
-# TODO xsetroot -name "$(cat ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | sort | tail --lines=1 | cut -d ' ' -f 2- -- -)"
 # herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
 # IDEA: store layouts in z/y
-# keymask Mod4 for Code ?
