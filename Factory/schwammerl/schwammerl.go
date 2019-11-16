@@ -18,7 +18,6 @@ const (
 	unpluggedSign     = "!"
 	pluggedSign       = ""
 	separatorModules  = "  "
-	realFg            = "#e5e6e6" // because we 'abuse' lemonbar's F for theming color
 )
 
 var (
@@ -57,31 +56,31 @@ func fixed(rate int) string {
 	return fmt.Sprintf("%d %s", rate, suf)
 }
 
-func formatHerbstluftwmStatus(input string, screen string, linePosition string) string {
+func formatHerbstluftwmStatus(input string, screen string, linePosition string, accentColor string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
 	var result string
 	for _, v := range items {
 		switch v[:1] {
 		case ".":
-			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
 		case ":":
 			// occupied tag = !viewed, !here, !focused
-			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
 		case "+":
 			// viewed, here, !focused
-			result += "%{F" + realFg + "}%{U" + realFg + "}%{+" + linePosition + "}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-" + linePosition + "}%{U-}"
+			result += "%{+" + linePosition + "}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-" + linePosition + "}"
 		case "-":
 			// viewed, !here, !focused
-			result += "%{F" + realFg + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
 		case "%":
 			// viewed, !here, focused
-			result += "%{F-}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{F" + accentColor + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
 		case "#":
 			// viewed, here, focused
-			result += "%{F-}%{+" + linePosition + "}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-" + linePosition + "}"
+			result += "%{F" + accentColor + "}%{U" + accentColor + "}%{+" + linePosition + "}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-" + linePosition + "}%{U-}%{F-}"
 		case "!":
 			// urgent
-			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
 		}
 	}
 	return result
@@ -91,24 +90,33 @@ func getCurFrameWCount() string {
 	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
 	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
 	if err != nil || err2 != nil {
-		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F" + realFg + "}%{B-}"
+		return "%{F-}%{B#005577}%{O1500}%{A}%{r}[?] %{B-}"
 	}
 	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
 	clientNumber := string(out)[:len(out)-1]
 	if clientNumber == "0" || clientNumber == "1" {
-		return "%{O1500}%{A}%{r}%{F" + realFg + "}%{B-}"
+		return "%{O1500}%{A}%{r}%{F-}%{B-}"
 	}
 	if err == nil {
-		return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{F" + realFg + "}%{B-}"
+		return "%{F-}%{B#005577}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
 	}
-	return "%{F#e5e6e6}%{B#005577}%{O1500}%{A}%{r}[?] %{F" + realFg + "}%{B-}"
+	return "%{F-}%{B#005577}%{O1500}%{A}%{r}[?] %{B-}"
+}
+
+func getAccentColor() string {
+	accentColorQuery, err := exec.Command("herbstclient", "get", "window_border_active_color").Output()
+	if err != nil {
+		return "-"
+	}
+	return string(accentColorQuery)[:7]
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
 	var workspaces, windowTitle, linePosition string
-	var curFrameWCount string = "0"
+	curFrameWCount := "0"
+	accentColor := getAccentColor()
 	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
 	if err1 == nil && string(isLockedQuery) == "true\n" {
 		linePosition = "o"
@@ -129,7 +137,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			isHereQuery, err := exec.Command("herbstclient", "get_attr", "monitors.focus.index").Output()
 			if err == nil && (string(isHereQuery))[:len(isHereQuery)-1] == screen {
 				if len(action) >= 2 {
-					windowTitle = "%{F#e5e6e6}%{B#005577}  " + action[2]
+					windowTitle = "%{F-}%{B#005577}  " + action[2]
 				} else {
 					windowTitle = " "
 				}
@@ -147,6 +155,8 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 					linePosition = "u"
 				}
 			}
+		case "🖌️":
+			accentColor = getAccentColor()
 		}
 		curFrameWCount = getCurFrameWCount()
 		{
@@ -154,7 +164,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			if err != nil {
 				workspaces = "ERROR: Failed to display tags."
 			} else {
-				workspaces = formatHerbstluftwmStatus(string(out), screen, linePosition)
+				workspaces = formatHerbstluftwmStatus(string(out), screen, linePosition, accentColor)
 			}
 		}
 	SendStatus:
