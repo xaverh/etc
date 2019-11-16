@@ -20,7 +20,6 @@ Xcursor.theme: DMZ-White
 
 rofi.modi:                           window,run,drun
 rofi.font:                           mono 12
-rofi.fixed-num-lines:                true
 rofi.separator-style:                none
 rofi.hide-scrollbar:                 true
 rofi.kb-row-tab:
