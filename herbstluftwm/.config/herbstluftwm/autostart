@@ -31,7 +31,7 @@ herbstclient chain \
 🍂 keyunbind --all \
 🍂 mouseunbind --all \
 🍂 unrule --all \
-🍂 $backdropcmd \
+🍂 and 🥨 new_attr color my_🦎 🥨 set_attr color my_🦎 `printf -- "#%06x" $(shuf -i0-16777215 -n1)` \
 \
 🍂 set frame_gap 5 \
 🍂 set frame_padding 0 \
@@ -71,9 +71,9 @@ herbstclient chain \
 🍂 set focus_stealing_prevention 0 \
 🍂 set swap_monitors_to_get_tag 1 \
 🍂 set auto_detect_monitors 0 \
-🍂 set tree_style "-| |\`--." \
 🍂 set tree_style '├│ ├└──┬' \
 🍂 set update_dragged_clients 1 \
+\
 🍂 keybind Mod4+Left  focus left \
 🍂 keybind Mod4+Down  focus down \
 🍂 keybind Mod4+Up    focus up \
@@ -101,6 +101,7 @@ herbstclient chain \
 🍂 keybind Mod4+Control+Down    resize down +$resizestep \
 🍂 keybind Mod4+Control+Up      resize up +$resizestep \
 🍂 keybind Mod4+Control+Right   resize right +$resizestep \
+\
 🍂 rename default '!' \
 🍂 add '@' \
 🍂 add '#' \
@@ -166,7 +167,7 @@ herbstclient chain \
 🍂 keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')" \
 🍂 keybind Mod4+i spawn clipmenu -p clipboard \
 🍂 keybind Mod4+equal spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
-🍂 keybind Mod4+e spawn $SHELL -c "rofi -dmenu -i -p '¯\\_(ツ)_/¯' -input $HOME/.local/share/emoji.txt | awk '{printf \$1}' | xsel -ib" \
+🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' $HOME/.local/share/emoji.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+t spawn $SHELL -c "$TERMINAL -e tmux new-session -A -s \$(tmux list-clients -F \"#S\" | rofi -dmenu -i -p 'tmux:')" \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
@@ -234,3 +235,4 @@ $localbinds \
 # 🍂 keybind Mod4+Control+5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
 # 🍂 substitute 🏷️ tags.focus.name substitute 🖥️ monitors.focus.index emit_hook tag_changed 🏷️ 🖥️
 # 🍂 substitute TAG tags.focus.name substitute MONITOR monitors.focus.index emit_hook tag_changed TAG MONITOR
+# 🍂 set tree_style "-| |\`--." \
