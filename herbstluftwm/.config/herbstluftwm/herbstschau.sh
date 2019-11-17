@@ -21,7 +21,7 @@ function external_left() {
 function external_off() {
 	<<-EOF
 	┌───────┐ ╭┄┄┄┄╮
-	│   II  │ ┆ ☠️ ┆   2nd monitor disabled
+	│   I   │ ┆ ☠️ ┆   2nd monitor disabled
 	│       │ ╰┄┄┄┄╯
 	└───────┘
 	EOF

@@ -56,31 +56,31 @@ func fixed(rate int) string {
 	return fmt.Sprintf("%d %s", rate, suf)
 }
 
-func formatHerbstluftwmStatus(input string, screen string, linePosition string, accentColor string) string {
+func formatHerbstluftwmStatus(input string, screen string, lockedSymbol string, accentColor string) string {
 	items := strings.Split(strings.TrimSpace(input), "\t")
-	var result string
+	result := " "
 	for _, v := range items {
 		switch v[:1] {
 		case ".":
-			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
+			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
 		case ":":
 			// occupied tag = !viewed, !here, !focused
-			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
+			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
 		case "+":
 			// viewed, here, !focused
-			result += "%{+" + linePosition + "}%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{-" + linePosition + "}"
+			result += "%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':}[" + v[1:] + "]" + lockedSymbol + "%{A}%{A}"
 		case "-":
 			// viewed, !here, !focused
-			result += "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}"
+			result += "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}"
 		case "%":
 			// viewed, !here, focused
-			result += "%{F" + accentColor + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
+			result += "%{F" + accentColor + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
 		case "#":
 			// viewed, here, focused
-			result += "%{F" + accentColor + "}%{U" + accentColor + "}%{+" + linePosition + "}%{A:herbstclient use_previous:} " + v[1:] + " %{A}%{-" + linePosition + "}%{U-}%{F-}"
+			result += "%{F" + accentColor + "}%{U" + accentColor + "}[" + v[1:] + "]" + lockedSymbol + "%{U-}%{F-}"
 		case "!":
 			// urgent
-			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + " %{A}%{A}%{F-}"
+			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
 		}
 	}
 	return result
@@ -114,14 +114,13 @@ func getAccentColor() string {
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
-	var workspaces, windowTitle, linePosition string
-	curFrameWCount := "0"
+	var workspaces, windowTitle string
+	lockedSymbol := " "
+	curFrameWCount := getCurFrameWCount()
 	accentColor := getAccentColor()
 	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
 	if err1 == nil && string(isLockedQuery) == "true\n" {
-		linePosition = "o"
-	} else {
-		linePosition = "u"
+		lockedSymbol = "*"
 	}
 	err = cmd.Start()
 	if err != nil {
@@ -132,6 +131,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
 		case "focus_changed":
+			curFrameWCount = getCurFrameWCount()
 			fallthrough
 		case "window_title_changed":
 			isHereQuery, err := exec.Command("herbstclient", "get_attr", "monitors.focus.index").Output()
@@ -146,25 +146,24 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 		case "🔒":
 			if len(action) >= 1 {
 				if action[1] == screen {
-					linePosition = "o"
+					lockedSymbol = "*"
 				}
 			}
 		case "🔓":
 			if len(action) >= 1 {
 				if action[1] == screen {
-					linePosition = "u"
+					lockedSymbol = " "
 				}
 			}
 		case "🖌️":
 			accentColor = getAccentColor()
 		}
-		curFrameWCount = getCurFrameWCount()
 		{
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
 			if err != nil {
 				workspaces = "ERROR: Failed to display tags."
 			} else {
-				workspaces = formatHerbstluftwmStatus(string(out), screen, linePosition, accentColor)
+				workspaces = formatHerbstluftwmStatus(string(out), screen, lockedSymbol, accentColor)
 			}
 		}
 	SendStatus:

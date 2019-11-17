@@ -1,5 +1,5 @@
 {
-	"editor.fontFamily": "IBM Plex Mono, SF Mono, Consolas, Menlo, Source Code Pro",
+	"editor.fontFamily": "SF Mono, IBM Plex Mono, Consolas, Menlo, Source Code Pro",
 	"editor.fontWeight": "400",
 	"editor.rulers": [],
 	"editor.formatOnType": true,
