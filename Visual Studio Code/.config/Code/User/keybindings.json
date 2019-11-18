@@ -89,5 +89,9 @@
 		"key": "ctrl+r",
 		"command": "-workbench.action.quickOpenNavigateNextInRecentFilesPicker",
 		"when": "inQuickOpen && inRecentFilesPicker"
+	},
+	{
+		"key": "shift+alt+enter",
+		"command": "git.push"
 	}
 ]
