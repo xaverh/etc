@@ -1,4 +1,4 @@
-export TERMINAL=alacritty
+export TERMINAL=termite
 export XCURSOR_THEME="DMZ-White"
 # export MOZ_ENABLE_WAYLAND=1
 

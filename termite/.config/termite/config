@@ -1,0 +1,81 @@
+[options]
+allow_bold = true
+audible_bell = false
+bold_is_bright = false
+#cell_height_scale = 1.0
+#cell_width_scale = 1.0
+clickable_url = true
+dynamic_title = true
+font = Monospace 11
+fullscreen = false
+#icon_name = terminal
+mouse_autohide = false
+scroll_on_output = false
+scroll_on_keystroke = true
+scrollback_lines = -1
+search_wrap = true
+urgent_on_bell = true
+hyperlinks = true
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+#browser = xdg-open
+
+# "system", "on" or "off"
+cursor_blink = on
+
+# "block", "underline" or "ibeam"
+#cursor_shape = block
+
+# Hide links that are no longer valid in url select overlay mode
+filter_unmatched_urls = true
+
+# Emit escape sequences for extra modified keys
+#modify_other_keys = false
+
+# set size hints for the window
+#size_hints = false
+
+# "off", "left" or "right"
+#scrollbar = off
+
+[colors]
+# If both of these are unset, cursor falls back to the foreground color,
+# and cursor_foreground falls back to the background color.
+cursor = #20bbfc
+cursor_foreground = #1e1e1e
+
+foreground = #e5e6e6
+foreground_bold = #e5e6e6
+background = #1e1e1e
+
+# If unset, will reverse foreground and background
+# highlight = #2f2f2f
+
+# Colors from color0 to color254 can be set
+color0  = #1e1e1e
+color1  = #e32791
+color2  = #30c798
+color3  = #e3c472
+color4  = #6796e6
+color5  = #e59fdf
+color6  = #81d8d0
+color7  = #969696
+color8  = #515151
+color9  = #e466ad
+color10 = #6cd1b2
+color11 = #e4cf98
+color12 = #91b0e6
+color13 = #e5b6e1
+color14 = #a2dcd7
+color15 = #e5e6e6
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 11
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0
