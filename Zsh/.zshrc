@@ -101,9 +101,8 @@ alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias o='less'
 alias u='du -s --si'
 
-chpwd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
-precmd () {print -Pn "\e]0;%n@%m: $0 %~ ($TERM)\a"}
-preexec () {print -Pn "\e]0;%n@%m: $2 ($TERM)\a"}
+chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
+preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
 
 function sx () {
 	local f
@@ -179,3 +178,9 @@ function Install-VSCode()
 	rm -r "$HOME/.local/share/VSCode-linux-x64/" || mkdir -p "$HOME/.local/share"
 	curl -L 'https://update.code.visualstudio.com/latest/linux-x64/stable' | tar xz -C "$HOME/.local/share/"
 }
+
+# required for termite
+if [[ $TERM == xterm-termite ]]; then
+	. /etc/profile.d/vte.sh
+	__vte_osc7
+fi
