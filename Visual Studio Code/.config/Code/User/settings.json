@@ -1,5 +1,4 @@
 {
-	"editor.fontFamily": "SF Mono, IBM Plex Mono, Consolas, Menlo, Source Code Pro",
 	"editor.fontWeight": "400",
 	"editor.rulers": [],
 	"editor.formatOnType": true,
@@ -148,7 +147,7 @@
 	"editor.cursorStyle": "line",
 	"editor.cursorBlinking": "phase",
 	"editor.autoClosingQuotes": "never",
-	"editor.fontLigatures": "'liga','calt','ss03'",
+	"editor.fontLigatures": "'liga','calt'",
 	"javascript.preferences.quoteStyle": "single",
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.format.enable": false,
