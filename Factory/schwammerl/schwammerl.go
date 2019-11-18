@@ -35,7 +35,6 @@ var (
 		"^": homeDirectory + "/.local/share/backdrops/Dolphins.xbm",
 	}
 	// TODO: hook to enable/disable backdrop changing
-	doesChangeBackdrops = true
 )
 
 func fixed(rate int) string {
@@ -137,10 +136,11 @@ func changeBackdropColor() string {
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
-	cmd := exec.Command("herbstclient", "--idle")
-	out, err := cmd.StdoutPipe()
 	var workspaces, windowTitle, backdropColor string
 	lockedSymbol := " "
+	doesChangeBackdrops := false
+	cmd := exec.Command("herbstclient", "--idle")
+	out, err := cmd.StdoutPipe()
 	curFrameWCount := getCurFrameWCount()
 	accentColor := getAccentColor()
 	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
@@ -161,9 +161,13 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	for ok := true; ok; ok = scanner.Scan() {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
+		case "🔏":
+			doesChangeBackdrops = false
 		case "tag_changed":
-			if len(action) >= 1 {
-				changeBackdrop(backdropColor, action[1])
+			if doesChangeBackdrops {
+				if len(action) >= 1 {
+					changeBackdrop(backdropColor, action[1])
+				}
 			}
 		case "focus_changed":
 			curFrameWCount = getCurFrameWCount()
@@ -177,7 +181,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 					windowTitle = " "
 				}
 			}
-			goto SendStatus
+			goto SENDSTATUS
 		case "🔒":
 			if len(action) >= 1 {
 				if action[1] == screen {
@@ -193,6 +197,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 		case "🖌️":
 			accentColor = getAccentColor()
 		case "🦎":
+			doesChangeBackdrops = true
 			backdropColor = changeBackdropColor()
 		}
 		{
@@ -203,7 +208,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 				workspaces = formatHerbstluftwmStatus(string(out), screen, lockedSymbol, accentColor)
 			}
 		}
-	SendStatus:
+	SENDSTATUS:
 		hlwmStatus <- workspaces + "%{A:herbstclient cycle:}" + windowTitle + curFrameWCount
 	}
 	if err := scanner.Err(); err != nil {
