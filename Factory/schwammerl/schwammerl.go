@@ -25,6 +25,17 @@ var (
 	wifiDevice        = ""
 	thermalZone       = "1"
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
+	homeDirectory     = os.Getenv("HOME")
+	backdrops         = map[string]string{
+		"!": homeDirectory + "/.local/share/backdrops/Southwest.xbm",
+		"@": homeDirectory + "/.local/share/backdrops/LatticeBig.xbm",
+		"#": homeDirectory + "/.local/share/backdrops/BrickWall.xbm",
+		"$": homeDirectory + "/.local/share/backdrops/Toronto.xbm",
+		"%": homeDirectory + "/.local/share/backdrops/E7bMSiv.xbm",
+		"^": homeDirectory + "/.local/share/backdrops/Dolphins.xbm",
+	}
+	// TODO: hook to enable/disable backdrop changing
+	doesChangeBackdrops = true
 )
 
 func fixed(rate int) string {
@@ -111,14 +122,34 @@ func getAccentColor() string {
 	return string(accentColorQuery)[:7]
 }
 
+func changeBackdrop(color string, tag string) {
+	exec.Command("xsetroot", "-bitmap", backdrops[tag], "-bg", os.Getenv("QI_W"), "-fg", color).Start()
+}
+
+func changeBackdropColor() string {
+	getBackdropColorAndTagQuery, err := exec.Command("herbstclient", "and", "🥨", "get_attr", "my_🦎", "🥨", "get_attr", "tags.focus.name").Output()
+	if err == nil {
+		backdropColorAndTag := string(getBackdropColorAndTagQuery)
+		changeBackdrop(backdropColorAndTag[:7], backdropColorAndTag[7:8])
+		return backdropColorAndTag[:7]
+	}
+	return "#ff00ff"
+}
+
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
-	var workspaces, windowTitle string
+	var workspaces, windowTitle, backdropColor string
 	lockedSymbol := " "
 	curFrameWCount := getCurFrameWCount()
 	accentColor := getAccentColor()
 	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
+	backdropColorQuery, err2 := exec.Command("herbstclient", "get_attr", "my_🦎").Output()
+	if err2 == nil {
+		backdropColor = string(backdropColorQuery)[:7]
+	} else {
+		backdropColor = "#ff00ff"
+	}
 	if err1 == nil && string(isLockedQuery) == "true\n" {
 		lockedSymbol = "*"
 	}
@@ -130,6 +161,10 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	for ok := true; ok; ok = scanner.Scan() {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
+		case "tag_changed":
+			if len(action) >= 1 {
+				changeBackdrop(backdropColor, action[1])
+			}
 		case "focus_changed":
 			curFrameWCount = getCurFrameWCount()
 			fallthrough
@@ -157,6 +192,8 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			}
 		case "🖌️":
 			accentColor = getAccentColor()
+		case "🦎":
+			backdropColor = changeBackdropColor()
 		}
 		{
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
