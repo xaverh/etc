@@ -9,7 +9,6 @@ raisevolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ p
 strawberryplaycmd=(strawberry --play-pause)
 strawberrynextcmd=(strawberry --next)
 strawberryprevcmd=(strawberry --restart-or-previous)
-backdropcmd=(spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`")
 
 if [[ $HOST = andermatt ]] ; then;
 	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
@@ -130,12 +129,12 @@ herbstclient chain \
 🍂 keybind Mod4+Mod1+4 substitute 🔜 tags.focus.name chain ⛓️ lock ⛓️ use_index 3 ⛓️ move 🔜 ⛓️ use 🔜 ⛓️ unlock \
 🍂 keybind Mod4+Mod1+5 substitute 🔜 tags.focus.name chain ⛓️ lock ⛓️ use_index 4 ⛓️ move 🔜 ⛓️ use 🔜 ⛓️ unlock \
 🍂 keybind Mod4+Mod1+6 substitute 🔜 tags.focus.name chain ⛓️ lock ⛓️ use_index 5 ⛓️ move 🔜 ⛓️ use 🔜 ⛓️ unlock \
-🍂 keybind Mod4+7 or 🙈 substitute 🆔 my_7️⃣ or 💀 bring 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_7️⃣ 🆕 🙈 chain ⛓️ new_attr string my_7️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_7️⃣ 🆕 \
-🍂 keybind Mod4+8 or 🙈 substitute 🆔 my_8️⃣ or 💀 bring 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_8️⃣ 🆕 🙈 chain ⛓️ new_attr string my_8️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_8️⃣ 🆕 \
-🍂 keybind Mod4+9 or 🙈 substitute 🆔 my_9️⃣ or 💀 bring 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_9️⃣ 🆕 🙈 chain ⛓️ new_attr string my_9️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_9️⃣ 🆕 \
-🍂 keybind Mod4+Mod1+8 substitute 🆔 my_8️⃣ jumpto 🆔 \
-🍂 keybind Mod4+Mod1+7 substitute 🆔 my_7️⃣ jumpto 🆔 \
-🍂 keybind Mod4+Mod1+9 substitute 🆔 my_9️⃣ jumpto 🆔 \
+🍂 keybind Mod4+7 or 🙈 substitute 🆔 my_7️⃣ or 💀 jumpto 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_7️⃣ 🆕 🙈 chain ⛓️ new_attr string my_7️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_7️⃣ 🆕 \
+🍂 keybind Mod4+8 or 🙈 substitute 🆔 my_8️⃣ or 💀 jumpto 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_8️⃣ 🆕 🙈 chain ⛓️ new_attr string my_8️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_8️⃣ 🆕 \
+🍂 keybind Mod4+9 or 🙈 substitute 🆔 my_9️⃣ or 💀 jumpto 🆔 💀 substitute 🆕 clients.focus.winid set_attr my_9️⃣ 🆕 🙈 chain ⛓️ new_attr string my_9️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_9️⃣ 🆕 \
+🍂 keybind Mod4+Mod1+8 substitute 🆔 my_8️⃣ bring 🆔 \
+🍂 keybind Mod4+Mod1+7 substitute 🆔 my_7️⃣ bring 🆔 \
+🍂 keybind Mod4+Mod1+9 substitute 🆔 my_9️⃣ bring 🆔 \
 🍂 keybind Mod4+Control+Shift+7 substitute 🆔 my_7️⃣ close 🆔 \
 🍂 keybind Mod4+Control+Shift+8 substitute 🆔 my_8️⃣ close 🆔 \
 🍂 keybind Mod4+Control+Shift+9 substitute 🆔 my_9️⃣ close 🆔 \
