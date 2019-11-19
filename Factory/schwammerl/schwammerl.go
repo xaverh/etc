@@ -182,6 +182,12 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 				}
 			}
 			goto SENDSTATUS
+		case "rule":
+			if len(action) >= 2 {
+				if action[1] == "new_terminal" {
+					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_terminal", "⛓️", "set_attr", "my_terminal", action[2]).Start()
+				}
+			}
 		case "🔒":
 			if len(action) >= 1 {
 				if action[1] == screen {
