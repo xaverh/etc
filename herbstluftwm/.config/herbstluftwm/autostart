@@ -176,7 +176,7 @@ herbstclient chain \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
-🍂 keybind Mod4+F12 spawn "$TERMINAL" --class Journalctl -e journalctl -b -f -n 1000 \
+🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 spawn ${TERMINAL:-xterm} --class=Journalctl -e "journalctl -b -f -n 1000" \
 🍂 keybind Mod4+F5 cycle_value frame_gap 0 5 10 15 20 \
 🍂 keybind Mod4+F6 chain ⛓️ spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json" ⛓️ spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ silent try spawn killall -USR1 termite ⛓️ silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
 🍂 keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ silent try spawn killall -USR1 termite ⛓️ silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
@@ -210,7 +210,7 @@ $localbinds \
 🍂 rule class=mpv instance=gl index=10 focus=on switchtag=on \
 🍂 rule title='Picture in picture' index=10 focus=off \
 🍂 rule instance=FM0 tag='$' focus=off switchtag=off \
-🍂 rule instance=Journalctl tag='#' focus=off switchtag=off \
+🍂 rule class=Journalctl tag='#' focus=on switchtag=on hook=new_journalctl \
 🍂 rule once class=Google-chrome index=0 focus=on switchtag=on \
 🍂 rule once class=Firefox instance=Navigator index=0 focus=on switchtag=on \
 🍂 rule once class=Code index=0 focus=on switchtag=on \
@@ -224,7 +224,6 @@ $localbinds \
 🍂 rule title~'MuPDF: .*' index=0 focus=on switchtag=on \
 🍂 detect_monitors --no-disjoin \
 🍂 unlock &
-
 
 ~/.config/herbstluftwm/restartpanel.sh
 
