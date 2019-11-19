@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-local music_player = os.getenv('TERMINAL') .. ' --class FM0 -e mpv --mute=no --x11-name FM0 -- '
+os.execute('herbstclient substitute 🏷️ my_📻 close 🏷️')
 
 local radio_stations = {
 	['🇬🇧 🔥\tBBC Radio 1'] = {
@@ -155,9 +155,9 @@ local radio_stations = {
 
 local function play(id)
 	if radio_stations[id] then
-		local success, _, exit_code = os.execute(music_player .. radio_stations[id].url)
+		local success, _, exit_code = os.execute('mpv --mute=no --x11-name=FM0 --force-window=yes ' .. radio_stations[id].url)
 		if not success and exit_code ~= 4 then
-			os.execute(music_player .. radio_stations[id].backup_url)
+			os.execute('mpv --mute=no --x11-name=FM0 --force-window=yes ' .. radio_stations[id].backup_url)
 		end
 		return true
 	else
