@@ -186,6 +186,8 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			if len(action) >= 2 {
 				if action[1] == "new_terminal" {
 					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_terminal", "⛓️", "set_attr", "my_terminal", action[2]).Start()
+				} else if action[1] == "new_journalctl" {
+					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_journalctl", "⛓️", "set_attr", "my_journalctl", action[2]).Start()
 				}
 			}
 		case "🔒":
