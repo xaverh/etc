@@ -138,6 +138,7 @@ code \
 --install-extension eg2.vscode-npm-script \
 --install-extension esbenp.prettier-vscode \
 --install-extension James-Yu.latex-workshop \
+--install-extension ms-python.python \
 --install-extension ms-vscode.cpptools \
 --install-extension ms-vscode.Go \
 --install-extension ms-vscode.vscode-typescript-tslint-plugin \
