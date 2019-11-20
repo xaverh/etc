@@ -56,14 +56,14 @@ echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo pts/0  >> /mnt/etc/securetty
 
 # As needed
-cp ~/etc/Factory/etc-systemd-network-10\\x2dwireless.network /mnt/etc/systemd/network/10-wireless.network
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 cp ~/etc/Factory/etc-udev-rules.d-90x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
-/etc/mkinitcpio.conf
-# HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck"
+cp ~/etc/Factory/etc-iwd-main.conf /mnt/etc/iwd/main.conf
+# /etc/mkinitcpio.conf
+# HOOKS="systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems"
 # sd-encrypt only needed if hd is encrypted
 
 systemd-nspawn -D /mnt passwd root
@@ -86,7 +86,7 @@ pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts -
 pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee gstreamer-vaapi abcde weechat opus-tools vulkan-intel mons
 
 pacman -S --needed --asdeps gst-plugins-ugly gst-libav x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar
-# as-deps: libdvdcss libva-intel-driver linux-headers
+# as-deps: libdvdcss libva-intel-driver linux-headers crda
 
 localectl set-locale LANG=en_US.UTF-8
 localectl set-x11-keymap us pc104 altgr-intl "compose:menu"
@@ -101,11 +101,12 @@ systemctl enable iwd.service
 systemctl enable bluetooth.service
 systemctl enable slock@xha.service
 systemctl mask lvm2.service
+systemctl mask systemd-fsck-root.service
 
 systemctl edit getty@tty1
 # [Service]
 # ExecStart=
-# ExecStart=-/usr/bin/agetty --autologin xha --noclear %I $TERM
+# ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin xha --noclear %I $TERM
 
 bootctl install
 
