@@ -100,6 +100,14 @@ herbstclient chain \
 🍂 keybind Mod4+Control+Down    resize down +$resizestep \
 🍂 keybind Mod4+Control+Up      resize up +$resizestep \
 🍂 keybind Mod4+Control+Right   resize right +$resizestep \
+🍂 keybind Mod4+Mod1+Right substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e right ⛓️ or 🙉 shift -e left 🙉 chain 🔗 shift_to_monitor -l 🔗 focus_monitor -l ⛓️ focus -e right ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+Left substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e left ⛓️ or 🙉 shift -e right 🙉 chain 🔗 shift_to_monitor -r 🔗 focus_monitor -r ⛓️ focus -e left ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+Up substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e up ⛓️ or 🙉 shift -e down 🙉 chain 🔗 shift_to_monitor -d 🔗 focus_monitor -d ⛓️ focus -e up ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+Down substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e down ⛓️ or 🙉 shift -e up 🙉 chain 🔗 shift_to_monitor -u 🔗 focus_monitor -u ⛓️ focus -e down ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+l substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e right ⛓️ or 🙉 shift -e left 🙉 chain 🔗 shift_to_monitor -l 🔗 focus_monitor -l ⛓️ focus -e right ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+h substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e left ⛓️ or 🙉 shift -e right 🙉 chain 🔗 shift_to_monitor -r 🔗 focus_monitor -r ⛓️ focus -e left ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+k substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e up ⛓️ or 🙉 shift -e down 🙉 chain 🔗 shift_to_monitor -d 🔗 focus_monitor -d ⛓️ focus -e up ⛓️ bring 🔛 ⛓️ unlock \
+🍂 keybind Mod4+Mod1+j substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e down ⛓️ or 🙉 shift -e up 🙉 chain 🔗 shift_to_monitor -u 🔗 focus_monitor -u ⛓️ focus -e down ⛓️ bring 🔛 ⛓️ unlock \
 \
 🍂 silent rename default '!' \
 🍂 add '@' \
@@ -141,8 +149,6 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+7 chain ⛓️ new_attr string my_7️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_7️⃣ 🆕 \
 🍂 keybind Mod4+Shift+8 chain ⛓️ new_attr string my_8️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_8️⃣ 🆕 \
 🍂 keybind Mod4+Shift+9 chain ⛓️ new_attr string my_9️⃣ ⛓️ substitute 🆕 clients.focus.winid set_attr my_9️⃣ 🆕 \
-🍂 keybind Mod4+asciicircum use_previous \
-🍂 keybind Mod4+grave use_previous \
 🍂 keybind Mod4+r remove \
 🍂 keybind Mod4+Shift+f floating toggle \
 🍂 keybind Mod4+f fullscreen toggle \
@@ -151,15 +157,18 @@ herbstclient chain \
 🍂 mousebind Mod4+Button1 move \
 🍂 mousebind Mod4+Button2 zoom \
 🍂 mousebind Mod4+Button3 resize \
-🍂 keybind Mod4+Next cycle_all --skip-invisible +1 \
-🍂 keybind Mod4+Prior cycle_all --skip-invisible -1 \
-🍂 keybind Mod1+Tab cycle_all --skip-invisible +1 \
-🍂 keybind Mod1+Shift+Tab cycle_all --skip-invisible -1 \
+🍂 keybind Mod4+asciicircum cycle_frame -1 \
+🍂 keybind Mod4+Mod1+asciicircum rotate \
+🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame -1 ⛓️ bring 🧓 ⛓️ unlock \
+🍂 keybind Mod4+grave cycle_frame -1 \
+🍂 keybind Mod4+Mod1+grave rotate \
+🍂 keybind Mod4+Shift+grave substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame -1 ⛓️ bring 🧓 ⛓️ unlock \
+🍂 keybind Mod1+Tab use_previous \
 🍂 keybind Mod4+Tab cycle +1 \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
 🍂 keybind Mod4+Return or 🙈 substitute 🆔 my_terminal bring 🆔 🙈 and 🥨 rule once maxage=5 class=Termite hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} \
-🍂 keybind Mod4+Control+Shift+Return and 🥨 rule once maxage=5 class=Termite hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
+🍂 keybind Mod4+Control+Return and 🥨 rule once maxage=5 class=Termite hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Termite 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
 🍂 keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))" \
 🍂 keybind Mod4+F2 spawn herbstadler \
@@ -172,6 +181,7 @@ herbstclient chain \
 🍂 keybind Mod4+equal spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
 🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' $HOME/.local/share/emoji.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
+🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
 🍂 keybind Mod4+t spawn ${TERMINAL:-xterm} -e "$SHELL -c \"tmux new-session -A -s \\\$(tmux list-clients -F \\\"#S\\\" 2> /dev/null | rofi -dmenu -i -p 'tmux')\"" \
 🍂 keybind Mod4+Shift+t spawn ${TERMINAL:-xterm} -e tmux \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
@@ -228,7 +238,6 @@ $localbinds \
 
 ~/.config/herbstluftwm/restartpanel.sh
 
-# TODO find running journalctl instance
 # herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
 # IDEA: store layouts in z/y
 # 🍂 keybind Mod4+Control+1 load '(clients max:0)' \
@@ -236,6 +245,4 @@ $localbinds \
 # 🍂 keybind Mod4+Control+3 load '(clients grid:0)' \
 # 🍂 keybind Mod4+Control+4 load '(clients max:0)' \
 # 🍂 keybind Mod4+Control+5 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
-# 🍂 substitute 🏷️ tags.focus.name substitute 🖥️ monitors.focus.index emit_hook tag_changed 🏷️ 🖥️
-# 🍂 substitute TAG tags.focus.name substitute MONITOR monitors.focus.index emit_hook tag_changed TAG MONITOR
 # 🍂 set tree_style "-| |\`--." \
