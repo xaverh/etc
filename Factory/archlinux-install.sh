@@ -98,6 +98,7 @@ systemctl enable --now systemd-timesyncd.service
 systemctl enable iwd.service
 systemctl enable bluetooth.service
 systemctl enable slock@xha.service
+systemctl enable fstrim.timer
 systemctl mask lvm2.service
 systemctl mask systemd-fsck-root.service
 
