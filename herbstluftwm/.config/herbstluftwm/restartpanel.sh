@@ -7,6 +7,6 @@ for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
 	x=${geometry[1]}
 	y=${geometry[2]}
 	width="${geometry[3]}"
-	(schwammerl "$monitor" | lemonbar -g "$(printf '%dx%d%+d%+d' $width $panel_height $x $y)" -f -uw-ttyp0-medium-r-normal--14-130-75-75-c-70-iso10646-1 -f "-wenquanyi-wenquanyi bitmap song-medium-r-normal--12-120-75-75-p-119-iso10646-1" -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL ) &
+	(schwammerl "$monitor" | lemonbar -g "$(printf '%dx%d%+d%+d' $width $panel_height $x $y)" -f -uw-ttyp0-medium-r-normal--14-130-75-75-c-70-iso10646-1 -f "-wenquanyi-wenquanyi bitmap song-medium-r-normal--12-120-75-75-p-119-iso10646-1" -a 13 -B "$QI_W" -F "$QI_B_K" | $SHELL ) 2> /tmp/herbstlog &
 	herbstclient pad "$monitor" "$panel_height"
 done
