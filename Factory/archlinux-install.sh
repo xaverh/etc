@@ -129,31 +129,7 @@ xdg-mime default sxiv.desktop image/tiff
 
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
-code \
---install-extension bierner.markdown-checkbox \
---install-extension bierner.markdown-footnotes \
---install-extension bierner.markdown-mermaid \
---install-extension dbaeumer.vscode-eslint \
---install-extension eg2.vscode-npm-script \
---install-extension esbenp.prettier-vscode \
---install-extension James-Yu.latex-workshop \
---install-extension ms-python.python \
---install-extension ms-vscode.cpptools \
---install-extension ms-vscode.Go \
---install-extension ms-vscode.vscode-typescript-tslint-plugin \
---install-extension msjsdiag.debugger-for-chrome \
---install-extension nhoizey.gremlins \
---install-extension octref.vetur \
---install-extension pflannery.vscode-versionlens \
---install-extension sdras.night-owl \
---install-extension sdras.vue-vscode-snippets \
---install-extension trixnz.vscode-lua \
---install-extension twxs.cmake \
---install-extension VisualStudioExptTeam.vscodeintellicode \
---install-extension wmaurer.change-case \
---install-extension xaver.clang-format \
---install-extension xaver.theme-qillqaq \
---install-extension xaver.theme-ysgrifennwr
+code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-python.python --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 
 systemctl --user enable --now ssh-agent.service
 systemctl --user enable --now clipmenud.service
