@@ -23,7 +23,6 @@ const (
 var (
 	networkDevices, _ = net.Interfaces()
 	wifiDevice        = ""
-	thermalZone       = "1"
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 	homeDirectory     = os.Getenv("HOME")
 	backdrops         = map[string]string{
@@ -227,7 +226,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	}
 }
 
-func updateTemperature(θ chan<- string) {
+func updateTemperature(θ chan<- string, thermalZone string) {
 	for {
 		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
 		if err != nil {
@@ -414,8 +413,10 @@ func updateWIFI(wifi chan<- string) {
 
 func main() {
 	screen := os.Args[1]
-	if os.Getenv("HOSTNAME") == "airolo" {
-		thermalZone = "2"
+	thermalZone      := "1"
+	var hostname, _ = ioutil.ReadFile("/etc/hostname")
+	if string(hostname) == "airolo\n" {
+		thermalZone="2"
 	}
 	for _, v := range networkDevices {
 		if v.Name[0] == 'w' {
@@ -433,7 +434,7 @@ func main() {
 	hlwmChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
-	go updateTemperature(tempChan)
+	go updateTemperature(tempChan, thermalZone)
 	go updateWIFI(wifiChan)
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
