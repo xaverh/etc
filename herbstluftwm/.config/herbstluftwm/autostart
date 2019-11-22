@@ -4,25 +4,25 @@ resizestep=0.02
 accentcolors=("$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B")
 accentcolor="$accentcolors[RANDOM % $#accentcolors + 1]"
 mutecmd=(and 🥨 spawn $SHELL -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
-lowervolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\" && notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
-raisevolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\" && notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }')%\"" )
-strawberryplaycmd=(strawberry --play-pause)
-strawberrynextcmd=(strawberry --next)
-strawberryprevcmd=(strawberry --restart-or-previous)
+lowervolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\" && notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
+raisevolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\" && notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
+musicplaycmd=(deadbeef --play-pause)
+musicnextcmd=(deadbeef --next)
+musicprevcmd=(deadbeef --prev)
 
 if [[ $HOST = andermatt ]] ; then;
 	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
 	localbinds=(🍂 or 🔙 silent get_attr my_touchpad_enabled 🔙 new_attr bool my_touchpad_enabled \
 	🍂 set_attr my_touchpad_enabled true \
 	🍂 keybind XF86TouchpadToggle or 🔙 and 🥨 compare my_touchpad_enabled = true 🥨 spawn xinput disable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled false 🔙 and 🥨 spawn xinput enable 'AlpsPS/2 ALPS GlidePoint' 🥨 set_attr my_touchpad_enabled true \
-	🍂 keybind XF86MonBrightnessDown and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔅 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness ))%\"" \
-	🍂 keybind XF86MonBrightnessUp and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔆 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness ))%\"" \
+	🍂 keybind XF86MonBrightnessDown and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness); new_brightness=\$((-$maxbrightness/10+\$brightness)); actual_brightness=\$((\$new_brightness > 0 ? \$new_brightness : 0)); echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔅 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"" \
+	🍂 keybind XF86MonBrightnessUp and 🥨 spawn $SHELL -c "brightness=\$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=\$(($maxbrightness/10+\$brightness)) ; actual_brightness=\$((\$new_brightness < $maxbrightness ? \$new_brightness : $maxbrightness)) ; echo \$actual_brightness > /sys/class/backlight/intel_backlight/brightness" 🥨 spawn $SHELL -c "notify-send \"🔆 \$(( \$(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"" \
 	🍂 keybind XF86AudioMute $mutecmd \
 	🍂 keybind XF86AudioLowerVolume $lowervolumecmd \
 	🍂 keybind XF86AudioRaiseVolume $raisevolumecmd \
-	🍂 keybind XF86AudioPlay spawn $strawberryplaycmd \
-	🍂 keybind XF86AudioNext spawn $strawberrynextcmd \
-	🍂 keybind XF86AudioPrev spawn $strawberryprevcmd)
+	🍂 keybind XF86AudioPlay spawn $musicplaycmd \
+	🍂 keybind XF86AudioNext spawn $musicnextcmd \
+	🍂 keybind XF86AudioPrev spawn $musicprevcmd)
 fi
 
 herbstclient chain \
@@ -89,8 +89,9 @@ herbstclient chain \
 🍂 keybind Mod4-Shift-j or / shift down / chain , lock , shift_to_monitor -d , focus_monitor -d , unlock \
 🍂 keybind Mod4-Shift-k or / shift up / chain , lock , shift_to_monitor -u , focus_monitor -u , unlock \
 🍂 keybind Mod4-Shift-l or / shift right / chain , lock , shift_to_monitor -r , focus_monitor -r , unlock \
-🍂 keybind Mod4+backslash split right 0.6180339887498949 \
-🍂 keybind Mod4+minus split bottom 0.6180339887498949 \
+🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+🍂 keybind Mod4+minus chain ⛓️ split bottom 0.6180339887498949 ⛓️ focus -e down \
 🍂 keybind Mod4+x split explode \
 🍂 keybind Mod4+Control+h       resize left +$resizestep \
 🍂 keybind Mod4+Control+j       resize down +$resizestep \
@@ -178,7 +179,7 @@ herbstclient chain \
 🍂 keybind Mod4+Print spawn flameshot full -c -p /tmp \
 🍂 keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')" \
 🍂 keybind Mod4+i spawn clipmenu -p clipboard \
-🍂 keybind Mod4+equal spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
+🍂 keybind Mod4+Insert spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
 🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' $HOME/.local/share/emoji.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
@@ -196,7 +197,9 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+F7 and 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" 🥨 emit_hook 🔏 \
 🍂 keybind Mod4+Control+Shift+F7 spawn xsetroot -solid "$QI_W" \
 🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
+🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame \
+🍂 keybind Mod4+Shift+numbersign toggle always_show_frame \
 🍂 keybind Mod4+p spawn $HOME/.config/herbstluftwm/herbstschau.sh \
 🍂 keybind Mod4+m or 🖕 and 🥨 compare monitors.focus.lock_tag  = false 🥨 lock_tag "" 🥨 substitute 🖥️ monitors.focus.index emit_hook 🔒 🖥️ 🖕 and 🥨 unlock_tag "" 🥨 substitute 💻 monitors.focus.index emit_hook 🔓 💻 \
 🍂 keybind Mod4+comma focus_monitor -l \
@@ -209,9 +212,9 @@ herbstclient chain \
 🍂 keybind Mod4+KP_Insert $mutecmd \
 🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
 🍂 keybind Mod4+KP_Add $raisevolumecmd \
-🍂 keybind Mod4+KP_End spawn $strawberryplaycmd \
-🍂 keybind Mod4+KP_Multiply spawn $strawberrynextcmd \
-🍂 keybind Mod4+KP_Divide spawn $strawberryprevcmd \
+🍂 keybind Mod4+KP_End spawn $musicplaycmd \
+🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
+🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
 $localbinds \
 🍂 rule focus=on \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on \
@@ -231,6 +234,7 @@ $localbinds \
 🍂 rule instance=Weechat tag='^' \
 🍂 rule class=presenter title=sent instance=sent fullscreen=true \
 🍂 rule class=strawberry tag='$' focus=on switchtag=off \
+🍂 rule class=Deadbeef tag='$' focus=on switchtag=off \
 🍂 rule class=Spotify tag='$' focus=on switchtag=off \
 🍂 rule title~'MuPDF: .*' index=0 focus=on switchtag=on \
 🍂 detect_monitors --no-disjoin \
