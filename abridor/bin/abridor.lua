@@ -7,7 +7,7 @@ local ls
 function open_folder(filename)
 	local application_file =
 		io.popen(
-		'echo "📂 nnn\n🖼️ sxiv\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | rofi -dmenu -i -p "Open ' ..
+		'echo "📂 nnn\n🖼️ sxiv\n♾️ Visual Studio Code\n📼 mpv\n🐮 DeaDBeeF" | rofi -dmenu -i -p "Open ' ..
 			filename .. ' with…"'
 	)
 	local application = application_file:read('a')
@@ -19,9 +19,9 @@ function open_folder(filename)
 		os.execute('code -n "' .. filename .. '"')
 	elseif application == '📼 mpv\n' then
 		os.execute('mpv "' .. filename .. '"')
-	elseif application == '🍓 Strawberry\n' then
-		os.execute('strawberry -a "' .. filename .. '"')
-		os.execute('strawberry -p')
+	elseif application == '🐮 DeaDBeeF\n' then
+		os.execute('deadbeef --queue "' .. filename .. '"')
+		os.execute('deadbeef --play')
 	end
 end
 
