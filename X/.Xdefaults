@@ -61,3 +61,14 @@ rofi.window-command:                 herbstclient bring {window}
 ! Grey 90%, R=229, G=230, B=230
 *.color15: #e5e6e6
 *.foreground: #e5e6e6
+
+twobwm.border_width: 7
+twobwm.outer_border: 3
+twobwm.focus_color: #82a7c7
+twobwm.unfocus_color: #cdd5d5
+twobwm.fixed_color: #faf669
+twobwm.unkill_color: #b6fa69
+twobwm.outer_border_color: #87737b
+twobwm.fixed_unkill_color: #faad69
+twobwm.inverted_colors: true
+twobwm.enable_compton: false

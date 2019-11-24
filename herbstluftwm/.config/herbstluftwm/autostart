@@ -32,40 +32,35 @@ herbstclient chain \
 🍂 unrule --all \
 🍂 and 🥨 silent new_attr color my_🦎 🥨 set_attr my_🦎 `printf -- "#%06x" $(shuf -i0-16777215 -n1)` \
 \
-🍂 set frame_gap 5 \
+🍂 set frame_gap 15 \
 🍂 set frame_padding 0 \
 🍂 set window_gap 0 \
 🍂 set snap_distance 10 \
 🍂 set snap_gap 0 \
-🍂 set mouse_recenter_gap 0 \
-🍂 set frame_border_active_color "$QI_W" \
-🍂 set frame_border_normal_color "$QI_W" \
-🍂 set frame_border_inner_color "$QI_W" \
-🍂 set frame_bg_active_color "$accentcolor" \
-🍂 set emit_hook 🖌️ \
-🍂 set frame_bg_normal_color "$QI_B_W" \
+🍂 set mouse_recenter_gap 1 \
+🍂 set frame_border_active_color "$YS_B_C" \
+🍂 set frame_border_normal_color "$YS_B_K" \
+🍂 set frame_bg_active_color "$YS_C" \
+🍂 set frame_bg_normal_color "$YS_B_K" \
 🍂 set frame_bg_transparent 1 \
-🍂 set frame_transparent_width 5 \
-🍂 set frame_border_width 1 \
+🍂 set frame_transparent_width 0 \
+🍂 set frame_border_width 5 \
 🍂 set frame_border_inner_width 0 \
 🍂 set focus_crosses_monitor_boundaries 1 \
 🍂 set raise_on_focus 0 \
 🍂 set raise_on_focus_temporarily 0 \
 🍂 set raise_on_click 1 \
-🍂 set window_border_width 4 \
-🍂 set window_border_inner_width 1 \
-🍂 set window_border_active_color "$accentcolor" \
-🍂 set window_border_normal_color "$QI_B_W" \
+🍂 set window_border_width 5 \
+🍂 set window_border_inner_width 0 \
+🍂 set window_border_active_color "$YS_C" \
+🍂 set window_border_normal_color '#696969' \
 🍂 set window_border_urgent_color "$QI_R" \
-🍂 set window_border_inner_color "$QI_W" \
 🍂 set always_show_frame 0 \
-🍂 set frame_normal_opacity 100 \
-🍂 set frame_active_opacity 100 \
 🍂 set default_frame_layout 2 \
 🍂 set default_direction_external_only 0 \
 🍂 set gapless_grid 1 \
-🍂 set smart_frame_surroundings 0 \
-🍂 set smart_window_surroundings 0 \
+🍂 set smart_frame_surroundings 1 \
+🍂 set smart_window_surroundings 1 \
 🍂 set focus_follows_mouse 0 \
 🍂 set focus_stealing_prevention 0 \
 🍂 set swap_monitors_to_get_tag 1 \
@@ -208,13 +203,14 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+period shift_to_monitor -r \
 🍂 keybind Mod4+Control+Shift+q quit \
 🍂 keybind Mod4+Shift+q reload \
-🍂 keybind Mod4+F4 close \
+🍂 keybind Mod4+w close \
 🍂 keybind Mod4+KP_Insert $mutecmd \
 🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
 🍂 keybind Mod4+KP_Add $raisevolumecmd \
 🍂 keybind Mod4+KP_End spawn $musicplaycmd \
 🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
 🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
+🍂 keybind Mod4+b spawn firefox \
 $localbinds \
 🍂 rule focus=on \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on \
