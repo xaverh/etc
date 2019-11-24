@@ -25,15 +25,6 @@ var (
 	wifiDevice        = ""
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 	homeDirectory     = os.Getenv("HOME")
-	backdrops         = map[string]string{
-		"!": homeDirectory + "/.local/share/backdrops/Southwest.xbm",
-		"@": homeDirectory + "/.local/share/backdrops/LatticeBig.xbm",
-		"#": homeDirectory + "/.local/share/backdrops/BrickWall.xbm",
-		"$": homeDirectory + "/.local/share/backdrops/Toronto.xbm",
-		"%": homeDirectory + "/.local/share/backdrops/E7bMSiv.xbm",
-		"^": homeDirectory + "/.local/share/backdrops/Dolphins.xbm",
-	}
-	// TODO: hook to enable/disable backdrop changing
 )
 
 func fixed(rate int) string {
@@ -112,46 +103,82 @@ func getCurFrameWCount() string {
 	return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
 }
 
-func getAccentColor() string {
-	accentColorQuery, err := exec.Command("herbstclient", "get", "window_border_active_color").Output()
-	if err != nil {
-		return "-"
+type colorScheme struct{ W, R, G, Y, B, M, C, K, BW, BR, BG, BY, BB, BM, BC, BK string }
+
+func getScheme(prefix string) colorScheme {
+	return colorScheme{
+		W:  os.Getenv(prefix + "_W"),
+		R:  os.Getenv(prefix + "_R"),
+		G:  os.Getenv(prefix + "_G"),
+		Y:  os.Getenv(prefix + "_Y"),
+		B:  os.Getenv(prefix + "_B"),
+		M:  os.Getenv(prefix + "_M"),
+		C:  os.Getenv(prefix + "_C"),
+		K:  os.Getenv(prefix + "_K"),
+		BW: os.Getenv(prefix + "_B_W"),
+		BR: os.Getenv(prefix + "_B_R"),
+		BG: os.Getenv(prefix + "_B_G"),
+		BY: os.Getenv(prefix + "_B_Y"),
+		BB: os.Getenv(prefix + "_B_B"),
+		BM: os.Getenv(prefix + "_B_M"),
+		BC: os.Getenv(prefix + "_B_C"),
+		BK: os.Getenv(prefix + "_B_K"),
 	}
-	return string(accentColorQuery)[:7]
 }
 
-func changeBackdrop(color string, tag string) {
-	exec.Command("xsetroot", "-bitmap", backdrops[tag], "-bg", os.Getenv("QI_W"), "-fg", color).Start()
-}
-
-func changeBackdropColor() string {
-	getBackdropColorAndTagQuery, err := exec.Command("herbstclient", "and", "🥨", "get_attr", "my_🦎", "🥨", "get_attr", "tags.focus.name").Output()
-	if err == nil {
-		backdropColorAndTag := string(getBackdropColorAndTagQuery)
-		changeBackdrop(backdropColorAndTag[:7], backdropColorAndTag[7:8])
-		return backdropColorAndTag[:7]
+func getTagColors(tag string, currentColorScheme colorScheme) (frameBorderActiveColor string, windowBorderActiveColor string) {
+	switch tag {
+	case "!":
+		frameBorderActiveColor = currentColorScheme.BR
+		windowBorderActiveColor = currentColorScheme.R
+	case "@":
+		frameBorderActiveColor = currentColorScheme.BC
+		windowBorderActiveColor = currentColorScheme.C
+	case "#":
+		frameBorderActiveColor = currentColorScheme.BM
+		windowBorderActiveColor = currentColorScheme.M
+	case "$":
+		frameBorderActiveColor = currentColorScheme.BG
+		windowBorderActiveColor = currentColorScheme.G
+	case "%":
+		frameBorderActiveColor = currentColorScheme.BB
+		windowBorderActiveColor = currentColorScheme.B
+	case "^":
+		fallthrough
+	default:
+		frameBorderActiveColor = currentColorScheme.BY
+		windowBorderActiveColor = currentColorScheme.Y
 	}
-	return "#ff00ff"
+	return frameBorderActiveColor, windowBorderActiveColor
 }
 
 func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
-	var workspaces, windowTitle, backdropColor string
+	var workspaces, windowTitle string
+	var currentColorScheme colorScheme
+	if os.Getenv("IS_YSGRIFENNWR") == "1" {
+		currentColorScheme = getScheme("YS")
+	} else {
+		currentColorScheme = getScheme("QI")
+	}
+	frameBorderActiveColor := currentColorScheme.BR
+	windowBorderActiveColor := currentColorScheme.R
+	tagColor := currentColorScheme.R
 	lockedSymbol := " "
-	doesChangeBackdrops := false
+	{
+		out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
+		if err == nil {
+			frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
+		}
+		tagColor = windowBorderActiveColor
+		exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
+		isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
+		if err1 == nil && string(isLockedQuery) == "true\n" {
+			lockedSymbol = "*"
+		}
+	}
 	cmd := exec.Command("herbstclient", "--idle")
 	out, err := cmd.StdoutPipe()
 	curFrameWCount := getCurFrameWCount()
-	accentColor := getAccentColor()
-	isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
-	backdropColorQuery, err2 := exec.Command("herbstclient", "get_attr", "my_🦎").Output()
-	if err2 == nil {
-		backdropColor = string(backdropColorQuery)[:7]
-	} else {
-		backdropColor = "#ff00ff"
-	}
-	if err1 == nil && string(isLockedQuery) == "true\n" {
-		lockedSymbol = "*"
-	}
 	err = cmd.Start()
 	if err != nil {
 		workspaces = fmt.Sprintf("Failed to start err=%v", err)
@@ -160,14 +187,10 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	for ok := true; ok; ok = scanner.Scan() {
 		action := strings.Split(scanner.Text(), "\t")
 		switch action[0] {
-		case "🔏":
-			doesChangeBackdrops = false
 		case "tag_changed":
-			if doesChangeBackdrops {
-				if len(action) >= 1 {
-					changeBackdrop(backdropColor, action[1])
-				}
-			}
+			frameBorderActiveColor, windowBorderActiveColor = getTagColors(action[1], currentColorScheme)
+			tagColor = windowBorderActiveColor
+			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
 		case "focus_changed":
 			curFrameWCount = getCurFrameWCount()
 			fallthrough
@@ -204,18 +227,29 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 					lockedSymbol = " "
 				}
 			}
-		case "🖌️":
-			accentColor = getAccentColor()
-		case "🦎":
-			doesChangeBackdrops = true
-			backdropColor = changeBackdropColor()
+		case "🧚":
+			currentColorScheme = getScheme("YS")
+			out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
+			if err == nil {
+				frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
+			}
+			tagColor = windowBorderActiveColor
+			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
+		case "🧛":
+			currentColorScheme = getScheme("QI")
+			out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
+			if err == nil {
+				frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
+			}
+			tagColor = windowBorderActiveColor
+			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
 		}
 		{
 			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
 			if err != nil {
 				workspaces = "ERROR: Failed to display tags."
 			} else {
-				workspaces = formatHerbstluftwmStatus(string(out), screen, lockedSymbol, accentColor)
+				workspaces = formatHerbstluftwmStatus(string(out), screen, lockedSymbol, tagColor)
 			}
 		}
 	SENDSTATUS:
@@ -413,10 +447,10 @@ func updateWIFI(wifi chan<- string) {
 
 func main() {
 	screen := os.Args[1]
-	thermalZone      := "1"
+	thermalZone := "1"
 	var hostname, _ = ioutil.ReadFile("/etc/hostname")
 	if string(hostname) == "airolo\n" {
-		thermalZone="2"
+		thermalZone = "2"
 	}
 	for _, v := range networkDevices {
 		if v.Name[0] == 'w' {
