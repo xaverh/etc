@@ -8,6 +8,7 @@ export PAGER=less
 export AWS_REGION=eu-central-1
 export CM_LAUNCHER=rofi
 export CM_DIR=$XDG_RUNTIME_DIR
+export READNULLCMD=less
 
 # (( EUID != 0 )) && umask 0077
 

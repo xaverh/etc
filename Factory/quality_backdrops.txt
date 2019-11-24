@@ -6,13 +6,16 @@ Dolphins.xbm -fg #422d82 -bg #cdcf12
 Convex.xbm -fg #be6891 -bg #cfcb3f
 E7bMSiv.xbm -fg #d6add3 -bg #589665
 Burl.xbm -fg #2a2930 -bg #c53235
+E7bMSiv.xbm -fg #43f58b -bg #ee309c
+Dolphins.xbm -fg #255917 -bg #e6c3c1
+Convex.xbm -fg #efd1c7 -bg #511c7e
 wall.xbm -fg #440738 -bg #ad6336
 E7bMSiv.xbm -fg #c37c5a -bg #23b5d4
 Ridged.xbm -fg #986636 -bg #48071f
 Dune.xbm -fg #722b09 -bg #d1c382
 Burl.xbm -fg #2c2e02 -bg #7b1bb1
 E7bMSiv.xbm -fg #7b550f -bg #361919
-🦎 #902c25 #1e1e1e
+E7bMSiv.xbm -fg #902c25 -bg #1e1e1e
 SkyLight.xbm -fg #bc851e -bg #932fa2
 Ridged.xbm -fg #6c021a -bg #00d2e7
 E7bMSiv.xbm -fg #5f616c -bg #030bd0

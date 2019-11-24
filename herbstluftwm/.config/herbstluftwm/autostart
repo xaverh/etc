@@ -1,14 +1,26 @@
 #!/usr/bin/zsh
 
 resizestep=0.02
-accentcolors=("$QI_G" "$QI_M" "$QI_C" "$QI_Y" "$QI_B")
-accentcolor="$accentcolors[RANDOM % $#accentcolors + 1]"
 mutecmd=(and 🥨 spawn $SHELL -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
 lowervolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\" && notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
 raisevolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\" && notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
 musicplaycmd=(deadbeef --play-pause)
 musicnextcmd=(deadbeef --next)
 musicprevcmd=(deadbeef --prev)
+qillqaqify=(chain \
+💱 try unsetenv IS_YSGRIFENNWR \
+💱 spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \
+💱 spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" \
+💱 silent try spawn killall -USR1 termite \
+💱 silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
+💱 emit_hook 🧛)
+ysgrifennwrify=(chain \
+💱 setenv IS_YSGRIFENNWR 1 \
+💱 spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json" \
+💱 spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" \
+💱 silent try spawn killall -USR1 termite \
+💱 silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
+💱 emit_hook 🧚)
 
 if [[ $HOST = andermatt ]] ; then;
 	maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness)
@@ -30,7 +42,6 @@ herbstclient chain \
 🍂 keyunbind --all \
 🍂 mouseunbind --all \
 🍂 unrule --all \
-🍂 and 🥨 silent new_attr color my_🦎 🥨 set_attr my_🦎 `printf -- "#%06x" $(shuf -i0-16777215 -n1)` \
 \
 🍂 set frame_gap 15 \
 🍂 set frame_padding 0 \
@@ -38,10 +49,8 @@ herbstclient chain \
 🍂 set snap_distance 10 \
 🍂 set snap_gap 0 \
 🍂 set mouse_recenter_gap 1 \
-🍂 set frame_border_active_color "$YS_B_C" \
-🍂 set frame_border_normal_color "$YS_B_K" \
-🍂 set frame_bg_active_color "$YS_C" \
-🍂 set frame_bg_normal_color "$YS_B_K" \
+🍂 set frame_border_normal_color '#515151' \
+🍂 and 🥨 new_attr bool my_colors_not_yet_set 🥨 set frame_border_active_color "$QI_B_R" 🥨 set window_border_active_color "$QI_R" \
 🍂 set frame_bg_transparent 1 \
 🍂 set frame_transparent_width 0 \
 🍂 set frame_border_width 5 \
@@ -52,9 +61,8 @@ herbstclient chain \
 🍂 set raise_on_click 1 \
 🍂 set window_border_width 5 \
 🍂 set window_border_inner_width 0 \
-🍂 set window_border_active_color "$YS_C" \
 🍂 set window_border_normal_color '#696969' \
-🍂 set window_border_urgent_color "$QI_R" \
+🍂 set window_border_urgent_color red \
 🍂 set always_show_frame 0 \
 🍂 set default_frame_layout 2 \
 🍂 set default_direction_external_only 0 \
@@ -68,14 +76,14 @@ herbstclient chain \
 🍂 set tree_style '├│ ├└──┬' \
 🍂 set update_dragged_clients 1 \
 \
-🍂 keybind Mod4+Left  focus left \
-🍂 keybind Mod4+Down  focus down \
-🍂 keybind Mod4+Up    focus up \
+🍂 keybind Mod4+Left focus left \
+🍂 keybind Mod4+Down focus down \
+🍂 keybind Mod4+Up focus up \
 🍂 keybind Mod4+Right focus right \
-🍂 keybind Mod4+h     focus left \
-🍂 keybind Mod4+j     focus down \
-🍂 keybind Mod4+k     focus up \
-🍂 keybind Mod4+l     focus right \
+🍂 keybind Mod4+h focus left \
+🍂 keybind Mod4+j focus down \
+🍂 keybind Mod4+k focus up \
+🍂 keybind Mod4+l focus right \
 🍂 keybind Mod4-Shift-Left or / shift left / chain , lock , shift_to_monitor -l , focus_monitor -l , unlock \
 🍂 keybind Mod4-Shift-Down or / shift down / chain , lock , shift_to_monitor -d , focus_monitor -d , unlock \
 🍂 keybind Mod4-Shift-Up or / shift up / chain , lock , shift_to_monitor -u , focus_monitor -u , unlock \
@@ -88,14 +96,14 @@ herbstclient chain \
 🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
 🍂 keybind Mod4+minus chain ⛓️ split bottom 0.6180339887498949 ⛓️ focus -e down \
 🍂 keybind Mod4+x split explode \
-🍂 keybind Mod4+Control+h       resize left +$resizestep \
-🍂 keybind Mod4+Control+j       resize down +$resizestep \
-🍂 keybind Mod4+Control+k       resize up +$resizestep \
-🍂 keybind Mod4+Control+l       resize right +$resizestep \
-🍂 keybind Mod4+Control+Left    resize left +$resizestep \
-🍂 keybind Mod4+Control+Down    resize down +$resizestep \
-🍂 keybind Mod4+Control+Up      resize up +$resizestep \
-🍂 keybind Mod4+Control+Right   resize right +$resizestep \
+🍂 keybind Mod4+Control+h resize left +$resizestep \
+🍂 keybind Mod4+Control+j resize down +$resizestep \
+🍂 keybind Mod4+Control+k resize up +$resizestep \
+🍂 keybind Mod4+Control+l resize right +$resizestep \
+🍂 keybind Mod4+Control+Left resize left +$resizestep \
+🍂 keybind Mod4+Control+Down resize down +$resizestep \
+🍂 keybind Mod4+Control+Up resize up +$resizestep \
+🍂 keybind Mod4+Control+Right resize right +$resizestep \
 🍂 keybind Mod4+Mod1+Right substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e right ⛓️ or 🙉 shift -e left 🙉 chain 🔗 shift_to_monitor -l 🔗 focus_monitor -l ⛓️ focus -e right ⛓️ bring 🔛 ⛓️ unlock \
 🍂 keybind Mod4+Mod1+Left substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e left ⛓️ or 🙉 shift -e right 🙉 chain 🔗 shift_to_monitor -r 🔗 focus_monitor -r ⛓️ focus -e left ⛓️ bring 🔛 ⛓️ unlock \
 🍂 keybind Mod4+Mod1+Up substitute 🔛 clients.focus.winid chain ⛓️ lock ⛓️ focus -e up ⛓️ or 🙉 shift -e down 🙉 chain 🔗 shift_to_monitor -d 🔗 focus_monitor -d ⛓️ focus -e up ⛓️ bring 🔛 ⛓️ unlock \
@@ -184,13 +192,10 @@ herbstclient chain \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 spawn ${TERMINAL:-xterm} --class=Journalctl -e "journalctl -b -f -n 1000" \
-🍂 keybind Mod4+F5 cycle_value frame_gap 0 5 10 15 20 \
-🍂 keybind Mod4+F6 chain ⛓️ spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json" ⛓️ spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ silent try spawn killall -USR1 termite ⛓️ silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
-🍂 keybind Mod4+Shift+F6 chain ⛓️ spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" ⛓️ spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" ⛓️ silent try spawn killall -USR1 termite ⛓️ silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
-🍂 keybind Mod4+F8 and 🥨 cycle_value window_border_active_color $accentcolors 🥨 substitute 🖼️ settings.window_border_active_color chain ⛓️ set frame_bg_active_color 🖼️ ⛓️ emit_hook 🖌️ 🖼️ \
-🍂 keybind Mod4+F7 spawn $SHELL -c "herbstclient and 🥨 set_attr my_🦎 \`printf -- \"#%06x\" \$(shuf -i0-16777215 -n1)\` 🥨 emit_hook 🦎" \
-🍂 keybind Mod4+Shift+F7 and 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" 🥨 emit_hook 🔏 \
-🍂 keybind Mod4+Control+Shift+F7 spawn xsetroot -solid "$QI_W" \
+🍂 keybind Mod4+F5 cycle_value frame_gap 0 15 \
+🍂 keybind Mod4+F6 or 🙉 and 🥨 getenv IS_YSGRIFENNWR 🥨 $qillqaqify 🙉 $ysgrifennwrify \
+🍂 keybind Mod4+F7 and 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" \
+🍂 keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W" \
 🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame \
@@ -237,6 +242,8 @@ $localbinds \
 🍂 unlock &
 
 ~/.config/herbstluftwm/restartpanel.sh
+
+herbstclient or 🙉 and 🥨 getenv IS_YSGRIFENNWR 🥨 $ysgrifennwrify 🙉 $qillqaqify
 
 # herbstclient keybind Mod4+n chain ⛓️ keybind h and 🥨 shift left 🥨 keyunbind Escape 🥨 keyunbind h ⛓️ keybind Escape and 🥨 keyunbind Escape 🥨 keyunbind h
 # IDEA: store layouts in z/y
