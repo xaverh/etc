@@ -99,7 +99,7 @@ func getCurFrameWCount() string {
 	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
 	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
 	if err != nil || err2 != nil {
-		return "%{F-}%{B#005577}%{O1500}%{A}%{r}[?] %{B-}"
+		return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
 	}
 	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
 	clientNumber := string(out)[:len(out)-1]
@@ -107,9 +107,9 @@ func getCurFrameWCount() string {
 		return "%{O1500}%{A}%{r}%{F-}%{B-}"
 	}
 	if err == nil {
-		return "%{F-}%{B#005577}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
+		return "%{F-}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
 	}
-	return "%{F-}%{B#005577}%{O1500}%{A}%{r}[?] %{B-}"
+	return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
 }
 
 func getAccentColor() string {
