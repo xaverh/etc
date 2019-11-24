@@ -81,7 +81,7 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot  wqy-bitmapfont xorg-xinput dunst termite deadbeef man-db man-pages uw-ttyp0-font mons sent lemonbar feh
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite deadbeef xcursor-vanilla-dmz man-db man-pages feh mons
 
 pacman -S bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
