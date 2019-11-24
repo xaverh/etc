@@ -7,8 +7,8 @@ ls /sys/firmware/efi/efivars
 
 # efibootmgr
 blkdiscard /dev/sdX
-sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sda
-mkfs.fat -F32 /dev/sda1
+sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sdX
+mkfs.fat -F32 /dev/sdX1
 
 cryptsetup -y --use-random -v --type luks2 luksFormat /dev/sdX2
 # SSD?
@@ -34,12 +34,12 @@ mount /dev/sda1 /mnt/boot
 
 vim /etc/pacman.d/mirrorlist
 
-pacstrap /mnt base linux linux-firmware vim zsh tmux man-db man-pages btrfs-progs sudo
-# cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iw iwd
+pacstrap /mnt base linux linux-firmware vim zsh tmux btrfs-progs sudo git stow
+# cryptsetup intel-ucode amd-ucode broadcom-wl-dkms iwd xf86-video-intel
 
 # Essentials
 mkdir -p /mnt/usr/local/lib/systemd/system
-cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/lib/systemd/slock@.service
+cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/lib/systemd/system/slock@.service
 cp ~/etc/Factory/etc-systemd-network-05\\x2dwired.network /mnt/etc/systemd/network/05-wired.network
 mkdir /mnt/etc/systemd/resolved.conf.d
 cp ~/etc/Factory/etc-systemd-resolved.conf.d-20\\x2d1.1.1.1.conf /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf
@@ -53,12 +53,14 @@ cp ~/etc/Factory/etc-pacman.d-hooks-100\\x2dsystemd\\x2dboot.hook /mnt/etc/pacma
 cp /etc/pacman.conf /mnt/etc/pacman.conf
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo pts/0  >> /mnt/etc/securetty
-
-# As needed
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+
+# As needed
+cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 cp ~/etc/Factory/etc-udev-rules.d-90x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
+mkdir /mnt/etc/iwd
 cp ~/etc/Factory/etc-iwd-main.conf /mnt/etc/iwd/main.conf
 # /etc/mkinitcpio.conf
 # HOOKS="systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems"
@@ -79,15 +81,15 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack unrar zip unzip exfat-utils git mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock sxiv telegram-desktop ttf-ibm-plex xclip xorg-server xorg-xinit nodejs lua stow discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite deadbeef xcursor-vanilla-dmz
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite deadbeef xcursor-vanilla-dmz man-db man-pages feh mons
 
-pacman -S xf86-video-intel bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat opus-tools vulkan-intel mons
+pacman -S bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
-pacman -S --needed --asdeps gst-plugins-ugly x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libmad wavpack faad2 libzip
+pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libmad wavpack faad2 libzip opus-tools farbfeld jpegexiforient
 # as-deps: libdvdcss libva-intel-driver linux-headers crda
 
 localectl set-locale LANG=en_US.UTF-8
-localectl set-x11-keymap us pc104 altgr-intl "compose:menu"
+localectl set-x11-keymap us pc104 altgr-intl compose:menu,rupeesign:4
 localectl set-x11-keymap de apple_laptop mac_nodeadkeys compose:rwin-altgr
 timedatectl set-ntp true
 timedatectl set-timezone Europe/Berlin
@@ -99,8 +101,9 @@ systemctl enable iwd.service
 systemctl enable bluetooth.service
 systemctl enable slock@xha.service
 systemctl enable fstrim.timer
-systemctl mask lvm2.service
 systemctl mask systemd-fsck-root.service
+
+vim /etc/conf.d/wireless-regdom
 
 systemctl edit getty@tty1
 # [Service]
@@ -110,18 +113,17 @@ systemctl edit getty@tty1
 bootctl install
 
 mkinitcpio -p linux
+ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
 
 exit
 reboot
 
-ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
-
 # As user
-xdg-mime default mupdf-gl.desktop application/pdf
-xdg-mime default mupdf-gl.desktop application/vnd.comicbook-rar
-xdg-mime default mupdf-gl.desktop application/vnd.comicbook+zip
-xdg-mime default mupdf-gl.desktop application/epub+zip
-xdg-mime default mupdf-gl.desktop application/x-cb7
+xdg-mime default mupdf.desktop application/pdf
+xdg-mime default mupdf.desktop application/vnd.comicbook-rar
+xdg-mime default mupdf.desktop application/vnd.comicbook+zip
+xdg-mime default mupdf.desktop application/epub+zip
+xdg-mime default mupdf.desktop application/x-cb7
 xdg-mime default sxiv.desktop image/jpeg
 xdg-mime default sxiv.desktop image/png
 xdg-mime default sxiv.desktop image/gif
