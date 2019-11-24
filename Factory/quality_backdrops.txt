@@ -1,7 +1,18 @@
 Paver.xbm -fg #0d0918 -bg #1c5b2a
-Crochet.xbm -fg #41ea19 -bg #e93a99
+CrochetBig.xbm -fg #41ea19 -bg #e93a99
 Lattice.xbm -fg #464695 -bg #a4546d
 Miniweave.xbm -fg #1c027f -bg #877f22
 Dolphins.xbm -fg #422d82 -bg #cdcf12
 Convex.xbm -fg #be6891 -bg #cfcb3f
+E7bMSiv.xbm -fg #d6add3 -bg #589665
 Burl.xbm -fg #2a2930 -bg #c53235
+wall.xbm -fg #440738 -bg #ad6336
+E7bMSiv.xbm -fg #c37c5a -bg #23b5d4
+Ridged.xbm -fg #986636 -bg #48071f
+Dune.xbm -fg #722b09 -bg #d1c382
+Burl.xbm -fg #2c2e02 -bg #7b1bb1
+E7bMSiv.xbm -fg #7b550f -bg #361919
+🦎 #902c25 #1e1e1e
+SkyLight.xbm -fg #bc851e -bg #932fa2
+Ridged.xbm -fg #6c021a -bg #00d2e7
+E7bMSiv.xbm -fg #5f616c -bg #030bd0
