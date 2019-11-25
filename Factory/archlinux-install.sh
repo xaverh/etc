@@ -85,8 +85,8 @@ pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts -
 
 pacman -S bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
-pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libmad wavpack faad2 libzip opus-tools farbfeld jpegexiforient
-# as-deps: libdvdcss libva-intel-driver linux-headers crda
+pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libmad wavpack faad2 libzip farbfeld jpegexiforient
+# as-deps: libdvdcss libva-intel-driver linux-headers crda opus-tools
 
 localectl set-locale LANG=en_US.UTF-8
 localectl set-x11-keymap us pc104 altgr-intl compose:menu,rupeesign:4
