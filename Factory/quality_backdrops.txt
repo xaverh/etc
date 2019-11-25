@@ -20,3 +20,4 @@ SkyLight.xbm -fg #bc851e -bg #932fa2
 Ridged.xbm -fg #6c021a -bg #00d2e7
 E7bMSiv.xbm -fg #5f616c -bg #030bd0
 Squares.xbm -fg #93535f -bg #f8fffc
+Convex.xbm -fg #0ff60a -bg #9b297a
