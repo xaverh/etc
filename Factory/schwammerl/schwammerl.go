@@ -300,11 +300,11 @@ func (cl *Client) DeviceMuteUpdated(path dbus.ObjectPath, mute bool) {
 }
 
 func updateVolume() {
+	pulseaudio.LoadModule()
 	pulse, e := pulseaudio.New()
 	if e != nil {
 		fmt.Println("connect", e)
 	}
-
 	client := &Client{pulse}
 	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ printf $2 }'").Output()
 	if err == nil {
@@ -317,7 +317,7 @@ func updateVolume() {
 		if !isMute {
 			volChan <- fmt.Sprintf("%%{A2:herbstclient emit_hook 🔇:}%%{A1:herbstclient emit_hook 🔉:}%%{A3:herbstclient emit_hook 🔊:}vol. %v %%%%%%{A}%%{A}%%{A}", string(initialVolumeCheck))
 		} else {
-			volChan <- fmt.Sprintf("%{A2:herbstclient emit_hook 🔈:}mute%{A}")
+			volChan <- "%{A2:herbstclient emit_hook 🔈:}mute%{A}"
 		}
 	}
 	pulse.Register(client)
