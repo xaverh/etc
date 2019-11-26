@@ -1,9 +1,9 @@
 #!/usr/bin/zsh
 
 resizestep=0.02
-mutecmd=(and 🥨 spawn $SHELL -c "pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') true" 🥨 spawn notify-send '🔇 muted')
-lowervolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; pactl set-sink-volume \"\$sink\" \"\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') - 5 ))%\" && notify-send \"🔉 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
-raisevolumecmd=(spawn $SHELL -c "sink=\$(pacmd list-sinks | awk '/\\* index:/{ print \$3 }'); pactl set-sink-mute \$(pacmd list-sinks|awk '/\\* index:/{ print \$3 }') false; newvol=\$(( \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') + 5 )); pactl set-sink-volume \"\$sink\" \"\$(( (\$newvol > 100) ? 100 : \$newvol ))%\" && notify-send \"🔊 \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') %\"" )
+mutecmd=(spawn pactl set-sink-mute @DEFAULT_SINK@ true)
+lowervolumecmd=(chain 🔗 pactl set-sink-mute @DEFAULT_SINK@ false 🔗 pactl set-sink-volume @DEFAULT_SINK@ -5%)
+raisevolumecmd=(spawn $SHELL -c "pactl set-sink-mute @DEFAULT_SINK@ false; [[ \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)")
 musicplaycmd=(deadbeef --play-pause)
 musicnextcmd=(deadbeef --next)
 musicprevcmd=(deadbeef --prev)
@@ -34,7 +34,26 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind XF86AudioRaiseVolume $raisevolumecmd \
 	🍂 keybind XF86AudioPlay spawn $musicplaycmd \
 	🍂 keybind XF86AudioNext spawn $musicnextcmd \
-	🍂 keybind XF86AudioPrev spawn $musicprevcmd)
+	🍂 keybind XF86AudioPrev spawn $musicprevcmd \
+	🍂 keybind Mod4+asciicircum cycle_frame +1 \
+	🍂 keybind Mod4+Mod1+asciicircum chain ⛓️ lock ⛓️ rotate ⛓️ rotate ⛓️ rotate ⛓️ unlock \
+	🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
+	🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
+	🍂 keybind Mod4+Shift+numbersign toggle always_show_frame)
+else
+	localbinds=(🍂 keybind Mod4+grave cycle_frame +1 \
+	🍂 keybind Mod4+Mod1+grave chain ⛓️ lock ⛓️ rotate ⛓️ rotate ⛓️ rotate ⛓️ unlock \
+	🍂 keybind Mod4+Shift+grave substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
+	🍂 keybind Mod4+KP_Insert $mutecmd \
+	🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
+	🍂 keybind Mod4+KP_Add $raisevolumecmd \
+	🍂 keybind Mod4+KP_End spawn $musicplaycmd \
+	🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
+	🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
+	🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
+	🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame)
 fi
 
 herbstclient chain \
@@ -64,7 +83,7 @@ herbstclient chain \
 🍂 set window_border_normal_color '#696969' \
 🍂 set window_border_urgent_color red \
 🍂 set always_show_frame 0 \
-🍂 set default_frame_layout 2 \
+🍂 set default_frame_layout 3 \
 🍂 set default_direction_external_only 0 \
 🍂 set gapless_grid 1 \
 🍂 set smart_frame_surroundings 1 \
@@ -92,8 +111,6 @@ herbstclient chain \
 🍂 keybind Mod4-Shift-j or / shift down / chain , lock , shift_to_monitor -d , focus_monitor -d , unlock \
 🍂 keybind Mod4-Shift-k or / shift up / chain , lock , shift_to_monitor -u , focus_monitor -u , unlock \
 🍂 keybind Mod4-Shift-l or / shift right / chain , lock , shift_to_monitor -r , focus_monitor -r , unlock \
-🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
-🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
 🍂 keybind Mod4+minus chain ⛓️ split bottom 0.6180339887498949 ⛓️ focus -e down \
 🍂 keybind Mod4+x split explode \
 🍂 keybind Mod4+Control+h resize left +$resizestep \
@@ -122,7 +139,9 @@ herbstclient chain \
 🍂 load '!' '(clients grid:0)' \
 🍂 load '@' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' \
 🍂 load '#' '(clients grid:0)' \
+🍂 load '$' '(clients max:0)' \
 🍂 load '%' '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
+🍂 load '^' '(clients max:0)' \
 🍂 keybind Mod4+1 use_index 0 \
 🍂 keybind Mod4+2 use_index 1 \
 🍂 keybind Mod4+3 use_index 2 \
@@ -161,12 +180,6 @@ herbstclient chain \
 🍂 mousebind Mod4+Button1 move \
 🍂 mousebind Mod4+Button2 zoom \
 🍂 mousebind Mod4+Button3 resize \
-🍂 keybind Mod4+asciicircum cycle_frame -1 \
-🍂 keybind Mod4+Mod1+asciicircum rotate \
-🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame -1 ⛓️ bring 🧓 ⛓️ unlock \
-🍂 keybind Mod4+grave cycle_frame -1 \
-🍂 keybind Mod4+Mod1+grave rotate \
-🍂 keybind Mod4+Shift+grave substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame -1 ⛓️ bring 🧓 ⛓️ unlock \
 🍂 keybind Mod1+Tab use_previous \
 🍂 keybind Mod4+Tab cycle +1 \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
@@ -196,29 +209,18 @@ herbstclient chain \
 🍂 keybind Mod4+F6 or 🙉 and 🥨 getenv IS_YSGRIFENNWR 🥨 $qillqaqify 🙉 $ysgrifennwrify \
 🍂 keybind Mod4+F7 and 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" \
 🍂 keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W" \
-🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
-🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
-🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame \
-🍂 keybind Mod4+Shift+numbersign toggle always_show_frame \
 🍂 keybind Mod4+p spawn $HOME/.config/herbstluftwm/herbstschau.sh \
 🍂 keybind Mod4+m or 🖕 and 🥨 compare monitors.focus.lock_tag  = false 🥨 lock_tag "" 🥨 substitute 🖥️ monitors.focus.index emit_hook 🔒 🖥️ 🖕 and 🥨 unlock_tag "" 🥨 substitute 💻 monitors.focus.index emit_hook 🔓 💻 \
 🍂 keybind Mod4+comma focus_monitor -l \
 🍂 keybind Mod4+period focus_monitor -r \
 🍂 keybind Mod4+Shift+comma shift_to_monitor -l \
 🍂 keybind Mod4+Shift+period shift_to_monitor -r \
-🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
+🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
 🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+w substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+Shift+y spawn $SHELL -c 'herbstclient keybind Mod4+y substitute 🪟 clients.focus.winid and 🥨 load "`herbstclient dump`"  🥨 jumpto 🪟' \
 🍂 keybind Mod4+Shift+z spawn $SHELL -c 'herbstclient keybind Mod4+z substitute 🪟 clients.focus.winid and 🥨 load "`herbstclient dump`"  🥨 jumpto 🪟' \
 🍂 keybind Mod4+q close \
-🍂 keybind Mod4+KP_Insert $mutecmd \
-🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
-🍂 keybind Mod4+KP_Add $raisevolumecmd \
-🍂 keybind Mod4+KP_End spawn $musicplaycmd \
-🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
-🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
-🍂 keybind Mod4+b spawn firefox \
 $localbinds \
 🍂 rule focus=on \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on \
