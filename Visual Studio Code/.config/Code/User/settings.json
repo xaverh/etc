@@ -151,7 +151,6 @@
 	"javascript.preferences.quoteStyle": "single",
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.format.enable": false,
-	"terminal.external.linuxExec": "urxvtc",
 	"git.defaultCloneDirectory": "$HOME/src",
 	"terminal.integrated.cursorBlinking": true,
 	"editor.formatOnPaste": true,
@@ -226,6 +225,10 @@
 			"description": "right-to-left override",
 			"level": "error"
 		},
+		"202f": {
+			"description": "narrow no-break space",
+			"level": "info"
+		},
 		"fffc": {
 			"zeroWidth": true,
 			"description": "object replacement character",
@@ -236,5 +239,6 @@
 	"editor.fontSize": 14,
 	"git.untrackedChanges": "separate",
 	"git.enableCommitSigning": false,
-	"git.openDiffOnClick": false
+	"git.openDiffOnClick": false,
+	"go.formatTool": "goimports"
 }
