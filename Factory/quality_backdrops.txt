@@ -21,3 +21,5 @@ Ridged.xbm -fg #6c021a -bg #00d2e7
 E7bMSiv.xbm -fg #5f616c -bg #030bd0
 Squares.xbm -fg #93535f -bg #f8fffc
 Convex.xbm -fg #0ff60a -bg #9b297a
+Ridged.xbm -fg #6f0e45 -bg #805d20
+Concave.xbm -fg #01ade9 -bg #edb0c7
