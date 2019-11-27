@@ -300,10 +300,12 @@ func (cl *Client) DeviceMuteUpdated(path dbus.ObjectPath, mute bool) {
 }
 
 func updateVolume() {
-	pulseaudio.LoadModule()
+TRYAGAIN:
 	pulse, e := pulseaudio.New()
 	if e != nil {
-		fmt.Println("connect", e)
+		volChan <- "v. ?"
+		time.Sleep(time.Duration(5003 * time.Millisecond))
+		goto TRYAGAIN
 	}
 	client := &Client{pulse}
 	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ printf $2 }'").Output()
@@ -490,7 +492,7 @@ func updatePower(pow chan<- string) {
 }
 
 func updateWIFI(wifi chan<- string) {
-	sleepTime := 4500 * time.Millisecond
+OUTER:
 	for {
 		if wifiDevice != "" {
 			iwOutput, _ := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
@@ -505,8 +507,14 @@ func updateWIFI(wifi chan<- string) {
 			}
 		} else {
 			wifi <- "%{F#969696}no WiFi%{F-}"
+			for _, v := range networkDevices {
+				if v.Name[0] == 'w' {
+					wifiDevice = v.Name
+					continue OUTER
+				}
+			}
 		}
-		time.Sleep(time.Duration(sleepTime))
+		time.Sleep(time.Duration(4507 * time.Millisecond))
 	}
 }
 
