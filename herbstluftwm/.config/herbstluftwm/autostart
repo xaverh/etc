@@ -10,7 +10,7 @@ musicprevcmd=(deadbeef --prev)
 qillqaqify=(chain \
 💱 try unsetenv IS_YSGRIFENNWR \
 💱 spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \
-💱 spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" "$HOME/.config/dunst/dunstrc" \
+💱 spawn sed -i "s/${YS_K#\#}/${QI_K#\#}/;s/${YS_R#\#}/${QI_R#\#}/;s/${YS_G#\#}/${QI_G#\#}/;s/${YS_B#\#}/${QI_B#\#}/;s/${YS_C#\#}/${QI_C#\#}/;s/${YS_M#\#}/${QI_M#\#}/;s/${YS_Y#\#}/${QI_Y#\#}/;s/${YS_W#\#}/${QI_W#\#}/;s/${YS_B_K#\#}/${QI_B_K#\#}/;s/${YS_B_R#\#}/${QI_B_R#\#}/;s/${YS_B_G#\#}/${QI_B_G#\#}/;s/${YS_B_B#\#}/${QI_B_B#\#}/;s/${YS_B_C#\#}/${QI_B_C#\#}/;s/${YS_B_M#\#}/${QI_B_M#\#}/;s/${YS_B_Y#\#}/${QI_B_Y#\#}/;s/${YS_B_W#\#}/${QI_B_W#\#}/;s/${YS_W_80#\#}/${QI_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" "$HOME/.config/dunst/dunstrc" \
 💱 silent try spawn killall -USR1 termite \
 💱 silent try spawn killall dunst \
 💱 silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
@@ -18,7 +18,7 @@ qillqaqify=(chain \
 ysgrifennwrify=(chain \
 💱 setenv IS_YSGRIFENNWR 1 \
 💱 spawn sed -i 's/Qillqaq/Ysgrifennwr/' "$HOME/.config/Code/User/settings.json" \
-💱 spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" "$HOME/.config/dunst/dunstrc" \
+💱 spawn sed -i "s/${QI_K#\#}/${YS_K#\#}/;s/${QI_R#\#}/${YS_R#\#}/;s/${QI_G#\#}/${YS_G#\#}/;s/${QI_B#\#}/${YS_B#\#}/;s/${QI_C#\#}/${YS_C#\#}/;s/${QI_M#\#}/${YS_M#\#}/;s/${QI_Y#\#}/${YS_Y#\#}/;s/${QI_W#\#}/${YS_W#\#}/;s/${QI_B_K#\#}/${YS_B_K#\#}/;s/${QI_B_R#\#}/${YS_B_R#\#}/;s/${QI_B_G#\#}/${YS_B_G#\#}/;s/${QI_B_B#\#}/${YS_B_B#\#}/;s/${QI_B_C#\#}/${YS_B_C#\#}/;s/${QI_B_M#\#}/${YS_B_M#\#}/;s/${QI_B_Y#\#}/${YS_B_Y#\#}/;s/${QI_B_W#\#}/${YS_B_W#\#}/;s/${QI_W_80#\#}/${YS_W_80#\#}/" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.config/termite/config" "$HOME/.config/rofi/config.rasi" "$HOME/etc/X/.Xdefaults" "$HOME/.config/dunst/dunstrc" \
 💱 silent try spawn killall -USR1 termite \
 💱 silent try spawn killall dunst \
 💱 silent try spawn $SHELL -c "sleep .5 && killall -USR1 termite" \
@@ -185,10 +185,11 @@ herbstclient chain \
 🍂 keybind Mod1+Tab use_previous \
 🍂 keybind Mod4+Tab cycle +1 \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
-🍂 keybind Mod4+Return or 🙈 substitute 📌 tags.focus.name sprintf 🏷️ clients.%s.tag my_terminal substitute 🆔 my_terminal or 🙉 and 🥨 compare 🏷️ = 📌 🥨 jumpto 🆔 🙉 bring 🆔 🙈 and 🥨 rule once maxage=5 class=Termite hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
-🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} \
-🍂 keybind Mod4+Control+Return and 🥨 rule once maxage=5 class=Termite hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
-🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Termite 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
+🍂 keybind Mod4+Return or 🙈 substitute 📌 tags.focus.name sprintf 🏷️ clients.%s.tag my_terminal substitute 🆔 my_terminal or 🙉 and 🥨 compare 🏷️ = 📌 🥨 jumpto 🆔 🙉 bring 🆔 🙈 and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} -e tmux \
+🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} -e tmux \
+🍂 keybind Mod4+Control+Return and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} -e tmux \
+🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Alacritty 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
+🍂 keybind Mod4+Control+Shift+Return spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))" \
 🍂 keybind Mod4+F2 spawn herbstadler \
 🍂 keybind Mod4+o spawn abridor.lua \
@@ -202,7 +203,6 @@ herbstclient chain \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
 🍂 keybind Mod4+t spawn ${TERMINAL:-xterm} -e "$SHELL -c \"tmux new-session -A -s \\\$(tmux list-clients -F \\\"#S\\\" 2> /dev/null | rofi -dmenu -i -p 'tmux')\"" \
-🍂 keybind Mod4+Shift+t spawn ${TERMINAL:-xterm} -e tmux \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
