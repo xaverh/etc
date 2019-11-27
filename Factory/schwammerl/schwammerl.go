@@ -492,7 +492,6 @@ func updatePower(pow chan<- string) {
 }
 
 func updateWIFI(wifi chan<- string) {
-OUTER:
 	for {
 		if wifiDevice != "" {
 			iwOutput, _ := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
@@ -510,7 +509,6 @@ OUTER:
 			for _, v := range networkDevices {
 				if v.Name[0] == 'w' {
 					wifiDevice = v.Name
-					continue OUTER
 				}
 			}
 		}
