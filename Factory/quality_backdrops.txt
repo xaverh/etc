@@ -23,3 +23,4 @@ Squares.xbm -fg #93535f -bg #f8fffc
 Convex.xbm -fg #0ff60a -bg #9b297a
 Ridged.xbm -fg #6f0e45 -bg #805d20
 Concave.xbm -fg #01ade9 -bg #edb0c7
+OldChars.xbm -fg #ea0b85 -bg #290d36
