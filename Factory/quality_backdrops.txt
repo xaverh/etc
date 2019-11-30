@@ -25,3 +25,4 @@ Ridged.xbm -fg #6f0e45 -bg #805d20
 Concave.xbm -fg #01ade9 -bg #edb0c7
 OldChars.xbm -fg #ea0b85 -bg #290d36
 E7bMSiv.xbm -fg #6510b0 -bg #e4621b
+E7bMSiv.xbm -fg #00c2af -bg #67435d
