@@ -187,7 +187,7 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
 🍂 keybind Mod4+Return or 🙈 substitute 📌 tags.focus.name sprintf 🏷️ clients.%s.tag my_terminal substitute 🆔 my_terminal or 🙉 and 🥨 compare 🏷️ = 📌 🥨 jumpto 🆔 🙉 bring 🆔 🙈 and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} -e tmux \
 🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} -e tmux \
-🍂 keybind Mod4+Control+Return and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} -e tmux \
+🍂 keybind Mod4+Control+Return substitute 🆔 my_terminal bring 🆔 \
 🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Alacritty 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
 🍂 keybind Mod4+Control+Shift+Return spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))" \
