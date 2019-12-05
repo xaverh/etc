@@ -4,9 +4,9 @@ resizestep=0.02
 mutecmd=(spawn pactl set-sink-mute @DEFAULT_SINK@ true)
 lowervolumecmd=(chain 🔗 spawn pactl set-sink-mute @DEFAULT_SINK@ false 🔗 spawn pactl set-sink-volume @DEFAULT_SINK@ -5%)
 raisevolumecmd=(spawn $SHELL -c "pactl set-sink-mute @DEFAULT_SINK@ false; [[ \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)")
-musicplaycmd=(deadbeef --play-pause)
-musicnextcmd=(deadbeef --next)
-musicprevcmd=(deadbeef --prev)
+musicplaycmd=(strawberry -t)
+musicnextcmd=(strawberry -f)
+musicprevcmd=(strawberry -r)
 qillqaqify=(chain \
 💱 try unsetenv IS_YSGRIFENNWR \
 💱 spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \

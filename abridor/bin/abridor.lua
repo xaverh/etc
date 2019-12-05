@@ -7,7 +7,7 @@ local ls
 function open_folder(filename)
 	local application_file =
 		io.popen(
-		'echo "📂 nnn\n🖼️ sxiv\n♾️ Visual Studio Code\n📼 mpv\n🐮 DeaDBeeF" | rofi -dmenu -i -p "Open ' ..
+		'echo "📂 nnn\n🖼️ sxiv\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | rofi -dmenu -i -p "Open ' ..
 			filename .. ' with…"'
 	)
 	local application = application_file:read('a')
@@ -19,9 +19,9 @@ function open_folder(filename)
 		os.execute('code -n "' .. filename .. '"')
 	elseif application == '📼 mpv\n' then
 		os.execute('mpv "' .. filename .. '"')
-	elseif application == '🐮 DeaDBeeF\n' then
-		os.execute('deadbeef --queue "' .. filename .. '"')
-		os.execute('deadbeef --play')
+	elseif application == '🍓 Strawberry\n' then
+		os.execute('strawberry --append "' .. filename .. '"')
+		os.execute('strawberry --play')
 	end
 end
 
@@ -48,7 +48,7 @@ for line in ls_file:lines('l') do
 	end
 end
 
-local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -i -p "' .. filename .. '"')
+local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -l 10 -i -p "' .. filename .. '"')
 local filename_new = string.sub(filename_file:read('a'), 1, -2)
 
 if filename_new == '' then
