@@ -94,7 +94,7 @@
 	"javascript.implicitProjectConfig.checkJs": true,
 	"extensions.autoUpdate": false,
 	"editor.renderIndentGuides": false,
-	"editor.autoIndent": true,
+	"editor.autoIndent": "advanced",
 	"window.restoreWindows": "all",
 	"git.enableSmartCommit": true,
 	"markdown.preview.fontSize": 18,
