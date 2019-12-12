@@ -45,9 +45,9 @@ compinit
 autoload -U colors && colors
 
 if [[ -n $SSH_CONNECTION ]]; then
-PROMPT="%F{green}%m:%B%/ %#%b%f "
+	PROMPT="%F{green}%m:%B%/ %#%b%f "
 else
-PROMPT="%B%~ %#%b "
+	PROMPT="%B%~ %#%b "
 fi
 
 RPROMPT="%(?..%{$fg[red]%}%?%{$reset_color%})"
@@ -62,16 +62,6 @@ zstyle ':completion:*:default' menu select=2
 # https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
 zstyle ":completion:*:commands" rehash 1
 
-# manpage colors
-export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
-export LESS_TERMCAP_md=$'\E[00;94m'     # begin bold
-export LESS_TERMCAP_us=$'\E[01;95m'     # begin underline
-export LESS_TERMCAP_so=$'\E[00;100;2m'  # begin standout-mode
-export LESS_TERMCAP_me=$'\E[0m'         # end bold
-export LESS_TERMCAP_ue=$'\E[0m'         # end underline
-export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
-export GROFF_NO_SGR=1
-
 unalias you 2> /dev/null
 unalias ls 2> /dev/null
 alias grep="grep --color=auto"
@@ -79,7 +69,7 @@ alias ...='../..'
 alias ....='../../..'
 if ls --color=auto &> /dev/null; then
 	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
-	alias ll='ls -l --human-readable --si '
+	alias ll='ls -l --si '
 	alias la='ll --almost-all'
 	alias l='ll --group-directories-first'
 	alias lx='ll -X'
@@ -168,19 +158,11 @@ function n ()
 
 alias nnn=n
 
-function ripsite()
-{
+function ripsite() {
 	wkhtmltopdf --images --no-stop-slow-scripts "$@" `systemd-escape $@`".pdf"
 }
 
-function Install-VSCode()
-{
+function Install-VSCode() {
 	rm -r "$HOME/.local/share/VSCode-linux-x64/" || mkdir -p "$HOME/.local/share"
 	curl -L 'https://update.code.visualstudio.com/latest/linux-x64/stable' | tar xz -C "$HOME/.local/share/"
 }
-
-# required for termite
-if [[ $TERM == xterm-termite ]]; then
-	. /etc/profile.d/vte.sh
-	__vte_osc7
-fi

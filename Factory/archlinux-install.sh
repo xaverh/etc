@@ -81,11 +81,11 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite deadbeef xcursor-vanilla-dmz man-db man-pages feh mons
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=udisks2 unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite strawberry xcursor-vanilla-dmz man-db man-pages feh mons
 
 pacman -S bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
-pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libmad wavpack faad2 libzip farbfeld jpegexiforient
+pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libzip farbfeld jpegexiforient gst-plugins-bad gst-libav gst-plugins-ugly
 # as-deps: libdvdcss libva-intel-driver linux-headers crda opus-tools
 
 localectl set-locale LANG=en_US.UTF-8
@@ -124,10 +124,11 @@ xdg-mime default mupdf.desktop application/vnd.comicbook-rar
 xdg-mime default mupdf.desktop application/vnd.comicbook+zip
 xdg-mime default mupdf.desktop application/epub+zip
 xdg-mime default mupdf.desktop application/x-cb7
-xdg-mime default sxiv.desktop image/jpeg
-xdg-mime default sxiv.desktop image/png
-xdg-mime default sxiv.desktop image/gif
-xdg-mime default sxiv.desktop image/tiff
+xdg-mime default feh.desktop image/jpeg
+xdg-mime default feh.desktop image/png
+xdg-mime default feh.desktop image/gif
+xdg-mime default feh.desktop image/tiff
+xdg-mime default feh.desktop image/webp
 
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 

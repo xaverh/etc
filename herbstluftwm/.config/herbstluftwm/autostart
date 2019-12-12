@@ -4,9 +4,9 @@ resizestep=0.02
 mutecmd=(spawn pactl set-sink-mute @DEFAULT_SINK@ true)
 lowervolumecmd=(chain 🔗 spawn pactl set-sink-mute @DEFAULT_SINK@ false 🔗 spawn pactl set-sink-volume @DEFAULT_SINK@ -5%)
 raisevolumecmd=(spawn $SHELL -c "pactl set-sink-mute @DEFAULT_SINK@ false; [[ \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)")
-musicplaycmd=(deadbeef --play-pause)
-musicnextcmd=(deadbeef --next)
-musicprevcmd=(deadbeef --prev)
+musicplaycmd=(strawberry -t)
+musicnextcmd=(strawberry -f)
+musicprevcmd=(strawberry -r)
 qillqaqify=(chain \
 💱 try unsetenv IS_YSGRIFENNWR \
 💱 spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \
@@ -41,6 +41,7 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind Mod4+Mod1+asciicircum chain ⛓️ lock ⛓️ rotate ⛓️ rotate ⛓️ rotate ⛓️ unlock \
 	🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
 	🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+odiaeresis or 🙉 sprintf 🖖 my_%s_layout tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_layout tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+numbersign toggle always_show_frame)
 else
@@ -54,15 +55,14 @@ else
 	🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
 	🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
 	🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+semicolon or 🙉 sprintf 🖖 my_%s_layout tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_layout tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame)
 fi
 
 herbstclient chain \
 🍂 emit_hook reload \
-🍂 keyunbind --all \
-🍂 mouseunbind --all \
-🍂 unrule --all \
+🍂 and 🥨 new_attr bool my_backdrop_not_yet_set 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" \
 \
 🍂 set frame_gap 15 \
 🍂 set frame_padding 0 \
@@ -142,7 +142,6 @@ herbstclient chain \
 🍂 load '@' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' \
 🍂 load '#' '(clients grid:0)' \
 🍂 load '$' '(clients max:0)' \
-🍂 load '%' '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' \
 🍂 load '^' '(clients max:0)' \
 🍂 keybind Mod4+1 use_index 0 \
 🍂 keybind Mod4+2 use_index 1 \
@@ -185,11 +184,10 @@ herbstclient chain \
 🍂 keybind Mod1+Tab use_previous \
 🍂 keybind Mod4+Tab cycle +1 \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
-🍂 keybind Mod4+Return or 🙈 substitute 📌 tags.focus.name sprintf 🏷️ clients.%s.tag my_terminal substitute 🆔 my_terminal or 🙉 and 🥨 compare 🏷️ = 📌 🥨 jumpto 🆔 🙉 bring 🆔 🙈 and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} -e tmux \
-🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} -e tmux \
+🍂 keybind Mod4+Return or 🙈 substitute 📌 tags.focus.name sprintf 🏷️ clients.%s.tag my_terminal substitute 🆔 my_terminal or 🙉 and 🥨 compare 🏷️ = 📌 🥨 jumpto 🆔 🙉 bring 🆔 🙈 and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
+🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+Control+Return substitute 🆔 my_terminal bring 🆔 \
 🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Alacritty 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
-🍂 keybind Mod4+Control+Shift+Return spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))" \
 🍂 keybind Mod4+F2 spawn herbstadler \
 🍂 keybind Mod4+o spawn abridor.lua \
@@ -202,14 +200,14 @@ herbstclient chain \
 🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' $HOME/.local/share/emoji.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
-🍂 keybind Mod4+t spawn ${TERMINAL:-xterm} -e "$SHELL -c \"tmux new-session -A -s \\\$(tmux list-clients -F \\\"#S\\\" 2> /dev/null | rofi -dmenu -i -p 'tmux')\"" \
+🍂 keybind Mod4+t spawn $SHELL -c "tmux list-clients -F \"#S\" | rofi -dmenu -i -p tmux | xargs ${TERMINAL:-xterm} -e tmux new-session -A -s" \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
-🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 spawn ${TERMINAL:-xterm} --class=Journalctl -e "journalctl -b -f -n 1000" \
+🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 and 🥨 rule once maxage=5 class=Journalctl hook=new_journalctl 🥨 spawn ${TERMINAL:-xterm} --class Journalctl,Journalctl -e journalctl -b -f -n 1000 \
 🍂 keybind Mod4+F5 cycle_value frame_gap 0 15 \
 🍂 keybind Mod4+F6 or 🙉 and 🥨 getenv IS_YSGRIFENNWR 🥨 $qillqaqify 🙉 $ysgrifennwrify \
-🍂 keybind Mod4+F7 and 🥨 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" \
+🍂 keybind Mod4+F7 spawn $SHELL -c "xsetroot -bitmap $HOME/.local/share/backdrops/\`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper\` \`printf -- \" -fg #%06x -bg #%06x\\n\" \$(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper\`" \
 🍂 keybind Mod4+Shift+F7 spawn xsetroot -solid "$QI_W" \
 🍂 keybind Mod4+p spawn $HOME/.config/herbstluftwm/herbstschau.sh \
 🍂 keybind Mod4+m or 🖕 and 🥨 compare monitors.focus.lock_tag  = false 🥨 lock_tag "" 🥨 substitute 🖥️ monitors.focus.index emit_hook 🔒 🖥️ 🖕 and 🥨 unlock_tag "" 🥨 substitute 💻 monitors.focus.index emit_hook 🔓 💻 \
@@ -217,7 +215,7 @@ herbstclient chain \
 🍂 keybind Mod4+period focus_monitor -r \
 🍂 keybind Mod4+Shift+comma shift_to_monitor -l \
 🍂 keybind Mod4+Shift+period shift_to_monitor -r \
-🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
+🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,reconfigure,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/reconfigure/herbstclient chain ⛓️ keyunbind --all ⛓️ mouseunbind --all ⛓️ unrule --all ⛓️ reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
 🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+w substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+Shift+y spawn $SHELL -c 'herbstclient keybind Mod4+y substitute 🪟 clients.focus.winid and 🥨 load "`herbstclient dump`"  🥨 jumpto 🪟' \
@@ -238,7 +236,10 @@ $localbinds \
 🍂 rule once class=Code index=0 focus=on switchtag=on \
 🍂 rule class=discord tag='^' \
 🍂 rule class=TelegramDesktop tag='^' \
-🍂 rule class=Steam tag='^' \
+🍂 rule class=Steam tag='%' focus=on switchtag=on \
+🍂 rule class=Steam title='Friends List' tag='^' focus=off switchtag=off \
+🍂 rule class=Steam title~'Steam - News .*' tag='#' focus=off switchtag=off \
+🍂 rule class=Civ5XP fullscreen=on \
 🍂 rule instance=Weechat tag='^' \
 🍂 rule class=presenter title=sent instance=sent fullscreen=true \
 🍂 rule class=strawberry tag='$' focus=on switchtag=off \
