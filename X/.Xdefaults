@@ -72,3 +72,8 @@ twobwm.outer_border_color: #87737b
 twobwm.fixed_unkill_color: #faad69
 twobwm.inverted_colors: true
 twobwm.enable_compton: false
+
+URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Regular:pixelsize=14
+URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
