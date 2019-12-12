@@ -196,13 +196,13 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			tagColor = windowBorderActiveColor
 			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
 		case "focus_changed":
-			curFrameWCount = getCurFrameWCount()
 			fallthrough
 		case "window_title_changed":
 			isHereQuery, err := exec.Command("herbstclient", "get_attr", "monitors.focus.index").Output()
 			if err == nil && (string(isHereQuery))[:len(isHereQuery)-1] == screen {
 				if len(action) >= 2 {
 					windowTitle = "%{F-}%{B#005577}  " + action[2]
+					curFrameWCount = getCurFrameWCount()
 				} else {
 					windowTitle = " "
 				}
@@ -272,7 +272,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			}
 		}
 	SENDSTATUS:
-		hlwmStatus <- workspaces + "%{A:herbstclient cycle:}" + windowTitle + curFrameWCount
+		hlwmStatus <- workspaces + "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ cycle:}" + windowTitle + curFrameWCount
 	BACKTOTHEGOODPART:
 	}
 	if err := scanner.Err(); err != nil {

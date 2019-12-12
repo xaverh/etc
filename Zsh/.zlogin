@@ -1,6 +1,5 @@
 export TERMINAL=alacritty
 export XCURSOR_THEME="DMZ-White"
-# export MOZ_ENABLE_WAYLAND=1
 
 export YS_W="#f9f8f4" # Floral White, R=249, G=248, B=244
 export YS_W_80="#edece8" # Grey 90%, R=237, G=236, B=232
@@ -38,8 +37,4 @@ export QI_B_C="#a2dcd7" # Sinbad, R=162, G=220, B=215
 export QI_B_K="#e5e6e6" # Grey 90%, R=229, G=230, B=230
 export CURSOR_COLOR="#20bbfc" # Deep Sky Blue, R=32, G=187, B=252
 
-
-# Following automatically calls "startx" when you login:
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp >| ~/.xorg.log 2>&1
-
-# exec sway

@@ -25,7 +25,10 @@
 		"*.xbm": "c",
 		"*.xpm": "c",
 		"_service": "xml",
-		"*.timer": "ini"
+		"*.timer": "ini",
+		".tmux.conf": "shellscript",
+		"dunstrc": "ini",
+		"config": "ini"
 	},
 	"files.exclude": {
 		"**/.git": true,
