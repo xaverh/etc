@@ -30,3 +30,6 @@ bg_blu.xbm -fg #ca3818 -bg #a1c6e5
 E7bMSiv.xbm -fg #ddc2ed -bg #1a4786
 LatticeBig.xbm -fg #f06464 -bg #67cc98
 wall.xbm -fg #b17fb2 -bg #c5fa7f
+Dolphins.xbm -fg #861f92 -bg #fc3344
+wall.xbm -fg #5f7298 -bg #7af7ba
+E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
