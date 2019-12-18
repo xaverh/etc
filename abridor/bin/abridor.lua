@@ -62,7 +62,7 @@ if filter_for_pattern(filename, '/%./$') then
 elseif filter_for_pattern(filename, '/$') then
 	goto recurse
 elseif filter_for_pattern(filename, '%.cbz$', '%.epub$', '%.oxps$', '%.pdf$', '%.xps$') then
-	os.execute('mupdf-gl "' .. filename .. '"')
+	os.execute('mupdf "' .. filename .. '"')
 elseif
 	filter_for_pattern(
 		filename,
