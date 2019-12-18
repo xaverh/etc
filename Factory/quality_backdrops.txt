@@ -33,3 +33,4 @@ wall.xbm -fg #b17fb2 -bg #c5fa7f
 Dolphins.xbm -fg #861f92 -bg #fc3344
 wall.xbm -fg #5f7298 -bg #7af7ba
 E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
+Pebbles.xbm -fg #2abbe5 -bg #92021d
