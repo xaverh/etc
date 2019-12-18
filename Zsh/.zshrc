@@ -67,6 +67,9 @@ unalias ls 2> /dev/null
 alias grep="grep --color=auto"
 alias ...='../..'
 alias ....='../../..'
+alias .....='../../../..'
+alias ......='../../../../..'
+alias .......='../../../../../..'
 if ls --color=auto &> /dev/null; then
 	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
 	alias ll='ls -l --si '
