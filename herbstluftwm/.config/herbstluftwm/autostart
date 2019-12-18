@@ -222,6 +222,8 @@ herbstclient chain \
 🍂 keybind Mod4+period focus_monitor -r \
 🍂 keybind Mod4+Shift+comma shift_to_monitor -l \
 🍂 keybind Mod4+Shift+period shift_to_monitor -r \
+🍂 keybind Mod4+Mod1+comma substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -l ⛓️ use 🏷️ \
+🍂 keybind Mod4+Mod1+period substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -r ⛓️ use 🏷️ \
 🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,reconfigure,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/reconfigure/herbstclient chain ⛓️ keyunbind --all ⛓️ mouseunbind --all ⛓️ unrule --all ⛓️ reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
 🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+w substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' 🥨 jumpto 🪟 \
@@ -246,13 +248,13 @@ $localbinds \
 🍂 rule class=Steam tag='%' focus=on switchtag=on \
 🍂 rule class=Steam title='Friends List' tag='^' focus=off switchtag=off \
 🍂 rule class=Steam title~'Steam - News .*' tag='#' focus=off switchtag=off \
-🍂 rule class=Civ5XP fullscreen=on \
+🍂 rule class=Civ5XP monitor=0 fullscreen=on \
 🍂 rule instance=Weechat tag='^' \
 🍂 rule class=presenter title=sent instance=sent fullscreen=true \
 🍂 rule class=strawberry tag='$' focus=on switchtag=off \
 🍂 rule class=Deadbeef tag='$' focus=on switchtag=off \
 🍂 rule class=Spotify tag='$' focus=on switchtag=off \
-🍂 rule title~'MuPDF: .*' index=0 focus=on switchtag=on \
+🍂 rule title~'MuPDF: .*' index=/ focus=on switchtag=on \
 🍂 rule class=Gimp index=0 focus=on switchtag=on \
 🍂 detect_monitors --no-disjoin \
 🍂 unlock &
