@@ -91,7 +91,7 @@
 	"C_Cpp.autocomplete": "Default",
 	"C_Cpp.intelliSenseEngine": "Default",
 	"javascript.implicitProjectConfig.checkJs": true,
-	"extensions.autoUpdate": false,
+	"extensions.autoUpdate": true,
 	"editor.renderIndentGuides": false,
 	"editor.autoIndent": true,
 	"window.restoreWindows": "all",
