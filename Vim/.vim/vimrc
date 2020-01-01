@@ -224,8 +224,8 @@ imap <F6> <c-o>:set list!<CR>
 " nmap <silent> <LEFT><LEFT>    :cpf<CR><C-G>
 
 " http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 
 " sensible.vim - Defaults everyone can agree on
 " Maintainer:   Tim Pope <http://tpo.pe/>

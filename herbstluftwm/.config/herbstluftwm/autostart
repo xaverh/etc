@@ -6,7 +6,9 @@ lowervolumecmd=(chain 🔗 spawn pactl set-sink-mute @DEFAULT_SINK@ false 🔗 s
 raisevolumecmd=(spawn $SHELL -c "pactl set-sink-mute @DEFAULT_SINK@ false; [[ \$(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",\$5); print \$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)")
 musicplaycmd=(strawberry -t)
 musicnextcmd=(strawberry -f)
-musicprevcmd=(strawberry -r)
+musicprevcmd=(strawberry --restart-or-previous)
+musicvolupcmd=(strawberry --volume-up)
+musicvoldowncmd=(strawberry --volume-down)
 qillqaqify=(chain \
 💱 try unsetenv IS_YSGRIFENNWR \
 💱 spawn sed -i 's/Ysgrifennwr/Qillqaq/' "$HOME/.config/Code/User/settings.json" \
@@ -34,6 +36,8 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind XF86AudioMute $mutecmd \
 	🍂 keybind XF86AudioLowerVolume $lowervolumecmd \
 	🍂 keybind XF86AudioRaiseVolume $raisevolumecmd \
+	🍂 keybind Mod4+XF86AudioLowerVolume spawn $musicvoldowncmd \
+	🍂 keybind Mod4+XF86AudioRaiseVolume spawn $musicvolupcmd \
 	🍂 keybind XF86AudioPlay spawn $musicplaycmd \
 	🍂 keybind XF86AudioNext spawn $musicnextcmd \
 	🍂 keybind XF86AudioPrev spawn $musicprevcmd \
@@ -41,7 +45,7 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind Mod4+Mod1+asciicircum chain ⛓️ lock ⛓️ rotate ⛓️ rotate ⛓️ rotate ⛓️ unlock \
 	🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
 	🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
-	🍂 keybind Mod4+odiaeresis or 🙉 sprintf 🖖 my_%s_layout tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_layout tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
+	🍂 keybind Mod4+odiaeresis or 🙉 sprintf 🖖 my_%s_🖼️ tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_🖼️ tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+numbersign toggle always_show_frame)
 else
@@ -51,11 +55,13 @@ else
 	🍂 keybind Mod4+KP_Insert $mutecmd \
 	🍂 keybind Mod4+KP_Subtract $lowervolumecmd \
 	🍂 keybind Mod4+KP_Add $raisevolumecmd \
+	🍂 keybind Mod4+Shift+KP_Subtract spawn $musicvoldowncmd \
+	🍂 keybind Mod4+Shift+KP_Add spawn $musicvolupcmd \
 	🍂 keybind Mod4+KP_End spawn $musicplaycmd \
 	🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
 	🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
 	🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
-	🍂 keybind Mod4+semicolon or 🙉 sprintf 🖖 my_%s_layout tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_layout tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
+	🍂 keybind Mod4+semicolon or 🙉 sprintf 🖖 my_%s_🖼️ tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_🖼️ tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame)
 fi
@@ -188,6 +194,7 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+Return spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+Control+Return substitute 🆔 my_terminal bring 🆔 \
 🍂 keybind Mod4+Mod1+Return and 🥨 compare clients.focus.class = Alacritty 🥨 chain ⛓️ new_attr string my_terminal ⛓️ substitute 🆕 clients.focus.winid set_attr my_terminal 🆕 \
+🍂 keybind Mod4+Mod1+Shift+Return and 🥨 rule once maxage=5 class=Alacritty hook=new_terminal 🥨 spawn ${TERMINAL:-xterm} \
 🍂 keybind Mod4+F1 spawn $SHELL -c "mupdf =(man -Tpdf \$(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print \$2\" \"\$1}'))" \
 🍂 keybind Mod4+F2 spawn herbstadler \
 🍂 keybind Mod4+o spawn abridor.lua \
@@ -215,6 +222,8 @@ herbstclient chain \
 🍂 keybind Mod4+period focus_monitor -r \
 🍂 keybind Mod4+Shift+comma shift_to_monitor -l \
 🍂 keybind Mod4+Shift+period shift_to_monitor -r \
+🍂 keybind Mod4+Mod1+comma substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -l ⛓️ use 🏷️ \
+🍂 keybind Mod4+Mod1+period substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -r ⛓️ use 🏷️ \
 🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,reconfigure,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/reconfigure/herbstclient chain ⛓️ keyunbind --all ⛓️ mouseunbind --all ⛓️ unrule --all ⛓️ reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
 🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+w substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' 🥨 jumpto 🪟 \
@@ -239,13 +248,14 @@ $localbinds \
 🍂 rule class=Steam tag='%' focus=on switchtag=on \
 🍂 rule class=Steam title='Friends List' tag='^' focus=off switchtag=off \
 🍂 rule class=Steam title~'Steam - News .*' tag='#' focus=off switchtag=off \
-🍂 rule class=Civ5XP fullscreen=on \
+🍂 rule class=Civ5XP monitor=0 fullscreen=on \
 🍂 rule instance=Weechat tag='^' \
 🍂 rule class=presenter title=sent instance=sent fullscreen=true \
 🍂 rule class=strawberry tag='$' focus=on switchtag=off \
 🍂 rule class=Deadbeef tag='$' focus=on switchtag=off \
 🍂 rule class=Spotify tag='$' focus=on switchtag=off \
-🍂 rule title~'MuPDF: .*' index=0 focus=on switchtag=on \
+🍂 rule title~'MuPDF: .*' index=/ focus=on switchtag=on \
+🍂 rule class=Gimp index=0 focus=on switchtag=on \
 🍂 detect_monitors --no-disjoin \
 🍂 unlock &
 

@@ -119,16 +119,8 @@ exit
 reboot
 
 # As user
-xdg-mime default mupdf.desktop application/pdf
-xdg-mime default mupdf.desktop application/vnd.comicbook-rar
-xdg-mime default mupdf.desktop application/vnd.comicbook+zip
-xdg-mime default mupdf.desktop application/epub+zip
-xdg-mime default mupdf.desktop application/x-cb7
-xdg-mime default feh.desktop image/jpeg
-xdg-mime default feh.desktop image/png
-xdg-mime default feh.desktop image/gif
-xdg-mime default feh.desktop image/tiff
-xdg-mime default feh.desktop image/webp
+xdg-mime default mupdf.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
+xdg-mime default feh.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
 
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
