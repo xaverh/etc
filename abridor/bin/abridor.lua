@@ -7,14 +7,14 @@ local ls
 function open_folder(filename)
 	local application_file =
 		io.popen(
-		'echo "📂 nnn\n🖼️ sxiv\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | rofi -dmenu -i -p "Open ' ..
+		'echo "📂 nnn\n🖼️ feh\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | rofi -dmenu -i -p "Open ' ..
 			filename .. ' with…"'
 	)
 	local application = application_file:read('a')
 	if application == '📂 nnn\n' then
 		os.execute('kitty -1 nnn "' .. filename .. '"')
-	elseif application == '🖼️ sxiv\n' then
-		os.execute('sxiv -t "' .. filename .. '"')
+	elseif application == '🖼️ feh\n' then
+		os.execute('feh -t. "' .. filename .. '"')
 	elseif application == '♾️ Visual Studio Code\n' then
 		os.execute('code -n "' .. filename .. '"')
 	elseif application == '📼 mpv\n' then
@@ -62,7 +62,7 @@ if filter_for_pattern(filename, '/%./$') then
 elseif filter_for_pattern(filename, '/$') then
 	goto recurse
 elseif filter_for_pattern(filename, '%.cbz$', '%.epub$', '%.oxps$', '%.pdf$', '%.xps$') then
-	os.execute('mupdf-gl "' .. filename .. '"')
+	os.execute('mupdf "' .. filename .. '"')
 elseif
 	filter_for_pattern(
 		filename,
@@ -112,7 +112,7 @@ elseif
 		'%.TIFF?$'
 	)
  then
-	os.execute('sxiv "' .. filename .. '"')
+	os.execute('feh -.ke "' .. filename .. '"')
 elseif filter_for_pattern(filename, '%.sent$') then
 	os.execute('sent "' .. filename .. '"')
 else

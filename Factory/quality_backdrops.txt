@@ -27,4 +27,14 @@ OldChars.xbm -fg #ea0b85 -bg #290d36
 E7bMSiv.xbm -fg #6510b0 -bg #e4621b
 E7bMSiv.xbm -fg #00c2af -bg #67435d
 bg_blu.xbm -fg #ca3818 -bg #a1c6e5
+<<<<<<< HEAD
 RicePaper.xbm -fg #5457fe -bg #35f9cc
+=======
+E7bMSiv.xbm -fg #ddc2ed -bg #1a4786
+LatticeBig.xbm -fg #f06464 -bg #67cc98
+wall.xbm -fg #b17fb2 -bg #c5fa7f
+Dolphins.xbm -fg #861f92 -bg #fc3344
+wall.xbm -fg #5f7298 -bg #7af7ba
+E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
+Pebbles.xbm -fg #2abbe5 -bg #92021d
+>>>>>>> 7769a308d9e182e76009872297d7b42783be3c15

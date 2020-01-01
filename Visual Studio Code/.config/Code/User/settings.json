@@ -28,7 +28,8 @@
 		"*.timer": "ini",
 		".tmux.conf": "shellscript",
 		"dunstrc": "ini",
-		"config": "ini"
+		"config": "ini",
+		"fonts.conf": "xml"
 	},
 	"files.exclude": {
 		"**/.git": true,
@@ -93,7 +94,7 @@
 	"javascript.implicitProjectConfig.checkJs": true,
 	"extensions.autoUpdate": true,
 	"editor.renderIndentGuides": false,
-	"editor.autoIndent": true,
+	"editor.autoIndent": "advanced",
 	"window.restoreWindows": "all",
 	"git.enableSmartCommit": true,
 	"markdown.preview.fontSize": 18,
@@ -161,7 +162,6 @@
 	"workbench.colorTheme": "Qillqaq",
 	"terminal.integrated.lineHeight": 1.2,
 	"editor.suggestSelection": "first",
-	"terminal.integrated.rendererType": "canvas",
 	"workbench.editor.highlightModifiedTabs": true,
 	"editor.wordWrap": "on",
 	"extensions.ignoreRecommendations": true,
@@ -243,5 +243,11 @@
 	"git.untrackedChanges": "separate",
 	"git.enableCommitSigning": false,
 	"git.openDiffOnClick": false,
-	"go.formatTool": "goimports"
+	"go.formatTool": "goimports",
+	"terminal.integrated.rendererType": "experimentalWebgl",
+	"javascript.format.semicolons": "remove",
+	"typescript.format.semicolons": "remove",
+	"search.enableSearchEditorPreview": true,
+	"debug.chrome.useV3": true,
+	"debug.node.useV3": true
 }
