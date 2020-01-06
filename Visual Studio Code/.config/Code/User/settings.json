@@ -104,18 +104,7 @@
 	"git.autofetch": true,
 	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		{
-			"language": "html",
-			"autoFix": true
-		},
-		{
-			"language": "vue",
-			"autoFix": true
-		}
-	],
+	"eslint.validate": ["javascript", "javascriptreact", "html", "vue"],
 	"eslint.options": {
 		"plugins": ["vue", "html"]
 	},
