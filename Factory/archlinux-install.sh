@@ -83,7 +83,7 @@ pacman-key --lsign-key home
 
 pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=udisks2 unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite strawberry xcursor-vanilla-dmz man-db man-pages feh mons
 
-pacman -S bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
+pacman -S --needed bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
 pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libzip farbfeld jpegexiforient gst-plugins-bad gst-libav gst-plugins-ugly
 # as-deps: libdvdcss libva-intel-driver linux-headers crda opus-tools
