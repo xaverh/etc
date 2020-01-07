@@ -238,11 +238,12 @@ $localbinds \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off \
 🍂 rule class=SshAskpass pseudotile=on \
 🍂 rule class=mpv instance=gl index=10 focus=on switchtag=on \
-🍂 rule title='Picture in picture' index=10 focus=off \
+🍂 rule title='Picture in picture' index=10 focus=off pseudotile=off \
+🍂 rule class=firefox instance=Toolkit index=10 focus=off pseudotile=off \
 🍂 rule class=mpv instance=FM0 focus=on hook=📻 \
 🍂 rule class=Journalctl tag='#' focus=on switchtag=on hook=new_journalctl \
 🍂 rule once class=Google-chrome index=0 focus=on switchtag=on \
-🍂 rule once class=Firefox instance=Navigator index=0 focus=on switchtag=on \
+🍂 rule once class=firefox instance=Navigator index=0 focus=on switchtag=on \
 🍂 rule once class=Code index=0 focus=on switchtag=on \
 🍂 rule class=discord tag='^' \
 🍂 rule class=TelegramDesktop tag='^' \
