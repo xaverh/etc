@@ -92,7 +92,7 @@
 	"C_Cpp.autocomplete": "Default",
 	"C_Cpp.intelliSenseEngine": "Default",
 	"javascript.implicitProjectConfig.checkJs": true,
-	"extensions.autoUpdate": false,
+	"extensions.autoUpdate": true,
 	"editor.renderIndentGuides": false,
 	"editor.autoIndent": "advanced",
 	"window.restoreWindows": "all",
@@ -104,18 +104,7 @@
 	"git.autofetch": true,
 	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		{
-			"language": "html",
-			"autoFix": true
-		},
-		{
-			"language": "vue",
-			"autoFix": true
-		}
-	],
+	"eslint.validate": ["javascript", "javascriptreact", "html", "vue"],
 	"eslint.options": {
 		"plugins": ["vue", "html"]
 	},

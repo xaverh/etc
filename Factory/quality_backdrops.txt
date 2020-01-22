@@ -27,6 +27,7 @@ OldChars.xbm -fg #ea0b85 -bg #290d36
 E7bMSiv.xbm -fg #6510b0 -bg #e4621b
 E7bMSiv.xbm -fg #00c2af -bg #67435d
 bg_blu.xbm -fg #ca3818 -bg #a1c6e5
+RicePaper.xbm -fg #5457fe -bg #35f9cc
 E7bMSiv.xbm -fg #ddc2ed -bg #1a4786
 LatticeBig.xbm -fg #f06464 -bg #67cc98
 wall.xbm -fg #b17fb2 -bg #c5fa7f
@@ -36,3 +37,4 @@ E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
 Pebbles.xbm -fg #2abbe5 -bg #92021d
 slate.xbm -fg #9c58e7 -bg #2c2b50
 Dolphins.xbm -fg #4089e7 -bg #a1035e
+E7bMSiv.xbm -fg #4f8ce4 -bg #ba9098

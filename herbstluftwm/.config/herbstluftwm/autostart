@@ -45,6 +45,7 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind Mod4+Mod1+asciicircum chain ⛓️ lock ⛓️ rotate ⛓️ rotate ⛓️ rotate ⛓️ unlock \
 	🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
 	🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.612700:0 (clients max:1) (split vertical:0.415300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 	🍂 keybind Mod4+odiaeresis or 🙉 sprintf 🖖 my_%s_🖼️ tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_🖼️ tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+numbersign toggle always_show_frame)
@@ -61,6 +62,7 @@ else
 	🍂 keybind Mod4+KP_Multiply spawn $musicnextcmd \
 	🍂 keybind Mod4+KP_Divide spawn $musicprevcmd \
 	🍂 keybind Mod4+backslash chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
+	🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 	🍂 keybind Mod4+semicolon or 🙉 sprintf 🖖 my_%s_🖼️ tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_🖼️ tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+apostrophe and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+apostrophe toggle always_show_frame)
@@ -225,7 +227,6 @@ herbstclient chain \
 🍂 keybind Mod4+Mod1+comma substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -l ⛓️ use 🏷️ \
 🍂 keybind Mod4+Mod1+period substitute 🏷️ monitors.focus.tag chain ⛓️ focus_monitor -r ⛓️ use 🏷️ \
 🍂 keybind Mod4+Shift+q spawn $SHELL -c "rofi -sep ',' -dmenu -p Quit <<<'reload,reconfigure,restart panel,lock,suspend,reboot,shutdown' | sed 's/reload/herbstclient reload/;s/reconfigure/herbstclient chain ⛓️ keyunbind --all ⛓️ mouseunbind --all ⛓️ unrule --all ⛓️ reload/;s/restart panel/~\/.config\/herbstluftwm\/restartpanel.sh/;s/lock/slock/;s/suspend/systemctl suspend/;s/reboot/systemctl reboot/;s/shutdown/systemctl poweroff/' | $SHELL" \
-🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+w substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.550000:0 (clients max:0) (clients max:0))' 🥨 jumpto 🪟 \
 🍂 keybind Mod4+Shift+y spawn $SHELL -c 'herbstclient keybind Mod4+y substitute 🪟 clients.focus.winid and 🥨 load "`herbstclient dump`"  🥨 jumpto 🪟' \
 🍂 keybind Mod4+Shift+z spawn $SHELL -c 'herbstclient keybind Mod4+z substitute 🪟 clients.focus.winid and 🥨 load "`herbstclient dump`"  🥨 jumpto 🪟' \
@@ -237,11 +238,12 @@ $localbinds \
 🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off \
 🍂 rule class=SshAskpass pseudotile=on \
 🍂 rule class=mpv instance=gl index=10 focus=on switchtag=on \
-🍂 rule title='Picture in picture' index=10 focus=off \
+🍂 rule title='Picture in picture' index=10 focus=off pseudotile=off \
+🍂 rule class=firefox instance=Toolkit index=10 focus=off pseudotile=off \
 🍂 rule class=mpv instance=FM0 focus=on hook=📻 \
 🍂 rule class=Journalctl tag='#' focus=on switchtag=on hook=new_journalctl \
 🍂 rule once class=Google-chrome index=0 focus=on switchtag=on \
-🍂 rule once class=Firefox instance=Navigator index=0 focus=on switchtag=on \
+🍂 rule once class=firefox instance=Navigator index=0 focus=on switchtag=on \
 🍂 rule once class=Code index=0 focus=on switchtag=on \
 🍂 rule class=discord tag='^' \
 🍂 rule class=TelegramDesktop tag='^' \
