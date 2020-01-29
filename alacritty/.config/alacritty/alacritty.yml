@@ -100,7 +100,7 @@ scrolling:
 #tabspaces: 8
 
 # Font configuration
-font:
+# font:
   # Normal (roman) font face
   # normal:
     # Font family
@@ -148,7 +148,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 8
+  # size: 8
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -375,7 +375,7 @@ cursor:
   # Record all characters and escape sequences as test data.
   #ref_test: false
 
-#mouse:
+mouse:
   # Click settings
   #
   # The `double_click` and `triple_click` settings control the time
@@ -387,7 +387,7 @@ cursor:
   # If this is `true`, the cursor is temporarily hidden when typing.
   #hide_when_typing: false
 
-  #url:
+  url:
     # URL launcher
     #
     # This program is executed when clicking on a text which is recognized as a URL.
@@ -407,7 +407,7 @@ cursor:
     #
     # These are the modifiers that need to be held down for opening URLs when clicking
     # on them. The available modifiers are documented in the key binding section.
-    #modifiers: None
+    modifiers: Shift
 
 # Mouse bindings
 #
