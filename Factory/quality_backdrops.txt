@@ -36,3 +36,7 @@ wall.xbm -fg #5f7298 -bg #7af7ba
 E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
 Pebbles.xbm -fg #2abbe5 -bg #92021d
 E7bMSiv.xbm -fg #4f8ce4 -bg #ba9098
+Dolphins.xbm -fg #a2eb5d -bg #16148b
+Corduroy.xbm -fg #001f13 -bg #994b3c
+Miniweave.xbm -fg #550a1f -bg #ec4193
+Swirl.xbm -fg #d1d758 -bg #09a197
