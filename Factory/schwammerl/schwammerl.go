@@ -94,15 +94,15 @@ func getCurFrameWCount() string {
 	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
 	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
 	if err != nil || err2 != nil {
-		return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
+		return "%{F-}%{O1500}%{A}%{A}%{r}[?] %{B-}"
 	}
 	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
 	clientNumber := string(out)[:len(out)-1]
 	if clientNumber == "0" || clientNumber == "1" {
-		return "%{O1500}%{A}%{r}%{F-}%{B-}"
+		return "%{O1500}%{A}%{A}%{r}%{F-}%{B-}"
 	}
 	if err == nil {
-		return "%{F-}%{O1500}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
+		return "%{F-}%{O1500}%{A}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
 	}
 	return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
 }
@@ -272,7 +272,7 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			}
 		}
 	SENDSTATUS:
-		hlwmStatus <- workspaces + "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ cycle:}" + windowTitle + curFrameWCount
+		hlwmStatus <- workspaces + "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ cycle:} %{A3:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ spawn abridor.lua:}" + windowTitle + curFrameWCount
 	BACKTOTHEGOODPART:
 	}
 	if err := scanner.Err(); err != nil {
@@ -308,7 +308,7 @@ TRYAGAIN:
 		goto TRYAGAIN
 	}
 	client := &Client{pulse}
-	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ printf $2 }'").Output()
+	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks | grep -A 15 '* index' | awk '/muted:/{ printf $2 }'").Output()
 	if err == nil {
 		if string(initialMuteCheck) == "no" {
 			isMute = false

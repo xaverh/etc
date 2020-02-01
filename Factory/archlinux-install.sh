@@ -51,6 +51,7 @@ cp ~/etc/Factory/boot-loader-entries-arch.conf /mnt/boot/loader/entries/arch.con
 mkdir -p /mnt/etc/pacman.d/hooks
 cp ~/etc/Factory/etc-pacman.d-hooks-100\\x2dsystemd\\x2dboot.hook /mnt/etc/pacman.d/hooks/100-systemd-boot.hook
 cp /etc/pacman.conf /mnt/etc/pacman.conf
+cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo pts/0  >> /mnt/etc/securetty
 mkdir -p /mnt/usr/local/lib/systemd/user
@@ -81,11 +82,11 @@ pacman -D --asexplicit curl less
 pacman-key --add ~/etc/Factory/home_xha_Arch.key
 pacman-key --lsign-key home
 
-pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=udisks2 unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite strawberry xcursor-vanilla-dmz man-db man-pages feh mons
+pacman -S --needed --assume-installed=dmenu --assume-installed=cantarell-fonts --assume-installed=adobe-source-code-pro-fonts --assume-installed=jack --assume-installed=udisks2 unrar zip unzip exfat-utils mupdf-gl ncdu openssh p7zip pulseaudio rmlint clipmenu gimp herbstluftwm rofi mpv nnn youtube-dl pavucontrol slock telegram-desktop xclip xorg-server xorg-xinit nodejs lua discord firefox noto-fonts-emoji chromium go flameshot uw-ttyp0-font wqy-bitmapfont xorg-xinput sent dunst termite strawberry xcursor-vanilla-dmz man-db man-pages feh mons wireguard-tools wireguard-arch
 
 pacman -S --needed bluez bluez-utils numlockx pulseaudio-bluetooth steam rawtherapee abcde weechat vulkan-intel iw
 
-pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libzip farbfeld jpegexiforient gst-plugins-bad gst-libav gst-plugins-ugly
+pacman -S --needed --asdeps x11-ssh-askpass clipnotify xorg-xsetroot npm rtmpdump lemonbar libzip farbfeld jpegexiforient gst-plugins-bad gst-libav gst-plugins-ugly openresolv
 # as-deps: libdvdcss libva-intel-driver linux-headers crda opus-tools
 
 localectl set-locale LANG=en_US.UTF-8
