@@ -29,7 +29,8 @@
 		".tmux.conf": "shellscript",
 		"dunstrc": "ini",
 		"config": "ini",
-		"fonts.conf": "xml"
+		"fonts.conf": "xml",
+		"*.rules": "javascript"
 	},
 	"files.exclude": {
 		"**/.git": true,
