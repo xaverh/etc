@@ -51,6 +51,7 @@ cp ~/etc/Factory/boot-loader-entries-arch.conf /mnt/boot/loader/entries/arch.con
 mkdir -p /mnt/etc/pacman.d/hooks
 cp ~/etc/Factory/etc-pacman.d-hooks-100\\x2dsystemd\\x2dboot.hook /mnt/etc/pacman.d/hooks/100-systemd-boot.hook
 cp /etc/pacman.conf /mnt/etc/pacman.conf
+cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo pts/0  >> /mnt/etc/securetty
 mkdir -p /mnt/usr/local/lib/systemd/user
