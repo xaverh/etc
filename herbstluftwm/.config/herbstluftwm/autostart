@@ -212,6 +212,7 @@ herbstclient chain \
 🍂 keybind Mod4+t spawn $SHELL -c "tmux list-clients -F \"#S\" | rofi -dmenu -i -p tmux | xargs ${TERMINAL:-xterm} -e tmux new-session -A -s" \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
+🍂 keybind Mod4+F10 spawn toupeira.lua \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
 🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 and 🥨 rule once maxage=5 class=Journalctl hook=new_journalctl 🥨 spawn ${TERMINAL:-xterm} --class Journalctl,Journalctl -e journalctl -b -f -n 1000 \
 🍂 keybind Mod4+F5 cycle_value frame_gap 0 15 \

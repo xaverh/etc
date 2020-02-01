@@ -186,11 +186,9 @@ end
 local city_file = io.popen('echo "' .. city_list .. '" | rofi -dmenu -i -no-custom -p "Connect to …"')
 local city = string.sub(city_file:read('a'), 1, -2)
 
-if city == '❌ Cancel' then
-	return
-elseif city == '🔓 Stop VPN' then
+if city == '🔓 Stop VPN' then
 	close_old_instance()
-else
+elseif servers[city] then
 	close_old_instance()
 	os.execute('systemctl start wg-quick@mullvad-' .. servers[city] .. '.service')
 end
