@@ -146,8 +146,7 @@ herbstclient chain \
 🍂 add '$' \
 🍂 add '%' \
 🍂 add '^' \
-🍂 load '!' '(clients grid:0)' \
-🍂 load '@' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' \
+🍂 load '!' '(split horizontal:0.626100:0 (clients max:1) (split vertical:0.395300:1 (clients max:0) (clients max:0)))' \
 🍂 load '#' '(clients grid:0)' \
 🍂 load '$' '(clients max:0)' \
 🍂 load '^' '(clients max:0)' \
@@ -186,9 +185,9 @@ herbstclient chain \
 🍂 keybind Mod4+f fullscreen toggle \
 🍂 keybind Mod4+Control+Shift+f pseudotile toggle \
 🍂 keybind Mod4+BackSpace or 🙉 and 🥨 compare tags.focus.curframe_wcount \!= 2 🥨 cycle_layout +1 🙉 cycle_layout +1  max grid vertical max horizontal \
-🍂 mousebind Mod4+Button3 move \
-🍂 mousebind Mod4+Button2 resize \
 🍂 mousebind Mod4+Button1 call set_attr clients.dragged.fullscreen toggle \
+🍂 mousebind Mod4+Button2 move \
+🍂 mousebind Mod4+Button3 resize \
 🍂 keybind Mod1+Tab use_previous \
 🍂 keybind Mod4+Tab cycle +1 \
 🍂 keybind Mod4+Shift+Tab cycle -1 \
@@ -211,9 +210,12 @@ herbstclient chain \
 🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
 🍂 keybind Mod4+t spawn $SHELL -c "tmux list-clients -F \"#S\" | rofi -dmenu -i -p tmux | xargs ${TERMINAL:-xterm} -e tmux new-session -A -s" \
 🍂 keybind Mod4+Escape spawn slock ssh-add -D \
+🍂 keybind Mod4+F8 spawn iwctl station wlan0 connect ceos \
+🍂 keybind Mod4+Shift+F8 spawn iwctl station wlan0 disconnect ceos \
+🍂 keybind Mod4+Control+Shift+F8 spawn systemctl restart iwd.service \
 🍂 keybind Mod4+F9 spawn bluetoothctl connect 88:C6:26:F4:8A:90 \
-🍂 keybind Mod4+F10 spawn toupeira.lua \
 🍂 keybind Mod4+Shift+F9 spawn bluetoothctl disconnect 88:C6:26:F4:8A:90 \
+🍂 keybind Mod4+F10 spawn toupeira.lua \
 🍂 keybind Mod4+F12 or 🙈 substitute 🆔 my_journalctl jumpto 🆔 🙈 and 🥨 rule once maxage=5 class=Journalctl hook=new_journalctl 🥨 spawn ${TERMINAL:-xterm} --class Journalctl,Journalctl -e journalctl -b -f -n 1000 \
 🍂 keybind Mod4+F5 cycle_value frame_gap 0 15 \
 🍂 keybind Mod4+F6 or 🙉 and 🥨 getenv IS_YSGRIFENNWR 🥨 $qillqaqify 🙉 $ysgrifennwrify \
