@@ -41,3 +41,4 @@ E7bMSiv.xbm -fg #4f8ce4 -bg #ba9098
 KnitLight.xbm -fg #f0f03d -bg #ee3011
 E7bMSiv.xbm -fg #fdac6c -bg #d89856
 Dimple.xbm -fg #da2fb4 -bg #40d3e4
+Pebbles.xbm -fg #038db0 -bg #cb467f
