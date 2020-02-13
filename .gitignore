@@ -41,3 +41,5 @@ DeaDBeeF/.config/deadbeef/socket
 Factory/ricing_todo.txt
 Visual Studio Code/.config/Code/Workspaces
 SSH/.ssh/known_hosts
+SSH/.ssh/authorized_keys
+SSH/.ssh/id_ed25519
