@@ -1,4 +1,6 @@
 export TERMINAL=alacritty
+# https://github.com/alacritty/alacritty/issues/1501
+export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
 
 export YS_W="#f9f8f4" # Floral White, R=249, G=248, B=244
@@ -38,3 +40,5 @@ export QI_B_K="#e5e6e6" # Grey 90%, R=229, G=230, B=230
 export CURSOR_COLOR="#20bbfc" # Deep Sky Blue, R=32, G=187, B=252
 
 # [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp >| ~/.xorg.log 2>&1
+export IS_YSGRIFENNWR=1
+

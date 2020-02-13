@@ -303,7 +303,7 @@ func updateVolume() {
 TRYAGAIN:
 	pulse, e := pulseaudio.New()
 	if e != nil {
-		volChan <- "v. ?"
+		volChan <- "v. ?" + e.Error()
 		time.Sleep(time.Duration(5003 * time.Millisecond))
 		goto TRYAGAIN
 	}
