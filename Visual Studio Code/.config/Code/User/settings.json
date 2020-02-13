@@ -228,7 +228,7 @@
 			"level": "error"
 		}
 	},
-	"workbench.editor.showTabs": false,
+	"workbench.editor.showTabs": true,
 	"editor.fontSize": 15,
 	"git.untrackedChanges": "separate",
 	"git.enableCommitSigning": false,
@@ -239,5 +239,11 @@
 	"typescript.format.semicolons": "remove",
 	"search.enableSearchEditorPreview": true,
 	"debug.chrome.useV3": true,
-	"debug.node.useV3": true
+	"debug.node.useV3": true,
+	"workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.perEditorGroup": true,
+	"workbench.editor.limit.value": 6,
+	"files.defaultLanguage": "${activeEditorLanguage}",
+	"editor.semanticHighlighting.enabled": true,
+	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration"
 }
