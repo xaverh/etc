@@ -42,6 +42,7 @@ if [[ $HOST = andermatt ]] ; then;
 	🍂 keybind Mod4+Shift+asciicircum substitute 🧓 clients.focus.winid chain ⛓️ lock ⛓️ cycle_frame +1 ⛓️ bring 🧓 ⛓️ unlock \
 	🍂 keybind Mod4+less chain ⛓️ split right 0.6180339887498949 ⛓️ focus -e right \
 	🍂 keybind Mod4+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.612700:0 (clients max:1) (split vertical:0.415300:1 (clients max:0) (clients max:0)))' 🥨 jumpto 🪟 \
+	🍂 keybind Mod4+Shift+v substitute 🪟 clients.focus.winid and 🥨 load '(split horizontal:0.373900:0 (split vertical:0.373900:1 (clients max:0) (clients max:0)) (clients max:0))' 🥨 jumpto 🪟 \
 	🍂 keybind Mod4+odiaeresis or 🙉 sprintf 🖖 my_%s_🖼️ tags.focus.index substitute 🆔 clients.focus.winid  and 🥨 get_attr 🖖 🥨 substitute 📊 🖖 load 📊 🥨 remove_attr 🖖 🥨 jumpto 🆔 🙉 spawn $SHELL -c "herbstclient sprintf 🖖 my_%s_🖼️ tags.focus.index and 🥨 new_attr string 🖖 🥨 set_attr 🖖 \"\`herbstclient dump\`\" 🥨 load \"\`herbstclient dump '' @\`\"" \
 	🍂 keybind Mod4+numbersign and 🥨 toggle always_show_frame 1 🥨 spawn $SHELL -c 'sleep 1 && herbstclient toggle always_show_frame' \
 	🍂 keybind Mod4+Shift+numbersign toggle always_show_frame)
