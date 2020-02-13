@@ -45,3 +45,9 @@ Swirl.xbm -fg #d1d758 -bg #09a197
 KnitLight.xbm -fg #f0f03d -bg #ee3011
 E7bMSiv.xbm -fg #fdac6c -bg #d89856
 Dimple.xbm -fg #da2fb4 -bg #40d3e4
+Miniweave.xbm -fg #77ecdb -bg #f23794
+SmallCurves.xbm -fg #388224 -bg #f52369
+Miniweave.xbm -fg #f902b8 -bg #5715b3
+Pebbles.xbm -fg #663202 -bg #1ae6af
+wax.xbm -fg #77e3a5 -bg #ab3416
+Wave.xbm -fg #d70ada -bg #128207
