@@ -3,7 +3,7 @@ include "%L"
 <Multi_key> <8> <equal> <c>               : "🍆" # Eggplant
 <Multi_key> <c> <equal> <8>               : "🍆" # Eggplant
 <Multi_key> <x> <h>                       : "Xaver Hellauer"
-<Multi_key> <X> <H>                       : "xaver@hellauer.bayern"
+<Multi_key> <X> <H>                       : "xaver.hellauer@gmail.com"
 <Multi_key> <greater> <greater>           : "ʻ"   U02BB # Okina
 <Multi_key> <colon> <colon>               : "‘"   leftsinglequotemark # LEFT SINGLE QUOTATION MARK
 <Multi_key> <quotedbl> <quotedbl>         : "’"   rightsinglequotemark # RIGHT SINGLE QUOTATION MARK
