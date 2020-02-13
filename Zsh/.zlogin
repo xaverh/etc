@@ -1,4 +1,6 @@
 export TERMINAL=alacritty
+# https://github.com/alacritty/alacritty/issues/1501
+export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
 
 export YS_W="#f9f8f4" # Floral White, R=249, G=248, B=244
