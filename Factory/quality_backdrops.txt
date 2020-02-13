@@ -47,3 +47,11 @@ E7bMSiv.xbm -fg #fdac6c -bg #d89856
 Dimple.xbm -fg #da2fb4 -bg #40d3e4
 Pebbles.xbm -fg #038db0 -bg #cb467f
 Southwest.xbm -fg #8b53eb -bg #45eefd
+E7bMSiv.xbm -fg #555a3b -bg #5dcba2
+BrickWall.xbm -fg #c3ecf1 -bg #ec6f55
+Dimple.xbm -fg #36718b -bg #363b33
+bg_blu.xbm -fg #d77ae3 -bg #364214
+wax.xbm -fg #41073e -bg #0a1651
+worm.xbm -fg #cf8ae4 -bg #16978b
+PinStripe.xbm -fg #91cb83 -bg #e898d5
+Squares.xbm -fg #a66065 -bg #98d551

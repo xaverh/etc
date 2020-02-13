@@ -43,15 +43,10 @@ if [[ -d /etc/X11/xinit/xinitrc.d ]] ; then
 	unset f
 fi
 
-if [[ -f $HOME/.local/share/lsl3260w.icm ]]; then
-	dispwin -d1 $HOME/.local/share/lsl3260w.icm
-fi
-
 xset b off &
 xset s off &
 xset -dpms &
-xset fp+ /usr/share/fonts/wenquanyi &
-xset fp+ /usr/local/share/fonts/alabdali &
+([[ -d /usr/local/share/fonts/unifont && -x /usr/local/share/fonts/unifont ]] && xset fp+ /usr/local/share/fonts/unifont) &
 
 # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#Key_combinations
 export GTK_IM_MODULE="xim"
@@ -61,4 +56,3 @@ exec herbstluftwm --locked 2> /tmp/herbstlog
 
 # call failsafe
 exit 0
-
