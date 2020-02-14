@@ -61,3 +61,5 @@ wax.xbm -fg #41073e -bg #0a1651
 worm.xbm -fg #cf8ae4 -bg #16978b
 PinStripe.xbm -fg #91cb83 -bg #e898d5
 Squares.xbm -fg #a66065 -bg #98d551
+wax.xbm -fg #305243 -bg #df4c6c
+Miniweave.xbm -fg #ac3dce -bg #c8ca05

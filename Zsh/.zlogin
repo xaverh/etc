@@ -39,6 +39,6 @@ export QI_B_C="#a2dcd7" # Sinbad, R=162, G=220, B=215
 export QI_B_K="#e5e6e6" # Grey 90%, R=229, G=230, B=230
 export CURSOR_COLOR="#20bbfc" # Deep Sky Blue, R=32, G=187, B=252
 
-# [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp >| ~/.xorg.log 2>&1
-export IS_YSGRIFENNWR=1
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -keeptty -nolisten tcp >| ~/.xorg.log 2>&1
+export IS_YSGRIFENNWR=0
 
