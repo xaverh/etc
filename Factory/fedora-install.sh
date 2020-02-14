@@ -128,6 +128,7 @@ mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
 cp ~/etc/Factory/etc-systemd-system-getty\\x40tty1.service.d-override.conf /mnt/etc/systemd/system/getty@tty1.service.d/override.conf
 cp ~/etc/Factory/etc-systemd-system-iwd.service.d-override.conf /mnt/etc/systemd/system/iwd.service.d/override.conf
+cp ~/etc/Factory/etc-dracut.conf.d-local.conf /mnt/etc/dracut.conf.d/local.conf
 # As needed
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
