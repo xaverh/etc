@@ -126,6 +126,7 @@ cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/
 cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+cp ~/etc/Factory/etc-systemd-system-getty\\x40tty1.service.d-override.conf /mnt/etc/systemd/system/getty@tty1.service.d/override.conf
 cp ~/etc/Factory/etc-systemd-system-iwd.service.d-override.conf /mnt/etc/systemd/system/iwd.service.d/override.conf
 # As needed
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
