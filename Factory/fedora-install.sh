@@ -57,7 +57,7 @@ dnf check-update
 # xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
 
 dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim btrfs-progs util-linux-user rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted sqlite
-# iwd wireless-regdb b43-firmware cryptsetup
+# iwd wireless-regdb broadcom-wl cryptsetup
 
 systemd-firstboot --root=/mnt --locale=en_US.UTF-8 --keymap=us --hostname=airolo --setup-machine-id
 
@@ -126,6 +126,7 @@ cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/
 cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+cp ~/etc/Factory/etc-systemd-system-iwd.service.d-override.conf /mnt/etc/systemd/system/iwd.service.d/override.conf
 # As needed
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
