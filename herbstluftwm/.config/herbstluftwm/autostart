@@ -206,7 +206,7 @@ herbstclient chain \
 🍂 keybind Mod4+u spawn $SHELL -c "xdg-open \$(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\/\/[^ \\\"\(\)\<\>\]]*\" | uniq |rofi -dmenu -i -p 'open URL')" \
 🍂 keybind Mod4+i spawn clipmenu -p clipboard \
 🍂 keybind Mod4+Insert spawn $SHELL -c "notify-send -- \"📋 \$(sort ${CM_DIR}/clipmenu.5.${USER}/line_cache_* | tail -n 1 | cut -d ' ' -f 2- -- -)\"" \
-🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' $HOME/.local/share/emoji.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf \$1}' | xsel -ib" \
+🍂 keybind Mod4+e spawn $SHELL -c "awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", \$2); print \$2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf \$1}' | xsel -ib" \
 🍂 keybind Mod4+0 spawn fm0.lua \
 🍂 keybind Mod4+Shift+0 substitute 🏷️ my_📻 bring 🏷️ \
 🍂 keybind Mod4+t spawn $SHELL -c "tmux list-clients -F \"#S\" | rofi -dmenu -i -p tmux | xargs ${TERMINAL:-xterm} -e tmux new-session -A -s" \
