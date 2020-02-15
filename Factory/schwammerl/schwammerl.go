@@ -3,8 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/godbus/dbus"
-	"github.com/sqp/pulseaudio"
 	"io/ioutil"
 	"net"
 	"os"
@@ -27,8 +25,6 @@ var (
 	wifiDevice        = ""
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 	homeDirectory     = os.Getenv("HOME")
-	isMute            = false
-	volChan           = make(chan string)
 )
 
 func fixed(rate int) string {
@@ -247,20 +243,6 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 			}
 			tagColor = windowBorderActiveColor
 			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
-		case "🔊":
-			exec.Command(os.Getenv("SHELL"), "-c", "pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)").Start()
-			goto BACKTOTHEGOODPART
-		case "🔉":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "false").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%").Start()
-			goto BACKTOTHEGOODPART
-		case "🔇":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "true").Start()
-			goto BACKTOTHEGOODPART
-		case "🔈":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "false").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "-1").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "+1").Start()
 			goto BACKTOTHEGOODPART
 		}
 		{
@@ -278,53 +260,6 @@ func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
 	if err := scanner.Err(); err != nil {
 		workspaces = fmt.Sprintf("reading standard input: %v", err)
 	}
-}
-
-type Client struct {
-	*pulseaudio.Client
-}
-
-func (cl *Client) DeviceVolumeUpdated(path dbus.ObjectPath, values []uint32) {
-	if !isMute {
-		volChan <- fmt.Sprintf("%%{A2:herbstclient emit_hook 🔇:}%%{A1:herbstclient emit_hook 🔉:}%%{A3:herbstclient emit_hook 🔊:}vol. %v %%%%%%{A}%%{A}%%{A}", values[0]*100/65536)
-	}
-}
-
-func (cl *Client) DeviceMuteUpdated(path dbus.ObjectPath, mute bool) {
-	if mute {
-		volChan <- "%{A2:herbstclient emit_hook 🔈:}mute%{A}"
-		isMute = true
-	} else {
-		isMute = false
-	}
-}
-
-func updateVolume() {
-TRYAGAIN:
-	pulse, e := pulseaudio.New()
-	if e != nil {
-		volChan <- "v. ?" + e.Error()
-		time.Sleep(time.Duration(5003 * time.Millisecond))
-		goto TRYAGAIN
-	}
-	client := &Client{pulse}
-	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks | grep -A 15 '* index' | awk '/muted:/{ printf $2 }'").Output()
-	if err == nil {
-		if string(initialMuteCheck) == "no" {
-			isMute = false
-		}
-	}
-	initialVolumeCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); printf $5 }'").Output()
-	if err == nil {
-		if !isMute {
-			volChan <- fmt.Sprintf("%%{A2:herbstclient emit_hook 🔇:}%%{A1:herbstclient emit_hook 🔉:}%%{A3:herbstclient emit_hook 🔊:}vol. %v %%%%%%{A}%%{A}%%{A}", string(initialVolumeCheck))
-		} else {
-			volChan <- "%{A2:herbstclient emit_hook 🔈:}mute%{A}"
-		}
-	}
-	pulse.Register(client)
-
-	pulse.Listen()
 }
 
 func updateTemperature(θ chan<- string, thermalZone string) {
@@ -545,15 +480,13 @@ func main() {
 	go updatePower(powChan)
 	go updateTime(timeChan)
 	go updateHerbstluftStatus(hlwmChan, screen)
-	go updateVolume()
-	status := make([]string, 9)
+	status := make([]string, 8)
 	for {
 		select {
 		case status[0] = <-hlwmChan:
 			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[8] = <-timeChan:
+		case status[7] = <-timeChan:
 			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[7] = <-volChan:
 		case status[2] = <-memChan:
 		case status[3] = <-netChan:
 		case status[4] = <-tempChan:
