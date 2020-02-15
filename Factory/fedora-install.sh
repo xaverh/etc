@@ -78,7 +78,7 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh herbstluftwm herbstluftwm-zsh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip lemonbar sent slock mons alacritty rxvt-unicode-ml terminus-fonts google-noto-emoji-color-fonts dmz-cursor-themes
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh herbstluftwm herbstluftwm-zsh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip lemonbar sent slock mons alacritty rxvt-unicode-ml terminus-fonts google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji
 # wireguard-dkms wireguard-tools dbus-x11 openssh-askpass
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
