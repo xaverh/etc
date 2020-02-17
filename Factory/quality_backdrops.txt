@@ -63,3 +63,8 @@ PinStripe.xbm -fg #91cb83 -bg #e898d5
 Squares.xbm -fg #a66065 -bg #98d551
 wax.xbm -fg #305243 -bg #df4c6c
 Miniweave.xbm -fg #ac3dce -bg #c8ca05
+Dolphins.xbm -fg #4a5db3 -bg #38d18e
+bg_blu.xbm -fg #a3147f -bg #3f0a71
+Wooly.xbm -fg #669724 -bg #6f0b5d
+bg_blu.xbm -fg #00eee7 -bg #631d8a
+bg_blu.xbm -fg #211eb2 -bg #869019

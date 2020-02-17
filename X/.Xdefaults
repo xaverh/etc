@@ -25,53 +25,27 @@ rofi.hide-scrollbar:                 true
 rofi.kb-row-tab:
 rofi.kb-row-select:                  Tab
 rofi.show-icons:                     true
-rofi.window-command:                 herbstclient bring {window}
+! rofi.window-command:                 herbstclient bring {window}
+! rofi.window-command:                 bspc node {window} --to-desktop focused --focus
 
-! Grey 10%, R=30, G=30, B=30
 *.color0: #1e1e1e
 *.background: #1e1e1e
-! Deep Cerise, R=227, G=39, B=145
 *.color1: #e32791
-! Shamrock, R=48, G=199, B=152
 *.color2: #30c798
-! Chenin, R=227, G=196, B=114
 *.color3: #e3c472
-! Cornflower Blue, R=103, G=150, B=230
 *.color4: #6796e6
-! Plum, R=229, G=159, B=223
 *.color5: #e59fdf
-! Riptide, R=129, G=216, B=208
 *.color6: #81d8d0
-! Grey 60%, R=150, G=150, B=150
 *.color7: #969696
-! Grey 30%, R=81, G=81, B=81
 *.color8: #515151
-! Hot Pink, R=228, G=102, B=173
 *.color9: #e466ad
-! Medium Aquamarine, R=108, G=209, B=178
 *.color10: #6cd1b2
-! Double Colonial White, R=228, G=207, B=152
 *.color11: #e4cf98
-! Jordy Blue, R=145, G=181, B=230
 *.color12: #91b0e6
-! French Lilac, R=229, G=182, B=225
 *.color13: #e5b6e1
-! Sinbad, R=162, G=220, B=215
 *.color14: #a2dcd7
-! Grey 90%, R=229, G=230, B=230
 *.color15: #e5e6e6
 *.foreground: #e5e6e6
-
-twobwm.border_width: 7
-twobwm.outer_border: 3
-twobwm.focus_color: #82a7c7
-twobwm.unfocus_color: #cdd5d5
-twobwm.fixed_color: #faf669
-twobwm.unkill_color: #b6fa69
-twobwm.outer_border_color: #87737b
-twobwm.fixed_unkill_color: #faad69
-twobwm.inverted_colors: true
-twobwm.enable_compton: false
 
 URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Regular:pixelsize=14
 URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1

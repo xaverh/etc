@@ -22,4 +22,3 @@ export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
 # (( EUID != 0 )) && umask 0077
-
