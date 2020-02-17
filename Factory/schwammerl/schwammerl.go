@@ -23,7 +23,7 @@ const (
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
 	pluggedSign       = ""
-	separatorModules  = "   "
+	separatorModules  = "  "
 )
 
 var (
@@ -94,7 +94,7 @@ func updateIPAdress(ipv4 chan<- string) {
 			if len(localAddr) > 0 {
 				ipv4 <- localAddr[0]
 			} else {
-				ipv4 <- "%{F#ff00ff} ERROR %{F-}"
+				ipv4 <- "ERROR"
 				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
 			}
 		}
@@ -238,10 +238,10 @@ func updateWIFI(wifi chan<- string) {
 					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
 				}
 			} else {
-				wifi <- "%{F#e32791}no WiFi%{F-}"
+				wifi <- "no WiFi"
 			}
 		} else {
-			wifi <- "%{F#969696}no WiFi%{F-}"
+			wifi <- "no WiFi"
 			for _, v := range networkDevices {
 				if v.Name[0] == 'w' {
 					wifiDevice = v.Name
