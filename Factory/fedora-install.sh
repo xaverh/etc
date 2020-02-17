@@ -79,7 +79,7 @@ systemd-nspawn -bD /mnt
 
 sudo bootctl install
 sudo dnf module enable dwm:latest
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip sent slock mons alacritty rxvt-unicode-ml google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry dwm-user
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock mons alacritty rxvt-unicode-ml google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry dwm-user
 # wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
