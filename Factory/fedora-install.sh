@@ -78,11 +78,12 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh herbstluftwm herbstluftwm-zsh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip lemonbar sent slock mons alacritty rxvt-unicode-ml terminus-fonts google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji
-# wireguard-dkms wireguard-tools dbus-x11 openssh-askpass
+sudo dnf module enable dwm:latest
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip sent slock mons alacritty rxvt-unicode-ml google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry dwm-user
+# wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
-# libva-intel-hybrid-driver weechat strawberry
+# libva-intel-hybrid-driver weechat
 
 localectl set-x11-keymap us pc104 altgr-intl compose:menu,rupeesign:4
 localectl set-x11-keymap de apple_laptop mac_nodeadkeys compose:rwin-altgr
@@ -104,7 +105,7 @@ sudo touch /.autorelabel
 exit
 reboot
 
-# timedatectl set-ntp true
+timedatectl set-ntp true
 
 systemctl enable slock@xha.service
 # Essentials
