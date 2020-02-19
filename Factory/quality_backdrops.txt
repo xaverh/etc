@@ -55,3 +55,4 @@ wax.xbm -fg #41073e -bg #0a1651
 worm.xbm -fg #cf8ae4 -bg #16978b
 PinStripe.xbm -fg #91cb83 -bg #e898d5
 Squares.xbm -fg #a66065 -bg #98d551
+E7bMSiv.xbm -fg #1da883 -bg #43c6b1
