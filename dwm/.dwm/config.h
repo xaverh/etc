@@ -34,7 +34,23 @@
 #define QI_B_K "e5e6e6" // Grey 90%, R=229, G=230, B=230
 #define CURSOR_COLOR "20bbfc" // Deep Sky Blue, R=32, G=187, B=252
 
-#define HOME "/home/xha"
+
+#if MACHINE_ID == 0xb2d5751b41ed4edc // airolo
+#define HAS_TEN_KEYS
+// ISO 3166 Country codes, US=840, DE=276
+#define KBD_LAYOUT 840
+#elif MACHINE_ID == 0x1
+#define HAS_SCR_BACKLIGHT_KEYS
+#define HAS_KBD_BACKLIGHT_KEYS
+#define HAS_VOLUME_KEYS
+#define HAS_MULTIMEDIA_KEYS
+#define KBD_LAYOUT 276
+#define IS_MACINTOSH
+#endif
+
+#if !defined(KBD_LAYOUT)
+#define KBD_LAYOUT 276
+#endif
 
 #define MAINFONT "IBM Plex Sans:size=9"
 
@@ -191,23 +207,33 @@ static Key keys[] = {
 	{ MODKEY,			XK_F10,    spawn,          {.v = (const char*[]){"toupeira.lua", NULL}}},
 	{ MODKEY,			XK_F12,    spawn,          {.v = (const char*[]){TERMINAL, "--class", "Journalctl,Journalctl", "-e", "journalctl", "-b", "-f", "-n", "1000", NULL}}},
 	{ MODKEY,			XK_F1,     spawn,          SHCMD("mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" \"$1}'))")},
+#if defined(HAS_VOLUME_KEYS)
 	{ 0,			        0x1008ff13,spawn,          SHCMD(raisevolcmd)},
 	{ 0,			        0x1008ff11,spawn,          SHCMD(lowervolcmd)},
-	{ 0,			        0x1008ff12,mute,           {}},
+	{ 0,			        0x1008ff12,mute,           {0}},
 	{ MODKEY,			0x1008ff13,spawn,          {.v = (const char*[]){"strawberry", "--volume-up", NULL}}},
 	{ MODKEY,			0x1008ff11,spawn,          {.v = (const char*[]){"strawberry", "--volume-down", NULL}}},
 	{ MODKEY,			0x1008ff12,spawn,          {.v = (const char*[]){"strawberry", "-v", "0", NULL}}},
+#elif defined (HAS_TEN_KEYS)
+	{ MODKEY,		        XK_KP_Add, spawn,          SHCMD(raisevolcmd)},
+	{ MODKEY,		        XK_KP_Subtract,spawn,      SHCMD(lowervolcmd)},
+	{ MODKEY,		        XK_KP_Insert,mute,         {0}},
+#endif
 	{ 0,				0x1008ff14,spawn,          {.v = (const char*[]){"strawberry", "-t", NULL}}},
 	{ 0,				0x1008ff17,spawn,          {.v = (const char*[]){"strawberry", "-f", NULL}}},
 	{ 0,				0x1008ff16,spawn,          {.v = (const char*[]){"strawberry", "--restart-or-previous", NULL}}},
 	{ MODKEY,			0x1008ff14,spawn,          {.v = (const char*[]){"fm0.lua", NULL}}},
 	{ MODKEY,			0x1008ff17,spawn,          {.v = (const char*[]){"strawberry", "--seek-by", "1", NULL}}},
 	{ MODKEY,			0x1008ff16,spawn,          {.v = (const char*[]){"strawberry", "--seek-by", "-1", NULL}}},
+#if defined (HAS_KBD_BACKLIGHT_KEYS)
 	{ 0,			        0x1008ff05,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness) ; new_brightness=$(($maxbrightness/10+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
 	{ 0,			        0x1008ff06,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness); new_brightness=$((-$maxbrightness/10+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
+#endif
+#if defined (HAS_SCR_BACKLIGHT_KEYS)
 	{ 0,			        0x1008ff02,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=$(($maxbrightness/20+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔆 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
 	{ 0,			        0x1008ff03,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness); new_brightness=$((-$maxbrightness/20+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔅 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
-	{ MODKEY,			XK_F6,     toggle_theme,   {}},
+#endif
+	{ MODKEY,			XK_F6,     toggle_theme,   {0}},
 	{ MODKEY,			XK_F7,     spawn,          SHCMD("xsetroot -bitmap "HOME"/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`")},
 	{ MODKEY|Mod1Mask,		XK_F7,     spawn,          SHCMD("xsetroot -bitmap $(printf -- \"$HOME/.local/share/backdrops/$(shuf -n 1 etc/Factory/quality_backdrops.txt)\" | xargs)")},
 	{ MODKEY|ShiftMask,		XK_F7,     spawn,          SHCMD("dunstify -- 🖼️ \"`tail -n 1 /tmp/wallpaper | tee -a $HOME/etc/Factory/quality_backdrops.txt`\"; sort -o $HOME/etc/Factory/quality_backdrops.txt -u $HOME/etc/Factory/quality_backdrops.txt")},
