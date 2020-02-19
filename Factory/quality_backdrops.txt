@@ -4,6 +4,7 @@ bg_blu.xbm -fg #a3147f -bg #3f0a71
 bg_blu.xbm -fg #ca3818 -bg #a1c6e5
 bg_blu.xbm -fg #d77ae3 -bg #364214
 BrickWall.xbm -fg #c3ecf1 -bg #ec6f55
+BrickWall.xbm -fg #cd596a -bg #0fdca3
 Burl.xbm -fg #2a2930 -bg #c53235
 Burl.xbm -fg #2c2e02 -bg #7b1bb1
 Concave.xbm -fg #01ade9 -bg #edb0c7
@@ -18,6 +19,7 @@ Dolphins.xbm -fg #255917 -bg #e6c3c1
 Dolphins.xbm -fg #4089e7 -bg #a1035e
 Dolphins.xbm -fg #422d82 -bg #cdcf12
 Dolphins.xbm -fg #4a5db3 -bg #38d18e
+Dolphins.xbm -fg #607c37 -bg #2b1b43
 Dolphins.xbm -fg #861f92 -bg #fc3344
 Dolphins.xbm -fg #a2eb5d -bg #16148b
 Dune.xbm -fg #22131c -bg #2d86c0
@@ -31,6 +33,7 @@ E7bMSiv.xbm -fg #5f616c -bg #030bd0
 E7bMSiv.xbm -fg #6510b0 -bg #e4621b
 E7bMSiv.xbm -fg #7b550f -bg #361919
 E7bMSiv.xbm -fg #902c25 -bg #1e1e1e
+E7bMSiv.xbm -fg #b31766 -bg #1b1370
 E7bMSiv.xbm -fg #c37c5a -bg #23b5d4
 E7bMSiv.xbm -fg #d6add3 -bg #589665
 E7bMSiv.xbm -fg #ddc2ed -bg #1a4786

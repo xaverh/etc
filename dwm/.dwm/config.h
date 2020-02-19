@@ -36,18 +36,20 @@
 
 #define HOME "/home/xha"
 
+#define MAINFONT "IBM Plex Sans:size=9"
+
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "sans-serif:size=10" };
-static const char dmenufont[]       = "sans-serif:size=10";
+static const char *fonts[]          = { MAINFONT };
+static const char dmenufont[]       = MAINFONT;
 static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { "#"YS_B_W, "#"QI_W, "#"YS_B_K },
-	[SchemeSel]  = { "#"QI_B_K, col_cyan,  col_cyan  },
+	[SchemeSel]  = { "#"QI_B_K, col_cyan,  "#"CURSOR_COLOR  },
 };
 
 /* tagging */
@@ -59,8 +61,10 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Journalctl",     NULL,       NULL,       4,            0,           -1 },
-	{ "strawberry",     NULL,       NULL,       8,            0,            0 },
+	{ "Google-chrome",  NULL,       NULL,       5,            0,           -1 },
+	{ "Code",           NULL,       NULL,       6,            0,           -1 },
+	{ "Journalctl",     NULL,       NULL,     256,            0,           -1 },
+	{ "strawberry",     NULL,       NULL,      64,            0,            0 },
 };
 
 /* layout(s) */
@@ -109,21 +113,34 @@ static const char *screenshotcmd[] = { "flameshot", "full", "-c", "-p", "/tmp", 
 static const char *screenshotselcmd[] = { "flameshot", "gui", "-p", "/tmp", NULL };
 static const char raisevolcmd[] = "pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; dunstify -r 7549 \"🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') %\"";
 static const char lowervolcmd[] = "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; dunstify -r 7549 \"🔉 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') %\"";
-static const char mutecmd[] = "pactl set-sink-mute @DEFAULT_SINK@ true; dunstify -r 7549 '🔇 mute'";
 
-#include <stdio.h>
-#include <stdlib.h>
-
-void test_spawn_chain()
+void mute()
 {
-	int r = rand();
-	int length = snprintf(NULL, 0, "%d", r);
-	char* str = malloc(++length);
-	snprintf(str, length, "%x", r);
-	spawn(&(Arg){.v = (char*[]){ "dunstify", getenv("HOSTNAME"), str, NULL }});
-	free(str);
-	return;
+	spawn(&(Arg){.v = (char*[]){ "pactl", "set-sink-mute", "@DEFAULT_SINK@", "true", NULL }});
+	spawn(&(Arg){.v = (char*[]){ "dunstify", "-r", "7549", "🔇 mute", NULL }});
 }
+
+static _Bool is_ysgrifennwr = 0;
+void toggle_theme()
+{
+	if (is_ysgrifennwr) {
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"YS_K"/"QI_K"/;s/"YS_R"/"QI_R"/;s/"YS_G"/"QI_G"/;s/"YS_B"/"QI_B"/;s/"YS_C"/"QI_C"/;s/"YS_M"/"QI_M"/;s/"YS_Y"/"QI_Y"/;s/"YS_W"/"QI_W"/;s/"YS_B_K"/"QI_B_K"/;s/"YS_B_R"/"QI_B_R"/;s/"YS_B_G"/"QI_B_G"/;s/"YS_B_B"/"QI_B_B"/;s/"YS_B_C"/"QI_B_C"/;s/"YS_B_M"/"QI_B_M"/;s/"YS_B_Y"/"QI_B_Y"/;s/"YS_B_W"/"QI_B_W"/;s/"YS_W_80"/"QI_W_80"/", HOME"/.config/alacritty/alacritty.yml", HOME"/.config/rofi/config.rasi", HOME"/.Xdefaults", HOME"/.config/dunst/dunstrc", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Ysgrifennwr/Qillqaq/", HOME"/.config/Code/User/settings.json", NULL }});
+	} else {
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"QI_K"/"YS_K"/;s/"QI_R"/"YS_R"/;s/"QI_G"/"YS_G"/;s/"QI_B"/"YS_B"/;s/"QI_C"/"YS_C"/;s/"QI_M"/"YS_M"/;s/"QI_Y"/"YS_Y"/;s/"QI_W"/"YS_W"/;s/"QI_B_K"/"YS_B_K"/;s/"QI_B_R"/"YS_B_R"/;s/"QI_B_G"/"YS_B_G"/;s/"QI_B_B"/"YS_B_B"/;s/"QI_B_C"/"YS_B_C"/;s/"QI_B_M"/"YS_B_M"/;s/"QI_B_Y"/"YS_B_Y"/;s/"QI_B_W"/"YS_B_W"/;s/"QI_W_80"/"YS_W_80"/", HOME"/.config/alacritty/alacritty.yml", HOME"/.config/rofi/config.rasi", HOME"/.Xdefaults", HOME"/.config/dunst/dunstrc", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Qillqaq/Ysgrifennwr/", HOME"/.config/Code/User/settings.json", NULL }});
+	}
+	is_ysgrifennwr = !is_ysgrifennwr;
+	spawn(&(Arg){.v = (char*[]){ "pkill", "-x", "dunst", NULL }});
+}
+
+// int r = rand();
+// int length = snprintf(NULL, 0, "%d", r);
+// char* str = malloc(++length);
+// snprintf(str, length, "%x", r);
+// free(str);
+
+// static const char* main9menucmd[] = { "9menu", "-font", FONT_9MENU, "-shell", SHELL, "-bg", col_gray1, "-fg", col_gray3, "-popup", "-teleport", "9menu:false", "---:true", "Connect Set\372bal:bluetoothctl connect 88:C6:26:F4:8A:90", "Disconnect Set\372bal:bluetoothctl disconnect 88:C6:26:F4:8A:90", "---:true", "Screenshot (full):flameshot full -p /tmp -c -d 10", "Screenshot (selection):flameshot gui -p /tmp -d 10", "---:true", "Add SSH key 'xaver@hellauer.bayern (ED25519)':" SSHADDKEYCMD, "Remove all SSH keys:/usr/bin/ssh-add -D", "---:true", "Quit:9menu -font '" FONT_9MENU "' -shell " SHELL " -bg '" COL_GRAY1 "' -fg '" COL_GRAY3 "' -popup -teleport -label 'Quit?' 'Quit?:true' 'Lock " "screen:i3lock -c \"" COL_GRAY1 "\"' 'Restart dwm:killall -USR1 dwm' " "'---:true' " "'Suspend:systemctl suspend' " "'Reboot:systemctl reboot' " "'Poweroff:systemctl poweroff'" " '---:true'" " 'Cancel:false'", "---:true", "Cancel:false", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -134,8 +151,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_plus,   incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_minus,  incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.01} },
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.01} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
@@ -166,7 +183,7 @@ static Key keys[] = {
 	{ MODKEY,			0x1008ff4b,spawn,          {.v = screenshotselcmd}},
 	{ MODKEY,			XK_Print,  spawn,          {.v = screenshotselcmd}},
 	{ MODKEY,			XK_e,      spawn,          SHCMD("awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", $2); print $2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\\_(ツ)_/¯' -no-custom | awk '{printf $1}' | xsel -ib") },
-	{ MODKEY,			XK_u,      spawn,          SHCMD("xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq |rofi -dmenu -i -p 'open URL')") },
+	{ MODKEY,			XK_u,      spawn,          SHCMD("xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq | dmenu -l 10 -i -p 'open URL')") },
 	{ MODKEY,			XK_i,      spawn,          {.v = (const char*[]){"clipmenu", "-p", "clipboard", NULL}}},
 	{ MODKEY,			XK_Escape, spawn,          {.v = (const char*[]){"slock", "ssh-add", "-D", NULL}}},
 	{ MODKEY,			XK_F9,     spawn,          {.v = (const char*[]){"bluetoothctl", "connect", "88:C6:26:F4:8A:90", NULL}}},
@@ -176,7 +193,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_F1,     spawn,          SHCMD("mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" \"$1}'))")},
 	{ 0,			        0x1008ff13,spawn,          SHCMD(raisevolcmd)},
 	{ 0,			        0x1008ff11,spawn,          SHCMD(lowervolcmd)},
-	{ 0,			        0x1008ff12,spawn,          SHCMD(mutecmd)},
+	{ 0,			        0x1008ff12,mute,           {}},
 	{ MODKEY,			0x1008ff13,spawn,          {.v = (const char*[]){"strawberry", "--volume-up", NULL}}},
 	{ MODKEY,			0x1008ff11,spawn,          {.v = (const char*[]){"strawberry", "--volume-down", NULL}}},
 	{ MODKEY,			0x1008ff12,spawn,          {.v = (const char*[]){"strawberry", "-v", "0", NULL}}},
@@ -188,12 +205,13 @@ static Key keys[] = {
 	{ MODKEY,			0x1008ff16,spawn,          {.v = (const char*[]){"strawberry", "--seek-by", "-1", NULL}}},
 	{ 0,			        0x1008ff05,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness) ; new_brightness=$(($maxbrightness/10+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
 	{ 0,			        0x1008ff06,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness); new_brightness=$((-$maxbrightness/10+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
-	{ 0,			        0x1008ff02,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=$(($maxbrightness/10+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔆 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
-	{ 0,			        0x1008ff03,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness); new_brightness=$((-$maxbrightness/10+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔅 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
-	{ MODKEY,			XK_F6,     spawn,          SHCMD("if [[ $(bspc config focused_border_color) == $QI_M ]]; then; bspc config focused_border_color $YS_M; sed -i 's/Qillqaq/Ysgrifennwr/' \""HOME"/.config/Code/User/settings.json\"; sed -i \"s/"QI_K"/"YS_K"/;s/"QI_R"/"YS_R"/;s/"QI_G"/"YS_G"/;s/"QI_B"/"YS_B"/;s/"QI_C"/"YS_C"/;s/"QI_M"/"YS_M"/;s/"QI_Y"/"YS_Y"/;s/"QI_W"/"YS_W"/;s/"QI_B_K"/"YS_B_K"/;s/"QI_B_R"/"YS_B_R"/;s/"QI_B_G"/"YS_B_G"/;s/"QI_B_B"/"YS_B_B"/;s/"QI_B_C"/"YS_B_C"/;s/"QI_B_M"/"YS_B_M"/;s/"QI_B_Y"/"YS_B_Y"/;s/"QI_B_W"/"YS_B_W"/;s/"QI_W_80"/"YS_W_80"/\" \""HOME"/.config/alacritty/alacritty.yml\" \""HOME"/.config/rofi/config.rasi\" \""HOME"/.Xdefaults\" \""HOME"/.config/dunst/dunstrc\";else; bspc config focused_border_color $QI_M; sed -i 's/Ysgrifennwr/Qillqaq/' \""HOME"/.config/Code/User/settings.json\"; sed -i \"s/"YS_K"/"QI_K"/;s/"YS_R"/"QI_R"/;s/"YS_G"/"QI_G"/;s/"YS_B"/"QI_B"/;s/"YS_C"/"QI_C"/;s/"YS_M"/"QI_M"/;s/"YS_Y"/"QI_Y"/;s/"YS_W"/"QI_W"/;s/"YS_B_K"/"QI_B_K"/;s/"YS_B_R"/"QI_B_R"/;s/"YS_B_G"/"QI_B_G"/;s/"YS_B_B"/"QI_B_B"/;s/"YS_B_C"/"QI_B_C"/;s/"YS_B_M"/"QI_B_M"/;s/"YS_B_Y"/"QI_B_Y"/;s/"YS_B_W"/"QI_B_W"/;s/"YS_W_80"/"QI_W_80"/\" \""HOME"/.config/alacritty/alacritty.yml\" \""HOME"/.config/rofi/config.rasi\" \""HOME"/.Xdefaults\" \""HOME"/.config/dunst/dunstrc\"; fi; pkill -x dunst")},
-	{ MODKEY,				XK_F7,     spawn,          SHCMD("xsetroot -bitmap "HOME"/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`")},
-	{ MODKEY|ShiftMask,			XK_F7,     spawn,          {.v = (const char*[]){"xsetroot", "-solid", "#"QI_W, NULL}}},
-	{ MODKEY,                               XK_F4,     test_spawn_chain, {}},
+	{ 0,			        0x1008ff02,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness) ; new_brightness=$(($maxbrightness/20+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔆 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
+	{ 0,			        0x1008ff03,spawn,          SHCMD("maxbrightness=$(</sys/class/backlight/intel_backlight/max_brightness); brightness=$(</sys/class/backlight/intel_backlight/brightness); new_brightness=$((-$maxbrightness/20+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/backlight/intel_backlight/brightness && dunstify -r 5994 \"🔅 $(( $(</sys/class/backlight/intel_backlight/brightness) * 100 / $maxbrightness )) %\"")},
+	{ MODKEY,			XK_F6,     toggle_theme,   {}},
+	{ MODKEY,			XK_F7,     spawn,          SHCMD("xsetroot -bitmap "HOME"/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- \" -fg #%06x -bg #%06x\\n\" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`")},
+	{ MODKEY|Mod1Mask,		XK_F7,     spawn,          SHCMD("xsetroot -bitmap $(printf -- \"$HOME/.local/share/backdrops/$(shuf -n 1 etc/Factory/quality_backdrops.txt)\" | xargs)")},
+	{ MODKEY|ShiftMask,		XK_F7,     spawn,          SHCMD("dunstify -- 🖼️ \"`tail -n 1 /tmp/wallpaper | tee -a $HOME/etc/Factory/quality_backdrops.txt`\"; sort -o $HOME/etc/Factory/quality_backdrops.txt -u $HOME/etc/Factory/quality_backdrops.txt")},
+	{ MODKEY|ControlMask,		XK_F7,     spawn,          {.v = (const char*[]){"xsetroot", "-solid", "#"QI_W, NULL}}},
 };
 
 /* button definitions */
