@@ -173,14 +173,14 @@ func updatePower(pow chan<- string) {
 	var enFull, enNow, enPerc int = 0, 0, 0
 	for {
 		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
-		if err != nil {
+		if err == nil {
 			pow <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 		batts, err := ioutil.ReadDir(powerSupply)
 		if err != nil {
-			pow <- "no battery"
+			pow <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
