@@ -1,0 +1,11 @@
+diff -up a/config.mk b/config.mk
+--- a/config.mk	2020-02-19 18:38:51.660531001 +0100
++++ b/config.mk	2020-02-19 21:52:08.635715794 +0100
+@@ -26,6 +26,7 @@ LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS}
+ 
+ # flags
+ CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
++CPPFLAGS += -DHOME=\"$(shell echo ~)\" -DMACHINE_ID=0x$(shell head -c 16 /etc/machine-id)
+ #CFLAGS   = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
+ CFLAGS   = -std=c99 -pedantic -Wall -Wno-deprecated-declarations -O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection ${INCS} ${CPPFLAGS}
+ LDFLAGS  = -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld ${LIBS}
