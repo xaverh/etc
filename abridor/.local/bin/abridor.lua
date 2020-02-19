@@ -7,7 +7,7 @@ local ls
 function open_folder(filename)
 	local application_file =
 		io.popen(
-		'echo "📂 nnn\n🖼️ feh\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | rofi -dmenu -i -p "Open ' ..
+		'echo "📂 nnn\n🖼️ feh\n♾️ Visual Studio Code\n📼 mpv\n🍓 Strawberry" | dmenu -i -f -l 5 -p "Open ' ..
 			filename .. ' with…"'
 	)
 	local application = application_file:read('a')
@@ -48,7 +48,7 @@ for line in ls_file:lines('l') do
 	end
 end
 
-local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | rofi -dmenu -l 10 -i -p "' .. filename .. '"')
+local filename_file = io.popen('echo "' .. table.concat(ls, '\n') .. '"' .. ' | dmenu -l 10 -i -p "' .. filename .. '"')
 local filename_new = string.sub(filename_file:read('a'), 1, -2)
 
 if filename_new == '' then

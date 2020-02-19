@@ -19,7 +19,7 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b><span foreground='#424242'>%s</span></b>\n%b"
+    format = "<b><span foreground='#e5e6e6'>%s</span></b>\n%b"
 
     # Sort messages by urgency
     sort = yes
@@ -147,16 +147,16 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
-    background = "#f9f8f4"
-    foreground = "#424242"
+    background = "#1e1e1e"
+    foreground = "#e5e6e6"
     timeout = 4
 
 [urgency_normal]
-    background = "#f9f8f4"
-    foreground = "#424242"
+    background = "#1e1e1e"
+    foreground = "#e5e6e6"
     timeout = 4
 
 [urgency_critical]
-    background = "#f9f8f4"
+    background = "#1e1e1e"
     foreground = "#e32791"
     timeout = 4

@@ -53,11 +53,11 @@ dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/x
 dnf check-update
 
 # Add following options to /etc/dnf/dnf.conf
-# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion
+# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion vim-minimal
 # xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
 
 dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim btrfs-progs util-linux-user rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted sqlite
-# iwd wireless-regdb b43-firmware cryptsetup
+# iwd wireless-regdb broadcom-wl cryptsetup
 
 systemd-firstboot --root=/mnt --locale=en_US.UTF-8 --keymap=us --hostname=airolo --setup-machine-id
 
@@ -78,11 +78,12 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh herbstluftwm herbstluftwm-zsh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst ncdu nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development clipmenu clipnotify xclip lemonbar sent slock mons alacritty rxvt-unicode-ml terminus-fonts google-noto-emoji-color-fonts dmz-cursor-themes
-# wireguard-dkms wireguard-tools dbus-x11 openssh-askpass
+sudo dnf module enable dwm:latest
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp rofi mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol dunst nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock mons alacritty rxvt-unicode-ml google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry dwm-user
+# wireguard-dkms wireguard-tools
 
-sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde
-# libva-intel-hybrid-driver weechat strawberry
+sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
+# libva-intel-hybrid-driver weechat
 
 localectl set-x11-keymap us pc104 altgr-intl compose:menu,rupeesign:4
 localectl set-x11-keymap de apple_laptop mac_nodeadkeys compose:rwin-altgr
@@ -92,16 +93,6 @@ systemctl enable --now systemd-resolved.service
 systemctl enable --now systemd-timesyncd.service
 systemctl enable iwd.service
 systemctl enable fstrim.timer
-
-# enc?
-sudo systemctl edit getty@tty1
-# [Service]
-# ExecStart=
-# ExecStart=-/usr/bin/agetty --skip-login --nonewline --noissue --autologin xha --noclear %I $TERM
-
-/etc/dracut.conf.d/local.conf
-filesystems+="btrfs"
-hostonly="yes"
 
 sudo dnf install kernel
 
@@ -114,7 +105,7 @@ sudo touch /.autorelabel
 exit
 reboot
 
-# timedatectl set-ntp true
+timedatectl set-ntp true
 
 systemctl enable slock@xha.service
 # Essentials
@@ -126,10 +117,13 @@ cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/
 cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
+cp ~/etc/Factory/etc-systemd-system-getty\\x40tty1.service.d-override.conf /mnt/etc/systemd/system/getty@tty1.service.d/override.conf
+cp ~/etc/Factory/etc-systemd-system-iwd.service.d-override.conf /mnt/etc/systemd/system/iwd.service.d/override.conf
+cp ~/etc/Factory/etc-dracut.conf.d-local.conf /mnt/etc/dracut.conf.d/local.conf
 # As needed
+cp ~/etc/Factory/etc-udev-rules.d-90\\x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
-cp ~/etc/Factory/etc-udev-rules.d-90x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
 
 # disable root account
 
@@ -141,7 +135,8 @@ npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
 code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-python.python --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 
-# systemctl --user enable --now ssh-agent.service
+systemctl --user enable --now ssh-agent.service
+systemctl --user enable --now clipmenud.service
 systemctl enable sshd.socket
 
 # Add to /etc/pulse/default.pa

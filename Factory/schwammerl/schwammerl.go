@@ -1,10 +1,14 @@
 package main
 
+/*
+#cgo LDFLAGS: -lX11
+#include <X11/Xlib.h>
+*/
+import "C"
+
 import (
 	"bufio"
 	"fmt"
-	"github.com/godbus/dbus"
-	"github.com/sqp/pulseaudio"
 	"io/ioutil"
 	"net"
 	"os"
@@ -23,12 +27,11 @@ const (
 )
 
 var (
+	dpy               = C.XOpenDisplay(nil)
 	networkDevices, _ = net.Interfaces()
 	wifiDevice        = ""
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 	homeDirectory     = os.Getenv("HOME")
-	isMute            = false
-	volChan           = make(chan string)
 )
 
 func fixed(rate int) string {
@@ -58,273 +61,6 @@ func fixed(rate int) string {
 
 	}
 	return fmt.Sprintf("%d %s", rate, suf)
-}
-
-func formatHerbstluftwmStatus(input string, screen string, lockedSymbol string, accentColor string) string {
-	items := strings.Split(strings.TrimSpace(input), "\t")
-	result := " "
-	for _, v := range items {
-		switch v[:1] {
-		case ".":
-			result += "%{F#515151}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
-		case ":":
-			// occupied tag = !viewed, !here, !focused
-			result += "%{F#969696}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
-		case "+":
-			// viewed, here, !focused
-			result += "%{A:herbstclient use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':}[" + v[1:] + "]" + lockedSymbol + "%{A}%{A}"
-		case "-":
-			// viewed, !here, !focused
-			result += "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}"
-		case "%":
-			// viewed, !here, focused
-			result += "%{F" + accentColor + "}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
-		case "#":
-			// viewed, here, focused
-			result += "%{F" + accentColor + "}%{U" + accentColor + "}[" + v[1:] + "]" + lockedSymbol + "%{U-}%{F-}"
-		case "!":
-			// urgent
-			result += "%{F#e32791}%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ use '" + v[1:] + "':}%{A3:herbstclient move '" + v[1:] + "':} " + v[1:] + "  %{A}%{A}%{F-}"
-		}
-	}
-	return result
-}
-
-func getCurFrameWCount() string {
-	out, err := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_wcount").Output()
-	out2, err2 := exec.Command("herbstclient", "get_attr", "tags.focus.curframe_windex").Output()
-	if err != nil || err2 != nil {
-		return "%{F-}%{O1500}%{A}%{A}%{r}[?] %{B-}"
-	}
-	clientIndex, err := strconv.Atoi(string(out2)[:len(out2)-1])
-	clientNumber := string(out)[:len(out)-1]
-	if clientNumber == "0" || clientNumber == "1" {
-		return "%{O1500}%{A}%{A}%{r}%{F-}%{B-}"
-	}
-	if err == nil {
-		return "%{F-}%{O1500}%{A}%{A}%{r}[" + strconv.Itoa(clientIndex+1) + "/" + clientNumber + "] %{B-}"
-	}
-	return "%{F-}%{O1500}%{A}%{r}[?] %{B-}"
-}
-
-type colorScheme struct{ W, R, G, Y, B, M, C, K, BW, BR, BG, BY, BB, BM, BC, BK string }
-
-func getScheme(prefix string) colorScheme {
-	return colorScheme{
-		W:  os.Getenv(prefix + "_W"),
-		R:  os.Getenv(prefix + "_R"),
-		G:  os.Getenv(prefix + "_G"),
-		Y:  os.Getenv(prefix + "_Y"),
-		B:  os.Getenv(prefix + "_B"),
-		M:  os.Getenv(prefix + "_M"),
-		C:  os.Getenv(prefix + "_C"),
-		K:  os.Getenv(prefix + "_K"),
-		BW: os.Getenv(prefix + "_B_W"),
-		BR: os.Getenv(prefix + "_B_R"),
-		BG: os.Getenv(prefix + "_B_G"),
-		BY: os.Getenv(prefix + "_B_Y"),
-		BB: os.Getenv(prefix + "_B_B"),
-		BM: os.Getenv(prefix + "_B_M"),
-		BC: os.Getenv(prefix + "_B_C"),
-		BK: os.Getenv(prefix + "_B_K"),
-	}
-}
-
-func getTagColors(tag string, currentColorScheme colorScheme) (frameBorderActiveColor string, windowBorderActiveColor string) {
-	switch tag {
-	case "!":
-		frameBorderActiveColor = currentColorScheme.BR
-		windowBorderActiveColor = currentColorScheme.R
-	case "@":
-		frameBorderActiveColor = currentColorScheme.BC
-		windowBorderActiveColor = currentColorScheme.C
-	case "#":
-		frameBorderActiveColor = currentColorScheme.BM
-		windowBorderActiveColor = currentColorScheme.M
-	case "$":
-		frameBorderActiveColor = currentColorScheme.BG
-		windowBorderActiveColor = currentColorScheme.G
-	case "%":
-		frameBorderActiveColor = currentColorScheme.BB
-		windowBorderActiveColor = currentColorScheme.B
-	case "^":
-		fallthrough
-	default:
-		frameBorderActiveColor = currentColorScheme.BY
-		windowBorderActiveColor = currentColorScheme.Y
-	}
-	return frameBorderActiveColor, windowBorderActiveColor
-}
-
-func updateHerbstluftStatus(hlwmStatus chan<- string, screen string) {
-	var workspaces, windowTitle string
-	var currentColorScheme colorScheme
-	if os.Getenv("IS_YSGRIFENNWR") == "1" {
-		currentColorScheme = getScheme("YS")
-	} else {
-		currentColorScheme = getScheme("QI")
-	}
-	frameBorderActiveColor := currentColorScheme.BR
-	windowBorderActiveColor := currentColorScheme.R
-	tagColor := currentColorScheme.R
-	lockedSymbol := " "
-	{
-		out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
-		if err == nil {
-			frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
-		}
-		tagColor = windowBorderActiveColor
-		exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
-		isLockedQuery, err1 := exec.Command("herbstclient", "get_attr", "monitors."+screen+".lock_tag").Output()
-		if err1 == nil && string(isLockedQuery) == "true\n" {
-			lockedSymbol = "*"
-		}
-	}
-	cmd := exec.Command("herbstclient", "--idle")
-	out, err := cmd.StdoutPipe()
-	curFrameWCount := getCurFrameWCount()
-	err = cmd.Start()
-	if err != nil {
-		workspaces = fmt.Sprintf("Failed to start err=%v", err)
-	}
-	scanner := bufio.NewScanner(out)
-	for ok := true; ok; ok = scanner.Scan() {
-		action := strings.Split(scanner.Text(), "\t")
-		switch action[0] {
-		case "tag_changed":
-			frameBorderActiveColor, windowBorderActiveColor = getTagColors(action[1], currentColorScheme)
-			tagColor = windowBorderActiveColor
-			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
-		case "focus_changed":
-			fallthrough
-		case "window_title_changed":
-			isHereQuery, err := exec.Command("herbstclient", "get_attr", "monitors.focus.index").Output()
-			if err == nil && (string(isHereQuery))[:len(isHereQuery)-1] == screen {
-				if len(action) >= 2 {
-					windowTitle = "%{F-}%{B#005577}  " + action[2]
-					curFrameWCount = getCurFrameWCount()
-				} else {
-					windowTitle = " "
-				}
-			}
-			goto SENDSTATUS
-		case "rule":
-			if len(action) >= 2 {
-				switch action[1] {
-				case "new_terminal":
-					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_terminal", "⛓️", "set_attr", "my_terminal", action[2]).Start()
-				case "new_journalctl":
-					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_journalctl", "⛓️", "set_attr", "my_journalctl", action[2]).Start()
-				case "📻":
-					exec.Command("herbstclient", "chain", "⛓️", "new_attr", "string", "my_📻", "⛓️", "set_attr", "my_📻", action[2], "⛓️", "move", "$").Start()
-				}
-			}
-		case "🔒":
-			if len(action) >= 1 {
-				if action[1] == screen {
-					lockedSymbol = "*"
-				}
-			}
-		case "🔓":
-			if len(action) >= 1 {
-				if action[1] == screen {
-					lockedSymbol = " "
-				}
-			}
-		case "🧚":
-			currentColorScheme = getScheme("YS")
-			out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
-			if err == nil {
-				frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
-			}
-			tagColor = windowBorderActiveColor
-			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
-		case "🧛":
-			currentColorScheme = getScheme("QI")
-			out, err := exec.Command("herbstclient", "get_attr", "tags.focus.name").Output()
-			if err == nil {
-				frameBorderActiveColor, windowBorderActiveColor = getTagColors(strings.TrimSuffix(string(out), "\n"), currentColorScheme)
-			}
-			tagColor = windowBorderActiveColor
-			exec.Command("herbstclient", "and", "🥨", "set", "frame_border_active_color", frameBorderActiveColor, "🥨", "set", "window_border_active_color", windowBorderActiveColor).Start()
-		case "🔊":
-			exec.Command(os.Getenv("SHELL"), "-c", "pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || (pactl set-sink-volume @DEFAULT_SINK@ 65535; pactl set-sink-volume @DEFAULT_SINK@ 65536)").Start()
-			goto BACKTOTHEGOODPART
-		case "🔉":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "false").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%").Start()
-			goto BACKTOTHEGOODPART
-		case "🔇":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "true").Start()
-			goto BACKTOTHEGOODPART
-		case "🔈":
-			exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "false").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "-1").Start()
-			exec.Command("pactl", "set-sink-volume", "@DEFAULT_SINK@", "+1").Start()
-			goto BACKTOTHEGOODPART
-		}
-		{
-			out, err := exec.Command("herbstclient", "tag_status", screen).Output()
-			if err != nil {
-				workspaces = "ERROR: Failed to display tags."
-			} else {
-				workspaces = formatHerbstluftwmStatus(string(out), screen, lockedSymbol, tagColor)
-			}
-		}
-	SENDSTATUS:
-		hlwmStatus <- workspaces + "%{A:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ cycle:} %{A3:herbstclient chain ⛓️ focus_monitor " + string(screen) + " ⛓️ spawn abridor.lua:}" + windowTitle + curFrameWCount
-	BACKTOTHEGOODPART:
-	}
-	if err := scanner.Err(); err != nil {
-		workspaces = fmt.Sprintf("reading standard input: %v", err)
-	}
-}
-
-type Client struct {
-	*pulseaudio.Client
-}
-
-func (cl *Client) DeviceVolumeUpdated(path dbus.ObjectPath, values []uint32) {
-	if !isMute {
-		volChan <- fmt.Sprintf("%%{A2:herbstclient emit_hook 🔇:}%%{A1:herbstclient emit_hook 🔉:}%%{A3:herbstclient emit_hook 🔊:}vol. %v %%%%%%{A}%%{A}%%{A}", values[0]*100/65536)
-	}
-}
-
-func (cl *Client) DeviceMuteUpdated(path dbus.ObjectPath, mute bool) {
-	if mute {
-		volChan <- "%{A2:herbstclient emit_hook 🔈:}mute%{A}"
-		isMute = true
-	} else {
-		isMute = false
-	}
-}
-
-func updateVolume() {
-TRYAGAIN:
-	pulse, e := pulseaudio.New()
-	if e != nil {
-		volChan <- "v. ?" + e.Error()
-		time.Sleep(time.Duration(5003 * time.Millisecond))
-		goto TRYAGAIN
-	}
-	client := &Client{pulse}
-	initialMuteCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks | grep -A 15 '* index' | awk '/muted:/{ printf $2 }'").Output()
-	if err == nil {
-		if string(initialMuteCheck) == "no" {
-			isMute = false
-		}
-	}
-	initialVolumeCheck, err := exec.Command(os.Getenv("SHELL"), "-c", "pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); printf $5 }'").Output()
-	if err == nil {
-		if !isMute {
-			volChan <- fmt.Sprintf("%%{A2:herbstclient emit_hook 🔇:}%%{A1:herbstclient emit_hook 🔉:}%%{A3:herbstclient emit_hook 🔊:}vol. %v %%%%%%{A}%%{A}%%{A}", string(initialVolumeCheck))
-		} else {
-			volChan <- "%{A2:herbstclient emit_hook 🔈:}mute%{A}"
-		}
-	}
-	pulse.Register(client)
-
-	pulse.Listen()
 }
 
 func updateTemperature(θ chan<- string, thermalZone string) {
@@ -358,7 +94,7 @@ func updateIPAdress(ipv4 chan<- string) {
 			if len(localAddr) > 0 {
 				ipv4 <- localAddr[0]
 			} else {
-				ipv4 <- "%{F#ff00ff} ERROR %{F-}"
+				ipv4 <- "ERROR"
 				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
 			}
 		}
@@ -437,14 +173,14 @@ func updatePower(pow chan<- string) {
 	var enFull, enNow, enPerc int = 0, 0, 0
 	for {
 		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
-		if err != nil {
+		if err == nil {
 			pow <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 		batts, err := ioutil.ReadDir(powerSupply)
 		if err != nil {
-			pow <- "no battery"
+			pow <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
@@ -502,10 +238,10 @@ func updateWIFI(wifi chan<- string) {
 					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
 				}
 			} else {
-				wifi <- "%{F#e32791}no WiFi%{F-}"
+				wifi <- "no WiFi"
 			}
 		} else {
-			wifi <- "%{F#969696}no WiFi%{F-}"
+			wifi <- "no WiFi"
 			for _, v := range networkDevices {
 				if v.Name[0] == 'w' {
 					wifiDevice = v.Name
@@ -516,8 +252,12 @@ func updateWIFI(wifi chan<- string) {
 	}
 }
 
+func setStatus(s *C.char) {
+	C.XStoreName(dpy, C.XDefaultRootWindow(dpy), s)
+	C.XSync(dpy, 1)
+}
+
 func main() {
-	screen := os.Args[1]
 	thermalZone := "1"
 	var hostname, _ = ioutil.ReadFile("/etc/hostname")
 	if string(hostname) == "airolo\n" {
@@ -536,7 +276,6 @@ func main() {
 	ipChan := make(chan string)
 	powChan := make(chan string)
 	timeChan := make(chan string)
-	hlwmChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan, thermalZone)
@@ -544,22 +283,17 @@ func main() {
 	go updateIPAdress(ipChan)
 	go updatePower(powChan)
 	go updateTime(timeChan)
-	go updateHerbstluftStatus(hlwmChan, screen)
-	go updateVolume()
-	status := make([]string, 9)
+	status := make([]string, 7)
 	for {
 		select {
-		case status[0] = <-hlwmChan:
-			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[8] = <-timeChan:
-			fmt.Println(strings.Join(status[:], separatorModules))
-		case status[7] = <-volChan:
-		case status[2] = <-memChan:
-		case status[3] = <-netChan:
-		case status[4] = <-tempChan:
-		case status[5] = <-wifiChan:
-		case status[6] = <-ipChan:
-		case status[1] = <-powChan:
+		case status[6] = <-timeChan:
+			setStatus(C.CString(" " + strings.Join(status[:], separatorModules)))
+		case status[1] = <-memChan:
+		case status[2] = <-netChan:
+		case status[3] = <-tempChan:
+		case status[4] = <-wifiChan:
+		case status[5] = <-ipChan:
+		case status[0] = <-powChan:
 		}
 	}
 }
