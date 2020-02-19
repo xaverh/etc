@@ -5,20 +5,8 @@ PGP/.gnupg/pubring.kbx~
 PGP/.gnupg/pubring.kbx
 *.bak
 mpv/.config/mpv/watch_later
-XnView/.config/xnviewmp/Thumb.db
-XnView/.config/xnviewmp/XnView.db
-fvwm/.fvwm/.FvwmConsole-History
-fvwm/.fvwm/cache/*
-fvwm/.fvwm/.BGdefault
-fvwm/.fvwm/images/background/
 weechat/.weechat/logs/
 weechat/.weechat/certs/
-Geeqie/.config/geeqie/marks
-Geeqie/.config/geeqie/history
-Geeqie/.config/geeqie/timezone21.bin
-RawTherapee/.config/RawTherapee/batch/queue.csv
-kitty/.local/share/systemd/timers
-suckless/schwammerl/schwammerl
 Visual Studio Code/.config/Code/Backups
 Visual Studio Code/.config/Code/Cache
 Visual Studio Code/.config/Code/CachedData
@@ -36,10 +24,11 @@ Visual Studio Code/.config/Code/storage.json
 Visual Studio Code/.config/Code/Code Cache
 Visual Studio Code/.config/Code/logs
 PGP/.gnupg/private-keys-v1.d
-DeaDBeeF/.config/deadbeef/dspconfig
-DeaDBeeF/.config/deadbeef/socket
-Factory/ricing_todo.txt
 Visual Studio Code/.config/Code/Workspaces
+Visual Studio Code/.config/Code/Preferences
 SSH/.ssh/known_hosts
 SSH/.ssh/authorized_keys
 SSH/.ssh/id_ed25519
+dwm/.dwm/version
+dwm/.dwm/modified
+dwm/.dwm/dwm

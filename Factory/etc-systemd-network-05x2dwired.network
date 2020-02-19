@@ -4,7 +4,7 @@ Name=e*
 [Network]
 DHCP=true
 IPv6AcceptRA=true
-IPv6PrivacyExtensions=true
+IPv6PrivacyExtensions=kernel
 
 [DHCP]
 UseDNS=false

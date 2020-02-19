@@ -93,7 +93,8 @@ local radio_stations = {
 		backup_url = 'https://www.deutschlandradio.de/streaming/dlf_hq_ogg.m3u'
 	},
 	['🇪🇸 🔥\tLos 40'] = {
-		url = 'https://20873.live.streamtheworld.com/LOS40AAC.aac'
+		url = 'https://21313.live.streamtheworld.com/LOS40AAC.aac',
+		backup_url = 'https://20873.live.streamtheworld.com/LOS40AAC.aac'
 	},
 	['🇪🇸 💃🏽\tLos 40 Latin'] = {
 		-- url = 'https://20853.live.streamtheworld.com/LOS40_03AAC.aac',
@@ -152,7 +153,7 @@ local radio_stations = {
 }
 
 local function play(id)
-	os.execute('herbstclient substitute 🏷️ my_📻 close 🏷️')
+	-- os.execute('herbstclient substitute 🏷️ my_📻 close 🏷️')
 	if radio_stations[id] then
 		local success, _, exit_code = os.execute('mpv --mute=no --x11-name=FM0 --force-window=yes ' .. radio_stations[id].url)
 		if not success and exit_code ~= 4 then

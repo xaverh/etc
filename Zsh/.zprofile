@@ -6,7 +6,7 @@ export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 export AWS_REGION=eu-central-1
-export CM_LAUNCHER=rofi
+export CM_LAUNCHER=dmenu
 export CM_DIR=$XDG_RUNTIME_DIR
 export READNULLCMD=less
 export GO111MODULE=on
@@ -22,4 +22,3 @@ export LESS_TERMCAP_se=$'\E[0m'         # end standout-mode
 export GROFF_NO_SGR=1
 
 # (( EUID != 0 )) && umask 0077
-

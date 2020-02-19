@@ -1,5 +1,5 @@
 {
-	"editor.fontWeight": "400",
+	"editor.fontWeight": "normal",
 	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
@@ -149,7 +149,7 @@
 	"terminal.integrated.cursorBlinking": true,
 	"editor.formatOnPaste": true,
 	"editor.minimap.showSlider": "always",
-	"workbench.colorTheme": "Ysgrifennwr",
+	"workbench.colorTheme": "Qillqaq",
 	"terminal.integrated.lineHeight": 1.2,
 	"editor.suggestSelection": "first",
 	"workbench.editor.highlightModifiedTabs": true,
@@ -229,7 +229,6 @@
 		}
 	},
 	"workbench.editor.showTabs": true,
-	"editor.fontSize": 15,
 	"git.untrackedChanges": "separate",
 	"git.enableCommitSigning": false,
 	"git.openDiffOnClick": false,
@@ -242,8 +241,10 @@
 	"debug.node.useV3": true,
 	"workbench.editor.limit.enabled": true,
 	"workbench.editor.limit.perEditorGroup": true,
-	"workbench.editor.limit.value": 6,
+	"workbench.editor.limit.value": 5,
 	"files.defaultLanguage": "${activeEditorLanguage}",
 	"editor.semanticHighlighting.enabled": true,
-	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration"
+	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
+	"editor.fontSize": 13,
+	"terminal.integrated.fontSize": 13
 }
