@@ -39,7 +39,7 @@
 #define HAS_TEN_KEYS
 // ISO 3166 Country codes, US=840, DE=276
 #define KBD_LAYOUT 840
-#elif MACHINE_ID == 0x1
+#elif MACHINE_ID == 0xe523ec7d7f8f49db // aberystwyth
 #define HAS_SCR_BACKLIGHT_KEYS
 #define HAS_KBD_BACKLIGHT_KEYS
 #define HAS_VOLUME_KEYS
@@ -257,4 +257,4 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
-/* vim: setlocal ft=c: */
+/* vim: set ft=c: */
