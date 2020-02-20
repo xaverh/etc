@@ -1,63 +1,53 @@
 #!/usr/bin/zsh
 
-# https://www.uninformativ.de/blog/postings/2018-06-02/0/POSTING-de.html
-# [[ "$1" != logging ]] && exec systemd-cat "$0" logging
+# Set up i18n environment
+if [ -r /etc/profile.d/lang.sh ]; then
+  . /etc/profile.d/lang.sh
+fi
 
-#
-# In case everything goes wrong, we at least fall back to a plain xterm
-#
-failsafe="xterm -ls -T Failsafe -geometry 80x24-0-0"
-trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
+[ -r $HOME/.profile ] && . $HOME/.profile
 
-userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
+userxkbmap=$HOME/.Xkbmap
 
-# merge in defaults and keymaps
+sysmodmap=/etc/X11/Xmodmap
+sysxkbmap=/etc/X11/Xkbmap
 
-if [[ -f $sysresources ]]; then
-	xrdb -merge $sysresources
+# merge in keymaps
+if [ -r "$sysxkbmap" ]; then
+    setxkbmap $(cat "$sysxkbmap")
 fi
 
-if [[ -f $sysmodmap ]]; then
-	xmodmap $sysmodmap
+if [ -r "$userxkbmap" ]; then
+    setxkbmap $(cat "$userxkbmap")
 fi
 
-if [[ -f $userresources ]]; then
-	xrdb -merge "$userresources"
+# xkb and xmodmap don't play nice together
+if ! [ -r "$sysxkbmap" -o -r "$userxkbmap" ] ; then
+    [ -r "$sysmodmap" ] && xmodmap "$sysmodmap"
+    [ -r "$usermodmap" ] && xmodmap "$usermodmap"
 fi
 
-if [[ -f $usermodmap ]]; then
-	xmodmap "$usermodmap"
-fi
+# run all system xinitrc shell scripts.
+for file in /etc/X11/xinit/xinitrc.d/* ; do
+        . $file
+done
 
-if [[ -f /etc/X11/xinit/xinitrc.common ]] ; then
-	. /etc/X11/xinit/xinitrc.common
-fi
-
-if [[ -d /etc/X11/xinit/xinitrc.d ]] ; then
-	for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-		[[ -x $f ]] && . "$f"
-	done
-	unset f
+if [ -x $HOME/.Xclients ]; then
+    . $HOME/.Xclients
 fi
 
 xset b off &
 xset s off &
 xset -dpms &
-
 # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#Key_combinations
 export GTK_IM_MODULE="xim"
 export XMODIFIERS="@im=none"
-
 xsetroot -bitmap $HOME/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
 while true; do
 	pkill -x schwammerl
-	schwammerl &
-	dwm-start 2> ~/.dwm.log
+	go run ~/etc/Factory/schwammerl/schwammerl.go &
+	dwm-start 2>>| ~/.dwm.log
 done
 
-# call failsafe
-exit 0

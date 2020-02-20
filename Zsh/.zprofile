@@ -9,7 +9,6 @@ export AWS_REGION=eu-central-1
 export CM_LAUNCHER=dmenu
 export CM_DIR=$XDG_RUNTIME_DIR
 export READNULLCMD=less
-export GO111MODULE=on
 
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking

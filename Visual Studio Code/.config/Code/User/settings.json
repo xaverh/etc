@@ -149,7 +149,6 @@
 	"terminal.integrated.cursorBlinking": true,
 	"editor.formatOnPaste": true,
 	"editor.minimap.showSlider": "always",
-	"workbench.colorTheme": "Qillqaq",
 	"terminal.integrated.lineHeight": 1.2,
 	"editor.suggestSelection": "first",
 	"workbench.editor.highlightModifiedTabs": true,
@@ -159,7 +158,6 @@
 	"vetur.format.options.tabSize": 4,
 	"files.autoSave": "afterDelay",
 	"editor.minimap.enabled": false,
-	"go.useLanguageServer": true,
 	"explorer.incrementalNaming": "smart",
 	"editor.cursorSurroundingLines": 3,
 	"terminal.integrated.cwd": "${fileDirname}",
@@ -246,5 +244,7 @@
 	"editor.semanticHighlighting.enabled": true,
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"editor.fontSize": 13,
-	"terminal.integrated.fontSize": 13
+	"terminal.integrated.fontSize": 13,
+	"workbench.colorTheme": "Qillqaq",
+	"go.useLanguageServer": true
 }
