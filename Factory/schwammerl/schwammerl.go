@@ -69,7 +69,7 @@ func updateTemperature(θ chan<- string, thermalZone string) {
 		if err != nil {
 			θ <- "temp unknown"
 		} else {
-			θ <- fmt.Sprintf("%s °C", string(temp)[:len(temp)-4])
+			θ <- fmt.Sprintf("%s °C%s", string(temp)[:len(temp)-4], separatorModules)
 		}
 		time.Sleep(time.Duration(7 * time.Second))
 	}
@@ -92,7 +92,7 @@ func updateIPAdress(ipv4 chan<- string) {
 		} else {
 			localAddr := strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")
 			if len(localAddr) > 0 {
-				ipv4 <- localAddr[0]
+				ipv4 <- localAddr[0] + separatorModules
 			} else {
 				ipv4 <- "ERROR"
 				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
@@ -132,7 +132,7 @@ func updateMemUse(mem chan<- string) {
 			}
 		}
 		file.Close()
-		mem <- fmt.Sprintf("%d MB", used/1000)
+		mem <- fmt.Sprintf("%d MB%s", used/1000,separatorModules)
 		time.Sleep(time.Duration(5 * time.Second))
 	}
 }
@@ -162,7 +162,7 @@ func updateNetUse(net chan<- string) {
 			}
 		}
 		file.Close()
-		net <- fmt.Sprintf("%s%s%s", fixed((rxNow-rxOld)/rate), separatorModules, fixed((txNow-txOld)/rate))
+		net <- fmt.Sprintf("%s%s%s%s", fixed((rxNow-rxOld)/rate), separatorModules, fixed((txNow-txOld)/rate),separatorModules)
 		rxOld, txOld = rxNow, txNow
 		time.Sleep(time.Duration(2) * time.Second)
 	}
@@ -222,7 +222,7 @@ func updatePower(pow chan<- string) {
 			icon = pluggedSign
 		}
 
-		pow <- fmt.Sprintf("%d%%%s", enPerc, icon)
+		pow <- fmt.Sprintf("%d%%%s%s", enPerc, icon,separatorModules)
 		time.Sleep(time.Duration(13 * time.Second))
 	}
 }
@@ -235,13 +235,13 @@ func updateWIFI(wifi chan<- string) {
 				ssidStrings := ssidRegex.FindStringSubmatch(string(iwOutput))
 				if len(ssidStrings) > 0 {
 					ssidString := ssidStrings[0]
-					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30]
+					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30] + separatorModules
 				}
 			} else {
-				wifi <- "no WiFi"
+				wifi <- "no WiFi" + separatorModules
 			}
 		} else {
-			wifi <- "no WiFi"
+			wifi <- "no WiFi" + separatorModules
 			for _, v := range networkDevices {
 				if v.Name[0] == 'w' {
 					wifiDevice = v.Name
@@ -279,15 +279,19 @@ func main() {
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan, thermalZone)
-	go updateWIFI(wifiChan)
+	if string(hostname) != "airolo\n" {
+		go updateWIFI(wifiChan)
+	}
 	go updateIPAdress(ipChan)
-	go updatePower(powChan)
+	if string(hostname) != "airolo\n" {
+		go updatePower(powChan)
+	}
 	go updateTime(timeChan)
 	status := make([]string, 7)
 	for {
 		select {
 		case status[6] = <-timeChan:
-			setStatus(C.CString(" " + strings.Join(status[:], separatorModules)))
+			setStatus(C.CString(" " + strings.Join(status[:], "")))
 		case status[1] = <-memChan:
 		case status[2] = <-netChan:
 		case status[3] = <-tempChan:
