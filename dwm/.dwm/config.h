@@ -140,11 +140,11 @@ static _Bool is_ysgrifennwr = 0;
 void toggle_theme()
 {
 	if (is_ysgrifennwr) {
-		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"YS_K"/"QI_K"/;s/"YS_R"/"QI_R"/;s/"YS_G"/"QI_G"/;s/"YS_B"/"QI_B"/;s/"YS_C"/"QI_C"/;s/"YS_M"/"QI_M"/;s/"YS_Y"/"QI_Y"/;s/"YS_W"/"QI_W"/;s/"YS_B_K"/"QI_B_K"/;s/"YS_B_R"/"QI_B_R"/;s/"YS_B_G"/"QI_B_G"/;s/"YS_B_B"/"QI_B_B"/;s/"YS_B_C"/"QI_B_C"/;s/"YS_B_M"/"QI_B_M"/;s/"YS_B_Y"/"QI_B_Y"/;s/"YS_B_W"/"QI_B_W"/;s/"YS_W_80"/"QI_W_80"/", HOME"/.config/alacritty/alacritty.yml", HOME"/.config/rofi/config.rasi", HOME"/.Xdefaults", HOME"/.config/dunst/dunstrc", NULL }});
-		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Ysgrifennwr/Qillqaq/", HOME"/.config/Code/User/settings.json", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"YS_K"/"QI_K"/;s/"YS_R"/"QI_R"/;s/"YS_G"/"QI_G"/;s/"YS_B"/"QI_B"/;s/"YS_C"/"QI_C"/;s/"YS_M"/"QI_M"/;s/"YS_Y"/"QI_Y"/;s/"YS_W"/"QI_W"/;s/"YS_B_K"/"QI_B_K"/;s/"YS_B_R"/"QI_B_R"/;s/"YS_B_G"/"QI_B_G"/;s/"YS_B_B"/"QI_B_B"/;s/"YS_B_C"/"QI_B_C"/;s/"YS_B_M"/"QI_B_M"/;s/"YS_B_Y"/"QI_B_Y"/;s/"YS_B_W"/"QI_B_W"/;s/"YS_W_80"/"QI_W_80"/", HOME"/etc/alacritty/.config/alacritty/alacritty.yml", HOME"/etc/rofi/.config/rofi/config.rasi", HOME"/etc/X/.Xdefaults", HOME"/etc/dunst/.config/dunst/dunstrc", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Ysgrifennwr/Qillqaq/", HOME"/etc/Visual Studio Code/.config/Code/User/settings.json", NULL }});
 	} else {
-		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"QI_K"/"YS_K"/;s/"QI_R"/"YS_R"/;s/"QI_G"/"YS_G"/;s/"QI_B"/"YS_B"/;s/"QI_C"/"YS_C"/;s/"QI_M"/"YS_M"/;s/"QI_Y"/"YS_Y"/;s/"QI_W"/"YS_W"/;s/"QI_B_K"/"YS_B_K"/;s/"QI_B_R"/"YS_B_R"/;s/"QI_B_G"/"YS_B_G"/;s/"QI_B_B"/"YS_B_B"/;s/"QI_B_C"/"YS_B_C"/;s/"QI_B_M"/"YS_B_M"/;s/"QI_B_Y"/"YS_B_Y"/;s/"QI_B_W"/"YS_B_W"/;s/"QI_W_80"/"YS_W_80"/", HOME"/.config/alacritty/alacritty.yml", HOME"/.config/rofi/config.rasi", HOME"/.Xdefaults", HOME"/.config/dunst/dunstrc", NULL }});
-		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Qillqaq/Ysgrifennwr/", HOME"/.config/Code/User/settings.json", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/"QI_K"/"YS_K"/;s/"QI_R"/"YS_R"/;s/"QI_G"/"YS_G"/;s/"QI_B"/"YS_B"/;s/"QI_C"/"YS_C"/;s/"QI_M"/"YS_M"/;s/"QI_Y"/"YS_Y"/;s/"QI_W"/"YS_W"/;s/"QI_B_K"/"YS_B_K"/;s/"QI_B_R"/"YS_B_R"/;s/"QI_B_G"/"YS_B_G"/;s/"QI_B_B"/"YS_B_B"/;s/"QI_B_C"/"YS_B_C"/;s/"QI_B_M"/"YS_B_M"/;s/"QI_B_Y"/"YS_B_Y"/;s/"QI_B_W"/"YS_B_W"/;s/"QI_W_80"/"YS_W_80"/", HOME"/etc/alacritty/.config/alacritty/alacritty.yml", HOME"/etc/rofi/.config/rofi/config.rasi", HOME"/etc/X/.Xdefaults", HOME"/etc/dunst/.config/dunst/dunstrc", NULL }});
+		spawn(&(Arg){.v = (char*[]){ "sed", "-i", "s/Qillqaq/Ysgrifennwr/", HOME"/etc/Visual Studio Code/.config/Code/User/settings.json", NULL }});
 	}
 	is_ysgrifennwr = !is_ysgrifennwr;
 	spawn(&(Arg){.v = (char*[]){ "pkill", "-x", "dunst", NULL }});
