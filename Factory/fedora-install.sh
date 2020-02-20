@@ -5,26 +5,52 @@ lsblk
 ping google.com
 ls /sys/firmware/efi/efivars
 
+sudo -s
+
 # efibootmgr
-blkdiscard /dev/sdX
+blkdiscard /dev/sda
 
 # enc
-sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sdX
+sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8309 /dev/sda
 
 # not enc
-sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8304 /dev/sdX
+sgdisk -Z -o -n 1:0:+200MiB -t 1:ef00 -n 2:0:0 -t 2:8304 /dev/sda
 
-mkfs.fat -F32 /dev/sdX1
+mkfs.fat -F32 /dev/sda1
 
-cryptsetup -y --use-random -v --type luks2 luksFormat /dev/sdX2
+cryptsetup -y --use-random -v --type luks2 luksFormat /dev/sda2
 # SSD?
-cryptsetup -y --use-random -v --type luks2 --align-payload=8192 luksFormat /dev/sdX2
+cryptsetup -y --use-random -v --type luks2 --align-payload=8192 luksFormat /dev/sda2
 
-cryptsetup open /dev/sdX2 cryptroot
+cryptsetup open /dev/sda2 cryptroot
 # SSD?
-cryptsetup --allow-discards --persistent open /dev/sdX2 cryptroot
+cryptsetup --allow-discards --persistent open /dev/sda2 cryptroot
+
+cryptsetup luksUUID /dev/sda2
+# 04f7a64c-e13f-4a09-a2bb-afbfc3c45390
 
 mkfs.btrfs /dev/mapper/cryptroot
+
+# btrfs-progs v5.2.1
+# See http://btrfs.wiki.kernel.org for more information.
+#
+# Detected a SSD, turning off metadata duplication.  Mkfs with -m dup if you want to force metadata duplication.
+# Label:              (null)
+# UUID:               23ccb92a-f945-4ef6-aecc-e32b46840ee1
+# Node size:          16384
+# Sector size:        4096
+# Filesystem size:    111.58GiB
+# Block group profiles:
+#   Data:             single            8.00MiB
+#   Metadata:         single            8.00MiB
+#   System:           single            4.00MiB
+# SSD detected:       yes
+# Incompat features:  extref, skinny-metadata
+# Number of devices:  1
+# Devices:
+#    ID        SIZE  PATH
+#     1   111.58GiB  /dev/mapper/cryptroot
+
 mount -o compress-force=zstd:6,lazytime /dev/mapper/cryptroot /mnt
 
 btrfs subvolume create /mnt/@
@@ -33,11 +59,9 @@ mkdir /mnt/@/var
 chattr +C /mnt/@/var
 mkdir /mnt/@/efi
 btrfs subvolume set-default /mnt/@
-cd /
 umount /mnt
 mount -o compress-force=zstd:6,lazytime /dev/mapper/cryptroot /mnt
 mount /dev/sda1 /mnt/efi
-
 
 dnf config-manager --enablerepo fedora-cisco-openh264
 dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -53,7 +77,7 @@ dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/x
 dnf check-update
 
 # Add following options to /etc/dnf/dnf.conf
-# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion vim-minimal
+# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion
 # xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
 
 dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim btrfs-progs util-linux-user rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted sqlite
@@ -66,7 +90,7 @@ mkdir /mnt/etc/systemd/resolved.conf.d
 cp ~/etc/Factory/etc-systemd-resolved.conf.d-20\\x2d1.1.1.1.conf /mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf
 mkdir /mnt/etc/iwd
 cp ~/etc/Factory/etc-iwd-main.conf /mnt/etc/iwd/main.conf
-cp -n /etc/yum.repos.d/* /mnt/etc/yum.repos.d/
+cp -nv /etc/yum.repos.d/* /mnt/etc/yum.repos.d/
 cp /etc/dnf/dnf.conf /mnt/etc/dnf/dnf.conf
 
 systemd-nspawn -D /mnt chsh -s /usr/bin/zsh
@@ -98,9 +122,11 @@ sudo dnf install kernel
 
 # kernel boot line
 # root=PARTUUID=0c8461cd-db5c-4249-96b8-18451311aab0 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
-options root=UUID=3b2c840f-7211-42da-a4da-03b4ede59aa3 rd.luks.uuid=1838ca5a-a41f-4a07-883a-63044a346355 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
+# root=UUID=23ccb92a-f945-4ef6-aecc-e32b46840ee1 rd.luks.uuid=04f7a64c-e13f-4a09-a2bb-afbfc3c45390 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
 
 sudo touch /.autorelabel
+
+sudo dnf install kernel
 
 exit
 reboot
