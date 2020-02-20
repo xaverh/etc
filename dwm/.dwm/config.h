@@ -33,7 +33,8 @@
 #define QI_B_C "a2dcd7" // Sinbad, R=162, G=220, B=215
 #define QI_B_K "e5e6e6" // Grey 90%, R=229, G=230, B=230
 #define CURSOR_COLOR "20bbfc" // Deep Sky Blue, R=32, G=187, B=252
-
+#define TERMINAL "alacritty"
+#define DMENU_LINES "10"
 
 #if MACHINE_ID == 0xb2d5751b41ed4edc // airolo
 #define HAS_TEN_KEYS
@@ -119,7 +120,6 @@ void view_and_focus(const Arg* arg)
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/usr/bin/zsh", "-c", cmd, NULL } }
 
-#define TERMINAL "alacritty"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -194,19 +194,22 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_Escape, quit,           {0} },
 	{ MODKEY,			XK_o,      spawn,          {.v = (const char*[]){"abridor.lua", NULL}}},
+#if defined(IS_MACINTOSH)
 	{ 0,			        0x1008ff4b,spawn,          {.v = screenshotcmd}},
-	{ 0,			        XK_Print,  spawn,          {.v = screenshotcmd}},
 	{ MODKEY,			0x1008ff4b,spawn,          {.v = screenshotselcmd}},
+#else
+	{ 0,			        XK_Print,  spawn,          {.v = screenshotcmd}},
 	{ MODKEY,			XK_Print,  spawn,          {.v = screenshotselcmd}},
+#endif
 	{ MODKEY,			XK_e,      spawn,          SHCMD("awk 'BEGIN {FS=\"# \"} /;[[:blank:]]fully-qualified/ { sub(\" E[[:digit:]]*.[[:digit:]]* \", \"\\t\", $2); print $2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\\_(ツ)_/¯' -no-custom | awk '{printf $1}' | xsel -ib") },
-	{ MODKEY,			XK_u,      spawn,          SHCMD("xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq | dmenu -l 10 -i -p 'open URL')") },
+	{ MODKEY,			XK_u,      spawn,          SHCMD("xdg-open $(\\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\\ * | xargs awk 1 | grep --only-matching --perl-regexp \"http(s?):\\/\\/[^ \\\"\\(\\)\\<\\>\\]]*\" | uniq | dmenu -l " DMENU_LINES " -i -p 'open URL')") },
 	{ MODKEY,			XK_i,      spawn,          {.v = (const char*[]){"clipmenu", "-p", "clipboard", NULL}}},
 	{ MODKEY,			XK_Escape, spawn,          {.v = (const char*[]){"slock", "ssh-add", "-D", NULL}}},
 	{ MODKEY,			XK_F9,     spawn,          {.v = (const char*[]){"bluetoothctl", "connect", "88:C6:26:F4:8A:90", NULL}}},
 	{ MODKEY|ShiftMask,		XK_F9,     spawn,          {.v = (const char*[]){"bluetoothctl", "disconnect", "88:C6:26:F4:8A:90", NULL}}},
 	{ MODKEY,			XK_F10,    spawn,          {.v = (const char*[]){"toupeira.lua", NULL}}},
 	{ MODKEY,			XK_F12,    spawn,          {.v = (const char*[]){TERMINAL, "--class", "Journalctl,Journalctl", "-e", "journalctl", "-b", "-f", "-n", "1000", NULL}}},
-	{ MODKEY,			XK_F1,     spawn,          SHCMD("mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" \"$1}'))")},
+	{ MODKEY,			XK_F1,     spawn,          SHCMD("mupdf-gl =(man -Tpdf $(apropos . | dmenu -l " DMENU_LINES " -i -p mansplain | awk '{gsub(/[()]/,\"\"); print $2\" \"$1}'))")},
 #if defined(HAS_VOLUME_KEYS)
 	{ 0,			        0x1008ff13,spawn,          SHCMD(raisevolcmd)},
 	{ 0,			        0x1008ff11,spawn,          SHCMD(lowervolcmd)},
@@ -219,12 +222,14 @@ static Key keys[] = {
 	{ MODKEY,		        XK_KP_Subtract,spawn,      SHCMD(lowervolcmd)},
 	{ MODKEY,		        XK_KP_Insert,mute,         {0}},
 #endif
+#if defined(HAS_MULTIMEDIA_KEYS)
 	{ 0,				0x1008ff14,spawn,          {.v = (const char*[]){"strawberry", "-t", NULL}}},
 	{ 0,				0x1008ff17,spawn,          {.v = (const char*[]){"strawberry", "-f", NULL}}},
 	{ 0,				0x1008ff16,spawn,          {.v = (const char*[]){"strawberry", "--restart-or-previous", NULL}}},
 	{ MODKEY,			0x1008ff14,spawn,          {.v = (const char*[]){"fm0.lua", NULL}}},
 	{ MODKEY,			0x1008ff17,spawn,          {.v = (const char*[]){"strawberry", "--seek-by", "1", NULL}}},
 	{ MODKEY,			0x1008ff16,spawn,          {.v = (const char*[]){"strawberry", "--seek-by", "-1", NULL}}},
+#endif
 #if defined (HAS_KBD_BACKLIGHT_KEYS)
 	{ 0,			        0x1008ff05,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness) ; new_brightness=$(($maxbrightness/10+$brightness)) ; actual_brightness=$(($new_brightness < $maxbrightness ? $new_brightness : $maxbrightness)) ; echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
 	{ 0,			        0x1008ff06,spawn,          SHCMD("maxbrightness=$(</sys/class/leds/smc::kbd_backlight/max_brightness); brightness=$(</sys/class/leds/smc::kbd_backlight/brightness); new_brightness=$((-$maxbrightness/10+$brightness)); actual_brightness=$(($new_brightness > 0 ? $new_brightness : 0)); echo $actual_brightness > /sys/class/leds/smc::kbd_backlight/brightness && dunstify -r 8754 \"⌨️ $(( $(</sys/class/leds/smc::kbd_backlight/brightness) * 100 / $maxbrightness )) %\"")},
