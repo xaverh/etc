@@ -26,6 +26,7 @@ Dune.xbm -fg #22131c -bg #2d86c0
 Dune.xbm -fg #722b09 -bg #d1c382
 E7bMSiv.xbm -fg #00c2af -bg #67435d
 E7bMSiv.xbm -fg #086ca1 -bg #d1d30f
+E7bMSiv.xbm -fg #1da883 -bg #43c6b1
 E7bMSiv.xbm -fg #43f58b -bg #ee309c
 E7bMSiv.xbm -fg #4f8ce4 -bg #ba9098
 E7bMSiv.xbm -fg #555a3b -bg #5dcba2
@@ -59,6 +60,7 @@ Ridged.xbm -fg #986636 -bg #48071f
 SkyLight.xbm -fg #bc851e -bg #932fa2
 slate.xbm -fg #9c58e7 -bg #2c2b50
 SmallCurves.xbm -fg #388224 -bg #f52369
+Southwest.xbm -fg #1620a5 -bg #062f43
 Southwest.xbm -fg #8b53eb -bg #45eefd
 Squares.xbm -fg #93535f -bg #f8fffc
 Squares.xbm -fg #a66065 -bg #98d551
@@ -72,6 +74,3 @@ wax.xbm -fg #41073e -bg #0a1651
 wax.xbm -fg #77e3a5 -bg #ab3416
 Wooly.xbm -fg #669724 -bg #6f0b5d
 worm.xbm -fg #cf8ae4 -bg #16978b
-PinStripe.xbm -fg #91cb83 -bg #e898d5
-Squares.xbm -fg #a66065 -bg #98d551
-E7bMSiv.xbm -fg #1da883 -bg #43c6b1
