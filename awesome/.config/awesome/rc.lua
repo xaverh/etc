@@ -56,6 +56,72 @@ do
 end
 
 -- {{{ Variable definitions
+
+local color_ys_w = 'f9f8f4' -- Floral White, R=249, G=248, B=244
+local color_ys_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
+local color_ys_g = '488432' -- La Palma, R=72, G=132, B=50
+local color_ys_y = 'a25d0e' -- Golden Brown, R=162, G=93, B=14
+local color_ys_b = '2c65b5' -- Cerulean Blue, R=44, G=101, B=181
+local color_ys_m = 'b062a7' -- Violet Blue, R=176, G=98, B=167
+local color_ys_c = '27bbbe' -- Light Sea Green, R=39, G=187, B=190
+local color_ys_k = '999999' -- Grey 60%, R=153, G=153, B=153
+local color_qi_w = '1e1e1e' -- Grey 10%, R=30, G=30, B=30
+local color_qi_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
+local color_qi_g = '30c798' -- Shamrock, R=48, G=199, B=152
+local color_qi_y = 'e3c472' -- Chenin, R=227, G=196, B=114
+local color_qi_b = '6796e6' -- Cornflower Blue, R=103, G=150, B=230
+local color_qi_m = 'e59fdf' -- Plum, R=229, G=159, B=223
+local color_qi_c = '81d8d0' -- Riptide, R=129, G=216, B=208
+local color_qi_k = '969696' -- Grey 60%, R=150, G=150, B=150
+local color_qi_b_w = '515151' -- Grey 30%, R=81, G=81, B=81
+local color_qi_b_r = 'e466ad' -- Hot Pink, R=228, G=102, B=173
+local color_qi_b_g = '6cd1b2' -- Medium Aquamarine, R=108, G=209, B=178
+local color_qi_b_y = 'e4cf98' -- Double Colonial White, R=228, G=207, B=152
+local color_qi_b_b = '91b0e6' -- Jordy Blue, R=145, G=181, B=230
+local color_qi_b_m = 'e5b6e1' -- French Lilac, R=229, G=182, B=225
+local color_qi_b_c = 'a2dcd7' -- Sinbad, R=162, G=220, B=215
+local color_qi_b_k = 'e5e6e6' -- Grey 90%, R=229, G=230, B=230
+local color_ys_b_w = 'b8b8b8' -- Grey 70%, R=184, G=184, B=184
+local color_ys_b_r = '9f1b66' -- Jazzberry Jam, R=159, G=27, B=102
+local color_ys_b_g = '325d23' -- Parsley, R=50, G=93, B=35
+local color_ys_b_y = '71410a' -- Raw Umber, R=113, G=65, B=10
+local color_ys_b_b = '1f477f' -- Bahama Blue, R=31, G=71, B=127
+local color_ys_b_m = '7b4474' -- Eminence, R=123, G=68, B=116
+local color_ys_b_c = '1b8486' -- Atoll, R=27, G=132, B=134
+local color_ys_b_k = '424242' -- Grey 20%, R=66, G=66, B=66
+local color_qi_w_80 = '333333' -- Grey 20%, R=51, G=51, B=51
+local color_ys_w_80 = 'edece8' -- Grey 90%, R=237, G=236, B=232
+local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
+
+local main_font = "IBM Plex Sans:size=9"
+
+-- 0xb2d5751b41ed4edc // airolo
+-- 0xe523ec7d7f8f49db // aberystwyth
+-- ISO 3166 Country codes, US=840, DE=276
+local has_ten_keys = false
+local kbd_layout = 840
+local has_scr_backlight_keys = false
+local has_kbd_backlight_keys = false
+local has_volume_keys = false
+local has_multimedia_keys = false
+local is_macintosh = false
+
+--[[
+/* appearance */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int snap      = 32;       /* snap pixel */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[]          = { MAINFONT };
+static const char dmenufont[]       = MAINFONT;
+static const char col_cyan[]        = "#005577";
+static const char *colors[][3]      = {
+	/*               fg         bg         border   */
+	[SchemeNorm] = { "#"YS_B_W, "#"QI_W, "#"YS_B_K },
+	[SchemeSel]  = { "#"QI_B_K, col_cyan,  "#"CURSOR_COLOR  },
+};
+]]
+
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 
