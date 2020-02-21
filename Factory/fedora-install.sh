@@ -150,6 +150,8 @@ cp ~/etc/Factory/etc-udev-rules.d-90\\x2dbacklight.rules /mnt/etc/udev/rules.d/9
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
 cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 
+echo "w /sys/module/hid_apple/parameters/fnmode - - - - 2" | sudo tee /etc/tmpfiles.d/rev_fn_key.conf
+
 # disable root account
 
 # As user
