@@ -18,16 +18,6 @@ SshAskpass.*borderWidth:           1
 
 Xcursor.theme: DMZ-White
 
-rofi.modi:                           window,run,drun
-rofi.font:                           mono 12
-rofi.separator-style:                none
-rofi.hide-scrollbar:                 true
-rofi.kb-row-tab:
-rofi.kb-row-select:                  Tab
-rofi.show-icons:                     true
-! rofi.window-command:                 herbstclient bring {window}
-! rofi.window-command:                 bspc node {window} --to-desktop focused --focus
-
 *.color0: #1e1e1e
 *.background: #1e1e1e
 *.color1: #e32791
