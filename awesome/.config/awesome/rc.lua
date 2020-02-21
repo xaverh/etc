@@ -101,14 +101,22 @@ myawesomemenu = {
         end
     },
     {'manual', terminal .. ' -e man awesome'},
-    {'edit config', editor_cmd .. ' ' .. awesome.conffile},
+    {'edit config', editor_cmd .. ' ' .. awesome.conffile}
+}
+
+myexitmenu = {
     {'restart', awesome.restart},
     {
-        'quit',
+        'log out',
         function()
             awesome.quit()
-        end
-    }
+        end,
+        menubar.utils.lookup_icon('system-log-out')
+    },
+    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon('system-suspend')},
+    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon('system-suspend-hibernate')},
+    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon('system-reboot')},
+    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon('system-shutdown')}
 }
 
 mymainmenu =
@@ -116,6 +124,7 @@ mymainmenu =
     {
         items = {
             {'awesome', myawesomemenu, beautiful.awesome_icon},
+            {'exit', myexitmenu, menubar.utils.lookup_icon('system-shutdown')},
             {'open terminal', terminal}
         }
     }
