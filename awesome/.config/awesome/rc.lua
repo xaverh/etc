@@ -129,6 +129,14 @@ terminal = os.getenv('TERMINAL') or 'alacritty'
 editor = os.getenv('EDITOR') or 'vim'
 editor_cmd = terminal .. ' -e ' .. editor
 
+local function connect_bluetooth()
+    awful.spawn('bluetoothctl connect 88:C6:26:F4:8A:90')
+end
+
+local function disconnect_bluetooth()
+    awful.spawn('bluetoothctl disconnect 88:C6:26:F4:8A:90')
+end
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -158,7 +166,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
     {
         'hotkeys',
         function()
@@ -169,7 +177,12 @@ myawesomemenu = {
     {'edit config', editor_cmd .. ' ' .. awesome.conffile}
 }
 
-myexitmenu = {
+local mymultimediamenu = {
+    {'connect bluetooth device (Setúbal)', connect_bluetooth},
+    {'disconnect bluetooth device (Setúbal)', disconnect_bluetooth}
+}
+
+local myexitmenu = {
     {'restart', awesome.restart},
     {
         'log out',
@@ -184,11 +197,12 @@ myexitmenu = {
     {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon('system-shutdown')}
 }
 
-mymainmenu =
+local mymainmenu =
     awful.menu(
     {
         items = {
             {'awesome', myawesomemenu, beautiful.awesome_icon},
+            {'multimedia', mymultimediamenu},
             {'exit', myexitmenu, menubar.utils.lookup_icon('system-shutdown')},
             {'open terminal', terminal}
         }
@@ -758,6 +772,23 @@ for i = 1, 9 do
         )
     )
 end
+
+globalkeys =
+    gears.table.join(
+    globalkeys,
+    awful.key(
+        {modkey},
+        'F9',
+        connect_bluetooth,
+        {description = 'connect bluetooth device (Setúbal)', group = 'multimedia'}
+    ),
+    awful.key(
+        {modkey, 'Shift'},
+        'F9',
+        disconnect_bluetooth,
+        {description = 'disconnect bluetooth device (Setúbal)', group = 'multimedia'}
+    )
+)
 
 clientbuttons =
     gears.table.join(
