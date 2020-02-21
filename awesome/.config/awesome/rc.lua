@@ -93,7 +93,7 @@ local color_qi_w_80 = '333333' -- Grey 20%, R=51, G=51, B=51
 local color_ys_w_80 = 'edece8' -- Grey 90%, R=237, G=236, B=232
 local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
 
-local main_font = "IBM Plex Sans:size=9"
+local main_font = 'IBM Plex Sans:size=9'
 
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
@@ -121,7 +121,6 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { "#"QI_B_K, col_cyan,  "#"CURSOR_COLOR  },
 };
 ]]
-
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 
@@ -846,8 +845,15 @@ awful.rules.rules = {
             type = {'normal', 'dialog'}
         },
         properties = {titlebars_enabled = false}
+    },
+    {
+        rule = {class = 'Journalctl'},
+        properties = {screen = 1, tag = '9'}
+    },
+    {
+        rule = {class = 'strawberry'},
+        properties = {screen = 1, tag = '4'}
     }
-
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
