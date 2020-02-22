@@ -217,10 +217,8 @@ theme.layout_cornerse = assets .. 'layouts/cornerse.png'
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
 
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
-
+theme.tasklist_icon_size = 12 -- XXX waiting for awesome 4.4
+theme.tasklist_disable_icon = true
 theme.wibar_height = 20
 
 -- Themes define colours, icons, font and wallpapers.
