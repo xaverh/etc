@@ -179,7 +179,6 @@ modkey = 'Mod4'
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
@@ -187,6 +186,7 @@ awful.layout.layouts = {
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.floating,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
@@ -442,7 +442,7 @@ awful.screen.connect_for_each_screen(
     end
 )
 
--- {{{ Mouse bindings
+-- Mouse bindings
 root.buttons(
     gears.table.join(
         awful.button(
@@ -457,10 +457,10 @@ root.buttons(
     )
 )
 
--- {{{ Key bindings
+-- Key bindings
 globalkeys =
     gears.table.join(
-    awful.key({modkey}, 's', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
+    awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
     awful.key({modkey}, 'Left', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
     awful.key({modkey}, 'Right', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
     awful.key({modkey}, 'Escape', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
@@ -759,7 +759,13 @@ for i = 1, 9 do
                     tag:view_only()
                 end
             end,
-            {description = 'view tag #' .. i, group = 'tag'}
+            (function()
+                if i == 1 then
+                    return {description = '… view tag #1 …', group = 'tag'}
+                else
+                    return {}
+                end
+            end)()
         ),
         -- Toggle tag display.
         awful.key(
@@ -772,7 +778,13 @@ for i = 1, 9 do
                     awful.tag.viewtoggle(tag)
                 end
             end,
-            {description = 'toggle tag #' .. i, group = 'tag'}
+            (function()
+                if i == 1 then
+                    return {description = '… toggle tag #1 …', group = 'tag'}
+                else
+                    return {}
+                end
+            end)()
         ),
         -- Move client to tag.
         awful.key(
@@ -786,7 +798,13 @@ for i = 1, 9 do
                     end
                 end
             end,
-            {description = 'move focused client to tag #' .. i, group = 'tag'}
+            (function()
+                if i == 1 then
+                    return {description = '… move focused client to #1 …', group = 'tag'}
+                else
+                    return {}
+                end
+            end)()
         ),
         -- Toggle tag on focused client.
         awful.key(
@@ -800,7 +818,13 @@ for i = 1, 9 do
                     end
                 end
             end,
-            {description = 'toggle focused client on tag #' .. i, group = 'tag'}
+            (function()
+                if i == 1 then
+                    return {description = '… toggle focused client on #1 …', group = 'tag'}
+                else
+                    return {}
+                end
+            end)()
         )
     )
 end
