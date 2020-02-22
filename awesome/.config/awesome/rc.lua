@@ -118,24 +118,11 @@ end
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
 local has_ten_keys = false
-local kbd_layout = 840
+local kbd_layout = 276
 local has_volume_keys = false
 local has_multimedia_keys = true
-local is_macintosh = false
+local is_macintosh = true
 
---[[
-/* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { "#"YS_B_W, "#"QI_W, "#"YS_B_K },
-	[SchemeSel]  = { "#"QI_B_K, col_cyan,  "#"CURSOR_COLOR  },
-};
-]]
 -- Theme
 
 local theme = {}
@@ -286,12 +273,17 @@ local function strawberry_rew()
     awful.spawn('strawberry --seek-by -10')
 end
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = 'Mod4'
+
+local key_above_tab = 'acute'
+if kbd_layout == 276 then
+    key_above_tab = 'asciicircum'
+end
+
+local printkey = 'Print'
+if is_macintosh then
+    printkey = 'XF86LaunchA'
+end
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -305,7 +297,7 @@ awful.layout.layouts = {
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.floating,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
@@ -580,7 +572,7 @@ globalkeys =
     awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
     awful.key({modkey}, 'Left', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
     awful.key({modkey}, 'Right', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-    awful.key({modkey}, 'Escape', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+    awful.key({modkey}, key_above_tab, awful.tag.history.restore, {description = 'go back', group = 'tag'}),
     awful.key(
         {modkey},
         'j',
@@ -767,6 +759,30 @@ globalkeys =
             menubar.show()
         end,
         {description = 'show the menubar', group = 'launcher'}
+    ),
+    awful.key(
+        {},
+        printkey,
+        function()
+            awful.spawn {'flameshot', 'full', '-c', '-p', os.getenv('HOME') .. '/tmp'}
+        end,
+        {description = 'take a screenshot', group = '🖥️'}
+    ),
+    awful.key(
+        {modkey},
+        printkey,
+        function()
+            awful.spawn {'flameshot', 'gui', '-p', os.getenv('HOME') .. '/tmp'}
+        end,
+        {description = 'capture a portion of the screen', group = '🖥️'}
+    ),
+    awful.key(
+        {modkey},
+        'Escape',
+        function()
+            awful.spawn {'slock', 'ssh-add', '-D'}
+        end,
+        {description = 'lock screen and SSH', group = '🖥️'}
     )
 )
 
