@@ -3,35 +3,33 @@
 pcall(require, 'luarocks.loader')
 
 -- Standard awesome library
-local gears = require('gears')
-local awful = require('awful')
-require('awful.autofocus')
+local gears = require 'gears'
+local awful = require 'awful'
+require 'awful.autofocus'
 -- Widget and layout library
-local wibox = require('wibox')
+local wibox = require 'wibox'
 -- Theme handling library
-local beautiful = require('beautiful')
+local beautiful = require 'beautiful'
 -- Notification library
-local naughty = require('naughty')
-local menubar = require('menubar')
-local hotkeys_popup = require('awful.hotkeys_popup')
+local naughty = require 'naughty'
+local menubar = require 'menubar'
+local hotkeys_popup = require 'awful.hotkeys_popup'
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 -- require('awful.hotkeys_popup.keys')
-local theme_assets = require('beautiful.theme_assets')
-local xresources = require('beautiful.xresources')
+local theme_assets = require 'beautiful.theme_assets'
+local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
--- {{{ Error handling
+-- Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify(
-        {
-            preset = naughty.config.presets.critical,
-            title = 'Oops, there were errors during startup!',
-            text = awesome.startup_errors
-        }
-    )
+    naughty.notify {
+        preset = naughty.config.presets.critical,
+        title = 'Oops, there were errors during startup!',
+        text = awesome.startup_errors
+    }
 end
 
 -- Handle runtime errors after startup
@@ -227,37 +225,37 @@ theme.icon_theme = nil
 beautiful.init(theme)
 
 -- This is used later as the default terminal and editor to run.
-terminal = os.getenv('TERMINAL') or 'alacritty'
-editor = os.getenv('EDITOR') or 'vim'
+terminal = os.getenv 'TERMINAL' or 'alacritty'
+editor = os.getenv 'EDITOR' or 'vim'
 editor_cmd = terminal .. ' -e ' .. editor
 
 local function connect_bluetooth()
-    awful.spawn('bluetoothctl connect 88:C6:26:F4:8A:90')
+    awful.spawn 'bluetoothctl connect 88:C6:26:F4:8A:90'
 end
 
 local function disconnect_bluetooth()
-    awful.spawn('bluetoothctl disconnect 88:C6:26:F4:8A:90')
+    awful.spawn 'bluetoothctl disconnect 88:C6:26:F4:8A:90'
 end
 
 local function strawberry_next()
     -- IDEA: check whether mpv or strawberry is running
-    awful.spawn('strawberry -f')
+    awful.spawn 'strawberry -f'
 end
 
 local function strawberry_prev()
-    awful.spawn('strawberry --restart-or-previous')
+    awful.spawn 'strawberry --restart-or-previous'
 end
 
 local function strawberry_playpause()
-    awful.spawn('strawberry -t')
+    awful.spawn 'strawberry -t'
 end
 
 local function strawberry_fwd()
-    awful.spawn('strawberry --seek-by 10')
+    awful.spawn 'strawberry --seek-by 10'
 end
 
 local function strawberry_rew()
-    awful.spawn('strawberry --seek-by -10')
+    awful.spawn 'strawberry --seek-by -10'
 end
 
 modkey = 'Mod4'
@@ -351,9 +349,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 -- mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- Wibar
+mytextclock = wibox.widget.textclock('%a %d %b %T %Z', 1)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -448,6 +445,29 @@ local function set_wallpaper(s)
     end
 end
 
+local ipwidget =
+    awful.widget.watch(
+    {'ip', 'route', 'get', '8.8.8.8'},
+    7,
+    function(widget, stdout, stderr, exitreason, exitcode)
+        widget:set_text(stdout:match 'src ([%d.]*)')
+    end,
+    wibox.widget.textbox()
+)
+
+local wifiwidget =
+    awful.widget.watch(
+    {'iw', 'dev', 'wlp2s0', 'link'},
+    11,
+    function(widget, stdout, stderr, exitreason, exitcode)
+        widget:set_text(
+            (stdout:match 'SSID: ([^\n]*)' or 'N/A') ..
+                ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'N/A')
+        )
+    end,
+    wibox.widget.textbox()
+)
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
@@ -523,16 +543,19 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 mylauncher,
                 s.mytaglist,
+                s.mylayoutbox,
                 s.mypromptbox
             },
             s.mytasklist, -- Middle widget
             {
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
+                spacing = 10,
                 -- mykeyboardlayout,
                 -- wibox.widget.systray(),
-                mytextclock,
-                s.mylayoutbox
+                wifiwidget,
+                ipwidget,
+                mytextclock
             }
         }
     end
@@ -952,12 +975,7 @@ end
 globalkeys =
     gears.table.join(
     globalkeys,
-    awful.key(
-        {modkey},
-        'F9',
-        connect_bluetooth,
-        {description = 'connect bluetooth device (Setúbal)', group = '🎧'}
-    ),
+    awful.key({modkey}, 'F9', connect_bluetooth, {description = 'connect bluetooth device (Setúbal)', group = '🎧'}),
     awful.key(
         {modkey, 'Shift'},
         'F9',
