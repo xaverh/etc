@@ -77,7 +77,7 @@ dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/x
 dnf check-update
 
 # Add following options to /etc/dnf/dnf.conf
-# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion
+# exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion wireless-tools hddtemp
 # xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
 
 dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim btrfs-progs util-linux-user rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted sqlite
@@ -102,7 +102,7 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock mons alacritty rxvt-unicode-ml google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock mons alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome
 # wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
