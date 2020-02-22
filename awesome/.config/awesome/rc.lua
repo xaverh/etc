@@ -95,15 +95,26 @@ local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
 
 local main_font = 'IBM Plex Sans:size=9'
 
+local function increase_light_curry(brightness_file, max_brightness, emoji)
+    local f = io.open(brightness_file, 'r')
+    local brightness = f:read 'n'
+    f:close()
+    return function(percentage)
+        brightness = math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
+        local f = io.open(brightness_file, 'w+')
+        f:write(brightness)
+        f:close()
+        naughty.notify {title = emoji .. ' ' .. brightness * 100 // max_brightness .. '%'}
+    end
+end
+
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
 local has_ten_keys = false
 local kbd_layout = 840
-local has_scr_backlight_keys = false
-local has_kbd_backlight_keys = false
 local has_volume_keys = false
-local has_multimedia_keys = false
+local has_multimedia_keys = true
 local is_macintosh = false
 
 --[[
@@ -135,6 +146,27 @@ end
 
 local function disconnect_bluetooth()
     awful.spawn('bluetoothctl disconnect 88:C6:26:F4:8A:90')
+end
+
+local function strawberry_next()
+    -- IDEA: check whether mpv or strawberry is running
+    awful.spawn('strawberry -f')
+end
+
+local function strawberry_prev()
+    awful.spawn('strawberry --restart-or-previous')
+end
+
+local function strawberry_playpause()
+    awful.spawn('strawberry -t')
+end
+
+local function strawberry_fwd()
+    awful.spawn('strawberry --seek-by 10')
+end
+
+local function strawberry_rew()
+    awful.spawn('strawberry --seek-by -10')
 end
 
 -- Default modkey.
@@ -789,6 +821,74 @@ globalkeys =
         {description = 'disconnect bluetooth device (Setúbal)', group = 'multimedia'}
     )
 )
+
+if has_multimedia_keys then
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key({}, 'XF86AudioNext', strawberry_next, {description = '⏭️', group = '🍓'}),
+        awful.key({}, 'XF86AudioPrev', strawberry_prev, {description = '⏮', group = '🍓'}),
+        awful.key({}, 'XF86AudioPlay', strawberry_playpause, {description = '⏯', group = '🍓'}),
+        awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓'}),
+        awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓'})
+    )
+end
+
+if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_brightness') then
+    local f = io.open('/sys/class/leds/smc::kbd_backlight/max_brightness', 'r')
+    local max_brightness = f:read 'n'
+    f:close()
+    local increase_keyboard_light =
+        increase_light_curry('/sys/class/leds/smc::kbd_backlight/brightness', max_brightness, '⌨️')
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {},
+            'XF86KbdBrightnessDown',
+            function()
+                increase_keyboard_light(-5)
+            end,
+            {description = '🔅', group = '⌨️'}
+        ),
+        awful.key(
+            {},
+            'XF86KbdBrightnessUp',
+            function()
+                increase_keyboard_light(5)
+            end,
+            {description = '🔆', group = '⌨️'}
+        )
+    )
+end
+
+if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brightness') then
+    local f = io.open('/sys/class/backlight/intel_backlight/max_brightness', 'r')
+    local max_brightness = f:read 'n'
+    f:close()
+    local increase_keyboard_light =
+        increase_light_curry('/sys/class/backlight/intel_backlight/brightness', max_brightness, '🖥️')
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {},
+            'XF86MonBrightnessDown',
+            function()
+                increase_keyboard_light(-5)
+            end,
+            {description = '🔅', group = '🖥️'}
+        ),
+        awful.key(
+            {},
+            'XF86MonBrightnessUp',
+            function()
+                increase_keyboard_light(5)
+            end,
+            {description = '🔆', group = '🖥️'}
+        )
+    )
+end
 
 clientbuttons =
     gears.table.join(
