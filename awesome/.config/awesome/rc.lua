@@ -16,7 +16,7 @@ local menubar = require('menubar')
 local hotkeys_popup = require('awful.hotkeys_popup')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
-require('awful.hotkeys_popup.keys')
+-- require('awful.hotkeys_popup.keys')
 local theme_assets = require('beautiful.theme_assets')
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
@@ -101,25 +101,12 @@ local color_ys_w_80 = 'edece8' -- Grey 90%, R=237, G=236, B=232
 local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 
-local function increase_light_curry(brightness_file, max_brightness, emoji)
-    local f = io.open(brightness_file, 'r')
-    local brightness = f:read 'n'
-    f:close()
-    return function(percentage)
-        brightness = math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
-        local f = io.open(brightness_file, 'w+')
-        f:write(brightness)
-        f:close()
-        naughty.notify {title = emoji .. ' ' .. brightness * 100 // max_brightness .. '%'}
-    end
-end
-
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
 local has_ten_keys = false
 local kbd_layout = 276
-local has_volume_keys = false
+local has_volume_keys = true
 local has_multimedia_keys = true
 local is_macintosh = true
 
@@ -766,7 +753,7 @@ globalkeys =
         function()
             awful.spawn {'flameshot', 'full', '-c', '-p', os.getenv('HOME') .. '/tmp'}
         end,
-        {description = 'take a screenshot', group = '🖥️'}
+        {description = 'take a screenshot', group = 'awesome'}
     ),
     awful.key(
         {modkey},
@@ -774,7 +761,7 @@ globalkeys =
         function()
             awful.spawn {'flameshot', 'gui', '-p', os.getenv('HOME') .. '/tmp'}
         end,
-        {description = 'capture a portion of the screen', group = '🖥️'}
+        {description = 'capture a portion of the screen', group = 'awesome'}
     ),
     awful.key(
         {modkey},
@@ -782,7 +769,7 @@ globalkeys =
         function()
             awful.spawn {'slock', 'ssh-add', '-D'}
         end,
-        {description = 'lock screen and SSH', group = '🖥️'}
+        {description = 'lock screen and SSH', group = 'awesome'}
     )
 )
 
@@ -969,13 +956,13 @@ globalkeys =
         {modkey},
         'F9',
         connect_bluetooth,
-        {description = 'connect bluetooth device (Setúbal)', group = 'multimedia'}
+        {description = 'connect bluetooth device (Setúbal)', group = '🎧'}
     ),
     awful.key(
         {modkey, 'Shift'},
         'F9',
         disconnect_bluetooth,
-        {description = 'disconnect bluetooth device (Setúbal)', group = 'multimedia'}
+        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧'}
     )
 )
 
@@ -989,6 +976,132 @@ if has_multimedia_keys then
         awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓'}),
         awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓'})
     )
+end
+
+function increase_volume_curry()
+    local latest_volume_notification
+    local function my_notify(text)
+        if latest_volume_notification then
+            naughty.replace_text(latest_volume_notification, text, '')
+        else
+            latest_volume_notification =
+                naughty.notify {
+                title = text,
+                destroy = function()
+                    latest_volume_notification = nil
+                end
+            }
+        end
+    end
+    return function(percentage)
+        if percentage == nil then
+            awful.spawn.with_line_callback(
+                {'pactl', 'set-sink-mute', '@DEFAULT_SINK@', 'false'},
+                {
+                    exit = my_notify '🔇 mute'
+                }
+            )
+            return
+        end
+        local emoji = percentage > 0 and '🔊' or '🔉'
+        awful.spawn.easy_async_with_shell(
+            "pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }'",
+            function(stdout, stderr, exitreason, exitcode)
+                local volume = stdout
+                awful.spawn.with_line_callback(
+                    {'pactl', 'set-sink-mute', '@DEFAULT_SINK@', 'false'},
+                    {
+                        exit = function()
+                            local new_volume = math.max(math.min(tonumber(volume) + percentage, 100), 0)
+                            awful.spawn.with_line_callback(
+                                {'pactl', 'set-sink-volume', '@DEFAULT_SINK@', new_volume .. '%'},
+                                {
+                                    exit = function()
+                                        my_notify(emoji .. new_volume .. ' %')
+                                    end
+                                }
+                            )
+                        end
+                    }
+                )
+            end
+        )
+    end
+end
+
+local increase_volume = increase_volume_curry()
+
+if has_volume_keys then
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {},
+            'XF86AudioRaiseVolume',
+            function()
+                increase_volume(5)
+            end,
+            {description = '🔊', group = '🎧'}
+        ),
+        awful.key(
+            {},
+            'XF86AudioLowerVolume',
+            function()
+                increase_volume(-5)
+            end,
+            {description = '🔉', group = '🎧'}
+        ),
+        awful.key(
+            {},
+            'XF86AudioMute',
+            function()
+                increase_volume()
+            end,
+            {description = '🔇', group = '🎧'}
+        )
+    )
+elseif has_ten_keys then
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {modkey},
+            'KP_Add',
+            function()
+                increase_volume(5)
+            end,
+            {description = '🔊', group = '🎧'}
+        ),
+        awful.key(
+            {modkey},
+            'KP_Subtract',
+            function()
+                increase_volume(-5)
+            end,
+            {description = '🔉', group = '🎧'}
+        ),
+        awful.key(
+            {modkey},
+            'KP_Insert',
+            function()
+                increase_volume()
+            end,
+            {description = '🔇', group = '🎧'}
+        )
+    )
+end
+
+local function increase_light_curry(brightness_file, max_brightness, emoji)
+    local f = io.open(brightness_file, 'r')
+    local brightness = f:read 'n'
+    f:close()
+    return function(percentage)
+        brightness = math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
+        local f = io.open(brightness_file, 'w+')
+        f:write(brightness)
+        f:close()
+        naughty.notify {title = emoji .. ' ' .. brightness * 100 // max_brightness .. '%'}
+    end
 end
 
 if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_brightness') then
