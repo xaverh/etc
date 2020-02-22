@@ -470,6 +470,26 @@ local wifiwidget =
     wibox.widget.textbox()
 )
 
+local temperaturewidget =
+    (function()
+    local t = gears.timer {timeout = 17}
+    local widget = wibox.widget.textbox()
+    t:connect_signal(
+        'timeout',
+        function()
+            t:stop()
+            local f = io.open('/sys/class/thermal/thermal_zone1/temp', 'r')
+            local temperature = f:read 'n'
+            f:close()
+            widget:set_text(temperature // 1000 .. ' °C')
+            t:again()
+        end
+    )
+    t:start()
+    t:emit_signal('timeout')
+    return widget
+end)()
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
@@ -550,11 +570,12 @@ awful.screen.connect_for_each_screen(
             },
             s.mytasklist, -- Middle widget
             {
+                spacing = 10,
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                spacing = 10,
                 -- mykeyboardlayout,
                 -- wibox.widget.systray(),
+                temperaturewidget,
                 wifiwidget,
                 ipwidget,
                 mytextclock
@@ -1380,6 +1401,7 @@ client.connect_signal(
         c.border_color = beautiful.border_focus
     end
 )
+
 client.connect_signal(
     'unfocus',
     function(c)
