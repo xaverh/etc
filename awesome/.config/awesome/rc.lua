@@ -112,7 +112,7 @@ local is_macintosh = true
 
 local theme = {}
 
-theme.font = 'Helvetica 10'
+theme.font = 'IBM Plex Sans 10'
 
 theme.bg_normal = '#' .. color_qi_w
 theme.bg_focus = '#005577'
@@ -220,6 +220,8 @@ theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
+theme.wibar_height = 20
 
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(theme)
