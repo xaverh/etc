@@ -997,16 +997,16 @@ if has_multimedia_keys then
 end
 
 function increase_volume_curry()
-    local latest_volume_notification
+    local latest_notification
     local function my_notify(text)
-        if latest_volume_notification then
-            naughty.replace_text(latest_volume_notification, text, '')
+        if latest_notification then
+            naughty.replace_text(latest_notification, text, '')
         else
-            latest_volume_notification =
+            latest_notification =
                 naughty.notify {
                 title = text,
                 destroy = function()
-                    latest_volume_notification = nil
+                    latest_notification = nil
                 end
             }
         end
@@ -1113,12 +1113,26 @@ local function increase_light_curry(brightness_file, max_brightness, emoji)
     local f = io.open(brightness_file, 'r')
     local brightness = f:read 'n'
     f:close()
+    local latest_notification
+    local function my_notify(text)
+        if latest_notification then
+            naughty.replace_text(latest_notification, text, '')
+        else
+            latest_notification =
+                naughty.notify {
+                title = text,
+                destroy = function()
+                    latest_notification = nil
+                end
+            }
+        end
+    end
     return function(percentage)
         brightness = math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
         local f = io.open(brightness_file, 'w+')
         f:write(brightness)
         f:close()
-        naughty.notify {title = emoji .. ' ' .. brightness * 100 // max_brightness .. '%'}
+        my_notify(emoji .. ' ' .. brightness * 100 // max_brightness .. '%')
     end
 end
 
