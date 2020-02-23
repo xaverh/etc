@@ -171,8 +171,7 @@ map <leader>tm :tabmove
 map j gj
 map k gk
 
-" Map öö to the Esc functionality
-inoremap öö <Esc>
+" Map jj to the Esc functionality
 inoremap jj <Esc>
 
 " Always show filetypes in menu
