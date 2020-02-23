@@ -264,8 +264,8 @@ local myawesomemenu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
     },
-    {'manual', terminal .. ' -e man awesome'},
-    {'edit config', editor_cmd .. ' ' .. awesome.conffile}
+    {'manual', terminal .. ' -e man awesome'}
+    -- {'edit config', editor_cmd .. ' ' .. awesome.conffile}
 }
 
 local mymultimediamenu = {
@@ -571,6 +571,25 @@ local netthroughwidget =
     return widget
 end)()
 
+local is_ysgrifennwr = false
+local function toggle_theme()
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. '/Code/User/settings.json', 'w')
+    local content = file:read('a')
+    if is_ysgrifennwr then
+        content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
+    else
+        content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
+    end
+    file:write(content)
+    file:close()
+    -- awful.spawn { 'sed', '-i', 's/Ysgrifennwr/Qillqaq/', os.getenv 'HOME' .. '/etc/Visual Studio Code/.config/Code/User/settings.json' }
+    -- awful.spawn.easy_async( { 'sed', '-i', 's/' .. color_ys_k .. '/' .. color_qi_k .. '/;s/' .. color_ys_r .. '/' .. color_qi_r .. '/;s/' .. color_ys_g .. '/' .. color_qi_g .. '/;s/' .. color_ys_b .. '/' .. color_qi_b .. '/;s/' .. color_ys_c .. '/' .. color_qi_c .. '/;s/' .. color_ys_m .. '/' .. color_qi_m .. '/;s/' .. color_ys_y .. '/' .. color_qi_y .. '/;s/' .. color_ys_w .. '/' .. color_qi_w .. '/;s/' .. color_ys_b_k .. '/' .. color_qi_b_k .. '/;s/' .. color_ys_b_r .. '/' .. color_qi_b_r .. '/;s/' .. color_ys_b_g .. '/' .. color_qi_b_g .. '/;s/' .. color_ys_b_b .. '/' .. color_qi_b_b .. '/;s/' .. color_ys_b_c .. '/' .. color_qi_b_c .. '/;s/' .. color_ys_b_m .. '/' .. color_qi_b_m .. '/;s/' .. color_ys_b_y .. '/' .. color_qi_b_y .. '/;s/' .. color_ys_b_w .. '/' .. color_qi_b_w .. '/;s/' .. color_ys_w_80 .. '/' .. color_qi_w_80 .. '/', os.getenv 'HOME' .. '/etc/alacritty/.config/alacritty/alacritty.yml', os.getenv 'HOME' .. '/etc/X/.Xresources' },)
+    -- awful.spawn { 'sed', '-i', 's/Qillqaq/Ysgrifennwr/', os.getenv 'HOME' .. '/etc/Visual Studio Code/.config/Code/User/settings.json' }
+    -- awful.spawn.easy_async( { 'sed', '-i', 's/' .. color_qi_k .. '/' .. color_ys_k .. '/;s/' .. color_qi_r .. '/' .. color_ys_r .. '/;s/' .. color_qi_ .. g '/' .. color_ys_g .. '/;s/' .. color_qi_b .. '/' .. color_ys_b .. '/;s/' .. color_qi_c .. '/' .. color_ys_c .. '/;s/' .. color_qi_m .. '/' .. color_ys_m .. '/;s/' .. color_qi_y .. '/' .. color_ys_y .. '/;s/' .. color_qi_w .. '/' .. color_ys_w .. '/;s/' .. color_qi_b_k .. '/' .. color_ys_b_ .. k '/;s/' .. color_qi_b_r .. '/' .. color_ys_b_r .. '/;s/' .. color_qi_b_g .. '/' .. color_ys_b_g .. '/;s/' .. color_qi_b_b .. '/' .. color_ys_b_b .. '/;s/' .. color_qi_b_c .. '/' .. color_ys_b_c .. '/;s/' .. color_qi_b_m .. '/' .. color_ys_b_m .. '/;s/' .. color_qi_b_y .. '/' .. color_ys_b_y .. '/;s/' .. color_qi_b_w .. '/' .. color_ys_b_w .. '/;s/' .. color_qi_w_80 .. '/' .. color_ys_w_80 .. '/', os.getenv 'HOME' .. '/etc/alacritty/.config/alacritty/alacritty.yml', os.getenv 'HOME' .. '/etc/X/.Xresources' },
+    --  )
+    is_ysgrifennwr = not is_ysgrifennwr
+end
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
@@ -736,7 +755,7 @@ globalkeys =
         function()
             awful.screen.focus_relative(1)
         end,
-        {description = 'focus the next screen', group = 'screen'}
+        {description = 'focus the next screen', group = '🖥️ screen'}
     ),
     awful.key(
         {modkey, 'Control'},
@@ -744,7 +763,7 @@ globalkeys =
         function()
             awful.screen.focus_relative(-1)
         end,
-        {description = 'focus the previous screen', group = 'screen'}
+        {description = 'focus the previous screen', group = '🖥️ screen'}
     ),
     awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
     awful.key(
@@ -987,7 +1006,8 @@ clientkeys =
             c:raise()
         end,
         {description = '(un)maximize horizontally', group = 'client'}
-    )
+    ),
+    awful.key({modkey}, 'F6', toggle_theme, {description = 'change theme', group = 'awesome'})
 )
 
 -- Bind all key numbers to tags.
@@ -1295,7 +1315,7 @@ if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brig
             function()
                 increase_keyboard_light(-5)
             end,
-            {description = '🔅', group = '🖥️'}
+            {description = '🔅', group = '🖥️ screen'}
         ),
         awful.key(
             {},
@@ -1303,7 +1323,7 @@ if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brig
             function()
                 increase_keyboard_light(5)
             end,
-            {description = '🔆', group = '🖥️'}
+            {description = '🔆', group = '🖥️ screen'}
         )
     )
 end
