@@ -194,6 +194,7 @@ theme.titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_f
 theme.titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png'
 theme.titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png'
 
+-- XXX waiting for random function in awesome 4.4
 theme.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
 
 -- You can use your own layout icons like this:
@@ -445,12 +446,14 @@ local function set_wallpaper(s)
     end
 end
 
+local netdevice = ''
 local ipwidget =
     awful.widget.watch(
     {'ip', 'route', 'get', '8.8.8.8'},
     7,
     function(widget, stdout, stderr, exitreason, exitcode)
         widget:set_text(stdout:match 'src ([%d.]*)')
+        netdevice = stdout:match 'dev ([%S]*)'
     end,
     wibox.widget.textbox()
 )
@@ -462,7 +465,7 @@ local wifiwidget =
     function(widget, stdout, stderr, exitreason, exitcode)
         widget:set_text(
             (stdout:match 'SSID: ([^\n]*)' or 'N/A') ..
-                ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'N/A')
+                '  ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'N/A')
         )
     end,
     wibox.widget.textbox()
@@ -480,6 +483,67 @@ local temperaturewidget =
             local temperature = f:read 'n'
             f:close()
             widget:set_text(temperature // 1000 .. ' °C')
+            t:again()
+        end
+    )
+    t:start()
+    t:emit_signal('timeout')
+    return widget
+end)()
+
+function fixed(bytes)
+    local unit
+    local result
+    if bytes >= 1000000000 then
+        result = bytes / 1000000000
+        unit = 'GB'
+    elseif bytes >= 1000000 then
+        result = bytes / 1000000
+        unit = 'MB'
+    elseif bytes >= 1000 then
+        result = bytes / 1000
+        unit = 'kB'
+    else
+        unit = 'B'
+        return string.format('%d %s', bytes, unit)
+    end
+    return string.format('%.1f %s', result, unit)
+end
+
+local netthroughwidget =
+    (function()
+    local t = gears.timer {timeout = 3}
+    local widget = wibox.widget.textbox()
+    local old_recv = 0
+    local old_send = 0
+    local last_time = os.time()
+    local send_rate = 0
+    local recv_rate = 0
+    t:connect_signal(
+        'timeout',
+        function()
+            t:stop()
+            local f = io.open('/proc/net/dev', 'r')
+            while true do
+                local line = f:read 'l'
+                if line == nil then
+                    break
+                end
+                local name = string.match(line, '^[%s]?[%s]?[%s]?[%s]?([%w]+):')
+                if name == netdevice then
+                    local new_recv = tonumber(string.match(line, ':[%s]*([%d]+)'))
+                    local new_send = tonumber(string.match(line, '([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$'))
+                    local this_time = os.time()
+                    local timediff = os.difftime(this_time, last_time)
+                    recv_rate = (new_recv - old_recv) // timediff
+                    send_rate = (new_send - old_send) // timediff
+                    last_time = this_time
+                    old_send = new_send
+                    old_recv = new_recv
+                end
+            end
+            f:close()
+            widget:set_text(fixed(recv_rate) .. '/s  ' .. fixed(send_rate) .. '/s')
             t:again()
         end
     )
@@ -573,6 +637,7 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
                 -- wibox.widget.systray(),
+                netthroughwidget,
                 temperaturewidget,
                 wifiwidget,
                 ipwidget,
@@ -1313,7 +1378,7 @@ awful.rules.rules = {
     --   properties = { screen = 1, tag = "2" } },
 }
 
--- {{{ Signals
+-- Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal(
     'manage',
