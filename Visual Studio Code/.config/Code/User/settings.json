@@ -242,5 +242,6 @@
 	"editor.fontSize": 14,
 	"terminal.integrated.fontSize": 13,
 	"workbench.colorTheme": "Ysgrifennwr",
-	"go.useLanguageServer": true
+	"go.useLanguageServer": true,
+	"editor.lineHeight": 20
 }
