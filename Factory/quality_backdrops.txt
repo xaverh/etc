@@ -61,6 +61,7 @@ Ridged.xbm -fg #986636 -bg #48071f
 SkyLight.xbm -fg #bc851e -bg #932fa2
 slate.xbm -fg #9c58e7 -bg #2c2b50
 SmallCurves.xbm -fg #388224 -bg #f52369
+Southwest.xbm -fg #1620a5 -bg #062f43
 Southwest.xbm -fg #8b53eb -bg #45eefd
 Squares.xbm -fg #93535f -bg #f8fffc
 Squares.xbm -fg #a66065 -bg #98d551

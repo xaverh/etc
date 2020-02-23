@@ -7,11 +7,17 @@ fi
 
 [ -r $HOME/.profile ] && . $HOME/.profile
 
+userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 userxkbmap=$HOME/.Xkbmap
 
+sysresources=/etc/X11/Xresources
 sysmodmap=/etc/X11/Xmodmap
 sysxkbmap=/etc/X11/Xkbmap
+
+# merge in defaults
+[ -r "$sysresources" ] && xrdb -nocpp -merge "$sysresources"
+[ -r "$userresources" ] && xrdb -merge "$userresources"
 
 # merge in keymaps
 if [ -r "$sysxkbmap" ]; then
@@ -43,11 +49,9 @@ xset -dpms &
 # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#Key_combinations
 export GTK_IM_MODULE="xim"
 export XMODIFIERS="@im=none"
-xsetroot -bitmap $HOME/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
+# xsetroot -bitmap $HOME/.local/share/backdrops/`\\ls $HOME/.local/share/backdrops | shuf -n 1 | tr -d '\\n' | tee -a /tmp/wallpaper` `printf -- " -fg #%06x -bg #%06x\n" $(shuf -i0-16777215 -n2) | tee -a /tmp/wallpaper`
 
 while true; do
-	pkill -x schwammerl
-	go run ~/etc/Factory/schwammerl/schwammerl.go &
-	dwm-start 2>>| ~/.dwm.log
+	awesome 2>>| ~/.awesome.log
 done
 
