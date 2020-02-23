@@ -102,7 +102,6 @@ local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
-local has_ten_keys = false
 local kbd_layout = 276
 local has_volume_keys = true
 local has_multimedia_keys = true
@@ -118,7 +117,6 @@ theme.bg_normal = '#' .. color_qi_w
 theme.bg_focus = '#005577'
 theme.bg_urgent = '#' .. color_qi_r
 theme.bg_minimize = '#444444'
-theme.bg_systray = theme.bg_normal
 
 theme.fg_normal = '#' .. color_ys_b_w
 theme.fg_focus = '#' .. color_qi_b_k
@@ -260,11 +258,6 @@ local function strawberry_rew()
 end
 
 modkey = 'Mod4'
-
-local key_above_tab = 'acute'
-if kbd_layout == 276 then
-    key_above_tab = 'asciicircum'
-end
 
 local printkey = 'Print'
 if is_macintosh then
@@ -452,37 +445,41 @@ local ipwidget =
     {'ip', 'route', 'get', '8.8.8.8'},
     7,
     function(widget, stdout, stderr, exitreason, exitcode)
-        widget:set_text(stdout:match 'src ([%d.]*)')
-        netdevice = stdout:match 'dev ([%S]*)'
+        local ip = stdout:match 'src ([%d.]*)'
+        if ip then
+            widget:set_text(ip)
+            netdevice = stdout:match 'dev ([%S]*)'
+        end
     end,
     wibox.widget.textbox()
 )
 
 local wifiwidget
 if gears.filesystem.file_executable('/usr/sbin/iw') or gears.filesystem.file_executable('/usr/bin/iw') then
-    wifiwidget =(function()
-            local t = gears.timer {timeout = 5}
-            local widget = wibox.widget.textbox()
-            t:connect_signal(
-                'timeout',
-                function()
-                    t:stop()
-                    awful.spawn.easy_async(
-                        {'iw', 'dev', netdevice, 'link'},
-                        function(stdout, stderr, exitreason, exitcode)
-                            widget:set_text(
-                                (stdout:match 'SSID: ([^\n]*)' or 'no') ..
-                                    ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
-                            )
-                            t:again()
-                        end
-                    )
-                end
-            )
-            t:start()
-            t:emit_signal('timeout')
-            return widget
-        end)()
+    wifiwidget =
+        (function()
+        local t = gears.timer {timeout = 5}
+        local widget = wibox.widget.textbox()
+        t:connect_signal(
+            'timeout',
+            function()
+                t:stop()
+                awful.spawn.easy_async(
+                    {'iw', 'dev', netdevice, 'link'},
+                    function(stdout, stderr, exitreason, exitcode)
+                        widget:set_text(
+                            (stdout:match 'SSID: ([^\n]*)' or 'no') ..
+                                ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
+                        )
+                        t:again()
+                    end
+                )
+            end
+        )
+        t:start()
+        t:emit_signal('timeout')
+        return widget
+    end)()
 end
 
 local temperaturewidget =
@@ -523,6 +520,43 @@ function fixed(bytes)
     end
     return string.format('%.1f %s', result, unit)
 end
+
+local memorywidget =
+    (function()
+    local t = gears.timer {timeout = 11}
+    local widget = wibox.widget.textbox()
+    t:connect_signal(
+        'timeout',
+        function()
+            t:stop()
+            local mem = {}
+            for line in io.lines('/proc/meminfo') do
+                for k, v in string.gmatch(line, '([%a]+):[%s]+([%d]+).+') do
+                    if k == 'MemTotal' then
+                        mem.total = v * 1024
+                    elseif k == 'MemFree' then
+                        mem.free = v * 1024
+                    elseif k == 'Shmem' then
+                        mem.shmem = v * 1024
+                    elseif k == 'Buffers' then
+                        mem.buffers = v * 1024
+                    elseif k == 'Cached' then
+                        mem.cached = v * 1024
+                    elseif k == 'SReclaimable' then
+                        mem.sreclaimable = v * 1024
+                    end
+                end
+            end
+            -- https://github.com/KittyKatt/screenFetch/issues/386#issuecomment-249312716
+            mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
+            widget:set_text(fixed(mem.used))
+            t:again()
+        end
+    )
+    t:start()
+    t:emit_signal('timeout')
+    return widget
+end)()
 
 local netthroughwidget =
     (function()
@@ -575,7 +609,7 @@ awful.screen.connect_for_each_screen(
         set_wallpaper(s)
 
         -- Each screen has its own tag table.
-        awful.tag({'1', '2', '3', '4', '5', '6', '7', '8', '9'}, s, awful.layout.layouts[1])
+        awful.tag({'🏄', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
 
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
@@ -651,6 +685,7 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
                 -- wibox.widget.systray(),
+                memorywidget,
                 netthroughwidget,
                 temperaturewidget,
                 wifiwidget,
@@ -682,7 +717,7 @@ globalkeys =
     awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
     awful.key({modkey}, 'Left', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
     awful.key({modkey}, 'Right', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-    awful.key({modkey}, key_above_tab, awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+    awful.key({modkey}, '#49', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
     awful.key(
         {modkey},
         'j',
@@ -1094,6 +1129,16 @@ if has_multimedia_keys then
         awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓'}),
         awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓'})
     )
+else
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key({modkey}, '#63', strawberry_next, {description = '⏭️', group = '🍓'}),
+        awful.key({modkey}, '#106', strawberry_prev, {description = '⏮', group = '🍓'}),
+        awful.key({modkey}, '#87', strawberry_playpause, {description = '⏯', group = '🍓'}),
+        awful.key({modkey}, '#85', strawberry_fwd, {description = '⏩', group = '🍓'}),
+        awful.key({modkey}, '#83', strawberry_rew, {description = '⏪', group = '🍓'})
+    )
 end
 
 function increase_volume_curry()
@@ -1123,7 +1168,7 @@ function increase_volume_curry()
         end
         local emoji = percentage > 0 and '🔊' or '🔉'
         awful.spawn.easy_async_with_shell(
-            "pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }'",
+            [[pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$5); print $5 }']],
             function(stdout, stderr, exitreason, exitcode)
                 local volume = stdout
                 awful.spawn.with_line_callback(
@@ -1178,7 +1223,7 @@ if has_volume_keys then
             {description = '🔇', group = '🎧'}
         )
     )
-elseif has_ten_keys then
+else
     globalkeys =
         gears.table.join(
         globalkeys,
