@@ -458,18 +458,32 @@ local ipwidget =
     wibox.widget.textbox()
 )
 
-local wifiwidget =
-    awful.widget.watch(
-    {'iw', 'dev', 'wlp2s0', 'link'},
-    11,
-    function(widget, stdout, stderr, exitreason, exitcode)
-        widget:set_text(
-            (stdout:match 'SSID: ([^\n]*)' or 'N/A') ..
-                '  ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'N/A')
-        )
-    end,
-    wibox.widget.textbox()
-)
+local wifiwidget
+if gears.filesystem.file_executable('/usr/sbin/iw') or gears.filesystem.file_executable('/usr/bin/iw') then
+    wifiwidget =(function()
+            local t = gears.timer {timeout = 5}
+            local widget = wibox.widget.textbox()
+            t:connect_signal(
+                'timeout',
+                function()
+                    t:stop()
+                    awful.spawn.easy_async(
+                        {'iw', 'dev', netdevice, 'link'},
+                        function(stdout, stderr, exitreason, exitcode)
+                            widget:set_text(
+                                (stdout:match 'SSID: ([^\n]*)' or 'no') ..
+                                    ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
+                            )
+                            t:again()
+                        end
+                    )
+                end
+            )
+            t:start()
+            t:emit_signal('timeout')
+            return widget
+        end)()
+end
 
 local temperaturewidget =
     (function()
