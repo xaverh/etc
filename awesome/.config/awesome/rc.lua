@@ -108,120 +108,91 @@ local has_multimedia_keys = true
 local is_macintosh = true
 
 -- Theme
+beautiful.init {
+    font = 'IBM Plex Sans 10',
+    bg_normal = '#' .. color_qi_w,
+    bg_focus = '#005577',
+    bg_urgent = '#' .. color_qi_r,
+    bg_minimize = '#444444',
+    fg_normal = '#' .. color_ys_b_w,
+    fg_focus = '#' .. color_qi_b_k,
+    fg_urgent = '#' .. color_qi_b_k,
+    fg_minimize = '#ffffff',
+    useless_gap = dpi(0),
+    border_width = dpi(2),
+    border_normal = '#' .. color_ys_b_k,
+    border_focus = '#' .. color_cursor,
+    border_marked = '#' .. color_qi_y,
+    -- There are other variable sets
+    -- overriding the one when
+    -- defined, the sets are:
+    -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
+    -- tasklist_[bg|fg]_[focus|urgent]
+    -- titlebar_[bg|fg]_[normal|focus]
+    -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
+    -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
+    -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
+    -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
+    -- Example:
+    --theme.taglist_bg_focus = "#ff0000"
+    -- Variables set for theming notifications:
+    -- notification_font
+    -- notification_[bg|fg]
+    -- notification_[width|height|margin]
+    -- notification_[border_color|border_width|shape|opacity]
+    -- Variables set for theming the menu:
+    -- menu_[bg|fg]_[normal|focus]
+    -- menu_[border_color|border_width]
+    menu_submenu_icon = assets .. 'submenu.png',
+    menu_height = dpi(15),
+    menu_width = dpi(100),
+    titlebar_close_button_normal = assets .. 'titlebar/close_normal.png',
+    titlebar_close_button_focus = assets .. 'titlebar/close_focus.png',
+    titlebar_minimize_button_normal = assets .. 'titlebar/minimize_normal.png',
+    titlebar_minimize_button_focus = assets .. 'titlebar/minimize_focus.png',
+    titlebar_ontop_button_normal_inactive = assets .. 'titlebar/ontop_normal_inactive.png',
+    titlebar_ontop_button_focus_inactive = assets .. 'titlebar/ontop_focus_inactive.png',
+    titlebar_ontop_button_normal_active = assets .. 'titlebar/ontop_normal_active.png',
+    titlebar_ontop_button_focus_active = assets .. 'titlebar/ontop_focus_active.png',
+    titlebar_sticky_button_normal_inactive = assets .. 'titlebar/sticky_normal_inactive.png',
+    titlebar_sticky_button_focus_inactive = assets .. 'titlebar/sticky_focus_inactive.png',
+    titlebar_sticky_button_normal_active = assets .. 'titlebar/sticky_normal_active.png',
+    titlebar_sticky_button_focus_active = assets .. 'titlebar/sticky_focus_active.png',
+    titlebar_floating_button_normal_inactive = assets .. 'titlebar/floating_normal_inactive.png',
+    titlebar_floating_button_focus_inactive = assets .. 'titlebar/floating_focus_inactive.png',
+    titlebar_floating_button_normal_active = assets .. 'titlebar/floating_normal_active.png',
+    titlebar_floating_button_focus_active = assets .. 'titlebar/floating_focus_active.png',
+    titlebar_maximized_button_normal_inactive = assets .. 'titlebar/maximized_normal_inactive.png',
+    titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png',
+    titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png',
+    titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png',
+    -- You can use your own layout icons like this:
+    layout_fairh = assets .. 'layouts/fairh.png',
+    layout_fairv = assets .. 'layouts/fairv.png',
+    layout_floating = assets .. 'layouts/floating.png',
+    layout_magnifier = assets .. 'layouts/magnifier.png',
+    layout_max = assets .. 'layouts/max.png',
+    layout_fullscreen = assets .. 'layouts/fullscreen.png',
+    layout_tilebottom = assets .. 'layouts/tilebottom.png',
+    layout_tileleft = assets .. 'layouts/tileleft.png',
+    layout_tile = assets .. 'layouts/tile.png',
+    layout_tiletop = assets .. 'layouts/tiletop.png',
+    layout_spiral = assets .. 'layouts/spiral.png',
+    layout_dwindle = assets .. 'layouts/dwindle.png',
+    layout_cornernw = assets .. 'layouts/cornernw.png',
+    layout_cornerne = assets .. 'layouts/cornerne.png',
+    layout_cornersw = assets .. 'layouts/cornersw.png',
+    layout_cornerse = assets .. 'layouts/cornerse.png',
+    -- Generate Awesome icon:
+    tasklist_icon_size = 12, -- XXX waiting for awesome 4.4
+    tasklist_disable_icon = true,
+    wibar_height = 20
+}
 
-local theme = {}
-
-theme.font = 'IBM Plex Sans 10'
-
-theme.bg_normal = '#' .. color_qi_w
-theme.bg_focus = '#005577'
-theme.bg_urgent = '#' .. color_qi_r
-theme.bg_minimize = '#444444'
-
-theme.fg_normal = '#' .. color_ys_b_w
-theme.fg_focus = '#' .. color_qi_b_k
-theme.fg_urgent = '#' .. color_qi_b_k
-theme.fg_minimize = '#ffffff'
-
-theme.useless_gap = dpi(0)
-theme.border_width = dpi(2)
-theme.border_normal = '#' .. color_ys_b_k
-theme.border_focus = '#' .. color_cursor
-theme.border_marked = '#' .. color_qi_y
-
--- There are other variable sets
--- overriding the one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
-
--- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
-
--- Variables set for theming notifications:
--- notification_font
--- notification_[bg|fg]
--- notification_[width|height|margin]
--- notification_[border_color|border_width|shape|opacity]
-
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_submenu_icon = assets .. 'submenu.png'
-theme.menu_height = dpi(15)
-theme.menu_width = dpi(100)
-
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
-
--- Define the image to load
-theme.titlebar_close_button_normal = assets .. 'titlebar/close_normal.png'
-theme.titlebar_close_button_focus = assets .. 'titlebar/close_focus.png'
-
-theme.titlebar_minimize_button_normal = assets .. 'titlebar/minimize_normal.png'
-theme.titlebar_minimize_button_focus = assets .. 'titlebar/minimize_focus.png'
-
-theme.titlebar_ontop_button_normal_inactive = assets .. 'titlebar/ontop_normal_inactive.png'
-theme.titlebar_ontop_button_focus_inactive = assets .. 'titlebar/ontop_focus_inactive.png'
-theme.titlebar_ontop_button_normal_active = assets .. 'titlebar/ontop_normal_active.png'
-theme.titlebar_ontop_button_focus_active = assets .. 'titlebar/ontop_focus_active.png'
-
-theme.titlebar_sticky_button_normal_inactive = assets .. 'titlebar/sticky_normal_inactive.png'
-theme.titlebar_sticky_button_focus_inactive = assets .. 'titlebar/sticky_focus_inactive.png'
-theme.titlebar_sticky_button_normal_active = assets .. 'titlebar/sticky_normal_active.png'
-theme.titlebar_sticky_button_focus_active = assets .. 'titlebar/sticky_focus_active.png'
-
-theme.titlebar_floating_button_normal_inactive = assets .. 'titlebar/floating_normal_inactive.png'
-theme.titlebar_floating_button_focus_inactive = assets .. 'titlebar/floating_focus_inactive.png'
-theme.titlebar_floating_button_normal_active = assets .. 'titlebar/floating_normal_active.png'
-theme.titlebar_floating_button_focus_active = assets .. 'titlebar/floating_focus_active.png'
-
-theme.titlebar_maximized_button_normal_inactive = assets .. 'titlebar/maximized_normal_inactive.png'
-theme.titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png'
-theme.titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png'
-theme.titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png'
-
--- XXX waiting for random function in awesome 4.4
-theme.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
-
--- You can use your own layout icons like this:
-theme.layout_fairh = assets .. 'layouts/fairh.png'
-theme.layout_fairv = assets .. 'layouts/fairv.png'
-theme.layout_floating = assets .. 'layouts/floating.png'
-theme.layout_magnifier = assets .. 'layouts/magnifier.png'
-theme.layout_max = assets .. 'layouts/max.png'
-theme.layout_fullscreen = assets .. 'layouts/fullscreen.png'
-theme.layout_tilebottom = assets .. 'layouts/tilebottom.png'
-theme.layout_tileleft = assets .. 'layouts/tileleft.png'
-theme.layout_tile = assets .. 'layouts/tile.png'
-theme.layout_tiletop = assets .. 'layouts/tiletop.png'
-theme.layout_spiral = assets .. 'layouts/spiral.png'
-theme.layout_dwindle = assets .. 'layouts/dwindle.png'
-theme.layout_cornernw = assets .. 'layouts/cornernw.png'
-theme.layout_cornerne = assets .. 'layouts/cornerne.png'
-theme.layout_cornersw = assets .. 'layouts/cornersw.png'
-theme.layout_cornerse = assets .. 'layouts/cornerse.png'
-
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
-
-theme.tasklist_icon_size = 12 -- XXX waiting for awesome 4.4
-theme.tasklist_disable_icon = true
-theme.wibar_height = 20
-
--- Themes define colours, icons, font and wallpapers.
-beautiful.init(theme)
+beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
+beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
+beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png' -- XXX waiting for random function in awesome 4.4
+beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 -- This is used later as the default terminal and editor to run.
 terminal = os.getenv 'TERMINAL' or 'alacritty'
