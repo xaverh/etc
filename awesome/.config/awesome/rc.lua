@@ -543,12 +543,12 @@ local function toggle_theme()
     file:close()
     file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
     if is_ysgrifennwr then
-        for i = 1, 16 do
-            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        for i, v in ipairs(colors.ys) do
+            content = string.gsub(content, v, colors.qi[i])
         end
     else
-        for i = 1, 16 do
-            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        for i, v in ipairs(colors.qi) do
+            content = string.gsub(content, v, colors.ys[i])
         end
     end
     file:write(content)
@@ -559,12 +559,12 @@ local function toggle_theme()
     file:close()
     file = io.open(os.getenv 'HOME' .. '/.Xresources', 'w')
     if is_ysgrifennwr then
-        for i = 1, 16 do
-            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        for i, v in ipairs(colors.ys) do
+            content = string.gsub(content, v, colors.qi[i])
         end
     else
-        for i = 1, 16 do
-            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        for i, v in ipairs(colors.qi) do
+            content = string.gsub(content, v, colors.ys[i])
         end
     end
     file:write(content)
@@ -581,7 +581,7 @@ awful.screen.connect_for_each_screen(
         -- Wallpaper
         set_wallpaper(s)
 
-        -- Each screen has its own tag table.
+        -- Each screen has its own tag table. 🥑
         awful.tag({'🏄', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
 
         -- Create a promptbox for each screen
@@ -899,7 +899,8 @@ globalkeys =
         {modkey},
         'Escape',
         function()
-            awful.spawn {'slock', 'ssh-add', '-D'}
+            awful.spawn {'ssh-add', '-D'}
+            awful.spawn {'slock'}
         end,
         {description = 'lock screen and SSH', group = 'awesome'}
     )
@@ -1401,15 +1402,12 @@ awful.rules.rules = {
     },
     {
         rule = {class = 'Journalctl'},
-        properties = {screen = 1, tag = '9'}
+        properties = {screen = 1, tag = '🗞️'}
     },
     {
         rule = {class = 'strawberry'},
-        properties = {screen = 1, tag = '4'}
+        properties = {screen = 1, tag = '🍓'}
     }
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
 }
 
 -- Signals
