@@ -6,6 +6,8 @@ local beautiful = require 'beautiful'
 local naughty = require 'naughty'
 local menubar = require 'menubar'
 local hotkeys_popup = require 'awful.hotkeys_popup'
+-- Enable hotkeys help widget for VIM and other apps when client with a matching name is opened:
+require('awful.hotkeys_popup.keys')
 local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
@@ -52,17 +54,15 @@ local colors = {
     },
     cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
 }
-local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 
+local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
-local kbd_layout = 276
 local has_volume_keys = true
 local has_multimedia_keys = true
 local is_macintosh = true
 
--- Theme
 beautiful.init {
     font = 'IBM Plex Sans 10',
     bg_normal = '#' .. colors.qi[1],
@@ -146,13 +146,11 @@ beautiful.init {
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
 beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
-beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png' -- XXX waiting for random function in awesome 4.4
+-- XXX waiting for random function in awesome 4.4
+beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
--- This is used later as the default terminal and editor to run.
-terminal = os.getenv 'TERMINAL' or 'alacritty'
 editor = os.getenv 'EDITOR' or 'vim'
-editor_cmd = terminal .. ' -e ' .. editor
 
 local function connect_bluetooth()
     awful.spawn 'bluetoothctl connect 88:C6:26:F4:8A:90'
@@ -219,8 +217,7 @@ local myawesomemenu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
     },
-    {'manual', terminal .. ' -e man awesome'}
-    -- {'edit config', editor_cmd .. ' ' .. awesome.conffile}
+    {'manual', os.getenv 'TERMINAL' .. ' -e man awesome'}
 }
 
 local mymultimediamenu = {
@@ -250,7 +247,7 @@ local mymainmenu =
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
             {'exit', myexitmenu, menubar.utils.lookup_icon('system-shutdown')},
-            {'open terminal', terminal}
+            {'open terminal', os.getenv('TERMINAL')}
         }
     }
 )
@@ -541,10 +538,10 @@ local function toggle_theme()
     file:write(content)
     file:close()
     -- Alacritty
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml','r')
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
     content = file:read 'a'
     file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml','w')
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
     if is_ysgrifennwr then
         for i = 1, 16 do
             content = string.gsub(content, colors.ys[i], colors.qi[i])
@@ -557,10 +554,10 @@ local function toggle_theme()
     file:write(content)
     file:close()
     -- X11
-    file = io.open(os.getenv 'HOME' .. '/.Xresources','r')
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'r')
     content = file:read 'a'
     file:close()
-    file = io.open(os.getenv 'HOME' .. '/.Xresources','w')
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'w')
     if is_ysgrifennwr then
         for i = 1, 16 do
             content = string.gsub(content, colors.ys[i], colors.qi[i])
@@ -768,7 +765,7 @@ globalkeys =
         {modkey},
         'Return',
         function()
-            awful.spawn(terminal)
+            awful.spawn(os.getenv 'TERMINAL')
         end,
         {description = 'open a terminal', group = 'launcher'}
     ),
