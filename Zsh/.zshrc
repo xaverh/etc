@@ -142,10 +142,6 @@ alias clinton=" clinton"
 
 autoload -U zmv
 
-autoload -U tetris
-zle -N tetris
-bindkey "^Xt" tetris
-
 export NNN_TMPFILE="/tmp/nnn"
 export NNN_USE_EDITOR=1
 
