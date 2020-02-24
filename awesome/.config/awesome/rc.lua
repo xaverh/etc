@@ -63,7 +63,7 @@ local has_multimedia_keys = true
 local is_macintosh = true
 
 beautiful.init {
-    font = 'IBM Plex Sans 10',
+    font = '.SF Compact Display 11',
     bg_normal = '#' .. colors.qi[1],
     bg_focus = '#005577',
     bg_urgent = '#' .. colors.qi[2],
@@ -168,13 +168,13 @@ awful.layout.layouts = {
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
+    awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.floating,
-    awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
@@ -331,7 +331,7 @@ local netdevice = ''
 local ipwidget =
     awful.widget.watch(
     {'ip', 'route', 'get', '8.8.8.8'},
-    7,
+    1.9,
     function(widget, stdout, stderr, exitreason, exitcode)
         local ip = stdout:match 'src ([%d.]*)'
         if ip then
@@ -346,7 +346,7 @@ local wifiwidget
 if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_executable '/usr/bin/iw' then
     wifiwidget =
         (function()
-        local t = gears.timer {timeout = 5}
+        local t = gears.timer {timeout = 2.9}
         local widget = wibox.widget.textbox()
         t:connect_signal(
             'timeout',
@@ -372,7 +372,7 @@ end
 
 local temperaturewidget =
     (function()
-    local t = gears.timer {timeout = 17}
+    local t = gears.timer {timeout = 3.1}
     local widget = wibox.widget.textbox()
     t:connect_signal(
         'timeout',
@@ -381,7 +381,7 @@ local temperaturewidget =
             local f = io.open('/sys/class/thermal/thermal_zone1/temp', 'r')
             local temperature = f:read 'n'
             f:close()
-            widget:set_text(temperature // 1000 .. ' °C')
+            widget:set_text(temperature // 1000 .. '\u{2009}°C')
             t:again()
         end
     )
@@ -389,6 +389,41 @@ local temperaturewidget =
     t:emit_signal 'timeout'
     return widget
 end)()
+
+local batterywidget
+if gears.filesystem.dir_readable('/sys/class/power_supply/BAT0/') then
+    batterywidget =
+        (function()
+        local t = gears.timer {timeout = 2.3}
+        local widget = wibox.widget.textbox()
+        t:connect_signal(
+            'timeout',
+            function()
+                t:stop()
+                local f = io.open('/sys/class/power_supply/BAT0/status', 'r')
+                local battery_status = f:read 'l'
+                f:close()
+                if battery_status == 'Full' or battery_status == 'Charged' then
+                    widget:set_text('100\u{2009}%')
+                else
+                    local f = io.open('/sys/class/power_supply/BAT0/charge_now', 'r')
+                    local charge_now = f:read 'n'
+                    f:close()
+                    f = io.open('/sys/class/power_supply/BAT0/charge_full', 'r')
+                    local charge_full = f:read 'n'
+                    f:close()
+                    local capacity = charge_now * 100 // charge_full
+                    local charging_symbol = battery_status == 'Charging' and '+' or '-'
+                    widget:set_text(capacity .. '\u{2009}%\u{2009}' .. charging_symbol)
+                end
+                t:again()
+            end
+        )
+        t:start()
+        t:emit_signal 'timeout'
+        return widget
+    end)()
+end
 
 function fixed(bytes)
     local unit
@@ -411,7 +446,7 @@ end
 
 local memorywidget =
     (function()
-    local t = gears.timer {timeout = 11}
+    local t = gears.timer {timeout = 4.1}
     local widget = wibox.widget.textbox()
     t:connect_signal(
         'timeout',
@@ -628,6 +663,7 @@ awful.screen.connect_for_each_screen(
                 temperaturewidget,
                 wifiwidget,
                 ipwidget,
+                batterywidget,
                 mytextclock
             }
         }
