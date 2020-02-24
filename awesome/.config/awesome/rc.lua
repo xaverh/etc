@@ -1,234 +1,131 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
-pcall(require, 'luarocks.loader')
-
--- Standard awesome library
 local gears = require 'gears'
 local awful = require 'awful'
 require 'awful.autofocus'
--- Widget and layout library
 local wibox = require 'wibox'
--- Theme handling library
 local beautiful = require 'beautiful'
--- Notification library
 local naughty = require 'naughty'
 local menubar = require 'menubar'
 local hotkeys_popup = require 'awful.hotkeys_popup'
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
--- require('awful.hotkeys_popup.keys')
 local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
--- Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify {
-        preset = naughty.config.presets.critical,
-        title = 'Oops, there were errors during startup!',
-        text = awesome.startup_errors
-    }
-end
-
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal(
-        'debug::error',
-        function(err)
-            -- Make sure we don't go into an endless error loop
-            if in_error then
-                return
-            end
-            in_error = true
-
-            naughty.notify(
-                {
-                    preset = naughty.config.presets.critical,
-                    title = 'Oops, an error happened!',
-                    text = tostring(err)
-                }
-            )
-            in_error = false
-        end
-    )
-end
-
--- Options
 menubar.cache_entries = true
 menubar.show_categories = false
 
--- Variable definitions
+local colors = {
+    qi = {
+        '1e1e1e', -- Grey 10%, R=30, G=30, B=30
+        'e32791', -- Deep Cerise, R=227, G=39, B=145
+        '30c798', -- Shamrock, R=48, G=199, B=152
+        'e3c472', -- Chenin, R=227, G=196, B=114
+        '6796e6', -- Cornflower Blue, R=103, G=150, B=230
+        'e59fdf', -- Plum, R=229, G=159, B=223
+        '81d8d0', -- Riptide, R=129, G=216, B=208
+        '969696', -- Grey 60%, R=150, G=150, B=150
+        '515151', -- Grey 30%, R=81, G=81, B=81
+        'e466ad', -- Hot Pink, R=228, G=102, B=173
+        '6cd1b2', -- Medium Aquamarine, R=108, G=209, B=178
+        'e4cf98', -- Double Colonial White, R=228, G=207, B=152
+        '91b0e6', -- Jordy Blue, R=145, G=181, B=230
+        'e5b6e1', -- French Lilac, R=229, G=182, B=225
+        'a2dcd7', -- Sinbad, R=162, G=220, B=215
+        'e5e6e6' -- Grey 90%, R=229, G=230, B=230
+    },
+    ys = {
+        'f9f8f4', -- Floral White, R=249, G=248, B=244
+        'e32791', -- Deep Cerise, R=227, G=39, B=145
+        '488432', -- La Palma, R=72, G=132, B=50
+        'a25d0e', -- Golden Brown, R=162, G=93, B=14
+        '2c65b5', -- Cerulean Blue, R=44, G=101, B=181
+        'b062a7', -- Violet Blue, R=176, G=98, B=167
+        '27bbbe', -- Light Sea Green, R=39, G=187, B=190
+        '999999', -- Grey 60%, R=153, G=153, B=153
+        'b8b8b8', -- Grey 70%, R=184, G=184, B=184
+        '9f1b66', -- Jazzberry Jam, R=159, G=27, B=102
+        '325d23', -- Parsley, R=50, G=93, B=35
+        '71410a', -- Raw Umber, R=113, G=65, B=10
+        '1f477f', -- Bahama Blue, R=31, G=71, B=127
+        '7b4474', -- Eminence, R=123, G=68, B=116
+        '1b8486', -- Atoll, R=27, G=132, B=134
+        '424242' -- Grey 20%, R=66, G=66, B=66
+    },
+    cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
+}
 
-local color_ys_w = 'f9f8f4' -- Floral White, R=249, G=248, B=244
-local color_ys_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
-local color_ys_g = '488432' -- La Palma, R=72, G=132, B=50
-local color_ys_y = 'a25d0e' -- Golden Brown, R=162, G=93, B=14
-local color_ys_b = '2c65b5' -- Cerulean Blue, R=44, G=101, B=181
-local color_ys_m = 'b062a7' -- Violet Blue, R=176, G=98, B=167
-local color_ys_c = '27bbbe' -- Light Sea Green, R=39, G=187, B=190
-local color_ys_k = '999999' -- Grey 60%, R=153, G=153, B=153
-local color_qi_w = '1e1e1e' -- Grey 10%, R=30, G=30, B=30
-local color_qi_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
-local color_qi_g = '30c798' -- Shamrock, R=48, G=199, B=152
-local color_qi_y = 'e3c472' -- Chenin, R=227, G=196, B=114
-local color_qi_b = '6796e6' -- Cornflower Blue, R=103, G=150, B=230
-local color_qi_m = 'e59fdf' -- Plum, R=229, G=159, B=223
-local color_qi_c = '81d8d0' -- Riptide, R=129, G=216, B=208
-local color_qi_k = '969696' -- Grey 60%, R=150, G=150, B=150
-local color_qi_b_w = '515151' -- Grey 30%, R=81, G=81, B=81
-local color_qi_b_r = 'e466ad' -- Hot Pink, R=228, G=102, B=173
-local color_qi_b_g = '6cd1b2' -- Medium Aquamarine, R=108, G=209, B=178
-local color_qi_b_y = 'e4cf98' -- Double Colonial White, R=228, G=207, B=152
-local color_qi_b_b = '91b0e6' -- Jordy Blue, R=145, G=181, B=230
-local color_qi_b_m = 'e5b6e1' -- French Lilac, R=229, G=182, B=225
-local color_qi_b_c = 'a2dcd7' -- Sinbad, R=162, G=220, B=215
-local color_qi_b_k = 'e5e6e6' -- Grey 90%, R=229, G=230, B=230
-local color_ys_b_w = 'b8b8b8' -- Grey 70%, R=184, G=184, B=184
-local color_ys_b_r = '9f1b66' -- Jazzberry Jam, R=159, G=27, B=102
-local color_ys_b_g = '325d23' -- Parsley, R=50, G=93, B=35
-local color_ys_b_y = '71410a' -- Raw Umber, R=113, G=65, B=10
-local color_ys_b_b = '1f477f' -- Bahama Blue, R=31, G=71, B=127
-local color_ys_b_m = '7b4474' -- Eminence, R=123, G=68, B=116
-local color_ys_b_c = '1b8486' -- Atoll, R=27, G=132, B=134
-local color_ys_b_k = '424242' -- Grey 20%, R=66, G=66, B=66
-local color_qi_w_80 = '333333' -- Grey 20%, R=51, G=51, B=51
-local color_ys_w_80 = 'edece8' -- Grey 90%, R=237, G=236, B=232
-local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
-
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
-local has_ten_keys = false
-local kbd_layout = 276
+-- TODO automate these
 local has_volume_keys = true
 local has_multimedia_keys = true
 local is_macintosh = true
 
--- Theme
+beautiful.init {
+    font = 'IBM Plex Sans 10',
+    bg_normal = '#' .. colors.qi[1],
+    bg_focus = '#005577',
+    bg_urgent = '#' .. colors.qi[2],
+    bg_minimize = '#444444',
+    fg_normal = '#' .. colors.ys[9],
+    fg_focus = '#' .. colors.qi[16],
+    fg_urgent = '#' .. colors.qi[16],
+    fg_minimize = '#ffffff',
+    useless_gap = dpi(0),
+    border_width = dpi(2),
+    border_normal = '#' .. colors.ys[16],
+    border_focus = '#' .. colors.cursor,
+    border_marked = '#' .. colors.qi[4],
+    menu_submenu_icon = assets .. 'submenu.png',
+    menu_height = dpi(15),
+    menu_width = dpi(100),
+    titlebar_close_button_normal = assets .. 'titlebar/close_normal.png',
+    titlebar_close_button_focus = assets .. 'titlebar/close_focus.png',
+    titlebar_minimize_button_normal = assets .. 'titlebar/minimize_normal.png',
+    titlebar_minimize_button_focus = assets .. 'titlebar/minimize_focus.png',
+    titlebar_ontop_button_normal_inactive = assets .. 'titlebar/ontop_normal_inactive.png',
+    titlebar_ontop_button_focus_inactive = assets .. 'titlebar/ontop_focus_inactive.png',
+    titlebar_ontop_button_normal_active = assets .. 'titlebar/ontop_normal_active.png',
+    titlebar_ontop_button_focus_active = assets .. 'titlebar/ontop_focus_active.png',
+    titlebar_sticky_button_normal_inactive = assets .. 'titlebar/sticky_normal_inactive.png',
+    titlebar_sticky_button_focus_inactive = assets .. 'titlebar/sticky_focus_inactive.png',
+    titlebar_sticky_button_normal_active = assets .. 'titlebar/sticky_normal_active.png',
+    titlebar_sticky_button_focus_active = assets .. 'titlebar/sticky_focus_active.png',
+    titlebar_floating_button_normal_inactive = assets .. 'titlebar/floating_normal_inactive.png',
+    titlebar_floating_button_focus_inactive = assets .. 'titlebar/floating_focus_inactive.png',
+    titlebar_floating_button_normal_active = assets .. 'titlebar/floating_normal_active.png',
+    titlebar_floating_button_focus_active = assets .. 'titlebar/floating_focus_active.png',
+    titlebar_maximized_button_normal_inactive = assets .. 'titlebar/maximized_normal_inactive.png',
+    titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png',
+    titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png',
+    titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png',
+    layout_fairh = assets .. 'layouts/fairh.png',
+    layout_fairv = assets .. 'layouts/fairv.png',
+    layout_floating = assets .. 'layouts/floating.png',
+    layout_magnifier = assets .. 'layouts/magnifier.png',
+    layout_max = assets .. 'layouts/max.png',
+    layout_fullscreen = assets .. 'layouts/fullscreen.png',
+    layout_tilebottom = assets .. 'layouts/tilebottom.png',
+    layout_tileleft = assets .. 'layouts/tileleft.png',
+    layout_tile = assets .. 'layouts/tile.png',
+    layout_tiletop = assets .. 'layouts/tiletop.png',
+    layout_spiral = assets .. 'layouts/spiral.png',
+    layout_dwindle = assets .. 'layouts/dwindle.png',
+    layout_cornernw = assets .. 'layouts/cornernw.png',
+    layout_cornerne = assets .. 'layouts/cornerne.png',
+    layout_cornersw = assets .. 'layouts/cornersw.png',
+    layout_cornerse = assets .. 'layouts/cornerse.png',
+    tasklist_icon_size = 12, -- XXX, doesn't work yet waiting for awesome 4.4
+    tasklist_disable_icon = true,
+    wibar_height = 20
+}
 
-local theme = {}
-
-theme.font = 'IBM Plex Sans 10'
-
-theme.bg_normal = '#' .. color_qi_w
-theme.bg_focus = '#005577'
-theme.bg_urgent = '#' .. color_qi_r
-theme.bg_minimize = '#444444'
-theme.bg_systray = theme.bg_normal
-
-theme.fg_normal = '#' .. color_ys_b_w
-theme.fg_focus = '#' .. color_qi_b_k
-theme.fg_urgent = '#' .. color_qi_b_k
-theme.fg_minimize = '#ffffff'
-
-theme.useless_gap = dpi(0)
-theme.border_width = dpi(2)
-theme.border_normal = '#' .. color_ys_b_k
-theme.border_focus = '#' .. color_cursor
-theme.border_marked = '#' .. color_qi_y
-
--- There are other variable sets
--- overriding the one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
-
--- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
-
--- Variables set for theming notifications:
--- notification_font
--- notification_[bg|fg]
--- notification_[width|height|margin]
--- notification_[border_color|border_width|shape|opacity]
-
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_submenu_icon = assets .. 'submenu.png'
-theme.menu_height = dpi(15)
-theme.menu_width = dpi(100)
-
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
-
--- Define the image to load
-theme.titlebar_close_button_normal = assets .. 'titlebar/close_normal.png'
-theme.titlebar_close_button_focus = assets .. 'titlebar/close_focus.png'
-
-theme.titlebar_minimize_button_normal = assets .. 'titlebar/minimize_normal.png'
-theme.titlebar_minimize_button_focus = assets .. 'titlebar/minimize_focus.png'
-
-theme.titlebar_ontop_button_normal_inactive = assets .. 'titlebar/ontop_normal_inactive.png'
-theme.titlebar_ontop_button_focus_inactive = assets .. 'titlebar/ontop_focus_inactive.png'
-theme.titlebar_ontop_button_normal_active = assets .. 'titlebar/ontop_normal_active.png'
-theme.titlebar_ontop_button_focus_active = assets .. 'titlebar/ontop_focus_active.png'
-
-theme.titlebar_sticky_button_normal_inactive = assets .. 'titlebar/sticky_normal_inactive.png'
-theme.titlebar_sticky_button_focus_inactive = assets .. 'titlebar/sticky_focus_inactive.png'
-theme.titlebar_sticky_button_normal_active = assets .. 'titlebar/sticky_normal_active.png'
-theme.titlebar_sticky_button_focus_active = assets .. 'titlebar/sticky_focus_active.png'
-
-theme.titlebar_floating_button_normal_inactive = assets .. 'titlebar/floating_normal_inactive.png'
-theme.titlebar_floating_button_focus_inactive = assets .. 'titlebar/floating_focus_inactive.png'
-theme.titlebar_floating_button_normal_active = assets .. 'titlebar/floating_normal_active.png'
-theme.titlebar_floating_button_focus_active = assets .. 'titlebar/floating_focus_active.png'
-
-theme.titlebar_maximized_button_normal_inactive = assets .. 'titlebar/maximized_normal_inactive.png'
-theme.titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png'
-theme.titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png'
-theme.titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png'
-
+beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
+beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
 -- XXX waiting for random function in awesome 4.4
-theme.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
-
--- You can use your own layout icons like this:
-theme.layout_fairh = assets .. 'layouts/fairh.png'
-theme.layout_fairv = assets .. 'layouts/fairv.png'
-theme.layout_floating = assets .. 'layouts/floating.png'
-theme.layout_magnifier = assets .. 'layouts/magnifier.png'
-theme.layout_max = assets .. 'layouts/max.png'
-theme.layout_fullscreen = assets .. 'layouts/fullscreen.png'
-theme.layout_tilebottom = assets .. 'layouts/tilebottom.png'
-theme.layout_tileleft = assets .. 'layouts/tileleft.png'
-theme.layout_tile = assets .. 'layouts/tile.png'
-theme.layout_tiletop = assets .. 'layouts/tiletop.png'
-theme.layout_spiral = assets .. 'layouts/spiral.png'
-theme.layout_dwindle = assets .. 'layouts/dwindle.png'
-theme.layout_cornernw = assets .. 'layouts/cornernw.png'
-theme.layout_cornerne = assets .. 'layouts/cornerne.png'
-theme.layout_cornersw = assets .. 'layouts/cornersw.png'
-theme.layout_cornerse = assets .. 'layouts/cornerse.png'
-
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
-
-theme.tasklist_icon_size = 12 -- XXX waiting for awesome 4.4
-theme.tasklist_disable_icon = true
-theme.wibar_height = 20
-
--- Themes define colours, icons, font and wallpapers.
-beautiful.init(theme)
-
--- This is used later as the default terminal and editor to run.
-terminal = os.getenv 'TERMINAL' or 'alacritty'
-editor = os.getenv 'EDITOR' or 'vim'
-editor_cmd = terminal .. ' -e ' .. editor
+beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
+beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth()
     awful.spawn 'bluetoothctl connect 88:C6:26:F4:8A:90'
@@ -239,7 +136,7 @@ local function disconnect_bluetooth()
 end
 
 local function strawberry_next()
-    -- IDEA: check whether mpv or strawberry is running
+    -- TODO: check whether mpv or strawberry is running
     awful.spawn 'strawberry -f'
 end
 
@@ -259,19 +156,13 @@ local function strawberry_rew()
     awful.spawn 'strawberry --seek-by -10'
 end
 
-modkey = 'Mod4'
-
-local key_above_tab = 'acute'
-if kbd_layout == 276 then
-    key_above_tab = 'asciicircum'
-end
+local modkey = 'Mod4'
 
 local printkey = 'Print'
 if is_macintosh then
     printkey = 'XF86LaunchA'
 end
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
@@ -291,8 +182,6 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.se,
 }
 
--- {{{ Menu
--- Create a launcher widget and a main menu
 local myawesomemenu = {
     {
         'hotkeys',
@@ -300,8 +189,7 @@ local myawesomemenu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
     },
-    {'manual', terminal .. ' -e man awesome'},
-    {'edit config', editor_cmd .. ' ' .. awesome.conffile}
+    {'manual', os.getenv 'TERMINAL' .. ' -e man awesome'}
 }
 
 local mymultimediamenu = {
@@ -316,12 +204,12 @@ local myexitmenu = {
         function()
             awesome.quit()
         end,
-        menubar.utils.lookup_icon('system-log-out')
+        menubar.utils.lookup_icon 'system-log-out'
     },
-    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon('system-suspend')},
-    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon('system-suspend-hibernate')},
-    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon('system-reboot')},
-    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon('system-shutdown')}
+    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon 'system-suspend'},
+    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon 'system-suspend-hibernate'},
+    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon 'system-reboot'},
+    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon 'system-shutdown'}
 }
 
 local mymainmenu =
@@ -330,8 +218,8 @@ local mymainmenu =
         items = {
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
-            {'exit', myexitmenu, menubar.utils.lookup_icon('system-shutdown')},
-            {'open terminal', terminal}
+            {'exit', myexitmenu, menubar.utils.lookup_icon 'system-shutdown'},
+            {'open terminal', os.getenv 'TERMINAL'}
         }
     }
 )
@@ -344,13 +232,6 @@ mylauncher =
     }
 )
 
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-
--- Keyboard map indicator and switcher
--- mykeyboardlayout = awful.widget.keyboardlayout()
-
--- Wibar
 mytextclock = wibox.widget.textclock('%a %d %b %T %Z', 1)
 
 -- Create a wibox for each screen and add it
@@ -415,7 +296,7 @@ local tasklist_buttons =
         {},
         3,
         function()
-            awful.menu.client_list({theme = {width = 250}})
+            awful.menu.client_list {theme = {width = 250}}
         end
     ),
     awful.button(
@@ -452,24 +333,42 @@ local ipwidget =
     {'ip', 'route', 'get', '8.8.8.8'},
     7,
     function(widget, stdout, stderr, exitreason, exitcode)
-        widget:set_text(stdout:match 'src ([%d.]*)')
-        netdevice = stdout:match 'dev ([%S]*)'
+        local ip = stdout:match 'src ([%d.]*)'
+        if ip then
+            widget:set_text(ip)
+            netdevice = stdout:match 'dev ([%S]*)'
+        end
     end,
     wibox.widget.textbox()
 )
 
-local wifiwidget =
-    awful.widget.watch(
-    {'iw', 'dev', 'wlp2s0', 'link'},
-    11,
-    function(widget, stdout, stderr, exitreason, exitcode)
-        widget:set_text(
-            (stdout:match 'SSID: ([^\n]*)' or 'N/A') ..
-                '  ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'N/A')
+local wifiwidget
+if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_executable '/usr/bin/iw' then
+    wifiwidget =
+        (function()
+        local t = gears.timer {timeout = 5}
+        local widget = wibox.widget.textbox()
+        t:connect_signal(
+            'timeout',
+            function()
+                t:stop()
+                awful.spawn.easy_async(
+                    {'iw', 'dev', netdevice, 'link'},
+                    function(stdout, stderr, exitreason, exitcode)
+                        widget:set_text(
+                            (stdout:match 'SSID: ([^\n]*)' or 'no') ..
+                                ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
+                        )
+                        t:again()
+                    end
+                )
+            end
         )
-    end,
-    wibox.widget.textbox()
-)
+        t:start()
+        t:emit_signal 'timeout'
+        return widget
+    end)()
+end
 
 local temperaturewidget =
     (function()
@@ -487,7 +386,7 @@ local temperaturewidget =
         end
     )
     t:start()
-    t:emit_signal('timeout')
+    t:emit_signal 'timeout'
     return widget
 end)()
 
@@ -509,6 +408,43 @@ function fixed(bytes)
     end
     return string.format('%.1f %s', result, unit)
 end
+
+local memorywidget =
+    (function()
+    local t = gears.timer {timeout = 11}
+    local widget = wibox.widget.textbox()
+    t:connect_signal(
+        'timeout',
+        function()
+            t:stop()
+            local mem = {}
+            for line in io.lines '/proc/meminfo' do
+                for k, v in string.gmatch(line, '([%a]+):[%s]+([%d]+).+') do
+                    if k == 'MemTotal' then
+                        mem.total = v * 1024
+                    elseif k == 'MemFree' then
+                        mem.free = v * 1024
+                    elseif k == 'Shmem' then
+                        mem.shmem = v * 1024
+                    elseif k == 'Buffers' then
+                        mem.buffers = v * 1024
+                    elseif k == 'Cached' then
+                        mem.cached = v * 1024
+                    elseif k == 'SReclaimable' then
+                        mem.sreclaimable = v * 1024
+                    end
+                end
+            end
+            -- https://github.com/KittyKatt/screenFetch/issues/386#issuecomment-249312716
+            mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
+            widget:set_text(fixed(mem.used))
+            t:again()
+        end
+    )
+    t:start()
+    t:emit_signal 'timeout'
+    return widget
+end)()
 
 local netthroughwidget =
     (function()
@@ -548,9 +484,59 @@ local netthroughwidget =
         end
     )
     t:start()
-    t:emit_signal('timeout')
+    t:emit_signal 'timeout'
     return widget
 end)()
+
+local is_ysgrifennwr = false
+local function toggle_theme()
+    -- VS Code
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
+    local content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'w')
+    if is_ysgrifennwr then
+        content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
+    else
+        content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
+    end
+    file:write(content)
+    file:close()
+    -- Alacritty
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
+    if is_ysgrifennwr then
+        for i = 1, 16 do
+            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        end
+    else
+        for i = 1, 16 do
+            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    -- X11
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'w')
+    if is_ysgrifennwr then
+        for i = 1, 16 do
+            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        end
+    else
+        for i = 1, 16 do
+            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    awful.spawn {'xrdb', os.getenv 'HOME' .. '/.Xresources'}
+    is_ysgrifennwr = not is_ysgrifennwr
+end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
@@ -561,7 +547,7 @@ awful.screen.connect_for_each_screen(
         set_wallpaper(s)
 
         -- Each screen has its own tag table.
-        awful.tag({'1', '2', '3', '4', '5', '6', '7', '8', '9'}, s, awful.layout.layouts[1])
+        awful.tag({'🏄', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
 
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
@@ -637,6 +623,7 @@ awful.screen.connect_for_each_screen(
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout,
                 -- wibox.widget.systray(),
+                memorywidget,
                 netthroughwidget,
                 temperaturewidget,
                 wifiwidget,
@@ -668,7 +655,7 @@ globalkeys =
     awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
     awful.key({modkey}, 'Left', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
     awful.key({modkey}, 'Right', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-    awful.key({modkey}, key_above_tab, awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+    awful.key({modkey}, '#49', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
     awful.key(
         {modkey},
         'j',
@@ -716,7 +703,7 @@ globalkeys =
         function()
             awful.screen.focus_relative(1)
         end,
-        {description = 'focus the next screen', group = 'screen'}
+        {description = 'focus the next screen', group = '🖥️ screen'}
     ),
     awful.key(
         {modkey, 'Control'},
@@ -724,7 +711,7 @@ globalkeys =
         function()
             awful.screen.focus_relative(-1)
         end,
-        {description = 'focus the previous screen', group = 'screen'}
+        {description = 'focus the previous screen', group = '🖥️ screen'}
     ),
     awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
     awful.key(
@@ -743,7 +730,7 @@ globalkeys =
         {modkey},
         'Return',
         function()
-            awful.spawn(terminal)
+            awful.spawn(os.getenv 'TERMINAL')
         end,
         {description = 'open a terminal', group = 'launcher'}
     ),
@@ -967,7 +954,8 @@ clientkeys =
             c:raise()
         end,
         {description = '(un)maximize horizontally', group = 'client'}
-    )
+    ),
+    awful.key({modkey}, 'F6', toggle_theme, {description = 'change theme', group = 'awesome'})
 )
 
 -- Bind all key numbers to tags.
@@ -1080,6 +1068,16 @@ if has_multimedia_keys then
         awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓'}),
         awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓'})
     )
+else
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key({modkey}, '#63', strawberry_next, {description = '⏭️', group = '🍓'}),
+        awful.key({modkey}, '#106', strawberry_prev, {description = '⏮', group = '🍓'}),
+        awful.key({modkey}, '#87', strawberry_playpause, {description = '⏯', group = '🍓'}),
+        awful.key({modkey}, '#85', strawberry_fwd, {description = '⏩', group = '🍓'}),
+        awful.key({modkey}, '#83', strawberry_rew, {description = '⏪', group = '🍓'})
+    )
 end
 
 function increase_volume_curry()
@@ -1109,7 +1107,7 @@ function increase_volume_curry()
         end
         local emoji = percentage > 0 and '🔊' or '🔉'
         awful.spawn.easy_async_with_shell(
-            "pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }'",
+            [[pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$5); print $5 }']],
             function(stdout, stderr, exitreason, exitcode)
                 local volume = stdout
                 awful.spawn.with_line_callback(
@@ -1164,7 +1162,7 @@ if has_volume_keys then
             {description = '🔇', group = '🎧'}
         )
     )
-elseif has_ten_keys then
+else
     globalkeys =
         gears.table.join(
         globalkeys,
@@ -1222,7 +1220,7 @@ local function increase_light_curry(brightness_file, max_brightness, emoji)
     end
 end
 
-if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_brightness') then
+if gears.filesystem.file_readable '/sys/class/leds/smc::kbd_backlight/max_brightness' then
     local f = io.open('/sys/class/leds/smc::kbd_backlight/max_brightness', 'r')
     local max_brightness = f:read 'n'
     f:close()
@@ -1250,7 +1248,7 @@ if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_bright
     )
 end
 
-if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brightness') then
+if gears.filesystem.file_readable '/sys/class/backlight/intel_backlight/max_brightness' then
     local f = io.open('/sys/class/backlight/intel_backlight/max_brightness', 'r')
     local max_brightness = f:read 'n'
     f:close()
@@ -1265,7 +1263,7 @@ if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brig
             function()
                 increase_keyboard_light(-5)
             end,
-            {description = '🔅', group = '🖥️'}
+            {description = '🔅', group = '🖥️ screen'}
         ),
         awful.key(
             {},
@@ -1273,7 +1271,7 @@ if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brig
             function()
                 increase_keyboard_light(5)
             end,
-            {description = '🔆', group = '🖥️'}
+            {description = '🔆', group = '🖥️ screen'}
         )
     )
 end
