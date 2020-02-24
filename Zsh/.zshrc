@@ -36,8 +36,6 @@ warncreateglobal
 bindkey -e
 zstyle :compinstall filename "$HOME/.zshrc"
 
-vscodecompdir="$HOME"/.local/share/VSCode-linux-x64/resources/completions/zsh
-[[ -d $vscodecompdir && -x $vscodecompdir ]] && fpath=($fpath $vscodecompdir)
 autoload -Uz compinit
 compinit
 [[ -r "$HOME"/.npm-packages/lib/node_modules/gulp-cli/completion/zsh  ]] && . "$HOME"/.npm-packages/lib/node_modules/gulp-cli/completion/zsh
@@ -64,6 +62,8 @@ zstyle ":completion:*:commands" rehash 1
 
 unalias you 2> /dev/null
 unalias ls 2> /dev/null
+alias vi=nvim
+alias vim=nvim
 alias grep="grep --color=auto"
 alias ...='../..'
 alias ....='../../..'
@@ -91,8 +91,8 @@ alias -g G='|& grep -i --colour=auto'
 alias d='dirs -v'
 alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
-alias o='less'
 alias u='du -s --si'
+alias mupdf=mupdf-gl
 
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
 preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
@@ -131,14 +131,14 @@ function sx () {
 	done
 }
 
-function clinton_server () {
+function clinton () {
 	local i
 	for i in "$@"; do
 		sed -i "/$i/d" $HISTFILE
 	done
 }
 
-alias clinton_server=" clinton_server"
+alias clinton=" clinton"
 
 autoload -U zmv
 
@@ -160,12 +160,3 @@ function n ()
 }
 
 alias nnn=n
-
-function ripsite() {
-	wkhtmltopdf --images --no-stop-slow-scripts "$@" `systemd-escape $@`".pdf"
-}
-
-function Install-VSCode() {
-	rm -r "$HOME/.local/share/VSCode-linux-x64/" || mkdir -p "$HOME/.local/share"
-	curl -L 'https://update.code.visualstudio.com/latest/linux-x64/stable' | tar xz -C "$HOME/.local/share/"
-}
