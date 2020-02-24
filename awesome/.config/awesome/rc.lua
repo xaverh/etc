@@ -57,6 +57,7 @@ local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 -- 0xb2d5751b41ed4edc // airolo
 -- 0xe523ec7d7f8f49db // aberystwyth
 -- ISO 3166 Country codes, US=840, DE=276
+-- TODO automate these
 local has_volume_keys = true
 local has_multimedia_keys = true
 local is_macintosh = true
@@ -76,26 +77,6 @@ beautiful.init {
     border_normal = '#' .. colors.ys[16],
     border_focus = '#' .. colors.cursor,
     border_marked = '#' .. colors.qi[4],
-    -- There are other variable sets
-    -- overriding the one when
-    -- defined, the sets are:
-    -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
-    -- tasklist_[bg|fg]_[focus|urgent]
-    -- titlebar_[bg|fg]_[normal|focus]
-    -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
-    -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
-    -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
-    -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
-    -- Example:
-    --theme.taglist_bg_focus = "#ff0000"
-    -- Variables set for theming notifications:
-    -- notification_font
-    -- notification_[bg|fg]
-    -- notification_[width|height|margin]
-    -- notification_[border_color|border_width|shape|opacity]
-    -- Variables set for theming the menu:
-    -- menu_[bg|fg]_[normal|focus]
-    -- menu_[border_color|border_width]
     menu_submenu_icon = assets .. 'submenu.png',
     menu_height = dpi(15),
     menu_width = dpi(100),
@@ -119,7 +100,6 @@ beautiful.init {
     titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png',
     titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png',
     titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png',
-    -- You can use your own layout icons like this:
     layout_fairh = assets .. 'layouts/fairh.png',
     layout_fairv = assets .. 'layouts/fairv.png',
     layout_floating = assets .. 'layouts/floating.png',
@@ -136,8 +116,7 @@ beautiful.init {
     layout_cornerne = assets .. 'layouts/cornerne.png',
     layout_cornersw = assets .. 'layouts/cornersw.png',
     layout_cornerse = assets .. 'layouts/cornerse.png',
-    -- Generate Awesome icon:
-    tasklist_icon_size = 12, -- XXX waiting for awesome 4.4
+    tasklist_icon_size = 12, -- XXX, doesn't work yet waiting for awesome 4.4
     tasklist_disable_icon = true,
     wibar_height = 20
 }
@@ -148,8 +127,6 @@ beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), bea
 beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
-editor = os.getenv 'EDITOR' or 'vim'
-
 local function connect_bluetooth()
     awful.spawn 'bluetoothctl connect 88:C6:26:F4:8A:90'
 end
@@ -159,7 +136,7 @@ local function disconnect_bluetooth()
 end
 
 local function strawberry_next()
-    -- IDEA: check whether mpv or strawberry is running
+    -- TODO: check whether mpv or strawberry is running
     awful.spawn 'strawberry -f'
 end
 
@@ -179,14 +156,13 @@ local function strawberry_rew()
     awful.spawn 'strawberry --seek-by -10'
 end
 
-modkey = 'Mod4'
+local modkey = 'Mod4'
 
 local printkey = 'Print'
 if is_macintosh then
     printkey = 'XF86LaunchA'
 end
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
@@ -206,8 +182,6 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.se,
 }
 
--- {{{ Menu
--- Create a launcher widget and a main menu
 local myawesomemenu = {
     {
         'hotkeys',
@@ -230,12 +204,12 @@ local myexitmenu = {
         function()
             awesome.quit()
         end,
-        menubar.utils.lookup_icon('system-log-out')
+        menubar.utils.lookup_icon 'system-log-out'
     },
-    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon('system-suspend')},
-    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon('system-suspend-hibernate')},
-    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon('system-reboot')},
-    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon('system-shutdown')}
+    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon 'system-suspend'},
+    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon 'system-suspend-hibernate'},
+    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon 'system-reboot'},
+    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon 'system-shutdown'}
 }
 
 local mymainmenu =
@@ -244,8 +218,8 @@ local mymainmenu =
         items = {
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
-            {'exit', myexitmenu, menubar.utils.lookup_icon('system-shutdown')},
-            {'open terminal', os.getenv('TERMINAL')}
+            {'exit', myexitmenu, menubar.utils.lookup_icon 'system-shutdown'},
+            {'open terminal', os.getenv 'TERMINAL'}
         }
     }
 )
@@ -258,13 +232,6 @@ mylauncher =
     }
 )
 
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-
--- Keyboard map indicator and switcher
--- mykeyboardlayout = awful.widget.keyboardlayout()
-
--- Wibar
 mytextclock = wibox.widget.textclock('%a %d %b %T %Z', 1)
 
 -- Create a wibox for each screen and add it
@@ -329,7 +296,7 @@ local tasklist_buttons =
         {},
         3,
         function()
-            awful.menu.client_list({theme = {width = 250}})
+            awful.menu.client_list {theme = {width = 250}}
         end
     ),
     awful.button(
@@ -376,7 +343,7 @@ local ipwidget =
 )
 
 local wifiwidget
-if gears.filesystem.file_executable('/usr/sbin/iw') or gears.filesystem.file_executable('/usr/bin/iw') then
+if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_executable '/usr/bin/iw' then
     wifiwidget =
         (function()
         local t = gears.timer {timeout = 5}
@@ -398,7 +365,7 @@ if gears.filesystem.file_executable('/usr/sbin/iw') or gears.filesystem.file_exe
             end
         )
         t:start()
-        t:emit_signal('timeout')
+        t:emit_signal 'timeout'
         return widget
     end)()
 end
@@ -419,7 +386,7 @@ local temperaturewidget =
         end
     )
     t:start()
-    t:emit_signal('timeout')
+    t:emit_signal 'timeout'
     return widget
 end)()
 
@@ -451,7 +418,7 @@ local memorywidget =
         function()
             t:stop()
             local mem = {}
-            for line in io.lines('/proc/meminfo') do
+            for line in io.lines '/proc/meminfo' do
                 for k, v in string.gmatch(line, '([%a]+):[%s]+([%d]+).+') do
                     if k == 'MemTotal' then
                         mem.total = v * 1024
@@ -475,7 +442,7 @@ local memorywidget =
         end
     )
     t:start()
-    t:emit_signal('timeout')
+    t:emit_signal 'timeout'
     return widget
 end)()
 
@@ -517,7 +484,7 @@ local netthroughwidget =
         end
     )
     t:start()
-    t:emit_signal('timeout')
+    t:emit_signal 'timeout'
     return widget
 end)()
 
@@ -1253,7 +1220,7 @@ local function increase_light_curry(brightness_file, max_brightness, emoji)
     end
 end
 
-if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_brightness') then
+if gears.filesystem.file_readable '/sys/class/leds/smc::kbd_backlight/max_brightness' then
     local f = io.open('/sys/class/leds/smc::kbd_backlight/max_brightness', 'r')
     local max_brightness = f:read 'n'
     f:close()
@@ -1281,7 +1248,7 @@ if gears.filesystem.file_readable('/sys/class/leds/smc::kbd_backlight/max_bright
     )
 end
 
-if gears.filesystem.file_readable('/sys/class/backlight/intel_backlight/max_brightness') then
+if gears.filesystem.file_readable '/sys/class/backlight/intel_backlight/max_brightness' then
     local f = io.open('/sys/class/backlight/intel_backlight/max_brightness', 'r')
     local max_brightness = f:read 'n'
     f:close()
