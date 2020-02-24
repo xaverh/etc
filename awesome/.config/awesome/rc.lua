@@ -62,41 +62,45 @@ menubar.show_categories = false
 
 -- Variable definitions
 
-local color_ys_w = 'f9f8f4' -- Floral White, R=249, G=248, B=244
-local color_ys_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
-local color_ys_g = '488432' -- La Palma, R=72, G=132, B=50
-local color_ys_y = 'a25d0e' -- Golden Brown, R=162, G=93, B=14
-local color_ys_b = '2c65b5' -- Cerulean Blue, R=44, G=101, B=181
-local color_ys_m = 'b062a7' -- Violet Blue, R=176, G=98, B=167
-local color_ys_c = '27bbbe' -- Light Sea Green, R=39, G=187, B=190
-local color_ys_k = '999999' -- Grey 60%, R=153, G=153, B=153
-local color_qi_w = '1e1e1e' -- Grey 10%, R=30, G=30, B=30
-local color_qi_r = 'e32791' -- Deep Cerise, R=227, G=39, B=145
-local color_qi_g = '30c798' -- Shamrock, R=48, G=199, B=152
-local color_qi_y = 'e3c472' -- Chenin, R=227, G=196, B=114
-local color_qi_b = '6796e6' -- Cornflower Blue, R=103, G=150, B=230
-local color_qi_m = 'e59fdf' -- Plum, R=229, G=159, B=223
-local color_qi_c = '81d8d0' -- Riptide, R=129, G=216, B=208
-local color_qi_k = '969696' -- Grey 60%, R=150, G=150, B=150
-local color_qi_b_w = '515151' -- Grey 30%, R=81, G=81, B=81
-local color_qi_b_r = 'e466ad' -- Hot Pink, R=228, G=102, B=173
-local color_qi_b_g = '6cd1b2' -- Medium Aquamarine, R=108, G=209, B=178
-local color_qi_b_y = 'e4cf98' -- Double Colonial White, R=228, G=207, B=152
-local color_qi_b_b = '91b0e6' -- Jordy Blue, R=145, G=181, B=230
-local color_qi_b_m = 'e5b6e1' -- French Lilac, R=229, G=182, B=225
-local color_qi_b_c = 'a2dcd7' -- Sinbad, R=162, G=220, B=215
-local color_qi_b_k = 'e5e6e6' -- Grey 90%, R=229, G=230, B=230
-local color_ys_b_w = 'b8b8b8' -- Grey 70%, R=184, G=184, B=184
-local color_ys_b_r = '9f1b66' -- Jazzberry Jam, R=159, G=27, B=102
-local color_ys_b_g = '325d23' -- Parsley, R=50, G=93, B=35
-local color_ys_b_y = '71410a' -- Raw Umber, R=113, G=65, B=10
-local color_ys_b_b = '1f477f' -- Bahama Blue, R=31, G=71, B=127
-local color_ys_b_m = '7b4474' -- Eminence, R=123, G=68, B=116
-local color_ys_b_c = '1b8486' -- Atoll, R=27, G=132, B=134
-local color_ys_b_k = '424242' -- Grey 20%, R=66, G=66, B=66
-local color_qi_w_80 = '333333' -- Grey 20%, R=51, G=51, B=51
-local color_ys_w_80 = 'edece8' -- Grey 90%, R=237, G=236, B=232
-local color_cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
+local colors = {
+    qi = {
+        '1e1e1e', -- Grey 10%, R=30, G=30, B=30
+        'e32791', -- Deep Cerise, R=227, G=39, B=145
+        '30c798', -- Shamrock, R=48, G=199, B=152
+        'e3c472', -- Chenin, R=227, G=196, B=114
+        '6796e6', -- Cornflower Blue, R=103, G=150, B=230
+        'e59fdf', -- Plum, R=229, G=159, B=223
+        '81d8d0', -- Riptide, R=129, G=216, B=208
+        '969696', -- Grey 60%, R=150, G=150, B=150
+        '515151', -- Grey 30%, R=81, G=81, B=81
+        'e466ad', -- Hot Pink, R=228, G=102, B=173
+        '6cd1b2', -- Medium Aquamarine, R=108, G=209, B=178
+        'e4cf98', -- Double Colonial White, R=228, G=207, B=152
+        '91b0e6', -- Jordy Blue, R=145, G=181, B=230
+        'e5b6e1', -- French Lilac, R=229, G=182, B=225
+        'a2dcd7', -- Sinbad, R=162, G=220, B=215
+        'e5e6e6' -- Grey 90%, R=229, G=230, B=230
+    },
+    ys = {
+        'f9f8f4', -- Floral White, R=249, G=248, B=244
+        'e32791', -- Deep Cerise, R=227, G=39, B=145
+        '488432', -- La Palma, R=72, G=132, B=50
+        'a25d0e', -- Golden Brown, R=162, G=93, B=14
+        '2c65b5', -- Cerulean Blue, R=44, G=101, B=181
+        'b062a7', -- Violet Blue, R=176, G=98, B=167
+        '27bbbe', -- Light Sea Green, R=39, G=187, B=190
+        '999999', -- Grey 60%, R=153, G=153, B=153
+        'b8b8b8', -- Grey 70%, R=184, G=184, B=184
+        '9f1b66', -- Jazzberry Jam, R=159, G=27, B=102
+        '325d23', -- Parsley, R=50, G=93, B=35
+        '71410a', -- Raw Umber, R=113, G=65, B=10
+        '1f477f', -- Bahama Blue, R=31, G=71, B=127
+        '7b4474', -- Eminence, R=123, G=68, B=116
+        '1b8486', -- Atoll, R=27, G=132, B=134
+        '424242' -- Grey 20%, R=66, G=66, B=66
+    },
+    cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
+}
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 
 -- 0xb2d5751b41ed4edc // airolo
@@ -110,19 +114,19 @@ local is_macintosh = true
 -- Theme
 beautiful.init {
     font = 'IBM Plex Sans 10',
-    bg_normal = '#' .. color_qi_w,
+    bg_normal = '#' .. colors.qi[1],
     bg_focus = '#005577',
-    bg_urgent = '#' .. color_qi_r,
+    bg_urgent = '#' .. colors.qi[2],
     bg_minimize = '#444444',
-    fg_normal = '#' .. color_ys_b_w,
-    fg_focus = '#' .. color_qi_b_k,
-    fg_urgent = '#' .. color_qi_b_k,
+    fg_normal = '#' .. colors.ys[9],
+    fg_focus = '#' .. colors.qi[16],
+    fg_urgent = '#' .. colors.qi[16],
     fg_minimize = '#ffffff',
     useless_gap = dpi(0),
     border_width = dpi(2),
-    border_normal = '#' .. color_ys_b_k,
-    border_focus = '#' .. color_cursor,
-    border_marked = '#' .. color_qi_y,
+    border_normal = '#' .. colors.ys[16],
+    border_focus = '#' .. colors.cursor,
+    border_marked = '#' .. colors.qi[4],
     -- There are other variable sets
     -- overriding the one when
     -- defined, the sets are:
@@ -573,8 +577,11 @@ end)()
 
 local is_ysgrifennwr = false
 local function toggle_theme()
-    local file = io.open(gears.filesystem.get_xdg_config_home() .. '/Code/User/settings.json', 'w')
-    local content = file:read('a')
+    -- VS Code
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
+    local content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'w')
     if is_ysgrifennwr then
         content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
     else
@@ -582,11 +589,39 @@ local function toggle_theme()
     end
     file:write(content)
     file:close()
-    -- awful.spawn { 'sed', '-i', 's/Ysgrifennwr/Qillqaq/', os.getenv 'HOME' .. '/etc/Visual Studio Code/.config/Code/User/settings.json' }
-    -- awful.spawn.easy_async( { 'sed', '-i', 's/' .. color_ys_k .. '/' .. color_qi_k .. '/;s/' .. color_ys_r .. '/' .. color_qi_r .. '/;s/' .. color_ys_g .. '/' .. color_qi_g .. '/;s/' .. color_ys_b .. '/' .. color_qi_b .. '/;s/' .. color_ys_c .. '/' .. color_qi_c .. '/;s/' .. color_ys_m .. '/' .. color_qi_m .. '/;s/' .. color_ys_y .. '/' .. color_qi_y .. '/;s/' .. color_ys_w .. '/' .. color_qi_w .. '/;s/' .. color_ys_b_k .. '/' .. color_qi_b_k .. '/;s/' .. color_ys_b_r .. '/' .. color_qi_b_r .. '/;s/' .. color_ys_b_g .. '/' .. color_qi_b_g .. '/;s/' .. color_ys_b_b .. '/' .. color_qi_b_b .. '/;s/' .. color_ys_b_c .. '/' .. color_qi_b_c .. '/;s/' .. color_ys_b_m .. '/' .. color_qi_b_m .. '/;s/' .. color_ys_b_y .. '/' .. color_qi_b_y .. '/;s/' .. color_ys_b_w .. '/' .. color_qi_b_w .. '/;s/' .. color_ys_w_80 .. '/' .. color_qi_w_80 .. '/', os.getenv 'HOME' .. '/etc/alacritty/.config/alacritty/alacritty.yml', os.getenv 'HOME' .. '/etc/X/.Xresources' },)
-    -- awful.spawn { 'sed', '-i', 's/Qillqaq/Ysgrifennwr/', os.getenv 'HOME' .. '/etc/Visual Studio Code/.config/Code/User/settings.json' }
-    -- awful.spawn.easy_async( { 'sed', '-i', 's/' .. color_qi_k .. '/' .. color_ys_k .. '/;s/' .. color_qi_r .. '/' .. color_ys_r .. '/;s/' .. color_qi_ .. g '/' .. color_ys_g .. '/;s/' .. color_qi_b .. '/' .. color_ys_b .. '/;s/' .. color_qi_c .. '/' .. color_ys_c .. '/;s/' .. color_qi_m .. '/' .. color_ys_m .. '/;s/' .. color_qi_y .. '/' .. color_ys_y .. '/;s/' .. color_qi_w .. '/' .. color_ys_w .. '/;s/' .. color_qi_b_k .. '/' .. color_ys_b_ .. k '/;s/' .. color_qi_b_r .. '/' .. color_ys_b_r .. '/;s/' .. color_qi_b_g .. '/' .. color_ys_b_g .. '/;s/' .. color_qi_b_b .. '/' .. color_ys_b_b .. '/;s/' .. color_qi_b_c .. '/' .. color_ys_b_c .. '/;s/' .. color_qi_b_m .. '/' .. color_ys_b_m .. '/;s/' .. color_qi_b_y .. '/' .. color_ys_b_y .. '/;s/' .. color_qi_b_w .. '/' .. color_ys_b_w .. '/;s/' .. color_qi_w_80 .. '/' .. color_ys_w_80 .. '/', os.getenv 'HOME' .. '/etc/alacritty/.config/alacritty/alacritty.yml', os.getenv 'HOME' .. '/etc/X/.Xresources' },
-    --  )
+    -- Alacritty
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml','r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml','w')
+    if is_ysgrifennwr then
+        for i = 1, 16 do
+            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        end
+    else
+        for i = 1, 16 do
+            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    -- X11
+    file = io.open(os.getenv 'HOME' .. '/.Xresources','r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(os.getenv 'HOME' .. '/.Xresources','w')
+    if is_ysgrifennwr then
+        for i = 1, 16 do
+            content = string.gsub(content, colors.ys[i], colors.qi[i])
+        end
+    else
+        for i = 1, 16 do
+            content = string.gsub(content, colors.qi[i], colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    awful.spawn {'xrdb', os.getenv 'HOME' .. '/.Xresources'}
     is_ysgrifennwr = not is_ysgrifennwr
 end
 
