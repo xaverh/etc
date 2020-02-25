@@ -1,64 +1,35 @@
-" " Blinking cursor
-" if &term =~ '^xterm\|rxvt\|^st'
-" 	let &t_SI = "\<Esc>[5 q"
-" 	let &t_SR = "\<Esc>[3 q"
-" 	let &t_EI = "\<Esc>[0 q"
-" endif
+set bg=dark
+set cindent
+set formatoptions+=j
+set switchbuf=vsplit
+set title
+
+
+" Comma as leader (default is \)
+let mapleader = ","
+let g:mapleader = ","
 "
-" " Comma as leader (default is \)
-" " let mapleader = ","
-" " let g:mapleader = ","
-"
-" if has("win32") || has("win64")
-" 	let &undodir=$HOME . '\AppData\Local\VIM_UNDO_FILES\'
-" else
-" 	let &undodir='/tmp/'
-" endif
-"
-" " set t_ts=^[]2;
-" " set t_fs=^[\\
-" " set t_ts=k
-" " set t_fs=\
-" " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" " let &t_ZH = "\e[3m"
-" " let &t_ZR = "\e[23m"
-"
-" "set cpoptions=q
 " "set tabline=%M\ %t
-" set autoindent
-" set autoread
-" set backspace=indent,eol,start
 " set backup
 " set backupdir=~/.vim/.tmp/,/tmp
 " set backupskip=/tmp/*,~/.vim/.tmp/*
-" set cindent
 " set cinoptions=(0,u0,g0,:0,j1,J1,)200
 " set clipboard=unnamed
 " " set colorcolumn=+1
 " set copyindent
 " " XXX
-" " set cryptmethod=blowfish2
-" "set cursorline
 " set directory=~/tmp,/tmp
 " set display=truncate
-" set encoding=utf8
 " set fixendofline
 " set foldclose=all
 " set foldcolumn=1
 " set foldopen=all
-" set guioptions+=T
-" set guioptions+=m
-" set guioptions-=e
-" set guioptions-=r
-" set guioptions-=t
 " set guitablabel=%M\ %t
 " set history=1000
 " set hlsearch
 " set ignorecase
 " set incsearch
 " set laststatus=2
-" set lazyredraw
 " set linebreak
 " set listchars=eol:¬,extends:»,tab:▸\ ,trail:·
 " set matchpairs+=«:»
@@ -71,7 +42,6 @@
 " set numberwidth=1
 " set pastetoggle=<F8>
 " set pyxversion=3
-" set noruler
 " set scrolloff=5
 " set shiftwidth=4
 " set shortmess=at
@@ -85,7 +55,6 @@
 " set tabstop=4
 " set textwidth=0
 " set timeoutlen=1000
-" set title
 " " set ttymouse=urxvt
 " set undofile
 " set undolevels=5000
@@ -264,7 +233,6 @@
 " endif
 "
 " set laststatus=2
-" set ruler
 " set wildmenu
 "
 " if !&scrolloff
@@ -283,9 +251,6 @@
 "   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 " endif
 "
-" if v:version > 703 || v:version == 703 && has("patch541")
-"   set formatoptions+=j " Delete comment character when joining commented lines
-" endif
 "
 " if has('path_extra')
 "   setglobal tags-=./tags tags-=./tags; tags^=./tags;
@@ -320,7 +285,3 @@
 "
 " inoremap <C-U> <C-G>u<C-U>
 "
-" " vim:set ft=vim et sw=2:
-"
-"
-" 
