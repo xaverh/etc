@@ -148,7 +148,7 @@ font:
     #style: Bold Italic
 
   # Point size
-    size: 11
+    size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -186,8 +186,8 @@ draw_bold_text_with_bright_colors: false
 colors:
   # Default colors
   primary:
-    background: '0xf9f8f4'
-    foreground: '0x424242'
+    background: '0x1e1e1e'
+    foreground: '0xe5e6e6'
 
     # Bright and dim foreground colors
     #
@@ -202,7 +202,7 @@ colors:
   # Colors which should be used to draw the terminal cursor. If these are unset,
   # the cursor color will be the inverse of the cell color.
   cursor:
-    # text: '0xf9f8f4'
+    # text: '0x1e1e1e'
     cursor: '0x20bbfc'
 
   # Selection colors
@@ -216,25 +216,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0xf9f8f4'
+    black:   '0x1e1e1e'
     red:     '0xe32791'
-    green:   '0x488432'
-    yellow:  '0xa25d0e'
-    blue:    '0x2c65b5'
-    magenta: '0xb062a7'
-    cyan:    '0x27bbbe'
-    white:   '0x999999'
+    green:   '0x30c798'
+    yellow:  '0xe3c472'
+    blue:    '0x6796e6'
+    magenta: '0xe59fdf'
+    cyan:    '0x81d8d0'
+    white:   '0x969696'
 
   # Bright colors
   bright:
-    black:   '0xb8b8b8'
-    red:     '0x9f1b66'
-    green:   '0x325d23'
-    yellow:  '0x71410a'
-    blue:    '0x1f477f'
-    magenta: '0x7b4474'
-    cyan:    '0x1b8486'
-    white:   '0x424242'
+    black:   '0x515151'
+    red:     '0xe466ad'
+    green:   '0x6cd1b2'
+    yellow:  '0xe4cf98'
+    blue:    '0x91b0e6'
+    magenta: '0xe5b6e1'
+    cyan:    '0xa2dcd7'
+    white:   '0xe5e6e6'
 
   # Dim colors
   #
