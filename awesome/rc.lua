@@ -668,23 +668,11 @@ local function toggle_theme()
     file:write(content)
     file:close()
     -- X11
-    local user_xresources = gears.filesystem.get_xdg_config_home() .. 'Xresources'
-    file = io.open(user_xresources, 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(user_xresources, 'w')
-    if is_ysgrifennwr then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    else
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
-    end
-    file:write(content)
-    file:close()
-    awful.spawn {'xrdb', user_xresources}
+    awful.spawn {
+        'xrdb',
+        '-override',
+        gears.filesystem.get_xdg_config_home() .. (is_ysgrifennwr and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
+    }
     is_ysgrifennwr = not is_ysgrifennwr
 end
 
