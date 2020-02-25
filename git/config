@@ -1,0 +1,25 @@
+[user]
+	name = Xaver Hellauer
+	signingkey = 1119D14EB6DCAADB3669F8A80940C207E5E7CFEF
+	# useConfigOnly = true
+	email = xaver.hellauer@gmail.com
+[color]
+	ui = auto
+[core]
+	# editor = code --wait
+	whitespace = fix
+	excludesfile = /home/xha/.config/gitignore_global
+[diff]
+	tool = default-difftool
+[difftool "default-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[alias]
+	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+	default = current
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	require = true
+[branch]
+	autosetuprebase = always
