@@ -1005,6 +1005,17 @@ clientkeys =
             end
         end,
         {description = 'show content of clipboard', group = '📋 clipboard'}
+    ),
+    awful.key(
+        {modkey},
+        'b',
+        function()
+            beautiful.useless_gap = beautiful.useless_gap == 0 and 10 or 0
+            for s in screen do
+                awful.layout.arrange(s)
+            end
+        end,
+        {description = 'toggle useless gaps', group = 'layout'}
     )
 )
 
