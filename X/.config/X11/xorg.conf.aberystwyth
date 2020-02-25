@@ -1,8 +1,13 @@
+Section "ServerFlags"
+	Option "DontVTSwitch" "False"
+	Option "DontZap"      "True"
+EndSection
+
 Section "InputClass"
 	Identifier "devname"
 	Driver "libinput"
 	MatchIsTouchpad "on"
-	Option "NaturalScrolling" "true"
+	Option "NaturalScrolling" "True"
 	Option "HorizontalScrolling" "1"
         Option "Tapping" "on"
 EndSection
