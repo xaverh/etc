@@ -1,0 +1,25 @@
+set font "\.SF Compact Display 11"
+set adjust-open "width"
+set default-bg "#1e1e1e"
+set default-fg "#f9f8f4"
+set completion-highlight-bg "#20BBFC"
+set completion-highlight-fg "#1e1e1e"
+set completion-bg "#1e1e1e"
+set completion-fg "#f9f8f4"
+set inputbar-bg "#1e1e1e"
+set inputbar-fg "#f9f8f4"
+set statusbar-fg "#f9f8f4"
+set statusbar-bg "#005577"
+set recolor-keephue true
+set recolor-darkcolor "#e5e6e6"
+set recolor-lightcolor "#1e1e1e"
+set highlight-color "#20BBFC"
+set highlight-active-color "#fc9520"
+set scroll-page-aware true
+set smooth-scroll true
+set window-title-home-tilde true
+set window-title-page true
+set guioptions ""
+set selection-clipboard clipboard
+set window-width 700
+set window-height 950

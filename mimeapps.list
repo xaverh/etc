@@ -1,0 +1,18 @@
+
+[Default Applications]
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+image/jpeg=feh.desktop
+image/png=feh.desktop
+image/gif=feh.desktop
+image/tiff=feh.desktop
+image/webp=feh.desktop
+image/x-xpmi=feh.desktop
+application/pdf=org.pwmt.zathura.desktop
+application/vnd.comicbook-rar=org.pwmt.zathura.desktop
+application/vnd.comicbook+zip=org.pwmt.zathura.desktop
+application/epub+zip=org.pwmt.zathura.desktop
+application/x-cb7=org.pwmt.zathura.desktop

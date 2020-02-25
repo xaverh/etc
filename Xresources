@@ -1,0 +1,43 @@
+Xft.autohint: false
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+SshAskpass*font:                   -uw-ttyp0-*-*-*-*-*-*-*-*-*-*-*-*
+SshAskpass*background:             #f9f8f4
+SshAskpass*foreground:             #424242
+SshAskpass.Button*background:      #f9f8f4
+SshAskpass.Indicator*foreground:   #a25d0e
+SshAskpass.Indicator*background:   #b8b8b8
+SshAskpass*topShadowColor:         #f9f8f4
+SshAskpass*bottomShadowColor:      #f9f8f4
+SshAskpass.*borderWidth:           1
+
+Xcursor.theme: DMZ-White
+
+*.color0: #f9f8f4
+*.background: #f9f8f4
+*.color1: #e32791
+*.color2: #488432
+*.color3: #a25d0e
+*.color4: #2c65b5
+*.color5: #b062a7
+*.color6: #27bbbe
+*.color7: #999999
+*.color8: #b8b8b8
+*.color9: #9f1b66
+*.color10: #325d23
+*.color11: #71410a
+*.color12: #1f477f
+*.color13: #7b4474
+*.color14: #1b8486
+*.color15: #424242
+*.foreground: #424242
+
+URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Regular:pixelsize=14
+URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:OpenMoji:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
