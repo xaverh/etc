@@ -17,7 +17,7 @@ sysxkbmap=/etc/X11/Xkbmap
 
 # merge in defaults
 [ -r "$sysresources" ] && xrdb -nocpp -merge "$sysresources"
-[ -r "$userresources" ] && xrdb -merge "$userresources"
+[ -r "$userresources" ] && xrdb -override "$userresources"
 
 # merge in keymaps
 if [ -r "$sysxkbmap" ]; then

@@ -1,0 +1,26 @@
+SshAskpass*background:             #1e1e1e
+SshAskpass*foreground:             #e5e6e6
+SshAskpass.Button*background:      #1e1e1e
+SshAskpass.Indicator*foreground:   #e3c472
+SshAskpass.Indicator*background:   #515151
+SshAskpass*topShadowColor:         #1e1e1e
+SshAskpass*bottomShadowColor:      #1e1e1e
+
+*.color0: #1e1e1e
+*.background: #1e1e1e
+*.color1: #e32791
+*.color2: #30c798
+*.color3: #e3c472
+*.color4: #6796e6
+*.color5: #e59fdf
+*.color6: #81d8d0
+*.color7: #969696
+*.color8: #515151
+*.color9: #e466ad
+*.color10: #6cd1b2
+*.color11: #e4cf98
+*.color12: #91b0e6
+*.color13: #e5b6e1
+*.color14: #a2dcd7
+*.color15: #e5e6e6
+*.foreground: #e5e6e6
