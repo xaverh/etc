@@ -14,6 +14,7 @@ export npm_config_userconfig="$XDG_CONFIG_HOME"/npm/.npmrc
 export npm_config_prefix="$NPMPATH"
 export npm_config_cache="$XDG_CACHE_HOME"/npm
 export LESSHISTFILE="$XDG_CACHE_HOME"/lesshst
+export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 
 eval `dircolors "$ZDOTDIR"/dir_colors`
 

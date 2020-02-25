@@ -1,6 +1,7 @@
-PGP/.gnupg/trustdb.gpg
-PGP/.gnupg/pubring.kbx~
-PGP/.gnupg/pubring.kbx
+gnupg/trustdb.gpg
+gnupg/pubring.kbx~
+gnupg/pubring.kbx
+gnupg/private-keys-v1.d
 *.bak
 mpv/watch_later
 weechat/logs/
@@ -24,7 +25,6 @@ Code/logs
 Code/blob_storage
 Code/Local Storage
 Code/Preferences
-PGP/.gnupg/private-keys-v1.d
 Code/Workspaces
 SSH/.ssh/known_hosts
 SSH/.ssh/authorized_keys
