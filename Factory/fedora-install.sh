@@ -102,7 +102,7 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock mons alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code mupdf feh gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome
 # wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
@@ -136,9 +136,6 @@ systemctl enable slock@xha.service
 # Essentials
 mkdir -p /mnt/usr/local/lib/systemd/system
 cp ~/etc/Factory/usr-local-lib-systemd-system-slock\\x40.service /mnt/usr/local/lib/systemd/system/slock@.service
-# mkdir -p /mnt/etc/X11/xorg.conf.d
-# cp ~/etc/Factory/etc-X11-xorg.conf.d-20\\x2ddontzap.conf /mnt/etc/X11/xorg.conf.d/20-dontzap.conf
-# cp ~/etc/Factory/etc-pacman.d-hooks-100\\x2dsystemd\\x2dboot.hook /mnt/etc/pacman.d/hooks/100-systemd-boot.hook
 cp ~/etc/Factory/etc-polkit\x2d1-rules.d-49\x2dnopasswd_limited.rules /mnt/etc/polkit-1/rules.d/49-nopasswd_limited.rules
 mkdir -p /mnt/usr/local/lib/systemd/user
 cp ~/etc/Factory/usr-local-lib-systemd-user-ssh\\x2dagent.service /mnt/usr/local/lib/systemd/user/ssh-agent.service
@@ -148,7 +145,6 @@ cp ~/etc/Factory/etc-dracut.conf.d-local.conf /mnt/etc/dracut.conf.d/local.conf
 # As needed
 cp ~/etc/Factory/etc-udev-rules.d-90\\x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
 cp ~/etc/Factory/etc-X11-xorg.conf.d-15\\x2dintel.conf /mnt/etc/X11/xorg.conf.d/15-intel.conf
-cp ~/etc/Factory/etc-X11-xorg.conf.d-30\\x2dinput.conf /mnt/etc/X11/xorg.conf.d/30-input.conf
 
 echo "w /sys/module/hid_apple/parameters/fnmode - - - - 2" | sudo tee /etc/tmpfiles.d/rev_fn_key.conf
 
