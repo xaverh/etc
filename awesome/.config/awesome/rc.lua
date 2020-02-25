@@ -523,56 +523,6 @@ local netthroughwidget =
     return widget
 end)()
 
-local is_ysgrifennwr = false
-local function toggle_theme()
-    -- VS Code
-    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
-    local content = file:read 'a'
-    file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'w')
-    if is_ysgrifennwr then
-        content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
-    else
-        content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
-    end
-    file:write(content)
-    file:close()
-    -- Alacritty
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
-    if is_ysgrifennwr then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    else
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
-    end
-    file:write(content)
-    file:close()
-    -- X11
-    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'w')
-    if is_ysgrifennwr then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    else
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
-    end
-    file:write(content)
-    file:close()
-    awful.spawn {'xrdb', os.getenv 'HOME' .. '/.Xresources'}
-    is_ysgrifennwr = not is_ysgrifennwr
-end
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
@@ -686,6 +636,57 @@ root.buttons(
 )
 
 -- Key bindings
+
+local is_ysgrifennwr = false
+local function toggle_theme()
+    -- VS Code
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
+    local content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'w')
+    if is_ysgrifennwr then
+        content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
+    else
+        content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
+    end
+    file:write(content)
+    file:close()
+    -- Alacritty
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
+    if is_ysgrifennwr then
+        for i, v in ipairs(colors.ys) do
+            content = string.gsub(content, v, colors.qi[i])
+        end
+    else
+        for i, v in ipairs(colors.qi) do
+            content = string.gsub(content, v, colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    -- X11
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(os.getenv 'HOME' .. '/.Xresources', 'w')
+    if is_ysgrifennwr then
+        for i, v in ipairs(colors.ys) do
+            content = string.gsub(content, v, colors.qi[i])
+        end
+    else
+        for i, v in ipairs(colors.qi) do
+            content = string.gsub(content, v, colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
+    awful.spawn {'xrdb', os.getenv 'HOME' .. '/.Xresources'}
+    is_ysgrifennwr = not is_ysgrifennwr
+end
+
 globalkeys =
     gears.table.join(
     awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
@@ -992,12 +993,22 @@ clientkeys =
         end,
         {description = '(un)maximize horizontally', group = 'client'}
     ),
-    awful.key({modkey}, 'F6', toggle_theme, {description = 'change theme', group = 'awesome'})
+    awful.key({modkey}, 'F6', toggle_theme, {description = 'change theme', group = 'awesome'}),
+    -- XXX next version: https://www.reddit.com/r/awesomewm/comments/bcc73o/how_to_use_clipboard_in_awesome/
+    awful.key(
+        {modkey},
+        '#34',
+        function()
+            local sel = selection()
+            if sel then
+                naughty.notify({text = tostring(sel)})
+            end
+        end,
+        {description = 'show content of clipboard', group = '📋 clipboard'}
+    )
 )
 
 -- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys =
         gears.table.join(
