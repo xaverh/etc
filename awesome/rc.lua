@@ -54,13 +54,15 @@ local colors = {
 }
 
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
--- 0xb2d5751b41ed4edc // airolo
--- 0xe523ec7d7f8f49db // aberystwyth
--- ISO 3166 Country codes, US=840, DE=276
--- TODO automate these
-local has_volume_keys = true
-local has_multimedia_keys = true
-local is_macintosh = true
+
+local has_volume_keys
+local has_multimedia_keys
+local is_macintosh
+if os.getenv('HOSTNAME') == 'aberystwyth' then
+    has_volume_keys = true
+    has_multimedia_keys = true
+    is_macintosh = true
+end
 
 beautiful.init {
     font = '.SF Compact Display 11',
@@ -100,22 +102,22 @@ beautiful.init {
     titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png',
     titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png',
     titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png',
-    layout_fairh = assets .. 'layouts/fairh.png',
-    layout_fairv = assets .. 'layouts/fairv.png',
-    layout_floating = assets .. 'layouts/floating.png',
-    layout_magnifier = assets .. 'layouts/magnifier.png',
-    layout_max = assets .. 'layouts/max.png',
-    layout_fullscreen = assets .. 'layouts/fullscreen.png',
-    layout_tilebottom = assets .. 'layouts/tilebottom.png',
-    layout_tileleft = assets .. 'layouts/tileleft.png',
-    layout_tile = assets .. 'layouts/tile.png',
-    layout_tiletop = assets .. 'layouts/tiletop.png',
-    layout_spiral = assets .. 'layouts/spiral.png',
-    layout_dwindle = assets .. 'layouts/dwindle.png',
-    layout_cornernw = assets .. 'layouts/cornernw.png',
-    layout_cornerne = assets .. 'layouts/cornerne.png',
-    layout_cornersw = assets .. 'layouts/cornersw.png',
-    layout_cornerse = assets .. 'layouts/cornerse.png',
+    layout_txt_fairh = '[fh]',
+    layout_txt_fairv = '[fv]',
+    layout_txt_floating = '><>',
+    layout_txt_magnifier = '[M]',
+    layout_txt_max = '[m]',
+    layout_txt_fullscreen = '[F]',
+    layout_txt_tilebottom = '[b]',
+    layout_txt_tileleft = '[l]',
+    layout_txt_tile = '[]=',
+    layout_txt_tiletop = '[tt]',
+    layout_txt_spiral = '[s]',
+    layout_txt_dwindle = '[d]',
+    layout_txt_cornernw = '[c]',
+    layout_txt_cornerne = '[c]',
+    layout_txt_cornersw = '[c]',
+    layout_txt_cornerse = '[c]',
     tasklist_icon_size = 12, -- XXX, doesn't work yet waiting for awesome 4.4
     tasklist_disable_icon = true,
     wibar_height = 20
@@ -523,6 +525,12 @@ local netthroughwidget =
     return widget
 end)()
 
+local function update_txt_layoutbox(s)
+    -- Writes a string representation of the current layout in a textbox widget
+    local txt_l = beautiful['layout_txt_' .. awful.layout.getname(awful.layout.get(s))] or ''
+    s.mylayoutbox:set_text(txt_l)
+end
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
@@ -532,13 +540,26 @@ awful.screen.connect_for_each_screen(
         set_wallpaper(s)
 
         -- Each screen has its own tag table. 🥑
-        awful.tag({'🏄', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
+        awful.tag({'🏄🏾‍♀️', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
 
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
-        -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-        -- We need one layoutbox per screen.
-        s.mylayoutbox = awful.widget.layoutbox(s)
+        -- Textual layoutbox
+        s.mylayoutbox = wibox.widget.textbox(beautiful['layout_txt_' .. awful.layout.getname(awful.layout.get(s))])
+        awful.tag.attached_connect_signal(
+            s,
+            'property::selected',
+            function()
+                update_txt_layoutbox(s)
+            end
+        )
+        awful.tag.attached_connect_signal(
+            s,
+            'property::layout',
+            function()
+                update_txt_layoutbox(s)
+            end
+        )
         s.mylayoutbox:buttons(
             gears.table.join(
                 awful.button(
@@ -546,6 +567,13 @@ awful.screen.connect_for_each_screen(
                     1,
                     function()
                         awful.layout.inc(1)
+                    end
+                ),
+                awful.button(
+                    {},
+                    2,
+                    function()
+                        awful.layout.set(awful.layout.layouts[1])
                     end
                 ),
                 awful.button(
@@ -603,11 +631,9 @@ awful.screen.connect_for_each_screen(
             },
             s.mytasklist, -- Middle widget
             {
-                spacing = 10,
                 -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                -- mykeyboardlayout,
-                -- wibox.widget.systray(),
+                spacing = 10,
                 memorywidget,
                 netthroughwidget,
                 temperaturewidget,
@@ -1418,6 +1444,10 @@ awful.rules.rules = {
     {
         rule = {class = 'strawberry'},
         properties = {screen = 1, tag = '🍓'}
+    },
+    {
+        rule = {class = 'Google-chrome'},
+        properties = {screen = 1, tag = '🏄🏾‍♀️'}
     }
 }
 
