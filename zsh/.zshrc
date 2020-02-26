@@ -60,10 +60,7 @@ zstyle ':completion:*:default' menu select=2
 # https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
 zstyle ":completion:*:commands" rehash 1
 
-unalias you 2> /dev/null
-unalias ls 2> /dev/null
 alias vi=nvim
-alias vim=nvim
 alias grep="grep --color=auto"
 alias ...='../..'
 alias ....='../../..'
@@ -140,10 +137,6 @@ function clinton () {
 alias clinton=" clinton"
 
 autoload -U zmv
-
-# TODO better tmpfile
-export NNN_TMPFILE="/tmp/nnn"
-export NNN_USE_EDITOR=1
 
 function n ()
 {

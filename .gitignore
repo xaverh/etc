@@ -38,4 +38,5 @@ pavucontrol.ini
 QtProject.conf
 nnn/.history
 nnn/.lastd
+nnn/.selection
 configstore
