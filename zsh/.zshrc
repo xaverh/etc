@@ -34,7 +34,7 @@ warncreateglobal
 # TODO: options from Input/Output in zshoptions(1) onward
 
 bindkey -e
-zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+zstyle :compinstall filename "${ZDOTDIR:-$HOME}/.zshrc"
 
 autoload -Uz compinit
 compinit
@@ -92,7 +92,6 @@ alias d='dirs -v'
 alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias u='du -s --si'
-alias mupdf=mupdf-gl
 
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
 preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
