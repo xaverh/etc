@@ -5,9 +5,9 @@ if [ -r /etc/profile.d/lang.sh ]; then
   . /etc/profile.d/lang.sh
 fi
 
-userresources=$HOME/.config/Xresources
-usermodmap=$HOME/.config/Xmodmap
-userxkbmap=$HOME/.config/Xkbmap
+userresources=${XDG_CONFIG_HOME:-$HOME/.config}/Xresources
+usermodmap=${XDG_CONFIG_HOME:-$HOME/.config}/Xmodmap
+userxkbmap=${XDG_CONFIG_HOME:-$HOME/.config}/Xkbmap
 
 sysresources=/etc/X11/Xresources
 sysmodmap=/etc/X11/Xmodmap
@@ -36,6 +36,11 @@ fi
 for file in /etc/X11/xinit/xinitrc.d/* ; do
         . $file
 done
+
+userlocalxinitrc="${XDG_CONFIG_HOME:-$HOME/.config}/xinitrc-${HOSTNAME}"
+if [ -x "$userlocalxinitrc" ]; then
+    . "$userlocalxinitrc"
+fi
 
 xset b off &
 xset s off &
