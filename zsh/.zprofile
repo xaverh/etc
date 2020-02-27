@@ -14,13 +14,12 @@ export WEECHAT_HOME=${XDG_CONFIG_HOME:-$HOME/.config}/weechat
 export npm_config_userconfig="${XDG_CONFIG_HOME:-$HOME/.config}/npm/.npmrc"
 export npm_config_prefix="$NPMPATH"
 export npm_config_cache="${XDG_CACHE_HOME:-$HOME/.cache}/npm"
+export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/lesshst"
 export GNUPGHOME="${XDG_CONFIG_HOME:-$HOME/.config}/gnupg"
 # https://github.com/alacritty/alacritty/issues/1501
 export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
-
-eval `dircolors "${ZDOTDIR:-$HOME}/.dir_colors"`
 
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
