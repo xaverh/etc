@@ -1,5 +1,4 @@
 {
-	"editor.rulers": [],
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
@@ -140,7 +139,7 @@
 	"editor.cursorStyle": "line",
 	"editor.cursorBlinking": "phase",
 	"editor.autoClosingQuotes": "never",
-	"editor.fontLigatures": "'liga','calt', 'zero'",
+	"editor.fontLigatures": "'liga','calt','zero'",
 	"javascript.preferences.quoteStyle": "single",
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.format.enable": false,
@@ -148,11 +147,9 @@
 	"terminal.integrated.cursorBlinking": true,
 	"editor.formatOnPaste": true,
 	"editor.minimap.showSlider": "always",
-	"terminal.integrated.lineHeight": 1.2,
 	"editor.suggestSelection": "first",
 	"workbench.editor.highlightModifiedTabs": true,
 	"editor.wordWrap": "on",
-	"extensions.ignoreRecommendations": true,
 	"vetur.format.options.useTabs": true,
 	"vetur.format.options.tabSize": 4,
 	"files.autoSave": "afterDelay",
@@ -225,7 +222,7 @@
 			"level": "error"
 		}
 	},
-	"workbench.editor.showTabs": true,
+	"workbench.editor.showTabs": false,
 	"git.untrackedChanges": "separate",
 	"git.enableCommitSigning": false,
 	"git.openDiffOnClick": false,
@@ -239,8 +236,6 @@
 	"files.defaultLanguage": "${activeEditorLanguage}",
 	"editor.semanticHighlighting.enabled": true,
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
-	"editor.fontSize": 14,
-	"terminal.integrated.fontSize": 13,
 	"go.useLanguageServer": true,
 	"workbench.colorTheme": "Qillqaq"
 }

@@ -102,7 +102,7 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code feh gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils tmux git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git stow nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl mpv-mpris abduco dvtm
 # wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi
@@ -143,15 +143,16 @@ cp ~/etc/Factory/etc-dracut.conf.d-local.conf /mnt/etc/dracut.conf.d/local.conf
 # As needed
 cp ~/etc/Factory/etc-udev-rules.d-90\\x2dbacklight.rules /mnt/etc/udev/rules.d/90-backlight.rules
 
-echo "w /sys/module/hid_apple/parameters/fnmode - - - - 2" | sudo tee /etc/tmpfiles.d/rev_fn_key.conf
+echo 'w /sys/module/hid_apple/parameters/fnmode - - - - 2' | sudo tee /etc/tmpfiles.d/rev_fn_key.conf
+echo 'fs.inotify.max_user_watches=524288' | sudo tee /etc/sysctl.d/95-max-user-watches.conf
 
 # disable root account
 
 # As user
 xdg-mime default org.pwmt.zathura.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
-xdg-mime default feh.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
+xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
 
-npm -g i @vue/cli generator-code gulp-cli sass vsce yo
+npm -g i @vue/cli generator-code gulp-cli sass vsce yo neovim
 
 code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-python.python --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 

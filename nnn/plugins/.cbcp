@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}" # protect trailing \n
+
+SELECTION=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection
+
+tr '\0' '\n' < "$SELECTION" | xclip -sel clipboard -sel primary

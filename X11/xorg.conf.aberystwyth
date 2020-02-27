@@ -18,3 +18,10 @@ Section "InputClass"
 	MatchIsPointer "on"
 	Option "NaturalScrolling" "false"
 EndSection
+
+Section "Device"
+	Identifier "Card0"
+	Driver "intel"
+	Option "TearFree" "true"
+	Option "DRI" "3"
+EndSection
