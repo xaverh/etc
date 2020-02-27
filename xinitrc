@@ -5,8 +5,6 @@ if [ -r /etc/profile.d/lang.sh ]; then
   . /etc/profile.d/lang.sh
 fi
 
-[ -r $HOME/.profile ] && . $HOME/.profile
-
 userresources=$HOME/.config/Xresources
 usermodmap=$HOME/.config/Xmodmap
 userxkbmap=$HOME/.config/Xkbmap
@@ -39,10 +37,6 @@ for file in /etc/X11/xinit/xinitrc.d/* ; do
         . $file
 done
 
-if [ -x $HOME/.Xclients ]; then
-    . $HOME/.Xclients
-fi
-
 xset b off &
 xset s off &
 xset -dpms &
@@ -54,4 +48,3 @@ export XMODIFIERS="@im=none"
 while true; do
 	awesome 2>>| ~/.cache/awesome.log
 done
-

@@ -3,7 +3,7 @@ set cindent
 set formatoptions+=j
 set switchbuf=vsplit
 set title
-
+set noemoji
 
 " Comma as leader (default is \)
 let mapleader = ","

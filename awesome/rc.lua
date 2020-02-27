@@ -15,42 +15,43 @@ menubar.show_categories = false
 
 local colors = {
     qi = {
-        '1e1e1e', -- Grey 10%, R=30, G=30, B=30
-        'e32791', -- Deep Cerise, R=227, G=39, B=145
-        '30c798', -- Shamrock, R=48, G=199, B=152
-        'e3c472', -- Chenin, R=227, G=196, B=114
-        '6796e6', -- Cornflower Blue, R=103, G=150, B=230
-        'e59fdf', -- Plum, R=229, G=159, B=223
-        '81d8d0', -- Riptide, R=129, G=216, B=208
-        '969696', -- Grey 60%, R=150, G=150, B=150
-        '515151', -- Grey 30%, R=81, G=81, B=81
-        'e466ad', -- Hot Pink, R=228, G=102, B=173
-        '6cd1b2', -- Medium Aquamarine, R=108, G=209, B=178
-        'e4cf98', -- Double Colonial White, R=228, G=207, B=152
-        '91b0e6', -- Jordy Blue, R=145, G=181, B=230
-        'e5b6e1', -- French Lilac, R=229, G=182, B=225
-        'a2dcd7', -- Sinbad, R=162, G=220, B=215
-        'e5e6e6' -- Grey 90%, R=229, G=230, B=230
+        '1e1e1e', -- Grey 10%
+        'e32791', -- Deep Cerise
+        '30c798', -- Shamrock
+        'e3c472', -- Chenin
+        '6796e6', -- Cornflower Blue
+        'e59fdf', -- Plum
+        '81d8d0', -- Riptide
+        '999999', -- Grey 60%
+        '515151', -- Grey 30%
+        'e466ad', -- Hot Pink
+        '6cd1b2', -- Medium Aquamarine
+        'e4cf98', -- Double Colonial White
+        '91b0e6', -- Jordy Blue
+        'e5b6e1', -- French Lilac
+        'a2dcd7', -- Sinbad
+        'e5e6e6' -- Grey 90%
     },
     ys = {
-        'f9f8f4', -- Floral White, R=249, G=248, B=244
-        'e32791', -- Deep Cerise, R=227, G=39, B=145
-        '488432', -- La Palma, R=72, G=132, B=50
-        'a25d0e', -- Golden Brown, R=162, G=93, B=14
-        '2c65b5', -- Cerulean Blue, R=44, G=101, B=181
-        'b062a7', -- Violet Blue, R=176, G=98, B=167
-        '27bbbe', -- Light Sea Green, R=39, G=187, B=190
-        '999999', -- Grey 60%, R=153, G=153, B=153
-        'b8b8b8', -- Grey 70%, R=184, G=184, B=184
-        '9f1b66', -- Jazzberry Jam, R=159, G=27, B=102
-        '325d23', -- Parsley, R=50, G=93, B=35
-        '71410a', -- Raw Umber, R=113, G=65, B=10
-        '1f477f', -- Bahama Blue, R=31, G=71, B=127
-        '7b4474', -- Eminence, R=123, G=68, B=116
-        '1b8486', -- Atoll, R=27, G=132, B=134
-        '424242' -- Grey 20%, R=66, G=66, B=66
+        'f9f8f4', -- Floral White
+        'e32791', -- Deep Cerise
+        '488432', -- La Palma
+        'a25d0e', -- Golden Brown
+        '2c65b5', -- Cerulean Blue
+        'b062a7', -- Violet Blue
+        '27bbbe', -- Light Sea Green
+        '999999', -- Grey 60%
+        'b8b8b8', -- Grey 70%
+        '9f1b66', -- Jazzberry Jam
+        '325d23', -- Parsley
+        '71410a', -- Raw Umber
+        '1f477f', -- Bahama Blue
+        '7b4474', -- Eminence
+        '1b8486', -- Atoll
+        '424242' -- Grey 20%
     },
-    cursor = '20bbfc' -- Deep Sky Blue, R=32, G=187, B=252
+    cursor = '20bbfc', -- Deep Sky Blue, R=32, G=187, B=252
+    cursor_dark = '0f3a4b' -- Cyprus, R=15
 }
 
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
@@ -58,75 +59,66 @@ local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 local has_volume_keys
 local has_multimedia_keys
 local is_macintosh
-if os.getenv('HOSTNAME') == 'aberystwyth' then
+local temperature_filename = '/sys/class/thermal/thermal_zone1/temp'
+if os.getenv 'HOSTNAME' == 'aberystwyth' then
     has_volume_keys = true
     has_multimedia_keys = true
     is_macintosh = true
+elseif os.getenv 'HOSTNAME' == 'airolo' then
+    temperature_filename = '/sys/class/thermal/thermal_zone2/temp'
 end
 
 beautiful.init {
     font = '.SF Compact Display 11',
+    hotkeys_font = '.SF Compact Display 11',
+    hotkeys_description_font = '.SF Compact Display 11',
     bg_normal = '#' .. colors.qi[1],
-    bg_focus = '#005577',
+    bg_focus = '#' .. colors.cursor_dark,
     bg_urgent = '#' .. colors.qi[2],
-    bg_minimize = '#444444',
-    fg_normal = '#' .. colors.ys[9],
-    fg_focus = '#' .. colors.qi[16],
-    fg_urgent = '#' .. colors.qi[16],
-    fg_minimize = '#ffffff',
+    bg_minimize = bg_normal,
+    fg_normal = '#' .. colors.qi[16],
+    fg_focus = fg_normal,
+    fg_urgent = fg_normal,
+    fg_minimize = '#' .. colors.qi[9],
+    tasklist_fg_normal = '#' .. colors.qi[8],
+    tasklist_fg_focus = '#' .. colors.qi[16],
+    menubar_fg_focus = '#' .. colors.qi[16],
     useless_gap = dpi(0),
     border_width = dpi(2),
-    border_normal = '#' .. colors.ys[16],
+    border_normal = '#' .. colors.qi[9],
     border_focus = '#' .. colors.cursor,
     border_marked = '#' .. colors.qi[4],
     menu_submenu_icon = assets .. 'submenu.png',
-    menu_height = dpi(15),
-    menu_width = dpi(100),
-    titlebar_close_button_normal = assets .. 'titlebar/close_normal.png',
-    titlebar_close_button_focus = assets .. 'titlebar/close_focus.png',
-    titlebar_minimize_button_normal = assets .. 'titlebar/minimize_normal.png',
-    titlebar_minimize_button_focus = assets .. 'titlebar/minimize_focus.png',
-    titlebar_ontop_button_normal_inactive = assets .. 'titlebar/ontop_normal_inactive.png',
-    titlebar_ontop_button_focus_inactive = assets .. 'titlebar/ontop_focus_inactive.png',
-    titlebar_ontop_button_normal_active = assets .. 'titlebar/ontop_normal_active.png',
-    titlebar_ontop_button_focus_active = assets .. 'titlebar/ontop_focus_active.png',
-    titlebar_sticky_button_normal_inactive = assets .. 'titlebar/sticky_normal_inactive.png',
-    titlebar_sticky_button_focus_inactive = assets .. 'titlebar/sticky_focus_inactive.png',
-    titlebar_sticky_button_normal_active = assets .. 'titlebar/sticky_normal_active.png',
-    titlebar_sticky_button_focus_active = assets .. 'titlebar/sticky_focus_active.png',
-    titlebar_floating_button_normal_inactive = assets .. 'titlebar/floating_normal_inactive.png',
-    titlebar_floating_button_focus_inactive = assets .. 'titlebar/floating_focus_inactive.png',
-    titlebar_floating_button_normal_active = assets .. 'titlebar/floating_normal_active.png',
-    titlebar_floating_button_focus_active = assets .. 'titlebar/floating_focus_active.png',
-    titlebar_maximized_button_normal_inactive = assets .. 'titlebar/maximized_normal_inactive.png',
-    titlebar_maximized_button_focus_inactive = assets .. 'titlebar/maximized_focus_inactive.png',
-    titlebar_maximized_button_normal_active = assets .. 'titlebar/maximized_normal_active.png',
-    titlebar_maximized_button_focus_active = assets .. 'titlebar/maximized_focus_active.png',
-    layout_txt_fairh = '[fh]',
-    layout_txt_fairv = '[fv]',
-    layout_txt_floating = '><>',
-    layout_txt_magnifier = '[M]',
-    layout_txt_max = '[m]',
+    menu_height = dpi(20),
+    menu_width = dpi(120),
+    -- layout_txt_fairh = '[fh]',
+    layout_txt_tile = '🐧',
+    layout_txt_fairv = '🍱',
+    layout_txt_floating = '🎏',
+    layout_txt_magnifier = '🔍',
+    layout_txt_max = '🌆',
+    layout_txt_spiral = '🍤',
+    --[[
     layout_txt_fullscreen = '[F]',
     layout_txt_tilebottom = '[b]',
     layout_txt_tileleft = '[l]',
-    layout_txt_tile = '[]=',
     layout_txt_tiletop = '[tt]',
-    layout_txt_spiral = '[s]',
     layout_txt_dwindle = '[d]',
     layout_txt_cornernw = '[c]',
     layout_txt_cornerne = '[c]',
     layout_txt_cornersw = '[c]',
     layout_txt_cornerse = '[c]',
+    --]]
     tasklist_icon_size = 12, -- XXX, doesn't work yet waiting for awesome 4.4
     tasklist_disable_icon = true,
-    wibar_height = 20
+    tasklist_align = 'center',
+    wibar_height = dpi(20),
+    -- XXX waiting for random function in awesome 4.4
+    wallpaper = gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_20-01-21_973_1280x800.png'
 }
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
 beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
--- XXX waiting for random function in awesome 4.4
-beautiful.wallpaper = gears.filesystem.get_xdg_cache_home() .. 'Tapet/2020-02-14_17-05-44_883_1920x1200.png'
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth()
@@ -174,8 +166,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.floating,
     awful.layout.suit.magnifier
     -- awful.layout.suit.corner.nw,
@@ -380,7 +372,7 @@ local temperaturewidget =
         'timeout',
         function()
             t:stop()
-            local f = io.open('/sys/class/thermal/thermal_zone1/temp', 'r')
+            local f = io.open(temperature_filename, 'r')
             local temperature = f:read 'n'
             f:close()
             widget:set_text(temperature // 1000 .. '\u{2009}°C')
@@ -474,7 +466,7 @@ local memorywidget =
             end
             -- https://github.com/KittyKatt/screenFetch/issues/386#issuecomment-249312716
             mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
-            widget:set_text(fixed(mem.used))
+            widget:set_text('  ' .. fixed(mem.used))
             t:again()
         end
     )
@@ -539,8 +531,11 @@ awful.screen.connect_for_each_screen(
         -- Wallpaper
         set_wallpaper(s)
 
-        -- Each screen has its own tag table. 🥑
-        awful.tag({'🏄🏾‍♀️', '☕', '🏝️', '🍓', '🍿', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
+        if s.index == 1 then
+            awful.tag({'🏄🏾‍♀️', '☕', '🏝️', '🍓', '🥑', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
+        else
+            awful.tag({'🍿', 'ß', '´'}, s, awful.layout.layouts[1])
+        end
 
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
@@ -599,15 +594,14 @@ awful.screen.connect_for_each_screen(
                 )
             )
         )
-        -- Create a taglist widget
+
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.noempty,
+            filter = s.index == 1 and awful.widget.taglist.filter.noempty or awful.widget.taglist.filter.selected,
             buttons = taglist_buttons
         }
 
-        -- Create a tasklist widget
         s.mytasklist =
             awful.widget.tasklist {
             screen = s,
@@ -838,7 +832,7 @@ globalkeys =
     ),
     awful.key(
         {modkey},
-        'space',
+        'BackSpace',
         function()
             awful.layout.inc(1)
         end,
@@ -889,7 +883,7 @@ globalkeys =
     -- Menubar
     awful.key(
         {modkey},
-        'p',
+        'space',
         function()
             menubar.show()
         end,
@@ -1035,7 +1029,7 @@ clientkeys =
 )
 
 -- Bind all key numbers to tags.
-for i = 1, 9 do
+for i = 1, 12 do
     globalkeys =
         gears.table.join(
         globalkeys,
@@ -1044,19 +1038,17 @@ for i = 1, 9 do
             {modkey},
             '#' .. i + 9,
             function()
+                local tags = i % #screen.primary.tags
+                -- index of primary screen is not necessarily #1
+                local primary_index = screen.primary.index
                 local screen = awful.screen.focused()
                 local tag = screen.tags[i]
+                naughty.notify {title = #screen.tags .. ' ' .. tags .. ' ' .. primary_index}
                 if tag then
                     tag:view_only()
                 end
             end,
-            (function()
-                if i == 1 then
-                    return {description = '… view tag #1 …', group = 'tag'}
-                else
-                    return {}
-                end
-            end)()
+            {description = 'view tag #' .. i, group = 'tag'}
         ),
         -- Toggle tag display.
         awful.key(
@@ -1069,13 +1061,7 @@ for i = 1, 9 do
                     awful.tag.viewtoggle(tag)
                 end
             end,
-            (function()
-                if i == 1 then
-                    return {description = '… toggle tag #1 …', group = 'tag'}
-                else
-                    return {}
-                end
-            end)()
+            {description = 'toggle tag #' .. i, group = 'tag'}
         ),
         -- Move client to tag.
         awful.key(
@@ -1089,13 +1075,7 @@ for i = 1, 9 do
                     end
                 end
             end,
-            (function()
-                if i == 1 then
-                    return {description = '… move focused client to #1 …', group = 'tag'}
-                else
-                    return {}
-                end
-            end)()
+            {description = 'move focused client to tag #' .. i, group = 'tag'}
         ),
         -- Toggle tag on focused client.
         awful.key(
@@ -1109,13 +1089,7 @@ for i = 1, 9 do
                     end
                 end
             end,
-            (function()
-                if i == 1 then
-                    return {description = '… toggle focused client on #1 …', group = 'tag'}
-                else
-                    return {}
-                end
-            end)()
+            {description = 'toggle focused client on tag #' .. i, group = 'tag'}
         )
     )
 end
@@ -1430,13 +1404,6 @@ awful.rules.rules = {
         },
         properties = {floating = true}
     },
-    -- Add titlebars to normal clients and dialogs
-    {
-        rule_any = {
-            type = {'normal', 'dialog'}
-        },
-        properties = {titlebars_enabled = false}
-    },
     {
         rule = {class = 'Journalctl'},
         properties = {screen = 1, tag = '🗞️'}
@@ -1464,62 +1431,6 @@ client.connect_signal(
             -- Prevent clients from being unreachable after screen count changes.
             awful.placement.no_offscreen(c)
         end
-    end
-)
-
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal(
-    'request::titlebars',
-    function(c)
-        -- buttons for the titlebar
-        local buttons =
-            gears.table.join(
-            awful.button(
-                {},
-                1,
-                function()
-                    c:emit_signal('request::activate', 'titlebar', {raise = true})
-                    awful.mouse.client.move(c)
-                end
-            ),
-            awful.button(
-                {},
-                3,
-                function()
-                    c:emit_signal('request::activate', 'titlebar', {raise = true})
-                    awful.mouse.client.resize(c)
-                end
-            )
-        )
-
-        awful.titlebar(c):setup {
-            {
-                -- Left
-                awful.titlebar.widget.iconwidget(c),
-                buttons = buttons,
-                layout = wibox.layout.fixed.horizontal
-            },
-            {
-                -- Middle
-                {
-                    -- Title
-                    align = 'center',
-                    widget = awful.titlebar.widget.titlewidget(c)
-                },
-                buttons = buttons,
-                layout = wibox.layout.flex.horizontal
-            },
-            {
-                -- Right
-                awful.titlebar.widget.floatingbutton(c),
-                awful.titlebar.widget.maximizedbutton(c),
-                awful.titlebar.widget.stickybutton(c),
-                awful.titlebar.widget.ontopbutton(c),
-                awful.titlebar.widget.closebutton(c),
-                layout = wibox.layout.fixed.horizontal()
-            },
-            layout = wibox.layout.align.horizontal
-        }
     end
 )
 
