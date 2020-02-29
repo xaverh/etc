@@ -4,6 +4,18 @@ set formatoptions+=j
 set switchbuf=vsplit
 set title
 set noemoji
+set history=10000
+
+if !has('nvim')
+	" https://github.com/alacritty/alacritty/issues/2931
+	set ttymouse=sgr
+endif
+set mouse=a
+
+if !has('nvim')
+	set viminfo^=!
+	set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+endif
 
 " Comma as leader (default is \)
 let mapleader = ","
@@ -25,7 +37,6 @@ let g:mapleader = ","
 " set foldcolumn=1
 " set foldopen=all
 " set guitablabel=%M\ %t
-" set history=1000
 " set hlsearch
 " set ignorecase
 " set incsearch
@@ -55,7 +66,6 @@ let g:mapleader = ","
 " set tabstop=4
 " set textwidth=0
 " set timeoutlen=1000
-" " set ttymouse=urxvt
 " set undofile
 " set undolevels=5000
 " set visualbell t_vb=
@@ -262,14 +272,8 @@ let g:mapleader = ","
 "
 " set autoread
 "
-" if &history < 1000
-"   set history=1000
-" endif
 " if &tabpagemax < 50
 "   set tabpagemax=50
-" endif
-" if !empty(&viminfo)
-"   set viminfo^=!
 " endif
 " set sessionoptions-=options
 "
