@@ -28,7 +28,8 @@
 		"dunstrc": "ini",
 		"config": "ini",
 		"fonts.conf": "xml",
-		"*.rules": "javascript"
+		"*.rules": "javascript",
+		"*.desktop": "ini"
 	},
 	"files.exclude": {
 		"**/.git": true,
@@ -237,5 +238,6 @@
 	"editor.semanticHighlighting.enabled": true,
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"go.useLanguageServer": true,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"search.followSymlinks": false
 }

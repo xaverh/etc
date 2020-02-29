@@ -10,7 +10,7 @@ local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
-menubar.cache_entries = true
+menubar.cache_entries = false
 menubar.show_categories = false
 
 local colors = {
@@ -73,32 +73,36 @@ beautiful.init {
     hotkeys_font = '.SF Compact Display 11',
     hotkeys_description_font = '.SF Compact Display 11',
     bg_normal = '#' .. colors.qi[1],
-    bg_focus = '#' .. colors.cursor_dark,
+    -- bg_focus = '#' .. colors.cursor_dark,
     bg_urgent = '#' .. colors.qi[2],
-    bg_minimize = bg_normal,
+    bg_minimize = '#' .. colors.qi[1],
     fg_normal = '#' .. colors.qi[16],
-    fg_focus = fg_normal,
-    fg_urgent = fg_normal,
+    fg_focus = '#' .. colors.qi[5],
+    fg_urgent = '#' .. colors.qi[16],
     fg_minimize = '#' .. colors.qi[9],
-    tasklist_fg_normal = '#' .. colors.qi[8],
-    tasklist_fg_focus = '#' .. colors.qi[16],
+    -- tasklist_fg_focus = '#' .. colors.qi[16],
+    taglist_bg_focus = '#' .. colors.qi[8],
     menubar_fg_focus = '#' .. colors.qi[16],
-    useless_gap = dpi(0),
-    border_width = dpi(2),
+    hotkeys_modifiers_fg = '#' .. colors.qi[8],
     border_normal = '#' .. colors.qi[9],
-    border_focus = '#' .. colors.cursor,
+    border_focus = '#' .. colors.qi[5],
     border_marked = '#' .. colors.qi[4],
-    menu_submenu_icon = assets .. 'submenu.png',
+    maximized_hide_border = true,
+    useless_gap = dpi(0),
+    border_width = dpi(3),
+    menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
-    menu_width = dpi(120),
-    -- layout_txt_fairh = '[fh]',
-    layout_txt_tile = '🐧',
-    layout_txt_fairv = '🍱',
-    layout_txt_floating = '🎏',
-    layout_txt_magnifier = '🔍',
-    layout_txt_max = '🌆',
-    layout_txt_spiral = '🍤',
+    menu_width = dpi(150),
+    master_width_factor = 0.55,
+    layout_txt_tile = '👈🏻',
+    layout_txt_tileleft = '👉🏻',
+    layout_txt_fairv = '🤙🏻',
+    layout_txt_floating = '🖖🏻',
+    layout_txt_magnifier = '🤏🏻',
+    layout_txt_max = '👊🏻',
     --[[
+    layout_txt_spiral = '🍤',
+    layout_txt_fairh = '[fh]',
     layout_txt_fullscreen = '[F]',
     layout_txt_tilebottom = '[b]',
     layout_txt_tileleft = '[l]',
@@ -114,11 +118,13 @@ beautiful.init {
     tasklist_align = 'center',
     wibar_height = dpi(20),
     -- XXX waiting for random function in awesome 4.4
-    wallpaper = gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_20-01-21_973_1280x800.png'
+    wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and
+        gears.filesystem.get_xdg_data_home() .. 'Tapet/96e62f8c1cc24eaeab314bf4a201cf40.png' or
+        os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
 }
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
-beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
+-- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth()
@@ -159,17 +165,17 @@ end
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    -- awful.layout.suit.tile.left,
+    awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.floating,
-    awful.layout.suit.magnifier
+    awful.layout.suit.magnifier,
+    awful.layout.suit.floating
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -526,15 +532,18 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
+local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️       🧞‍♀️ , '💤', ,'👾',🥑'🧻'
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({'🏄🏾‍♀️', '☕', '🏝️', '🍓', '🥑', '🦄', '🎰', '🎱', '🗞️'}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 9)}, s, awful.layout.layouts[1])
+        elseif s.index == 2 then
+            awful.tag({table.unpack(default_tags, 10, 11)}, s, awful.layout.layouts[1])
         else
-            awful.tag({'🍿', 'ß', '´'}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 12)}, s, awful.layout.layouts[1])
         end
 
         -- Create a promptbox for each screen
@@ -598,7 +607,9 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = s.index == 1 and awful.widget.taglist.filter.noempty or awful.widget.taglist.filter.selected,
+            -- TODO: filter out terminals above index 6
+            -- filter = s.index == 1 and awful.widget.taglist.filter.all or awful.widget.taglist.filter.noempty,
+            filter = awful.widget.taglist.filter.noempty,
             buttons = taglist_buttons
         }
 
@@ -610,7 +621,7 @@ awful.screen.connect_for_each_screen(
         }
 
         -- Create the wibox
-        s.mywibox = awful.wibar({position = 'top', screen = s})
+        s.mywibox = awful.wibar {position = 'top', screen = s}
 
         -- Add widgets to the wibox
         s.mywibox:setup {
@@ -744,20 +755,12 @@ globalkeys =
         {description = 'swap with previous client by index', group = 'client'}
     ),
     awful.key(
-        {modkey, 'Control'},
-        'j',
+        {modkey},
+        '#47',
         function()
             awful.screen.focus_relative(1)
         end,
         {description = 'focus the next screen', group = '🖥️ screen'}
-    ),
-    awful.key(
-        {modkey, 'Control'},
-        'k',
-        function()
-            awful.screen.focus_relative(-1)
-        end,
-        {description = 'focus the previous screen', group = '🖥️ screen'}
     ),
     awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
     awful.key(
@@ -778,7 +781,30 @@ globalkeys =
         function()
             awful.spawn(os.getenv 'TERMINAL')
         end,
-        {description = 'open a terminal', group = 'launcher'}
+        {description = 'open a terminal', group = '🚀 launcher'}
+    ),
+    -- TODO: bessere Idee: Nnn hat eigenes Tag das rein-und-rausgemerged wird, wie es gerade benötigt wird.
+    -- kann man Tags auf verschiedene Monitore verschieben?
+    awful.key(
+        {modkey},
+        'n',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'Nnn', class = 'Alacritty'})
+                end
+            ) do
+                if client.focus == c then
+                    c.minimized = true
+                    return
+                else
+                    c:jump_to(false)
+                    return
+                end
+            end
+            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn', '-e', 'nnn', '-x'}
+        end,
+        {description = 'open nnn', group = '🚀 launcher'}
     ),
     awful.key({modkey, 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = 'awesome'}),
     awful.key({modkey, 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = 'awesome'}),
@@ -832,7 +858,7 @@ globalkeys =
     ),
     awful.key(
         {modkey},
-        'BackSpace',
+        'space',
         function()
             awful.layout.inc(1)
         end,
@@ -847,8 +873,8 @@ globalkeys =
         {description = 'select previous', group = 'layout'}
     ),
     awful.key(
-        {modkey, 'Control'},
-        'n',
+        {modkey},
+        '#61',
         function()
             local c = awful.client.restore()
             -- Focus restored client
@@ -865,7 +891,7 @@ globalkeys =
         function()
             awful.screen.focused().mypromptbox:run()
         end,
-        {description = 'run prompt', group = 'launcher'}
+        {description = 'run prompt', group = '🚀 launcher'}
     ),
     awful.key(
         {modkey},
@@ -883,11 +909,11 @@ globalkeys =
     -- Menubar
     awful.key(
         {modkey},
-        'space',
+        'p',
         function()
             menubar.show()
         end,
-        {description = 'show the menubar', group = 'launcher'}
+        {description = 'show the menubar', group = '🚀 launcher'}
     ),
     awful.key(
         {},
@@ -919,7 +945,7 @@ globalkeys =
 clientkeys =
     gears.table.join(
     awful.key(
-        {modkey},
+        {modkey, 'Shift'},
         'f',
         function(c)
             c.fullscreen = not c.fullscreen
@@ -936,10 +962,22 @@ clientkeys =
         {description = 'close', group = 'client'}
     ),
     awful.key(
-        {modkey, 'Control'},
-        'space',
-        awful.client.floating.toggle,
+        {modkey},
+        'f',
+        function(c)
+            c.floating = not c.floating
+            c:raise()
+        end,
         {description = 'toggle floating', group = 'client'}
+    ),
+    awful.key(
+        {modkey},
+        's',
+        function(c)
+            c.sticky = not c.sticky
+            c:raise()
+        end,
+        {description = 'toggle sticky', group = 'client'}
     ),
     awful.key(
         {modkey, 'Control'},
@@ -967,7 +1005,7 @@ clientkeys =
     ),
     awful.key(
         {modkey},
-        'n',
+        'period',
         function(c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
@@ -1028,40 +1066,33 @@ clientkeys =
     )
 )
 
--- Bind all key numbers to tags.
-for i = 1, 12 do
+local tags_per_screen = 5
+for i, v in ipairs(default_tags) do
     globalkeys =
         gears.table.join(
         globalkeys,
-        -- View tag only.
         awful.key(
             {modkey},
             '#' .. i + 9,
             function()
-                local tags = i % #screen.primary.tags
-                -- index of primary screen is not necessarily #1
-                local primary_index = screen.primary.index
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                naughty.notify {title = #screen.tags .. ' ' .. tags .. ' ' .. primary_index}
-                if tag then
-                    tag:view_only()
-                end
+                awful.tag.find_by_name(nil, v):view_only()
             end,
-            {description = 'view tag #' .. i, group = 'tag'}
+            {
+                description = 'view tag ' .. v,
+                group = 'tag'
+            }
         ),
         -- Toggle tag display.
         awful.key(
             {modkey, 'Control'},
             '#' .. i + 9,
             function()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                if tag then
-                    awful.tag.viewtoggle(tag)
-                end
+                awful.tag.viewtoggle(awful.tag.find_by_name(nil, v))
             end,
-            {description = 'toggle tag #' .. i, group = 'tag'}
+            {
+                description = 'toggle tag ' .. v,
+                group = 'tag'
+            }
         ),
         -- Move client to tag.
         awful.key(
@@ -1069,13 +1100,13 @@ for i = 1, 12 do
             '#' .. i + 9,
             function()
                 if client.focus then
-                    local tag = client.focus.screen.tags[i]
-                    if tag then
-                        client.focus:move_to_tag(tag)
-                    end
+                    client.focus:move_to_tag(awful.tag.find_by_name(nil, v))
                 end
             end,
-            {description = 'move focused client to tag #' .. i, group = 'tag'}
+            {
+                description = 'move focused client to tag ' .. v,
+                group = 'tag'
+            }
         ),
         -- Toggle tag on focused client.
         awful.key(
@@ -1083,13 +1114,13 @@ for i = 1, 12 do
             '#' .. i + 9,
             function()
                 if client.focus then
-                    local tag = client.focus.screen.tags[i]
-                    if tag then
-                        client.focus:toggle_tag(tag)
-                    end
+                    client.focus:toggle_tag(awful.tag.find_by_name(nil, v))
                 end
             end,
-            {description = 'toggle focused client on tag #' .. i, group = 'tag'}
+            {
+                description = 'toggle focused client on tag ' .. v,
+                group = 'tag'
+            }
         )
     )
 end
@@ -1283,7 +1314,7 @@ if gears.filesystem.file_readable '/sys/class/leds/smc::kbd_backlight/max_bright
             function()
                 increase_keyboard_light(-5)
             end,
-            {description = '🔅', group = '⌨️'}
+            {description = '🔅', group = '⌨️ keyboard'}
         ),
         awful.key(
             {},
@@ -1291,7 +1322,7 @@ if gears.filesystem.file_readable '/sys/class/leds/smc::kbd_backlight/max_bright
             function()
                 increase_keyboard_light(5)
             end,
-            {description = '🔆', group = '⌨️'}
+            {description = '🔆', group = '⌨️ keyboard'}
         )
     )
 end
@@ -1413,8 +1444,23 @@ awful.rules.rules = {
         properties = {screen = 1, tag = '🍓'}
     },
     {
-        rule = {class = 'Google-chrome'},
-        properties = {screen = 1, tag = '🏄🏾‍♀️'}
+        rule = {class = 'Alacritty', instance = 'Nnn'},
+        properties = {
+            sticky = true,
+            tag = '💤'
+        }
+    },
+    {
+        rule = {class = 'mpv'},
+        properties = {
+            new_tag = {
+                name = '🍿',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false
+        }
     }
 }
 

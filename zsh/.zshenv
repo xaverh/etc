@@ -5,5 +5,5 @@ export GOPATH="$XDG_DATA_HOME/go"
 export NPMPATH="$XDG_DATA_HOME/npm"
 
 typeset -U path
-path=(/usr/local/bin /usr/bin /usr/sbin /bin /sbin $path ~/.local/bin $NPMPATH/bin $GOPATH/bin /var/lib/snapd/snap/bin)
+path=(/usr/local/bin /usr/bin /usr/sbin $path ~/.local/bin $NPMPATH/bin $GOPATH/bin /var/lib/snapd/snap/bin)
 export PATH
