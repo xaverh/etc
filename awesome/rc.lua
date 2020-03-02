@@ -4,14 +4,11 @@ require 'awful.autofocus'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
-local menubar = require 'menubar'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
-
-menubar.cache_entries = false
-menubar.show_categories = false
+local fm0 = require 'fm0'
 
 local colors = {
     qi = {
@@ -72,59 +69,45 @@ beautiful.init {
     font = '.SF Compact Display 11',
     hotkeys_font = '.SF Compact Display 11',
     hotkeys_description_font = '.SF Compact Display 11',
+    tasklist_font_minimized = '.SF Compact Display Italic 11',
+    tasklist_font_focus = '.SF Compact Display Bold 11',
     bg_normal = '#' .. colors.qi[1],
-    -- bg_focus = '#' .. colors.cursor_dark,
+    bg_focus = '#' .. colors.qi[1],
     bg_urgent = '#' .. colors.qi[2],
     bg_minimize = '#' .. colors.qi[1],
     fg_normal = '#' .. colors.qi[16],
-    fg_focus = '#' .. colors.qi[5],
+    fg_focus = '#' .. colors.qi[16],
     fg_urgent = '#' .. colors.qi[16],
-    fg_minimize = '#' .. colors.qi[9],
-    -- tasklist_fg_focus = '#' .. colors.qi[16],
-    taglist_bg_focus = '#' .. colors.qi[8],
-    menubar_fg_focus = '#' .. colors.qi[16],
+    fg_minimize = '#' .. colors.qi[8],
+    -- taglist_bg_focus = '#' .. colors.cursor,
     hotkeys_modifiers_fg = '#' .. colors.qi[8],
     border_normal = '#' .. colors.qi[9],
-    border_focus = '#' .. colors.qi[5],
+    border_focus = '#' .. colors.cursor,
     border_marked = '#' .. colors.qi[4],
     maximized_hide_border = true,
     useless_gap = dpi(0),
-    border_width = dpi(3),
+    border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
     menu_width = dpi(150),
     master_width_factor = 0.55,
-    layout_txt_tile = '👈🏻',
-    layout_txt_tileleft = '👉🏻',
-    layout_txt_fairv = '🤙🏻',
-    layout_txt_floating = '🖖🏻',
-    layout_txt_magnifier = '🤏🏻',
-    layout_txt_max = '👊🏻',
-    --[[
-    layout_txt_spiral = '🍤',
-    layout_txt_fairh = '[fh]',
-    layout_txt_fullscreen = '[F]',
-    layout_txt_tilebottom = '[b]',
-    layout_txt_tileleft = '[l]',
-    layout_txt_tiletop = '[tt]',
-    layout_txt_dwindle = '[d]',
-    layout_txt_cornernw = '[c]',
-    layout_txt_cornerne = '[c]',
-    layout_txt_cornersw = '[c]',
-    layout_txt_cornerse = '[c]',
-    --]]
-    tasklist_icon_size = 12, -- XXX, doesn't work yet waiting for awesome 4.4
+    layout_txt_tile = '  👈🏻  ',
+    layout_txt_tileleft = '  👉🏻  ',
+    layout_txt_fairv = '  🤙🏻  ',
+    layout_txt_floating = '  🖖🏻  ',
+    layout_txt_magnifier = '  🤏🏻  ',
+    layout_txt_max = '  👊🏻  ',
     tasklist_disable_icon = true,
     tasklist_align = 'center',
     wibar_height = dpi(20),
     -- XXX waiting for random function in awesome 4.4
     wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and
-        gears.filesystem.get_xdg_data_home() .. 'Tapet/96e62f8c1cc24eaeab314bf4a201cf40.png' or
+        gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or
         os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
 }
 
-beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(4), beautiful.fg_normal)
--- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(4), beautiful.fg_normal)
+beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
+-- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth()
@@ -155,8 +138,6 @@ end
 local function strawberry_rew()
     awful.spawn 'strawberry --seek-by -10'
 end
-
-local modkey = 'Mod4'
 
 local printkey = 'Print'
 if is_macintosh then
@@ -203,13 +184,12 @@ local myexitmenu = {
         'log out',
         function()
             awesome.quit()
-        end,
-        menubar.utils.lookup_icon 'system-log-out'
+        end
     },
-    {'suspend', 'systemctl suspend', menubar.utils.lookup_icon 'system-suspend'},
-    {'hibernate', 'systemctl hibernate', menubar.utils.lookup_icon 'system-suspend-hibernate'},
-    {'reboot', 'systemctl reboot', menubar.utils.lookup_icon 'system-reboot'},
-    {'shutdown', 'systemctl poweroff', menubar.utils.lookup_icon 'system-shutdown'}
+    {'suspend', 'systemctl suspend'},
+    {'hibernate', 'systemctl hibernate'},
+    {'reboot', 'systemctl reboot'},
+    {'shutdown', 'systemctl poweroff'}
 }
 
 local mymainmenu =
@@ -218,7 +198,7 @@ local mymainmenu =
         items = {
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
-            {'exit', myexitmenu, menubar.utils.lookup_icon 'system-shutdown'},
+            {'exit', myexitmenu},
             {'open terminal', os.getenv 'TERMINAL'}
         }
     }
@@ -245,7 +225,7 @@ local taglist_buttons =
         end
     ),
     awful.button(
-        {modkey},
+        {'Mod4'},
         1,
         function(t)
             if client.focus then
@@ -255,7 +235,7 @@ local taglist_buttons =
     ),
     awful.button({}, 3, awful.tag.viewtoggle),
     awful.button(
-        {modkey},
+        {'Mod4'},
         3,
         function(t)
             if client.focus then
@@ -532,7 +512,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️       🧞‍♀️ , '💤', ,'👾',🥑'🧻'
+local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️ '💤',🥑'
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
@@ -607,9 +587,7 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            -- TODO: filter out terminals above index 6
-            -- filter = s.index == 1 and awful.widget.taglist.filter.all or awful.widget.taglist.filter.noempty,
-            filter = awful.widget.taglist.filter.noempty,
+            filter = awful.widget.taglist.filter.selected,
             buttons = taglist_buttons
         }
 
@@ -623,20 +601,17 @@ awful.screen.connect_for_each_screen(
         -- Create the wibox
         s.mywibox = awful.wibar {position = 'top', screen = s}
 
-        -- Add widgets to the wibox
         s.mywibox:setup {
             layout = wibox.layout.align.horizontal,
             {
-                -- Left widgets
                 layout = wibox.layout.fixed.horizontal,
                 mylauncher,
                 s.mytaglist,
                 s.mylayoutbox,
                 s.mypromptbox
             },
-            s.mytasklist, -- Middle widget
+            s.mytasklist,
             {
-                -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 10,
                 memorywidget,
@@ -707,64 +682,211 @@ local function toggle_theme()
     is_ysgrifennwr = not is_ysgrifennwr
 end
 
+local function tag_view_nonempty(direction)
+    for i = 1, #awful.screen.focused().tags do
+        awful.tag.viewidx(i * direction)
+        if #awful.screen.focused().clients > 0 then
+            return
+        else
+            awful.tag.history.restore(awful.screen.focused(), 'previous')
+        end
+    end
+end
+
+-- TODO: error handling
+local function mansplain()
+    awful.spawn.with_shell [[zathura =(man -Tps $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $2" "$1}'))]]
+end
+
+local function emoji()
+    awful.spawn.with_shell [=[awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $2); print $2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $1}' | xsel -ib]=]
+end
+
+local function open_url()
+    awful.spawn.with_shell [=[xdg-open $(\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')]=]
+end
+
 globalkeys =
     gears.table.join(
-    awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
-    awful.key({modkey}, 'Left', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
-    awful.key({modkey}, 'Right', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-    awful.key({modkey}, '#49', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+    awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
+    awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
+    awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
+    awful.key({'Mod4'}, 'r', fm0.start_radio, {description = 'FM0', group = '🚀 launcher'}),
     awful.key(
-        {modkey},
-        'j',
+        {'Mod4'},
+        'i',
         function()
-            awful.client.focus.byidx(1)
+            awful.spawn {'clipmenu', '-p', 'clipboard'}
         end,
-        {description = 'focus next by index', group = 'client'}
+        {description = 'clipmenu', group = '📋 clipboard'}
+    ),
+    awful.key({'Mod4'}, 'F2', hotkeys_popup.show_help, {description = 'show help', group = '🌐 global'}),
+    awful.key(
+        {'Mod4'},
+        'Escape',
+        function()
+            tag_view_nonempty(1)
+        end,
+        {description = 'view next non-empty tag', group = '🏷️ tag'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4', 'Shift'},
+        'Escape',
+        function()
+            tag_view_nonempty(-1)
+        end,
+        {description = 'view previous non-empty tag', group = '🏷️ tag'}
+    ),
+    awful.key({'Mod4'}, 'Prior', awful.tag.viewprev, {description = 'view previous', group = '🏷️ tag'}),
+    awful.key({'Mod4'}, 'Next', awful.tag.viewnext, {description = 'view next', group = '🏷️ tag'}),
+    awful.key({'Mod4'}, '#49', awful.tag.history.restore, {description = 'go back', group = '🏷️ tag'}),
+    awful.key(
+        {'Mod4'},
+        'Left',
+        function()
+            awful.client.focus.global_bydirection 'left'
+        end,
+        {description = 'focus client to the left', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Up',
+        function()
+            awful.client.focus.global_bydirection 'up'
+        end,
+        {description = 'focus client above', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Down',
+        function()
+            awful.client.focus.global_bydirection 'down'
+        end,
+        {description = 'focus client below', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Right',
+        function()
+            awful.client.focus.global_bydirection 'right'
+        end,
+        {description = 'focus client to the right', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'Left',
+        function()
+            awful.client.swap.global_bydirection 'left'
+        end,
+        {description = 'swap client with client to the left', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'Up',
+        function()
+            awful.client.swap.global_bydirection 'up'
+        end,
+        {description = 'swap client with client above', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'Down',
+        function()
+            awful.client.swap.global_bydirection 'down'
+        end,
+        {description = 'swap client with client below', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'Right',
+        function()
+            awful.client.swap.global_bydirection 'right'
+        end,
+        {description = 'swap client with client to the right', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'h',
+        function()
+            awful.client.focus.global_bydirection 'left'
+        end,
+        {description = 'focus client to the left', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
         'k',
         function()
-            awful.client.focus.byidx(-1)
+            awful.client.focus.global_bydirection 'up'
         end,
-        {description = 'focus previous by index', group = 'client'}
+        {description = 'focus client above', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
+        'j',
+        function()
+            awful.client.focus.global_bydirection 'down'
+        end,
+        {description = 'focus client below', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'l',
+        function()
+            awful.client.focus.global_bydirection 'right'
+        end,
+        {description = 'focus client to the right', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'h',
+        function()
+            awful.client.swap.global_bydirection 'left'
+        end,
+        {description = 'swap client with client to the left', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'k',
+        function()
+            awful.client.swap.global_bydirection 'up'
+        end,
+        {description = 'swap client with client above', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'j',
+        function()
+            awful.client.swap.global_bydirection 'down'
+        end,
+        {description = 'swap client with client below', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'l',
+        function()
+            awful.client.swap.global_bydirection 'right'
+        end,
+        {description = 'swap client with client to the right', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
         'w',
         function()
             mymainmenu:show()
         end,
-        {description = 'show main menu', group = 'awesome'}
-    ),
-    -- Layout manipulation
-    awful.key(
-        {modkey, 'Shift'},
-        'j',
-        function()
-            awful.client.swap.byidx(1)
-        end,
-        {description = 'swap with next client by index', group = 'client'}
+        {description = 'show main menu', group = '🌐 global'}
     ),
     awful.key(
-        {modkey, 'Shift'},
-        'k',
-        function()
-            awful.client.swap.byidx(-1)
-        end,
-        {description = 'swap with previous client by index', group = 'client'}
-    ),
-    awful.key(
-        {modkey},
+        {'Mod4'},
         '#47',
         function()
             awful.screen.focus_relative(1)
         end,
         {description = 'focus the next screen', group = '🖥️ screen'}
     ),
-    awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
+    -- awful.key({'Mod4'}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = '🎮 client'}),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'Tab',
         function()
             awful.client.focus.history.previous()
@@ -772,108 +894,138 @@ globalkeys =
                 client.focus:raise()
             end
         end,
-        {description = 'go back', group = 'client'}
+        {description = 'go back', group = '🎮 client'}
     ),
-    -- Standard program
     awful.key(
-        {modkey},
+        {'Mod4'},
         'Return',
         function()
             awful.spawn(os.getenv 'TERMINAL')
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
-    -- TODO: bessere Idee: Nnn hat eigenes Tag das rein-und-rausgemerged wird, wie es gerade benötigt wird.
-    -- kann man Tags auf verschiedene Monitore verschieben?
     awful.key(
-        {modkey},
+        {'Mod4'},
         'n',
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Nnn', class = 'Alacritty'})
+                    return awful.rules.match(c, {instance = 'Nnn', class = 'Nnn'})
                 end
             ) do
                 if client.focus == c then
-                    c.minimized = true
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧞‍♀️'))
                     return
                 else
-                    c:jump_to(false)
+                    c:jump_to(true)
                     return
                 end
             end
-            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn', '-e', 'nnn', '-x'}
+            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn,Nnn', '-e', 'nnn', '-x'}
         end,
         {description = 'open nnn', group = '🚀 launcher'}
     ),
-    awful.key({modkey, 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = 'awesome'}),
-    awful.key({modkey, 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = 'awesome'}),
     awful.key(
-        {modkey},
+        {'Mod4'},
+        'F12',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'Journalctl', class = 'Journalctl'})
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧻'))
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+            awful.spawn {
+                'alacritty',
+                '--title',
+                'Journalctl',
+                '--class',
+                'Journalctl,Journalctl',
+                '-e',
+                'journalctl',
+                '-b',
+                '-f',
+                '-n',
+                '1000'
+            }
+        end,
+        {description = 'open nnn', group = '🚀 launcher'}
+    ),
+    awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
+    awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
+    awful.key(
+        {'Mod4', 'Control'},
         'l',
         function()
             awful.tag.incmwfact(0.05)
         end,
-        {description = 'increase master width factor', group = 'layout'}
+        {description = 'increase master width factor', group = '💠 layout'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4', 'Control'},
         'h',
         function()
             awful.tag.incmwfact(-0.05)
         end,
-        {description = 'decrease master width factor', group = 'layout'}
+        {description = 'decrease master width factor', group = '💠 layout'}
     ),
     awful.key(
-        {modkey, 'Shift'},
-        'h',
+        {'Mod4', 'Control'},
+        'j',
         function()
             awful.tag.incnmaster(1, nil, true)
         end,
-        {description = 'increase the number of master clients', group = 'layout'}
+        {description = 'increase the number of master clients', group = '💠 layout'}
     ),
     awful.key(
-        {modkey, 'Shift'},
-        'l',
+        {'Mod4', 'Control'},
+        'k',
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
-        {description = 'decrease the number of master clients', group = 'layout'}
+        {description = 'decrease the number of master clients', group = '💠 layout'}
     ),
     awful.key(
-        {modkey, 'Control'},
-        'h',
+        {'Mod4', 'Control', 'Shift'},
+        'j',
         function()
             awful.tag.incncol(1, nil, true)
         end,
-        {description = 'increase the number of columns', group = 'layout'}
+        {description = 'increase the number of columns', group = '💠 layout'}
     ),
     awful.key(
-        {modkey, 'Control'},
-        'l',
+        {'Mod4', 'Control', 'Shift'},
+        'k',
         function()
             awful.tag.incncol(-1, nil, true)
         end,
-        {description = 'decrease the number of columns', group = 'layout'}
+        {description = 'decrease the number of columns', group = '💠 layout'}
     ),
     awful.key(
-        {modkey},
-        'space',
+        {'Mod4'},
+        'BackSpace',
         function()
             awful.layout.inc(1)
         end,
-        {description = 'select next', group = 'layout'}
+        {description = 'select next', group = '💠 layout'}
     ),
     awful.key(
-        {modkey, 'Shift'},
-        'space',
+        {'Mod4', 'Shift'},
+        'BackSpace',
         function()
             awful.layout.inc(-1)
         end,
-        {description = 'select previous', group = 'layout'}
+        {description = 'select previous', group = '💠 layout'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         '#61',
         function()
             local c = awful.client.restore()
@@ -882,19 +1034,27 @@ globalkeys =
                 c:emit_signal('request::activate', 'key.unminimize', {raise = true})
             end
         end,
-        {description = 'restore minimized', group = 'client'}
+        {description = 'restore minimized', group = '🎮 client'}
     ),
-    -- Prompt
-    awful.key(
-        {modkey},
-        'r',
+    --[[awful.key(
+        {'Mod4'},
+        'space',
         function()
             awful.screen.focused().mypromptbox:run()
         end,
         {description = 'run prompt', group = '🚀 launcher'}
     ),
+    --]]
     awful.key(
-        {modkey},
+        {'Mod4'},
+        'space',
+        function()
+            awful.spawn.easy_async {'rofi', '-combi-modi', 'window,drun,run', '-show', 'combi', '-modi', 'combi'}
+        end,
+        {description = 'run prompt', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
         'x',
         function()
             awful.prompt.run {
@@ -904,146 +1064,137 @@ globalkeys =
                 history_path = awful.util.get_cache_dir() .. '/history_eval'
             }
         end,
-        {description = 'lua execute prompt', group = 'awesome'}
-    ),
-    -- Menubar
-    awful.key(
-        {modkey},
-        'p',
-        function()
-            menubar.show()
-        end,
-        {description = 'show the menubar', group = '🚀 launcher'}
+        {description = 'lua execute prompt', group = '🌐 global'}
     ),
     awful.key(
         {},
         printkey,
         function()
-            awful.spawn {'flameshot', 'full', '-c', '-p', os.getenv('HOME') .. '/tmp'}
+            awful.spawn {'flameshot', 'full', '-c', '-p', os.getenv 'HOME' .. '/tmp'}
         end,
-        {description = 'take a screenshot', group = 'awesome'}
+        {description = 'take a screenshot', group = '🌐 global'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         printkey,
         function()
-            awful.spawn {'flameshot', 'gui', '-p', os.getenv('HOME') .. '/tmp'}
+            awful.spawn {'flameshot', 'gui', '-p', os.getenv 'HOME' .. '/tmp'}
         end,
-        {description = 'capture a portion of the screen', group = 'awesome'}
+        {description = 'capture a portion of the screen', group = '🌐 global'}
     ),
     awful.key(
-        {modkey},
-        'Escape',
+        {'Mod4'},
+        is_macintosh and 'XF86Eject' or 'Pause',
         function()
             awful.spawn {'ssh-add', '-D'}
-            awful.spawn {'slock'}
+            awful.spawn 'slock'
         end,
-        {description = 'lock screen and SSH', group = 'awesome'}
+        {description = 'lock screen and SSH', group = '🌐 global'}
     )
 )
 
 clientkeys =
     gears.table.join(
     awful.key(
-        {modkey, 'Shift'},
+        {'Mod4', 'Shift'},
         'f',
         function(c)
             c.fullscreen = not c.fullscreen
             c:raise()
         end,
-        {description = 'toggle fullscreen', group = 'client'}
+        {description = 'toggle fullscreen', group = '🎮 client'}
     ),
     awful.key(
-        {modkey, 'Shift'},
+        {'Mod4', 'Shift'},
         'c',
         function(c)
             c:kill()
         end,
-        {description = 'close', group = 'client'}
+        {description = 'close', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'f',
         function(c)
             c.floating = not c.floating
             c:raise()
         end,
-        {description = 'toggle floating', group = 'client'}
+        {description = 'toggle floating', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         's',
         function(c)
             c.sticky = not c.sticky
             c:raise()
         end,
-        {description = 'toggle sticky', group = 'client'}
+        {description = 'toggle sticky', group = '🎮 client'}
     ),
     awful.key(
-        {modkey, 'Control'},
+        {'Mod4', 'Shift'},
         'Return',
         function(c)
-            c:swap(awful.client.getmaster())
+            awful.client.cycle(true)
         end,
-        {description = 'move to master', group = 'client'}
+        {description = 'cycle', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'o',
         function(c)
             c:move_to_screen()
         end,
-        {description = 'move to screen', group = 'client'}
+        {description = 'move to screen', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         't',
         function(c)
             c.ontop = not c.ontop
         end,
-        {description = 'toggle keep on top', group = 'client'}
+        {description = 'toggle keep on top', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'period',
         function(c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
         end,
-        {description = 'minimize', group = 'client'}
+        {description = 'minimize', group = '🎮 client'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'm',
         function(c)
             c.maximized = not c.maximized
             c:raise()
         end,
-        {description = '(un)maximize', group = 'client'}
+        {description = '(un)maximize', group = '🎮 client'}
     ),
     awful.key(
-        {modkey, 'Control'},
+        {'Mod4', 'Control'},
         'm',
         function(c)
             c.maximized_vertical = not c.maximized_vertical
             c:raise()
         end,
-        {description = '(un)maximize vertically', group = 'client'}
+        {description = '(un)maximize vertically', group = '🎮 client'}
     ),
     awful.key(
-        {modkey, 'Shift'},
+        {'Mod4', 'Shift'},
         'm',
         function(c)
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end,
-        {description = '(un)maximize horizontally', group = 'client'}
+        {description = '(un)maximize horizontally', group = '🎮 client'}
     ),
-    awful.key({modkey}, 'F6', toggle_theme, {description = 'change theme', group = 'awesome'}),
+    awful.key({'Mod4'}, 'F6', toggle_theme, {description = 'change theme', group = '🌐 global'}),
     -- XXX next version: https://www.reddit.com/r/awesomewm/comments/bcc73o/how_to_use_clipboard_in_awesome/
     awful.key(
-        {modkey},
+        {'Mod4'},
         '#34',
         function()
             local sel = selection()
@@ -1054,7 +1205,7 @@ clientkeys =
         {description = 'show content of clipboard', group = '📋 clipboard'}
     ),
     awful.key(
-        {modkey},
+        {'Mod4'},
         'b',
         function()
             beautiful.useless_gap = beautiful.useless_gap == 0 and 10 or 0
@@ -1062,7 +1213,7 @@ clientkeys =
                 awful.layout.arrange(s)
             end
         end,
-        {description = 'toggle useless gaps', group = 'layout'}
+        {description = 'toggle useless gaps', group = '💠 layout'}
     )
 )
 
@@ -1072,31 +1223,31 @@ for i, v in ipairs(default_tags) do
         gears.table.join(
         globalkeys,
         awful.key(
-            {modkey},
+            {'Mod4'},
             '#' .. i + 9,
             function()
                 awful.tag.find_by_name(nil, v):view_only()
             end,
             {
-                description = 'view tag ' .. v,
-                group = 'tag'
+                description = 'view ' .. v,
+                group = '🏷️ tag'
             }
         ),
         -- Toggle tag display.
         awful.key(
-            {modkey, 'Control'},
+            {'Mod4', 'Control'},
             '#' .. i + 9,
             function()
                 awful.tag.viewtoggle(awful.tag.find_by_name(nil, v))
             end,
             {
-                description = 'toggle tag ' .. v,
-                group = 'tag'
+                description = 'toggle ' .. v,
+                group = '🏷️ tag'
             }
         ),
         -- Move client to tag.
         awful.key(
-            {modkey, 'Shift'},
+            {'Mod4', 'Shift'},
             '#' .. i + 9,
             function()
                 if client.focus then
@@ -1104,13 +1255,13 @@ for i, v in ipairs(default_tags) do
                 end
             end,
             {
-                description = 'move focused client to tag ' .. v,
-                group = 'tag'
+                description = 'move client to ' .. v,
+                group = '🏷️ tag'
             }
         ),
         -- Toggle tag on focused client.
         awful.key(
-            {modkey, 'Control', 'Shift'},
+            {'Mod4', 'Control', 'Shift'},
             '#' .. i + 9,
             function()
                 if client.focus then
@@ -1118,8 +1269,8 @@ for i, v in ipairs(default_tags) do
                 end
             end,
             {
-                description = 'toggle focused client on tag ' .. v,
-                group = 'tag'
+                description = 'toggle client on ' .. v,
+                group = '🏷️ tag'
             }
         )
     )
@@ -1128,12 +1279,17 @@ end
 globalkeys =
     gears.table.join(
     globalkeys,
-    awful.key({modkey}, 'F9', connect_bluetooth, {description = 'connect bluetooth device (Setúbal)', group = '🎧'}),
     awful.key(
-        {modkey, 'Shift'},
+        {'Mod4'},
+        'F9',
+        connect_bluetooth,
+        {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
         'F9',
         disconnect_bluetooth,
-        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧'}
+        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
     )
 )
 
@@ -1141,21 +1297,21 @@ if has_multimedia_keys then
     globalkeys =
         gears.table.join(
         globalkeys,
-        awful.key({}, 'XF86AudioNext', strawberry_next, {description = '⏭️', group = '🍓'}),
-        awful.key({}, 'XF86AudioPrev', strawberry_prev, {description = '⏮', group = '🍓'}),
-        awful.key({}, 'XF86AudioPlay', strawberry_playpause, {description = '⏯', group = '🍓'}),
-        awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓'}),
-        awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓'})
+        awful.key({}, 'XF86AudioNext', strawberry_next, {description = '⏭️', group = '🍓 strawberry'}),
+        awful.key({}, 'XF86AudioPrev', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
+        awful.key({}, 'XF86AudioPlay', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
+        awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
+        awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
     )
 else
     globalkeys =
         gears.table.join(
         globalkeys,
-        awful.key({modkey}, '#63', strawberry_next, {description = '⏭️', group = '🍓'}),
-        awful.key({modkey}, '#106', strawberry_prev, {description = '⏮', group = '🍓'}),
-        awful.key({modkey}, '#87', strawberry_playpause, {description = '⏯', group = '🍓'}),
-        awful.key({modkey}, '#85', strawberry_fwd, {description = '⏩', group = '🍓'}),
-        awful.key({modkey}, '#83', strawberry_rew, {description = '⏪', group = '🍓'})
+        awful.key({'Mod4'}, '#63', strawberry_next, {description = '⏭️', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, '#106', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, '#87', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, '#85', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
     )
 end
 
@@ -1177,7 +1333,7 @@ function increase_volume_curry()
     return function(percentage)
         if percentage == nil then
             awful.spawn.with_line_callback(
-                {'pactl', 'set-sink-mute', '@DEFAULT_SINK@', 'false'},
+                {'pactl', 'set-sink-mute', '@DEFAULT_SINK@', 'true'},
                 {
                     exit = my_notify '🔇 mute'
                 }
@@ -1222,7 +1378,7 @@ if has_volume_keys then
             function()
                 increase_volume(5)
             end,
-            {description = '🔊', group = '🎧'}
+            {description = '🔊', group = '🎧 audio'}
         ),
         awful.key(
             {},
@@ -1230,7 +1386,7 @@ if has_volume_keys then
             function()
                 increase_volume(-5)
             end,
-            {description = '🔉', group = '🎧'}
+            {description = '🔉', group = '🎧 audio'}
         ),
         awful.key(
             {},
@@ -1238,7 +1394,7 @@ if has_volume_keys then
             function()
                 increase_volume()
             end,
-            {description = '🔇', group = '🎧'}
+            {description = '🔇', group = '🎧 audio'}
         )
     )
 else
@@ -1246,28 +1402,28 @@ else
         gears.table.join(
         globalkeys,
         awful.key(
-            {modkey},
+            {'Mod4'},
             'KP_Add',
             function()
                 increase_volume(5)
             end,
-            {description = '🔊', group = '🎧'}
+            {description = '🔊', group = '🎧 audio'}
         ),
         awful.key(
-            {modkey},
+            {'Mod4'},
             'KP_Subtract',
             function()
                 increase_volume(-5)
             end,
-            {description = '🔉', group = '🎧'}
+            {description = '🔉', group = '🎧 audio'}
         ),
         awful.key(
-            {modkey},
+            {'Mod4'},
             'KP_Insert',
             function()
                 increase_volume()
             end,
-            {description = '🔇', group = '🎧'}
+            {description = '🔇', group = '🎧 audio'}
         )
     )
 end
@@ -1365,7 +1521,7 @@ clientbuttons =
         end
     ),
     awful.button(
-        {modkey},
+        {'Mod4'},
         1,
         function(c)
             c:emit_signal('request::activate', 'mouse_click', {raise = true})
@@ -1373,10 +1529,10 @@ clientbuttons =
         end
     ),
     awful.button(
-        {modkey},
+        {'Mod4'},
         3,
         function(c)
-            c:emit_signal('request::activate', 'mouse_click', {raise = true})
+            c:emit_signal('request::activate', 'mouse strawberry_click', {raise = true})
             awful.mouse.client.resize(c)
         end
     )
@@ -1436,25 +1592,50 @@ awful.rules.rules = {
         properties = {floating = true}
     },
     {
-        rule = {class = 'Journalctl'},
-        properties = {screen = 1, tag = '🗞️'}
+        rule = {class = 'Journalctl', instance = 'Journalctl'},
+        properties = {
+            new_tag = {
+                name = '🧻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false
+        }
     },
     {
         rule = {class = 'strawberry'},
         properties = {screen = 1, tag = '🍓'}
     },
     {
-        rule = {class = 'Alacritty', instance = 'Nnn'},
+        rule = {class = 'Nnn', instance = 'Nnn'},
         properties = {
-            sticky = true,
-            tag = '💤'
+            new_tag = {
+                name = '🧞‍♀️',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false
         }
     },
     {
-        rule = {class = 'mpv'},
+        rule = {class = 'mpv', instance = 'mpvk'},
         properties = {
             new_tag = {
                 name = '🍿',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false
+        }
+    },
+    {
+        rule = {class = 'mpv', instance = 'FM0'},
+        properties = {
+            new_tag = {
+                name = '📻',
                 layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
@@ -1501,3 +1682,13 @@ client.connect_signal(
         c.border_color = beautiful.border_normal
     end
 )
+
+-- TODO keeps blocking awesome when starting up
+--[[
+if (os.date('*t').hour + 16) % 24 >= 12 then
+    is_ysgrifennwr = true
+else
+    is_ysgrifennwr = false
+end
+toggle_theme()
+]]
