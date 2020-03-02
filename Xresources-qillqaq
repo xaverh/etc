@@ -24,3 +24,12 @@ SshAskpass*bottomShadowColor:      #1e1e1e
 *.color14: #a2dcd7
 *.color15: #e5e6e6
 *.foreground: #e5e6e6
+*.cursorColor: #20bbfc
+*.cursorColor2: #0f3a4b
+
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #1e1e1e,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e5e6e6
+rofi.color-urgent: #1e1e1e,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e32791
+rofi.color-active: #1e1e1e,  #e5e6e6,  #2d2d2d,  #264f78,  #e5e6e6
+!                  'background', 'border', 'separator'
+rofi.color-window: #1e1e1e,      #20bbfc,  #999999

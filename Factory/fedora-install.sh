@@ -102,7 +102,7 @@ setenforce 1
 systemd-nspawn -bD /mnt
 
 sudo bootctl install
-sudo dnf install @base-x @multimedia @firefox google-chrome-stable code gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes groff-perl unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl mpv-mpris abduco dvtm
+sudo dnf install @base-x @multimedia @firefox google-chrome-stable code gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl mpv-mpris abduco dvtm rofi
 # wireguard-dkms wireguard-tools
 
 sudo dnf install iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi

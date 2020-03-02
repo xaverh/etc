@@ -1,11 +1,11 @@
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 export MAN_POSIXLY_CORRECT=1
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 export PAGER=less
 export TERMINAL=alacritty
 export AWS_REGION=eu-central-1
-export CM_LAUNCHER=dmenu
+export CM_LAUNCHER=rofi
 export CM_DIR="$XDG_RUNTIME_DIR"
 export READNULLCMD=less
 export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
@@ -19,6 +19,7 @@ export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
 # https://github.com/alacritty/alacritty/issues/1501
 export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
+export NNN_COLORS=4321
 
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking

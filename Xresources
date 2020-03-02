@@ -6,14 +6,40 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-SshAskpass*font:                   -uw-ttyp0-*-*-*-*-*-*-*-*-*-*-*-*
-SshAskpass.*borderWidth:           1
+SshAskpass*font: -uw-ttyp0-*-*-*-*-*-*-*-*-*-*-*-*
+SshAskpass.*borderWidth: 1
 
 Xcursor.theme: DMZ-White
 
-#include "Xresources-qillqaq"
 
-URxvt.font: xft:SF Mono:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:Noto Color Emoji:style=Regular:pixelsize=14
-URxvt.boldFont: xft:SF Mono:style=Bold:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:Noto Color Emoji:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.italicFont: xft:SF Mono:style=Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:Noto Color Emoji:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
-URxvt.boldItalicFont: xft:SF Mono:style=Bold Italic:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1,xft:Noto Color Emoji:style=Regular:pixelsize=14:antialias=true:hintstyle=1:lcdfilter=1:rgba=1
+rofi.modi:                           window,run,drun
+rofi.width:                          70
+rofi.lines:                          15
+rofi.font:                           .SF Compact Display 11
+rofi.padding:                        15
+rofi.fixed-num-lines:                true
+! rofi.show-icons:                     true
+rofi.window-command:                 awesome-client 'local awful = require "awful" for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'
+rofi.drun-match-fields:              name,generic,exec,categories
+rofi.parse-hosts:                    true
+rofi.parse-known-hosts:              true
+! rofi.combi-modi:                     window,run
+! "Set the matching algorithm. (normal, regex, glob, fuzzy)" Set from: Default
+! rofi.matching:                       normal
+rofi.separator-style:                solid
+rofi.hide-scrollbar:                 true
+rofi.combi-hide-mode-prefix:         true
+rofi.display-ssh:                    SSH
+rofi.display-combi:
+! rofi.kb-accept-entry:                Control+j,Control+m,Return,KP_Enter
+! rofi.kb-accept-custom:               Control+Return
+! rofi.kb-accept-alt:                  Shift+Return
+! rofi.kb-delete-entry:                Shift+Delete
+! rofi.kb-mode-next:                   Shift+Right,Control+Tab
+! rofi.kb-mode-previous:               Shift+Left,Control+ISO_Left_Tab
+! rofi.kb-toggle-case-sensitivity:     grave,dead_grave
+! rofi.kb-toggle-sort:                 Alt+grave
+! rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
+! rofi.kb-custom-1:                    Alt+1
+
+#include "Xresources-qillqaq"
