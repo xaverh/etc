@@ -4,7 +4,6 @@ local FM0 = {}
 
 local radio_stations = {
 	['🇬🇧 🔥\tBBC Radio 1'] = {
-		-- X
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_one.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_one.m3u8'
 	},
@@ -37,7 +36,6 @@ local radio_stations = {
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_five_live_sports_extra.m3u8'
 	},
 	['🇬🇧 🥑\tBBC Radio 6 Music'] = {
-		-- X
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_6music.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_6music.m3u8'
 	},

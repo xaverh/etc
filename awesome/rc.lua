@@ -27,7 +27,8 @@ local colors = {
         '91b0e6', -- Jordy Blue
         'e5b6e1', -- French Lilac
         'a2dcd7', -- Sinbad
-        'e5e6e6' -- Grey 90%
+        'e5e6e6', -- Grey 90%
+        cursor = '20bbfc' -- Deep Sky Blue
     },
     ys = {
         'f9f8f4', -- Floral White
@@ -45,10 +46,9 @@ local colors = {
         '1f477f', -- Bahama Blue
         '7b4474', -- Eminence
         '1b8486', -- Atoll
-        '424242' -- Grey 20%
-    },
-    cursor = '20bbfc', -- Deep Sky Blue, R=32, G=187, B=252
-    cursor_dark = '0f3a4b' -- Cyprus, R=15
+        '424242', -- Grey 20%
+        cursor = '0f3a4b' -- Cyprus
+    }
 }
 
 local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
@@ -65,25 +65,26 @@ elseif os.getenv 'HOSTNAME' == 'airolo' then
     temperature_filename = '/sys/class/thermal/thermal_zone2/temp'
 end
 
+local my_theme = 'qi'
+
 beautiful.init {
     font = '.SF Compact Display 11',
     hotkeys_font = '.SF Compact Display 11',
     hotkeys_description_font = '.SF Compact Display 11',
     tasklist_font_minimized = '.SF Compact Display Italic 11',
     tasklist_font_focus = '.SF Compact Display Bold 11',
-    bg_normal = '#' .. colors.qi[1],
-    bg_focus = '#' .. colors.qi[1],
-    bg_urgent = '#' .. colors.qi[2],
-    bg_minimize = '#' .. colors.qi[1],
-    fg_normal = '#' .. colors.qi[16],
-    fg_focus = '#' .. colors.qi[16],
-    fg_urgent = '#' .. colors.qi[16],
-    fg_minimize = '#' .. colors.qi[8],
-    -- taglist_bg_focus = '#' .. colors.cursor,
-    hotkeys_modifiers_fg = '#' .. colors.qi[8],
-    border_normal = '#' .. colors.qi[9],
-    border_focus = '#' .. colors.cursor,
-    border_marked = '#' .. colors.qi[4],
+    bg_normal = '#' .. colors[my_theme][1],
+    bg_focus = '#' .. colors[my_theme][1],
+    bg_urgent = '#' .. colors[my_theme][2],
+    bg_minimize = '#' .. colors[my_theme][1],
+    fg_normal = '#' .. colors[my_theme][16],
+    fg_focus = '#' .. colors[my_theme][16],
+    fg_urgent = '#' .. colors[my_theme][16],
+    fg_minimize = '#' .. colors[my_theme][8],
+    hotkeys_modifiers_fg = '#' .. colors[my_theme][8],
+    border_normal = '#' .. colors[my_theme][9],
+    border_focus = '#' .. colors[my_theme].cursor,
+    border_marked = '#' .. colors[my_theme][4],
     maximized_hide_border = true,
     useless_gap = dpi(0),
     border_width = dpi(2),
@@ -91,12 +92,12 @@ beautiful.init {
     menu_height = dpi(20),
     menu_width = dpi(150),
     master_width_factor = 0.55,
-    layout_txt_tile = '  👈🏻  ',
-    layout_txt_tileleft = '  👉🏻  ',
-    layout_txt_fairv = '  🤙🏻  ',
-    layout_txt_floating = '  🖖🏻  ',
-    layout_txt_magnifier = '  🤏🏻  ',
-    layout_txt_max = '  👊🏻  ',
+    layout_txt_tile = '👈🏻',
+    layout_txt_tileleft = '👉🏻',
+    layout_txt_fairv = '🤙🏻',
+    layout_txt_floating = '🖖🏻',
+    layout_txt_magnifier = '🤏🏻',
+    layout_txt_max = '👊🏻',
     tasklist_disable_icon = true,
     tasklist_align = 'center',
     wibar_height = dpi(20),
@@ -146,7 +147,6 @@ end
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     awful.layout.suit.max,
@@ -156,11 +156,12 @@ awful.layout.layouts = {
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.magnifier,
-    awful.layout.suit.floating
+    awful.layout.suit.floating,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
+    awful.layout.suit.tile.left
 }
 
 local myawesomemenu = {
@@ -201,14 +202,6 @@ local mymainmenu =
             {'exit', myexitmenu},
             {'open terminal', os.getenv 'TERMINAL'}
         }
-    }
-)
-
-mylauncher =
-    awful.widget.launcher(
-    {
-        image = beautiful.awesome_icon,
-        menu = mymainmenu
     }
 )
 
@@ -605,7 +598,6 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.align.horizontal,
             {
                 layout = wibox.layout.fixed.horizontal,
-                mylauncher,
                 s.mytaglist,
                 s.mylayoutbox,
                 s.mypromptbox
@@ -641,18 +633,43 @@ root.buttons(
     )
 )
 
--- Key bindings
-
-local is_ysgrifennwr = false
 local function toggle_theme()
+    -- TODO
+    --[[
+    beautiful.bg_normal = '#' .. colors[my_theme][1]
+    beautiful.bg_focus = '#' .. colors[my_theme][1]
+    beautiful.bg_urgent = '#' .. colors[my_theme][2]
+    beautiful.bg_minimize = '#' .. colors[my_theme][1]
+    beautiful.fg_normal = '#' .. colors[my_theme][16]
+    beautiful.fg_focus = '#' .. colors[my_theme][16]
+    beautiful.fg_urgent = '#' .. colors[my_theme][16]
+    beautiful.fg_minimize = '#' .. colors[my_theme][8]
+    beautiful.hotkeys_modifiers_fg = '#' .. colors[my_theme][8]
+    beautiful.border_normal = '#' .. colors[my_theme][9]
+    beautiful.border_focus = '#' .. colors[my_theme].cursor
+    beautiful.border_marked = '#' .. colors[my_theme][4]
+    beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
+    -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+    beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
+    beautiful.layout_txt_tile = string.gsub(beautiful.layout_txt_tile, '🏻', '🏿', 1)
+    beautiful.layout_txt_tileleft = string.gsub(beautiful.layout_txt_tileleft, '🏻', '🏿', 1)
+    beautiful.layout_txt_fairv = string.gsub(beautiful.layout_txt_fairv, '🏻', '🏿', 1)
+    beautiful.layout_txt_floating = string.gsub(beautiful.layout_txt_floating, '🏻', '🏿', 1)
+    beautiful.layout_txt_magnifier = string.gsub(beautiful.layout_txt_magnifier, '🏻', '🏿', 1)
+    beautiful.layout_txt_max = string.gsub(beautiful.layout_txt_max, '🏻', '🏿', 1)
+    for s in screen do
+        s.mywibox.bg = '#' .. colors[my_theme][1]
+        s.mywibox.fg = '#' .. colors[my_theme][16]
+    end
+    --]]
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
     local content = file:read 'a'
     file:close()
     file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'w')
-    if is_ysgrifennwr then
+    if my_theme == 'qi' then
         content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
-    else
+    elseif my_theme == 'ys' then
         content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
     end
     file:write(content)
@@ -662,11 +679,11 @@ local function toggle_theme()
     content = file:read 'a'
     file:close()
     file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
-    if is_ysgrifennwr then
+    if my_theme == 'qi' then
         for i, v in ipairs(colors.ys) do
             content = string.gsub(content, v, colors.qi[i])
         end
-    else
+    elseif my_theme == 'ys' then
         for i, v in ipairs(colors.qi) do
             content = string.gsub(content, v, colors.ys[i])
         end
@@ -679,7 +696,7 @@ local function toggle_theme()
         '-override',
         gears.filesystem.get_xdg_config_home() .. (is_ysgrifennwr and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
     }
-    is_ysgrifennwr = not is_ysgrifennwr
+    my_theme = my_theme == 'qi' and 'ys' or 'qi'
 end
 
 local function tag_view_nonempty(direction)
@@ -921,9 +938,41 @@ globalkeys =
                     return
                 end
             end
-            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn,Nnn', '-e', 'nnn', '-x'}
+            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn,Nnn', '-e', 'nnn'}
         end,
         {description = 'open nnn', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'F8',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'strawberry', class = 'strawberry'})
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🍓'))
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+            awful.spawn 'strawberry'
+        end,
+        {description = '🍓', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'F8',
+        function()
+            awful.tag.find_by_name(nil, '🍓'):view_only()
+        end,
+        {
+            description = 'toggle 🍓',
+            group = '🏷️ tag'
+        }
     ),
     awful.key(
         {'Mod4'},
@@ -964,7 +1013,7 @@ globalkeys =
         {'Mod4', 'Control'},
         'l',
         function()
-            awful.tag.incmwfact(0.05)
+            awful.tag.incmwfact(0.0125)
         end,
         {description = 'increase master width factor', group = '💠 layout'}
     ),
@@ -972,7 +1021,7 @@ globalkeys =
         {'Mod4', 'Control'},
         'h',
         function()
-            awful.tag.incmwfact(-0.05)
+            awful.tag.incmwfact(-0.0125)
         end,
         {description = 'decrease master width factor', group = '💠 layout'}
     ),
@@ -1003,6 +1052,54 @@ globalkeys =
     awful.key(
         {'Mod4', 'Control', 'Shift'},
         'k',
+        function()
+            awful.tag.incncol(-1, nil, true)
+        end,
+        {description = 'decrease the number of columns', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control'},
+        'Right',
+        function()
+            awful.tag.incmwfact(0.0125)
+        end,
+        {description = 'increase master width factor', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control'},
+        'Left',
+        function()
+            awful.tag.incmwfact(-0.0125)
+        end,
+        {description = 'decrease master width factor', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control'},
+        'Down',
+        function()
+            awful.tag.incnmaster(1, nil, true)
+        end,
+        {description = 'increase the number of master clients', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control'},
+        'Up',
+        function()
+            awful.tag.incnmaster(-1, nil, true)
+        end,
+        {description = 'decrease the number of master clients', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control', 'Shift'},
+        'Down',
+        function()
+            awful.tag.incncol(1, nil, true)
+        end,
+        {description = 'increase the number of columns', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4', 'Control', 'Shift'},
+        'Up',
         function()
             awful.tag.incncol(-1, nil, true)
         end,
@@ -1604,10 +1701,6 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {class = 'strawberry'},
-        properties = {screen = 1, tag = '🍓'}
-    },
-    {
         rule = {class = 'Nnn', instance = 'Nnn'},
         properties = {
             new_tag = {
@@ -1636,6 +1729,18 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '📻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false
+        }
+    },
+    {
+        rule = {class = 'strawberry', instance = 'strawberry'},
+        properties = {
+            new_tag = {
+                name = '🍓',
                 layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true

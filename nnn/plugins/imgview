@@ -1,0 +1,13 @@
+#!/usr/bin/zsh
+
+if [[ -z "$1" ]] || ! [[ -s "$1" ]]; then
+	printf "empty file"
+	read -r _
+	exit 1
+fi
+
+if [[ -f "$1" ]]; then
+	sxiv -q "$1" "$PWD"
+elif [[ -d "$1" ]] || [[ -h "$1" ]]; then
+	sxiv -qt "$1"
+fi
