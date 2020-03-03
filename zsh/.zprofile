@@ -2,6 +2,7 @@ export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 export MAN_POSIXLY_CORRECT=1
 export EDITOR=vim
 export VISUAL=vim
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/init.vim
 export PAGER=less
 export TERMINAL=alacritty
 export AWS_REGION=eu-central-1
