@@ -20,6 +20,9 @@ export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
 export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
 export NNN_COLORS=4321
+export NNN_OPTS=Rxe
+export NNN_PLUG='i:imgview;c:_code -r'
+export NNN_BMS='c:~/.config;t:/tmp'
 
 # manpage colors
 export LESS_TERMCAP_mb=$'\E[00;32m'     # begin blinking
