@@ -80,9 +80,6 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 rpm --import https://dl.google.com/linux/linux_signing_key.pub
 echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo
 
-# Alacritty
-dnf copr enable pschyska/alacritty
-
 # Wireguard
 dnf copr enable jdoss/wireguard
 
@@ -202,7 +199,7 @@ add_dracutmodules+="crypt"
 e.g.
 
 ```sh
-sudo dnf install kernel @base-x @multimedia @firefox google-chrome-stable code gimp mpv youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock alacritty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl mpv-mpris abduco dvtm rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
+sudo dnf install kernel @base-x @multimedia @firefox google-chrome-stable at code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock kitty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl abduco dvtm rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
 ```
 
 ### configure keyboard layout and timezone
@@ -345,32 +342,37 @@ echo 'fs.inotify.max_user_watches=524288' | sudo tee /etc/sysctl.d/95-max-user-w
 
 ### default applications
 
-```sh
-xdg-mime default org.pwmt.zathura.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
-xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
-xdg-mime default nnn.desktop inode/directory
-desktop-file-install --rebuild-mime-info-cache --dir="$XDG_DATA_HOME/applications" ~/.config/Factory/nnn.desktop && xdg-settings set default-url-scheme-handler file <<-EOF
+In `/tmp/nnn.desktop`:
+
+```ini
 [Desktop Entry]
 Name=Nnn
 GenericName=File Manager
 Comment=minimalist file manager
 Keywords=shell;prompt;command;commandline;cmd;nnn;
 MimeType=inode/directory;
-Exec=/usr/bin/alacritty --title Nnn --class Nnn,Nnn -e nnn %u
+Exec=/usr/bin/kitty -1 --listen-on unix:@mykitty --title Nnn --name Nnn -- nnn %u
 Icon=file-manager
 Type=Application
 Categories=FileManager;FileTools;System
 StartupNotify=true
 X-GNOME-SingleWindow=false
 StartupWMClass=Nnn
-EOF
+```
+
+```sh
+xdg-mime default org.pwmt.zathura.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
+xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
+xdg-mime default nnn.desktop inode/directory
+desktop-file-install --rebuild-mime-info-cache --dir="$XDG_DATA_HOME/applications" /tmp/nnn.desktop
+xdg-settings set default-url-scheme-handler file nnn.desktop
 ```
 
 ### Node.js and Visual Studio Code packages
 ```sh
 npm -g i @vue/cli generator-code gulp-cli sass vsce yo
 
-code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-python.python --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
+code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 ```
 
 #### bluetooth

@@ -11,7 +11,6 @@ SshAskpass.*borderWidth: 1
 
 Xcursor.theme: DMZ-White
 
-
 rofi.modi:                           window,run,drun
 rofi.width:                          70
 rofi.lines:                          15
