@@ -97,12 +97,14 @@ beautiful.init {
     menu_height = dpi(20),
     menu_width = dpi(150),
     master_width_factor = 0.55,
-    layout_txt_tile = '👈🏻',
-    layout_txt_tileleft = '👉🏻',
-    layout_txt_fairv = '🤙🏻',
-    layout_txt_floating = '🖖🏻',
-    layout_txt_magnifier = '🤏🏻',
-    layout_txt_max = '👊🏻',
+    layout_txt = {
+        tile = '👈🏻',
+        tileleft = '👉🏻',
+        fairv = '🤙🏻',
+        floating = '🖖🏻',
+        magnifier = '🤏🏻',
+        max = '👊🏻'
+    },
     tasklist_disable_icon = true,
     tasklist_align = 'center',
     wibar_height = dpi(20),
@@ -504,7 +506,7 @@ end)()
 
 local function update_txt_layoutbox(s)
     -- Writes a string representation of the current layout in a textbox widget
-    local txt_l = beautiful['layout_txt_' .. awful.layout.getname(awful.layout.get(s))] or ''
+    local txt_l = beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))] or ''
     s.mylayoutbox:set_text(txt_l)
 end
 
@@ -528,7 +530,7 @@ awful.screen.connect_for_each_screen(
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
         -- Textual layoutbox
-        s.mylayoutbox = wibox.widget.textbox(beautiful['layout_txt_' .. awful.layout.getname(awful.layout.get(s))])
+        s.mylayoutbox = wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
         awful.tag.attached_connect_signal(
             s,
             'property::selected',
@@ -655,15 +657,20 @@ local function toggle_theme()
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
-    beautiful.layout_txt_tile = string.gsub(beautiful.layout_txt_tile, '🏻', '🏿', 1)
-    beautiful.layout_txt_tileleft = string.gsub(beautiful.layout_txt_tileleft, '🏻', '🏿', 1)
-    beautiful.layout_txt_fairv = string.gsub(beautiful.layout_txt_fairv, '🏻', '🏿', 1)
-    beautiful.layout_txt_floating = string.gsub(beautiful.layout_txt_floating, '🏻', '🏿', 1)
-    beautiful.layout_txt_magnifier = string.gsub(beautiful.layout_txt_magnifier, '🏻', '🏿', 1)
-    beautiful.layout_txt_max = string.gsub(beautiful.layout_txt_max, '🏻', '🏿', 1)
+    if my_theme == 'ys' then
+        for k, v in pairs(beautiful.layout_txt) do
+            beautiful.layout_txt[k] = string.gsub(v, '\u{1F3FB}', '\u{1F3FF}', 1)
+        end
+    elseif my_theme == 'qi' then
+        for k, v in pairs(beautiful.layout_txt) do
+            beautiful.layout_txt[k] = string.gsub(v, '\u{1F3FF}', '\u{1F3FB}', 1)
+        end
+    end
     for s in screen do
         s.mywibox.bg = colors[my_theme][1]
         s.mywibox.fg = colors[my_theme][16]
+        client.focus:emit_signal('focus')
+        update_txt_layoutbox(s)
     end
     -- Kitty
     awful.spawn {
