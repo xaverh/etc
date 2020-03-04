@@ -12,42 +12,47 @@ local fm0 = require 'fm0'
 
 local colors = {
     qi = {
-        '1e1e1e', -- Grey 10%
-        'e32791', -- Deep Cerise
-        '30c798', -- Shamrock
-        'e3c472', -- Chenin
-        '6796e6', -- Cornflower Blue
-        'e59fdf', -- Plum
-        '81d8d0', -- Riptide
-        '999999', -- Grey 60%
-        '515151', -- Grey 30%
-        'e466ad', -- Hot Pink
-        '6cd1b2', -- Medium Aquamarine
-        'e4cf98', -- Double Colonial White
-        '91b0e6', -- Jordy Blue
-        'e5b6e1', -- French Lilac
-        'a2dcd7', -- Sinbad
-        'e5e6e6', -- Grey 90%
-        cursor = '20bbfc' -- Deep Sky Blue
+        '#1e1e1e', -- Grey 10%
+        '#e32791', -- Deep Cerise
+        '#30c798', -- Shamrock
+        '#e3c472', -- Chenin
+        '#6796e6', -- Cornflower Blue
+        '#e59fdf', -- Plum
+        '#81d8d0', -- Riptide
+        '#999999', -- Grey 60%
+        '#515151', -- Grey 30%
+        '#e466ad', -- Hot Pink
+        '#6cd1b2', -- Medium Aquamarine
+        '#e4cf98', -- Double Colonial White
+        '#91b0e6', -- Jordy Blue
+        '#e5b6e1', -- French Lilac
+        '#a2dcd7', -- Sinbad
+        '#e5e6e6', -- Grey 90%
+        -- TODO
+        cursor = '#20bbfc', -- Deep Sky Blue
+        selbg = '#0f3a4b' -- Cyprus
+        -- selbg = '#522900' -- Baker's Chocolate
     },
     ys = {
-        'f9f8f4', -- Floral White
-        'e32791', -- Deep Cerise
-        '488432', -- La Palma
-        'a25d0e', -- Golden Brown
-        '2c65b5', -- Cerulean Blue
-        'b062a7', -- Violet Blue
-        '27bbbe', -- Light Sea Green
-        '999999', -- Grey 60%
-        'b8b8b8', -- Grey 70%
-        '9f1b66', -- Jazzberry Jam
-        '325d23', -- Parsley
-        '71410a', -- Raw Umber
-        '1f477f', -- Bahama Blue
-        '7b4474', -- Eminence
-        '1b8486', -- Atoll
-        '424242', -- Grey 20%
-        cursor = '0f3a4b' -- Cyprus
+        '#f9f8f4', -- Floral White
+        '#e32791', -- Deep Cerise
+        '#488432', -- La Palma
+        '#a25d0e', -- Golden Brown
+        '#2c65b5', -- Cerulean Blue
+        '#b062a7', -- Violet Blue
+        '#27bbbe', -- Light Sea Green
+        '#999999', -- Grey 60%
+        '#b8b8b8', -- Grey 70%
+        '#9f1b66', -- Jazzberry Jam
+        '#325d23', -- Parsley
+        '#71410a', -- Raw Umber
+        '#1f477f', -- Bahama Blue
+        '#7b4474', -- Eminence
+        '#1b8486', -- Atoll
+        '#424242', -- Grey 20%
+        -- TODO
+        selbg = '#add6ff', -- Pale Cornflower Blue
+        cursor = '#553a63' -- Honey Flower aka Love Symbol #2
     }
 }
 
@@ -73,18 +78,18 @@ beautiful.init {
     hotkeys_description_font = '.SF Compact Display 11',
     tasklist_font_minimized = '.SF Compact Display Italic 11',
     tasklist_font_focus = '.SF Compact Display Bold 11',
-    bg_normal = '#' .. colors[my_theme][1],
-    bg_focus = '#' .. colors[my_theme][1],
-    bg_urgent = '#' .. colors[my_theme][2],
-    bg_minimize = '#' .. colors[my_theme][1],
-    fg_normal = '#' .. colors[my_theme][16],
-    fg_focus = '#' .. colors[my_theme][16],
-    fg_urgent = '#' .. colors[my_theme][16],
-    fg_minimize = '#' .. colors[my_theme][8],
-    hotkeys_modifiers_fg = '#' .. colors[my_theme][8],
-    border_normal = '#' .. colors[my_theme][9],
-    border_focus = '#' .. colors[my_theme].cursor,
-    border_marked = '#' .. colors[my_theme][4],
+    bg_normal = colors[my_theme][1],
+    bg_focus = colors[my_theme][1],
+    bg_urgent = colors[my_theme][2],
+    bg_minimize = colors[my_theme][1],
+    fg_normal = colors[my_theme][16],
+    fg_focus = colors[my_theme][16],
+    fg_urgent = colors[my_theme][16],
+    fg_minimize = colors[my_theme][8],
+    hotkeys_modifiers_fg = colors[my_theme][8],
+    border_normal = colors[my_theme][9],
+    border_focus = colors[my_theme].cursor,
+    border_marked = colors[my_theme][4],
     maximized_hide_border = true,
     useless_gap = dpi(0),
     border_width = dpi(2),
@@ -102,10 +107,12 @@ beautiful.init {
     tasklist_align = 'center',
     wibar_height = dpi(20),
     -- XXX waiting for random function in awesome 4.4
-    wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and
-        gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or
+    -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
+    wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
         os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
 }
+
+-- TODO: notification borders
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
 -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
@@ -170,8 +177,7 @@ local myawesomemenu = {
         function()
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end
-    },
-    {'manual', os.getenv 'TERMINAL' .. ' -e man awesome'}
+    }
 }
 
 local mymultimediamenu = {
@@ -200,7 +206,7 @@ local mymainmenu =
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
             {'exit', myexitmenu},
-            {'open terminal', os.getenv 'TERMINAL'}
+            {'open terminal', 'kitty -1 --listen-on unix:@mykitty'}
         }
     }
 )
@@ -634,20 +640,18 @@ root.buttons(
 )
 
 local function toggle_theme()
-    -- TODO
-    --[[
-    beautiful.bg_normal = '#' .. colors[my_theme][1]
-    beautiful.bg_focus = '#' .. colors[my_theme][1]
-    beautiful.bg_urgent = '#' .. colors[my_theme][2]
-    beautiful.bg_minimize = '#' .. colors[my_theme][1]
-    beautiful.fg_normal = '#' .. colors[my_theme][16]
-    beautiful.fg_focus = '#' .. colors[my_theme][16]
-    beautiful.fg_urgent = '#' .. colors[my_theme][16]
-    beautiful.fg_minimize = '#' .. colors[my_theme][8]
-    beautiful.hotkeys_modifiers_fg = '#' .. colors[my_theme][8]
-    beautiful.border_normal = '#' .. colors[my_theme][9]
-    beautiful.border_focus = '#' .. colors[my_theme].cursor
-    beautiful.border_marked = '#' .. colors[my_theme][4]
+    beautiful.bg_normal = colors[my_theme][1]
+    beautiful.bg_focus = colors[my_theme][1]
+    beautiful.bg_urgent = colors[my_theme][2]
+    beautiful.bg_minimize = colors[my_theme][1]
+    beautiful.fg_normal = colors[my_theme][16]
+    beautiful.fg_focus = colors[my_theme][16]
+    beautiful.fg_urgent = colors[my_theme][16]
+    beautiful.fg_minimize = colors[my_theme][8]
+    beautiful.hotkeys_modifiers_fg = colors[my_theme][8]
+    beautiful.border_normal = colors[my_theme][9]
+    beautiful.border_focus = colors[my_theme].cursor
+    beautiful.border_marked = colors[my_theme][4]
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
@@ -658,10 +662,54 @@ local function toggle_theme()
     beautiful.layout_txt_magnifier = string.gsub(beautiful.layout_txt_magnifier, '🏻', '🏿', 1)
     beautiful.layout_txt_max = string.gsub(beautiful.layout_txt_max, '🏻', '🏿', 1)
     for s in screen do
-        s.mywibox.bg = '#' .. colors[my_theme][1]
-        s.mywibox.fg = '#' .. colors[my_theme][16]
+        s.mywibox.bg = colors[my_theme][1]
+        s.mywibox.fg = colors[my_theme][16]
     end
-    --]]
+    -- Kitty
+    awful.spawn {
+        'kitty',
+        '@',
+        '--to',
+        'unix:@mykitty',
+        'set-colors',
+        '-a',
+        '-c',
+        'foreground=' .. colors[my_theme][16],
+        'background=' .. colors[my_theme][1],
+        'color0=' .. colors[my_theme][1],
+        'color1=' .. colors[my_theme][2],
+        'color2=' .. colors[my_theme][3],
+        'color3=' .. colors[my_theme][4],
+        'color4=' .. colors[my_theme][5],
+        'color5=' .. colors[my_theme][6],
+        'color6=' .. colors[my_theme][7],
+        'color7=' .. colors[my_theme][8],
+        'color8=' .. colors[my_theme][9],
+        'color9=' .. colors[my_theme][10],
+        'color10=' .. colors[my_theme][11],
+        'color11=' .. colors[my_theme][12],
+        'color12=' .. colors[my_theme][13],
+        'color13=' .. colors[my_theme][14],
+        'color14=' .. colors[my_theme][15],
+        'color15=' .. colors[my_theme][16],
+        'cursor=' .. colors[my_theme].cursor,
+        'selection_background=' .. colors[my_theme].selbg
+    }
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'r')
+    content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'w')
+    if my_theme == 'qi' then
+        for i, v in ipairs(colors.ys) do
+            content = string.gsub(content, v, colors.qi[i])
+        end
+    elseif my_theme == 'ys' then
+        for i, v in ipairs(colors.qi) do
+            content = string.gsub(content, v, colors.ys[i])
+        end
+    end
+    file:write(content)
+    file:close()
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
     local content = file:read 'a'
@@ -671,22 +719,6 @@ local function toggle_theme()
         content = string.gsub(content, 'Ysgrifennwr', 'Qillqaq')
     elseif my_theme == 'ys' then
         content = string.gsub(content, 'Qillqaq', 'Ysgrifennwr')
-    end
-    file:write(content)
-    file:close()
-    -- Alacritty
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
-    if my_theme == 'qi' then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    elseif my_theme == 'ys' then
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
     end
     file:write(content)
     file:close()
@@ -728,7 +760,6 @@ globalkeys =
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
     awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
-    awful.key({'Mod4'}, 'r', fm0.start_radio, {description = 'FM0', group = '🚀 launcher'}),
     awful.key(
         {'Mod4'},
         'i',
@@ -917,9 +948,30 @@ globalkeys =
         {'Mod4'},
         'Return',
         function()
-            awful.spawn(os.getenv 'TERMINAL')
+            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty'}
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'r',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'FM0', class = 'mpv'})
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '📻'))
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+            fm0.start_radio()
+        end,
+        {description = 'FM0', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -927,7 +979,7 @@ globalkeys =
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Nnn', class = 'Nnn'})
+                    return awful.rules.match(c, {instance = 'Nnn', class = 'kitty'})
                 end
             ) do
                 if client.focus == c then
@@ -938,7 +990,7 @@ globalkeys =
                     return
                 end
             end
-            awful.spawn {'alacritty', '--title', 'Nnn', '--class', 'Nnn,Nnn', '-e', 'nnn'}
+            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', 'Nnn', 'nnn'}
         end,
         {description = 'open nnn', group = '🚀 launcher'}
     ),
@@ -980,7 +1032,7 @@ globalkeys =
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Journalctl', class = 'Journalctl'})
+                    return awful.rules.match(c, {instance = 'Journalctl', class = 'kitty'})
                 end
             ) do
                 if client.focus == c then
@@ -992,12 +1044,14 @@ globalkeys =
                 end
             end
             awful.spawn {
-                'alacritty',
+                'kitty',
+                '-1',
+                '--listen-on',
+                'unix:@mykitty',
                 '--title',
                 'Journalctl',
-                '--class',
-                'Journalctl,Journalctl',
-                '-e',
+                '--name',
+                'Journalctl',
                 'journalctl',
                 '-b',
                 '-f',
@@ -1652,7 +1706,8 @@ awful.rules.rules = {
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            size_hints_honor = true
         }
     },
     -- Floating clients.
@@ -1689,7 +1744,7 @@ awful.rules.rules = {
         properties = {floating = true}
     },
     {
-        rule = {class = 'Journalctl', instance = 'Journalctl'},
+        rule = {class = 'kitty', instance = 'Journalctl'},
         properties = {
             new_tag = {
                 name = '🧻',
@@ -1701,11 +1756,10 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {class = 'Nnn', instance = 'Nnn'},
+        rule = {class = 'kitty', instance = 'Nnn'},
         properties = {
             new_tag = {
                 name = '🧞‍♀️',
-                layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
             },
@@ -1717,7 +1771,7 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '🍿',
-                layout = awful.layout.suit.max,
+                -- layout = awful.layout.suit.max.fullscreen,
                 volatile = true,
                 selected = true
             },
@@ -1729,7 +1783,7 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '📻',
-                layout = awful.layout.suit.max,
+                layout = awful.layout.suit.magnifier,
                 volatile = true,
                 selected = true
             },
@@ -1757,7 +1811,9 @@ client.connect_signal(
     function(c)
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
-        -- if not awesome.startup then awful.client.setslave(c) end
+        if not awesome.startup then
+            awful.client.setslave(c)
+        end
 
         if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
             -- Prevent clients from being unreachable after screen count changes.

@@ -4,7 +4,6 @@ export EDITOR=vim
 export VISUAL=vim
 export VIMINIT=":source $XDG_CONFIG_HOME"/vim/init.vim
 export PAGER=less
-export TERMINAL=alacritty
 export AWS_REGION=eu-central-1
 export CM_LAUNCHER=rofi
 export CM_DIR="$XDG_RUNTIME_DIR"
@@ -17,8 +16,6 @@ export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/lesshst"
 export GNUPGHOME="${XDG_CONFIG_HOME:-$HOME/.config}/gnupg"
 export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
-# https://github.com/alacritty/alacritty/issues/1501
-export WINIT_HIDPI_FACTOR=1
 export XCURSOR_THEME="DMZ-White"
 export NNN_COLORS=4321
 export NNN_OPTS=Rxe

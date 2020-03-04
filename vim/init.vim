@@ -1,14 +1,14 @@
 set nocompatible
 
+if !has('nvim')
+	let &t_SI = "\<Esc>[5 q"
+	let &t_SR = "\<Esc>[3 q"
+	let &t_EI = "\<Esc>[1 q"
+endif
+
 if has('nvim')
 	set bg=dark
 endif
-
-if !has('nvim')
-	" https://github.com/alacritty/alacritty/issues/2931
-	set ttymouse=sgr
-endif
-set mouse=a
 
 if !has('nvim')
 	if has('unix')
@@ -63,6 +63,7 @@ set incsearch
 set nolangremap
 set laststatus=2
 set listchars=eol:¬,extends:»,tab:▸\ ,trail:·,nbsp:°
+set mouse=a
 set nrformats+=bin
 set nrformats+=hex
 set nrformats+=alpha
