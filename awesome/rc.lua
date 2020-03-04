@@ -623,6 +623,23 @@ awful.screen.connect_for_each_screen(
                 mytextclock
             }
         }
+        screen[s]:connect_signal(
+            'arrange',
+            function(s)
+                for _, c in pairs(s.clients) do
+                    if
+                        (s.selected_tag.layout.name == 'max' or s.selected_tag.layout.name ~= 'floating' and
+                            #s.tiled_clients == 1) and
+                            not c.floating or
+                            c.maximized
+                     then
+                        c.border_width = 0
+                    else
+                        c.border_width = beautiful.border_width
+                    end
+                end
+            end
+        )
     end
 )
 
