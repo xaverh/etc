@@ -628,8 +628,8 @@ awful.screen.connect_for_each_screen(
             function(s)
                 for _, c in pairs(s.clients) do
                     if
-                        (s.selected_tag.layout.name == 'max' or s.selected_tag.layout.name ~= 'floating' and
-                            #s.tiled_clients == 1) and
+                        (s.selected_tag.layout.name == 'max' or
+                            s.selected_tag.layout.name ~= 'floating' and #s.tiled_clients == 1) and
                             not c.floating or
                             c.maximized
                      then
@@ -687,6 +687,11 @@ local function toggle_theme()
         s.mywibox.bg = colors[my_theme][1]
         s.mywibox.fg = colors[my_theme][16]
         client.focus:emit_signal('focus')
+        for _, c in ipairs(s.clients) do
+            if c ~= client.focus then
+                c.border_color = beautiful.border_normal
+            end
+        end
         update_txt_layoutbox(s)
     end
     -- Kitty
