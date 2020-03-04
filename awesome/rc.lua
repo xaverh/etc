@@ -71,6 +71,11 @@ elseif os.getenv 'HOSTNAME' == 'airolo' then
 end
 
 local my_theme = 'qi'
+-- if (os.date('*t').hour + 16) % 24 >= 12 then
+-- my_theme = 'qi'
+-- else
+-- my_theme = 'ys'
+-- end
 
 beautiful.init {
     font = '.SF Compact Display 11',
@@ -296,6 +301,7 @@ local tasklist_buttons =
     )
 )
 
+-- TODO
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -1872,13 +1878,3 @@ client.connect_signal(
         c.border_color = beautiful.border_normal
     end
 )
-
--- TODO keeps blocking awesome when starting up
---[[
-if (os.date('*t').hour + 16) % 24 >= 12 then
-    is_ysgrifennwr = true
-else
-    is_ysgrifennwr = false
-end
-toggle_theme()
-]]
