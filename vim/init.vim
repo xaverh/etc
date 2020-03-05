@@ -68,7 +68,6 @@ set nrformats+=bin
 set nrformats+=hex
 set nrformats+=alpha
 set nrformats+=octal
-set relativenumber
 set ruler
 set scrolloff=1
 set sessionoptions-=options
@@ -161,8 +160,12 @@ function! HasPaste()
 endfunction
 
 set cindent
-set title
+set number
+set numberwidth=1
 set pastetoggle=<F8>
+set relativenumber
+set title
+set nowrap
 
 " Comma as leader (default is \)
 " let mapleader = ","
@@ -184,7 +187,6 @@ set pastetoggle=<F8>
 " set noerrorbells
 " set noexpandtab
 " set nohidden
-" set numberwidth=1
 " set pyxversion=3
 " set shiftwidth=4
 " set showmatch
@@ -199,7 +201,6 @@ set pastetoggle=<F8>
 " set whichwrap+=<,>,[,],h,l
 " " http://stackoverflow.com/questions/526858/" how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
 " set wildmode=longest,list,full
-" set wrap
 " set writebackup
 "
 " " Useful mappings for managing tabs
