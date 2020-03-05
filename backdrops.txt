@@ -74,4 +74,5 @@ wax.xbm -fg #305243 -bg #df4c6c
 wax.xbm -fg #41073e -bg #0a1651
 wax.xbm -fg #77e3a5 -bg #ab3416
 Wooly.xbm -fg #669724 -bg #6f0b5d
+Wooly.xbm -fg #ccd5cd -bg #170632
 worm.xbm -fg #cf8ae4 -bg #16978b
