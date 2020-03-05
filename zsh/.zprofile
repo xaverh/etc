@@ -19,7 +19,7 @@ export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
 export XCURSOR_THEME="DMZ-White"
 export NNN_COLORS=4321
 export NNN_OPTS=Rxe
-export NNN_PLUG='i:imgview;c:_code -r'
+export NNN_PLUG='i:imgview;c:_code -r;x:sx;d:hexview'
 export NNN_BMS='c:~/.config;t:/tmp'
 
 # manpage colors
