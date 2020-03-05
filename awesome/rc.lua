@@ -28,9 +28,9 @@ local colors = {
         '#e5b6e1', -- French Lilac
         '#a2dcd7', -- Sinbad
         '#e5e6e6', -- Grey 90%
-        -- TODO
         cursor = '#20bbfc', -- Deep Sky Blue
-        selbg = '#0f3a4b' -- Cyprus
+        selbg = '#0f3a4b', -- Cyprus
+        -- error = '#ed2939' -- Alizarin
         -- selbg = '#522900' -- Baker's Chocolate
     },
     ys = {
@@ -50,13 +50,10 @@ local colors = {
         '#7b4474', -- Eminence
         '#1b8486', -- Atoll
         '#424242', -- Grey 20%
-        -- TODO
         selbg = '#add6ff', -- Pale Cornflower Blue
         cursor = '#553a63' -- Honey Flower aka Love Symbol #2
     }
 }
-
-local assets = gears.filesystem.get_configuration_dir() .. 'assets/'
 
 local has_volume_keys
 local has_multimedia_keys
@@ -95,8 +92,9 @@ beautiful.init {
     border_normal = colors[my_theme][9],
     border_focus = colors[my_theme].cursor,
     border_marked = colors[my_theme][4],
+    taglist_bg_focus = colors[my_theme].selbg,
     maximized_hide_border = true,
-    useless_gap = dpi(0),
+    useless_gap = 0,
     border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
@@ -213,7 +211,7 @@ local mymainmenu =
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
             {'exit', myexitmenu},
-            {'open terminal', 'kitty -1 --listen-on unix:@mykitty'}
+            {'open terminal', 'kitty -1 --name kitty --listen-on unix:@mykitty'}
         }
     }
 )
@@ -519,7 +517,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️ '💤',🥑'
+local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️ '💤',🥑'🧀,
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
@@ -529,7 +527,7 @@ awful.screen.connect_for_each_screen(
             awful.tag({table.unpack(default_tags, 1, 9)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
             awful.tag({table.unpack(default_tags, 10, 11)}, s, awful.layout.layouts[1])
-        else
+        elseif s.index == 3 then
             awful.tag({table.unpack(default_tags, 12)}, s, awful.layout.layouts[1])
         end
 
@@ -594,7 +592,7 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.selected,
+            filter = awful.widget.taglist.filter.noempty,
             buttons = taglist_buttons
         }
 
@@ -634,8 +632,9 @@ awful.screen.connect_for_each_screen(
             function(s)
                 for _, c in pairs(s.clients) do
                     if
-                        (s.selected_tag.layout.name == 'max' or
-                            s.selected_tag.layout.name ~= 'floating' and #s.tiled_clients == 1) and
+                        beautiful.useless_gap == 0 and
+                            (s.selected_tag.layout.name == 'max' or
+                                s.selected_tag.layout.name ~= 'floating' and #s.tiled_clients == 1) and
                             not c.floating or
                             c.maximized
                      then
@@ -677,6 +676,7 @@ local function toggle_theme()
     beautiful.border_normal = colors[my_theme][9]
     beautiful.border_focus = colors[my_theme].cursor
     beautiful.border_marked = colors[my_theme][4]
+    beautiful.taglist_bg_focus = colors[my_theme].selbg
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
@@ -983,7 +983,7 @@ globalkeys =
         {'Mod4'},
         'Return',
         function()
-            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty'}
+            awful.spawn {'kitty', '-1', '--name', 'kitty', '--listen-on', 'unix:@mykitty'}
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
@@ -1018,7 +1018,7 @@ globalkeys =
                 end
             ) do
                 if client.focus == c then
-                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧞‍♀️'))
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧞‍♂️'))
                     return
                 else
                     c:jump_to(true)
@@ -1028,6 +1028,26 @@ globalkeys =
             awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', 'Nnn', 'nnn'}
         end,
         {description = 'open nnn', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'v',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'mpvk', class = 'mpv'})
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🍿'))
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+        end,
+        {description = 'open mpv', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1727,8 +1747,6 @@ clientbuttons =
 -- Set keys
 root.keys(globalkeys)
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
     {
@@ -1743,6 +1761,8 @@ awful.rules.rules = {
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
             size_hints_honor = true
+            -- TODO
+            -- tag = function() return awful.screen.focused().selected_tag end
         }
     },
     -- Floating clients.
@@ -1779,7 +1799,7 @@ awful.rules.rules = {
         properties = {floating = true}
     },
     {
-        rule = {class = 'kitty', instance = 'Journalctl'},
+        rule = {instance = 'Journalctl'},
         properties = {
             new_tag = {
                 name = '🧻',
@@ -1791,10 +1811,10 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {class = 'kitty', instance = 'Nnn'},
+        rule = {instance = 'Nnn'},
         properties = {
             new_tag = {
-                name = '🧞‍♀️',
+                name = '🧞‍♂️',
                 volatile = true,
                 selected = true
             },
