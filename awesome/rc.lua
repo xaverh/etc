@@ -29,7 +29,7 @@ local colors = {
         '#a2dcd7', -- Sinbad
         '#e5e6e6', -- Grey 90%
         cursor = '#20bbfc', -- Deep Sky Blue
-        selbg = '#0f3a4b', -- Cyprus
+        selbg = '#0f3a4b' -- Cyprus
         -- error = '#ed2939' -- Alizarin
         -- selbg = '#522900' -- Baker's Chocolate
     },
@@ -761,7 +761,8 @@ local function toggle_theme()
     awful.spawn {
         'xrdb',
         '-override',
-        gears.filesystem.get_xdg_config_home() .. (is_ysgrifennwr and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
+        gears.filesystem.get_xdg_config_home() ..
+            (my_theme == 'qi' and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
     }
     my_theme = my_theme == 'qi' and 'ys' or 'qi'
 end
@@ -1439,7 +1440,6 @@ for i, v in ipairs(default_tags) do
                 group = '🏷️ tag'
             }
         ),
-        -- Toggle tag display.
         awful.key(
             {'Mod4', 'Control'},
             '#' .. i + 9,
@@ -1451,7 +1451,6 @@ for i, v in ipairs(default_tags) do
                 group = '🏷️ tag'
             }
         ),
-        -- Move client to tag.
         awful.key(
             {'Mod4', 'Shift'},
             '#' .. i + 9,
@@ -1465,7 +1464,6 @@ for i, v in ipairs(default_tags) do
                 group = '🏷️ tag'
             }
         ),
-        -- Toggle tag on focused client.
         awful.key(
             {'Mod4', 'Control', 'Shift'},
             '#' .. i + 9,
@@ -1475,7 +1473,26 @@ for i, v in ipairs(default_tags) do
                 end
             end,
             {
-                description = 'toggle client on ' .. v,
+                description = 'toggle ' .. v .. ' on client',
+                group = '🏷️ tag'
+            }
+        )
+    )
+end
+
+-- TODO: assign keys to apps instead of tags
+for i = 1, 4 do
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {},
+            'F' .. i,
+            function()
+                awful.tag.find_by_name(nil, default_tags[i]):view_only()
+            end,
+            {
+                description = 'view ' .. default_tags[i],
                 group = '🏷️ tag'
             }
         )
@@ -1855,6 +1872,12 @@ awful.rules.rules = {
                 selected = true
             },
             sticky = false
+        }
+    },
+    {
+        rule = {class = 'SshAskpass'},
+        properties = {
+            ontop = true
         }
     }
 }
