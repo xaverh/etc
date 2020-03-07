@@ -93,5 +93,13 @@
 	{
 		"key": "shift+alt+enter",
 		"command": "git.push"
+	},
+	{
+		"key": "alt+space",
+		"command": "workbench.action.showCommands"
+	},
+	{
+		"key": "f1",
+		"command": "-workbench.action.showCommands"
 	}
 ]
