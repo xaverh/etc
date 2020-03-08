@@ -1810,7 +1810,8 @@ awful.rules.rules = {
             role = {
                 'AlarmWindow', -- Thunderbird's calendar.
                 'ConfigManager', -- Thunderbird's about:config.
-                'pop-up' -- e.g. Google Chrome's (detached) Developer Tools.
+                'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
+                'bubble' -- Vivaldi's "cast..." menu
             }
         },
         properties = {floating = true}
@@ -1823,8 +1824,7 @@ awful.rules.rules = {
                 layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
-            },
-            sticky = false
+            }
         }
     },
     {
@@ -1834,8 +1834,7 @@ awful.rules.rules = {
                 name = '🧞‍♂️',
                 volatile = true,
                 selected = true
-            },
-            sticky = false
+            }
         }
     },
     {
@@ -1858,8 +1857,7 @@ awful.rules.rules = {
                 layout = awful.layout.suit.magnifier,
                 volatile = true,
                 selected = true
-            },
-            sticky = false
+            }
         }
     },
     {
@@ -1870,8 +1868,7 @@ awful.rules.rules = {
                 layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
-            },
-            sticky = false
+            }
         }
     },
     {
