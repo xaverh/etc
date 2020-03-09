@@ -3,6 +3,9 @@ module.exports = {
 	env: {
 		es6: true,
 		node: true
+	},
+	rules: {
+		'prettier/prettier': 'warn'
 	}
 }
 
