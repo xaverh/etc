@@ -1,7 +1,7 @@
 SshAskpass*background:             #f9f8f4
 SshAskpass*foreground:             #424242
 SshAskpass.Button*background:      #f9f8f4
-SshAskpass.Indicator*foreground:   #a25d0e
+SshAskpass.Indicator*foreground:   #553a63
 SshAskpass.Indicator*background:   #b8b8b8
 SshAskpass*topShadowColor:         #f9f8f4
 SshAskpass*bottomShadowColor:      #f9f8f4
@@ -25,11 +25,10 @@ SshAskpass*bottomShadowColor:      #f9f8f4
 *.color15: #424242
 *.foreground: #424242
 *.cursorColor: #20bbfc
-*.cursorColor2: #0f3a4b
 
 ! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
-rofi.color-normal: #f9f8f4,  #424242,  #ececec,  #add6ff,  #424242
-rofi.color-urgent: #f9f8f4,  #424242,  #ececec,  #add6ff,  #488432
-rofi.color-active: #f9f8f4,  #424242,  #ececec,  #20bbfc,  #424242
+rofi.color-normal: #f9f8f4,  #424242,  #edece8,  #baddff,  #424242
+rofi.color-urgent: #f9f8f4,  #424242,  #edece8,  #baddff,  #488432
+rofi.color-active: #f9f8f4,  #424242,  #edece8,  #20bbfc,  #424242
 !                  'background', 'border', 'separator'
-rofi.color-window: #f9f8f4,      #0f3a4b,  #999999
+rofi.color-window: #f9f8f4,      #20bbfc,  #999999
