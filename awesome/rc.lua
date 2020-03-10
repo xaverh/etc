@@ -12,46 +12,62 @@ local fm0 = require 'fm0'
 
 local colors = {
     qi = {
-        '#1e1e1e', -- Grey 10%
+        '#171717', -- Graphite Black
         '#e32791', -- Deep Cerise
         '#30c798', -- Shamrock
         '#e3c472', -- Chenin
         '#6796e6', -- Cornflower Blue
         '#e59fdf', -- Plum
         '#81d8d0', -- Riptide
-        '#999999', -- Grey 60%
-        '#515151', -- Grey 30%
+        '#999999', -- Pearl Light Grey
+        '#515151', -- Dark Grey
         '#e466ad', -- Hot Pink
         '#6cd1b2', -- Medium Aquamarine
         '#e4cf98', -- Double Colonial White
         '#91b0e6', -- Jordy Blue
         '#e5b6e1', -- French Lilac
         '#a2dcd7', -- Sinbad
-        '#e5e6e6', -- Grey 90%
-        cursor = '#20bbfc', -- Deep Sky Blue
-        selbg = '#0f3a4b' -- Cyprus
-        -- error = '#ed2939' -- Alizarin
-        -- selbg = '#522900' -- Baker's Chocolate
+        '#e5e6e6', -- Code Grey
+        cursor = '#ff7135', -- Burnt Orange
+        selbg = '#0f3a4b', -- Cyprus
+        bg_med = '#333333', -- Umbra Grey
+        bg_low = '#131313', -- Jet Black
+        info = '#1680ac', -- Cerulean
+        ui_blue = '#0f3a4b', -- Cyprus
+        ui_purple = '#553a63', -- Love Symbol #2,
+        ui_orange = '#522900', -- Baker's Chocolate
+        fg_inv = '#e5e6e6', -- Code Grey
+        error = '#ed2939', -- Alizarin
+        warning = '#e9a700' -- Gamboge
     },
     ys = {
-        '#f9f8f4', -- Floral White
+        '#f9f8f4', -- Traffic White
         '#e32791', -- Deep Cerise
         '#488432', -- La Palma
         '#a25d0e', -- Golden Brown
         '#2c65b5', -- Cerulean Blue
         '#b062a7', -- Violet Blue
         '#27bbbe', -- Light Sea Green
-        '#999999', -- Grey 60%
-        '#b8b8b8', -- Grey 70%
+        '#999999', -- Pearl Light Grey
+        '#b8b8b8', -- Fortress Grey
         '#9f1b66', -- Jazzberry Jam
         '#325d23', -- Parsley
         '#71410a', -- Raw Umber
         '#1f477f', -- Bahama Blue
         '#7b4474', -- Eminence
         '#1b8486', -- Atoll
-        '#424242', -- Grey 20%
-        selbg = '#add6ff', -- Pale Cornflower Blue
-        cursor = '#553a63' -- Honey Flower aka Love Symbol #2
+        '#424242', -- Meaning of Everything Grey,
+        bg_med = '#dddbd7', -- Light grey
+        bg_low = '#edece8', -- Signal White
+        selbg = '#baddff', -- Onahau
+        cursor = '#20bbfc', -- Deep Sky Blue
+        info = '#20bbfc', -- Deep Sky Blue
+        ui_blue = '#0f3a4b', -- Cyprus
+        ui_purple = '#553a63', -- Love Symbol #2
+        ui_orange = '#964f00', -- Saddle Brown
+        fg_inv = '#f9f8f4', -- Traffic White
+        error = '#ed2939', -- Alizarin
+        warning = '#c08a00' -- Dark Goldenrod
     }
 }
 
@@ -92,7 +108,7 @@ beautiful.init {
     border_normal = colors[my_theme][9],
     border_focus = colors[my_theme].cursor,
     border_marked = colors[my_theme][4],
-    taglist_bg_focus = colors[my_theme].selbg,
+    taglist_bg_focus = colors[my_theme].bg_med,
     maximized_hide_border = true,
     useless_gap = 0,
     border_width = dpi(2),
@@ -676,7 +692,7 @@ local function toggle_theme()
     beautiful.border_normal = colors[my_theme][9]
     beautiful.border_focus = colors[my_theme].cursor
     beautiful.border_marked = colors[my_theme][4]
-    beautiful.taglist_bg_focus = colors[my_theme].selbg
+    beautiful.taglist_bg_focus = colors[my_theme].bg_med
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
@@ -728,7 +744,19 @@ local function toggle_theme()
         'color14=' .. colors[my_theme][15],
         'color15=' .. colors[my_theme][16],
         'cursor=' .. colors[my_theme].cursor,
-        'selection_background=' .. colors[my_theme].selbg
+        'selection_background=' .. colors[my_theme].selbg,
+        'url_color=' .. colors[my_theme].info,
+        'active_border_color=' .. colors[my_theme].ui_purple,
+        'active_tab_foreground=' .. colors[my_theme][16],
+        'active_tab_background=' .. colors[my_theme][1],
+        'inactive_tab_foreground=' .. colors[my_theme][8],
+        'inactive_tab_background=' .. colors[my_theme].bg_med,
+        'mark1_foreground=' .. colors[my_theme][16],
+        'mark1_background=' .. colors[my_theme].ui_blue,
+        'mark2_foreground=' .. colors[my_theme][16],
+        'mark2_background=' .. colors[my_theme].ui_orange,
+        'mark3_foreground=' .. colors[my_theme][16],
+        'mark3_background=' .. colors[my_theme].ui_purple
     }
     file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'r')
     content = file:read 'a'
@@ -1256,7 +1284,7 @@ globalkeys =
         {'Mod4'},
         'space',
         function()
-            awful.spawn.easy_async {'rofi', '-combi-modi', 'window,drun,run', '-show', 'combi', '-modi', 'combi'}
+            awful.spawn {'rofi', '-combi-modi', 'window,drun,run', '-show', 'combi', '-modi', 'combi'}
         end,
         {description = 'run prompt', group = '🚀 launcher'}
     ),
