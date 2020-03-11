@@ -234,7 +234,7 @@
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
-	"editor.fontFamily": "monospace",
+	"editor.fontFamily": "IBM Plex Mono, monospace",
 	"editor.minimap.size": "fit",
 	"timeline.showView": true,
 	"workbench.colorTheme": "Qillqaq"
