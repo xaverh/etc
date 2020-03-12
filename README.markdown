@@ -78,7 +78,7 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 
 # Google Chrome
 rpm --import https://dl.google.com/linux/linux_signing_key.pub
-echo -e "[google-chrome-unstable]\nname=google-chrome-unstable\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo
+echo -e "[google-chrome-unstable]\nname=google-chrome-unstable\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome-unstable.repo
 
 # Vivaldi
 rpm --import https://repo.vivaldi.com/archive/linux_signing_key.pub
