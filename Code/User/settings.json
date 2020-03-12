@@ -103,10 +103,8 @@
 	"git.autofetch": true,
 	"javascript.format.enable": false,
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-	"eslint.validate": ["javascript", "javascriptreact", "html", "vue"],
-	"eslint.options": {
-		"plugins": ["vue", "html"]
-	},
+	//"eslint.validate": ["javascript", "javascriptreact", "html", "vue"],
+	//"eslint.options": { "plugins": ["vue", "html"] },
 	"editor.multiCursorPaste": "spread",
 	"search.smartCase": true,
 	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
@@ -153,7 +151,7 @@
 	"vetur.format.options.useTabs": true,
 	"vetur.format.options.tabSize": 4,
 	"files.autoSave": "afterDelay",
-	"editor.minimap.enabled": false,
+	"editor.minimap.enabled": true,
 	"explorer.incrementalNaming": "smart",
 	"editor.cursorSurroundingLines": 3,
 	"terminal.integrated.cwd": "${fileDirname}",
@@ -229,7 +227,6 @@
 	"terminal.integrated.rendererType": "experimentalWebgl",
 	"javascript.format.semicolons": "remove",
 	"typescript.format.semicolons": "remove",
-	"search.enableSearchEditorPreview": true,
 	"debug.chrome.useV3": true,
 	"debug.node.useV3": true,
 	"files.defaultLanguage": "${activeEditorLanguage}",
@@ -237,5 +234,8 @@
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
+	"editor.fontFamily": "monospace",
+	"editor.minimap.size": "fit",
+	"timeline.showView": true,
 	"workbench.colorTheme": "Qillqaq"
 }

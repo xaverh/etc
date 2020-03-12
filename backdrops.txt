@@ -33,7 +33,7 @@ E7bMSiv.xbm -fg #555a3b -bg #5dcba2
 E7bMSiv.xbm -fg #5f616c -bg #030bd0
 E7bMSiv.xbm -fg #6510b0 -bg #e4621b
 E7bMSiv.xbm -fg #7b550f -bg #361919
-E7bMSiv.xbm -fg #902c25 -bg #1e1e1e
+E7bMSiv.xbm -fg #902c25 -bg #171717
 E7bMSiv.xbm -fg #b31766 -bg #1b1370
 E7bMSiv.xbm -fg #c37c5a -bg #23b5d4
 E7bMSiv.xbm -fg #d6add3 -bg #589665

@@ -11,3 +11,4 @@
 -   prevent apps from creating 2nd tags, e.g. 🍓
 -   h,j,k,l don't work in max mode => solutions: either let Tab cycle all windows or change h,j,k,l functionality dynamically
 -   shortkeys for nnn, VS Code and Vivaldi in the awesome hotkeys menu
+-   toggle zathura's colorscheme

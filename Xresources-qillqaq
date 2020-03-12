@@ -1,13 +1,13 @@
-SshAskpass*background:             #1e1e1e
+SshAskpass*background:             #171717
 SshAskpass*foreground:             #e5e6e6
-SshAskpass.Button*background:      #1e1e1e
-SshAskpass.Indicator*foreground:   #e3c472
+SshAskpass.Button*background:      #171717
+SshAskpass.Indicator*foreground:   #ff7135
 SshAskpass.Indicator*background:   #515151
-SshAskpass*topShadowColor:         #1e1e1e
-SshAskpass*bottomShadowColor:      #1e1e1e
+SshAskpass*topShadowColor:         #171717
+SshAskpass*bottomShadowColor:      #171717
 
-*.color0: #1e1e1e
-*.background: #1e1e1e
+*.color0: #171717
+*.background: #171717
 *.color1: #e32791
 *.color2: #30c798
 *.color3: #e3c472
@@ -24,12 +24,11 @@ SshAskpass*bottomShadowColor:      #1e1e1e
 *.color14: #a2dcd7
 *.color15: #e5e6e6
 *.foreground: #e5e6e6
-*.cursorColor: #20bbfc
-*.cursorColor2: #0f3a4b
+*.cursorColor: #ff7135
 
 ! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
-rofi.color-normal: #1e1e1e,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e5e6e6
-rofi.color-urgent: #1e1e1e,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e32791
-rofi.color-active: #1e1e1e,  #e5e6e6,  #2d2d2d,  #264f78,  #e5e6e6
+rofi.color-normal: #171717,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e5e6e6
+rofi.color-urgent: #171717,  #e5e6e6,  #2d2d2d,  #0f3a4b,  #e32791
+rofi.color-active: #171717,  #e5e6e6,  #2d2d2d,  #553a63,  #e5e6e6
 !                  'background', 'border', 'separator'
-rofi.color-window: #1e1e1e,      #20bbfc,  #999999
+rofi.color-window: #171717,      #ff7135,  #999999
