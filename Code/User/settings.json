@@ -237,5 +237,5 @@
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
-	"workbench.colorTheme": "Qillqaq 2"
+	"workbench.colorTheme": "Qillqaq"
 }
