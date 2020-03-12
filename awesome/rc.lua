@@ -1926,6 +1926,16 @@ awful.rules.rules = {
         properties = {
             ontop = true
         }
+    },
+    {
+        rule = {role = 'GtkFileChooserDialog'},
+        properties = {
+            height = dpi(600),
+            width = dpi(860),
+            ontop = true,
+            x = dpi(210),
+            y = dpi(100)
+        }
     }
 }
 
