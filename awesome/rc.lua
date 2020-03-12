@@ -98,7 +98,7 @@ beautiful.init {
     border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
-    menu_width = dpi(150),
+    menu_width = dpi(300),
     master_width_factor = 0.55,
     layout_txt = {
         tile = '👈🏻',
@@ -123,12 +123,8 @@ beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautif
 -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
-local function connect_bluetooth()
-    awful.spawn 'bluetoothctl connect 88:C6:26:F4:8A:90'
-end
-
-local function disconnect_bluetooth()
-    awful.spawn 'bluetoothctl disconnect 88:C6:26:F4:8A:90'
+local function connect_bluetooth(connect, mac)
+    awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
 end
 
 local function strawberry_next()
@@ -186,8 +182,30 @@ local myawesomemenu = {
 }
 
 local mymultimediamenu = {
-    {'connect bluetooth device (Setúbal)', connect_bluetooth},
-    {'disconnect bluetooth device (Setúbal)', disconnect_bluetooth}
+    {
+        'connect bluetooth device (Setúbal)',
+        function()
+            connect_bluetooth(true, '88:C6:26:F4:8A:90')
+        end
+    },
+    {
+        'disconnect bluetooth device (Setúbal)',
+        function()
+            connect_bluetooth(false, '88:C6:26:F4:8A:90')
+        end
+    },
+    {
+        'connect bluetooth device (JBL GO)',
+        function()
+            connect_bluetooth(true, '78:44:05:E4:E0:D4')
+        end
+    },
+    {
+        'disconnect bluetooth device (JBL GO)',
+        function()
+            connect_bluetooth(false, '78:44:05:E4:E0:D4')
+        end
+    }
 }
 
 local myexitmenu = {
@@ -1505,13 +1523,17 @@ globalkeys =
     awful.key(
         {'Mod4'},
         'F9',
-        connect_bluetooth,
+        function()
+            connect_bluetooth(true, '88:C6:26:F4:8A:90')
+        end,
         {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
     ),
     awful.key(
         {'Mod4', 'Shift'},
         'F9',
-        disconnect_bluetooth,
+        function()
+            connect_bluetooth(false, '88:C6:26:F4:8A:90')
+        end,
         {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
     )
 )
