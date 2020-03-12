@@ -237,5 +237,6 @@
 	"editor.fontFamily": "IBM Plex Mono, monospace",
 	"editor.minimap.size": "fit",
 	"timeline.showView": true,
-	"workbench.colorTheme": "Qillqaq"
+	"workbench.colorTheme": "Qillqaq",
+	"editor.lineHeight": 21
 }
