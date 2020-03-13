@@ -17,3 +17,4 @@ x-scheme-handler/file=nnn.desktop
 inode/directory=nnn.desktop
 x-scheme-handler/about=vivaldi-stable.desktop
 x-scheme-handler/unknown=vivaldi-stable.desktop
+video/mp4=mpv.desktop
