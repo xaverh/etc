@@ -364,6 +364,20 @@ local ipwidget =
     wibox.widget.textbox()
 )
 
+local btrfswidget =
+    awful.widget.watch(
+    {'btrfs', 'filesystem', 'usage', '--si', '/'},
+    5.9,
+    function(widget, stdout, _, _, _)
+        -- local free = stdout:match 'Free %(estimated%):.*%(min: (.)*%)'
+        local free, unit = stdout:match 'Free %(estimated%):%s*([%d%.]*)(%a*)'
+        if free then
+            widget:set_text('  / ' .. free .. '\u{2009}' .. unit)
+        end
+    end,
+    wibox.widget.textbox()
+)
+
 local wifiwidget
 if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_executable '/usr/bin/iw' then
     wifiwidget =
@@ -403,7 +417,7 @@ local temperaturewidget =
             local f = io.open(temperature_filename, 'r')
             local temperature = f:read 'n'
             f:close()
-            widget:set_text(temperature // 1000 .. '\u{2009}°C')
+            widget:set_text('θ\u{2009}' .. temperature // 1000 .. '\u{2009}°C')
             t:again()
         end
     )
@@ -461,9 +475,9 @@ function fixed(bytes)
         unit = 'kB'
     else
         unit = 'B'
-        return string.format('%d %s', bytes, unit)
+        return string.format('%d\u{2009}%s', bytes, unit)
     end
-    return string.format('%.1f %s', result, unit)
+    return string.format('%.1f\u{2009}%s', result, unit)
 end
 
 local memorywidget =
@@ -474,10 +488,10 @@ local memorywidget =
         'timeout',
         function()
             t:stop()
-            local mem = {}
+            -- local mem = {}
             for line in io.lines '/proc/meminfo' do
                 for k, v in string.gmatch(line, '([%a]+):[%s]+([%d]+).+') do
-                    if k == 'MemTotal' then
+                    --[[ if k == 'MemTotal' then
                         mem.total = v * 1024
                     elseif k == 'MemFree' then
                         mem.free = v * 1024
@@ -489,12 +503,16 @@ local memorywidget =
                         mem.cached = v * 1024
                     elseif k == 'SReclaimable' then
                         mem.sreclaimable = v * 1024
+                    end ]]
+                    if k == 'MemAvailable' then
+                        mem_available = v * 1024
+                        break
                     end
                 end
             end
             -- https://github.com/KittyKatt/screenFetch/issues/386#issuecomment-249312716
-            mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
-            widget:set_text('  ' .. fixed(mem.used))
+            -- mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
+            widget:set_text('m ' .. fixed(mem_available))
             t:again()
         end
     )
@@ -655,6 +673,7 @@ awful.screen.connect_for_each_screen(
             {
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 10,
+                btrfswidget,
                 memorywidget,
                 netthroughwidget,
                 temperaturewidget,
@@ -1928,6 +1947,16 @@ awful.rules.rules = {
         rule = {class = 'SshAskpass'},
         properties = {
             ontop = true
+        }
+    },
+    {
+        rule = {role = 'GtkFileChooserDialog'},
+        properties = {
+            height = dpi(600),
+            width = dpi(860),
+            ontop = true,
+            x = dpi(210),
+            y = dpi(100)
         }
     }
 }
