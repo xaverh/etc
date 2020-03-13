@@ -127,6 +127,9 @@ beautiful.init {
     tasklist_disable_icon = true,
     tasklist_align = 'center',
     wibar_height = dpi(20),
+    notification_max_width = dpi(460),
+    -- notification_max_height = dpi(140),
+    notification_icon_size = dpi(100),
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
     wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
