@@ -208,7 +208,7 @@ add_dracutmodules+="crypt"
 e.g.
 
 ```sh
-sudo dnf install kernel @base-x @multimedia @firefox google-chrome-unstable at vivaldi code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock kitty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl abduco dvtm rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
+sudo dnf install kernel @base-x @multimedia @firefox google-chrome-unstable at vivaldi code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock kitty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl tmux rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
 ```
 
 ### configure keyboard layout and timezone
