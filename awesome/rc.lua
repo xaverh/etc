@@ -798,21 +798,12 @@ local function toggle_theme()
         'mark3_foreground=' .. colors[my_theme][16],
         'mark3_background=' .. colors[my_theme].ui_purple
     }
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'w')
-    if my_theme == 'qi' then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    elseif my_theme == 'ys' then
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
-    end
-    file:write(content)
-    file:close()
+    awful.spawn {
+        'ln',
+        '-sf',
+        gears.filesystem.get_xdg_config_home() .. 'kitty/' .. my_theme .. '.conf',
+        gears.filesystem.get_xdg_config_home() .. 'kitty/colors.conf'
+    }
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
     local content = file:read 'a'
@@ -1049,7 +1040,7 @@ globalkeys =
         {description = 'go back', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
+        {'Mod4', 'Control'},
         'Return',
         function()
             awful.spawn {'kitty', '-1', '--name', 'kitty', '--listen-on', 'unix:@mykitty'}
@@ -1184,6 +1175,49 @@ globalkeys =
             }
         end,
         {description = 'open nnn', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Return',
+        function()
+            local session =
+                awful.screen.focused {client = true}.index == 1 and '👨‍💻' or
+                awful.screen.focused {client = true}.index == 2 and '👩‍💻' or
+                '🧑‍💻'
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(
+                        c,
+                        {
+                            instance = session,
+                            class = 'kitty'
+                        }
+                    )
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(session)
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+            awful.spawn {
+                'kitty',
+                '-1',
+                '--name',
+                session,
+                '--listen-on',
+                'unix:@mykitty',
+                'tmux',
+                'new-session',
+                '-A',
+                '-s',
+                session
+            }
+        end,
+        {description = '👨‍💻', group = '🚀 launcher'}
     ),
     awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
     awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
@@ -1882,6 +1916,7 @@ awful.rules.rules = {
             role = {
                 'AlarmWindow', -- Thunderbird's calendar.
                 'ConfigManager', -- Thunderbird's about:config.
+                'Organizer', -- Firefox Bookmark organizer
                 'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
                 'bubble' -- Vivaldi's "cast..." menu
             }
@@ -1947,6 +1982,7 @@ awful.rules.rules = {
         rule = {class = 'SshAskpass'},
         properties = {
             ontop = true
+            -- TODO: centered
         }
     },
     {
@@ -1957,6 +1993,51 @@ awful.rules.rules = {
             ontop = true,
             x = dpi(210),
             y = dpi(100)
+        }
+    },
+    {
+        rule = {
+            instance = '👨‍💻',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '👨‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {
+            instance = '👩‍💻',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '👩‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {
+            instance = '🧑‍💻',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '🧑‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
         }
     }
 }
