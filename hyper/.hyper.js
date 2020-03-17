@@ -46,7 +46,7 @@ module.exports = {
 		backgroundColor: '#171717',
 
 		// terminal selection color
-		selectionColor: '#0f3a4b',
+		selectionColor: '#0f3a4baa',
 
 		// border color (window, tabs)
 		borderColor: '#333',
@@ -74,20 +74,20 @@ module.exports = {
 		// an array here instead of a color map object
 		colors: {
 			black: '#171717',
-			red: '#C51E14',
-			green: '#1DC121',
-			yellow: '#C7C329',
-			blue: '#0A2FC4',
-			magenta: '#C839C5',
-			cyan: '#20C5C6',
-			white: '#C7C7C7',
-			lightBlack: '#686868',
-			lightRed: '#FD6F6B',
-			lightGreen: '#67F86F',
-			lightYellow: '#FFFA72',
-			lightBlue: '#6A76FB',
-			lightMagenta: '#FD7CFC',
-			lightCyan: '#68FDFE',
+			red: '#e32791',
+			green: '#30c798',
+			yellow: '#e3c472',
+			blue: '#6796e6',
+			magenta: '#e59fdf',
+			cyan: '#81d8d0',
+			white: '#999999',
+			lightBlack: '#515151',
+			lightRed: '#e466ad',
+			lightGreen: '#6cd1b2',
+			lightYellow: '#e4cf98',
+			lightBlue: '#91b0e6',
+			lightMagenta: '#e5b6e1',
+			lightCyan: '#a2dcd7',
 			lightWhite: '#e5e6e6'
 		},
 
@@ -124,11 +124,6 @@ module.exports = {
 		// if `true` (without backticks and without quotes), on right click selected text will be copied or pasted if no
 		// selection is present (`true` by default on Windows and disables the context menu feature)
 		quickEdit: false,
-
-		// choose either `'vertical'`, if you want the column mode when Option key is hold during selection (Default)
-		// or `'force'`, if you want to force selection regardless of whether the terminal is in mouse events mode
-		// (inside tmux or vim with mouse mode enabled for example).
-		macOptionSelectionMode: 'vertical',
 
 		// URL to custom bell
 		// bellSoundURL: 'http://example.com/bell.mp3',
