@@ -110,7 +110,7 @@ beautiful.init {
     border_marked = colors[my_theme][4],
     taglist_bg_focus = colors[my_theme].bg_med,
     maximized_hide_border = true,
-    useless_gap = 0,
+    useless_gap = dpi(10),
     border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
@@ -139,7 +139,7 @@ beautiful.init {
 -- TODO: notification borders
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
--- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth(connect, mac)
@@ -179,11 +179,11 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
+    awful.layout.suit.floating,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.magnifier,
-    awful.layout.suit.floating,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -572,7 +572,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️ '💤',🥑'🧀,
+local default_tags = {'🏄', '☕', '🏖️', '🧠', '👾', '🏝️', '🥑', '🧀', '🧟‍♂️', '🏄‍♀️', '🏜️', '🦄'} --   '🎲', '🎰', '🎱', 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
@@ -647,7 +647,7 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.noempty,
+            filter = awful.widget.taglist.filter.all,
             buttons = taglist_buttons
         }
 
@@ -666,7 +666,6 @@ awful.screen.connect_for_each_screen(
             {
                 layout = wibox.layout.fixed.horizontal,
                 s.mytaglist,
-                s.mylayoutbox,
                 s.mypromptbox
             },
             s.mytasklist,
@@ -680,7 +679,8 @@ awful.screen.connect_for_each_screen(
                 wifiwidget,
                 ipwidget,
                 batterywidget,
-                mytextclock
+                mytextclock,
+                s.mylayoutbox
             }
         }
         screen[s]:connect_signal(
@@ -734,7 +734,7 @@ local function toggle_theme()
     beautiful.border_marked = colors[my_theme][4]
     beautiful.taglist_bg_focus = colors[my_theme].bg_med
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
-    -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+    beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
     if my_theme == 'ys' then
         for k, v in pairs(beautiful.layout_txt) do
@@ -1048,6 +1048,14 @@ globalkeys =
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
     awful.key(
+        {'Mod4', 'Mod1'},
+        'Return',
+        function()
+            awful.spawn 'hyper'
+        end,
+        {description = 'open hyper', group = '🚀 launcher'}
+    ),
+    awful.key(
         {'Mod4'},
         'r',
         function()
@@ -1072,22 +1080,30 @@ globalkeys =
         {'Mod4'},
         'n',
         function()
+            local instance = 'nnn' .. awful.screen.focused {client = true}.index
+            local session = instance == 'nnn1' and '🧞‍♂️' or instance == 'nnn2' and '🧞‍♀️' or '🧞'
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Nnn', class = 'kitty'})
+                    return awful.rules.match(
+                        c,
+                        {
+                            instance = instance,
+                            class = 'kitty'
+                        }
+                    )
                 end
             ) do
                 if client.focus == c then
-                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧞‍♂️'))
+                    awful.tag.viewtoggle(awful.tag.find_by_name(awful.screen.focused(), session))
                     return
                 else
                     c:jump_to(true)
                     return
                 end
             end
-            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', 'Nnn', 'nnn'}
+            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', instance, 'nnn'}
         end,
-        {description = 'open nnn', group = '🚀 launcher'}
+        {description = 'nnn', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1180,23 +1196,21 @@ globalkeys =
         {'Mod4'},
         'Return',
         function()
-            local session =
-                awful.screen.focused {client = true}.index == 1 and '👨‍💻' or
-                awful.screen.focused {client = true}.index == 2 and '👩‍💻' or
-                '🧑‍💻'
+            local instance = 'tmux' .. awful.screen.focused {client = true}.index
+            local session = instance == 'tmux1' and '👨‍💻' or instance == 'tmux2' and '👩‍💻' or '🧑‍💻'
             for c in awful.client.iterate(
                 function(c)
                     return awful.rules.match(
                         c,
                         {
-                            instance = session,
+                            instance = instance,
                             class = 'kitty'
                         }
                     )
                 end
             ) do
                 if client.focus == c then
-                    awful.tag.viewtoggle(session)
+                    awful.tag.viewtoggle(awful.tag.find_by_name(awful.screen.focused(), session))
                     return
                 else
                     c:jump_to(true)
@@ -1207,7 +1221,7 @@ globalkeys =
                 'kitty',
                 '-1',
                 '--name',
-                session,
+                instance,
                 '--listen-on',
                 'unix:@mykitty',
                 'tmux',
@@ -1217,7 +1231,7 @@ globalkeys =
                 session
             }
         end,
-        {description = '👨‍💻', group = '🚀 launcher'}
+        {description = 'open terminal', group = '🚀 launcher'}
     ),
     awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
     awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
@@ -1517,7 +1531,7 @@ clientkeys =
         {'Mod4'},
         'b',
         function()
-            beautiful.useless_gap = beautiful.useless_gap == 0 and 10 or 0
+            beautiful.useless_gap = beautiful.useless_gap == 0 and dpi(10) or 0
             for s in screen do
                 awful.layout.arrange(s)
             end
@@ -1526,7 +1540,6 @@ clientkeys =
     )
 )
 
-local tags_per_screen = 5
 for i, v in ipairs(default_tags) do
     globalkeys =
         gears.table.join(
@@ -1535,7 +1548,9 @@ for i, v in ipairs(default_tags) do
             {'Mod4'},
             '#' .. i + 9,
             function()
-                awful.tag.find_by_name(nil, v):view_only()
+                local t = awful.tag.find_by_name(nil, v)
+                t:view_only()
+                awful.screen.focus(t.screen)
             end,
             {
                 description = 'view ' .. v,
@@ -1935,10 +1950,30 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'Nnn'},
+        rule = {instance = 'nnn1', class = 'kitty'},
         properties = {
             new_tag = {
                 name = '🧞‍♂️',
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {instance = 'nnn2', class = 'kitty'},
+        properties = {
+            new_tag = {
+                name = '🧞‍♀️',
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {instance = 'nnn3', class = 'kitty'},
+        properties = {
+            new_tag = {
+                name = '🧞',
                 volatile = true,
                 selected = true
             }
@@ -1997,7 +2032,7 @@ awful.rules.rules = {
     },
     {
         rule = {
-            instance = '👨‍💻',
+            instance = 'tmux1',
             class = 'kitty'
         },
         properties = {
@@ -2012,7 +2047,7 @@ awful.rules.rules = {
     },
     {
         rule = {
-            instance = '👩‍💻',
+            instance = 'tmux2',
             class = 'kitty'
         },
         properties = {
@@ -2027,7 +2062,7 @@ awful.rules.rules = {
     },
     {
         rule = {
-            instance = '🧑‍💻',
+            instance = 'tmux3',
             class = 'kitty'
         },
         properties = {
@@ -2038,6 +2073,19 @@ awful.rules.rules = {
                 volatile = true,
                 selected = true
             }
+        }
+    },
+    {
+        rule = {
+            instance = 'code',
+            class = 'Code'
+        },
+        properties = {
+            tag = '☕',
+            focus = true,
+            callback = function(c)
+                c:jump_to(true)
+            end
         }
     }
 }
@@ -2060,11 +2108,12 @@ client.connect_signal(
     end
 )
 
--- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal(
     'mouse::enter',
     function(c)
-        c:emit_signal('request::activate', 'mouse_enter', {raise = false})
+        if awful.screen.focused().selected_tag.layout.name == 'floating' then
+            c:emit_signal('request::activate', 'mouse_enter', {raise = true})
+        end
     end
 )
 
