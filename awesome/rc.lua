@@ -860,21 +860,23 @@ globalkeys =
         'a',
         function()
             awful.spawn.easy_async_with_shell(
-                'tmux list-session -F \\#S | rofi -dmenu',
+                [[tmux list-session -F \#S | rofi -dmenu -i -p tmux]],
                 function(stdout)
-                    awful.spawn.easy_async {
-                        'kitty',
-                        '-1',
-                        '--name',
-                        string.sub(stdout, 1, -2),
-                        '--listen-on',
-                        'unix:@mykitty',
-                        'tmux',
-                        'new-session',
-                        '-A',
-                        '-s',
-                        string.sub(stdout, 1, -2)
-                    }
+                    if stdout ~= '' then
+                        awful.spawn.easy_async {
+                            'kitty',
+                            '-1',
+                            '--name',
+                            'kitty',
+                            '--listen-on',
+                            'unix:@mykitty',
+                            'tmux',
+                            'new-session',
+                            '-A',
+                            '-s',
+                            string.sub(stdout, 1, -2)
+                        }
+                    end
                 end
             )
         end,
