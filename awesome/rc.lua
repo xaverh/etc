@@ -572,18 +572,18 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄', '☕', '🏖️', '🧠', '👾', '🏝️', '🥑', '🧀', '🧟‍♂️', '🏄‍♀️', '🏜️', '🦄'} --   '🎲', '🎰', '🎱', 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️
+local default_tags = {'🏄‍♂️', '☕', '🏄‍♀️', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '🧠', '👾', '🏝️', '🥑', '🧀 🏜️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 9)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 2)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({table.unpack(default_tags, 10, 11)}, s, awful.layout.layouts[1])
+            awful.tag({default_tags[3]}, s, awful.layout.layouts[1])
         elseif s.index == 3 then
-            awful.tag({table.unpack(default_tags, 12)}, s, awful.layout.layouts[1])
+            awful.tag({default_tags[4]}, s, awful.layout.layouts[1])
         end
 
         -- Create a promptbox for each screen
@@ -850,6 +850,61 @@ local function open_url()
     awful.spawn.with_shell [=[xdg-open $(\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')]=]
 end
 
+function sharedmovetag(tag, screen)
+    screen = screen or awful.screen.focused()
+    local oldscreen = tag.screen
+    -- If the specified tag is allocated to another screen, we need to move it.
+    if oldscreen ~= screen then
+        local oldsel = oldscreen.selected_tag
+        tag.screen = screen
+
+        if oldsel == tag then
+            -- The tag has been moved away. In most cases the tag history
+            -- function will find the best match, but if we really want we can
+            -- try to find a fallback tag as well.
+            if not oldscreen.selected_tag then
+                local newtag = awful.tag.find_fallback(oldscreen)
+                if newtag then
+                    newtag:view_only()
+                end
+            end
+        end
+        return true
+    end
+    return false
+end
+
+function sharedviewtoggle(tag, screen)
+    local oldscreen = tag.screen
+
+    if sharedmovetag(tag, screen) then
+        -- Always mark the tag selected if the screen changed. Just feels a lot
+        -- more natural.
+        tag.selected = true
+        -- Update the history on the old and new screens.
+        oldscreen:emit_signal('tag::history::update')
+        tag.screen:emit_signal('tag::history::update')
+    else
+        -- Only toggle the tag unless the screen moved.
+        awful.tag.viewtoggle(tag)
+    end
+end
+
+local function throwaway_tag(newtag)
+    return function()
+        local t = awful.tag.find_by_name(nil, newtag)
+        if t then
+            sharedviewtoggle(t)
+        else
+            local c = client.focus
+            if not c then
+                return
+            end
+            c:tags {awful.tag.add(newtag, {screen = c.screen, volatile = true})}
+        end
+    end
+end
+
 globalkeys =
     gears.table.join(
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
@@ -1078,7 +1133,7 @@ globalkeys =
         {'Mod4', 'Mod1'},
         'Return',
         function()
-            awful.spawn 'hyper'
+            awful.spawn '/opt/Hyper/hyper'
         end,
         {description = 'open hyper', group = '🚀 launcher'}
     ),
@@ -1440,6 +1495,49 @@ globalkeys =
             awful.spawn 'slock'
         end,
         {description = 'lock screen and SSH', group = '🌐 global'}
+    ),
+    awful.key(
+        {},
+        'F6',
+        throwaway_tag '🎲',
+        {
+            description = 'view 🎲',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {},
+        'F7',
+        throwaway_tag '🎰',
+        {
+            description = 'view 🎰',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {},
+        'F8',
+        throwaway_tag '🎱',
+        {
+            description = 'view 🎱',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {'Mod4'},
+        'F9',
+        function()
+            connect_bluetooth(true, '88:C6:26:F4:8A:90')
+        end,
+        {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'F9',
+        function()
+            connect_bluetooth(false, '88:C6:26:F4:8A:90')
+        end,
+        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
     )
 )
 
@@ -1572,6 +1670,17 @@ for i, v in ipairs(default_tags) do
         gears.table.join(
         globalkeys,
         awful.key(
+            {},
+            'F' .. i,
+            function()
+                sharedviewtoggle(awful.tag.find_by_name(nil, v))
+            end,
+            {
+                description = 'toggle ' .. default_tags[i],
+                group = '🏷️ tag'
+            }
+        ),
+        awful.key(
             {'Mod4'},
             '#' .. i + 9,
             function()
@@ -1588,7 +1697,7 @@ for i, v in ipairs(default_tags) do
             {'Mod4', 'Control'},
             '#' .. i + 9,
             function()
-                awful.tag.viewtoggle(awful.tag.find_by_name(nil, v))
+                sharedviewtoggle(awful.tag.find_by_name(nil, v))
             end,
             {
                 description = 'toggle ' .. v,
@@ -1623,46 +1732,6 @@ for i, v in ipairs(default_tags) do
         )
     )
 end
-
--- TODO: assign keys to apps instead of tags
-for i = 1, 4 do
-    globalkeys =
-        gears.table.join(
-        globalkeys,
-        awful.key(
-            {},
-            'F' .. i,
-            function()
-                awful.tag.find_by_name(nil, default_tags[i]):view_only()
-            end,
-            {
-                description = 'view ' .. default_tags[i],
-                group = '🏷️ tag'
-            }
-        )
-    )
-end
-
-globalkeys =
-    gears.table.join(
-    globalkeys,
-    awful.key(
-        {'Mod4'},
-        'F9',
-        function()
-            connect_bluetooth(true, '88:C6:26:F4:8A:90')
-        end,
-        {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'F9',
-        function()
-            connect_bluetooth(false, '88:C6:26:F4:8A:90')
-        end,
-        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
-    )
-)
 
 if has_multimedia_keys then
     globalkeys =
