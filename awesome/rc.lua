@@ -857,6 +857,31 @@ globalkeys =
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
     awful.key(
         {'Mod4'},
+        'a',
+        function()
+            awful.spawn.easy_async_with_shell(
+                'tmux list-session -F \\#S | rofi -dmenu',
+                function(stdout)
+                    awful.spawn.easy_async {
+                        'kitty',
+                        '-1',
+                        '--name',
+                        string.sub(stdout, 1, -2),
+                        '--listen-on',
+                        'unix:@mykitty',
+                        'tmux',
+                        'new-session',
+                        '-A',
+                        '-s',
+                        string.sub(stdout, 1, -2)
+                    }
+                end
+            )
+        end,
+        {description = 'attach to tmux session', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
         'i',
         function()
             awful.spawn {'clipmenu', '-p', 'clipboard'}
