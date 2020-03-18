@@ -2130,6 +2130,19 @@ awful.rules.rules = {
         }
     },
     {
+        rule = {role = 'PictureInPicture'},
+        properties = {
+            new_tag = {
+                name = '🍿',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            },
+            sticky = false,
+            floating = false
+        }
+    },
+    {
         rule = {class = 'mpv', instance = 'FM0'},
         properties = {
             new_tag = {
