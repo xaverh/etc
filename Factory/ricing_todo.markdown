@@ -2,17 +2,18 @@
 
 - grml's zsh
 - sxiv
-- move tag of current client to another screen
-- playerctl
+- replace playerctl with signal handling which player is actually running, maybe show in status bar which one is selected
 - ysgrifennwr theme
 - mons https://github.com/Ventto/mons/blob/master/mons.sh
 - z
 - prevent apps from creating 2nd tags, e.g. 🍓
-- h,j,k,l don't work in max mode => solutions: either let Tab cycle all windows or change h,j,k,l functionality dynamically
-- shortkeys for nnn, VS Code and Vivaldi in the awesome hotkeys menu
 - toggle zathura's colorscheme
 - go through zathura settings
 - colorscheme lua operator
-- rofi tmux selector
 - 🦸 tag
-- ysgrifennwr theme VS Code action items
+- ysgrifennwr theme VS Code git action items
+- keep tags clean, ie prevent clients from being attached to tags they don't belong to, maybe client specific tags are a bad idea and it might be better to just add them to additonal tags, maybe via rofi
+- h,j,k,l don't work in max mode => solutions: either let Tab cycle all windows or change h,j,k,l functionality dynamically
+- h, l move to other screen, j, k old school behaviour?
+- how to use nnn as a launcher 
+- mansplain error handling through the use of callback and storing the data in lua
