@@ -1880,7 +1880,8 @@ awful.rules.rules = {
                 'AlarmWindow', -- Thunderbird's calendar.
                 'ConfigManager', -- Thunderbird's about:config.
                 'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
-                'bubble' -- Vivaldi's "cast..." menu
+                'bubble', -- Vivaldi's "cast..." menu
+                'Organizer' -- Firefox's bookmark manager
             }
         },
         properties = {floating = true}
