@@ -10,6 +10,7 @@ local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 local fm0 = require 'fm0'
 require 'awful.hotkeys_popup.keys'
+math.randomseed(os.time())
 
 local colors = {
     qi = {
@@ -91,6 +92,62 @@ local my_theme = 'qi'
 -- my_theme = 'ys'
 -- end
 
+local wallpapers = {
+    '01af74d64a1446acadb31e3f63d3fa52.png',
+    '02b81e89d9c74853aeba1dfecd44671e.png',
+    '03813b7b6e184c66a4aaf525e0723a15.png',
+    '1200de4339c34fe8b66bcbc5d3fcb8a8.png',
+    '16805acfafa643a482c4385886033535.png',
+    '18e9f5bbdc2e45c199a01a52c3759749.png',
+    '1dbcde2d1f554fc38eaf8e0b8886c557.png',
+    '1e9cee9d87f34c6aa20059766200cad9.png',
+    '2020-03-02_23-19-57_900_3840x2160.png',
+    '2020-03-02_23-21-10_477_3840x2160.png',
+    '2020-03-02_23-22-32_159_3840x2160.png',
+    '2020-03-08_16-33-06_895_3840x2160.png',
+    '20278fccf7c945e7b0994e8d92322733.png',
+    '234e55371f9f4cf195fcb000f9fa479a.png',
+    '2e1fd5c1156f4867b3304632e65f1524.png',
+    '3628b8862e56428e840faf12901446dc.png',
+    '3eec6c7edfed414fb29982217f83d6e1.png',
+    '404f19a8f98c4607beb3ee2136ada7b2.png',
+    '432550e8ff8f4430b360bf9dc7df628f.png',
+    '47bcf7c99737457ebd20bed1f15eb70c.png',
+    '536e961a93a54bbfba433b743e24dce5.png',
+    '539fa414853a465fbeaa6c2a0cc0c473.png',
+    '56ea6e2e1b054aca95b6a782d47c19b6.png',
+    '579848500da447298ad7696e9eaf71cb.png',
+    '58645567f5d249efa3347bdc811e3241.png',
+    '5c1c87d6df4a46e29d46a5c196371596.png',
+    '5ee974dba523454a936f6f6521b571d2.png',
+    '6405d1c34bfa42a6ae86b924bc4fc4da.png',
+    '710907b61d824fefbe18b49d7c4b251d.png',
+    '71d73a2e95ee49268fc8fb6b57f6a1bf.png',
+    '7ae65e913d8146709529fa481d96ec73.png',
+    '7cb59566798246ae965e93b8399b9b2f.png',
+    '88f007c7fa924d2587da73a57400421a.png',
+    '8c8642c61eaf4af6b56501856d84bbea.png',
+    '8ff28700a51242bb96bc9f032535097c.png',
+    '96e62f8c1cc24eaeab314bf4a201cf40.png',
+    '9a0821e7ff734f3c93b741b2c6d2e0f5.png',
+    '9fbe7f2cc4544613a643ed1f8fab7278.png',
+    'b0f0197780814142b553176db5f2b0e0.png',
+    'b77d489aee604f0c8e3bca9b5007e69e.png',
+    'bcf843ec1b144f2f90d366799219859d.png',
+    'bd62fd7f934f4c1886a665f2a0be823b.png',
+    'c61e102bbf8049f49f4fbe7125752e2a.png',
+    'c739cb7018604082aaf8a27790983918.png',
+    'd01247287d4947f9bd4f26a2b8f5a78f.png',
+    'd2976c325c7948ac9c435337f5fbf126.png',
+    'dd2b4ee39463473492812806d20bb626.png',
+    'e07f0a542862404d9b1110b578ec605c.png',
+    'e10ab15ffd4b475e9cecad75e0e95621.png',
+    'e568e269dfc643769174b116e7830196.png',
+    'f3a60a679a464d2297313f728662ef3a.png',
+    'f478b113d84045d8ad7b3dea8dd1289b.png',
+    'fbd2bc46abea4dff99fd069b6f476ee2.png'
+}
+
 beautiful.init {
     font = '.SF Compact Display 11',
     hotkeys_font = '.SF Compact Display 11',
@@ -134,7 +191,7 @@ beautiful.init {
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
     wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
-        os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
+        os.getenv 'XDG_DATA_HOME' .. '/Tapet/' .. wallpapers[math.random(#wallpapers)]
 }
 
 -- TODO: notification borders
