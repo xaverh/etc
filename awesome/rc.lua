@@ -9,6 +9,7 @@ local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 local fm0 = require 'fm0'
+require 'awful.hotkeys_popup.keys'
 
 local colors = {
     qi = {
@@ -144,27 +145,6 @@ beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beauti
 
 local function connect_bluetooth(connect, mac)
     awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
-end
-
-local function strawberry_next()
-    -- TODO: check whether mpv or strawberry is running
-    awful.spawn 'strawberry -f'
-end
-
-local function strawberry_prev()
-    awful.spawn 'strawberry --restart-or-previous'
-end
-
-local function strawberry_playpause()
-    awful.spawn 'strawberry -t'
-end
-
-local function strawberry_fwd()
-    awful.spawn 'strawberry --seek-by 10'
-end
-
-local function strawberry_rew()
-    awful.spawn 'strawberry --seek-by -10'
 end
 
 local printkey = 'Print'
@@ -572,7 +552,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄‍♂️', '☕', '🏄‍♀️', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '🧠', '👾', '🏝️', '🥑', '🧀 🏜️',
+local default_tags = {'🏄‍♂️', '☕', '🏄‍♀️', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '👾', '🏝️', '🥑', '🧀 🏜️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
@@ -962,8 +942,6 @@ globalkeys =
         end,
         {description = 'view previous non-empty tag', group = '🏷️ tag'}
     ),
-    awful.key({'Mod4'}, 'Prior', awful.tag.viewprev, {description = 'view previous', group = '🏷️ tag'}),
-    awful.key({'Mod4'}, 'Next', awful.tag.viewnext, {description = 'view next', group = '🏷️ tag'}),
     awful.key({'Mod4'}, '#49', awful.tag.history.restore, {description = 'go back', group = '🏷️ tag'}),
     awful.key(
         {'Mod4'},
@@ -1157,6 +1135,22 @@ globalkeys =
             fm0.start_radio()
         end,
         {description = 'FM0', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'z',
+        function()
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(c, {instance = 'zathura', class = 'Zathura'})
+                end
+            ) do
+                sharedviewtoggle(awful.tag.find_by_name(nil, '🧠'))
+                return
+            end
+            awful.spawn 'zathura'
+        end,
+        {description = '📃 Zathura', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1733,15 +1727,59 @@ for i, v in ipairs(default_tags) do
     )
 end
 
+local function strawberry_next()
+    awful.spawn 'strawberry -f'
+end
+
+local function strawberry_prev()
+    awful.spawn 'strawberry --restart-or-previous'
+end
+
+local function strawberry_playpause()
+    awful.spawn 'strawberry -t'
+end
+
+local function strawberry_fwd()
+    awful.spawn 'strawberry --seek-by 10'
+end
+
+local function strawberry_rew()
+    awful.spawn 'strawberry --seek-by -10'
+end
+
+local function playerctl_next()
+    awful.spawn 'playerctl next'
+end
+
+local function playerctl_prev()
+    awful.spawn 'playerctl previous'
+end
+
+local function playerctl_playpause()
+    awful.spawn 'playerctl play-pause'
+end
+
+local function playerctl_fwd()
+    awful.spawn 'playerctl position 10+'
+end
+
+local function playerctl_rew()
+    awful.spawn 'playerctl position 10-'
+end
+
+local function playerctl_stop()
+    awful.spawn 'playerctl stop'
+end
+
 if has_multimedia_keys then
     globalkeys =
         gears.table.join(
         globalkeys,
-        awful.key({}, 'XF86AudioNext', strawberry_next, {description = '⏭️', group = '🍓 strawberry'}),
-        awful.key({}, 'XF86AudioPrev', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
-        awful.key({}, 'XF86AudioPlay', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
-        awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
-        awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
+        awful.key({}, 'XF86AudioNext', playerctl_next, {description = '⏭️', group = '🌐 global'}),
+        awful.key({}, 'XF86AudioPrev', playerctl_prev, {description = '⏮', group = '🌐 global'}),
+        awful.key({}, 'XF86AudioPlay', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key({'Shift'}, 'XF86AudioNext', playerctl_fwd, {description = '⏩', group = '🌐 global'}),
+        awful.key({'Shift'}, 'XF86AudioPrev', playerctl_rew, {description = '⏪', group = '🌐 global'})
     )
 else
     globalkeys =
@@ -1751,7 +1789,11 @@ else
         awful.key({'Mod4'}, '#106', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#87', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#85', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
-        awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
+        awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, 'End', playerctl_next, {description = '⏭️', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Delete', playerctl_prev, {description = '⏮', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Insert', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Home', playerctl_stop, {description = '⏹️', group = '🌐 global'})
     )
 end
 
@@ -1972,7 +2014,7 @@ clientbuttons =
         {'Mod4'},
         3,
         function(c)
-            c:emit_signal('request::activate', 'mouse strawberry_click', {raise = true})
+            c:emit_signal('request::activate', 'mouse_click', {raise = true})
             awful.mouse.client.resize(c)
         end
     )
@@ -2092,6 +2134,17 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '📻',
+                layout = awful.layout.suit.magnifier,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {class = 'Zathura', instance = 'zathura'},
+        properties = {
+            new_tag = {
+                name = '🧠',
                 layout = awful.layout.suit.magnifier,
                 volatile = true,
                 selected = true
