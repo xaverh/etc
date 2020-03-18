@@ -4,17 +4,17 @@
 
 ### preparations
 
--   set keymap
--   run `lsblk` to find hard drive, in the following I am going to assume `/dev/sda`
--   setup networking
--   verify if the image has been booted in EFI mode: `ls /sys/firmware/efi/efivars`
+- set keymap
+- run `lsblk` to find hard drive, in the following I am going to assume `/dev/sda`
+- setup networking
+- verify if the image has been booted in EFI mode: `ls /sys/firmware/efi/efivars`
 
 ### in a root shell
 
 #### optionally clean remainders of old installs
 
--   run `efibootmgr` to remove old EFI boot entries
--   on an SSD run `blkdiscard /dev/sda` to force it to discard all blocks
+- run `efibootmgr` to remove old EFI boot entries
+- on an SSD run `blkdiscard /dev/sda` to force it to discard all blocks
 
 #### format the drive
 
@@ -208,7 +208,7 @@ add_dracutmodules+="crypt"
 e.g.
 
 ```sh
-sudo dnf install kernel @base-x @multimedia @firefox google-chrome-unstable at vivaldi code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock kitty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl abduco dvtm rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
+sudo dnf install kernel @base-x @multimedia @firefox google-chrome-unstable at vivaldi code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock kitty google-noto-emoji-color-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl tmux rofi wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
 ```
 
 ### configure keyboard layout and timezone
@@ -290,29 +290,27 @@ To allow user to start/stop certain systemd-services without password, in `/etc/
 
 ```js
 polkit.addRule(function(action, subject) {
-	if (action.id == 'org.freedesktop.systemd1.manage-units') {
-		if (
-			subject.isInGroup('wheel') &&
-			(/wg-quick@mullvad\-[a-z]+[0-9]+.service/.test(
-				action.lookup('unit')
-			) ||
-				action.lookup('unit') == 'iwd.service')
-		) {
-			var verb = action.lookup('verb')
-			if (verb == 'start' || verb == 'stop' || verb == 'restart') {
-				return polkit.Result.YES
-			}
-		}
-	}
+  if (action.id == 'org.freedesktop.systemd1.manage-units') {
+    if (
+      subject.isInGroup('wheel') &&
+      (/wg-quick@mullvad\-[a-z]+[0-9]+.service/.test(action.lookup('unit')) ||
+        action.lookup('unit') == 'iwd.service')
+    ) {
+      var verb = action.lookup('verb')
+      if (verb == 'start' || verb == 'stop' || verb == 'restart') {
+        return polkit.Result.YES
+      }
+    }
+  }
 })
 
 polkit.addRule(function(action, subject) {
-	if (
-		action.id == 'org.freedesktop.policykit.exec' &&
-		action.lookup('program') == '/usr/bin/resolvectl'
-	) {
-		return polkit.Result.YES
-	}
+  if (
+    action.id == 'org.freedesktop.policykit.exec' &&
+    action.lookup('program') == '/usr/bin/resolvectl'
+  ) {
+    return polkit.Result.YES
+  }
 })
 ```
 
@@ -373,11 +371,13 @@ StartupWMClass=Nnn
 xdg-mime default org.pwmt.zathura.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
 xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
 xdg-mime default nnn.desktop inode/directory
+xdg-mime default mpv.desktop video/mp4
 desktop-file-install --rebuild-mime-info-cache --dir="$XDG_DATA_HOME/applications" /tmp/nnn.desktop
 xdg-settings set default-url-scheme-handler file nnn.desktop
 ```
 
 ### Node.js and Visual Studio Code packages
+
 ```sh
 npm -g i @vue/cli generator-code gulp-cli vsce yo
 
@@ -387,6 +387,7 @@ code --install-extension bierner.markdown-checkbox --install-extension bierner.m
 #### bluetooth
 
 In `/etc/pulse/default.pa`:
+
 ```
 load-module module-switch-on-connect
 ```

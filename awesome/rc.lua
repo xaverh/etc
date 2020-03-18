@@ -9,6 +9,7 @@ local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 local fm0 = require 'fm0'
+require 'awful.hotkeys_popup.keys'
 
 local colors = {
     qi = {
@@ -108,9 +109,9 @@ beautiful.init {
     border_normal = colors[my_theme][9],
     border_focus = colors[my_theme].cursor,
     border_marked = colors[my_theme][4],
-    taglist_bg_focus = colors[my_theme].bg_med,
+    taglist_bg_focus = colors[my_theme][8],
     maximized_hide_border = true,
-    useless_gap = 0,
+    useless_gap = dpi(10),
     border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
@@ -127,6 +128,9 @@ beautiful.init {
     tasklist_disable_icon = true,
     tasklist_align = 'center',
     wibar_height = dpi(20),
+    notification_max_width = dpi(460),
+    -- notification_max_height = dpi(140),
+    notification_icon_size = dpi(100),
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
     wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
@@ -136,32 +140,11 @@ beautiful.init {
 -- TODO: notification borders
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
--- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
 beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth(connect, mac)
     awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
-end
-
-local function strawberry_next()
-    -- TODO: check whether mpv or strawberry is running
-    awful.spawn 'strawberry -f'
-end
-
-local function strawberry_prev()
-    awful.spawn 'strawberry --restart-or-previous'
-end
-
-local function strawberry_playpause()
-    awful.spawn 'strawberry -t'
-end
-
-local function strawberry_fwd()
-    awful.spawn 'strawberry --seek-by 10'
-end
-
-local function strawberry_rew()
-    awful.spawn 'strawberry --seek-by -10'
 end
 
 local printkey = 'Print'
@@ -176,11 +159,11 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
+    awful.layout.suit.floating,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.magnifier,
-    awful.layout.suit.floating,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -569,18 +552,18 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄🏽‍♀️', '☕', '🏖️', '🧠', '👾', '🎲', '🎰', '🎱', '🧟‍♂️', '🏝️', '🏜️', '🦄'} --     🧜🏻‍♀️ '💤',🥑'🧀,
+local default_tags = {'🏄‍♂️', '☕', '🏄‍♀️', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '👾', '🏝️', '🥑', '🧀 🏜️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 9)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 2)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({table.unpack(default_tags, 10, 11)}, s, awful.layout.layouts[1])
+            awful.tag({default_tags[3]}, s, awful.layout.layouts[1])
         elseif s.index == 3 then
-            awful.tag({table.unpack(default_tags, 12)}, s, awful.layout.layouts[1])
+            awful.tag({default_tags[4]}, s, awful.layout.layouts[1])
         end
 
         -- Create a promptbox for each screen
@@ -644,7 +627,7 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.noempty,
+            filter = awful.widget.taglist.filter.all,
             buttons = taglist_buttons
         }
 
@@ -663,7 +646,6 @@ awful.screen.connect_for_each_screen(
             {
                 layout = wibox.layout.fixed.horizontal,
                 s.mytaglist,
-                s.mylayoutbox,
                 s.mypromptbox
             },
             s.mytasklist,
@@ -677,7 +659,8 @@ awful.screen.connect_for_each_screen(
                 wifiwidget,
                 ipwidget,
                 batterywidget,
-                mytextclock
+                mytextclock,
+                s.mylayoutbox
             }
         }
         screen[s]:connect_signal(
@@ -729,9 +712,9 @@ local function toggle_theme()
     beautiful.border_normal = colors[my_theme][9]
     beautiful.border_focus = colors[my_theme].cursor
     beautiful.border_marked = colors[my_theme][4]
-    beautiful.taglist_bg_focus = colors[my_theme].bg_med
+    beautiful.taglist_bg_focus = colors[my_theme][8]
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
-    -- beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+    beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
     if my_theme == 'ys' then
         for k, v in pairs(beautiful.layout_txt) do
@@ -795,21 +778,12 @@ local function toggle_theme()
         'mark3_foreground=' .. colors[my_theme][16],
         'mark3_background=' .. colors[my_theme].ui_purple
     }
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'r')
-    content = file:read 'a'
-    file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'kitty/kitty.conf', 'w')
-    if my_theme == 'qi' then
-        for i, v in ipairs(colors.ys) do
-            content = string.gsub(content, v, colors.qi[i])
-        end
-    elseif my_theme == 'ys' then
-        for i, v in ipairs(colors.qi) do
-            content = string.gsub(content, v, colors.ys[i])
-        end
-    end
-    file:write(content)
-    file:close()
+    awful.spawn {
+        'ln',
+        '-sf',
+        gears.filesystem.get_xdg_config_home() .. 'kitty/' .. my_theme .. '.conf',
+        gears.filesystem.get_xdg_config_home() .. 'kitty/colors.conf'
+    }
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
     local content = file:read 'a'
@@ -856,11 +830,93 @@ local function open_url()
     awful.spawn.with_shell [=[xdg-open $(\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')]=]
 end
 
+function sharedmovetag(tag, screen)
+    screen = screen or awful.screen.focused()
+    local oldscreen = tag.screen
+    -- If the specified tag is allocated to another screen, we need to move it.
+    if oldscreen ~= screen then
+        local oldsel = oldscreen.selected_tag
+        tag.screen = screen
+
+        if oldsel == tag then
+            -- The tag has been moved away. In most cases the tag history
+            -- function will find the best match, but if we really want we can
+            -- try to find a fallback tag as well.
+            if not oldscreen.selected_tag then
+                local newtag = awful.tag.find_fallback(oldscreen)
+                if newtag then
+                    newtag:view_only()
+                end
+            end
+        end
+        return true
+    end
+    return false
+end
+
+function sharedviewtoggle(tag, screen)
+    local oldscreen = tag.screen
+
+    if sharedmovetag(tag, screen) then
+        -- Always mark the tag selected if the screen changed. Just feels a lot
+        -- more natural.
+        tag.selected = true
+        -- Update the history on the old and new screens.
+        oldscreen:emit_signal('tag::history::update')
+        tag.screen:emit_signal('tag::history::update')
+    else
+        -- Only toggle the tag unless the screen moved.
+        awful.tag.viewtoggle(tag)
+    end
+end
+
+local function throwaway_tag(newtag)
+    return function()
+        local t = awful.tag.find_by_name(nil, newtag)
+        if t then
+            sharedviewtoggle(t)
+        else
+            local c = client.focus
+            if not c then
+                return
+            end
+            c:tags {awful.tag.add(newtag, {screen = c.screen, volatile = true})}
+        end
+    end
+end
+
 globalkeys =
     gears.table.join(
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
     awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
+    awful.key(
+        {'Mod4'},
+        'a',
+        function()
+            awful.spawn.easy_async_with_shell(
+                [[tmux list-session -F \#S | rofi -dmenu -i -p tmux]],
+                function(stdout)
+                    if stdout ~= '' then
+                        awful.spawn.easy_async {
+                            'kitty',
+                            '-1',
+                            '--name',
+                            'kitty',
+                            '--listen-on',
+                            'unix:@mykitty',
+                            'tmux',
+                            'new-session',
+                            '-A',
+                            '-s',
+                            string.sub(stdout, 1, -2)
+                        }
+                    end
+                end
+            )
+        end,
+        {description = 'attach to tmux session', group = '🚀 launcher'}
+    ),
     awful.key(
         {'Mod4'},
         'i',
@@ -886,8 +942,6 @@ globalkeys =
         end,
         {description = 'view previous non-empty tag', group = '🏷️ tag'}
     ),
-    awful.key({'Mod4'}, 'Prior', awful.tag.viewprev, {description = 'view previous', group = '🏷️ tag'}),
-    awful.key({'Mod4'}, 'Next', awful.tag.viewnext, {description = 'view next', group = '🏷️ tag'}),
     awful.key({'Mod4'}, '#49', awful.tag.history.restore, {description = 'go back', group = '🏷️ tag'}),
     awful.key(
         {'Mod4'},
@@ -1046,12 +1100,20 @@ globalkeys =
         {description = 'go back', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
+        {'Mod4', 'Control'},
         'Return',
         function()
             awful.spawn {'kitty', '-1', '--name', 'kitty', '--listen-on', 'unix:@mykitty'}
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4', 'Mod1'},
+        'Return',
+        function()
+            awful.spawn '/opt/Hyper/hyper'
+        end,
+        {description = 'open hyper', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1076,24 +1138,48 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'n',
+        'z',
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Nnn', class = 'kitty'})
+                    return awful.rules.match(c, {instance = 'zathura', class = 'Zathura'})
+                end
+            ) do
+                sharedviewtoggle(awful.tag.find_by_name(nil, '🧠'))
+                return
+            end
+            awful.spawn 'zathura'
+        end,
+        {description = '📃 Zathura', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'n',
+        function()
+            local instance = 'nnn' .. awful.screen.focused {client = true}.index
+            local session = instance == 'nnn1' and '🧞‍♂️' or instance == 'nnn2' and '🧞‍♀️' or '🧞'
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(
+                        c,
+                        {
+                            instance = instance,
+                            class = 'kitty'
+                        }
+                    )
                 end
             ) do
                 if client.focus == c then
-                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🧞‍♂️'))
+                    awful.tag.viewtoggle(awful.tag.find_by_name(awful.screen.focused(), session))
                     return
                 else
                     c:jump_to(true)
                     return
                 end
             end
-            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', 'Nnn', 'nnn'}
+            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', instance, 'nnn'}
         end,
-        {description = 'open nnn', group = '🚀 launcher'}
+        {description = 'nnn', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1181,6 +1267,47 @@ globalkeys =
             }
         end,
         {description = 'open nnn', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Return',
+        function()
+            local instance = 'tmux' .. awful.screen.focused {client = true}.index
+            local session = instance == 'tmux1' and '👨‍💻' or instance == 'tmux2' and '👩‍💻' or '🧑‍💻'
+            for c in awful.client.iterate(
+                function(c)
+                    return awful.rules.match(
+                        c,
+                        {
+                            instance = instance,
+                            class = 'kitty'
+                        }
+                    )
+                end
+            ) do
+                if client.focus == c then
+                    awful.tag.viewtoggle(awful.tag.find_by_name(awful.screen.focused(), session))
+                    return
+                else
+                    c:jump_to(true)
+                    return
+                end
+            end
+            awful.spawn {
+                'kitty',
+                '-1',
+                '--name',
+                instance,
+                '--listen-on',
+                'unix:@mykitty',
+                'tmux',
+                'new-session',
+                '-A',
+                '-s',
+                session
+            }
+        end,
+        {description = 'open terminal', group = '🚀 launcher'}
     ),
     awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
     awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
@@ -1362,6 +1489,49 @@ globalkeys =
             awful.spawn 'slock'
         end,
         {description = 'lock screen and SSH', group = '🌐 global'}
+    ),
+    awful.key(
+        {},
+        'F6',
+        throwaway_tag '🎲',
+        {
+            description = 'view 🎲',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {},
+        'F7',
+        throwaway_tag '🎰',
+        {
+            description = 'view 🎰',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {},
+        'F8',
+        throwaway_tag '🎱',
+        {
+            description = 'view 🎱',
+            group = '🏷️ tag'
+        }
+    ),
+    awful.key(
+        {'Mod4'},
+        'F9',
+        function()
+            connect_bluetooth(true, '88:C6:26:F4:8A:90')
+        end,
+        {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'F9',
+        function()
+            connect_bluetooth(false, '88:C6:26:F4:8A:90')
+        end,
+        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
     )
 )
 
@@ -1480,7 +1650,7 @@ clientkeys =
         {'Mod4'},
         'b',
         function()
-            beautiful.useless_gap = beautiful.useless_gap == 0 and 10 or 0
+            beautiful.useless_gap = beautiful.useless_gap == 0 and dpi(10) or 0
             for s in screen do
                 awful.layout.arrange(s)
             end
@@ -1489,16 +1659,28 @@ clientkeys =
     )
 )
 
-local tags_per_screen = 5
 for i, v in ipairs(default_tags) do
     globalkeys =
         gears.table.join(
         globalkeys,
         awful.key(
+            {},
+            'F' .. i,
+            function()
+                sharedviewtoggle(awful.tag.find_by_name(nil, v))
+            end,
+            {
+                description = 'toggle ' .. default_tags[i],
+                group = '🏷️ tag'
+            }
+        ),
+        awful.key(
             {'Mod4'},
             '#' .. i + 9,
             function()
-                awful.tag.find_by_name(nil, v):view_only()
+                local t = awful.tag.find_by_name(nil, v)
+                t:view_only()
+                awful.screen.focus(t.screen)
             end,
             {
                 description = 'view ' .. v,
@@ -1509,7 +1691,7 @@ for i, v in ipairs(default_tags) do
             {'Mod4', 'Control'},
             '#' .. i + 9,
             function()
-                awful.tag.viewtoggle(awful.tag.find_by_name(nil, v))
+                sharedviewtoggle(awful.tag.find_by_name(nil, v))
             end,
             {
                 description = 'toggle ' .. v,
@@ -1545,55 +1727,59 @@ for i, v in ipairs(default_tags) do
     )
 end
 
--- TODO: assign keys to apps instead of tags
-for i = 1, 4 do
-    globalkeys =
-        gears.table.join(
-        globalkeys,
-        awful.key(
-            {},
-            'F' .. i,
-            function()
-                awful.tag.find_by_name(nil, default_tags[i]):view_only()
-            end,
-            {
-                description = 'view ' .. default_tags[i],
-                group = '🏷️ tag'
-            }
-        )
-    )
+local function strawberry_next()
+    awful.spawn 'strawberry -f'
 end
 
-globalkeys =
-    gears.table.join(
-    globalkeys,
-    awful.key(
-        {'Mod4'},
-        'F9',
-        function()
-            connect_bluetooth(true, '88:C6:26:F4:8A:90')
-        end,
-        {description = 'connect bluetooth device (Setúbal)', group = '🎧 audio'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'F9',
-        function()
-            connect_bluetooth(false, '88:C6:26:F4:8A:90')
-        end,
-        {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
-    )
-)
+local function strawberry_prev()
+    awful.spawn 'strawberry --restart-or-previous'
+end
+
+local function strawberry_playpause()
+    awful.spawn 'strawberry -t'
+end
+
+local function strawberry_fwd()
+    awful.spawn 'strawberry --seek-by 10'
+end
+
+local function strawberry_rew()
+    awful.spawn 'strawberry --seek-by -10'
+end
+
+local function playerctl_next()
+    awful.spawn 'playerctl next'
+end
+
+local function playerctl_prev()
+    awful.spawn 'playerctl previous'
+end
+
+local function playerctl_playpause()
+    awful.spawn 'playerctl play-pause'
+end
+
+local function playerctl_fwd()
+    awful.spawn 'playerctl position 10+'
+end
+
+local function playerctl_rew()
+    awful.spawn 'playerctl position 10-'
+end
+
+local function playerctl_stop()
+    awful.spawn 'playerctl stop'
+end
 
 if has_multimedia_keys then
     globalkeys =
         gears.table.join(
         globalkeys,
-        awful.key({}, 'XF86AudioNext', strawberry_next, {description = '⏭️', group = '🍓 strawberry'}),
-        awful.key({}, 'XF86AudioPrev', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
-        awful.key({}, 'XF86AudioPlay', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
-        awful.key({'Shift'}, 'XF86AudioNext', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
-        awful.key({'Shift'}, 'XF86AudioPrev', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
+        awful.key({}, 'XF86AudioNext', playerctl_next, {description = '⏭️', group = '🌐 global'}),
+        awful.key({}, 'XF86AudioPrev', playerctl_prev, {description = '⏮', group = '🌐 global'}),
+        awful.key({}, 'XF86AudioPlay', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key({'Shift'}, 'XF86AudioNext', playerctl_fwd, {description = '⏩', group = '🌐 global'}),
+        awful.key({'Shift'}, 'XF86AudioPrev', playerctl_rew, {description = '⏪', group = '🌐 global'})
     )
 else
     globalkeys =
@@ -1603,7 +1789,11 @@ else
         awful.key({'Mod4'}, '#106', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#87', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#85', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
-        awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'})
+        awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'}),
+        awful.key({'Mod4'}, 'End', playerctl_next, {description = '⏭️', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Delete', playerctl_prev, {description = '⏮', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Insert', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key({'Mod4'}, 'Home', playerctl_stop, {description = '⏹️', group = '🌐 global'})
     )
 end
 
@@ -1824,7 +2014,7 @@ clientbuttons =
         {'Mod4'},
         3,
         function(c)
-            c:emit_signal('request::activate', 'mouse strawberry_click', {raise = true})
+            c:emit_signal('request::activate', 'mouse_click', {raise = true})
             awful.mouse.client.resize(c)
         end
     )
@@ -1879,6 +2069,7 @@ awful.rules.rules = {
             role = {
                 'AlarmWindow', -- Thunderbird's calendar.
                 'ConfigManager', -- Thunderbird's about:config.
+                'Organizer', -- Firefox Bookmark organizer
                 'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
                 'bubble', -- Vivaldi's "cast..." menu
                 'Organizer' -- Firefox's bookmark manager
@@ -1898,10 +2089,30 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'Nnn'},
+        rule = {instance = 'nnn1', class = 'kitty'},
         properties = {
             new_tag = {
                 name = '🧞‍♂️',
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {instance = 'nnn2', class = 'kitty'},
+        properties = {
+            new_tag = {
+                name = '🧞‍♀️',
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {instance = 'nnn3', class = 'kitty'},
+        properties = {
+            new_tag = {
+                name = '🧞',
                 volatile = true,
                 selected = true
             }
@@ -1931,6 +2142,17 @@ awful.rules.rules = {
         }
     },
     {
+        rule = {class = 'Zathura', instance = 'zathura'},
+        properties = {
+            new_tag = {
+                name = '🧠',
+                layout = awful.layout.suit.magnifier,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
         rule = {class = 'strawberry', instance = 'strawberry'},
         properties = {
             new_tag = {
@@ -1945,6 +2167,7 @@ awful.rules.rules = {
         rule = {class = 'SshAskpass'},
         properties = {
             ontop = true
+            -- TODO: centered
         }
     },
     {
@@ -1955,6 +2178,64 @@ awful.rules.rules = {
             ontop = true,
             x = dpi(210),
             y = dpi(100)
+        }
+    },
+    {
+        rule = {
+            instance = 'tmux1',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '👨‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {
+            instance = 'tmux2',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '👩‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {
+            instance = 'tmux3',
+            class = 'kitty'
+        },
+        properties = {
+            floating = false,
+            new_tag = {
+                name = '🧑‍💻',
+                layout = awful.layout.suit.max,
+                volatile = true,
+                selected = true
+            }
+        }
+    },
+    {
+        rule = {
+            instance = 'code',
+            class = 'Code'
+        },
+        properties = {
+            tag = '☕',
+            focus = true,
+            callback = function(c)
+                c:jump_to(true)
+            end
         }
     }
 }
@@ -1977,11 +2258,12 @@ client.connect_signal(
     end
 )
 
--- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal(
     'mouse::enter',
     function(c)
-        c:emit_signal('request::activate', 'mouse_enter', {raise = false})
+        if awful.screen.focused().selected_tag.layout.name == 'floating' then
+            c:emit_signal('request::activate', 'mouse_enter', {raise = true})
+        end
     end
 )
 
