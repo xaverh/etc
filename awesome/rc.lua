@@ -2128,7 +2128,8 @@ awful.rules.rules = {
                 'ConfigManager', -- Thunderbird's about:config.
                 'Organizer', -- Firefox Bookmark organizer
                 'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
-                'bubble' -- Vivaldi's "cast..." menu
+                'bubble', -- Vivaldi's "cast..." menu
+                'Organizer' -- Firefox's bookmark manager
             }
         },
         properties = {floating = true}
