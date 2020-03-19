@@ -1,13 +1,13 @@
-set nocompatible
-
 if !has('nvim')
-	let &t_SI = "\<Esc>[5 q"
-	let &t_SR = "\<Esc>[3 q"
-	let &t_EI = "\<Esc>[1 q"
+	let &t_SI .= "\<Esc>[5 q"
+	let &t_SR .= "\<Esc>[3 q"
+	let &t_EI .= "\<Esc>[1 q"
 endif
 
-if has('nvim')
-	set bg=dark
+if &term =~ "^tmux"
+	let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
+	let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
+	let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
 endif
 
 if !has('nvim')
@@ -47,6 +47,7 @@ set undofile
 
 set autoindent
 set autoread
+set background=dark
 set backspace=indent,eol,start
 set belloff=all
 set complete+=i
