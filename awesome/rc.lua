@@ -168,7 +168,7 @@ beautiful.init {
     border_marked = colors[my_theme][4],
     taglist_bg_focus = colors[my_theme][8],
     maximized_hide_border = true,
-    useless_gap = dpi(10),
+    useless_gap = 0,
     border_width = dpi(2),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
@@ -1165,14 +1165,6 @@ globalkeys =
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
     awful.key(
-        {'Mod4', 'Mod1'},
-        'Return',
-        function()
-            awful.spawn '/opt/Hyper/hyper'
-        end,
-        {description = 'open hyper', group = '🚀 launcher'}
-    ),
-    awful.key(
         {'Mod4'},
         'r',
         function()
@@ -1213,7 +1205,7 @@ globalkeys =
         {'Mod4'},
         'n',
         function()
-            local instance = 'nnn' .. awful.screen.focused {client = true}.index
+            local instance = 'nnn' .. awful.screen.focused().index
             local session = instance == 'nnn1' and '🧞‍♂️' or instance == 'nnn2' and '🧞‍♀️' or '🧞'
             for c in awful.client.iterate(
                 function(c)
@@ -1329,7 +1321,7 @@ globalkeys =
         {'Mod4'},
         'Return',
         function()
-            local instance = 'tmux' .. awful.screen.focused {client = true}.index
+            local instance = 'tmux' .. awful.screen.focused().index
             local session = instance == 'tmux1' and '👨‍💻' or instance == 'tmux2' and '👩‍💻' or '🧑‍💻'
             for c in awful.client.iterate(
                 function(c)
