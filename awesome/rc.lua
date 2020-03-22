@@ -109,7 +109,7 @@ beautiful.init {
     border_normal = colors[my_theme][9],
     border_focus = colors[my_theme].cursor,
     border_marked = colors[my_theme][4],
-    taglist_bg_focus = colors[my_theme][8],
+    taglist_bg_focus = colors[my_theme][9],
     maximized_hide_border = true,
     useless_gap = dpi(10),
     border_width = dpi(2),
@@ -712,7 +712,7 @@ local function toggle_theme()
     beautiful.border_normal = colors[my_theme][9]
     beautiful.border_focus = colors[my_theme].cursor
     beautiful.border_marked = colors[my_theme][4]
-    beautiful.taglist_bg_focus = colors[my_theme][8]
+    beautiful.taglist_bg_focus = colors[my_theme][9]
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
