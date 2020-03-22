@@ -7,7 +7,7 @@
 - mons https://github.com/Ventto/mons/blob/master/mons.sh
 - z
 - prevent apps from creating 2nd tags, e.g. 🍓
-- toggle zathura's colorscheme
+- toggle zathura's colorscheme, does pywall do anything here?
 - go through zathura settings
 - colorscheme lua operator
 - 🦸 tag
@@ -17,3 +17,4 @@
 - h, l move to other screen, j, k old school behaviour?
 - how to use nnn as a launcher 
 - mansplain error handling through the use of callback and storing the data in lua
+- tmux config

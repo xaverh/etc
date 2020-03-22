@@ -204,6 +204,19 @@ local function connect_bluetooth(connect, mac)
     awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
 end
 
+local function rxvt_client(...)
+    local command = table.pack('urxvt256c-mlc', ...)
+    awful.spawn.easy_async(
+        command,
+        function(_, _, _, exitcode)
+            if exitcode == 2 then
+                os.execute 'urxvt256c-mld -q -o -f'
+                awful.spawn(command)
+            end
+        end
+    )
+end
+
 local printkey = 'Print'
 if is_macintosh then
     printkey = 'XF86LaunchA'
@@ -285,7 +298,12 @@ local mymainmenu =
             {'awesome', myawesomemenu, beautiful.awesome_icon},
             {'multimedia', mymultimediamenu},
             {'exit', myexitmenu},
-            {'open terminal', 'kitty -1 --name kitty --listen-on unix:@mykitty'}
+            {
+                'open terminal',
+                function()
+                    rxvt_client()
+                end
+            }
         }
     }
 )
@@ -609,18 +627,18 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄‍♂️', '☕', '🏄‍♀️', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '👾', '🏝️', '🥑', '🧀 🏜️',
+local default_tags = {'🏄‍♂️', '☕', '🏝️', '🏄‍♀️', '', '', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '👾', , '🥑', '🧀 🏜️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 2)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 3)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({default_tags[3]}, s, awful.layout.layouts[1])
-        elseif s.index == 3 then
             awful.tag({default_tags[4]}, s, awful.layout.layouts[1])
+        elseif s.index == 3 then
+            awful.tag({default_tags[5]}, s, awful.layout.layouts[1])
         end
 
         -- Create a promptbox for each screen
@@ -756,7 +774,47 @@ root.buttons(
     )
 )
 
+local function toggle_rxvt_theme(my_theme)
+    local command =
+        string.format(
+        '\27]4;0;%s;1;%s;2;%s;3;%s;4;%s;5;%s;6;%s;7;%s;8;%s;9;%s;10;%s;11;%s;12;%s;13;%s;14;%s;15;%s\27\92\27]10;%s\27\92\27]11;%s\27\92\27]12;%s\27\92\27]708;%s\27\92',
+        colors[my_theme][1],
+        colors[my_theme][2],
+        colors[my_theme][3],
+        colors[my_theme][4],
+        colors[my_theme][5],
+        colors[my_theme][6],
+        colors[my_theme][7],
+        colors[my_theme][8],
+        colors[my_theme][9],
+        colors[my_theme][10],
+        colors[my_theme][11],
+        colors[my_theme][12],
+        colors[my_theme][13],
+        colors[my_theme][14],
+        colors[my_theme][15],
+        colors[my_theme][16],
+        colors[my_theme][16],
+        colors[my_theme][1],
+        colors[my_theme].cursor,
+        colors[my_theme][1]
+    )
+    local terminals = {}
+    for i = 0, 99 do
+        local terminal = '/dev/pts/' .. i
+        if gears.filesystem.file_readable(terminal) then
+            table.insert(terminals, terminal)
+        end
+    end
+    for i, terminal in ipairs(terminals) do
+        local file = io.open(terminal, 'w')
+        file:write(command)
+        file:close()
+    end
+end
+
 local function toggle_theme()
+    toggle_rxvt_theme(my_theme)
     beautiful.bg_normal = colors[my_theme][1]
     beautiful.bg_focus = colors[my_theme][1]
     beautiful.bg_urgent = colors[my_theme][2]
@@ -793,54 +851,6 @@ local function toggle_theme()
         end
         update_txt_layoutbox(s)
     end
-    -- Kitty
-    awful.spawn {
-        'kitty',
-        '@',
-        '--to',
-        'unix:@mykitty',
-        'set-colors',
-        '-a',
-        '-c',
-        'foreground=' .. colors[my_theme][16],
-        'background=' .. colors[my_theme][1],
-        'color0=' .. colors[my_theme][1],
-        'color1=' .. colors[my_theme][2],
-        'color2=' .. colors[my_theme][3],
-        'color3=' .. colors[my_theme][4],
-        'color4=' .. colors[my_theme][5],
-        'color5=' .. colors[my_theme][6],
-        'color6=' .. colors[my_theme][7],
-        'color7=' .. colors[my_theme][8],
-        'color8=' .. colors[my_theme][9],
-        'color9=' .. colors[my_theme][10],
-        'color10=' .. colors[my_theme][11],
-        'color11=' .. colors[my_theme][12],
-        'color12=' .. colors[my_theme][13],
-        'color13=' .. colors[my_theme][14],
-        'color14=' .. colors[my_theme][15],
-        'color15=' .. colors[my_theme][16],
-        'cursor=' .. colors[my_theme].cursor,
-        'selection_background=' .. colors[my_theme].selbg,
-        'url_color=' .. colors[my_theme].info,
-        'active_border_color=' .. colors[my_theme].ui_purple,
-        'active_tab_foreground=' .. colors[my_theme][16],
-        'active_tab_background=' .. colors[my_theme][1],
-        'inactive_tab_foreground=' .. colors[my_theme][8],
-        'inactive_tab_background=' .. colors[my_theme].bg_med,
-        'mark1_foreground=' .. colors[my_theme][16],
-        'mark1_background=' .. colors[my_theme].ui_blue,
-        'mark2_foreground=' .. colors[my_theme][16],
-        'mark2_background=' .. colors[my_theme].ui_orange,
-        'mark3_foreground=' .. colors[my_theme][16],
-        'mark3_background=' .. colors[my_theme].ui_purple
-    }
-    awful.spawn {
-        'ln',
-        '-sf',
-        gears.filesystem.get_xdg_config_home() .. 'kitty/' .. my_theme .. '.conf',
-        gears.filesystem.get_xdg_config_home() .. 'kitty/colors.conf'
-    }
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
     local content = file:read 'a'
@@ -955,19 +965,7 @@ globalkeys =
                 [[tmux list-session -F \#S | rofi -dmenu -i -p tmux]],
                 function(stdout)
                     if stdout ~= '' then
-                        awful.spawn.easy_async {
-                            'kitty',
-                            '-1',
-                            '--name',
-                            'kitty',
-                            '--listen-on',
-                            'unix:@mykitty',
-                            'tmux',
-                            'new-session',
-                            '-A',
-                            '-s',
-                            string.sub(stdout, 1, -2)
-                        }
+                        rxvt_client('-e', 'tmux', 'new-session', '-A', '-s', string.sub(stdout, 1, -2))
                     end
                 end
             )
@@ -1160,7 +1158,7 @@ globalkeys =
         {'Mod4', 'Control'},
         'Return',
         function()
-            awful.spawn {'kitty', '-1', '--name', 'kitty', '--listen-on', 'unix:@mykitty'}
+            rxvt_client()
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
@@ -1213,7 +1211,7 @@ globalkeys =
                         c,
                         {
                             instance = instance,
-                            class = 'kitty'
+                            class = 'URxvt'
                         }
                     )
                 end
@@ -1226,7 +1224,7 @@ globalkeys =
                     return
                 end
             end
-            awful.spawn {'kitty', '-1', '--listen-on', 'unix:@mykitty', '--title', 'Nnn', '--name', instance, 'nnn'}
+            rxvt_client('-name', instance, '-e', '/usr/bin/zsh', '-i', '-c', 'n')
         end,
         {description = 'nnn', group = '🚀 launcher'}
     ),
@@ -1288,7 +1286,7 @@ globalkeys =
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Journalctl', class = 'kitty'})
+                    return awful.rules.match(c, {instance = 'Journalctl', class = 'URxvt'})
                 end
             ) do
                 if client.focus == c then
@@ -1299,37 +1297,23 @@ globalkeys =
                     return
                 end
             end
-            awful.spawn {
-                'kitty',
-                '-1',
-                '--listen-on',
-                'unix:@mykitty',
-                '--title',
-                'Journalctl',
-                '--name',
-                'Journalctl',
-                'journalctl',
-                '-b',
-                '-f',
-                '-n',
-                '1000'
-            }
+            rxvt_client('-name', 'Journalctl', '-e', 'journalctl', '-b', '-f', '-n', '1000')
         end,
-        {description = 'open nnn', group = '🚀 launcher'}
+        {description = 'open journalctl', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
         'Return',
         function()
             local instance = 'tmux' .. awful.screen.focused().index
-            local session = instance == 'tmux1' and '👨‍💻' or instance == 'tmux2' and '👩‍💻' or '🧑‍💻'
+            local session = instance == 'tmux1' and '☕' or instance == 'tmux2' and '⚓' or '⛵'
             for c in awful.client.iterate(
                 function(c)
                     return awful.rules.match(
                         c,
                         {
                             instance = instance,
-                            class = 'kitty'
+                            class = 'URxvt'
                         }
                     )
                 end
@@ -1342,19 +1326,7 @@ globalkeys =
                     return
                 end
             end
-            awful.spawn {
-                'kitty',
-                '-1',
-                '--name',
-                instance,
-                '--listen-on',
-                'unix:@mykitty',
-                'tmux',
-                'new-session',
-                '-A',
-                '-s',
-                session
-            }
+            rxvt_client('-name', instance, '-e', 'tmux', 'new-session', '-A', '-s', session)
         end,
         {description = 'open terminal', group = '🚀 launcher'}
     ),
@@ -1709,71 +1681,73 @@ clientkeys =
 )
 
 for i, v in ipairs(default_tags) do
-    globalkeys =
-        gears.table.join(
-        globalkeys,
-        awful.key(
-            {},
-            'F' .. i,
-            function()
-                sharedviewtoggle(awful.tag.find_by_name(nil, v))
-            end,
-            {
-                description = 'toggle ' .. default_tags[i],
-                group = '🏷️ tag'
-            }
-        ),
-        awful.key(
-            {'Mod4'},
-            '#' .. i + 9,
-            function()
-                local t = awful.tag.find_by_name(nil, v)
-                t:view_only()
-                awful.screen.focus(t.screen)
-            end,
-            {
-                description = 'view ' .. v,
-                group = '🏷️ tag'
-            }
-        ),
-        awful.key(
-            {'Mod4', 'Control'},
-            '#' .. i + 9,
-            function()
-                sharedviewtoggle(awful.tag.find_by_name(nil, v))
-            end,
-            {
-                description = 'toggle ' .. v,
-                group = '🏷️ tag'
-            }
-        ),
-        awful.key(
-            {'Mod4', 'Shift'},
-            '#' .. i + 9,
-            function()
-                if client.focus then
-                    client.focus:move_to_tag(awful.tag.find_by_name(nil, v))
-                end
-            end,
-            {
-                description = 'move client to ' .. v,
-                group = '🏷️ tag'
-            }
-        ),
-        awful.key(
-            {'Mod4', 'Control', 'Shift'},
-            '#' .. i + 9,
-            function()
-                if client.focus then
-                    client.focus:toggle_tag(awful.tag.find_by_name(nil, v))
-                end
-            end,
-            {
-                description = 'toggle ' .. v .. ' on client',
-                group = '🏷️ tag'
-            }
+    if v ~= '' then
+        globalkeys =
+            gears.table.join(
+            globalkeys,
+            awful.key(
+                {},
+                'F' .. i,
+                function()
+                    sharedviewtoggle(awful.tag.find_by_name(nil, v))
+                end,
+                {
+                    description = 'toggle ' .. default_tags[i],
+                    group = '🏷️ tag'
+                }
+            ),
+            awful.key(
+                {'Mod4'},
+                '#' .. i + 9,
+                function()
+                    local t = awful.tag.find_by_name(nil, v)
+                    t:view_only()
+                    awful.screen.focus(t.screen)
+                end,
+                {
+                    description = 'view ' .. v,
+                    group = '🏷️ tag'
+                }
+            ),
+            awful.key(
+                {'Mod4', 'Control'},
+                '#' .. i + 9,
+                function()
+                    sharedviewtoggle(awful.tag.find_by_name(nil, v))
+                end,
+                {
+                    description = 'toggle ' .. v,
+                    group = '🏷️ tag'
+                }
+            ),
+            awful.key(
+                {'Mod4', 'Shift'},
+                '#' .. i + 9,
+                function()
+                    if client.focus then
+                        client.focus:move_to_tag(awful.tag.find_by_name(nil, v))
+                    end
+                end,
+                {
+                    description = 'move client to ' .. v,
+                    group = '🏷️ tag'
+                }
+            ),
+            awful.key(
+                {'Mod4', 'Control', 'Shift'},
+                '#' .. i + 9,
+                function()
+                    if client.focus then
+                        client.focus:toggle_tag(awful.tag.find_by_name(nil, v))
+                    end
+                end,
+                {
+                    description = 'toggle ' .. v .. ' on client',
+                    group = '🏷️ tag'
+                }
+            )
         )
-    )
+    end
 end
 
 local function strawberry_next()
@@ -2138,7 +2112,7 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'nnn1', class = 'kitty'},
+        rule = {instance = 'nnn1', class = 'URxvt'},
         properties = {
             new_tag = {
                 name = '🧞‍♂️',
@@ -2148,7 +2122,7 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'nnn2', class = 'kitty'},
+        rule = {instance = 'nnn2', class = 'URxvt'},
         properties = {
             new_tag = {
                 name = '🧞‍♀️',
@@ -2158,7 +2132,7 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'nnn3', class = 'kitty'},
+        rule = {instance = 'nnn3', class = 'URxvt'},
         properties = {
             new_tag = {
                 name = '🧞',
@@ -2244,51 +2218,6 @@ awful.rules.rules = {
     },
     {
         rule = {
-            instance = 'tmux1',
-            class = 'kitty'
-        },
-        properties = {
-            floating = false,
-            new_tag = {
-                name = '👨‍💻',
-                layout = awful.layout.suit.max,
-                volatile = true,
-                selected = true
-            }
-        }
-    },
-    {
-        rule = {
-            instance = 'tmux2',
-            class = 'kitty'
-        },
-        properties = {
-            floating = false,
-            new_tag = {
-                name = '👩‍💻',
-                layout = awful.layout.suit.max,
-                volatile = true,
-                selected = true
-            }
-        }
-    },
-    {
-        rule = {
-            instance = 'tmux3',
-            class = 'kitty'
-        },
-        properties = {
-            floating = false,
-            new_tag = {
-                name = '🧑‍💻',
-                layout = awful.layout.suit.max,
-                volatile = true,
-                selected = true
-            }
-        }
-    },
-    {
-        rule = {
             instance = 'code',
             class = 'Code'
         },
@@ -2296,7 +2225,7 @@ awful.rules.rules = {
             tag = '☕',
             focus = true,
             callback = function(c)
-                c:jump_to(true)
+                c:jump_to(false)
             end
         }
     }

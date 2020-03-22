@@ -41,4 +41,15 @@ rofi.display-combi:
 ! rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
 ! rofi.kb-custom-1:                    Alt+1
 
+URxvt.cursorBlink:       true
+URxvt.internalBorder:    16
+URxvt.intensityStyles:   false
+URxvt.iso14755:          false
+URxvt.pointerBlank:      true
+URxvt.pointerBlankDelay: 987654321
+URxvt.saveLines:         0
+URxvt.scrollBar:         false
+URxvt.font:              -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1,-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1
+URxvt.boldFont:          -xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1,-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1
+
 #include "Xresources-qillqaq"

@@ -1,13 +1,11 @@
-if !has('nvim')
-	let &t_SI .= "\<Esc>[5 q"
-	let &t_SR .= "\<Esc>[3 q"
-	let &t_EI .= "\<Esc>[1 q"
-endif
-
 if &term =~ "^tmux"
 	let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
 	let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
 	let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
+elseif !has('nvim')
+	let &t_SI .= "\<Esc>[5 q"
+	let &t_SR .= "\<Esc>[3 q"
+	let &t_EI .= "\<Esc>[1 q"
 endif
 
 if !has('nvim')
@@ -166,7 +164,7 @@ set numberwidth=1
 set pastetoggle=<F8>
 set relativenumber
 set title
-set nowrap
+set wrap
 
 " Comma as leader (default is \)
 " let mapleader = ","
