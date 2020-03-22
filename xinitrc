@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # Set up i18n environment
-if [ -r /etc/profile.d/lang.sh ]; then
+if [[ -r /etc/profile.d/lang.sh ]]; then
   . /etc/profile.d/lang.sh
 fi
 
@@ -14,22 +14,22 @@ sysmodmap=/etc/X11/Xmodmap
 sysxkbmap=/etc/X11/Xkbmap
 
 # merge in defaults
-[ -r "$sysresources" ] && xrdb -nocpp -merge "$sysresources"
-[ -r "$userresources" ] && xrdb -override "$userresources"
+[[ -r "$sysresources" ]] && xrdb -nocpp -merge "$sysresources"
+[[ -r "$userresources" ]] && xrdb -override "$userresources"
 
 # merge in keymaps
-if [ -r "$sysxkbmap" ]; then
+if [[ -r "$sysxkbmap" ]]; then
     setxkbmap $(cat "$sysxkbmap")
 fi
 
-if [ -r "$userxkbmap" ]; then
+if [[ -r "$userxkbmap" ]]; then
     setxkbmap $(cat "$userxkbmap")
 fi
 
 # xkb and xmodmap don't play nice together
-if ! [ -r "$sysxkbmap" -o -r "$userxkbmap" ] ; then
-    [ -r "$sysmodmap" ] && xmodmap "$sysmodmap"
-    [ -r "$usermodmap" ] && xmodmap "$usermodmap"
+if ! [[ -r "$sysxkbmap" || -r "$userxkbmap" ]] ; then
+    [[ -r "$sysmodmap" ]] && xmodmap "$sysmodmap"
+    [[ -r "$usermodmap" ]] && xmodmap "$usermodmap"
 fi
 
 # run all system xinitrc shell scripts.
@@ -38,10 +38,11 @@ for file in /etc/X11/xinit/xinitrc.d/* ; do
 done
 
 userlocalxinitrc="${XDG_CONFIG_HOME:-$HOME/.config}/xinitrc-${HOSTNAME}"
-if [ -x "$userlocalxinitrc" ]; then
+if [[ -x "$userlocalxinitrc" ]]; then
     . "$userlocalxinitrc"
 fi
 
+[[ -d "${XDG_DATA_HOME}/fonts/unifont" && -x "${XDG_DATA_HOME}/fonts/unifont" ]] && xset fp+ "${XDG_DATA_HOME}/fonts/unifont"
 xset b off &
 xset s off &
 xset -dpms &

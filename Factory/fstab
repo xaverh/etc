@@ -1,0 +1,9 @@
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/docs btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@docs 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/edu btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@edu 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/lit btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@lit 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/mov btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@mov 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/mtv btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@mtv 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/music btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@music 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/pix btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@pix 0 0
+UUID=434eb8b9-318b-4d34-a5b0-f32b138e0202 /home/xha/pod btrfs defaults,lazytime,compress-force=zstd:6,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=5min,subvol=/@pod 0 0
+
