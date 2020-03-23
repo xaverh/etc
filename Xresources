@@ -17,7 +17,7 @@ rofi.lines:                          15
 rofi.font:                           .SF Compact Display 11
 rofi.padding:                        15
 rofi.fixed-num-lines:                true
-rofi.show-icons:                     true
+rofi.show-icons:                     false
 rofi.window-command:                 awesome-client 'local awful = require "awful" for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'
 rofi.drun-match-fields:              name,generic,exec,categories
 rofi.parse-hosts:                    true
@@ -49,7 +49,7 @@ URxvt.pointerBlank:      true
 URxvt.pointerBlankDelay: 987654321
 URxvt.saveLines:         0
 URxvt.scrollBar:         false
-URxvt.font:              -sgi-screen-medium-r-normal--16-160-72-72-m-80-iso8859-1,-xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1,-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1
-URxvt.boldFont:          -sgi-screen-bold-r-normal--16-160-72-72-m-90-iso8859-1,-xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1,-gnu-unifont-medium-r-normal-sans-16-160-75-75-c-80-iso10646-1
+URxvt.font:              -sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,xft:Symbola:style=Regular
+URxvt.boldFont:          -sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,xft:Symbola:style=Regular
 
 #include "Xresources-qillqaq"
