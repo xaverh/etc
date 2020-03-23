@@ -954,6 +954,14 @@ end
 
 globalkeys =
     gears.table.join(
+    awful.key(
+        {'Mod4'},
+        'c',
+        function()
+            awful.spawn {'mpv', '/home/xha/var/ygcv.ogg'}
+        end,
+        {description = 'You Got Coronavirus!', group = 'Covid-19 😷'}
+    ),
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
     awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
@@ -1245,6 +1253,14 @@ globalkeys =
                     return
                 end
             end
+            awful.spawn.easy_async_with_shell(
+                [=[\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | cat <<<"https://www.youtube.com/playlist?list=WL" | uniq | rofi -dmenu -i -p '🍿']=],
+                function(stdout)
+                    if stdout ~= '' then
+                        awful.spawn {'mpv', string.sub(stdout, 1, -2)}
+                    end
+                end
+            )
         end,
         {description = 'open mpv', group = '🚀 launcher'}
     ),
@@ -2146,11 +2162,12 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '🍿',
-                -- layout = awful.layout.suit.max.fullscreen,
+                layout = awful.layout.suit.tile,
                 volatile = true,
                 selected = true
             },
-            sticky = false
+            sticky = false,
+            focused = false
         }
     },
     {
@@ -2158,12 +2175,13 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '🍿',
-                layout = awful.layout.suit.max,
+                layout = awful.layout.suit.tile,
                 volatile = true,
                 selected = true
             },
             sticky = false,
-            floating = false
+            floating = false,
+            focused = false
         }
     },
     {
