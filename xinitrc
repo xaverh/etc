@@ -42,7 +42,6 @@ if [[ -x "$userlocalxinitrc" ]]; then
     . "$userlocalxinitrc"
 fi
 
-[[ -d "${XDG_CONFIG_HOME}/Fonts/unifont" && -x "${XDG_CONFIG_HOME}/Fonts/unifont" ]] && xset fp+ "${XDG_CONFIG_HOME}/Fonts/unifont"
 [[ -d "${XDG_CONFIG_HOME}/Fonts/sgi" && -x "${XDG_CONFIG_HOME}/Fonts/sgi" ]] && xset fp+ "${XDG_CONFIG_HOME}/Fonts/sgi"
 xset b off &
 xset s off &
