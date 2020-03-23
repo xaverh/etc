@@ -1224,7 +1224,7 @@ globalkeys =
                     return
                 end
             end
-            rxvt_client('-name', instance, '-e', '/usr/bin/zsh', '-i', '-c', 'n')
+            rxvt_client('-name', instance, '-e', 'nnn')
         end,
         {description = 'nnn', group = '🚀 launcher'}
     ),
