@@ -16,6 +16,7 @@ export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/lesshst"
 export GNUPGHOME="${XDG_CONFIG_HOME:-$HOME/.config}/gnupg"
 export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 export XCURSOR_THEME="DMZ-White"
 export NNN_COLORS=4321
 export NNN_OPTS=Rxe
