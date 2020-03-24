@@ -627,18 +627,18 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local default_tags = {'🏄‍♂️', '☕', '🏝️', '🏄‍♀️', '', '', '🏄'} -- 🧟‍♂️ 🧟‍♀️   🧜🏻‍♀️'🦄''🏖️', '👾', , '🥑', '🧀 🏜️',
+local default_tags = {'🏄‍♂️', '☕', '🏝️', '👾', '🏄‍♀️', '', '', '', '', '', '', '🏄'} --     🧜🏻‍♀️'🦄''🏖️', , , '🥑', '🧀 🏜️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 3)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 4)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({default_tags[4]}, s, awful.layout.layouts[1])
-        elseif s.index == 3 then
             awful.tag({default_tags[5]}, s, awful.layout.layouts[1])
+        elseif s.index == 3 then
+            awful.tag({default_tags[12]}, s, awful.layout.layouts[1])
         end
 
         -- Create a promptbox for each screen
@@ -954,14 +954,6 @@ end
 
 globalkeys =
     gears.table.join(
-    awful.key(
-        {'Mod4'},
-        'c',
-        function()
-            awful.spawn {'mpv', '/home/xha/var/ygcv.ogg'}
-        end,
-        {description = 'You Got Coronavirus!', group = 'Covid-19 😷'}
-    ),
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
     awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
@@ -1193,7 +1185,7 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'z',
+        'p',
         function()
             for c in awful.client.iterate(
                 function(c)
@@ -1322,7 +1314,7 @@ globalkeys =
         'Return',
         function()
             local instance = 'tmux' .. awful.screen.focused().index
-            local session = instance == 'tmux1' and '☕' or instance == 'tmux2' and '⚓' or '⛵'
+            local session = instance == 'tmux1' and 'i' or instance == 'tmux2' and 'ii' or 'iii'
             for c in awful.client.iterate(
                 function(c)
                     return awful.rules.match(
@@ -1334,11 +1326,14 @@ globalkeys =
                     )
                 end
             ) do
-                if client.focus == c then
-                    awful.tag.viewtoggle(awful.tag.find_by_name(awful.screen.focused(), session))
+                if client.focus ~= c then
+                    c:toggle_tag(awful.screen.focused().selected_tag)
+                    c:jump_to()
                     return
                 else
-                    c:jump_to(true)
+                    c:toggle_tag(awful.screen.focused().selected_tag)
+                    client.focus = awful.client.next(-1, c)
+                    awful.layout.arrange(awful.screen.focused())
                     return
                 end
             end
@@ -2134,6 +2129,39 @@ awful.rules.rules = {
                 name = '🧞‍♂️',
                 volatile = true,
                 selected = true
+            }
+        }
+    },
+    {
+        rule = {instance = 'tmux1', class = 'URxvt'},
+        properties = {
+            new_tag = {
+                name = '🧟‍♂️',
+                volatile = true,
+                layout = awful.layout.suit.fair,
+                selected = false
+            }
+        }
+    },
+    {
+        rule = {instance = 'tmux2', class = 'URxvt'},
+        properties = {
+            new_tag = {
+                name = '🧟‍♀️',
+                volatile = true,
+                layout = awful.layout.suit.fair,
+                selected = false
+            }
+        }
+    },
+    {
+        rule = {instance = 'tmux3', class = 'URxvt'},
+        properties = {
+            new_tag = {
+                name = '🧟',
+                volatile = true,
+                layout = awful.layout.suit.fair,
+                selected = false
             }
         }
     },

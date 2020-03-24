@@ -18,3 +18,4 @@
 - how to use nnn as a launcher 
 - mansplain error handling through the use of callback and storing the data in lua
 - tmux config
+- z as 🧟 key
