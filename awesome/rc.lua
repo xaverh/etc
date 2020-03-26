@@ -176,7 +176,7 @@ beautiful.init {
     master_width_factor = 0.55,
     layout_txt = {
         tile = '👈🏻',
-        tileleft = '👉🏻',
+        -- tileleft = '👉🏻',
         fairv = '🤙🏻',
         floating = '🖖🏻',
         magnifier = '🤏🏻',
@@ -238,7 +238,7 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
-    awful.layout.suit.tile.left
+    -- awful.layout.suit.tile.left
 }
 
 local myawesomemenu = {
