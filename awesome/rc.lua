@@ -2215,3 +2215,5 @@ client.connect_signal(
         c.border_color = beautiful.border_normal
     end
 )
+
+awful.spawn.with_shell [=[xrdb -merge <<<"rofi.window-command: awesome-client 'local awful = require [[awful]] for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'"]=]
