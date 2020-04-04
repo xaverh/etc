@@ -1,11 +1,13 @@
-if &term =~ "^tmux"
-	let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
-	let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
-	let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
-elseif !has('nvim')
-	let &t_SI .= "\<Esc>[5 q"
-	let &t_SR .= "\<Esc>[3 q"
-	let &t_EI .= "\<Esc>[1 q"
+if !has('nvim')
+	if &term =~ "^tmux"
+		let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
+		let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
+		let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
+	else
+		let &t_SI .= "\<Esc>[5 q"
+		let &t_SR .= "\<Esc>[3 q"
+		let &t_EI .= "\<Esc>[1 q"
+	endif
 endif
 
 if !has('nvim')

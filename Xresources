@@ -6,25 +6,25 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-SshAskpass*font: -uw-ttyp0-*-*-*-*-*-*-*-*-*-*-*-*
+SshAskpass*font: -sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1
 SshAskpass.*borderWidth: 1
 
 Xcursor.theme: DMZ-White
 
 rofi.modi:                           window,run,drun
-rofi.width:                          70
+rofi.width:                          55
 rofi.lines:                          15
 rofi.font:                           .SF Compact Display 11
 rofi.padding:                        15
 rofi.fixed-num-lines:                true
 rofi.show-icons:                     false
-rofi.window-command:                 awesome-client 'local awful = require "awful" for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'
+! rofi.window-command:                 awesome-client 'local awful = require "awful" for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'
 rofi.drun-match-fields:              name,generic,exec,categories
+rofi.window-format:                  ⟶ {w}: {t}
 rofi.parse-hosts:                    true
 rofi.parse-known-hosts:              true
-! rofi.combi-modi:                     window,run
-! "Set the matching algorithm. (normal, regex, glob, fuzzy)" Set from: Default
-! rofi.matching:                       normal
+rofi.combi-modi:                     window,run,drun
+rofi.matching:                       normal
 rofi.separator-style:                solid
 rofi.hide-scrollbar:                 true
 rofi.combi-hide-mode-prefix:         true
@@ -45,11 +45,19 @@ URxvt.cursorBlink:       true
 URxvt.internalBorder:    13
 URxvt.intensityStyles:   false
 URxvt.iso14755:          false
+URxvt.lineSpace:         3
 URxvt.pointerBlank:      true
 URxvt.pointerBlankDelay: 987654321
 URxvt.saveLines:         0
 URxvt.scrollBar:         false
 URxvt.font:              -sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1,-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular
 URxvt.boldFont:          -sgi-screen-bold-r-normal--13-130-72-72-m-80-iso8859-1,-misc-fixed-bold-r-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular
+URxvt.perl-ext-common:   selection-to-clipboard
+URxvt.iconFile:          /usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg
+! Disable Perl extension
+! If you do not use the Perl extension features, you can improve the security
+! and speed by disabling Perl extensions completely.
+! URxvt.perl-ext:
+! URxvt.perl-ext-common:
 
 #include "Xresources-qillqaq"

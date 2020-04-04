@@ -18,9 +18,10 @@ export GNUPGHOME="${XDG_CONFIG_HOME:-$HOME/.config}/gnupg"
 export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
 export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 export XCURSOR_THEME="DMZ-White"
+export FVWM_USERDIR="${XDG_CONFIG_HOME:-$HOME/.config}/fvwm"
 export NNN_COLORS=4321
 export NNN_OPTS=Rxe
-export NNN_PLUG='i:imgview;c:_code -r;x:sx;d:hexview'
+export NNN_PLUG='i:imgview;c:_code -r;x:sx;d:hexview,v:_mpv'
 export NNN_BMS='c:~/.config;t:/tmp'
 
 # manpage colors

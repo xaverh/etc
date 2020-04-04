@@ -238,5 +238,6 @@
 	"timeline.showView": true,
 	"workbench.colorTheme": "Qillqaq",
 	"editor.lineHeight": 21,
-	"editor.fontFamily": "monospace"
+	"editor.fontFamily": "monospace",
+	"window.titleBarStyle": "native"
 }
