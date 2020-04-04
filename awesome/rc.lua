@@ -83,14 +83,17 @@ if os.getenv 'HOSTNAME' == 'aberystwyth' then
     is_macintosh = true
 elseif os.getenv 'HOSTNAME' == 'airolo' then
     temperature_filename = '/sys/class/thermal/thermal_zone2/temp'
+    has_volume_keys = true
+    has_multimedia_keys = true
 end
 
-local my_theme = 'qi'
+-- TODO:
 -- if (os.date('*t').hour + 16) % 24 >= 12 then
 -- my_theme = 'qi'
 -- else
 -- my_theme = 'ys'
 -- end
+local my_theme = 'qi'
 
 local wallpapers = {
     '01af74d64a1446acadb31e3f63d3fa52.png',
@@ -101,10 +104,6 @@ local wallpapers = {
     '18e9f5bbdc2e45c199a01a52c3759749.png',
     '1dbcde2d1f554fc38eaf8e0b8886c557.png',
     '1e9cee9d87f34c6aa20059766200cad9.png',
-    '2020-03-02_23-19-57_900_3840x2160.png',
-    '2020-03-02_23-21-10_477_3840x2160.png',
-    '2020-03-02_23-22-32_159_3840x2160.png',
-    '2020-03-08_16-33-06_895_3840x2160.png',
     '20278fccf7c945e7b0994e8d92322733.png',
     '234e55371f9f4cf195fcb000f9fa479a.png',
     '2e1fd5c1156f4867b3304632e65f1524.png',
@@ -176,7 +175,6 @@ beautiful.init {
     master_width_factor = 0.55,
     layout_txt = {
         tile = '👈🏻',
-        -- tileleft = '👉🏻',
         fairv = '🤙🏻',
         floating = '🖖🏻',
         magnifier = '🤏🏻',
@@ -186,15 +184,14 @@ beautiful.init {
     tasklist_align = 'center',
     wibar_height = dpi(20),
     notification_max_width = dpi(460),
-    -- notification_max_height = dpi(140),
     notification_icon_size = dpi(100),
+    notification_border_width = dpi(2),
+    notification_border_color = colors[my_theme].cursor,
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
     wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
         os.getenv 'XDG_DATA_HOME' .. '/Tapet/' .. wallpapers[math.random(#wallpapers)]
 }
-
--- TODO: notification borders
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
 beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
@@ -224,21 +221,10 @@ end
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
     awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
     awful.layout.suit.floating,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.magnifier,
-    -- awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
-    -- awful.layout.suit.tile.left
+    awful.layout.suit.magnifier
 }
 
 local myawesomemenu = {
@@ -404,6 +390,9 @@ local function set_wallpaper(s)
     end
 end
 
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal('property::geometry', set_wallpaper)
+
 local netdevice = ''
 local ipwidget =
     awful.widget.watch(
@@ -424,7 +413,6 @@ local btrfswidget =
     {'btrfs', 'filesystem', 'usage', '--si', '/'},
     5.9,
     function(widget, stdout, _, _, _)
-        -- local free = stdout:match 'Free %(estimated%):.*%(min: (.)*%)'
         local free, unit = stdout:match 'Free %(estimated%):%s*([%d%.]*)(%a*)'
         if free then
             widget:set_text('  / ' .. free .. '\u{2009}' .. unit)
@@ -543,30 +531,14 @@ local memorywidget =
         'timeout',
         function()
             t:stop()
-            -- local mem = {}
             for line in io.lines '/proc/meminfo' do
                 for k, v in string.gmatch(line, '([%a]+):[%s]+([%d]+).+') do
-                    --[[ if k == 'MemTotal' then
-                        mem.total = v * 1024
-                    elseif k == 'MemFree' then
-                        mem.free = v * 1024
-                    elseif k == 'Shmem' then
-                        mem.shmem = v * 1024
-                    elseif k == 'Buffers' then
-                        mem.buffers = v * 1024
-                    elseif k == 'Cached' then
-                        mem.cached = v * 1024
-                    elseif k == 'SReclaimable' then
-                        mem.sreclaimable = v * 1024
-                    end ]]
                     if k == 'MemAvailable' then
                         mem_available = v * 1024
                         break
                     end
                 end
             end
-            -- https://github.com/KittyKatt/screenFetch/issues/386#issuecomment-249312716
-            -- mem.used = mem.total + mem.shmem - mem.free - mem.buffers - mem.cached - mem.sreclaimable
             widget:set_text('m ' .. fixed(mem_available))
             t:again()
         end
@@ -619,24 +591,20 @@ local netthroughwidget =
 end)()
 
 local function update_txt_layoutbox(s)
-    -- Writes a string representation of the current layout in a textbox widget
     local txt_l = beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))] or ''
     s.mylayoutbox:set_text(txt_l)
 end
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal('property::geometry', set_wallpaper)
-
-local default_tags = {'🏄‍♂️', '☕', '🏝️', '👾', '🏄‍♀️', '', '', '', '', '', '', '🏄'} --     🧜🏻‍♀️'🦄''🏖️', , , '🥑', '🧀 🏜️',
+local default_tags = {'🌐', '☕', '🧠', '👾', '🍓', '🎲', '🎰', '🎱', '🏜️', '🥑', '🧀', '🦄'} --     🧜🏻‍♀️'🦄''🏖️', , , ,'🏝️',
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
 
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 4)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 6)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({default_tags[5]}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 7, 11)}, s, awful.layout.layouts[1])
         elseif s.index == 3 then
             awful.tag({default_tags[12]}, s, awful.layout.layouts[1])
         end
@@ -831,6 +799,7 @@ local function toggle_theme()
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
+    beautiful.notification_border_color = colors[my_theme].cursor
     if my_theme == 'ys' then
         for k, v in pairs(beautiful.layout_txt) do
             beautiful.layout_txt[k] = string.gsub(v, '\u{1F3FB}', '\u{1F3FF}', 1)
@@ -976,7 +945,7 @@ globalkeys =
         {'Mod4'},
         'i',
         function()
-            awful.spawn {'clipmenu', '-p', 'clipboard'}
+            awful.spawn {'clipmenu', '-i', '-p', '📋'}
         end,
         {description = 'clipmenu', group = '📋 clipboard'}
     ),
@@ -1185,22 +1154,6 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'p',
-        function()
-            for c in awful.client.iterate(
-                function(c)
-                    return awful.rules.match(c, {instance = 'zathura', class = 'Zathura'})
-                end
-            ) do
-                sharedviewtoggle(awful.tag.find_by_name(nil, '🧠'))
-                return
-            end
-            awful.spawn 'zathura'
-        end,
-        {description = '📃 Zathura', group = '🚀 launcher'}
-    ),
-    awful.key(
-        {'Mod4'},
         'n',
         function()
             local instance = 'nnn' .. awful.screen.focused().index
@@ -1255,38 +1208,6 @@ globalkeys =
             )
         end,
         {description = 'open mpv', group = '🚀 launcher'}
-    ),
-    awful.key(
-        {'Mod4'},
-        'F8',
-        function()
-            for c in awful.client.iterate(
-                function(c)
-                    return awful.rules.match(c, {instance = 'strawberry', class = 'strawberry'})
-                end
-            ) do
-                if client.focus == c then
-                    awful.tag.viewtoggle(awful.tag.find_by_name(nil, '🍓'))
-                    return
-                else
-                    c:jump_to(true)
-                    return
-                end
-            end
-            awful.spawn 'strawberry'
-        end,
-        {description = '🍓', group = '🚀 launcher'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'F8',
-        function()
-            awful.tag.find_by_name(nil, '🍓'):view_only()
-        end,
-        {
-            description = 'toggle 🍓',
-            group = '🏷️ tag'
-        }
     ),
     awful.key(
         {'Mod4'},
@@ -1413,7 +1334,7 @@ globalkeys =
         function()
             awful.tag.incnmaster(1, nil, true)
         end,
-        {description = 'increase the number of master clients', group = '💠 layout'}
+        {description = 'decrease the number of master clients', group = '💠 layout'}
     ),
     awful.key(
         {'Mod4', 'Control'},
@@ -1421,23 +1342,7 @@ globalkeys =
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
-        {description = 'decrease the number of master clients', group = '💠 layout'}
-    ),
-    awful.key(
-        {'Mod4', 'Control', 'Shift'},
-        'Down',
-        function()
-            awful.tag.incncol(1, nil, true)
-        end,
-        {description = 'increase the number of columns', group = '💠 layout'}
-    ),
-    awful.key(
-        {'Mod4', 'Control', 'Shift'},
-        'Up',
-        function()
-            awful.tag.incncol(-1, nil, true)
-        end,
-        {description = 'decrease the number of columns', group = '💠 layout'}
+        {description = 'increase the number of master clients', group = '💠 layout'}
     ),
     awful.key(
         {'Mod4'},
@@ -1812,6 +1717,7 @@ if has_multimedia_keys then
         awful.key({}, 'XF86AudioNext', playerctl_next, {description = '⏭️', group = '🌐 global'}),
         awful.key({}, 'XF86AudioPrev', playerctl_prev, {description = '⏮', group = '🌐 global'}),
         awful.key({}, 'XF86AudioPlay', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key({}, 'XF86AudioStop', playerctl_stop, {description = '⏹️', group = '🌐 global'}),
         awful.key({'Shift'}, 'XF86AudioNext', playerctl_fwd, {description = '⏩', group = '🌐 global'}),
         awful.key({'Shift'}, 'XF86AudioPrev', playerctl_rew, {description = '⏪', group = '🌐 global'})
     )
@@ -2217,7 +2123,7 @@ awful.rules.rules = {
         properties = {
             new_tag = {
                 name = '📻',
-                layout = awful.layout.suit.magnifier,
+                layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
             }
@@ -2226,23 +2132,15 @@ awful.rules.rules = {
     {
         rule = {class = 'Zathura', instance = 'zathura'},
         properties = {
-            new_tag = {
-                name = '🧠',
-                layout = awful.layout.suit.magnifier,
-                volatile = true,
-                selected = true
-            }
+            tag = '🧠',
+            selected = true
         }
     },
     {
         rule = {class = 'strawberry', instance = 'strawberry'},
         properties = {
-            new_tag = {
-                name = '🍓',
-                layout = awful.layout.suit.max,
-                volatile = true,
-                selected = true
-            }
+            tag = '🍓',
+            selected = true
         }
     },
     {

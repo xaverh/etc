@@ -1,0 +1,244 @@
+InfoStoreAdd wallpaper $[XDG_DATA_HOME]/Tapet/3eec6c7edfed414fb29982217f83d6e1.png
+ExecUseShell
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Test (Init, f $[infostore.wallpaper]) Exec exec fvwm-root $[infostore.wallpaper]
++ I Module FvwmCommandS
++ I Test (Init) Exec xrdb -merge <<<"rofi.window-command: FvwmCommand 'WindowId {window} PlaceAgain\nWindowId {window} Iconify off\nWindowId {window} Focus\nWindowId {window} Raise'"
++ I Test (Init) Exec exec tint2
+
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+
+DestroyFunc ToggleTitle
+AddToFunc ToggleTitle
++ I ThisWindow (State 1) WindowStyle Title
++ I TestRc (Match) State 1 False
++ I TestRc (Match) Break
++ I WindowStyle !Title
++ I State 1 True
+
+DestroyFunc ToggleOnTop
+AddToFunc   ToggleOnTop
++ I ThisWindow (Layer 6) Layer
++ I TestRc (NoMatch) Layer 0 6
++ I Raise
+
+DestroyFunc ScrollAndRefocus
+AddToFunc ScrollAndRefocus
++ I Scroll $0 $1
++ I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
++ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
+
+DestroyFunc URxvtClient
+AddToFunc URxvtClient
++ I Exec urxvt256c-mlc $* ; if [[ $? -eq 2 ]] ; then ; urxvt256c-mld -q -o -f ; urxvt256c-mlc $* ; fi
+
+EwmhNumberOfDesktops 3 0
+DesktopName 0 🌐
+DesktopName 1 ☕
+DesktopName 2 👾
+DesktopName 3 🧠
+DesktopName 4 🥑
+DesktopName 5 🍓
+DesktopName 6 🎲
+DesktopName 7 🎰
+DesktopName 8 🎱
+DesktopName 9 🏜️
+DesktopName 10 🦄
+DesktopSize 2x2
+
+DefaultFont "xft:.SF Compact Display:style=Medium:size=11:antialias=True:encoding=iso10646-1"
+
+IgnoreModifiers L25
+
+ClickTime 250
+MoveThreshold 3
+EdgeScroll 0 0
+EdgeResistance -1
+EdgeThickness 1
+OpaqueMoveSize unlimited
+
+Style * ResizeOpaque, \
+	SnapAttraction 5 SameType ScreenAll, \
+	SnapGrid, \
+	DecorateTransient, \
+	StackTransientParent, \
+	WindowShadeScrolls, \
+	WindowShadeSteps 10, \
+	!Icon, \
+	EdgeMoveResistance 10, \
+	EdgeMoveDelay 128, \
+	EdgeResizeDelay -1, \
+	ClickToFocus, \
+	FPFocusByFunctionWarpPointer, \
+	!FPGrabFocusTransient, \
+	FPReleaseFocusTransient, \
+        Colorset 1, \
+        HilightColorset 2, \
+	MWMButtons, \
+	FvwmBorder, \
+	FirmBorder, \
+	HandleWidth 1, \
+	MinOverlapPercentPlacement, \
+	!UsePPosition
+
+Style Tint2 !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus, StaysOnTop, FixedPosition, UsePPosition
+
+CleanupColorsets
+# inactive windows
+Colorset 1  fg #e5e6e6, bg #171717
+# active windows/menu items
+Colorset 2 bg #553a63, fg #e5e6e6
+# inactive menu item
+Colorset 3 fg #e5e6e6, bg #f3f3f3, VGradient 200 #171717 #444444
+
+MenuStyle * MenuColorset 3, ActiveColorset 2, TitleColorset 1, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore
+
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot@/home/xha/.config/fvwm/linux_menu.xpm@^#005577^
++ "&Programs" Popup MenuPrograms
++ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:24x24%" Function URxvtClient
++ "Bluetooth%/usr/share/icons/Adwaita/24x24/devices/bluetooth-symbolic.symbolic.png%" Popup BluetoothMenu
++ "" Nop
++ "Toggle Titlebar" ToggleTitle
++ "Stays on Top" Pick Layer 0 6
++ "Stays Put" Pick Layer 0 4
++ "Stays on Bottom" Pick Layer 0 2
++ "Kill Client%reboot.svg:24x24%" Destroy
++ "" Nop
++ "&Quit" Popup QuitMenu
+
+DestroyMenu QuitMenu
+AddToMenu QuitMenu
++ "Re&fresh" Refresh
++ "&Restart" Restart
++ "" Nop
++ "Re&boot" Exec systemctl reboot
++ "&Shutdown" Exec systemctl poweroff
+
+DestroyMenu MenuPrograms
+AddToMenu   MenuPrograms "Programs" Title
++ "tmux" PopUp TmuxMenu
++ "Firefox%/usr/share/icons/hicolor/16x16/apps/firefox.png%" Exec exec firefox
++ "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_16_dev.png%" Exec exec google-chrome-unstable
+Test (x gimp) + "Gimp" Exec exec gimp
+
+DestroyMenu BluetoothMenu
+AddToMenu BluetoothMenu
++ "Connect Setúbal%/usr/share/icons/Adwaita/scalable/devices/bluetooth-symbolic.svg%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
++ "Disconnect Setúbal" Exec exec bluetoothctl disconnect 88:C6:26:F4:8A:90
++ "Connect JBL GO" Exec exec bluetoothctl connect 78:44:05:E4:E0:D4
++ "Disconnect JBL GO" Exec exec bluetoothctl disconnect 78:44:05:E4:E0:D4
+
+DestroyFunc GenTmuxMenu
+AddToFunc GenTmuxMenu
++ I AddToMenu TmuxMenu "tmux" Title
++ I PipeRead `tmux list-sessions -F '+ "#S" Function URxvtClient -e tmux new-session -A -s "#S"'`
++ I AddToMenu TmuxMenu "" Nop
++ I AddToMenu TmuxMenu "<new session>" Function URxvtClient -e tmux
+
+DestroyMenu TmuxMenu
+AddToMenu TmuxMenu
++ DynamicPopUpAction GenTmuxMenu
++ DynamicPopDownAction DestroyMenu recreate TmuxMenu
+
+Silent Key Menu A A Menu MenuFvwmRoot
+Silent Key Tab A M WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
+Key space A 4 Exec exec rofi -combi-modi window,drun,run -show combi -modi combi
+-Key e A 4 Exec `awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $$2); print $$2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $$1}' | xsel -ib`
+Key u A 4 Exec `xdg-open $(\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')`
+-Key F1 A 4 Exec `mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $$2" "$$1}'))`
+Key a A 4 Menu TmuxMenu
+Key i A 4 Exec exec clipmenu -i -p '📋'
+Silent Key XF86AudioNext A N Exec exec playerctl next
+Silent Key XF86AudioPrev A N Exec exec playerctl previous
+Silent Key XF86AudioPlay A N Exec exec playerctl play-pause
+Silent Key XF86AudioStop A N Exec exec playerctl stop
+Silent Key XF86AudioRaiseVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; exec notify-send "🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
+Silent Key XF86AudioLowerVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; exec notify-send "🔉 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
+Silent Key XF86AudioMute A N Exec `pactl set-sink-mute @DEFAULT_SINK@ true && exec notify-send "🔇 mute"`
+Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
+Key r A 4C Restart
+Key Return A 4 URxvtClient
+Key v A 4 URxvtClient -e vim
+Key h A SM4 MovetoPage -1p 0p
+Key j A SM4 MovetoPage 0p +1p
+Key k A SM4 MovetoPage 0p -1p
+Key l A SM4 MovetoPage +1p 0p
+Key h A S4 AnimatedMove w-10 keep ewmhiwa
+Key j A S4 AnimatedMove keep w10 ewmhiwa
+Key k A S4 AnimatedMove keep w-10 ewmhiwa
+Key l A S4 AnimatedMove w10 keep ewmhiwa
+Key 1 A 4 GotoDesk 0 0
+Key 2 A 4 GotoDesk 0 1
+Key 3 A 4 GotoDesk 0 2
+Key 4 A 4 GotoDesk 0 3
+Key 5 A 4 GotoDesk 0 4
+Key 6 A 4 GotoDesk 0 5
+Key 7 A 4 GotoDesk 0 6
+Key 8 A 4 GotoDesk 0 7
+Key 9 A 4 GotoDesk 0 8
+Key 0 A 4 GotoDesk 0 9
+Key 1 A S4 MovetoDesk 0 0
+Key 2 A S4 MovetoDesk 0 1
+Key 3 A S4 MovetoDesk 0 2
+Key 4 A S4 MovetoDesk 0 3
+Key 5 A S4 MovetoDesk 0 4
+Key 6 A S4 MovetoDesk 0 5
+Key 7 A S4 MovetoDesk 0 6
+Key 8 A S4 MovetoDesk 0 7
+Key 9 A S4 MovetoDesk 0 8
+Key 0 A S4 MovetoDesk 0 9
+Key h A 4 ScrollAndRefocus -25 0
+Key j A 4 ScrollAndRefocus +0 +50
+Key k A 4 ScrollAndRefocus +0 -50
+Key l A 4 ScrollAndRefocus +25 +0
+Key Prior A 4 GoToDesk +1
+Key Next A 4 GoToDesk -1
+Key Prior A S4 MoveToDesk +1
+Key Next A S4 MoveToDesk -1
+Silent Key odiaeresis A 4 ResizeMoveMaximize 59 100 0 0
+Silent Key udiaeresis A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
+Silent Key adiaeresis A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
+
+Mouse 1 1    A ToggleOnTop
+Mouse 2 T    A StickAcrossPages
+Mouse 3 T    A StickAcrossDesks
+Mouse 1 2    A Close
+Mouse 1 4    A Maximize 100 100
+Mouse 1 6    A Iconify
+Mouse 1	T    A RaiseMoveX Move Maximize
+Mouse 1	FS   A RaiseMoveX Resize Maximize
+Mouse 1 W    4 RaiseMoveX Move Maximize
+Mouse 4	T    A WindowShade True
+Mouse 5	T    A WindowShade False
+Mouse 3	R    A Menu MenuFvwmRoot
+Mouse 2	R    A WindowList
+Mouse 1 R    A Scroll reverse
+
+ButtonStyle Reset
+TitleStyle Reset
+BorderStyle Reset
+TitleStyle Centered Height 19 Active (Colorset 2 -- Flat) Inactive (Colorset 1 -- Flat) ToggledActive (Colorset 2 -- Flat) ToggledInactive (Colorset 1 -- Flat)
+BorderStyle -- Flat
+ButtonStyle 1 - MwmDecorLayer 6
+ButtonStyle 1 AllNormal Vector 5 40x40@1 60x40@3 60x60@3 40x60@3 40x40@3
+ButtonStyle 1 AllToggled Vector 4 50x35@1 65x65@3 35x65@3 50x35@3
+ButtonStyle 1 AllDown Vector 4 50x25@1 75x75@3 25x75@3 50x25@3
+ButtonStyle 1 ToggledDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
+ButtonStyle 2 AllUp Vector 4 35x65@1 65x35@3 35x35@4 65x65@3
+ButtonStyle 2 AllDown Vector 4 10x90@1 90x10@3 10x10@4 90x90@3
+ButtonStyle 4 - MwmDecorMax
+ButtonStyle 4 AllNormal Vector 6 50x65@1 35x65@3 35x50@3 50x35@4 65x35@3 65x50@3
+ButtonStyle 4 AllToggled Vector 6 35x55@1 45x55@3 45x65@3 55x35@4 55x45@3 65x45@3
+ButtonStyle 4 AllDown Vector 6 50x90@1 10x90@3 10x50@3 50x10@4 90x10@3 90x50@3
+ButtonStyle 4 ToggledDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
+ButtonStyle 6 - MwmDecorMin
+ButtonStyle 6 AllUp Vector 2 35x65@1 65x65@3
+ButtonStyle 6 AllDown Vector 2 10x65@1 90x65@3
+ButtonStyle All -- UseTitleStyle Flat

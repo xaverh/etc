@@ -62,7 +62,7 @@ zstyle ':completion:*:default' menu select=2
 # https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
 zstyle ":completion:*:commands" rehash 1
 
-alias vi=nvim
+alias vi=vim
 alias grep="grep --color=auto"
 alias ...='../..'
 alias ....='../../..'
