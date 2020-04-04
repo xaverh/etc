@@ -217,18 +217,6 @@ set wrap
 "
 " map Q gQ
 "
-" " Map jj to the Esc functionality
-" inoremap jj <Esc>
-"
-" " Show hightlighting groups for current word
-" nmap <C-S-P> :call <SID>SynStack()<CR>
-" function! <SID>SynStack()
-" 	if !exists("*synstack")
-" 		return
-" 	endif
-" 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-" endfunc
-"
 " " Return to last edit position when opening files
 " autocmd BufReadPost *
 " 			\ if line("'\"") > 0 && line("'\"") <= line("$") |
