@@ -18,7 +18,6 @@ rofi.font:                           .SF Compact Display 11
 rofi.padding:                        15
 rofi.fixed-num-lines:                true
 rofi.show-icons:                     false
-! rofi.window-command:                 awesome-client 'local awful = require "awful" for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'
 rofi.drun-match-fields:              name,generic,exec,categories
 rofi.window-format:                  ⟶ {w}: {t}
 rofi.parse-hosts:                    true
@@ -32,7 +31,6 @@ rofi.display-ssh:                    SSH
 rofi.display-combi:
 ! rofi.kb-accept-entry:                Control+j,Control+m,Return,KP_Enter
 ! rofi.kb-accept-custom:               Control+Return
-! rofi.kb-accept-alt:                  Shift+Return
 ! rofi.kb-delete-entry:                Shift+Delete
 ! rofi.kb-mode-next:                   Shift+Right,Control+Tab
 ! rofi.kb-mode-previous:               Shift+Left,Control+ISO_Left_Tab
