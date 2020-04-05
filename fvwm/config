@@ -105,8 +105,11 @@ DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot@/home/xha/.config/fvwm/linux_menu.xpm@^#005577^
 + "&Programs" Popup MenuPrograms
 + "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" Function URxvtClient
++ "r&xvt-unicode font%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" PopUp TerminalFontMenu
 + "Bluetooth%bluetooth.svg:0x24%" Popup BluetoothMenu
 + "Video%youtube.svg:0x16%" Popup YoutubeMenu
++ "" Nop
++ "Screenshot%camera.svg:0x24%" Exec exec flameshot full -c -p $[HOME]/tmp
 + "" Nop
 + "Bar?%bar.svg:0x24%" ToggleTitle
 + "Stay on Top%aboveground.svg:0x24%" Pick Layer 0 6
@@ -131,11 +134,12 @@ AddToMenu   MenuPrograms "Programs" Title
 + "tmux" PopUp TmuxMenu
 + "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
 + "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_24_dev.png%" Exec exec google-chrome-unstable
-+ "&Visual Studio Code%/usr/share/code/resources/app/out/vs/workbench/contrib/update/browser/media/code-icon.svg:24x24%" Exec /usr/share/code/code --no-sandbox --new-window
++ "Discord%discord.svg:0x24%" Exec exec Discord
++ "&Visual Studio Code%/usr/share/code/resources/app/out/vs/workbench/contrib/update/browser/media/code-icon.svg:0x24%" Exec /usr/share/code/code --no-sandbox --new-window
 + "&GIMP%/usr/share/icons/hicolor/24x24/apps/gimp.png%" Exec exec gimp
 
 DestroyMenu BluetoothMenu
-AddToMenu BluetoothMenu
+AddToMenu BluetoothMenu Bluetooth Title
 + "Connect Setúbal%/usr/share/icons/Adwaita/scalable/devices/bluetooth-symbolic.svg%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
 + "Disconnect Setúbal" Exec exec bluetoothctl disconnect 88:C6:26:F4:8A:90
 + "Connect JBL GO" Exec exec bluetoothctl connect 78:44:05:E4:E0:D4
@@ -156,7 +160,7 @@ AddToMenu TmuxMenu
 DestroyFunc GenYoutubeMenu
 AddToFunc GenYoutubeMenu
 + I AddToMenu YoutubeMenu "tmux" Title
-+ I AddToMenu YoutubeMenu "YouTube Watch Later%youtube-wl.svg:0x16%" Exec exec mpv "https://www.youtube.com/playlist?list=WL"
++ I AddToMenu YoutubeMenu "YouTube Watch Later%youtube-wl.svg:0x24%" Exec exec mpv "https://www.youtube.com/playlist?list=WL"
 + I AddToMenu YoutubeMenu "" Nop
 + I PipeRead `grep --no-filename --only-matching --perl-regexp "http(s?):\\/\\/[^ \\"\\(\\)\\<\\>\\]]*" $[CM_DIR]/clipmenu.5.$[USER]/*\\ * | awk '!x[$$$$0]++ { print "+ \\""$$$$0"\\" Exec exec mpv --really-quiet \\""$$$$0"\\"" }'`
 
@@ -165,10 +169,26 @@ AddToMenu YoutubeMenu
 + DynamicPopUpAction GenYoutubeMenu
 + DynamicPopDownAction DestroyMenu recreate YoutubeMenu
 
-#  Exec `\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq`
+DestroyMenu TerminalFontMenu
+AddToMenu TerminalFontMenu
++ "SGI Screen 15" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SGI Screen 13" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1,-misc-fixed-medium-o-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--13-130-72-72-m-80-iso8859-1,-misc-fixed-bold-r-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 9" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:size=9,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:size=9,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:size=10,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:size=10,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:size=10,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:size=10,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 11" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:size=11,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:size=11,xft:Symbola:style=Regular\007' > $i ; fi ; done`
+
+DestroyFunc Ysgrifennwrify
+AddToFunc Ysgrifennwrify
++ I Exec `exec sed -i "s/Qillqaq/Ysgrifennwr/" $[XDG_CONFIG_HOME]/Code/User/settings.json`
++ I -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]4;0;#f9f8f4;1;#e32791;2;#488432;3;#a25d0e;4;#2c65b5;5;#b062a7;6;#27bbbe;7;#999999;8;#b8b8b8;9;#9f1b66;10;#325d23;11;#71410a;12;#1f477f;13;#7b4474;14;#1b8486;15;#424242\007\033]10;#424242\007\033]11;#f9f8f4\007\033]12;#20bbfc\007\033]708;#f9f8f4\007' > $i ; fi ; done`
+
+DestroyFunc Qillqaqify
+AddToFunc Qillqaqify
++ I Exec `exec sed -i "s/Ysgrifennwr/Qillqaq/" $[XDG_CONFIG_HOME]/Code/User/settings.json`
++ I -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -en '\033]4;0;#171717;1;#e32791;2;#30c798;3;#e3c472;4;#6796e6;5;#e59fdf;6;#81d8d0;7;#999999;8;#515151;9;#e466ad;10;#6cd1b2;11;#e4cf98;12;#91b0e6;13;#e5b6e1;14;#a2dcd7;15;#e5e6e6\007\033]10;#e5e6e6\007\033]11;#171717\007\033]12;#ff7135\007\033]708;#171717\007' > $i ; fi ; done`
 
 Silent Key Menu A A Menu MenuFvwmRoot
-Silent Key Tab A M WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
 Key space A 4 Exec exec rofi -combi-modi window,drun,run -show combi -modi combi
 -Key e A 4 Exec `awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $$2); print $$2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $$1}' | xsel -ib`
 Key u A 4 Exec `xdg-open $(\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')`
@@ -176,6 +196,8 @@ Key v A 4 Menu YoutubeMenu
 -Key F1 A 4 Exec `mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $$2" "$$1}'))`
 Key a A 4 Menu TmuxMenu
 Key i A 4 Exec exec clipmenu -i -p '📋'
+Key F6 A 4 Ysgrifennwrify
+Key F6 A S4 Qillqaqify
 Silent Key XF86AudioNext A N Exec exec playerctl next
 Silent Key XF86AudioPrev A N Exec exec playerctl previous
 Silent Key XF86AudioPlay A N Exec exec playerctl play-pause
@@ -183,6 +205,10 @@ Silent Key XF86AudioStop A N Exec exec playerctl stop
 Silent Key XF86AudioRaiseVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; exec notify-send "🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
 Silent Key XF86AudioLowerVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; exec notify-send "🔉 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
 Silent Key XF86AudioMute A N Exec `pactl set-sink-mute @DEFAULT_SINK@ true && exec notify-send "🔇 mute"`
+Silent Key Print A N Exec exec flameshot full -c -p $[HOME]/tmp
+Silent Key XF86LaunchA A N Exec exec flameshot full -c -p $[HOME]/tmp
+Silent Key Print A 4 Exec exec flameshot gui -p $[HOME]/tmp
+Silent Key XF86LaunchA A 4 Exec exec flameshot gui -p $[HOME]/tmp
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key r A 4C Restart
 Key Return A 4 URxvtClient
@@ -235,6 +261,7 @@ Mouse 1 6    A Iconify
 Mouse 1	T    A RaiseMoveX Move Maximize
 Mouse 1	FS   A RaiseMoveX Resize Maximize
 Mouse 1 W    4 RaiseMoveX Move Maximize
+Mouse 3 W    4 RaiseMoveX `Resize Direction SE` Maximize
 Mouse 4	T    A WindowShade True
 Mouse 5	T    A WindowShade False
 Mouse 3	R    A Menu MenuFvwmRoot

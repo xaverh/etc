@@ -272,7 +272,6 @@ local myexitmenu = {
         end
     },
     {'suspend', 'systemctl suspend'},
-    {'hibernate', 'systemctl hibernate'},
     {'reboot', 'systemctl reboot'},
     {'shutdown', 'systemctl poweroff'}
 }
