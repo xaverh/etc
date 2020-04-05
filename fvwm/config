@@ -95,21 +95,22 @@ Colorset 1  fg #e5e6e6, bg #171717
 # active windows/menu items
 Colorset 2 bg #553a63, fg #e5e6e6
 # inactive menu item
-Colorset 3 fg #e5e6e6, bg #f3f3f3, VGradient 200 #171717 #444444
+Colorset 3 fg #424242, bg #f9f8f4, VGradient 200 #edece8 #f0efed
 
 MenuStyle * MenuColorset 3, ActiveColorset 2, TitleColorset 1, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore
 
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot@/home/xha/.config/fvwm/linux_menu.xpm@^#005577^
 + "&Programs" Popup MenuPrograms
-+ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:24x24%" Function URxvtClient
-+ "Bluetooth%/usr/share/icons/Adwaita/24x24/devices/bluetooth-symbolic.symbolic.png%" Popup BluetoothMenu
++ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" Function URxvtClient
++ "Bluetooth%bluetooth.svg:0x24%" Popup BluetoothMenu
++ "Video%youtube.svg:0x16%" Popup YoutubeMenu
 + "" Nop
-+ "Toggle Titlebar" ToggleTitle
-+ "Stays on Top" Pick Layer 0 6
-+ "Stays Put" Pick Layer 0 4
-+ "Stays on Bottom" Pick Layer 0 2
-+ "Kill Client%reboot.svg:24x24%" Destroy
++ "Bar?%bar.svg:0x24%" ToggleTitle
++ "Stay on Top%aboveground.svg:0x24%" Pick Layer 0 6
++ "Stay Put%groundlevel.svg:0x24%" Pick Layer 0 4
++ "Stay on Bottom%underground.svg:0x24%" Pick Layer 0 2
++ "Kill Client%kill.svg:0x24%" Destroy
 + "" Nop
 + "&Quit" Popup QuitMenu
 
@@ -119,13 +120,14 @@ AddToMenu QuitMenu
 + "&Restart" Restart
 + "" Nop
 + "Re&boot" Exec systemctl reboot
-+ "&Shutdown" Exec systemctl poweroff
++ "&Suspend%suspend.svg:0x24%" Exec systemctl suspend
++ "&Power off%poweroff.svg:0x24%" Exec systemctl poweroff
 
 DestroyMenu MenuPrograms
 AddToMenu   MenuPrograms "Programs" Title
 + "tmux" PopUp TmuxMenu
-+ "Firefox%/usr/share/icons/hicolor/16x16/apps/firefox.png%" Exec exec firefox
-+ "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_16_dev.png%" Exec exec google-chrome-unstable
++ "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
++ "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_24_dev.png%" Exec exec google-chrome-unstable
 Test (x gimp) + "Gimp" Exec exec gimp
 
 DestroyMenu BluetoothMenu
@@ -147,11 +149,26 @@ AddToMenu TmuxMenu
 + DynamicPopUpAction GenTmuxMenu
 + DynamicPopDownAction DestroyMenu recreate TmuxMenu
 
+DestroyFunc GenYoutubeMenu
+AddToFunc GenYoutubeMenu
++ I AddToMenu YoutubeMenu "tmux" Title
++ I AddToMenu YoutubeMenu "YouTube Watch Later%youtube-wl.svg:0x16%" Exec exec mpv "https://www.youtube.com/playlist?list=WL"
++ I AddToMenu YoutubeMenu "" Nop
++ I PipeRead `grep --no-filename --only-matching --perl-regexp "http(s?):\\/\\/[^ \\"\\(\\)\\<\\>\\]]*" $[CM_DIR]/clipmenu.5.$[USER]/*\\ * | awk '!x[$$$$0]++ { print "+ \\""$$$$0"\\" Exec exec mpv --really-quiet \\""$$$$0"\\"" }'`
+
+DestroyMenu YoutubeMenu
+AddToMenu YoutubeMenu
++ DynamicPopUpAction GenYoutubeMenu
++ DynamicPopDownAction DestroyMenu recreate YoutubeMenu
+
+#  Exec `\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq`
+
 Silent Key Menu A A Menu MenuFvwmRoot
 Silent Key Tab A M WindowList Root c c NoDeskSort, SelectOnRelease Meta_L
 Key space A 4 Exec exec rofi -combi-modi window,drun,run -show combi -modi combi
 -Key e A 4 Exec `awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $$2); print $$2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $$1}' | xsel -ib`
 Key u A 4 Exec `xdg-open $(\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')`
+Key v A 4 Menu YoutubeMenu
 -Key F1 A 4 Exec `mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $$2" "$$1}'))`
 Key a A 4 Menu TmuxMenu
 Key i A 4 Exec exec clipmenu -i -p '📋'
@@ -165,7 +182,6 @@ Silent Key XF86AudioMute A N Exec `pactl set-sink-mute @DEFAULT_SINK@ true && ex
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key r A 4C Restart
 Key Return A 4 URxvtClient
-Key v A 4 URxvtClient -e vim
 Key h A SM4 MovetoPage -1p 0p
 Key j A SM4 MovetoPage 0p +1p
 Key k A SM4 MovetoPage 0p -1p
@@ -222,22 +238,22 @@ Mouse 2	R    A WindowList
 Mouse 1 R    A Scroll reverse
 
 ButtonStyle Reset
-TitleStyle Reset
-BorderStyle Reset
 TitleStyle Centered Height 19 Active (Colorset 2 -- Flat) Inactive (Colorset 1 -- Flat) ToggledActive (Colorset 2 -- Flat) ToggledInactive (Colorset 1 -- Flat)
 BorderStyle -- Flat
 ButtonStyle 1 - MwmDecorLayer 6
 ButtonStyle 1 AllNormal Vector 5 40x40@1 60x40@3 60x60@3 40x60@3 40x40@3
 ButtonStyle 1 AllToggled Vector 4 50x35@1 65x65@3 35x65@3 50x35@3
 ButtonStyle 1 AllDown Vector 4 50x25@1 75x75@3 25x75@3 50x25@3
-ButtonStyle 1 ToggledDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
+ButtonStyle 1 ToggledActiveDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
+ButtonStyle 1 ToggledInActiveDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
 ButtonStyle 2 AllUp Vector 4 35x65@1 65x35@3 35x35@4 65x65@3
 ButtonStyle 2 AllDown Vector 4 10x90@1 90x10@3 10x10@4 90x90@3
 ButtonStyle 4 - MwmDecorMax
 ButtonStyle 4 AllNormal Vector 6 50x65@1 35x65@3 35x50@3 50x35@4 65x35@3 65x50@3
 ButtonStyle 4 AllToggled Vector 6 35x55@1 45x55@3 45x65@3 55x35@4 55x45@3 65x45@3
 ButtonStyle 4 AllDown Vector 6 50x90@1 10x90@3 10x50@3 50x10@4 90x10@3 90x50@3
-ButtonStyle 4 ToggledDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
+ButtonStyle 4 ToggledActiveDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
+ButtonStyle 4 ToggledInactiveDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
 ButtonStyle 6 - MwmDecorMin
 ButtonStyle 6 AllUp Vector 2 35x65@1 65x65@3
 ButtonStyle 6 AllDown Vector 2 10x65@1 90x65@3
