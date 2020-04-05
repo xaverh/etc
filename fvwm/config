@@ -1,9 +1,11 @@
 InfoStoreAdd wallpaper $[XDG_DATA_HOME]/Tapet/3eec6c7edfed414fb29982217f83d6e1.png
+InfoStoreAdd wallpaper2 $[HOME]/var/BingWallpaper-2020-03-02.png
 ExecUseShell
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[infostore.wallpaper]) Exec exec fvwm-root $[infostore.wallpaper]
++ I Test (f $[infostore.wallpaper2]) Exec exec fvwm-root $[infostore.wallpaper2]
 + I Module FvwmCommandS
 + I Test (Init) Exec xrdb -merge <<<"rofi.window-command: FvwmCommand 'WindowId {window} PlaceAgain\nWindowId {window} Iconify off\nWindowId {window} Focus\nWindowId {window} Raise'"
 + I Test (Init) Exec exec tint2
@@ -119,6 +121,7 @@ AddToMenu QuitMenu
 + "Re&fresh" Refresh
 + "&Restart" Restart
 + "" Nop
++ "&Quit FVWM" Quit
 + "Re&boot" Exec systemctl reboot
 + "&Suspend%suspend.svg:0x24%" Exec systemctl suspend
 + "&Power off%poweroff.svg:0x24%" Exec systemctl poweroff
@@ -128,7 +131,8 @@ AddToMenu   MenuPrograms "Programs" Title
 + "tmux" PopUp TmuxMenu
 + "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
 + "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_24_dev.png%" Exec exec google-chrome-unstable
-Test (x gimp) + "Gimp" Exec exec gimp
++ "&Visual Studio Code%/usr/share/code/resources/app/out/vs/workbench/contrib/update/browser/media/code-icon.svg:24x24%" Exec /usr/share/code/code --no-sandbox --new-window
++ "&GIMP%/usr/share/icons/hicolor/24x24/apps/gimp.png%" Exec exec gimp
 
 DestroyMenu BluetoothMenu
 AddToMenu BluetoothMenu
