@@ -1,4 +1,5 @@
 local awful = require 'awful'
+local naughty = require 'naughty'
 
 local FM0 = {}
 
@@ -153,20 +154,59 @@ local radio_stations = {
 }
 
 local function play(id)
-	if radio_stations[id] then
-		local i = 1
-		repeat
-			local success, exitcode
-			awful.spawn.easy_async(
-				{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][i]},
-				function(_, stderr, _, exit)
-					success = not stderr
-					exitcode = exit
+	if radio_stations[id][1] then
+		awful.spawn.easy_async(
+			{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][1]},
+			function(_, stderr, _, exit)
+				naughty.notify {
+					title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][1], stderr)
+				}
+				if exit ~= 0 and exit ~= 4 and radio_stations[id][2] then
+					awful.spawn.easy_async(
+						{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][2]},
+						function(_, stderr, _, exit)
+							naughty.notify {
+								title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][2], stderr)
+							}
+							if exit ~= 0 and exit ~= 4 and radio_stations[id][3] then
+								awful.spawn.easy_async(
+									{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][3]},
+									function(_, stderr, _, exit)
+										naughty.notify {
+											title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][3], stderr)
+										}
+										if exit ~= 0 and exit ~= 4 and radio_stations[id][4] then
+											awful.spawn.easy_async(
+												{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][4]},
+												function(_, stderr, _, exit)
+													naughty.notify {
+														title = string.format(
+															'Exitcode: %s, i: %s, Station: %s, stderr: %s',
+															exit,
+															i,
+															radio_stations[id][4],
+															stderr
+														)
+													}
+													if exit ~= 0 and exit ~= 4 then
+														naughty.notify {
+															title = 'all stations failed'
+														}
+													end
+												end
+											)
+										end
+									end
+								)
+							end
+						end
+					)
 				end
-			)
-			i = i + 1
-		until success or exitcode == 4 or i >= #radio_stations[id]
+			end
+		)
+		naughty.notify {title = 'station not available'}
 	end
+	return next, success
 end
 
 function FM0.start_radio()
