@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+if ! [[ -z "$1" ]]; then
+    xxd "$1" | $PAGER
+fi
