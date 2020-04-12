@@ -153,60 +153,21 @@ local radio_stations = {
 	}
 }
 
-local function play(id)
-	if radio_stations[id][1] then
+local function play(id, i)
+	local i = i or 1
+	if radio_stations[id][i] then
 		awful.spawn.easy_async(
-			{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][1]},
-			function(_, stderr, _, exit)
+			{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][i]},
+			function(_, _, _, exit)
 				naughty.notify {
-					title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][1], stderr)
+					title = string.format('Exitcode: %s, i: %s, Station: %s', exit, i, radio_stations[id][1])
 				}
-				if exit ~= 0 and exit ~= 4 and radio_stations[id][2] then
-					awful.spawn.easy_async(
-						{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][2]},
-						function(_, stderr, _, exit)
-							naughty.notify {
-								title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][2], stderr)
-							}
-							if exit ~= 0 and exit ~= 4 and radio_stations[id][3] then
-								awful.spawn.easy_async(
-									{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][3]},
-									function(_, stderr, _, exit)
-										naughty.notify {
-											title = string.format('Exitcode: %s, i: %s, Station: %s, stderr: %s', exit, i, radio_stations[id][3], stderr)
-										}
-										if exit ~= 0 and exit ~= 4 and radio_stations[id][4] then
-											awful.spawn.easy_async(
-												{'mpv', '--mute=no', '--x11-name=FM0', '--force-window=yes', radio_stations[id][4]},
-												function(_, stderr, _, exit)
-													naughty.notify {
-														title = string.format(
-															'Exitcode: %s, i: %s, Station: %s, stderr: %s',
-															exit,
-															i,
-															radio_stations[id][4],
-															stderr
-														)
-													}
-													if exit ~= 0 and exit ~= 4 then
-														naughty.notify {
-															title = 'all stations failed'
-														}
-													end
-												end
-											)
-										end
-									end
-								)
-							end
-						end
-					)
+				if exit ~= 0 and exit ~= 4 and radio_stations[id][i + 1] then
+					play(id, i + 1)
 				end
 			end
 		)
-		naughty.notify {title = 'station not available'}
 	end
-	return next, success
 end
 
 function FM0.start_radio()
@@ -220,6 +181,22 @@ function FM0.start_radio()
 			play(string.sub(stdout, 1, -2))
 		end
 	)
+end
+
+function FM0.get_menu()
+	local menu = {}
+	for k in pairs(radio_stations) do
+		table.insert(
+			menu,
+			{
+				k,
+				function()
+					play(k)
+				end
+			}
+		)
+	end
+	return menu
 end
 
 return FM0
