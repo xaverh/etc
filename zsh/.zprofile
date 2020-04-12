@@ -21,7 +21,7 @@ export XCURSOR_THEME="DMZ-White"
 export FVWM_USERDIR="${XDG_CONFIG_HOME:-$HOME/.config}/fvwm"
 export NNN_COLORS=4321
 export NNN_OPTS=Rxe
-export NNN_PLUG='i:imgview;c:-_code -r $nnn*;x:sx;d:hexview;v:-_|mpv $nnn;u:-uidgid'
+export NNN_PLUG='i:imgview;c:-_code -r $nnn*;x:sx;d:-hexview;v:-_|mpv $nnn;u:-uidgid'
 export NNN_BMS='c:~/.config;t:/tmp'
 
 # manpage colors
