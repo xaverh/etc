@@ -1,0 +1,3 @@
+#!/usr/bin/zsh
+
+\ls -lah --group-directories-first | less
