@@ -5,6 +5,10 @@
 		"command": "workbench.action.openRecent"
 	},
 	{
+		"key": "alt+f4",
+		"command": "workbench.action.quit",
+	},
+	{
 		"key": "ctrl+shift+j",
 		"command": "editor.action.joinLines"
 	},
@@ -97,9 +101,5 @@
 	{
 		"key": "alt+space",
 		"command": "workbench.action.showCommands"
-	},
-	{
-		"key": "f1",
-		"command": "-workbench.action.showCommands"
 	}
 ]
