@@ -5,7 +5,7 @@
 	"editor.wrappingIndent": "indent",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
-	"editor.renderLineHighlight": "all",
+	"editor.renderLineHighlight": "none",
 	"editor.renderControlCharacters": true,
 	"files.trimTrailingWhitespace": true,
 	"editor.renderWhitespace": "none",
@@ -26,7 +26,6 @@
 		"*.timer": "ini",
 		".tmux.conf": "shellscript",
 		"dunstrc": "ini",
-		"config": "ini",
 		"fonts.conf": "xml",
 		"*.rules": "javascript",
 		"*.desktop": "ini"
@@ -41,9 +40,7 @@
 		"**/*.un~": true
 	},
 	"git.confirmSync": false,
-	"window.zoomLevel": 0,
 	"workbench.statusBar.visible": true,
-	"C_Cpp.formatting": "Disabled",
 	"window.menuBarVisibility": "toggle",
 	"[html]": {
 		"editor.tabSize": 4,
@@ -224,7 +221,6 @@
 	"git.enableCommitSigning": false,
 	"git.openDiffOnClick": false,
 	"go.formatTool": "goimports",
-	"terminal.integrated.rendererType": "experimentalWebgl",
 	"javascript.format.semicolons": "remove",
 	"typescript.format.semicolons": "remove",
 	"debug.chrome.useV3": true,
@@ -235,9 +231,10 @@
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
 	"editor.minimap.size": "fit",
-	"timeline.showView": true,
-	"workbench.colorTheme": "Qillqaq",
-	"editor.lineHeight": 21,
 	"editor.fontFamily": "monospace",
-	"window.titleBarStyle": "native"
+	"window.titleBarStyle": "native",
+	"debug.javascript.usePreview": true,
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"workbench.list.smoothScrolling": true,
+	"workbench.colorTheme": "Ysgrifennwr"
 }
