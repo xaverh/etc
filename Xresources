@@ -42,8 +42,10 @@ URxvt.pointerBlank:      true
 URxvt.pointerBlankDelay: 987654321
 URxvt.saveLines:         65536
 URxvt.scrollBar:         false
-URxvt.font:              -sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular
-URxvt.boldFont:          -sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular
+URxvt.font:              xft:SF Mono:style=Regular:pixelsize=13px,xft:Symbola:style=Regular
+URxvt.boldFont:          xft:SF Mono:style=Bold:pixelsize=13px,xft:Symbola:style=Regular
+URxvt.italicFont:        xft:SF Mono:style=Regular Italic:pixelsize=13px,xft:Symbola:style=Regular
+URxvt.boldItalicFont:    xft:SF Mono:style=Bold Italic:pixelsize=13px,xft:Symbola:style=Regular
 URxvt.perl-ext-common:   selection-to-clipboard
 URxvt.iconFile:          /usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg
 

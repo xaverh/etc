@@ -26,6 +26,9 @@ Code/blob_storage
 Code/Local Storage
 Code/Preferences
 Code/Workspaces
+Code/Session Storage
+Code/TransportSecurity
+Code/.org.chromium.Chromium.*
 SSH/.ssh/known_hosts
 SSH/.ssh/authorized_keys
 SSH/.ssh/id_ed25519
@@ -49,11 +52,14 @@ nvim/.netrwhist
 glib-2.0/settings/keyfile
 dconf/user
 vivaldi
-Code/Session Storage
-Code/TransportSecurity
+vivaldi-snapshot
 kitty/colors.conf
 cef_user_data/Dictionaries/en-US-8-0.bdic
 vim/.netrwhist
 fvwm/.FvwmConsole-History
 fvwm/.BGdefault
 tint2/tint2rc.backup*
+insight-nodejs
+menus/applications-merged
+unity3d
+vue/.vue-cli-ui
