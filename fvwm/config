@@ -38,7 +38,7 @@ AddToFunc ScrollAndRefocus
 
 DestroyFunc URxvtClient
 AddToFunc URxvtClient
-+ I Exec urxvt256c-mlc $* ; if [[ $? -eq 2 ]] ; then ; urxvt256c-mld -q -o -f ; urxvt256c-mlc $* ; fi
++ I Exec urxvtc $* ; if [[ $? -eq 2 ]] ; then ; urxvtd -q -o -f ; urxvtc $* ; fi
 
 EwmhNumberOfDesktops 3 0
 DesktopName 0 🌐
@@ -133,7 +133,7 @@ DestroyMenu MenuPrograms
 AddToMenu   MenuPrograms "Programs" Title
 + "tmux" PopUp TmuxMenu
 + "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
-+ "Google Chrome Dev%/opt/google/chrome-unstable/product_logo_24_dev.png%" Exec exec google-chrome-unstable
++ "Google Chrome%/opt/google/chrome/product_logo_24_dev.png%" Exec exec google-chrome
 + "Discord%discord.svg:0x24%" Exec exec Discord
 + "&Visual Studio Code%/usr/share/code/resources/app/out/vs/workbench/contrib/update/browser/media/code-icon.svg:0x24%" Exec /usr/share/code/code --no-sandbox --new-window
 + "&GIMP%/usr/share/icons/hicolor/24x24/apps/gimp.png%" Exec exec gimp
@@ -171,12 +171,20 @@ AddToMenu YoutubeMenu
 
 DestroyMenu TerminalFontMenu
 AddToMenu TerminalFontMenu
-+ "SGI Screen 15" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SGI Screen 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--10-100-72-72-m-60-iso8859-1,-misc-fixed-medium-r-normal--10-100-75-75-c-60-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--10-100-72-72-m-70-iso8859-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
 + "SGI Screen 13" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1,-misc-fixed-medium-o-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--13-130-72-72-m-80-iso8859-1,-misc-fixed-bold-r-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
-+ "IBM Plex Mono 9" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:size=9,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:size=9,xft:Symbola:style=Regular\007' > $i ; fi ; done`
-+ "IBM Plex Mono 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:size=10,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:size=10,xft:Symbola:style=Regular\007' > $i ; fi ; done`
-+ "SF Mono 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:size=10,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:size=10,xft:Symbola:style=Regular\007' > $i ; fi ; done`
-+ "SF Mono 11" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:size=11,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:size=11,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SGI Screen 15" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=12px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=12px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=13px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=13px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=14px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=14px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=12px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=12px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=13px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=13px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=14px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=14px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 15px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=15px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=15px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=12,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=12,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=13,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=13,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=14,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=14,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 16px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=16,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=16,xft:Symbola:style=Regular\007' > $i ; fi ; done`
 
 DestroyFunc Ysgrifennwrify
 AddToFunc Ysgrifennwrify
