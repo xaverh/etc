@@ -400,7 +400,7 @@ echo 'export ZDOTDIR="$HOME"/.config/zsh' | sudo tee -a /etc/zshenv
 
 #### deactivate OpenSSH password authentication
 
-In `/etc/ssh/sshd_config` set to `PasswordAuthentication no`.
+In `/etc/ssh/sshd_config.d/99-nopassword.conf` set to `PasswordAuthentication no`.
 
 #### Firefox
 
