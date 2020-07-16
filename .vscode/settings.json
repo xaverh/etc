@@ -1,4 +1,3 @@
 {
-	"lua.targetVersion": "5.3",
-	"cmake.configureOnOpen": false
+  "lua.targetVersion": "5.3"
 }
