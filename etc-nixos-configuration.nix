@@ -41,8 +41,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #   wget vim
-      zsh
+    vim
+    zsh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -80,15 +80,18 @@
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
+  services.mingetty.autologinUser = "xha";
+  services.xserver.windowManager.awesome.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  # users.mutableUsers = false; # requires passwords to be hashed ...
   users.users.xha = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
+    # openssh.authorized.keys = [ " " ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -100,6 +103,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03"; # Did you read the comment?
-
 }
 
