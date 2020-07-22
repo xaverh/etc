@@ -1,33 +1,71 @@
 module.exports = {
-	extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+	extends: ['standard', 'prettier', 'prettier/standard'],
 	env: {
 		es6: true,
-		node: true
+		node: true,
 	},
 	rules: {
-		'prettier/prettier': 'warn'
-	}
+		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+	},
+	parserOptions: {
+		ecmaVersion: 2020,
+	},
 }
 
-// With TypeScript:
-// npm install typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
-// https://blog.theodo.com/2019/08/empower-your-dev-environment-with-eslint-prettier-and-editorconfig-with-no-conflicts
 /*
-module.exports = {
-	parser: '@typescript-eslint/parser',
-	extends: [
-		'plugin:@typescript-eslint/recommended',
-		'eslint:recommended',
-		'prettier',
-		'prettier/@typescript-eslint'
-	],
-	env: {
-		es6: true,
-		node: true
-	},
-	rules: {
-		'prettier/prettier': 'error'
-	},
-	plugins: ['prettier']
+{
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:vue/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/babel",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn",
+    "prettier/vue"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "babel",
+    "flowtype",
+    "react",
+    "standard",
+    "unicorn",
+    "vue"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  }
 }
 */
+
+// module.exports = {
+// 	root: true,
+// 	env: {
+// 		node: true,
+// 	},
+// 	extends: [
+// 		'plugin:vue/essential',
+// 		'@vue/standard',
+// 		'@vue/typescript/recommended',
+// 		'@vue/prettier',
+// 		'@vue/prettier/@typescript-eslint',
+// 	],
+// 	parserOptions: {
+// 		ecmaVersion: 2020,
+// 	},
+// }
