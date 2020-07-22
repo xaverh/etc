@@ -7,15 +7,20 @@
 - mons https://github.com/Ventto/mons/blob/master/mons.sh
 - z
 - prevent apps from creating 2nd tags, e.g. 🍓
-- toggle zathura's colorscheme, does pywall do anything here?
-- go through zathura settings
 - colorscheme lua operator
-- 🦸 tag
+- 🦸🧞🧜🦹 🦸‍♂️🦸‍♀️🦹‍♂️🦹‍♀️🧜‍♂️🧜‍♀️🧞‍♂️🧞‍♀️
 - ysgrifennwr theme VS Code git action items
 - keep tags clean, ie prevent clients from being attached to tags they don't belong to, maybe client specific tags are a bad idea and it might be better to just add them to additonal tags, maybe via rofi
-- h,j,k,l don't work in max mode => solutions: either let Tab cycle all windows or change h,j,k,l functionality dynamically
+- h,j,k,l don't work in max mode ⇒ solutions: either let Tab cycle all windows or change h,j,k,l functionality dynamically
 - h, l move to other screen, j, k old school behaviour?
 - how to use nnn as a launcher 
 - mansplain error handling through the use of callback and storing the data in lua
 - tmux config
 - z as 🧟 key
+- 📻 as awesome menu
+- floating should not be pertag but globally
+- Tag arbitrary clients to fetch them later
+- store tag groups in F-keys to fetch them dynamically
+- shift+ö,ä move tag to other screen
+- Zen mode: reduce bar to 'clock only' via key command
+- key to remove app from current tag, if it's the only one, move to 🚽

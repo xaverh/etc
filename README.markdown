@@ -78,19 +78,7 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 
 # Google Chrome
 rpm --import https://dl.google.com/linux/linux_signing_key.pub
-echo -e "[google-chrome-unstable]\nname=google-chrome-unstable\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome-unstable.repo
-
-# Vivaldi
-rpm --import https://repo.vivaldi.com/archive/linux_signing_key.pub
-echo -e "[vivaldi]
-name=vivaldi
-baseurl=http://repo.vivaldi.com/archive/rpm/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=http://repo.vivaldi.com/archive/linux_signing_key.pub" > /etc/yum.repos.d/vivaldi.repo
-
-# Wireguard
-dnf copr enable jdoss/wireguard
+echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo
 
 # private repo
 dnf config-manager --add-repo https://download.opensuse.org/repositories/home:/xha/Fedora_$(rpm -E %fedora)/home:xha.repo
@@ -103,7 +91,7 @@ dnf check-update
 Some optional packages to exclude in `/etc/dnf/dnf.conf` to avoid pulling them in as weak dependencies:
 
 ```ini
-exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client gnome-keyring mercurial subversion wireless-tools hddtemp xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
+exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-fonts fedora-bookmarks dhcp-client mercurial subversion wireless-tools hddtemp xorg-x11-drv-ati xorg-x11-drv-nouveau xorg-x11-drv-intel
 ```
 
 #### bootstrap base packages
@@ -112,7 +100,7 @@ exclude=NetworkManager plymouth* PackageKit-gstreamer-plugin abattis-cantarell-f
 dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim-enhanced btrfs-progs util-linux-user rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted sqlite dbus-tools
 ```
 
-optionally include as needed e.g. `iwd wireless-regdb broadcom-wl cryptsetup`
+optionally include as needed e.g. `iwd wireless-regdb broadcom-wl iwl6000g2a-firmware cryptsetup`
 
 #### setup base system
 
@@ -149,7 +137,7 @@ In `/mnt/etc/systemd/resolved.conf.d/20-1.1.1.1.conf`:
 
 ```ini
 [Resolve]
-FallbackDNS=1.1.1.1 2606:4700:4700::1111 1.0.0.1 2606:4700:4700::1001
+FallbackDNS=2606:4700:4700::1111 1.1.1.1 2606:4700:4700::1001 1.0.0.1
 Domains=~.
 DNSSEC=false
 ```
@@ -208,7 +196,7 @@ add_dracutmodules+="crypt"
 e.g.
 
 ```sh
-sudo dnf install kernel @base-x @multimedia @firefox google-chrome-unstable at vivaldi code gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock google-noto-emoji-color-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes unicode-emoji x11-ssh-askpass strawberry awesome zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps playerctl tmux rofi terminus-fonts rxvt-unicode-256color-ml fvwm redhat-menus wireguard-dkms wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat
+sudo dnf install kernel @base-x @multimedia @firefox google-chrome at code gnome-keyring gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock google-noto-emoji-color-fonts google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes unicode-emoji strawberry awesome mupdf perl-File-MimeInfo groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat smartmontools f32-backgrounds-base
 ```
 
 ### configure keyboard layout and timezone
@@ -356,22 +344,22 @@ In `/tmp/nnn.desktop`:
 Name=Nnn
 GenericName=File Manager
 Comment=minimalist file manager
-Keywords=shell;prompt;command;commandline;cmd;nnn;
 MimeType=inode/directory;
-Exec=/usr/bin/urxvt256c-mlc -title Nnn -name Nnn -e nnn %u
-Icon=system-file-manager
+Exec=/usr/bin/urxvtc -title Nnn -name Nnn -e nnn %u
+Icon=/home/xha/.config/Icons/nnn.svg
 Type=Application
-Categories=System;FileTools;FileManager;Utility;Core;
+Categories=System;FileTools;FileManager;Utility;Core;ConsoleOnly
+Keywords=File;Manager;Management;Explorer;Launcher
 StartupNotify=true
 X-GNOME-SingleWindow=false
 StartupWMClass=Nnn
 ```
 
 ```sh
-xdg-mime default org.pwmt.zathura.desktop application/pdf application/vnd.comicbook-rar application/vnd.comicbook+zip application/epub+zip application/x-cb7
+xdg-mime default mupdf-gl.desktop application/pdf application/vnd.comicbook+zip application/epub+zip
 xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
 xdg-mime default nnn.desktop inode/directory
-xdg-mime default mpv.desktop video/mp4
+xdg-mime default mpv.desktop video/mp4 video/webm video/x-matroska
 desktop-file-install --rebuild-mime-info-cache --dir="$XDG_DATA_HOME/applications" /tmp/nnn.desktop
 xdg-settings set default-url-scheme-handler file nnn.desktop
 ```
@@ -381,7 +369,7 @@ xdg-settings set default-url-scheme-handler file nnn.desktop
 ```sh
 npm -g i @vue/cli generator-code gulp-cli vsce yo
 
-code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension ms-vscode.vscode-typescript-tslint-plugin --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension twxs.cmake --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
+code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension christian-kohler.npm-intellisense --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension James-Yu.latex-workshop --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 ```
 
 #### bluetooth
