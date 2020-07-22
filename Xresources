@@ -17,7 +17,7 @@ rofi.lines:                          15
 rofi.font:                           .SF Compact Display 11
 rofi.padding:                        15
 rofi.fixed-num-lines:                true
-rofi.show-icons:                     false
+rofi.show-icons:                     true
 rofi.drun-match-fields:              name,generic,exec,categories
 rofi.window-format:                  ⟶ {w}: {t}
 rofi.parse-hosts:                    true
@@ -48,5 +48,8 @@ URxvt.italicFont:        xft:SF Mono:style=Regular Italic:pixelsize=13px,xft:Sym
 URxvt.boldItalicFont:    xft:SF Mono:style=Bold Italic:pixelsize=13px,xft:Symbola:style=Regular
 URxvt.perl-ext-common:   selection-to-clipboard
 URxvt.iconFile:          /usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg
+URxvt.scrollTtyOutput:   false
+URxvt.scrollWithBuffer:  true
+URxvt.scrollTtyKeypress: true
 
 #include "Xresources-qillqaq"
