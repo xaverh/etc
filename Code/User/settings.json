@@ -104,7 +104,7 @@
   "workbench.startupEditor": "welcomePageInEmptyWorkbench",
   "editor.smoothScrolling": true,
   "explorer.decorations.badges": false,
-  "git.autofetch": true,
+  "git.autofetch": false,
   "javascript.format.enable": false,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "editor.multiCursorPaste": "spread",
