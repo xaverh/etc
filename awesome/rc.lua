@@ -9,7 +9,7 @@ local theme_assets = require 'beautiful.theme_assets'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 local fm0 = require 'fm0'
-require 'awful.hotkeys_popup.keys'
+local icons = os.getenv 'XDG_CONFIG_HOME' .. '/Icons/'
 math.randomseed(os.time())
 
 local colors = {
@@ -38,7 +38,6 @@ local colors = {
         ui_blue = '#0f3a4b', -- Cyprus
         ui_purple = '#553a63', -- Love Symbol #2,
         ui_orange = '#522900', -- Baker's Chocolate
-        fg_inv = '#e5e6e6', -- Code Grey
         error = '#ed2939', -- Alizarin
         warning = '#e9a700' -- Gamboge
     },
@@ -67,7 +66,6 @@ local colors = {
         ui_blue = '#0f3a4b', -- Cyprus
         ui_purple = '#553a63', -- Love Symbol #2
         ui_orange = '#964f00', -- Saddle Brown
-        fg_inv = '#f9f8f4', -- Traffic White
         error = '#ed2939', -- Alizarin
         warning = '#c08a00' -- Dark Goldenrod
     }
@@ -81,6 +79,9 @@ if os.getenv 'HOSTNAME' == 'aberystwyth' then
     has_volume_keys = true
     has_multimedia_keys = true
     is_macintosh = true
+elseif os.getenv 'HOSTNAME' == 'andermatt' then
+    has_volume_keys = true
+    has_multimedia_keys = true
 elseif os.getenv 'HOSTNAME' == 'airolo' then
     temperature_filename = '/sys/class/thermal/thermal_zone2/temp'
     has_volume_keys = true
@@ -95,60 +96,9 @@ end
 -- end
 local my_theme = 'qi'
 
-local wallpapers = {
-    '01af74d64a1446acadb31e3f63d3fa52.png',
-    '02b81e89d9c74853aeba1dfecd44671e.png',
-    '03813b7b6e184c66a4aaf525e0723a15.png',
-    '1200de4339c34fe8b66bcbc5d3fcb8a8.png',
-    '16805acfafa643a482c4385886033535.png',
-    '18e9f5bbdc2e45c199a01a52c3759749.png',
-    '1dbcde2d1f554fc38eaf8e0b8886c557.png',
-    '1e9cee9d87f34c6aa20059766200cad9.png',
-    '20278fccf7c945e7b0994e8d92322733.png',
-    '234e55371f9f4cf195fcb000f9fa479a.png',
-    '2e1fd5c1156f4867b3304632e65f1524.png',
-    '3628b8862e56428e840faf12901446dc.png',
-    '3eec6c7edfed414fb29982217f83d6e1.png',
-    '404f19a8f98c4607beb3ee2136ada7b2.png',
-    '432550e8ff8f4430b360bf9dc7df628f.png',
-    '47bcf7c99737457ebd20bed1f15eb70c.png',
-    '536e961a93a54bbfba433b743e24dce5.png',
-    '539fa414853a465fbeaa6c2a0cc0c473.png',
-    '56ea6e2e1b054aca95b6a782d47c19b6.png',
-    '579848500da447298ad7696e9eaf71cb.png',
-    '58645567f5d249efa3347bdc811e3241.png',
-    '5c1c87d6df4a46e29d46a5c196371596.png',
-    '5ee974dba523454a936f6f6521b571d2.png',
-    '6405d1c34bfa42a6ae86b924bc4fc4da.png',
-    '710907b61d824fefbe18b49d7c4b251d.png',
-    '71d73a2e95ee49268fc8fb6b57f6a1bf.png',
-    '7ae65e913d8146709529fa481d96ec73.png',
-    '7cb59566798246ae965e93b8399b9b2f.png',
-    '88f007c7fa924d2587da73a57400421a.png',
-    '8c8642c61eaf4af6b56501856d84bbea.png',
-    '8ff28700a51242bb96bc9f032535097c.png',
-    '96e62f8c1cc24eaeab314bf4a201cf40.png',
-    '9a0821e7ff734f3c93b741b2c6d2e0f5.png',
-    '9fbe7f2cc4544613a643ed1f8fab7278.png',
-    'b0f0197780814142b553176db5f2b0e0.png',
-    'b77d489aee604f0c8e3bca9b5007e69e.png',
-    'bcf843ec1b144f2f90d366799219859d.png',
-    'bd62fd7f934f4c1886a665f2a0be823b.png',
-    'c61e102bbf8049f49f4fbe7125752e2a.png',
-    'c739cb7018604082aaf8a27790983918.png',
-    'd01247287d4947f9bd4f26a2b8f5a78f.png',
-    'd2976c325c7948ac9c435337f5fbf126.png',
-    'dd2b4ee39463473492812806d20bb626.png',
-    'e07f0a542862404d9b1110b578ec605c.png',
-    'e10ab15ffd4b475e9cecad75e0e95621.png',
-    'e568e269dfc643769174b116e7830196.png',
-    'f3a60a679a464d2297313f728662ef3a.png',
-    'f478b113d84045d8ad7b3dea8dd1289b.png',
-    'fbd2bc46abea4dff99fd069b6f476ee2.png'
-}
-
 beautiful.init {
     font = '.SF Compact Display 11',
+    menu_font = '.SF Compact Display 12',
     hotkeys_font = '.SF Compact Display 11',
     hotkeys_description_font = '.SF Compact Display 11',
     tasklist_font_minimized = '.SF Compact Display Italic 11',
@@ -168,17 +118,22 @@ beautiful.init {
     taglist_bg_focus = colors[my_theme][9],
     maximized_hide_border = true,
     useless_gap = 0,
-    border_width = dpi(2),
+    border_width = dpi(3),
     menu_submenu_icon = gears.filesystem.get_themes_dir() .. 'default/submenu.png',
     menu_height = dpi(20),
     menu_width = dpi(300),
+    menu_bg_focus = colors[my_theme].ui_purple,
+    menu_bg_normal = '#edece8',
+    menu_fg_normal = colors.ys[16],
+    menu_border_width = dpi(1),
     master_width_factor = 0.55,
     layout_txt = {
         tile = '👈🏻',
         fairv = '🤙🏻',
-        floating = '🖖🏻',
+        fairh = '🙌🏻',
+        max = '👊🏻',
         magnifier = '🤏🏻',
-        max = '👊🏻'
+        floating = '🖖🏻'
     },
     tasklist_disable_icon = true,
     tasklist_align = 'center',
@@ -189,8 +144,7 @@ beautiful.init {
     notification_border_color = colors[my_theme].cursor,
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
-    wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and os.getenv 'HOME' .. '/var/BingWallpaper-2020-03-02.jpg' or
-        os.getenv 'XDG_DATA_HOME' .. '/Tapet/' .. wallpapers[math.random(#wallpapers)]
+    wallpaper = '/usr/share/backgrounds/f32/default/f32.png'
 }
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
@@ -202,26 +156,24 @@ local function connect_bluetooth(connect, mac)
 end
 
 local function rxvt_client(...)
-    local command = table.pack('urxvt256c-mlc', ...)
+    local command = table.pack('urxvtc', ...)
     awful.spawn.easy_async(
         command,
         function(_, _, _, exitcode)
             if exitcode == 2 then
-                os.execute 'urxvt256c-mld -q -o -f'
+                os.execute 'urxvtd -q -o -f'
                 awful.spawn(command)
             end
         end
     )
 end
 
-local printkey = 'Print'
-if is_macintosh then
-    printkey = 'XF86LaunchA'
-end
+local printkey = is_macintosh and 'XF86LaunchA' or 'Print'
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.max,
+    awful.layout.suit.fair.horizontal,
     awful.layout.suit.fair,
     awful.layout.suit.floating,
     awful.layout.suit.magnifier
@@ -236,7 +188,7 @@ local myawesomemenu = {
     }
 }
 
-local mymultimediamenu = {
+local bluetooth_menu = {
     {
         'connect bluetooth device (Setúbal)',
         function()
@@ -264,36 +216,151 @@ local mymultimediamenu = {
 }
 
 local myexitmenu = {
-    {'restart', awesome.restart},
+    {'restart', awesome.restart, icons .. 'restart.svg'},
+    {'quit awesome', awesome.quit},
+    {'suspend', 'systemctl suspend', icons .. 'suspend.svg'},
+    {'reboot', 'systemctl reboot', icons .. 'reboot.svg'},
+    {'shutdown', 'systemctl poweroff', icons .. 'poweroff.svg'}
+}
+
+local function change_terminal_font(font, bold_font)
+    local command =
+        string.format(
+        '\27]710;%s,xft:Symbola:style=Regular\27\92\27]711;%s,xft:Symbola:style=Regular\27\92',
+        font,
+        bold_font
+    )
+    local terminals = {}
+    for i = 0, 99 do
+        local terminal = '/dev/pts/' .. i
+        if gears.filesystem.file_readable(terminal) then
+            table.insert(terminals, terminal)
+        end
+    end
+    for i, terminal in ipairs(terminals) do
+        local file = io.open(terminal, 'w')
+        file:write(command)
+        file:close()
+    end
+end
+
+local terminal_font_menu = {
     {
-        'log out',
+        'Consolas 14',
         function()
-            awesome.quit()
+            change_terminal_font('xft:Consolas:style=Regular:pixelsize=14px', 'xft:Consolas:style=Bold:pixelsize=14px')
         end
     },
-    {'suspend', 'systemctl suspend'},
-    {'reboot', 'systemctl reboot'},
-    {'shutdown', 'systemctl poweroff'}
+    {
+        'Consolas 16',
+        function()
+            change_terminal_font('xft:Consolas:style=Regular:pixelsize=16px', 'xft:Consolas:style=Bold:pixelsize=16px')
+        end
+    },
+    {
+        'SF Mono 12',
+        function()
+            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=12px', 'xft:SF Mono:style=Bold:pixelsize=12px')
+        end
+    },
+    {
+        'SF Mono 13',
+        function()
+            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=13px', 'xft:SF Mono:style=Bold:pixelsize=13px')
+        end
+    },
+    {
+        'SF Mono 14',
+        function()
+            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=14px', 'xft:SF Mono:style=Bold:pixelsize=14px')
+        end
+    },
+    {
+        'SF Mono 15',
+        function()
+            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=15px', 'xft:SF Mono:style=Bold:pixelsize=15px')
+        end
+    },
+    {
+        'SF Mono 16',
+        function()
+            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=16px', 'xft:SF Mono:style=Bold:pixelsize=16px')
+        end
+    },
+    {
+        'IBM Plex Mono 12',
+        function()
+            change_terminal_font(
+                'xft:IBM Plex Mono:style=Regular:pixelsize=12px',
+                'xft:IBM Plex Mono:style=Bold:pixelsize=12px'
+            )
+        end
+    },
+    {
+        'IBM Plex Mono 13',
+        function()
+            change_terminal_font(
+                'xft:IBM Plex Mono:style=Regular:pixelsize=13px',
+                'xft:IBM Plex Mono:style=Bold:pixelsize=13px'
+            )
+        end
+    },
+    {
+        'IBM Plex Mono 14',
+        function()
+            change_terminal_font(
+                'xft:IBM Plex Mono:style=Regular:pixelsize=14px',
+                'xft:IBM Plex Mono:style=Bold:pixelsize=14px'
+            )
+        end
+    },
+    {
+        'IBM Plex Mono 15',
+        function()
+            change_terminal_font(
+                'xft:IBM Plex Mono:style=Regular:pixelsize=15px',
+                'xft:IBM Plex Mono:style=Bold:pixelsize=15px'
+            )
+        end
+    },
+    {
+        'IBM Plex Mono 16',
+        function()
+            change_terminal_font(
+                'xft:IBM Plex Mono:style=Regular:pixelsize=16px',
+                'xft:IBM Plex Mono:style=Bold:pixelsize=16px'
+            )
+        end
+    }
 }
 
 local mymainmenu =
-    awful.menu(
-    {
-        items = {
-            {'awesome', myawesomemenu, beautiful.awesome_icon},
-            {'multimedia', mymultimediamenu},
-            {'exit', myexitmenu},
-            {
-                'open terminal',
-                function()
-                    rxvt_client()
-                end
-            }
+    awful.menu {
+    items = {
+        {'awesome', myawesomemenu, beautiful.awesome_icon},
+        {'Bluetooth', bluetooth_menu, icons .. 'bluetooth.svg'},
+        {'FM0', fm0.get_menu()},
+        {'change terminal font', terminal_font_menu},
+        {'exit', myexitmenu},
+        {
+            'open terminal',
+            function()
+                rxvt_client()
+            end,
+            '/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg'
         }
+    }
+}
+
+local mylauncher =
+    awful.widget.launcher(
+    {
+        image = beautiful.awesome_icon,
+        menu = mymainmenu
     }
 )
 
-mytextclock = wibox.widget.textclock('%a %d %b %T %Z', 1)
+local mytextclock = wibox.widget.textclock('%a %-d %b %T %Z', 1)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons =
@@ -432,7 +499,7 @@ if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_exec
                 t:stop()
                 awful.spawn.easy_async(
                     {'iw', 'dev', netdevice, 'link'},
-                    function(stdout, stderr, exitreason, exitcode)
+                    function(stdout)
                         widget:set_text(
                             (stdout:match 'SSID: ([^\n]*)' or 'no') ..
                                 ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
@@ -491,8 +558,8 @@ if gears.filesystem.dir_readable('/sys/class/power_supply/BAT0/') then
                     local charge_full = f:read 'n'
                     f:close()
                     local capacity = charge_now * 100 // charge_full
-                    local charging_symbol = battery_status == 'Charging' and '+' or '-'
-                    widget:set_text(capacity .. '\u{2009}%\u{2009}' .. charging_symbol)
+                    local charging_symbol = battery_status == 'Charging' and '↑' or '↓'
+                    widget:set_text(capacity .. '\u{2009}%' .. charging_symbol)
                 end
                 t:again()
             end
@@ -580,7 +647,7 @@ local netthroughwidget =
                 end
             end
             f:close()
-            widget:set_text(fixed(recv_rate) .. '/s  ' .. fixed(send_rate) .. '/s')
+            widget:set_text('↓' .. fixed(recv_rate) .. '/s  ↑' .. fixed(send_rate) .. '/s')
             t:again()
         end
     )
@@ -594,22 +661,20 @@ local function update_txt_layoutbox(s)
     s.mylayoutbox:set_text(txt_l)
 end
 
-local default_tags = {'🌐', '☕', '🧠', '👾', '🍓', '🎲', '🎰', '🎱', '🏜️', '🥑', '🧀', '🦄'} --     🧜🏻‍♀️'🦄''🏖️', , , ,'🏝️',
+local default_tags = {'🌐', '☕', '👾', '🧠', '🍓', '🎲', '🎰', '🎱', '🚽', '🏝️', '🏜️', '🦄'} -- 🥑
+
 awful.screen.connect_for_each_screen(
     function(s)
         -- Wallpaper
         set_wallpaper(s)
-
         if s.index == 1 then
-            awful.tag({table.unpack(default_tags, 1, 6)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 1, 9)}, s, awful.layout.layouts[1])
         elseif s.index == 2 then
-            awful.tag({table.unpack(default_tags, 7, 11)}, s, awful.layout.layouts[1])
+            awful.tag({table.unpack(default_tags, 10, 11)}, s, awful.layout.layouts[1])
         elseif s.index == 3 then
             awful.tag({default_tags[12]}, s, awful.layout.layouts[1])
         end
 
-        -- Create a promptbox for each screen
-        s.mypromptbox = awful.widget.prompt()
         -- Textual layoutbox
         s.mylayoutbox = wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
         awful.tag.attached_connect_signal(
@@ -669,7 +734,7 @@ awful.screen.connect_for_each_screen(
         s.mytaglist =
             awful.widget.taglist {
             screen = s,
-            filter = awful.widget.taglist.filter.all,
+            filter = awful.widget.taglist.filter.noempty,
             buttons = taglist_buttons
         }
 
@@ -680,20 +745,20 @@ awful.screen.connect_for_each_screen(
             buttons = tasklist_buttons
         }
 
-        -- Create the wibox
         s.mywibox = awful.wibar {position = 'top', screen = s}
 
         s.mywibox:setup {
             layout = wibox.layout.align.horizontal,
             {
+                mylauncher,
                 layout = wibox.layout.fixed.horizontal,
                 s.mytaglist,
-                s.mypromptbox
+                s.mylayoutbox
             },
             s.mytasklist,
             {
                 layout = wibox.layout.fixed.horizontal,
-                spacing = 10,
+                spacing = 8,
                 btrfswidget,
                 memorywidget,
                 netthroughwidget,
@@ -701,13 +766,33 @@ awful.screen.connect_for_each_screen(
                 wifiwidget,
                 ipwidget,
                 batterywidget,
-                mytextclock,
-                s.mylayoutbox
+                mytextclock
             }
         }
         screen[s]:connect_signal(
             'arrange',
             function(s)
+                for _, c in pairs(s.all_clients) do
+                    if
+                        c.class == 'Vivaldi-snapshot' and c.instance == 'vivaldi-snapshot' or
+                            c.instance == 'crx_cinhimbnkkaeohfgghhklpknlkffjgod'
+                     then
+                        if
+                            s.selected_tag.layout.name == 'max' or
+                                s.selected_tag.layout.name ~= 'floating' and #s.clients == 1
+                         then
+                            if not c.maximized then
+                                c.maximized = true
+                                awful.layout.arrange(s)
+                            end
+                        else
+                            if c.maximized then
+                                c.maximized = false
+                                awful.layout.arrange(s)
+                            end
+                        end
+                    end
+                end
                 for _, c in pairs(s.clients) do
                     if
                         beautiful.useless_gap == 0 and
@@ -741,7 +826,8 @@ root.buttons(
     )
 )
 
-local function toggle_rxvt_theme(my_theme)
+local function toggle_theme()
+    my_theme = my_theme == 'qi' and 'ys' or 'qi'
     local command =
         string.format(
         '\27]4;0;%s;1;%s;2;%s;3;%s;4;%s;5;%s;6;%s;7;%s;8;%s;9;%s;10;%s;11;%s;12;%s;13;%s;14;%s;15;%s\27\92\27]10;%s\27\92\27]11;%s\27\92\27]12;%s\27\92\27]708;%s\27\92',
@@ -773,15 +859,13 @@ local function toggle_rxvt_theme(my_theme)
             table.insert(terminals, terminal)
         end
     end
-    for i, terminal in ipairs(terminals) do
-        local file = io.open(terminal, 'w')
-        file:write(command)
-        file:close()
+    if #terminals > 0 then
+        for i, terminal in ipairs(terminals) do
+            local file = io.open(terminal, 'w')
+            file:write(command)
+            file:close()
+        end
     end
-end
-
-local function toggle_theme()
-    toggle_rxvt_theme(my_theme)
     beautiful.bg_normal = colors[my_theme][1]
     beautiful.bg_focus = colors[my_theme][1]
     beautiful.bg_urgent = colors[my_theme][2]
@@ -798,6 +882,7 @@ local function toggle_theme()
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
     beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
     beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
+    mylauncher.image = beautiful.awesome_icon
     beautiful.notification_border_color = colors[my_theme].cursor
     if my_theme == 'ys' then
         for k, v in pairs(beautiful.layout_txt) do
@@ -811,7 +896,9 @@ local function toggle_theme()
     for s in screen do
         s.mywibox.bg = colors[my_theme][1]
         s.mywibox.fg = colors[my_theme][16]
-        client.focus:emit_signal('focus')
+        if client.focus then
+            client.focus:emit_signal 'focus'
+        end
         for _, c in ipairs(s.clients) do
             if c ~= client.focus then
                 c.border_color = beautiful.border_normal
@@ -838,7 +925,6 @@ local function toggle_theme()
         gears.filesystem.get_xdg_config_home() ..
             (my_theme == 'qi' and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
     }
-    my_theme = my_theme == 'qi' and 'ys' or 'qi'
 end
 
 local function tag_view_nonempty(direction)
@@ -852,9 +938,20 @@ local function tag_view_nonempty(direction)
     end
 end
 
--- TODO: error handling
 local function mansplain()
-    awful.spawn.with_shell [[zathura =(man -Tps $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $2" "$1}'))]]
+    awful.spawn.easy_async_with_shell(
+        'apropos . | rofi -dmenu -i -p mansplain',
+        function(stdout, _, _, exitcode)
+            if exitcode == 0 then
+                awful.spawn.easy_async_with_shell(
+                    [[awk '{gsub(/[()]/,""); print $2" "$1}' <<<']] .. stdout .. "'",
+                    function(stdout)
+                        awful.spawn.with_shell('mupdf-gl =(man -Tpdf ' .. stdout .. ' )')
+                    end
+                )
+            end
+        end
+    )
 end
 
 local function emoji()
@@ -862,7 +959,13 @@ local function emoji()
 end
 
 local function open_url()
-    awful.spawn.with_shell [=[xdg-open $(\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')]=]
+    awful.spawn.with_shell(
+        string.format(
+            [=[xdg-open $(grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.5.%s/*\ * | awk '!x[$0]++' | rofi -dmenu -i -p 'open URL')]=],
+            os.getenv 'CM_DIR',
+            os.getenv 'USER'
+        )
+    )
 end
 
 function sharedmovetag(tag, screen)
@@ -905,21 +1008,6 @@ function sharedviewtoggle(tag, screen)
     end
 end
 
-local function throwaway_tag(newtag)
-    return function()
-        local t = awful.tag.find_by_name(nil, newtag)
-        if t then
-            sharedviewtoggle(t)
-        else
-            local c = client.focus
-            if not c then
-                return
-            end
-            c:tags {awful.tag.add(newtag, {screen = c.screen, volatile = true})}
-        end
-    end
-end
-
 globalkeys =
     gears.table.join(
     awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
@@ -942,7 +1030,7 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'i',
+        'o',
         function()
             awful.spawn {'clipmenu', '-i', '-p', '📋'}
         end,
@@ -1032,71 +1120,39 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'h',
+        'j',
         function()
-            awful.client.focus.global_bydirection 'left'
+            awful.client.focus.byidx(1)
         end,
-        {description = 'focus client to the left', group = '🎮 client'}
+        {description = 'focus next by index', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod1'},
+        'Tab',
+        function()
+            awful.client.focus.byidx(1)
+        end,
+        {description = 'focus next by index', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4'},
         'k',
         function()
-            awful.client.focus.global_bydirection 'up'
+            awful.client.focus.byidx(-1)
         end,
-        {description = 'focus client above', group = '🎮 client'}
+        {description = 'focus previous by index', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
-        'j',
+        {'Mod1', 'Shift'},
+        'Tab',
         function()
-            awful.client.focus.global_bydirection 'down'
+            awful.client.focus.byidx(-1)
         end,
-        {description = 'focus client below', group = '🎮 client'}
+        {description = 'focus previous by index', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
-        'l',
-        function()
-            awful.client.focus.global_bydirection 'right'
-        end,
-        {description = 'focus client to the right', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'h',
-        function()
-            awful.client.swap.global_bydirection 'left'
-        end,
-        {description = 'swap client with client to the left', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'k',
-        function()
-            awful.client.swap.global_bydirection 'up'
-        end,
-        {description = 'swap client with client above', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'j',
-        function()
-            awful.client.swap.global_bydirection 'down'
-        end,
-        {description = 'swap client with client below', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'l',
-        function()
-            awful.client.swap.global_bydirection 'right'
-        end,
-        {description = 'swap client with client to the right', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4'},
-        'w',
+        is_macintosh and {} or {'Mod4'},
+        is_macintosh and 'XF86LaunchB' or 'Menu',
         function()
             mymainmenu:show()
         end,
@@ -1106,11 +1162,18 @@ globalkeys =
         {'Mod4'},
         '#47',
         function()
+            awful.screen.focus_relative(-1)
+        end,
+        {description = 'focus the previous screen', group = '🖥️ screen'}
+    ),
+    awful.key(
+        {'Mod4'},
+        '#48',
+        function()
             awful.screen.focus_relative(1)
         end,
         {description = 'focus the next screen', group = '🖥️ screen'}
     ),
-    -- awful.key({'Mod4'}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = '🎮 client'}),
     awful.key(
         {'Mod4'},
         'Tab',
@@ -1123,7 +1186,7 @@ globalkeys =
         {description = 'go back', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4', 'Control'},
+        {'Mod4', 'Shift'},
         'Return',
         function()
             rxvt_client()
@@ -1149,7 +1212,20 @@ globalkeys =
             end
             fm0.start_radio()
         end,
-        {description = 'FM0', group = '🚀 launcher'}
+        {description = '📻', group = '🚀 launcher'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'r',
+        function()
+            if client.focus then
+                client.focus:move_to_tag(awful.tag.find_by_name(nil, '📻'))
+            end
+        end,
+        {
+            description = 'move client to 📻',
+            group = '🏷️ tag'
+        }
     ),
     awful.key(
         {'Mod4'},
@@ -1181,6 +1257,18 @@ globalkeys =
         {description = 'nnn', group = '🚀 launcher'}
     ),
     awful.key(
+        {'Mod4', 'Control'},
+        'n',
+        function()
+            local instance = 'nnn' .. awful.screen.focused().index
+            local session = instance == 'nnn1' and '🧞‍♂️' or instance == 'nnn2' and '🧞‍♀️' or '🧞'
+            local t = awful.tag.find_by_name(awful.screen.focused(), session)
+            t:view_only()
+            -- awful.screen.focus(t.screen)
+        end,
+        {description = 'view 🧞', group = '🏷️ tag'}
+    ),
+    awful.key(
         {'Mod4'},
         'v',
         function()
@@ -1198,15 +1286,19 @@ globalkeys =
                 end
             end
             awful.spawn.easy_async_with_shell(
-                [=[\ls -1Qt ${CM_DIR}/clipmenu.5.${USER}/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | cat <<<"https://www.youtube.com/playlist?list=WL" | uniq | rofi -dmenu -i -p '🍿']=],
+                string.format(
+                    [=[grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.5.%s/*\ * | cat <<<"https://www.youtube.com/playlist?list=WL" | awk '!x[$0]++' | rofi -dmenu -i -p '🍿']=],
+                    os.getenv 'CM_DIR',
+                    os.getenv 'USER'
+                ),
                 function(stdout)
                     if stdout ~= '' then
-                        awful.spawn {'mpv', string.sub(stdout, 1, -2)}
+                        awful.spawn {'mpv', '--really-quiet', string.sub(stdout, 1, -2)}
                     end
                 end
             )
         end,
-        {description = 'open mpv', group = '🚀 launcher'}
+        {description = 'open mpv 🍿', group = '🚀 launcher'}
     ),
     awful.key(
         {'Mod4'},
@@ -1227,44 +1319,12 @@ globalkeys =
             end
             rxvt_client('-name', 'Journalctl', '-e', 'journalctl', '-b', '-f', '-n', '1000')
         end,
-        {description = 'open journalctl', group = '🚀 launcher'}
-    ),
-    awful.key(
-        {'Mod4'},
-        'Return',
-        function()
-            local instance = 'tmux' .. awful.screen.focused().index
-            local session = instance == 'tmux1' and 'i' or instance == 'tmux2' and 'ii' or 'iii'
-            for c in awful.client.iterate(
-                function(c)
-                    return awful.rules.match(
-                        c,
-                        {
-                            instance = instance,
-                            class = 'URxvt'
-                        }
-                    )
-                end
-            ) do
-                if client.focus ~= c then
-                    c:toggle_tag(awful.screen.focused().selected_tag)
-                    c:jump_to()
-                    return
-                else
-                    c:toggle_tag(awful.screen.focused().selected_tag)
-                    client.focus = awful.client.next(-1, c)
-                    awful.layout.arrange(awful.screen.focused())
-                    return
-                end
-            end
-            rxvt_client('-name', instance, '-e', 'tmux', 'new-session', '-A', '-s', session)
-        end,
-        {description = 'open terminal', group = '🚀 launcher'}
+        {description = 'open journalctl 🧻', group = '🚀 launcher'}
     ),
     awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
     awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
     awful.key(
-        {'Mod4', 'Control'},
+        {'Mod4'},
         'l',
         function()
             awful.tag.incmwfact(0.0125)
@@ -1272,7 +1332,7 @@ globalkeys =
         {description = 'increase master width factor', group = '💠 layout'}
     ),
     awful.key(
-        {'Mod4', 'Control'},
+        {'Mod4'},
         'h',
         function()
             awful.tag.incmwfact(-0.0125)
@@ -1280,36 +1340,20 @@ globalkeys =
         {description = 'decrease master width factor', group = '💠 layout'}
     ),
     awful.key(
-        {'Mod4', 'Control'},
-        'j',
+        {'Mod4'},
+        'i',
         function()
             awful.tag.incnmaster(1, nil, true)
         end,
         {description = 'increase the number of master clients', group = '💠 layout'}
     ),
     awful.key(
-        {'Mod4', 'Control'},
-        'k',
+        {'Mod4'},
+        'd',
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
         {description = 'decrease the number of master clients', group = '💠 layout'}
-    ),
-    awful.key(
-        {'Mod4', 'Control', 'Shift'},
-        'j',
-        function()
-            awful.tag.incncol(1, nil, true)
-        end,
-        {description = 'increase the number of columns', group = '💠 layout'}
-    ),
-    awful.key(
-        {'Mod4', 'Control', 'Shift'},
-        'k',
-        function()
-            awful.tag.incncol(-1, nil, true)
-        end,
-        {description = 'decrease the number of columns', group = '💠 layout'}
     ),
     awful.key(
         {'Mod4', 'Control'},
@@ -1345,19 +1389,51 @@ globalkeys =
     ),
     awful.key(
         {'Mod4'},
-        'BackSpace',
+        'g',
         function()
-            awful.layout.inc(1)
+            awful.layout.set(awful.layout.suit.fair)
         end,
-        {description = 'select next', group = '💠 layout'}
+        {description = 'select 🤙', group = '💠 layout'}
     ),
     awful.key(
         {'Mod4', 'Shift'},
-        'BackSpace',
+        'g',
         function()
-            awful.layout.inc(-1)
+            awful.layout.set(awful.layout.suit.fair.horizontal)
         end,
-        {description = 'select previous', group = '💠 layout'}
+        {description = 'select 🙌', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4'},
+        't',
+        function()
+            awful.layout.set(awful.layout.suit.tile)
+        end,
+        {description = 'select 👈', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'm',
+        function()
+            awful.layout.set(awful.layout.suit.max)
+        end,
+        {description = 'select 👊', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'f',
+        function()
+            awful.layout.set(awful.layout.suit.floating)
+        end,
+        {description = 'select 🖖', group = '💠 layout'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'w',
+        function()
+            awful.layout.set(awful.layout.suit.magnifier)
+        end,
+        {description = 'select 🤏', group = '💠 layout'}
     ),
     awful.key(
         {'Mod4'},
@@ -1371,15 +1447,6 @@ globalkeys =
         end,
         {description = 'restore minimized', group = '🎮 client'}
     ),
-    --[[awful.key(
-        {'Mod4'},
-        'space',
-        function()
-            awful.screen.focused().mypromptbox:run()
-        end,
-        {description = 'run prompt', group = '🚀 launcher'}
-    ),
-    --]]
     awful.key(
         {'Mod4'},
         'space',
@@ -1387,19 +1454,6 @@ globalkeys =
             awful.spawn {'rofi', '-combi-modi', 'window,drun,run', '-show', 'combi', '-modi', 'combi'}
         end,
         {description = 'run prompt', group = '🚀 launcher'}
-    ),
-    awful.key(
-        {'Mod4'},
-        'x',
-        function()
-            awful.prompt.run {
-                prompt = 'Run Lua code: ',
-                textbox = awful.screen.focused().mypromptbox.widget,
-                exe_callback = awful.util.eval,
-                history_path = awful.util.get_cache_dir() .. '/history_eval'
-            }
-        end,
-        {description = 'lua execute prompt', group = '🌐 global'}
     ),
     awful.key(
         {},
@@ -1427,33 +1481,6 @@ globalkeys =
         {description = 'lock screen and SSH', group = '🌐 global'}
     ),
     awful.key(
-        {},
-        'F6',
-        throwaway_tag '🎲',
-        {
-            description = 'view 🎲',
-            group = '🏷️ tag'
-        }
-    ),
-    awful.key(
-        {},
-        'F7',
-        throwaway_tag '🎰',
-        {
-            description = 'view 🎰',
-            group = '🏷️ tag'
-        }
-    ),
-    awful.key(
-        {},
-        'F8',
-        throwaway_tag '🎱',
-        {
-            description = 'view 🎱',
-            group = '🏷️ tag'
-        }
-    ),
-    awful.key(
         {'Mod4'},
         'F9',
         function()
@@ -1468,19 +1495,33 @@ globalkeys =
             connect_bluetooth(false, '88:C6:26:F4:8A:90')
         end,
         {description = 'disconnect bluetooth device (Setúbal)', group = '🎧 audio'}
-    )
+    ),
+    awful.key({'Mod4'}, 'F6', toggle_theme, {description = 'change theme', group = '🌐 global'})
 )
 
 clientkeys =
     gears.table.join(
     awful.key(
         {'Mod4', 'Shift'},
-        'f',
+        'w',
         function(c)
             c.fullscreen = not c.fullscreen
             c:raise()
         end,
         {description = 'toggle fullscreen', group = '🎮 client'}
+    ),
+    awful.key(
+        {'Mod4'},
+        'Return',
+        function(c)
+            if c ~= awful.client.getmaster() then
+                awful.client.setmaster(c)
+            else
+                awful.client.setslave(c)
+                awful.client.focus.byidx(0, awful.client.getmaster())
+            end
+        end,
+        {description = 'zoom', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4', 'Shift'},
@@ -1491,13 +1532,13 @@ clientkeys =
         {description = 'close', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
+        {'Mod4', 'Shift'},
         'f',
         function(c)
             c.floating = not c.floating
             c:raise()
         end,
-        {description = 'toggle floating', group = '🎮 client'}
+        {description = '✈ toggle floating', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4'},
@@ -1506,15 +1547,7 @@ clientkeys =
             c.sticky = not c.sticky
             c:raise()
         end,
-        {description = 'toggle sticky', group = '🎮 client'}
-    ),
-    awful.key(
-        {'Mod4', 'Shift'},
-        'Return',
-        function(c)
-            awful.client.cycle(true)
-        end,
-        {description = 'cycle', group = '🎮 client'}
+        {description = '▪ toggle sticky', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4'},
@@ -1525,31 +1558,29 @@ clientkeys =
         {description = 'move to screen', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
+        {'Mod4', 'Shift'},
         't',
         function(c)
             c.ontop = not c.ontop
         end,
-        {description = 'toggle keep on top', group = '🎮 client'}
+        {description = '⌃ toggle keep on top', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4'},
         'period',
         function(c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
             c.minimized = true
         end,
         {description = 'minimize', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4'},
+        {'Mod4', 'Shift'},
         'm',
         function(c)
             c.maximized = not c.maximized
             c:raise()
         end,
-        {description = '(un)maximize', group = '🎮 client'}
+        {description = '+ (un)maximize', group = '🎮 client'}
     ),
     awful.key(
         {'Mod4', 'Control'},
@@ -1558,18 +1589,17 @@ clientkeys =
             c.maximized_vertical = not c.maximized_vertical
             c:raise()
         end,
-        {description = '(un)maximize vertically', group = '🎮 client'}
+        {description = '⬍ (un)maximize vertically', group = '🎮 client'}
     ),
     awful.key(
-        {'Mod4', 'Shift'},
+        {'Mod4', 'Mod1'},
         'm',
         function(c)
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end,
-        {description = '(un)maximize horizontally', group = '🎮 client'}
+        {description = '⬌ (un)maximize horizontally', group = '🎮 client'}
     ),
-    awful.key({'Mod4'}, 'F6', toggle_theme, {description = 'change theme', group = '🌐 global'}),
     -- XXX next version: https://www.reddit.com/r/awesomewm/comments/bcc73o/how_to_use_clipboard_in_awesome/
     awful.key(
         {'Mod4'},
@@ -1577,7 +1607,18 @@ clientkeys =
         function()
             local sel = selection()
             if sel then
-                naughty.notify({text = tostring(sel)})
+                local text = tostring(sel)
+                if latest_clipboard_notification then
+                    naughty.replace_text(latest_clipboard_notification, text, '')
+                else
+                    latest_clipboard_notification =
+                        naughty.notify {
+                        title = text,
+                        destroy = function()
+                            latest_clipboard_notification = nil
+                        end
+                    }
+                end
             end
         end,
         {description = 'show content of clipboard', group = '📋 clipboard'}
@@ -1596,73 +1637,60 @@ clientkeys =
 )
 
 for i, v in ipairs(default_tags) do
-    if v ~= '' then
-        globalkeys =
-            gears.table.join(
-            globalkeys,
-            awful.key(
-                {},
-                'F' .. i,
-                function()
-                    sharedviewtoggle(awful.tag.find_by_name(nil, v))
-                end,
-                {
-                    description = 'toggle ' .. default_tags[i],
-                    group = '🏷️ tag'
-                }
-            ),
-            awful.key(
-                {'Mod4'},
-                '#' .. i + 9,
-                function()
-                    local t = awful.tag.find_by_name(nil, v)
-                    t:view_only()
-                    awful.screen.focus(t.screen)
-                end,
-                {
-                    description = 'view ' .. v,
-                    group = '🏷️ tag'
-                }
-            ),
-            awful.key(
-                {'Mod4', 'Control'},
-                '#' .. i + 9,
-                function()
-                    sharedviewtoggle(awful.tag.find_by_name(nil, v))
-                end,
-                {
-                    description = 'toggle ' .. v,
-                    group = '🏷️ tag'
-                }
-            ),
-            awful.key(
-                {'Mod4', 'Shift'},
-                '#' .. i + 9,
-                function()
-                    if client.focus then
-                        client.focus:move_to_tag(awful.tag.find_by_name(nil, v))
-                    end
-                end,
-                {
-                    description = 'move client to ' .. v,
-                    group = '🏷️ tag'
-                }
-            ),
-            awful.key(
-                {'Mod4', 'Control', 'Shift'},
-                '#' .. i + 9,
-                function()
-                    if client.focus then
-                        client.focus:toggle_tag(awful.tag.find_by_name(nil, v))
-                    end
-                end,
-                {
-                    description = 'toggle ' .. v .. ' on client',
-                    group = '🏷️ tag'
-                }
-            )
+    globalkeys =
+        gears.table.join(
+        globalkeys,
+        awful.key(
+            {'Mod4'},
+            '#' .. i + 9,
+            function()
+                local t = awful.tag.find_by_name(nil, v)
+                t:view_only()
+                awful.screen.focus(t.screen)
+            end,
+            {
+                description = 'view ' .. v,
+                group = '🏷️ tag'
+            }
+        ),
+        awful.key(
+            {'Mod4', 'Control'},
+            '#' .. i + 9,
+            function()
+                sharedviewtoggle(awful.tag.find_by_name(nil, v))
+            end,
+            {
+                description = 'toggle ' .. v,
+                group = '🏷️ tag'
+            }
+        ),
+        awful.key(
+            {'Mod4', 'Shift'},
+            '#' .. i + 9,
+            function()
+                if client.focus then
+                    client.focus:move_to_tag(awful.tag.find_by_name(nil, v))
+                end
+            end,
+            {
+                description = 'move client to ' .. v,
+                group = '🏷️ tag'
+            }
+        ),
+        awful.key(
+            {'Mod4', 'Control', 'Shift'},
+            '#' .. i + 9,
+            function()
+                if client.focus then
+                    client.focus:toggle_tag(awful.tag.find_by_name(nil, v))
+                end
+            end,
+            {
+                description = 'toggle ' .. v .. ' on client',
+                group = '🏷️ tag'
+            }
         )
-    end
+    )
 end
 
 local function strawberry_next()
@@ -1959,11 +1987,9 @@ clientbuttons =
     )
 )
 
--- Set keys
 root.keys(globalkeys)
 
 awful.rules.rules = {
-    -- All clients will match this rule.
     {
         rule = {},
         properties = {
@@ -1975,9 +2001,10 @@ awful.rules.rules = {
             buttons = clientbuttons,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-            size_hints_honor = true
-            -- TODO
-            -- tag = function() return awful.screen.focused().selected_tag end
+            size_hints_honor = true,
+            tag = function()
+                return awful.screen.focused().selected_tag
+            end
         }
     },
     -- Floating clients.
@@ -2000,25 +2027,40 @@ awful.rules.rules = {
                 'veromix',
                 'xtightvncviewer'
             },
-            -- Note that the name property shown in xprop might be set slightly after creation of the client
-            -- and the name shown there might not match defined rules here.
             name = {
-                'Event Tester' -- xev.
+                'Event Tester', -- xev.
+                'Steam - News (1 of 1)',
+                'Steam - News (1 of 2)',
+                'Steam - News (1 of 3)',
+                'Steam - News (1 of 4)',
+                'Steam - News (1 of 5)',
+                'Steam - News (1 of 6)',
+                'Steam - News (1 of 7)',
+                'Steam - News (1 of 8)'
             },
             role = {
                 'AlarmWindow', -- Thunderbird's calendar.
                 'ConfigManager', -- Thunderbird's about:config.
                 'Organizer', -- Firefox Bookmark organizer
                 'pop-up', -- e.g. Google Chrome's (detached) Developer Tools.
-                'bubble', -- Vivaldi's "cast..." menu
-                'Organizer' -- Firefox's bookmark manager
+                -- 'bubble', -- Vivaldi's "cast..." menu
+                'page-info' -- Firefox page-info
             }
         },
         properties = {floating = true}
     },
     {
+        rule = {instance = 'crx_cinhimbnkkaeohfgghhklpknlkffjgod'}, -- YouTube Music
+        properties = {
+            floating = false,
+            tag = '🍓'
+        }
+    },
+    {
         rule = {instance = 'Journalctl'},
         properties = {
+            tag = '🧻',
+            maximized = true,
             new_tag = {
                 name = '🧻',
                 layout = awful.layout.suit.max,
@@ -2028,63 +2070,36 @@ awful.rules.rules = {
         }
     },
     {
-        rule = {instance = 'nnn1', class = 'URxvt'},
+        rule = {instance = 'nnn1'},
         properties = {
+            tag = '🧞‍♂️',
             new_tag = {
                 name = '🧞‍♂️',
+                layout = awful.layout.suit.tile,
                 volatile = true,
                 selected = true
             }
         }
     },
     {
-        rule = {instance = 'tmux1', class = 'URxvt'},
+        rule = {instance = 'nnn2'},
         properties = {
-            new_tag = {
-                name = '🧟‍♂️',
-                volatile = true,
-                layout = awful.layout.suit.fair,
-                selected = false
-            }
-        }
-    },
-    {
-        rule = {instance = 'tmux2', class = 'URxvt'},
-        properties = {
-            new_tag = {
-                name = '🧟‍♀️',
-                volatile = true,
-                layout = awful.layout.suit.fair,
-                selected = false
-            }
-        }
-    },
-    {
-        rule = {instance = 'tmux3', class = 'URxvt'},
-        properties = {
-            new_tag = {
-                name = '🧟',
-                volatile = true,
-                layout = awful.layout.suit.fair,
-                selected = false
-            }
-        }
-    },
-    {
-        rule = {instance = 'nnn2', class = 'URxvt'},
-        properties = {
+            tag = '🧞‍♀️',
             new_tag = {
                 name = '🧞‍♀️',
+                layout = awful.layout.suit.tile,
                 volatile = true,
                 selected = true
             }
         }
     },
     {
-        rule = {instance = 'nnn3', class = 'URxvt'},
+        rule = {instance = 'nnn3'},
         properties = {
+            tag = '🧞',
             new_tag = {
                 name = '🧞',
+                layout = awful.layout.suit.tile,
                 volatile = true,
                 selected = true
             }
@@ -2093,6 +2108,7 @@ awful.rules.rules = {
     {
         rule = {class = 'mpv', instance = 'mpvk'},
         properties = {
+            tag = '🍿',
             new_tag = {
                 name = '🍿',
                 layout = awful.layout.suit.tile,
@@ -2106,6 +2122,7 @@ awful.rules.rules = {
     {
         rule = {role = 'PictureInPicture'},
         properties = {
+            tag = '🍿',
             new_tag = {
                 name = '🍿',
                 layout = awful.layout.suit.tile,
@@ -2125,28 +2142,26 @@ awful.rules.rules = {
                 layout = awful.layout.suit.max,
                 volatile = true,
                 selected = true
-            }
+            },
+            tag = '📻'
         }
     },
     {
-        rule = {class = 'Zathura', instance = 'zathura'},
+        rule = {class = 'Steam', instance = 'Steam'},
         properties = {
-            tag = '🧠',
-            selected = true
+            tag = '🎲'
         }
     },
     {
         rule = {class = 'strawberry', instance = 'strawberry'},
         properties = {
-            tag = '🍓',
-            selected = true
+            tag = '🍓'
         }
     },
     {
         rule = {class = 'SshAskpass'},
         properties = {
             ontop = true
-            -- TODO: centered
         }
     },
     {
@@ -2157,6 +2172,17 @@ awful.rules.rules = {
             ontop = true,
             x = dpi(210),
             y = dpi(100)
+        }
+    },
+    {
+        rule = {class = 'Pavucontrol'},
+        properties = {
+            height = dpi(600),
+            width = dpi(860),
+            ontop = true,
+            x = dpi(210),
+            y = dpi(100),
+            floating = true
         }
     },
     {
@@ -2171,11 +2197,56 @@ awful.rules.rules = {
                 c:jump_to(false)
             end
         }
+    },
+    {
+        rule = {
+            name = 'MuPDF: .*'
+        },
+        properties = {
+            tag = '🧠',
+            focus = true,
+            sticky = true
+            --[[
+            callback = function(c)
+                c:jump_to(true)
+            end
+            --]]
+        }
+    },
+    {
+        rule = {class = 'Google-chrome'},
+        properties = {
+            keys = gears.table.join(
+                clientkeys,
+                awful.key(
+                    {'Control'},
+                    'q',
+                    _,
+                    function()
+                        awful.key.execute({'Mod1'}, 'F4')
+                    end
+                )
+            )
+        }
+    },
+    {
+        rule = {class = 'Spotify'},
+        properties = {
+            keys = gears.table.join(
+                clientkeys,
+                awful.key(
+                    {'Control'},
+                    'q',
+                    function(c)
+                        c:kill()
+                    end
+                )
+            ),
+            tag = '🍓'
+        }
     }
 }
 
--- Signals
--- Signal function to execute when a new client appears.
 client.connect_signal(
     'manage',
     function(c)
@@ -2195,9 +2266,11 @@ client.connect_signal(
 client.connect_signal(
     'mouse::enter',
     function(c)
-        if awful.screen.focused().selected_tag.layout.name == 'floating' then
-            c:emit_signal('request::activate', 'mouse_enter', {raise = true})
-        end
+        c:emit_signal(
+            'request::activate',
+            'mouse_enter',
+            {raise = awful.screen.focused().selected_tag.layout.name == 'floating'}
+        )
     end
 )
 
