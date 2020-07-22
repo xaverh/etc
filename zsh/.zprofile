@@ -1,9 +1,9 @@
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 export MAN_POSIXLY_CORRECT=1
-export EDITOR=vim
+export EDITOR=vim ###
 export VISUAL=vim
-export VIMINIT=":source $XDG_CONFIG_HOME"/vim/init.vim
-export PAGER=less
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/init.vim ###
+export PAGER=less ###
 export AWS_REGION=eu-central-1
 export CM_LAUNCHER=rofi
 export CM_DIR="$XDG_RUNTIME_DIR"
@@ -16,12 +16,11 @@ export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
 export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/lesshst"
 export GNUPGHOME="${XDG_CONFIG_HOME:-$HOME/.config}/gnupg"
 export ABDUCO_SOCKET_DIR="${XDG_RUNTIME_DIR}"
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-export XCURSOR_THEME="DMZ-White"
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority ###
 export FVWM_USERDIR="${XDG_CONFIG_HOME:-$HOME/.config}/fvwm"
-export NNN_COLORS=4321
-export NNN_OPTS=Rxe
-export NNN_PLUG='i:imgview;c:-_code -r $nnn*;x:sx;d:-hexview;v:-_|mpv $nnn;u:-uidgid'
+export NNN_COLORS=4216
+export NNN_OPTS=xe
+export NNN_PLUG='i:imgview;c:-_code -r $nnn*;x:sx;d:-hexview;v:-_|mpv $nnn;V:-_mpv --shuffle $nnn*;u:-uidgid'
 export NNN_BMS='c:~/.config;t:/tmp'
 
 # manpage colors
