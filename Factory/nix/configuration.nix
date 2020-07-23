@@ -7,7 +7,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_7;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -62,6 +62,19 @@
           sha256 =
             "06100f8635d897a3f1ebaeadc2eb4b769ae41b2cf9e0acfd8a06493f3d112907";
         };
+      });
+      noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: rec {
+        version = "unstable-2020-07-22";
+        src = builtins.fetchurl {
+          url =
+            "https://github.com/googlefonts/noto-emoji/archive/v2020-07-22-unicode13_0.tar.gz";
+          sha256 =
+            "c45bd3d5d5f787b3d7a20d55e612315823874f35d758c81f307268a5d6c99bd5";
+        };
+        installPhase = ''
+          mkdir -p $out/share/fonts/noto
+          cp NotoColorEmoji.ttf $out/share/fonts/noto
+        '';
       });
     };
   };
@@ -193,13 +206,13 @@
         "PMingLiu-\\ExtB"
       ];
       localConf = ''
-        <fontconfig>
-        <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
-        <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Droid Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
-	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Mono</string> </patelt> </pattern> </rejectfont> </selectfont>
-	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
-	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Serif</string> </patelt> </pattern> </rejectfont> </selectfont>
-        </fontconfig>'';
+                <fontconfig>
+                <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
+                <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Droid Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
+        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Mono</string> </patelt> </pattern> </rejectfont> </selectfont>
+        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
+        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Serif</string> </patelt> </pattern> </rejectfont> </selectfont>
+                </fontconfig>'';
       penultimate.enable = true;
     };
   };
