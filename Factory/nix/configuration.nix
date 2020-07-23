@@ -98,14 +98,15 @@
       enableSSHSupport = false;
       pinentryFlavor = "gnome3";
     };
-    npm.enable = true;
+    # npm.npmrc = "";
     slock.enable = true;
     udevil.enable = true;
     vim.defaultEditor = true;
     zsh = {
       enable = true;
       shellInit = "export ZDOTDIR=~/.config/zsh";
-      histFile = "~/.local/keep/zsh_history";
+      histFile = "~/.local/zsh_history";
+      histSize = 2147483647;
       promptInit = "";
       setOptions = [ "EMACS" ];
     };
@@ -181,10 +182,20 @@
   gtk.iconCache.enable = false;
 
   environment = {
-    variables = {
-      XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
+    variables = rec {
       XDG_CONFIG_HOME = "$HOME/.config";
-      VIMINIT = ":source $XDG_CONFIG_HOME/vim/init.vim";
+      XDG_CACHE_HOME = "$HOME/.cache";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      ABDUCO_SOCKET_DIR = "$XDG_RUNTIME_DIR";
+      GOPATH = "${XDG_DATA_HOME}/go";
+      GNUPGHOME = "$HOME/.local/gnupg";
+      LESSHISTFILE = "${XDG_CACHE_HOME}/less_history";
+      npm_config_prefix = "${XDG_DATA_HOME}/npm";
+      npm_config_userconfig = "${XDG_CONFIG_HOME}/npmrc";
+      npm_config_cache = "${XDG_CACHE_HOME}/npm";
+      NODE_REPL_HISTORY = "${XDG_CACHE_HOME}/node_repl_history";
+      WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
+      XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
     };
     etc = {
       adjtime.source = "/persist/etc/adjtime";

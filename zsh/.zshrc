@@ -1,4 +1,4 @@
-HISTFILE=~/.local/share/zsh_history
+HISTFILE=~/.local/zsh_history
 HISTSIZE=2147483647
 SAVEHIST=$HISTSIZE
 

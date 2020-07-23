@@ -18,8 +18,10 @@
     options = [ "subvol=@root" "compress-force=zstd:6" "noatime" ];
   };
 
-  boot.initrd.luks.devices."enc".device =
-    "/dev/disk/by-uuid/beec750d-bc17-4e53-8b07-94685dc61102";
+  boot.initrd.luks.devices."luks-beec750d-bc17-4e53-8b07-94685dc61102" = {
+    device = "/dev/disk/by-uuid/beec750d-bc17-4e53-8b07-94685dc61102";
+    allowDiscards = true;
+  };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/98f056d6-9b23-4b3f-95ca-45ad63f9d434";
@@ -55,7 +57,8 @@
   fileSystems."/var/lib/iwd" = {
     device = "/dev/disk/by-uuid/98f056d6-9b23-4b3f-95ca-45ad63f9d434";
     fsType = "btrfs";
-    options = [ "subvol=@private/@var-lib-iwd" "compress-force=zstd:6" "noatime" ];
+    options =
+      [ "subvol=@private/@var-lib-iwd" "compress-force=zstd:6" "noatime" ];
   };
 
   fileSystems."/boot" = {
@@ -64,6 +67,8 @@
   };
 
   swapDevices = [ ];
+
+  # services.fstrim.enable = true;
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

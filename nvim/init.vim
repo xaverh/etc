@@ -12,10 +12,10 @@ endif
 
 if !has('nvim')
 	if has('unix')
-		if !isdirectory($XDG_CACHE_HOME . "/vim")
-    			call mkdir($XDG_CACHE_HOME . "/vim", "p", 0700)
+		if !isdirectory($XDG_DATA_HOME . "/vim")
+    			call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
 		endif
-		set viminfofile=$XDG_CACHE_HOME/vim/viminfo
+		set viminfofile=$XDG_DATA_HOME/vim/viminfo
 
 		if !isdirectory($XDG_DATA_HOME . "/vim/swap")
     			call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
@@ -32,7 +32,7 @@ if !has('nvim')
 		endif
 		set undodir=$XDG_DATA_HOME/vim/undo
 
-		set runtimepath=$XDG_CONFIG_HOME/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$XDG_CONFIG_HOME/vim/after
+		set runtimepath=$XDG_CONFIG_HOME/nvim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$XDG_CONFIG_HOME/nvim/after
 	endif
 endif
 
