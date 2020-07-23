@@ -302,16 +302,6 @@ polkit.addRule(function(action, subject) {
 })
 ```
 
-### optionally setup autologin
-
-In `/etc/systemd/system/getty@tty1.service.d/override.conf`:
-
-```ini
-[Service]
-ExecStart=
-ExecStart=-/usr/sbin/agetty --autologin xha --noclear %I $TERM
-```
-
 ### backlight support
 
 To allow group `xha` to change the backlight:
