@@ -133,9 +133,8 @@
 
   services.xserver = {
     enable = true;
+    videoDrivers = [ "intel" ];
     deviceSection = ''
-      Identifier "Card0"
-      Driver "intel"
       Option "TearFree" "true"
       Option "DRI" "3"
     '';
@@ -168,16 +167,42 @@
     ];
   };
 
-  fonts.fontconfig = {
-    antialias = true; # disable for DPI > 200
-    hinting.enable = true; # disable for DPI > 200
-    subpixel.lcdfilter = "default"; # disable for DPI > 200
-    defaultFonts.monospace = [ "SF Mono" ];
-    # defaultFonts.sansSerif = [ "SF Mono" ];
-    # defaultFonts.serif = [ "SF Mono" ];
+  fonts = {
+    fonts = [ pkgs.ibm-plex ];
+    fontconfig = {
+      antialias = true; # disable for DPI > 200
+      hinting.enable = true; # disable for DPI > 200
+      subpixel.lcdfilter = "default"; # disable for DPI > 200
+      defaultFonts.monospace = [ "IBM Plex Mono" ];
+      defaultFonts.sansSerif = [
+        "IBM Plex Sans"
+        ".Helvetica Neue DeskInterface"
+        "Helvetica Neue World"
+        "Helvetica Neue"
+        "Helvetica"
+        "PingFang SC"
+        ".Hiragino Kaku Gothic Interface"
+      ];
+      defaultFonts.serif = [
+        "IBM Plex Serif"
+        "Times New Roman"
+        "Songti SC"
+        "NSimSun"
+        "SimSun-\\ExtB"
+        "PMingLiu"
+        "PMingLiu-\\ExtB"
+      ];
+      localConf = ''
+        <fontconfig>
+        <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
+        <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Droid Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
+	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Mono</string> </patelt> </pattern> </rejectfont> </selectfont>
+	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
+	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Serif</string> </patelt> </pattern> </rejectfont> </selectfont>
+        </fontconfig>'';
+      penultimate.enable = true;
+    };
   };
-
-  fonts.fonts = [ pkgs.ibm-plex ];
 
   gtk.iconCache.enable = false;
 
