@@ -67,13 +67,17 @@
         version = "unstable-2020-07-22";
         src = builtins.fetchurl {
           url =
-            "https://github.com/googlefonts/noto-emoji/archive/v2020-07-22-unicode13_0.tar.gz";
+            "https://github.com/googlefonts/noto-emoji/raw/v2020-07-22-unicode13_0/fonts/NotoColorEmoji.ttf";
           sha256 =
-            "c45bd3d5d5f787b3d7a20d55e612315823874f35d758c81f307268a5d6c99bd5";
+            "02dd5d288f404d51e12eae28e4b77ff7c705047c273e096d3f7fbe4efdd28321";
         };
+        buildInputs = [ ];
+        nativeBuildInputs = [ ];
+        unpackPhase = ":";
+        postPatch = ":";
         installPhase = ''
           mkdir -p $out/share/fonts/noto
-          cp NotoColorEmoji.ttf $out/share/fonts/noto
+          cp $src $out/share/fonts/noto/NotoColorEmoji.ttf
         '';
       });
     };
@@ -87,13 +91,16 @@
     clipnotify
     exfat
     firefox-devedition-bin
+    flameshot
     gimp
     git
     iw
     mpv
     mupdf
     nnn
+    pavucontrol
     rofi
+    sxiv
     vim
     vscode
     zsh
@@ -181,7 +188,8 @@
   };
 
   fonts = {
-    fonts = [ pkgs.ibm-plex ];
+    enableDefaultFonts = false;
+    fonts = [ pkgs.ibm-plex pkgs.noto-fonts-emoji ];
     fontconfig = {
       antialias = true; # disable for DPI > 200
       hinting.enable = true; # disable for DPI > 200
@@ -241,7 +249,7 @@
     };
   };
 
-  # systemd.tmpfiles.rules = [ "L /var/lib/iwd - - - - /private/var/lib/iwd" ];
+  # systemd.tmpfiles.rules = [ "L /usr/local/share/fonts - - - - /private/usr/local/share/fonts" ];
 
   security.sudo.extraConfig = ''
     Defaults insults
@@ -255,6 +263,8 @@
     cpu.amd.updateMicrocode = false;
     usbWwan.enable = false;
   };
+
+  boot.kernelParams = [ "i915.fastboot=1" ];
 
   networking.enableB43Firmware = false;
   networking.enableIntel2200BGFirmware = false;
