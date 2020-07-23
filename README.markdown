@@ -228,27 +228,6 @@ root=PARTUUID=0c8461cd-db5c-4249-96b8-18451311aab0 rd.luks.crypttab=0 rw rd.lvm=
 root=UUID=23ccb92a-f945-4ef6-aecc-e32b46840ee1 rd.luks.uuid=04f7a64c-e13f-4a09-a2bb-afbfc3c45390 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
 ```
 
-### force SELinux to relabel everything
-
-```sh
-sudo touch /.autorelabel
-```
-
-### boot into new system
-
-```sh
-exit
-reboot
-```
-
-## in the actual booted systemd as user
-
-### start ntp
-
-```sh
-timedatectl set-ntp true
-```
-
 ### setup slock
 
 In `/usr/local/lib/systemd/system/slock@.service`:
