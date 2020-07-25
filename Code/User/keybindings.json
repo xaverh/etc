@@ -10,7 +10,8 @@
   },
   {
     "key": "ctrl+shift+j",
-    "command": "editor.action.joinLines"
+    "command": "editor.action.joinLines",
+    "when": "!(inSearchEditor || searchViewletFocus)"
   },
   {
     "key": "ctrl+numpad_add",

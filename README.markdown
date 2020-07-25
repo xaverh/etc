@@ -1,4 +1,4 @@
-# Fedora setup
+# NixOS setup
 
 ## within the live image
 
@@ -228,27 +228,6 @@ root=PARTUUID=0c8461cd-db5c-4249-96b8-18451311aab0 rd.luks.crypttab=0 rw rd.lvm=
 root=UUID=23ccb92a-f945-4ef6-aecc-e32b46840ee1 rd.luks.uuid=04f7a64c-e13f-4a09-a2bb-afbfc3c45390 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
 ```
 
-### force SELinux to relabel everything
-
-```sh
-sudo touch /.autorelabel
-```
-
-### boot into new system
-
-```sh
-exit
-reboot
-```
-
-## in the actual booted systemd as user
-
-### start ntp
-
-```sh
-timedatectl set-ntp true
-```
-
 ### setup slock
 
 In `/usr/local/lib/systemd/system/slock@.service`:
@@ -300,16 +279,6 @@ polkit.addRule(function(action, subject) {
     return polkit.Result.YES
   }
 })
-```
-
-### optionally setup autologin
-
-In `/etc/systemd/system/getty@tty1.service.d/override.conf`:
-
-```ini
-[Service]
-ExecStart=
-ExecStart=-/usr/sbin/agetty --autologin xha --noclear %I $TERM
 ```
 
 ### backlight support
@@ -378,22 +347,4 @@ In `/etc/pulse/default.pa`:
 
 ```
 load-module module-switch-on-connect
-```
-
-#### change \$ZDOTDIR to use different folder for .zshrc
-
-```sh
-echo 'export ZDOTDIR="$HOME"/.config/zsh' | sudo tee -a /etc/zshenv
-```
-
-#### deactivate OpenSSH password authentication
-
-In `/etc/ssh/sshd_config.d/99-nopassword.conf` set to `PasswordAuthentication no`.
-
-#### Firefox
-
-```
-browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned: amazon
-browser.newtabpage.pinned: [null,{"url":"https://smile.amazon.de","label":"@amazon","searchTopSite":true}]
-extensions.pocket.enabled: false
 ```

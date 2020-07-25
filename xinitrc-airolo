@@ -1,3 +1,0 @@
-#!/usr/bin/zsh
-
-xrandr --output HDMI2 --primary --auto --left-of HDMI1
