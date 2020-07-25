@@ -144,7 +144,8 @@ beautiful.init {
     notification_border_color = colors[my_theme].cursor,
     -- XXX waiting for random function in awesome 4.4
     -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
-    wallpaper = '/usr/share/backgrounds/f32/default/f32.png'
+    wallpaper = os.getenv 'HOME' ..
+        '/.local/wallpapers/qillqaq/MKQeftK.jpg'
 }
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
