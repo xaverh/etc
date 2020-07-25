@@ -15,7 +15,6 @@
   boot.tmpOnTmpfs = true;
 
   networking.hostName = "andermatt";
-  networking.hostId = "d5f01b1d"; # head -c 8 /etc/machine-id
   networking.wireless.iwd.enable = true;
   networking.dhcpcd.enable = false;
   networking.useNetworkd = false;
@@ -52,6 +51,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
+      luaPackages = pkgs.luaPackages.override { lua = pkgs.lua5_3; };
       sudo = pkgs.sudo.override { withInsults = true; };
       vscode = pkgs.vscode.overrideAttrs (old: rec {
         version = "1.47.2";
@@ -190,19 +190,15 @@
   fonts = {
     enableDefaultFonts = false;
     fonts = [ pkgs.ibm-plex pkgs.noto-fonts-emoji ];
-    fontconfig = {
-      antialias = true; # disable for DPI > 200
-      hinting.enable = true; # disable for DPI > 200
-      subpixel.lcdfilter = "default"; # disable for DPI > 200
+    fontconfig = rec {
+      dpi = 96; # hardware
+      antialias = if dpi > 200 then false else true;
+      hinting.enable = if dpi > 200 then false else true;
+      subpixel.lcdfilter = if dpi > 200 then "none" else "default";
       defaultFonts.monospace = [ "IBM Plex Mono" ];
       defaultFonts.sansSerif = [
         "IBM Plex Sans"
-        ".Helvetica Neue DeskInterface"
-        "Helvetica Neue World"
-        "Helvetica Neue"
-        "Helvetica"
         "PingFang SC"
-        ".Hiragino Kaku Gothic Interface"
       ];
       defaultFonts.serif = [
         "IBM Plex Serif"
@@ -216,16 +212,10 @@
       localConf = ''
                 <fontconfig>
                 <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
-                <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Droid Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
-        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Mono</string> </patelt> </pattern> </rejectfont> </selectfont>
-        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
-        	      <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>Liberation Serif</string> </patelt> </pattern> </rejectfont> </selectfont>
+                <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>DejaVu Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
                 </fontconfig>'';
-      penultimate.enable = true;
     };
   };
-
-  gtk.iconCache.enable = false;
 
   environment = {
     variables = rec {
@@ -244,8 +234,10 @@
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
     };
     etc = {
-      adjtime.source = "/persist/etc/adjtime";
-      nixos.source = "/persist/etc/nixos";
+      # adjtime.source = "/persist/etc/adjtime";
+      iwd.source = "/persist/etc/iwd";
+      nixos.source = "/persist/etc/nixos"; # done after install
+      NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
   };
 
@@ -273,12 +265,10 @@
   services.xserver.xkbOptions = "compose:rctrl-altgr";
   services.xserver.xkbVariant = "nodeadkeys";
   services.xserver.xkbModel = "latitude";
+  
+  services.fstrim.enable = true;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  networking.hostId = "6942a402"; # head -c 8 /etc/machine-id
+
+  system.stateVersion = "20.09"; # Did you read the comment?
 }

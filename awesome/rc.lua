@@ -97,12 +97,12 @@ end
 local my_theme = 'qi'
 
 beautiful.init {
-    font = '.SF Compact Display 11',
-    menu_font = '.SF Compact Display 12',
-    hotkeys_font = '.SF Compact Display 11',
-    hotkeys_description_font = '.SF Compact Display 11',
-    tasklist_font_minimized = '.SF Compact Display Italic 11',
-    tasklist_font_focus = '.SF Compact Display Bold 11',
+    font = 'sans 9',
+    menu_font = 'sans 10',
+    hotkeys_font = 'sans 9',
+    hotkeys_description_font = 'sans 9',
+    tasklist_font_minimized = 'sans Italic 9',
+    tasklist_font_focus = 'sans Bold 9',
     bg_normal = colors[my_theme][1],
     bg_focus = colors[my_theme][1],
     bg_urgent = colors[my_theme][2],
@@ -135,7 +135,7 @@ beautiful.init {
         magnifier = '🤏🏻',
         floating = '🖖🏻'
     },
-    tasklist_disable_icon = true,
+    tasklist_disable_icon = false,
     tasklist_align = 'center',
     wibar_height = dpi(20),
     notification_max_width = dpi(460),
@@ -149,23 +149,15 @@ beautiful.init {
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
 beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
-beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
+beautiful.awesome_icon =
+    theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
 
 local function connect_bluetooth(connect, mac)
     awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
 end
 
-local function rxvt_client(...)
-    local command = table.pack('urxvtc', ...)
-    awful.spawn.easy_async(
-        command,
-        function(_, _, _, exitcode)
-            if exitcode == 2 then
-                os.execute 'urxvtd -q -o -f'
-                awful.spawn(command)
-            end
-        end
-    )
+local function open_terminal(...)
+    local command = awful.spawn(table.pack('alacritty', ...))
 end
 
 local printkey = is_macintosh and 'XF86LaunchA' or 'Print'
@@ -248,43 +240,64 @@ local terminal_font_menu = {
     {
         'Consolas 14',
         function()
-            change_terminal_font('xft:Consolas:style=Regular:pixelsize=14px', 'xft:Consolas:style=Bold:pixelsize=14px')
+            change_terminal_font(
+                'xft:Consolas:style=Regular:pixelsize=14px',
+                'xft:Consolas:style=Bold:pixelsize=14px'
+            )
         end
     },
     {
         'Consolas 16',
         function()
-            change_terminal_font('xft:Consolas:style=Regular:pixelsize=16px', 'xft:Consolas:style=Bold:pixelsize=16px')
+            change_terminal_font(
+                'xft:Consolas:style=Regular:pixelsize=16px',
+                'xft:Consolas:style=Bold:pixelsize=16px'
+            )
         end
     },
     {
         'SF Mono 12',
         function()
-            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=12px', 'xft:SF Mono:style=Bold:pixelsize=12px')
+            change_terminal_font(
+                'xft:SF Mono:style=Regular:pixelsize=12px',
+                'xft:SF Mono:style=Bold:pixelsize=12px'
+            )
         end
     },
     {
         'SF Mono 13',
         function()
-            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=13px', 'xft:SF Mono:style=Bold:pixelsize=13px')
+            change_terminal_font(
+                'xft:SF Mono:style=Regular:pixelsize=13px',
+                'xft:SF Mono:style=Bold:pixelsize=13px'
+            )
         end
     },
     {
         'SF Mono 14',
         function()
-            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=14px', 'xft:SF Mono:style=Bold:pixelsize=14px')
+            change_terminal_font(
+                'xft:SF Mono:style=Regular:pixelsize=14px',
+                'xft:SF Mono:style=Bold:pixelsize=14px'
+            )
         end
     },
     {
         'SF Mono 15',
         function()
-            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=15px', 'xft:SF Mono:style=Bold:pixelsize=15px')
+            change_terminal_font(
+                'xft:SF Mono:style=Regular:pixelsize=15px',
+                'xft:SF Mono:style=Bold:pixelsize=15px'
+            )
         end
     },
     {
         'SF Mono 16',
         function()
-            change_terminal_font('xft:SF Mono:style=Regular:pixelsize=16px', 'xft:SF Mono:style=Bold:pixelsize=16px')
+            change_terminal_font(
+                'xft:SF Mono:style=Regular:pixelsize=16px',
+                'xft:SF Mono:style=Bold:pixelsize=16px'
+            )
         end
     },
     {
@@ -345,7 +358,7 @@ local mymainmenu =
         {
             'open terminal',
             function()
-                rxvt_client()
+                open_terminal()
             end,
             '/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg'
         }
@@ -502,7 +515,9 @@ if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_exec
                     function(stdout)
                         widget:set_text(
                             (stdout:match 'SSID: ([^\n]*)' or 'no') ..
-                                ' ' .. (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or 'WiFi')
+                                ' ' ..
+                                    (stdout:match 'Connected to %x%x:%x%x:%x%x:(%x%x:%x%x:%x%x)' or
+                                        'WiFi')
                         )
                         t:again()
                     end
@@ -636,7 +651,10 @@ local netthroughwidget =
                 local name = string.match(line, '^[%s]?[%s]?[%s]?[%s]?([%w]+):')
                 if name == netdevice then
                     local new_recv = tonumber(string.match(line, ':[%s]*([%d]+)'))
-                    local new_send = tonumber(string.match(line, '([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$'))
+                    local new_send =
+                        tonumber(
+                        string.match(line, '([%d]+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d$')
+                    )
                     local this_time = os.time()
                     local timediff = os.difftime(this_time, last_time)
                     recv_rate = (new_recv - old_recv) // timediff
@@ -676,7 +694,8 @@ awful.screen.connect_for_each_screen(
         end
 
         -- Textual layoutbox
-        s.mylayoutbox = wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
+        s.mylayoutbox =
+            wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
         awful.tag.attached_connect_signal(
             s,
             'property::selected',
@@ -880,8 +899,10 @@ local function toggle_theme()
     beautiful.border_marked = colors[my_theme][4]
     beautiful.taglist_bg_focus = colors[my_theme][9]
     beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
-    beautiful.taglist_squares_unsel = theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
-    beautiful.awesome_icon = theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
+    beautiful.taglist_squares_unsel =
+        theme_assets.taglist_squares_unsel(dpi(5), beautiful.fg_normal)
+    beautiful.awesome_icon =
+        theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
     mylauncher.image = beautiful.awesome_icon
     beautiful.notification_border_color = colors[my_theme].cursor
     if my_theme == 'ys' then
@@ -1021,7 +1042,14 @@ globalkeys =
                 [[tmux list-session -F \#S | rofi -dmenu -i -p tmux]],
                 function(stdout)
                     if stdout ~= '' then
-                        rxvt_client('-e', 'tmux', 'new-session', '-A', '-s', string.sub(stdout, 1, -2))
+                        open_terminal(
+                            '-e',
+                            'tmux',
+                            'new-session',
+                            '-A',
+                            '-s',
+                            string.sub(stdout, 1, -2)
+                        )
                     end
                 end
             )
@@ -1036,7 +1064,12 @@ globalkeys =
         end,
         {description = 'clipmenu', group = '📋 clipboard'}
     ),
-    awful.key({'Mod4'}, 'F2', hotkeys_popup.show_help, {description = 'show help', group = '🌐 global'}),
+    awful.key(
+        {'Mod4'},
+        'F2',
+        hotkeys_popup.show_help,
+        {description = 'show help', group = '🌐 global'}
+    ),
     awful.key(
         {'Mod4'},
         'Escape',
@@ -1053,7 +1086,12 @@ globalkeys =
         end,
         {description = 'view previous non-empty tag', group = '🏷️ tag'}
     ),
-    awful.key({'Mod4'}, '#49', awful.tag.history.restore, {description = 'go back', group = '🏷️ tag'}),
+    awful.key(
+        {'Mod4'},
+        '#49',
+        awful.tag.history.restore,
+        {description = 'go back', group = '🏷️ tag'}
+    ),
     awful.key(
         {'Mod4'},
         'Left',
@@ -1189,7 +1227,7 @@ globalkeys =
         {'Mod4', 'Shift'},
         'Return',
         function()
-            rxvt_client()
+            open_terminal()
         end,
         {description = 'open a terminal', group = '🚀 launcher'}
     ),
@@ -1252,7 +1290,7 @@ globalkeys =
                     return
                 end
             end
-            rxvt_client('-name', instance, '-e', 'nnn')
+            open_terminal('--class', instance, '--title', 'nnn', '-e', 'nnn')
         end,
         {description = 'nnn', group = '🚀 launcher'}
     ),
@@ -1317,12 +1355,22 @@ globalkeys =
                     return
                 end
             end
-            rxvt_client('-name', 'Journalctl', '-e', 'journalctl', '-b', '-f', '-n', '1000')
+            open_terminal('-name', 'Journalctl', '-e', 'journalctl', '-b', '-f', '-n', '1000')
         end,
         {description = 'open journalctl 🧻', group = '🚀 launcher'}
     ),
-    awful.key({'Mod4', 'Control'}, 'r', awesome.restart, {description = 'reload awesome', group = '🌐 global'}),
-    awful.key({'Mod4', 'Shift'}, 'q', awesome.quit, {description = 'quit awesome', group = '🌐 global'}),
+    awful.key(
+        {'Mod4', 'Control'},
+        'r',
+        awesome.restart,
+        {description = 'reload awesome', group = '🌐 global'}
+    ),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'q',
+        awesome.quit,
+        {description = 'quit awesome', group = '🌐 global'}
+    ),
     awful.key(
         {'Mod4'},
         'l',
@@ -1451,7 +1499,15 @@ globalkeys =
         {'Mod4'},
         'space',
         function()
-            awful.spawn {'rofi', '-combi-modi', 'window,drun,run', '-show', 'combi', '-modi', 'combi'}
+            awful.spawn {
+                'rofi',
+                '-combi-modi',
+                'window,drun,run',
+                '-show',
+                'combi',
+                '-modi',
+                'combi'
+            }
         end,
         {description = 'run prompt', group = '🚀 launcher'}
     ),
@@ -1743,10 +1799,25 @@ if has_multimedia_keys then
         globalkeys,
         awful.key({}, 'XF86AudioNext', playerctl_next, {description = '⏭️', group = '🌐 global'}),
         awful.key({}, 'XF86AudioPrev', playerctl_prev, {description = '⏮', group = '🌐 global'}),
-        awful.key({}, 'XF86AudioPlay', playerctl_playpause, {description = '⏯', group = '🌐 global'}),
+        awful.key(
+            {},
+            'XF86AudioPlay',
+            playerctl_playpause,
+            {description = '⏯', group = '🌐 global'}
+        ),
         awful.key({}, 'XF86AudioStop', playerctl_stop, {description = '⏹️', group = '🌐 global'}),
-        awful.key({'Shift'}, 'XF86AudioNext', playerctl_fwd, {description = '⏩', group = '🌐 global'}),
-        awful.key({'Shift'}, 'XF86AudioPrev', playerctl_rew, {description = '⏪', group = '🌐 global'})
+        awful.key(
+            {'Shift'},
+            'XF86AudioNext',
+            playerctl_fwd,
+            {description = '⏩', group = '🌐 global'}
+        ),
+        awful.key(
+            {'Shift'},
+            'XF86AudioPrev',
+            playerctl_rew,
+            {description = '⏪', group = '🌐 global'}
+        )
     )
 else
     globalkeys =
@@ -1754,7 +1825,12 @@ else
         globalkeys,
         awful.key({'Mod4'}, '#63', strawberry_next, {description = '⏭️', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#106', strawberry_prev, {description = '⏮', group = '🍓 strawberry'}),
-        awful.key({'Mod4'}, '#87', strawberry_playpause, {description = '⏯', group = '🍓 strawberry'}),
+        awful.key(
+            {'Mod4'},
+            '#87',
+            strawberry_playpause,
+            {description = '⏯', group = '🍓 strawberry'}
+        ),
         awful.key({'Mod4'}, '#85', strawberry_fwd, {description = '⏩', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, '#83', strawberry_rew, {description = '⏪', group = '🍓 strawberry'}),
         awful.key({'Mod4'}, 'End', playerctl_next, {description = '⏭️', group = '🌐 global'}),
@@ -1798,7 +1874,8 @@ function increase_volume_curry()
                     {'pactl', 'set-sink-mute', '@DEFAULT_SINK@', 'false'},
                     {
                         exit = function()
-                            local new_volume = math.max(math.min(tonumber(volume) + percentage, 100), 0)
+                            local new_volume =
+                                math.max(math.min(tonumber(volume) + percentage, 100), 0)
                             awful.spawn.with_line_callback(
                                 {'pactl', 'set-sink-volume', '@DEFAULT_SINK@', new_volume .. '%'},
                                 {
@@ -1896,7 +1973,8 @@ local function increase_light_curry(brightness_file, max_brightness, emoji)
         end
     end
     return function(percentage)
-        brightness = math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
+        brightness =
+            math.min(math.max(brightness + percentage * max_brightness // 100, 0), max_brightness)
         local f = io.open(brightness_file, 'w+')
         f:write(brightness)
         f:close()
@@ -1937,7 +2015,11 @@ if gears.filesystem.file_readable '/sys/class/backlight/intel_backlight/max_brig
     local max_brightness = f:read 'n'
     f:close()
     local increase_keyboard_light =
-        increase_light_curry('/sys/class/backlight/intel_backlight/brightness', max_brightness, '🖥️')
+        increase_light_curry(
+        '/sys/class/backlight/intel_backlight/brightness',
+        max_brightness,
+        '🖥️'
+    )
     globalkeys =
         gears.table.join(
         globalkeys,

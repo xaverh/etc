@@ -1,46 +1,33 @@
-if !has('nvim')
-	if &term =~ "^tmux"
-		let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
-		let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
-		let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
-	else
-		let &t_SI .= "\<Esc>[5 q"
-		let &t_SR .= "\<Esc>[3 q"
-		let &t_EI .= "\<Esc>[1 q"
-	endif
+if &term =~ "^tmux"
+	let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
+	let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
+	let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
+else
+	let &t_SI .= "\<Esc>[5 q"
+	let &t_SR .= "\<Esc>[3 q"
+	let &t_EI .= "\<Esc>[1 q"
 endif
 
-if !has('nvim')
-	if has('unix')
-		if !isdirectory($XDG_DATA_HOME . "/vim")
-    			call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
-		endif
-		set viminfofile=$XDG_DATA_HOME/vim/viminfo
-
-		if !isdirectory($XDG_DATA_HOME . "/vim/swap")
-    			call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
-		endif
-		set directory=$XDG_DATA_HOME/vim/swap//
-
-		if !isdirectory($XDG_DATA_HOME . "/vim/backup")
-    			call mkdir($XDG_DATA_HOME . "/vim/backup", "p", 0700)
-		endif
-		set backupdir=$XDG_DATA_HOME/vim/backup//
-
-		if !isdirectory($XDG_DATA_HOME . "/vim/undo")
-    			call mkdir($XDG_DATA_HOME . "/vim/undo", "p", 0700)
-		endif
-		set undodir=$XDG_DATA_HOME/vim/undo
-
-		set runtimepath=$XDG_CONFIG_HOME/nvim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$XDG_CONFIG_HOME/nvim/after
+if has('unix')
+	if !isdirectory($XDG_DATA_HOME . "/vim")
+		call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
 	endif
-endif
+	set viminfofile=$XDG_DATA_HOME/vim/viminfo
 
-if has('nvim') && has('unix')
-	if !isdirectory($XDG_DATA_HOME . "nvim/backup")
-    		call mkdir($XDG_DATA_HOME . "/nvim/backup", "p", 0700)
+	if !isdirectory($XDG_DATA_HOME . "/vim/swap")
+   		call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
 	endif
-	set backupdir-=.
+	set directory=$XDG_DATA_HOME/vim/swap//
+
+	if !isdirectory($XDG_DATA_HOME . "/vim/backup")
+    		call mkdir($XDG_DATA_HOME . "/vim/backup", "p", 0700)
+	endif
+	set backupdir=$XDG_DATA_HOME/vim/backup//
+
+	if !isdirectory($XDG_DATA_HOME . "/vim/undo")
+    		call mkdir($XDG_DATA_HOME . "/vim/undo", "p", 0700)
+	endif
+	set undodir=$XDG_DATA_HOME/vim/undo
 endif
 
 set undofile
@@ -52,9 +39,7 @@ set belloff=all
 set complete+=i
 set cscopeverbose
 set display+=lastline
-if !has('nvim')
-	set fillchars="vert:│,fold:·,sep:│"
-endif
+set fillchars="vert:│,fold:·,sep:│"
 set formatoptions+=j
 set nofsync
 set history=10000
@@ -141,10 +126,7 @@ autocmd BufWrite *.hs :call DeleteTrailingWS()
 nnoremap / /\v
 
 " Clang-Format & gofmt
-if has("win32") || has("win64")
-	map <leader>i :%pyfile C:\\Program Files\ (x86)\\LLVM\\share\\clang\\clang-format." py<cr>
-	" imap <C-I> <c-o>:%pyfile C:\\Program Files\ (x86)" \\LLVM\\share\\clang\\clang-format.py<cr>
-else
+if has("unix")
 	map <leader>i :%pyfile /usr/share/clang/clang-format.py<cr>
 	" imap <C-I> <c-o>:%pyfile /usr/share/clang/clang-format.py<cr>
 endif
