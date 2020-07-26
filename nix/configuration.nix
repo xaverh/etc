@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -43,14 +39,29 @@
     ];
   };
 
-  documentation.doc.enable = false;
+  documentation.doc.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
+      dmenu = pkgs.dmenu.override {
+        patches = pkgs.dmenu.patches ++ [
+          (builtins.fetchurl {
+            url =
+              "https://raw.githubusercontent.com/xaverh/.config/master/suckless/dmenu-allowcoloremoji-4.9.diff";
+            sha256 =
+              "0a61eb0bb2184844f31e8cb6baa514bb92ab13efe3db9711fbb9dfd4662808ea";
+          })
+          (builtins.fetchurl {
+            url =
+              "https://raw.githubusercontent.com/xaverh/.config/master/suckless/dmenu-qillqaqconfig-4.9.diff";
+            sha256 =
+              "5d0abb4ed47041b186d9a91a223610904e3a81b7db248eb230f361458b30ac53";
+          })
+        ];
+      };
       luaPackages = pkgs.luaPackages.override { lua = pkgs.lua5_3; };
       sudo = pkgs.sudo.override { withInsults = true; };
       vscode = pkgs.vscode.overrideAttrs (old: rec {
@@ -89,6 +100,7 @@
     alacritty
     clipmenu
     clipnotify
+    dmenu
     exfat
     firefox-devedition-bin
     flameshot
@@ -99,7 +111,6 @@
     mupdf
     nnn
     pavucontrol
-    rofi
     sxiv
     vim
     vscode
@@ -140,7 +151,6 @@
   services.resolved = {
     enable = true;
     dnssec = "true";
-    # domains = [ "" ];
     fallbackDns =
       [ "2606:4700:4700:1111" "1.1.1.1" "2606:4700:4700::1001" "1.0.0.1" ];
   };
@@ -174,6 +184,8 @@
     windowManager.awesome.noArgb = true;
   };
 
+  xdg.portal.gtkUsePortal = true;
+
   services.mingetty.autologinUser = "xha";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -196,10 +208,7 @@
       hinting.enable = if dpi > 200 then false else true;
       subpixel.lcdfilter = if dpi > 200 then "none" else "default";
       defaultFonts.monospace = [ "IBM Plex Mono" ];
-      defaultFonts.sansSerif = [
-        "IBM Plex Sans"
-        "PingFang SC"
-      ];
+      defaultFonts.sansSerif = [ "IBM Plex Sans" "PingFang SC" ];
       defaultFonts.serif = [
         "IBM Plex Serif"
         "Times New Roman"
@@ -210,10 +219,10 @@
         "PMingLiu-\\ExtB"
       ];
       localConf = ''
-                <fontconfig>
-                <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
-                <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>DejaVu Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
-                </fontconfig>'';
+        <fontconfig>
+        <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
+        <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>DejaVu Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
+        </fontconfig>'';
     };
   };
 
@@ -234,7 +243,7 @@
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
     };
     etc = {
-      # adjtime.source = "/persist/etc/adjtime";
+      adjtime.source = "/persist/etc/adjtime";
       iwd.source = "/persist/etc/iwd";
       nixos.source = "/persist/etc/nixos"; # done after install
       NIXOS.source = "/persist/etc/NIXOS"; # done after install
@@ -265,10 +274,10 @@
   services.xserver.xkbOptions = "compose:rctrl-altgr";
   services.xserver.xkbVariant = "nodeadkeys";
   services.xserver.xkbModel = "latitude";
-  
+
   services.fstrim.enable = true;
 
   networking.hostId = "6942a402"; # head -c 8 /etc/machine-id
 
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
 }

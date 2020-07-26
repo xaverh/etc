@@ -1,0 +1,33 @@
+diff -up dmenu-4.9-original/config.def.h dmenu-4.9/config.def.h
+--- dmenu-4.9-original/config.def.h	2019-02-02 13:55:02.000000000 +0100
++++ dmenu-4.9/config.def.h	2020-07-26 16:31:09.121983091 +0200
+@@ -1,21 +1,16 @@
+-/* See LICENSE file for copyright and license details. */
+-/* Default settings; can be overriden by command line. */
+-
+-static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+-/* -fn option overrides fonts[0]; default X11 font or font set */
++static int topbar = 1;
+ static const char *fonts[] = {
+-	"monospace:size=10"
++	"sans:size=10",
++	"Noto Color Emoji"
+ };
+-static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
++static const char *prompt = NULL;
+ static const char *colors[SchemeLast][2] = {
+ 	/*     fg         bg       */
+-	[SchemeNorm] = { "#bbbbbb", "#222222" },
+-	[SchemeSel] = { "#eeeeee", "#005577" },
+-	[SchemeOut] = { "#000000", "#00ffff" },
++	[SchemeNorm] = { "#e5e6e6", "#171717" },
++	[SchemeSel] = { "#e5e6e6", "#0f3a4b" },
++	[SchemeOut] = { "#e3c472", "#171717" },
+ };
+-/* -l option; if nonzero, dmenu uses vertical list with given number of lines */
+-static unsigned int lines      = 0;
+-
++static unsigned int lines = 12;
+ /*
+  * Characters not considered part of a word while deleting words
+  * for example: " /?\"&[]"
