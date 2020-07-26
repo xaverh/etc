@@ -1,0 +1,1 @@
+BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "        ", $2); print $2 }

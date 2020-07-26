@@ -99,8 +99,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alacritty
-    clipmenu
-    clipnotify
     dmenu
     exfat
     firefox-devedition-bin
@@ -143,6 +141,8 @@
       setOptions = [ "EMACS" ];
     };
   };
+
+  services.clipmenu.enable = true;
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
