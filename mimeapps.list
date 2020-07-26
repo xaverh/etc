@@ -21,6 +21,9 @@ application/x-extension-shtml=userapp-Firefox Developer Edition-U207N0.desktop
 application/xhtml+xml=userapp-Firefox Developer Edition-U207N0.desktop
 application/x-extension-xhtml=userapp-Firefox Developer Edition-U207N0.desktop
 application/x-extension-xht=userapp-Firefox Developer Edition-U207N0.desktop
+x-scheme-handler/http=userapp-Firefox Developer Edition-U207N0.desktop
+x-scheme-handler/https=userapp-Firefox Developer Edition-U207N0.desktop
+text/html=userapp-Firefox Developer Edition-U207N0.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;userapp-Firefox Developer Edition-U207N0.desktop;
