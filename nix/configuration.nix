@@ -40,6 +40,7 @@
   };
 
   documentation.doc.enable = true;
+  documentation.man.generateCaches = true;
 
   time.timeZone = "Europe/Berlin";
 
@@ -186,7 +187,7 @@
 
   xdg.portal.gtkUsePortal = true;
 
-  services.mingetty.autologinUser = "xha";
+  services.mingetty.autologinUser = "xha"; # ##
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.mutableUsers = false; # requires passwords to be hashed ...
