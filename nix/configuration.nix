@@ -4,13 +4,29 @@
   imports = [ ./hardware-configuration.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.tmpOnTmpfs = true;
+  boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+    mkdir /mnt
+    mount -o compress-force=zstd:6,ssd,noatime,subvol=/ /dev/mapper/luks-04f7a64c-e13f-4a09-a2bb-afbfc3c45390 /mnt
+    btrfs subvolume list -o /mnt/@ | cut -f9 -d' ' | while read subvolume; do
+      echo "deleting /$subvolume subvolume..."
+      btrfs subvolume delete "/mnt/$subvolume"
+    done && echo "deleting /@ subvolume..." && btrfs subvolume delete /mnt/@
+
+    echo "restoring blank /@ subvolume..."
+    btrfs subvolume snapshot /mnt/@blank /mnt/@
+
+    umount /mnt
+  '';
+
+  # boot.tmpOnTmpfs = true;
 
   networking.hostName = "andermatt";
+  networking.hostId = "affeb00d";
   networking.wireless.iwd.enable = true;
   networking.dhcpcd.enable = false;
   networking.useNetworkd = false;
@@ -100,14 +116,12 @@
   environment.systemPackages = with pkgs; [
     alacritty
     dmenu
-    exfat
     firefox-devedition-bin
     flameshot
     gimp
     git
     iw
     mpv
-    mupdf
     nnn
     pavucontrol
     sxiv
@@ -115,6 +129,7 @@
     vim
     vscode
     xsel
+    zathura
     zsh
   ];
 
@@ -201,19 +216,23 @@
 
   xdg.portal.gtkUsePortal = true;
 
-  # services.mingetty.autologinUser = "xha"; # ##
+  services.mingetty.autologinUser = "xha"; # ## XXX
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.mutableUsers = false; # requires passwords to be hashed ...
+  users.mutableUsers = false;
   users.defaultUserShell = pkgs.zsh;
-  users.users.xha = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGNEBSblJ8T4tJUSncos7NnCi3HNK7QyYRgYlhE5Dtp+ xaver.hellauer@gmail.com"
-    ];
+  users = {
+    users = {
+      xha = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGNEBSblJ8T4tJUSncos7NnCi3HNK7QyYRgYlhE5Dtp+ xaver.hellauer@gmail.com"
+        ];
+        passwordFile = "/private/xha.passwd";
+      };
+    };
+    extraUsers.root = { shell = pkgs.zsh; };
   };
-
   fonts = {
     enableDefaultFonts = false;
     fonts = [ pkgs.ibm-plex pkgs.noto-fonts-emoji ];
@@ -261,12 +280,13 @@
     etc = {
       adjtime.source = "/persist/etc/adjtime";
       iwd.source = "/persist/etc/iwd";
+      machine-id.source = "/persist/etc/machine-id";
       nixos.source = "/persist/etc/nixos"; # done after install
       NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
   };
 
-  # systemd.tmpfiles.rules = [ "L /usr/local/share/fonts - - - - /private/usr/local/share/fonts" ];
+  systemd.tmpfiles.rules = [ "d /mnt - - - - -" ];
 
   security.sudo.extraConfig = ''
     Defaults insults
@@ -291,14 +311,10 @@
   services.xserver.xkbVariant = "nodeadkeys";
   services.xserver.xkbModel = "latitude";
 
-  hardware.opengl.extraPackages = with pkgs; [
-    vaapiIntel
-    libvdpau-va-gl
-  ]; # something missing?
+  hardware.opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl ];
 
   services.fstrim.enable = true;
 
-  networking.hostId = "6942a402"; # head -c 8 /etc/machine-id
-
   system.stateVersion = "20.09";
 }
+

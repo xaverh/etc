@@ -212,7 +212,7 @@
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
 	"editor.minimap.size": "fit",
-	"editor.fontFamily": "Consolas, monospace",
+	"editor.fontFamily": "monospace",
 	"window.titleBarStyle": "native",
 	"debug.javascript.usePreview": true,
 	"typescript.enablePromptUseWorkspaceTsdk": true,

@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-notify-send --icon $XDG_CONFIG_HOME/Icons/nnn.svg nnn 'Done!'
+awesome-client 'require "naughty".notify { title = "Done!", icon = os.getenv "XDG_CONFIG_HOME" ..  "/Icons/nnn.svg" }'
