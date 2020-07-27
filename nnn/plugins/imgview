@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 
 if [[ -z "$1" ]] || ! [[ -s "$1" ]]; then
 	printf "empty file"
