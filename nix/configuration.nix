@@ -111,8 +111,10 @@
     nnn
     pavucontrol
     sxiv
+    tmux
     vim
     vscode
+    xsel
     zsh
   ];
 
@@ -143,6 +145,11 @@
   };
 
   services.clipmenu.enable = true;
+  systemd.user.services.clipmenu.serviceConfig = {
+    Restart = "always";
+    Environment = "DISPLAY=:0";
+  };
+  systemd.user.services.clipmenu.wantedBy = [ "default.target" ];
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
@@ -162,7 +169,14 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+      '';
+  # ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
+
   services.xserver = {
+    autorun = false;
+    exportConfiguration = true;
     enable = true;
     videoDrivers = [ "intel" ];
     deviceSection = ''
@@ -187,7 +201,7 @@
 
   xdg.portal.gtkUsePortal = true;
 
-  services.mingetty.autologinUser = "xha"; # ##
+  # services.mingetty.autologinUser = "xha"; # ##
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.mutableUsers = false; # requires passwords to be hashed ...
@@ -242,6 +256,7 @@
       NODE_REPL_HISTORY = "${XDG_CACHE_HOME}/node_repl_history";
       WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
+      CM_DIR = "$XDG_RUNTIME_DIR";
     };
     etc = {
       adjtime.source = "/persist/etc/adjtime";
@@ -275,6 +290,11 @@
   services.xserver.xkbOptions = "compose:rctrl-altgr";
   services.xserver.xkbVariant = "nodeadkeys";
   services.xserver.xkbModel = "latitude";
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+    libvdpau-va-gl
+  ]; # something missing?
 
   services.fstrim.enable = true;
 

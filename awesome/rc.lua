@@ -10,7 +10,6 @@ local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 local fm0 = require 'fm0'
 local icons = os.getenv 'XDG_CONFIG_HOME' .. '/Icons/'
-math.randomseed(os.time())
 
 local colors = {
     qi = {
@@ -71,22 +70,10 @@ local colors = {
     }
 }
 
-local has_volume_keys
-local has_multimedia_keys
-local is_macintosh
+local has_volume_keys = true
+local has_multimedia_keys = true
+local is_macintosh = false
 local temperature_filename = '/sys/class/thermal/thermal_zone1/temp'
-if os.getenv 'HOSTNAME' == 'aberystwyth' then
-    has_volume_keys = true
-    has_multimedia_keys = true
-    is_macintosh = true
-elseif os.getenv 'HOSTNAME' == 'andermatt' then
-    has_volume_keys = true
-    has_multimedia_keys = true
-elseif os.getenv 'HOSTNAME' == 'airolo' then
-    temperature_filename = '/sys/class/thermal/thermal_zone2/temp'
-    has_volume_keys = true
-    has_multimedia_keys = true
-end
 
 -- TODO:
 -- if (os.date('*t').hour + 16) % 24 >= 12 then
@@ -96,7 +83,25 @@ end
 -- end
 local my_theme = 'qi'
 
+local themes_path = gears.filesystem.get_themes_dir()
+
 beautiful.init {
+    layout_fairh = themes_path .. 'default/layouts/fairhw.png',
+    layout_fairv = themes_path .. 'default/layouts/fairvw.png',
+    layout_floating = themes_path .. 'default/layouts/floatingw.png',
+    layout_magnifier = themes_path .. 'default/layouts/magnifierw.png',
+    layout_max = themes_path .. 'default/layouts/maxw.png',
+    layout_fullscreen = themes_path .. 'default/layouts/fullscreenw.png',
+    layout_tilebottom = themes_path .. 'default/layouts/tilebottomw.png',
+    layout_tileleft = themes_path .. 'default/layouts/tileleftw.png',
+    layout_tile = themes_path .. 'default/layouts/tilew.png',
+    layout_tiletop = themes_path .. 'default/layouts/tiletopw.png',
+    layout_spiral = themes_path .. 'default/layouts/spiralw.png',
+    layout_dwindle = themes_path .. 'default/layouts/dwindlew.png',
+    layout_cornernw = themes_path .. 'default/layouts/cornernww.png',
+    layout_cornerne = themes_path .. 'default/layouts/cornernew.png',
+    layout_cornersw = themes_path .. 'default/layouts/cornersww.png',
+    layout_cornerse = themes_path .. 'default/layouts/cornersew.png',
     font = 'sans 9',
     menu_font = 'sans 10',
     hotkeys_font = 'sans 9',
@@ -127,14 +132,14 @@ beautiful.init {
     menu_fg_normal = colors.ys[16],
     menu_border_width = dpi(1),
     master_width_factor = 0.55,
-    layout_txt = {
-        tile = '👈🏻',
-        fairv = '🤙🏻',
-        fairh = '🙌🏻',
-        max = '👊🏻',
-        magnifier = '🤏🏻',
-        floating = '🖖🏻'
-    },
+    -- layout_txt = {
+    -- tile = '👈🏻',
+    -- fairv = '🤙🏻',
+    -- fairh = '🙌🏻',
+    -- max = '👊🏻',
+    -- magnifier = '🤏🏻',
+    -- floating = '🖖🏻'
+    -- },
     tasklist_disable_icon = false,
     tasklist_align = 'center',
     wibar_height = dpi(20),
@@ -143,9 +148,8 @@ beautiful.init {
     notification_border_width = dpi(2),
     notification_border_color = colors[my_theme].cursor,
     -- XXX waiting for random function in awesome 4.4
-    -- wallpaper = os.getenv 'HOSTNAME' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
-    wallpaper = os.getenv 'HOME' ..
-        '/.local/wallpapers/qillqaq/MKQeftK.jpg'
+    -- wallpaper = os.getenv 'HOST' == 'aberystwyth' and gears.filesystem.get_xdg_data_home() .. 'Tapet/1280x800/tapet_2020-02-26_19-57-31_856_1280x800.png' or os.getenv 'HOME' .. '/var/7015773-girl-bus-mood.jpg'
+    wallpaper = os.getenv 'HOME' .. '/.local/wallpapers/qillqaq/MKQeftK.jpg'
 }
 
 beautiful.taglist_squares_sel = theme_assets.taglist_squares_sel(dpi(5), beautiful.fg_normal)
@@ -157,8 +161,15 @@ local function connect_bluetooth(connect, mac)
     awful.spawn {'bluetoothctl', connect and 'connect' or 'disconnect', mac}
 end
 
-local function open_terminal(...)
-    local command = awful.spawn(table.pack('alacritty', ...))
+-- open_terminal passes arguments on as they come: table, string, or nil
+local function open_terminal(first_arg, ...)
+    if ... ~= nil then
+        awful.spawn(table.pack('alacritty', first_arg, ...))
+    elseif first_arg then
+        awful.spawn('alacritty ' .. first_arg)
+    else
+        awful.spawn 'alacritty'
+    end
 end
 
 local printkey = is_macintosh and 'XF86LaunchA' or 'Print'
@@ -675,11 +686,6 @@ local netthroughwidget =
     return widget
 end)()
 
-local function update_txt_layoutbox(s)
-    local txt_l = beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))] or ''
-    s.mylayoutbox:set_text(txt_l)
-end
-
 local default_tags = {'🌐', '☕', '👾', '🧠', '🍓', '🎲', '🎰', '🎱', '🚽', '🏝️', '🏜️', '🦄'} -- 🥑
 
 awful.screen.connect_for_each_screen(
@@ -695,8 +701,40 @@ awful.screen.connect_for_each_screen(
         end
 
         -- Textual layoutbox
-        s.mylayoutbox =
-            wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
+        -- s.mylayoutbox = wibox.widget.textbox(beautiful.layout_txt[awful.layout.getname(awful.layout.get(s))])
+        s.mylayoutbox = awful.widget.layoutbox(s)
+        s.mylayoutbox:buttons(
+            gears.table.join(
+                awful.button(
+                    {},
+                    1,
+                    function()
+                        awful.layout.inc(1)
+                    end
+                ),
+                awful.button(
+                    {},
+                    3,
+                    function()
+                        awful.layout.inc(-1)
+                    end
+                ),
+                awful.button(
+                    {},
+                    4,
+                    function()
+                        awful.layout.inc(1)
+                    end
+                ),
+                awful.button(
+                    {},
+                    5,
+                    function()
+                        awful.layout.inc(-1)
+                    end
+                )
+            )
+        )
         awful.tag.attached_connect_signal(
             s,
             'property::selected',
@@ -848,44 +886,6 @@ root.buttons(
 
 local function toggle_theme()
     my_theme = my_theme == 'qi' and 'ys' or 'qi'
-    local command =
-        string.format(
-        '\27]4;0;%s;1;%s;2;%s;3;%s;4;%s;5;%s;6;%s;7;%s;8;%s;9;%s;10;%s;11;%s;12;%s;13;%s;14;%s;15;%s\27\92\27]10;%s\27\92\27]11;%s\27\92\27]12;%s\27\92\27]708;%s\27\92',
-        colors[my_theme][1],
-        colors[my_theme][2],
-        colors[my_theme][3],
-        colors[my_theme][4],
-        colors[my_theme][5],
-        colors[my_theme][6],
-        colors[my_theme][7],
-        colors[my_theme][8],
-        colors[my_theme][9],
-        colors[my_theme][10],
-        colors[my_theme][11],
-        colors[my_theme][12],
-        colors[my_theme][13],
-        colors[my_theme][14],
-        colors[my_theme][15],
-        colors[my_theme][16],
-        colors[my_theme][16],
-        colors[my_theme][1],
-        colors[my_theme].cursor,
-        colors[my_theme][1]
-    )
-    local terminals = {}
-    for i = 0, 99 do
-        local terminal = '/dev/pts/' .. i
-        if gears.filesystem.file_readable(terminal) then
-            table.insert(terminals, terminal)
-        end
-    end
-    if #terminals > 0 then
-        for i, terminal in ipairs(terminals) do
-            local file = io.open(terminal, 'w')
-            file:write(command)
-            file:close()
-        end
-    end
     beautiful.bg_normal = colors[my_theme][1]
     beautiful.bg_focus = colors[my_theme][1]
     beautiful.bg_urgent = colors[my_theme][2]
@@ -906,15 +906,6 @@ local function toggle_theme()
         theme_assets.awesome_icon(beautiful.menu_height, beautiful.bg_focus, beautiful.fg_focus)
     mylauncher.image = beautiful.awesome_icon
     beautiful.notification_border_color = colors[my_theme].cursor
-    if my_theme == 'ys' then
-        for k, v in pairs(beautiful.layout_txt) do
-            beautiful.layout_txt[k] = string.gsub(v, '\u{1F3FB}', '\u{1F3FF}', 1)
-        end
-    elseif my_theme == 'qi' then
-        for k, v in pairs(beautiful.layout_txt) do
-            beautiful.layout_txt[k] = string.gsub(v, '\u{1F3FF}', '\u{1F3FB}', 1)
-        end
-    end
     for s in screen do
         s.mywibox.bg = colors[my_theme][1]
         s.mywibox.fg = colors[my_theme][16]
@@ -926,7 +917,7 @@ local function toggle_theme()
                 c.border_color = beautiful.border_normal
             end
         end
-        update_txt_layoutbox(s)
+        -- update_txt_layoutbox(s)
     end
     -- VS Code
     local file = io.open(gears.filesystem.get_xdg_config_home() .. 'Code/User/settings.json', 'r')
@@ -940,13 +931,20 @@ local function toggle_theme()
     end
     file:write(content)
     file:close()
-    -- X11
-    awful.spawn {
-        'xrdb',
-        '-override',
-        gears.filesystem.get_xdg_config_home() ..
-            (my_theme == 'qi' and 'Xresources-qillqaq' or 'Xresources-ysgrifennwr')
-    }
+    -- Alacritty
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty.yml', 'r')
+    local content = file:read 'a'
+    file:close()
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty.yml', 'w')
+    if my_theme == 'qi' then
+        content = string.gsub(content, 'colors: #y', 'yolors:')
+        content = string.gsub(content, 'qolors:', 'colors: #q')
+    elseif my_theme == 'ys' then
+        content = string.gsub(content, 'colors: #q', 'qolors:')
+        content = string.gsub(content, 'yolors:', 'colors: #y')
+    end
+    file:write(content)
+    file:close()
 end
 
 local function tag_view_nonempty(direction)
@@ -962,13 +960,19 @@ end
 
 local function mansplain()
     awful.spawn.easy_async_with_shell(
-        'apropos . | rofi -dmenu -i -p mansplain',
+        'apropos . | dmenu -i -l 10 -p mansplain',
         function(stdout, _, _, exitcode)
             if exitcode == 0 then
                 awful.spawn.easy_async_with_shell(
                     [[awk '{gsub(/[()]/,""); print $2" "$1}' <<<']] .. stdout .. "'",
                     function(stdout)
-                        awful.spawn.with_shell('mupdf-gl =(man -Tpdf ' .. stdout .. ' )')
+                        open_terminal(
+                            string.format(
+                                '--title "mansplain: %s" --class mansplain -e man %s',
+                                stdout,
+                                stdout
+                            )
+                        )
                     end
                 )
             end
@@ -977,13 +981,13 @@ local function mansplain()
 end
 
 local function emoji()
-    awful.spawn.with_shell [=[awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $2); print $2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $1}' | xsel -ib]=]
+    awful.spawn.with_shell [=[cat ~/.config/awesome/emoji.txt | dmenu -i -p '¯\_(ツ)_/¯' | awk '{printf $1}' | xsel -ib]=]
 end
 
 local function open_url()
     awful.spawn.with_shell(
         string.format(
-            [=[xdg-open $(grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.5.%s/*\ * | awk '!x[$0]++' | rofi -dmenu -i -p 'open URL')]=],
+            [=[xdg-open $(grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.6.%s/*\ * | awk '!x[$0]++' | dmenu -i -p '🌐')]=],
             os.getenv 'CM_DIR',
             os.getenv 'USER'
         )
@@ -1040,7 +1044,7 @@ globalkeys =
         'a',
         function()
             awful.spawn.easy_async_with_shell(
-                [[tmux list-session -F \#S | rofi -dmenu -i -p tmux]],
+                [[tmux list-session -F \#S | dmenu -i -p tmux]],
                 function(stdout)
                     if stdout ~= '' then
                         open_terminal(
@@ -1278,7 +1282,7 @@ globalkeys =
                         c,
                         {
                             instance = instance,
-                            class = 'URxvt'
+                            class = 'Alacritty'
                         }
                     )
                 end
@@ -1326,7 +1330,7 @@ globalkeys =
             end
             awful.spawn.easy_async_with_shell(
                 string.format(
-                    [=[grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.5.%s/*\ * | cat <<<"https://www.youtube.com/playlist?list=WL" | awk '!x[$0]++' | rofi -dmenu -i -p '🍿']=],
+                    [=[grep --no-filename --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" %s/clipmenu.6.%s/*\ * | cat <<<"https://www.youtube.com/playlist?list=WL" | awk '!x[$0]++' | dmenu -i -p '🍿']=],
                     os.getenv 'CM_DIR',
                     os.getenv 'USER'
                 ),
@@ -1345,7 +1349,7 @@ globalkeys =
         function()
             for c in awful.client.iterate(
                 function(c)
-                    return awful.rules.match(c, {instance = 'Journalctl', class = 'URxvt'})
+                    return awful.rules.match(c, {instance = 'Journalctl', class = 'Alacritty'})
                 end
             ) do
                 if client.focus == c then
@@ -1356,7 +1360,18 @@ globalkeys =
                     return
                 end
             end
-            open_terminal('-name', 'Journalctl', '-e', 'journalctl', '-b', '-f', '-n', '1000')
+            open_terminal(
+                '--class',
+                'Journalctl',
+                '--title',
+                'journalctl',
+                '-e',
+                'journalctl',
+                '-b',
+                '-f',
+                '-n',
+                '1000'
+            )
         end,
         {description = 'open journalctl 🧻', group = '🚀 launcher'}
     ),
@@ -1500,15 +1515,7 @@ globalkeys =
         {'Mod4'},
         'space',
         function()
-            awful.spawn {
-                'rofi',
-                '-combi-modi',
-                'window,drun,run',
-                '-show',
-                'combi',
-                '-modi',
-                'combi'
-            }
+            awful.spawn 'dmenu_run'
         end,
         {description = 'run prompt', group = '🚀 launcher'}
     ),
@@ -2090,13 +2097,13 @@ awful.rules.rules = {
             end
         }
     },
-    -- Floating clients.
     {
         rule_any = {
             instance = {
                 'DTA', -- Firefox addon DownThemAll.
                 'copyq', -- Includes session name in class.
-                'pinentry'
+                'pinentry',
+                'mansplain'
             },
             class = {
                 'Arandr',
@@ -2269,6 +2276,13 @@ awful.rules.rules = {
         }
     },
     {
+        rule = {instance = 'mansplain'},
+        properties = {
+            x = dpi(280),
+            y = dpi(100)
+        }
+    },
+    {
         rule = {
             instance = 'code',
             class = 'Code'
@@ -2370,5 +2384,3 @@ client.connect_signal(
         c.border_color = beautiful.border_normal
     end
 )
-
-awful.spawn.with_shell [=[xrdb -merge <<<"rofi.window-command: awesome-client 'local awful = require [[awful]] for c in awful.client.iterate(function (c) return awful.rules.match(c, {window = {window}}) end) do c:jump_to(true) end'"]=]

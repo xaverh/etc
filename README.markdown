@@ -280,18 +280,6 @@ polkit.addRule(function(action, subject) {
   }
 })
 ```
-
-### backlight support
-
-To allow group `xha` to change the backlight:
-
-```
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp xha /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp xha /sys/class/leds/%k/brightness"
-ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
-```
-
 ### (optionally) disable fn for F1-F12 keys / switch alt and cmd
 
 ```sh

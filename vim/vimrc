@@ -68,6 +68,8 @@ set tags^=./tags;
 set tags-=TAGS
 set tags-=./TAGS
 set ttyfast
+" TODO: for rxvt-unicode: set ttymouse=urxvt
+set ttymouse=sgr
 set viewoptions-=options
 set viminfo^=!
 set wildmenu

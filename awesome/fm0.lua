@@ -176,7 +176,7 @@ function FM0.start_radio()
 		stations = stations .. k .. '\n'
 	end
 	awful.spawn.easy_async_with_shell(
-		'echo "' .. stations .. '" | rofi -dmenu -i -no-custom -p "Play …"',
+		'echo "' .. stations .. '" | dmenu -i -l 10 -p "Play …"',
 		function(stdout)
 			play(string.sub(stdout, 1, -2))
 		end
