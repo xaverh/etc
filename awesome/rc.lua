@@ -372,7 +372,7 @@ local mymainmenu =
             function()
                 open_terminal()
             end,
-            '/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg'
+            gears.filesystem.get_xdg_config_home() .. 'Icons/Alacritty.svg'
         }
     }
 }
@@ -513,7 +513,11 @@ local btrfswidget =
 )
 
 local wifiwidget
-if gears.filesystem.file_executable '/usr/sbin/iw' or gears.filesystem.file_executable '/usr/bin/iw' then
+if
+    gears.filesystem.file_executable '/run/current-system/sw/bin/iw' or
+        gears.filesystem.file_executable '/usr/sbin/iw' or
+        gears.filesystem.file_executable '/usr/bin/iw'
+ then
     wifiwidget =
         (function()
         local t = gears.timer {timeout = 2.9}
