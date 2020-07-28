@@ -219,7 +219,7 @@
 	"workbench.list.smoothScrolling": true,
 	"vetur.format.defaultFormatter.html": "prettier",
 	"prettier.useEditorConfig": false,
-	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+	"workbench.colorTheme": "Dracula",
 	"editor.fontSize": 16,
 	"editor.cursorStyle": "line-thin",
 	"editor.wordWrapColumn": 100,

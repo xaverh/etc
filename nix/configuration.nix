@@ -4,7 +4,6 @@
   imports = [ ./hardware-configuration.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  # boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -12,18 +11,10 @@
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
     mkdir /mnt
     mount -o compress-force=zstd:6,ssd,noatime,subvol=/ /dev/mapper/luks-04f7a64c-e13f-4a09-a2bb-afbfc3c45390 /mnt
-    btrfs subvolume list -o /mnt/@ | cut -f9 -d' ' | while read subvolume; do
-      echo "deleting /$subvolume subvolume..."
-      btrfs subvolume delete "/mnt/$subvolume"
-    done && echo "deleting /@ subvolume..." && btrfs subvolume delete /mnt/@
-
-    echo "restoring blank /@ subvolume..."
-    btrfs subvolume snapshot /mnt/@blank /mnt/@
-
+    echo "deleting /@ subvolume..." && btrfs subvolume delete /mnt/@
+    echo "restoring blank /@ subvolume..." && btrfs subvolume snapshot /mnt/@blank /mnt/@
     umount /mnt
   '';
-
-  # boot.tmpOnTmpfs = true;
 
   networking.hostName = "andermatt";
   networking.hostId = "affeb00d";
@@ -62,7 +53,33 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
+    packageOverrides = pkgs: rec {
+      clipmenu = let
+        runtimePath = pkgs.lib.makeBinPath [
+          pkgs.clipnotify
+          pkgs.xsel
+          dmenu
+          pkgs.utillinux
+          pkgs.gawk
+        ];
+      in pkgs.clipmenu.overrideAttrs (old: rec {
+        version = "6.1.0";
+        src = pkgs.fetchFromGitHub {
+          owner = "cdown";
+          repo = "clipmenu";
+          rev = version;
+          sha256 = "0ddj5xcwrdb2qvrndvhv8j6swcqc8dvv5i00pqk35rfk5mrl4hwv";
+        };
+        preBuild = ''
+          substituteInPlace ./Makefile --replace /usr "$out"
+        '';
+        installPhase = ''
+          for bin in $out/bin/*; do
+            wrapProgram "$bin" --prefix PATH : "${runtimePath}"
+          done
+        '';
+        buildInputs = old.buildInputs ++ [ pkgs.xsel pkgs.clipnotify ];
+      });
       dmenu = pkgs.dmenu.override {
         patches = pkgs.dmenu.patches ++ [
           (builtins.fetchurl {
@@ -111,8 +128,6 @@
     };
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     alacritty
     dmenu
@@ -155,16 +170,12 @@
       histFile = "~/.local/zsh_history";
       histSize = 2147483647;
       promptInit = "";
-      setOptions = [ "EMACS" ];
+      setOptions = [ "emacs" ];
     };
   };
 
   services.clipmenu.enable = true;
-  systemd.user.services.clipmenu.serviceConfig = {
-    Restart = "always";
-    Environment = "DISPLAY=:0";
-  };
-  systemd.user.services.clipmenu.wantedBy = [ "default.target" ];
+  systemd.user.services.clipmenu.serviceConfig = { Restart = "always"; };
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
@@ -175,7 +186,7 @@
     enable = true;
     dnssec = "true";
     fallbackDns =
-      [ "2606:4700:4700:1111" "1.1.1.1" "2606:4700:4700::1001" "1.0.0.1" ];
+      [ "2606:4700:4700::1111" "1.1.1.1" "2606:4700:4700::1001" "1.0.0.1" ];
   };
 
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -183,6 +194,10 @@
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  hardware.pulseaudio.extraConfig = ''
+    load-module module-switch-on-connect
+  '';
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
@@ -280,13 +295,16 @@
     etc = {
       adjtime.source = "/persist/etc/adjtime";
       iwd.source = "/persist/etc/iwd";
-      machine-id.source = "/persist/etc/machine-id";
       nixos.source = "/persist/etc/nixos"; # done after install
       NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
   };
 
-  systemd.tmpfiles.rules = [ "d /mnt - - - - -" ];
+  systemd.tmpfiles.rules = [
+    "d /mnt - - - - -"
+    "d /persist/var/lib/bluetooth - - - - -"
+    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
+  ];
 
   security.sudo.extraConfig = ''
     Defaults insults
@@ -312,8 +330,6 @@
   services.xserver.xkbModel = "latitude";
 
   hardware.opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl ];
-
-  services.fstrim.enable = true;
 
   system.stateVersion = "20.09";
 }
