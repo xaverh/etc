@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# https://nixos.wiki/wiki/Using_X_without_a_Display_Manager
 if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
 	eval $(dbus-launch --exit-with-sessioin --sh-syntax)
 fi
