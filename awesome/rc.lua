@@ -1040,7 +1040,15 @@ end
 
 globalkeys =
     gears.table.join(
-    awful.key({'Mod4'}, 'F1', mansplain, {description = 'show help', group = '🚀 launcher'}),
+    awful.key({'Mod4'}, 'F1', mansplain, {description = 'mansplain', group = '🚀 launcher'}),
+    awful.key(
+        {'Mod4', 'Shift'},
+        'F1',
+        function()
+            awful.spawn 'nixos-help'
+        end,
+        {description = 'show NixOS help', group = '🚀 launcher'}
+    ),
     awful.key({'Mod4'}, 'e', emoji, {description = [[¯\_(ツ)_/¯]], group = '🌐 global'}),
     awful.key({'Mod4'}, 'u', open_url, {description = 'open URL', group = '📋 clipboard'}),
     awful.key(
