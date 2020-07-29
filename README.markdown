@@ -102,15 +102,6 @@ dnf install --installroot=/mnt --releasever=/ @core zsh glibc-langpack-en vim-en
 
 optionally include as needed e.g. `iwd wireless-regdb broadcom-wl iwl6000g2a-firmware cryptsetup`
 
-#### setup base system
-
-```sh
-systemd-firstboot --root=/mnt --locale=en_US.UTF-8 --keymap=us --hostname=airolo --setup-machine-id
-systemd-nspawn -D /mnt chsh -s /usr/bin/zsh
-systemd-nspawn -D /mnt useradd -m -U -G wheel -s /usr/bin/zsh xha
-setenforce 0 && systemd-nspawn -D /mnt passwd xha && setenforce 1
-```
-
 ##### systemd-networkd & systemd-resolved
 
 In `/mnt/etc/systemd/network/05-wired.network`:
@@ -142,61 +133,10 @@ Domains=~.
 DNSSEC=false
 ```
 
-For WiFi support in `/mnt/etc/iwd/main.conf`:
-
-```ini
-[General]
-EnableNetworkConfiguration=true
-UseDefaultInterface=true
-
-[Network]
-NameResolvingService=systemd
-```
-
-In `/etc/systemd/system/iwd.service.d/override.conf`:
-
-```ini
-[Unit]
-After=systemd-udevd.service network-pre.target
-```
-
-###### copy repositories onto target system
-
-```sh
-cp -nv /etc/yum.repos.d/* /mnt/etc/yum.repos.d/
-cp /etc/dnf/dnf.conf /mnt/etc/dnf/dnf.conf
-```
-
-## within the target system
-
-### boot target system
-
-```sh
-systemd-nspawn -bD /mnt
-```
-
-### install systemd-boot
-
-```sh
-sudo bootctl --esp-path=/efi install
-```
-
-### configure dracut
-
-In `/etc/dracut.conf.d/local.conf`:
-
-```ini
-filesystems+="btrfs"
-hostonly="yes"
-add_dracutmodules+="crypt"
-```
-
 ### install packages and kernel
 
-e.g.
-
 ```sh
-sudo dnf install kernel @base-x @multimedia @firefox google-chrome at code gnome-keyring gimp mpv mpv-mpris youtube-dl ffmpeg telegram-desktop discord flameshot pavucontrol nnn rmlint unrar unzip exfat-utils git nodejs golang lua @c-development man-pages clipmenu clipnotify xclip sent slock google-noto-emoji-color-fonts google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes unicode-emoji strawberry awesome mupdf perl-File-MimeInfo groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee libva-intel-driver abcde gstreamer1-vaapi libva-intel-hybrid-driver weechat smartmontools f32-backgrounds-base
+sudo dnf install kernel @base-x @multimedia google-chrome at code gnome-keyring mpv mpv-mpris ffmpeg telegram-desktop discord rmlint unrar unzip exfat-utils git golang lua @c-development man-pages sent slock google-noto-emoji-color-fonts google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee weechat smartmontools
 ```
 
 ### configure keyboard layout and timezone
@@ -207,18 +147,6 @@ e.g.
 localectl set-x11-keymap us pc104 altgr-intl compose:menu,rupeesign:4
 localectl set-x11-keymap de apple_laptop mac_nodeadkeys compose:rwin-altgr
 timedatectl set-timezone Europe/Berlin
-```
-
-### start systemd-networkd, systemd-resolved, systemd-timesyncd, sshd, iwd and fstrim
-
-```sh
-sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-systemctl enable --now systemd-networkd.service
-systemctl enable --now systemd-resolved.service
-systemctl enable --now systemd-timesyncd.service
-systemctl enable sshd.socket
-systemctl enable iwd.service
-systemctl enable fstrim.timer
 ```
 
 ### fix kernel boot line in entry in /efi/loader/entries/\*.conf
@@ -327,12 +255,4 @@ xdg-settings set default-url-scheme-handler file nnn.desktop
 npm -g i @vue/cli generator-code gulp-cli vsce yo
 
 code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension christian-kohler.npm-intellisense --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
-```
-
-#### bluetooth
-
-In `/etc/pulse/default.pa`:
-
-```
-load-module module-switch-on-connect
 ```

@@ -2345,6 +2345,25 @@ awful.rules.rules = {
             ),
             tag = '🍓'
         }
+    },
+    {
+        rule = {class = 'flameshot', instance = 'flameshot', name = 'Open With'},
+        properties = {
+            keys = gears.table.join(
+                clientkeys,
+                awful.key(
+                    {'Control'},
+                    'q',
+                    function(c)
+                        c:kill()
+                    end
+                )
+            ),
+            floating = true,
+            x = dpi(500),
+            y = dpi(200),
+            ontop = true
+        }
     }
 }
 

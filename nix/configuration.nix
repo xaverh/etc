@@ -16,6 +16,12 @@
     umount /mnt
   '';
 
+  # boot.initrd.luks.cryptoModules
+  # boot.initrd.luks.devices.<name?>.allowDiscards
+  # boot.initrd.luks.devices.<name?>.postOpenCommands
+  # boot.initrd.luks.devices.<name?>.preLVM
+  boot.tmpOnTmpfs = true;
+
   networking.hostName = "andermatt";
   networking.hostId = "affeb00d";
   networking.wireless.iwd.enable = true;
@@ -70,7 +76,7 @@
           rev = version;
           sha256 = "0ddj5xcwrdb2qvrndvhv8j6swcqc8dvv5i00pqk35rfk5mrl4hwv";
         };
-        preBuild = ''
+        postPatch = ''
           substituteInPlace ./Makefile --replace /usr "$out"
         '';
         installPhase = ''
@@ -294,7 +300,13 @@
     };
     etc = {
       adjtime.source = "/persist/etc/adjtime";
-      iwd.source = "/persist/etc/iwd";
+      "iwd/main.conf".text = ''
+        [General]
+        EnableNetworkConfiguration=true
+        UseDefaultInterface=true
+        [Network]
+        NameResolvingService=systemd
+      '';
       nixos.source = "/persist/etc/nixos"; # done after install
       NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
