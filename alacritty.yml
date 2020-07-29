@@ -11,11 +11,11 @@ scrolling:
 font:
   size: 9.0
   normal:
-    family: Consolas
+    family: monospace
 
 draw_bold_text_with_bright_colors: false
 
-colors: #q
+qolors:
   primary:
     background: '#171717'
     foreground: '#e5e6e6'
@@ -43,7 +43,7 @@ colors: #q
     cyan: '#a2dcd7'
     white: '#e5e6e6'
 
-yolors: #y
+colors: #y
   primary:
     background: '#f9f8f4'
     foreground: '#424242'
@@ -72,7 +72,7 @@ yolors: #y
     white: '#424242'
 
 selection:
-  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  semantic_escape_chars: ",│`|\"' ()[]{}<>\t"
   save_to_clipboard: true
 
 dynamic_title: true
