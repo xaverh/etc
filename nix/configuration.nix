@@ -307,6 +307,26 @@
         [Network]
         NameResolvingService=systemd
       '';
+      "xdg/mimeapps.list".text = ''
+        [Default Applications]
+        image/jpeg=sxiv.desktop
+        image/png=sxiv.desktop
+        image/gif=sxiv.desktop
+        image/tiff=sxiv.desktop
+        image/webp=sxiv.desktop
+        image/x-xpmi=sxiv.desktop
+        x-scheme-handler/file=nnn.desktop
+        inode/directory=nnn.desktop
+        video/mp4=mpv.desktop
+        video/webm=mpv.desktop
+        video/x-matroska=mpv.desktop
+        application/pdf=org.pwmt.zathura.desktop
+        application/vnd.comicbook+zip=org.pwmt.zathura.desktop
+        application/epub+zip=org.pwmt.zathura.desktop
+        application/postscript=org.pwmt.zathura.desktop
+        image/vnd.djvu=org.pwmt.zathura.desktop
+        image/x-djvu=org.pwmt.zathura.desktop
+      '';
       nixos.source = "/persist/etc/nixos"; # done after install
       NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
