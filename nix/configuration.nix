@@ -57,6 +57,8 @@
 
   time.timeZone = "Europe/Berlin";
 
+  nixpkgs.overlays = [ (import /etc/nixos/firefox-overlay.nix) ];
+
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: rec {
@@ -137,7 +139,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     dmenu
-    firefox-devedition-bin
+    latest.firefox-bin
     flameshot
     gimp
     git
@@ -234,8 +236,6 @@
     windowManager.awesome.enable = true;
     windowManager.awesome.noArgb = true;
   };
-
-  xdg.portal.gtkUsePortal = true;
 
   services.mingetty.autologinUser = "xha"; # ## XXX
 
