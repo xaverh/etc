@@ -90,6 +90,20 @@ alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias u='du -s --si'
 
+alias -s {epub,pdf,ps,djvu,cbz,PDF}=zathura
+
+alias xxup="nix-env -u"
+alias xxrm="nix-env -e"
+function xxin () {
+	nix-env -iA nixos.${^*}
+}
+function xxse () {
+	nix-env -qaP ".*${^@}.*" --description
+}
+function xxs1 () {
+	nix-env -qaP ".*${^*}.*" --description
+}
+
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
 preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
 
