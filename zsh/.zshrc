@@ -67,7 +67,7 @@ alias ....='../../..'
 alias .....='../../../..'
 alias ......='../../../../..'
 alias .......='../../../../../..'
-if ls --color=auto &> /dev/null; then
+if [[ $OSTYPE == "linux-gnu" ]] then
 	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
 	alias ll='ls -l --si '
 	alias la='ll --almost-all'
@@ -86,7 +86,6 @@ alias mv='mv -i'
 alias f='df -H -T'
 alias -g G='|& grep -i --colour=auto'
 alias d='dirs -v'
-alias j='jobs -l'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
 alias u='du -s --si'
 
@@ -94,14 +93,9 @@ alias -s {epub,pdf,ps,djvu,cbz,PDF}=zathura
 
 alias xxup="nix-env -u"
 alias xxrm="nix-env -e"
+alias xxse="nix-env -qaP --description | grep"
 function xxin () {
 	nix-env -iA nixos.${^*}
-}
-function xxse () {
-	nix-env -qaP ".*${^@}.*" --description
-}
-function xxs1 () {
-	nix-env -qaP ".*${^*}.*" --description
 }
 
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}

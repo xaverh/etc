@@ -8,6 +8,9 @@ else
 	let &t_EI .= "\<Esc>[1 q"
 endif
 
+" Return to last edit position when opening files
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
 if has('unix')
 	if !isdirectory($XDG_DATA_HOME . "/vim")
 		call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
@@ -203,13 +206,7 @@ set wrap
 "
 " map Q gQ
 "
-" " Return to last edit position when opening files
-" autocmd BufReadPost *
-" 			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-" 			\   exe "normal! g`\"" |
-" 			\ endif
-"
-"
+
 " " Update in insert mode
 " nmap <F2> :update<CR>
 " vmap <F2> <Esc><F2>gv

@@ -1,0 +1,201 @@
+#######################################
+# Hardware specific
+#######################################
+
+input "2:8:AlpsPS/2_ALPS_GlidePoint" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+input "type:keyboard" {
+    xkb_layout de
+    xkb_variant nodeadkeys
+    xkb_options compose:rctrl-altgr
+    xkb_model latitude
+}
+
+#######################################
+# style
+#######################################
+
+output * bg ~/.local/wallpapers/common/isprwz.jpg fill
+
+font IBM Plex Sans 10
+
+default_border normal 3
+
+
+#######################################
+# launching
+#######################################
+
+bindsym Mod4+space exec bemenu-run
+# TODO client specific addition of Ctrl+Q ?
+bindsym Mod4+Shift+q kill
+bindsym Mod4+Return exec alacritty
+bindsym Mod4+i exec clipman pick -t bemenu -T'-p 📋' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
+bindsym Mod4+Shift+i exec clipman clear -t bemenu -T'-p 🚮' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
+bindsym Mod4+e exec cat ~/.config/awesome/emoji.txt | bemenu -i -l 10 -p '¯\_(ツ)_/¯' | awk '{printf $1}' | wl-copy
+
+#######################################
+# behavior
+#######################################
+
+default_orientation auto
+hide_edge_borders --i3 smart
+bindsym Mod4+BackSpace border toggle
+
+
+#######################################
+# Mouse
+#######################################
+
+floating_modifier Mod4 normal
+
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym Mod4+h focus left
+    bindsym Mod4+j focus down
+    bindsym Mod4+k focus up
+    bindsym Mod4+l focus right
+    # Or use Mod4+[up|down|left|right]
+    bindsym Mod4+Left focus left
+    bindsym Mod4+Down focus down
+    bindsym Mod4+Up focus up
+    bindsym Mod4+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym Mod4+Shift+h move left
+    bindsym Mod4+Shift+j move down
+    bindsym Mod4+Shift+k move up
+    bindsym Mod4+Shift+l move right
+    # Ditto, with arrow keys
+    bindsym Mod4+Shift+Left move left
+    bindsym Mod4+Shift+Down move down
+    bindsym Mod4+Shift+Up move up
+    bindsym Mod4+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym Mod4+1 workspace number 1
+    bindsym Mod4+2 workspace number 2
+    bindsym Mod4+3 workspace number 3
+    bindsym Mod4+4 workspace number 4
+    bindsym Mod4+5 workspace number 5
+    bindsym Mod4+6 workspace number 6
+    bindsym Mod4+7 workspace number 7
+    bindsym Mod4+8 workspace number 8
+    bindsym Mod4+9 workspace number 9
+    bindsym Mod4+0 workspace "💩"
+    # Move focused container to workspace
+    bindsym Mod4+Shift+1 move container to workspace number 1
+    bindsym Mod4+Shift+2 move container to workspace number 2
+    bindsym Mod4+Shift+3 move container to workspace number 3
+    bindsym Mod4+Shift+4 move container to workspace number 4
+    bindsym Mod4+Shift+5 move container to workspace number 5
+    bindsym Mod4+Shift+6 move container to workspace number 6
+    bindsym Mod4+Shift+7 move container to workspace number 7
+    bindsym Mod4+Shift+8 move container to workspace number 8
+    bindsym Mod4+Shift+9 move container to workspace number 9
+    bindsym Mod4+Shift+0 move container to workspace number "💩"
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # Mod4+b or Mod4+v, for horizontal and vertical splits
+    # respectively.
+    bindsym Mod4+b splith
+    bindsym Mod4+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym Mod4+s layout stacking
+    bindsym Mod4+w layout tabbed
+    # bindsym Mod4+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym Mod4+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym Mod4+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    # bindsym Mod4+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym Mod4+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym Mod4+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym Mod4+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize 🍆" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym h resize shrink width 2px
+    bindsym j resize grow height 2px
+    bindsym k resize shrink height 2px
+    bindsym l resize grow width 2px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 2px
+    bindsym Down resize grow height 2px
+    bindsym Up resize shrink height 2px
+    bindsym Right resize grow width 2px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym Mod4+r mode "resize 🍆"
+
+client.focused #0f3a4b #0f3a4b #e5e6e6
+client.unfocused #171717 #171717 #999999
+client.focused_inactive #171717 #171717 #e5e6e6
+
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    status_command swaymsg -t subscribe -m \'\[\"window\"\]\' | jq -r .container.name
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #323232ff #323232ff #5c5c5c
+    }
+}
+
+#######################################
+# Autostart
+#######################################
+
+exec wl-paste -t text --watch clipman store --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
+exec mako

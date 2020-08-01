@@ -73,5 +73,4 @@
 
   swapDevices = [ { device = "/persist/swapfile"; priority = 0; } ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

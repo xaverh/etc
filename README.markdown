@@ -72,10 +72,6 @@ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$
 dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf install rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
-# Visual Studio Code
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo
-
 # Google Chrome
 rpm --import https://dl.google.com/linux/linux_signing_key.pub
 echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo
@@ -136,7 +132,7 @@ DNSSEC=false
 ### install packages and kernel
 
 ```sh
-sudo dnf install kernel @base-x @multimedia google-chrome at code gnome-keyring mpv mpv-mpris ffmpeg telegram-desktop discord rmlint unrar unzip exfat-utils git golang lua @c-development man-pages sent slock google-noto-emoji-color-fonts google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam rawtherapee weechat smartmontools
+sudo dnf install google-chrome at ffmpeg telegram-desktop discord rmlint unrar unzip exfat-utils git golang lua @c-development man-pages sent google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam weechat smartmontools
 ```
 
 ### configure keyboard layout and timezone
@@ -230,7 +226,7 @@ Name=Nnn
 GenericName=File Manager
 Comment=minimalist file manager
 MimeType=inode/directory;
-Exec=/usr/bin/urxvtc -title Nnn -name Nnn -e nnn %u
+Exec=/run/current-system/sw/bin/alacritty --title=Nnn --class=Nnn -e /run/current-system/sw/bin/zsh -ic n %u
 Icon=/home/xha/.config/Icons/nnn.svg
 Type=Application
 Categories=System;FileTools;FileManager;Utility;Core;ConsoleOnly
@@ -241,10 +237,6 @@ StartupWMClass=Nnn
 ```
 
 ```sh
-xdg-mime default mupdf-gl.desktop application/pdf application/vnd.comicbook+zip application/epub+zip
-xdg-mime default sxiv.desktop image/jpeg image/png image/gif image/tiff image/webp image/x-xpmi
-xdg-mime default nnn.desktop inode/directory
-xdg-mime default mpv.desktop video/mp4 video/webm video/x-matroska
 desktop-file-install --rebuild-mime-info-cache --dir="$XDG_DATA_HOME/applications" /tmp/nnn.desktop
 xdg-settings set default-url-scheme-handler file nnn.desktop
 ```
@@ -254,5 +246,5 @@ xdg-settings set default-url-scheme-handler file nnn.desktop
 ```sh
 npm -g i @vue/cli generator-code gulp-cli vsce yo
 
-code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension christian-kohler.npm-intellisense --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension ms-vscode.cpptools --install-extension ms-vscode.Go --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
+code --install-extension bierner.markdown-checkbox --install-extension bierner.markdown-footnotes --install-extension bierner.markdown-mermaid --install-extension christian-kohler.npm-intellisense --install-extension dbaeumer.vscode-eslint --install-extension eg2.vscode-npm-script --install-extension esbenp.prettier-vscode --install-extension firefox-devtools.vscode-firefox-debug --install-extension golang.Go --install-extension ms-vscode.cpptools --install-extension msjsdiag.debugger-for-chrome --install-extension nhoizey.gremlins --install-extension octref.vetur --install-extension pflannery.vscode-versionlens --install-extension sdras.night-owl --install-extension sdras.vue-vscode-snippets --install-extension trixnz.vscode-lua --install-extension VisualStudioExptTeam.vscodeintellicode --install-extension wmaurer.change-case --install-extension xaver.clang-format --install-extension xaver.theme-qillqaq --install-extension xaver.theme-ysgrifennwr
 ```

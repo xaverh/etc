@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./vscode.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -16,10 +16,7 @@
     umount /mnt
   '';
 
-  # boot.initrd.luks.cryptoModules
-  # boot.initrd.luks.devices.<name?>.allowDiscards
-  # boot.initrd.luks.devices.<name?>.postOpenCommands
-  # boot.initrd.luks.devices.<name?>.preLVM
+  boot.initrd.luks.cryptoModules = [ "aes" "xts" "sha256" ];
   boot.tmpOnTmpfs = true;
 
   networking.hostName = "andermatt";
@@ -62,58 +59,15 @@
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: rec {
-      luaPackages = pkgs.luaPackages.override { lua = pkgs.lua5_3; };
-      sudo = pkgs.sudo.override { withInsults = true; };
-      mupdf-gl = pkgs.mupdf.overrideAttrs (old: rec {
-        makeFlags = [ "prefix=$(out) HAVE_X11=no USE_SYSTEM_GLUT=yes" ];
-        preConfigure = "";
-        buildInputs = [ freeglut pkgs.libGLU ];
-        patches = null;
-        postPatch = ":";
-        postInstall = ''
-          moveToOutput "bin" "$bin"
-          mkdir -p $bin/share/applications
-          cat > $bin/share/applications/mupdf-gl.desktop <<EOF
-          [Desktop Entry]
-          Type=Application
-          Version=1.0
-          Name=mupdf-gl
-          Comment=PDF viewer
-          Exec=$bin/bin/mupdf-gl %f
-          Terminal=false
-          MimeType=application/pdf;application/x-pdf;application/x-cbz;application/oxps;application/vnd.ms-xpsdocument;application/epub+zip
-          EOF
-        '';
-        freeglut = pkgs.freeglut.overrideAttrs (old2: rec {
-          buildInputs = old2.buildInputs ++ [ pkgs.wayland pkgs.libxkbcommon ];
-          cmakeFlags = old2.cmakeFlags ++ [ "-DFREEGLUT_WAYLAND:BOOL=ON" ];
-        });
-      dmenu = pkgs.dmenu.override {
-        patches = pkgs.dmenu.patches ++ [
-          (builtins.fetchurl {
-            url =
-              "https://raw.githubusercontent.com/xaverh/.config/master/suckless/dmenu-allowcoloremoji-4.9.diff";
-            sha256 =
-              "0a61eb0bb2184844f31e8cb6baa514bb92ab13efe3db9711fbb9dfd4662808ea";
-          })
-          (builtins.fetchurl {
-            url =
-              "https://raw.githubusercontent.com/xaverh/.config/master/suckless/dmenu-qillqaqconfig-4.9.diff";
-            sha256 =
-              "5d0abb4ed47041b186d9a91a223610904e3a81b7db248eb230f361458b30ac53";
-          })
-        ];
-      };
-      luaPackages = pkgs.luaPackages.override { lua = pkgs.lua5_3; };
       sudo = pkgs.sudo.override { withInsults = true; };
       vscode = pkgs.vscode.overrideAttrs (old: rec {
-        version = "1.47.2";
+        version = "1.47.3";
         src = builtins.fetchurl {
           url =
             "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
           name = "VSCode_${version}_linux-x64.tar.gz";
           sha256 =
-            "06100f8635d897a3f1ebaeadc2eb4b769ae41b2cf9e0acfd8a06493f3d112907";
+            "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
         };
       });
       noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: rec {
@@ -136,22 +90,40 @@
     };
   };
 
+  vscode.user = "xha";
+  vscode.homeDir = "/home/xha";
+  vscode.extensions = with pkgs.vscode-extensions;
+    [ ms-vscode.cpptools ]
+    ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+      name = "clang-format";
+      publisher = "xaver";
+      version = "1.9.0";
+      sha256 = "0bwc4lpcjq1x73kwd6kxr674v3rb0d2cjj65g3r69y7gfs8yzl5b";
+    }];
+
   environment.systemPackages = with pkgs; [
     alacritty
-    dmenu
-    latest.firefox-bin
-    flameshot
+    bemenu
+    clipman
+    latest.firefox-beta-bin
     gimp
     git
     iw
+    jq
+    libnotify
+    mako
     mpv
     nnn
     pavucontrol
+    sway
+    swaylock
     sxiv
     tmux
     vim
     vscode
+    wl-clipboard
     xsel
+    xwayland
     zathura
     zsh
   ];
@@ -162,7 +134,7 @@
       enableLsColors = false;
       promptInit = "";
     };
-    dconf.enable = false;
+    dconf.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = false;
@@ -181,9 +153,6 @@
       setOptions = [ "emacs" ];
     };
   };
-
-  services.clipmenu.enable = true;
-  systemd.user.services.clipmenu.serviceConfig = { Restart = "always"; };
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "no";
@@ -216,11 +185,6 @@
     autorun = false;
     exportConfiguration = true;
     enable = true;
-    videoDrivers = [ "intel" ];
-    deviceSection = ''
-      Option "TearFree" "true"
-      Option "DRI" "3"
-    '';
     inputClassSections = [''
       Identifier "devname"
       Driver "libinput"
@@ -232,12 +196,23 @@
     libinput.disableWhileTyping = true;
     libinput.enable = true;
     libinput.tappingDragLock = true; # ???
-    displayManager.startx.enable = true;
-    windowManager.awesome.enable = true;
-    windowManager.awesome.noArgb = true;
+    displayManager.startx.enable = false;
   };
 
-  services.mingetty.autologinUser = "xha"; # ## XXX
+  # https://gist.github.com/caadar/7884b1bf16cb1fc2c7cde33d329ae37f
+  systemd.services."autovt@tty1".description = "Autologin at the TTY1";
+  systemd.services."autovt@tty1".after = [
+    "systemd-logind.service"
+  ]; # without it user session not started and xorg can't be run from this tty
+  systemd.services."autovt@tty1".wantedBy = [ "multi-user.target" ];
+  systemd.services."autovt@tty1".serviceConfig = {
+    ExecStart = [
+      "" # override upstream default with an empty ExecStart
+      "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin xha --noclear %I $TERM"
+    ];
+    Restart = "always";
+    Type = "idle";
+  };
 
   users.mutableUsers = false;
   users.defaultUserShell = pkgs.zsh;
@@ -262,8 +237,10 @@
       antialias = if dpi > 200 then false else true;
       hinting.enable = if dpi > 200 then false else true;
       subpixel.lcdfilter = if dpi > 200 then "none" else "default";
+      defaultFonts.emoji = [ "Noto Color Emoji" ];
       defaultFonts.monospace = [ "IBM Plex Mono" ];
-      defaultFonts.sansSerif = [ "IBM Plex Sans" "PingFang SC" ];
+      defaultFonts.sansSerif =
+        [ "IBM Plex Sans" "Segoe UI" "Segoe UI Historic" "PingFang SC" ];
       defaultFonts.serif = [
         "IBM Plex Serif"
         "Times New Roman"
@@ -275,7 +252,11 @@
       ];
       localConf = ''
         <fontconfig>
+        <alias> <family>Consolas</family> <default><family>monospace</family></default> </alias>
         <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
+        <alias binding="weak"> <family>sans-serif</family> <prefer> <family>emoji</family> </prefer> </alias>
+        <alias binding="weak"> <family>serif</family> <prefer> <family>emoji</family> </prefer> </alias>
+        <alias binding="weak"> <family>monospace</family> <prefer> <family>emoji</family> </prefer> </alias>
         <selectfont> <rejectfont> <pattern> <patelt name="family"> <string>DejaVu Sans</string> </patelt> </pattern> </rejectfont> </selectfont>
         </fontconfig>'';
     };
@@ -297,6 +278,12 @@
       WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
       CM_DIR = "$XDG_RUNTIME_DIR";
+      MOZ_ENABLE_WAYLAND = "1";
+      QT_QPA_PLATFORM = "wayland";
+      BEMENU_OPTS = ''
+        --hb "#2f343f" --tb "#2f343f" --fb "#2f343f" --nb "#2f343f" --sb "#2f343f" --hb "#d8dee8" --hf "#2f343f" --tf "#d8dee8" --nf "#d8dee8" --scf "#7c7f84" --ff "#7c7f84" --fn sans 10''; # XXX
+      BEMENU_BACKEND = "wayland";
+      NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
     };
     etc = {
       adjtime.source = "/persist/etc/adjtime";
@@ -335,6 +322,7 @@
   systemd.tmpfiles.rules = [
     "d /mnt - - - - -"
     "d /persist/var/lib/bluetooth - - - - -"
+    "d /root/.local 0700 root root - -"
     "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
   ];
 
@@ -342,16 +330,18 @@
     Defaults insults
   '';
 
+  security.pam.services.swaylock = { };
+
   hardware = {
     acpilight.enable = true;
     bluetooth.enable = true;
     bluetooth.package = pkgs.bluezFull;
     cpu.intel.updateMicrocode = true;
     cpu.amd.updateMicrocode = false;
-    usbWwan.enable = false;
+    usbWwan.enable = true;
   };
 
-  boot.kernelParams = [ "i915.fastboot=1" ];
+  boot.kernelParams = [ "i915.fastboot=1" "mitigations=off" ];
 
   networking.enableB43Firmware = false;
   networking.enableIntel2200BGFirmware = false;
@@ -361,7 +351,10 @@
   services.xserver.xkbVariant = "nodeadkeys";
   services.xserver.xkbModel = "latitude";
 
+  hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl ];
+
+  powerManagement.cpuFreqGovernor = "performance";
 
   system.stateVersion = "20.09";
 }
