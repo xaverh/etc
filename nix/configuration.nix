@@ -62,37 +62,32 @@
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: rec {
-      clipmenu = let
-        runtimePath = pkgs.lib.makeBinPath [
-          pkgs.clipnotify
-          pkgs.xsel
-          dmenu
-          pkgs.utillinux
-          pkgs.gawk
-        ];
-      in pkgs.clipmenu.overrideAttrs (old: rec {
-        version = "6.1.0";
-        src = pkgs.fetchFromGitHub {
-          owner = "cdown";
-          repo = "clipmenu";
-          rev = version;
-          sha256 = "0ddj5xcwrdb2qvrndvhv8j6swcqc8dvv5i00pqk35rfk5mrl4hwv";
-        };
-        makeFlags = [ "PREFIX=$(out)" ];
-        patches = [
-          (pkgs.fetchpatch {
-            url =
-              "https://github.com/cdown/clipmenu/commit/443b58583ef216e2405e4a38d401f7c36386d21e.patch";
-            sha256 = "12m4rpw7jbr31c919llbsmn8dcf7yh9aijln4iym6h2lylzqzzdz";
-          })
-        ];
-        installPhase = ''
-          for bin in $out/bin/*; do
-            wrapProgram "$bin" --prefix PATH : "${runtimePath}"
-          done
+      luaPackages = pkgs.luaPackages.override { lua = pkgs.lua5_3; };
+      sudo = pkgs.sudo.override { withInsults = true; };
+      mupdf-gl = pkgs.mupdf.overrideAttrs (old: rec {
+        makeFlags = [ "prefix=$(out) HAVE_X11=no USE_SYSTEM_GLUT=yes" ];
+        preConfigure = "";
+        buildInputs = [ freeglut pkgs.libGLU ];
+        patches = null;
+        postPatch = ":";
+        postInstall = ''
+          moveToOutput "bin" "$bin"
+          mkdir -p $bin/share/applications
+          cat > $bin/share/applications/mupdf-gl.desktop <<EOF
+          [Desktop Entry]
+          Type=Application
+          Version=1.0
+          Name=mupdf-gl
+          Comment=PDF viewer
+          Exec=$bin/bin/mupdf-gl %f
+          Terminal=false
+          MimeType=application/pdf;application/x-pdf;application/x-cbz;application/oxps;application/vnd.ms-xpsdocument;application/epub+zip
+          EOF
         '';
-        buildInputs = old.buildInputs ++ [ pkgs.xsel pkgs.clipnotify ];
-      });
+        freeglut = pkgs.freeglut.overrideAttrs (old2: rec {
+          buildInputs = old2.buildInputs ++ [ pkgs.wayland pkgs.libxkbcommon ];
+          cmakeFlags = old2.cmakeFlags ++ [ "-DFREEGLUT_WAYLAND:BOOL=ON" ];
+        });
       dmenu = pkgs.dmenu.override {
         patches = pkgs.dmenu.patches ++ [
           (builtins.fetchurl {
