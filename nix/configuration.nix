@@ -99,6 +99,7 @@
     bemenu
     clipman
     latest.firefox-beta-bin
+    gcc
     gimp
     git
     go
@@ -198,7 +199,7 @@
   systemd.services."autovt@tty1".description = "Autologin at the TTY1";
   systemd.services."autovt@tty1".after = [
     "systemd-logind.service"
-  ]; # without it user session not started and xorg can't be run from this tty
+  ];
   systemd.services."autovt@tty1".wantedBy = [ "multi-user.target" ];
   systemd.services."autovt@tty1".serviceConfig = {
     ExecStart = [

@@ -16,7 +16,7 @@ import (
 const (
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	unpluggedSign     = "!"
-	pluggedSign       = ""
+	pluggedSign       = "🔌"
 	separatorModules  = "  "
 	thermalZone       = "1"
 )
@@ -24,83 +24,99 @@ const (
 var (
 	networkDevices, _ = net.Interfaces()
 	wifiDevice        = ""
-	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
 	homeDirectory     = os.Getenv("HOME")
+	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
+	btrfsRegex        = regexp.MustCompile(`Free \(estimated\):\s+([\d\.]+)([a-zA-Z]+)`)
 )
 
-func fixed(rate int) string {
-	if rate < 0 {
+func siPrefix(n int) string {
+	if n < 0 {
 		return "err"
 	}
 
-	suf := "kB/s"
-	if rate > 1000 {
-		var result = float64(rate)
+	var prefix string
+	if n > 1000 {
+		var d = float64(n)
 
 		switch {
-		case rate >= (1000000000):
-			result /= 1000000000.0
-			suf = "GB/s"
-		case rate >= (1000000):
-			result /= 1000000.0
-			suf = "MB/s"
-		case rate >= (1000):
-			result /= 1000.0
-			suf = "kB/s"
+		case n >= (1000000000000):
+			d /= 1000000000000.0
+			prefix = "T"
+		case n >= (1000000000):
+			d /= 1000000000.0
+			prefix = "G"
+		case n >= (1000000):
+			d /= 1000000.0
+			prefix = "M"
 		default:
-			suf = "B/s"
+			d /= 1000.0
+			prefix = "k"
 		}
 
-		return fmt.Sprintf("%.1f %s", result, suf)
+		return fmt.Sprintf("%.1f\u2009%s", d, prefix)
 
 	}
-	return fmt.Sprintf("%d %s", rate, suf)
+	return fmt.Sprintf("%d\u2009%s", n, prefix)
 }
 
-func updateTemperature(θ chan<- string, thermalZone string) {
+func updateTemperature(c chan<- string, thermalZone string) {
 	for {
-		var temp, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
+		var θ, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
 		if err != nil {
-			θ <- "temp unknown"
+			c <- "temp unknown"
 		} else {
-			θ <- fmt.Sprintf("%s °C%s", string(temp)[:len(temp)-4], separatorModules)
+			c <- fmt.Sprintf("θ\u2009%s\u2009°C%s", string(θ)[:len(θ)-4], separatorModules)
 		}
-		time.Sleep(time.Duration(7 * time.Second))
+		time.Sleep(time.Duration(6967 * time.Millisecond))
 	}
 }
 
-func updateTime(d chan<- string) {
+func updateTime(c chan<- string) {
 	for {
-		d <- time.Now().Local().Format(dateAndTimeFormat)
+		c <- time.Now().Local().Format(dateAndTimeFormat)
 		// sleep until beginning of next second
-		var now = time.Now()
-		time.Sleep(now.Truncate(time.Second).Add(time.Second).Sub(now))
+		var t = time.Now()
+		time.Sleep(t.Truncate(time.Second).Add(time.Second).Sub(t))
 	}
 }
 
-func updateIPAdress(ipv4 chan<- string) {
+func updateIpv4Address(c chan<- string) {
 	for {
 		conn, err := net.Dial("udp", "8.8.8.8:80")
 		if err != nil {
-			ipv4 <- "offline"
+			c <- "offline"
 		} else {
 			localAddr := strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")
 			if len(localAddr) > 0 {
-				ipv4 <- localAddr[0] + separatorModules
+				c <- localAddr[0] + separatorModules
 			} else {
-				ipv4 <- "ERROR"
+				c <- "ERROR"
 				// ipv4 <- conn.LocalAddr().(*net.UDPAddr).String()
 			}
 		}
-		time.Sleep(time.Duration(3 * time.Second))
+		time.Sleep(time.Duration(3037 * time.Millisecond))
 	}
 }
 
-func updateMemUse(mem chan<- string) {
+func updateBtrfsUse(c chan<- string) {
+	for {
+		out, err := exec.Command("/run/current-system/sw/bin/btrfs", "filesystem", "usage", "--si", "/").Output()
+		if err == nil {
+			matches := btrfsRegex.FindStringSubmatch(string(out))
+			c <- fmt.Sprintf("/ %s\u2009%s%s", matches[1], matches[2], separatorModules)
+		} else {
+			c <- ""
+			time.Sleep(time.Duration(24 * time.Hour))
+		}
+		time.Sleep(time.Duration(6113 * time.Millisecond))
+	}
+}
+
+func updateMemUse(c chan<- string) {
 	for {
 		var file, err = os.Open("/proc/meminfo")
 		if err != nil {
-			mem <- "err"
+			c <- "err"
 		}
 
 		// done must equal the flag combination (0001 | 0010 | 0100 | 1000) = 15
@@ -108,7 +124,7 @@ func updateMemUse(mem chan<- string) {
 		for info := bufio.NewScanner(file); done != 15 && info.Scan(); {
 			var prop, val = "", 0
 			if _, err = fmt.Sscanf(info.Text(), "%s %d", &prop, &val); err != nil {
-				mem <- "err"
+				c <- "err"
 			}
 			switch prop {
 			case "MemTotal:":
@@ -126,19 +142,19 @@ func updateMemUse(mem chan<- string) {
 			}
 		}
 		file.Close()
-		mem <- fmt.Sprintf("%d MB%s", used/1000, separatorModules)
-		time.Sleep(time.Duration(5 * time.Second))
+		c <- fmt.Sprintf("m %sB%s", siPrefix(used*1000), separatorModules)
+		time.Sleep(time.Duration(5077 * time.Millisecond))
 	}
 }
 
-func updateNetUse(net chan<- string) {
+func updateNetUse(c chan<- string) {
 	rxOld := 0
 	txOld := 0
 	rate := 2
 	for {
 		file, err := os.Open("/proc/net/dev")
 		if err != nil {
-			net <- "err"
+			c <- "err"
 		}
 
 		var void = 0 // target for unused values
@@ -156,26 +172,26 @@ func updateNetUse(net chan<- string) {
 			}
 		}
 		file.Close()
-		net <- fmt.Sprintf("%s%s%s%s", fixed((rxNow-rxOld)/rate), separatorModules, fixed((txNow-txOld)/rate), separatorModules)
+		c <- fmt.Sprintf("↓%sB/s%s↑%sB/s%s", siPrefix((rxNow-rxOld)/rate), separatorModules, siPrefix((txNow-txOld)/rate), separatorModules)
 		rxOld, txOld = rxNow, txNow
 		time.Sleep(time.Duration(2) * time.Second)
 	}
 }
 
-func updatePower(pow chan<- string) {
+func updatePower(c chan<- string) {
 	const powerSupply = "/sys/class/power_supply/"
 	var enFull, enNow, enPerc int = 0, 0, 0
 	for {
 		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
-		if err == nil {
-			pow <- ""
+		if err != nil {
+			c <- "error"
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
 		batts, err := ioutil.ReadDir(powerSupply)
 		if err != nil {
-			pow <- ""
-			time.Sleep(time.Duration(10007 * time.Second))
+			c <- ""
+			time.Sleep(time.Duration(86371 * time.Second))
 			break
 		}
 
@@ -207,7 +223,7 @@ func updatePower(pow chan<- string) {
 		}
 
 		if enFull == 0 {
-			pow <- "Battery found but no readable full file"
+			c <- "Battery found but no readable full file"
 		}
 
 		enPerc = enNow * 100 / enFull
@@ -216,33 +232,33 @@ func updatePower(pow chan<- string) {
 			icon = pluggedSign
 		}
 
-		pow <- fmt.Sprintf("%d%%%s%s", enPerc, icon, separatorModules)
-		time.Sleep(time.Duration(13 * time.Second))
+		c <- fmt.Sprintf("%d%%%s%s", enPerc, icon, separatorModules)
+		time.Sleep(time.Duration(2027 * time.Millisecond))
 	}
 }
 
-func updateWIFI(wifi chan<- string) {
+func updateWIFI(c chan<- string) {
 	for {
 		if wifiDevice != "" {
-			iwOutput, _ := exec.Command("/usr/sbin/iw", "dev", wifiDevice, "link").Output()
+			iwOutput, _ := exec.Command("/run/current-system/sw/bin/iw", "dev", wifiDevice, "link").Output()
 			if string(iwOutput) != "Not connected.\n" {
 				ssidStrings := ssidRegex.FindStringSubmatch(string(iwOutput))
 				if len(ssidStrings) > 0 {
 					ssidString := ssidStrings[0]
-					wifi <- ssidString[6:len(ssidString)-1] + " " + string(iwOutput)[22:30] + separatorModules
+					c <- ssidString[6:len(ssidString)-1] + "\u2009" + string(iwOutput)[22:30] + separatorModules
 				}
 			} else {
-				wifi <- "no WiFi" + separatorModules
+				c <- "no WiFi" + separatorModules
 			}
 		} else {
-			wifi <- "no WiFi" + separatorModules
+			c <- "no WiFi" + separatorModules
 			for _, v := range networkDevices {
 				if v.Name[0] == 'w' {
 					wifiDevice = v.Name
 				}
 			}
 		}
-		time.Sleep(time.Duration(4507 * time.Millisecond))
+		time.Sleep(time.Duration(3559 * time.Millisecond))
 	}
 }
 
@@ -260,24 +276,27 @@ func main() {
 	ipChan := make(chan string)
 	powChan := make(chan string)
 	timeChan := make(chan string)
+	btrfsChan := make(chan string)
 	go updateMemUse(memChan)
 	go updateNetUse(netChan)
 	go updateTemperature(tempChan, thermalZone)
 	go updateWIFI(wifiChan)
-	go updateIPAdress(ipChan)
+	go updateIpv4Address(ipChan)
 	go updatePower(powChan)
 	go updateTime(timeChan)
-	status := make([]string, 7)
+	go updateBtrfsUse(btrfsChan)
+	status := make([]string, 8)
 	for {
 		select {
-		case status[6] = <-timeChan:
+		case status[7] = <-timeChan:
 			fmt.Println(" " + strings.Join(status[:], ""))
+		case status[0] = <-btrfsChan:
 		case status[1] = <-memChan:
 		case status[2] = <-netChan:
 		case status[3] = <-tempChan:
 		case status[4] = <-wifiChan:
 		case status[5] = <-ipChan:
-		case status[0] = <-powChan:
+		case status[6] = <-powChan:
 		}
 	}
 }

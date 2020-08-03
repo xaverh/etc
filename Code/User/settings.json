@@ -130,7 +130,7 @@
 	"workbench.editor.highlightModifiedTabs": true,
 	"editor.wordWrap": "on",
 	"files.autoSave": "afterDelay",
-	"editor.minimap.enabled": false,
+	"editor.minimap.enabled": true,
 	"explorer.incrementalNaming": "smart",
 	"editor.cursorSurroundingLines": 3,
 	"terminal.integrated.cwd": "${fileDirname}",
@@ -224,12 +224,12 @@
 	"lua.format.singleQuote": true,
 	"lua.format.lineWidth": 100,
 	"lua.targetVersion": "5.3",
-	"workbench.colorTheme": "Qillqaq",
+	"workbench.colorTheme": "Night Owl",
 	"[c]": {
 		"editor.defaultFormatter": "ms-vscode.cpptools"
 	},
 	"[yaml]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-	"editor.fontFamily": "monospace"
+	"editor.fontFamily": "JetBrains Mono"
 }
