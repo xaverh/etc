@@ -212,8 +212,6 @@
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
 	"editor.minimap.size": "fit",
-	"editor.fontFamily": "monospace",
-	"window.titleBarStyle": "native",
 	"debug.javascript.usePreview": true,
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"workbench.list.smoothScrolling": true,
@@ -225,5 +223,13 @@
 	"editor.accessibilitySupport": "off",
 	"lua.format.singleQuote": true,
 	"lua.format.lineWidth": 100,
-	"lua.targetVersion": "5.3"
+	"lua.targetVersion": "5.3",
+	"workbench.colorTheme": "Qillqaq",
+	"[c]": {
+		"editor.defaultFormatter": "ms-vscode.cpptools"
+	},
+	"[yaml]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"editor.fontFamily": "monospace"
 }
