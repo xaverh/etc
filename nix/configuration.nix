@@ -103,6 +103,7 @@
     gimp
     git
     go
+    htop
     iw
     jq
     libnotify
@@ -350,4 +351,3 @@
 
   system.stateVersion = "20.09";
 }
-
