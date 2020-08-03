@@ -9,13 +9,16 @@ scrolling:
   multiplier: 3
 
 font:
-  size: 9.0
+  size: 10.5
   normal:
     family: monospace
+  offset:
+    x: 0
+    y: 0
 
 draw_bold_text_with_bright_colors: false
 
-qolors:
+colors:
   primary:
     background: '#171717'
     foreground: '#e5e6e6'
@@ -43,17 +46,17 @@ qolors:
     cyan: '#a2dcd7'
     white: '#e5e6e6'
 
-colors: #y
+yolors: #y
   primary:
-    background: '#f9f8f4'
+    background: '#f6f5f4'
     foreground: '#424242'
   cursor:
-    text: '#f9f8f4'
+    text: '#f6f5f4'
     cursor: '#20bbfc'
   selection:
     background: '#baddff'
   normal:
-    black: '#f9f8f4'
+    black: '#f6f5f4'
     red: '#e32791'
     green: '#488432'
     yellow: '#a25d0e'
@@ -84,6 +87,6 @@ cursor:
 live_config_reload: true
 
 mouse:
-  hide_when_typing: true
+  hide_when_typing: false
   url:
     modifiers: Control

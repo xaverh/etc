@@ -41,7 +41,7 @@ local colors = {
         warning = '#e9a700' -- Gamboge
     },
     ys = {
-        '#f9f8f4', -- Traffic White
+        '#f6f5f4', -- Traffic White
         '#e32791', -- Deep Cerise
         '#488432', -- La Palma
         '#a25d0e', -- Golden Brown
@@ -936,10 +936,10 @@ local function toggle_theme()
     file:write(content)
     file:close()
     -- Alacritty
-    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty.yml', 'r')
+    local file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'r')
     local content = file:read 'a'
     file:close()
-    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty.yml', 'w')
+    file = io.open(gears.filesystem.get_xdg_config_home() .. 'alacritty/alacritty.yml', 'w')
     if my_theme == 'qi' then
         content = string.gsub(content, 'colors: #y', 'yolors:')
         content = string.gsub(content, 'qolors:', 'colors: #q')
@@ -2416,4 +2416,4 @@ client.connect_signal(
     end
 )
 
-awful.spawn {'systemctl', '--user', 'start', 'graphical-session.target'}
+awful.spawn.easy_async {'systemctl', '--user', 'start', 'graphical-session.target'}
