@@ -112,6 +112,7 @@
     nnn
     nodejs-14_x
     pavucontrol
+    strawberry
     sway
     swaylock
     sxiv

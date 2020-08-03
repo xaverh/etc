@@ -34,6 +34,15 @@ bindsym Mod4+i exec clipman pick -t bemenu -T'-p 📋' --histpath="$XDG_RUNTIME_
 bindsym Mod4+Shift+i exec clipman clear -t bemenu -T'-p 🚮' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
 bindsym Mod4+e exec cat ~/.config/awesome/emoji.txt | bemenu -i -l 10 -p '¯\_(ツ)_/¯' | awk '{printf $1}' | wl-copy
 
+set $mode_launcher Launch:<span background='#e66000' foreground='#e5e6e6'> <u>F</u>irefox </span><span background='#0066b8' foreground='#e5e6e6'> Visual Studio <u>C</u>ode </span>
+bindsym Mod4+o mode "$mode_launcher"
+mode --pango_markup "$mode_launcher" {
+    bindsym f exec firefox; mode "default"
+    bindsym c exec code -n; mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 # behavior
 #######################################
 
@@ -47,7 +56,7 @@ bindsym Mod4+Shift+t layout stacking
 bindsym Mod4+d layout toggle split
 
 bindsym Mod4+Tab focus parent; focus next
-bindsym Mod4+asciicircum focus next sibling
+bindcode Mod4+49 focus next sibling
 bindsym Mod4+h focus left
 bindsym Mod4+j focus down
 bindsym Mod4+k focus up
@@ -100,6 +109,7 @@ bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
     bindsym Mod4+8 workspace number 8
     bindsym Mod4+9 workspace number 9
     bindsym Mod4+0 workspace 💩
+    bindsym F12 workspace 🧻
     # Move focused container to workspace
     bindsym Mod4+Shift+1 move container to workspace number 1
     bindsym Mod4+Shift+2 move container to workspace number 2
@@ -172,9 +182,9 @@ bar {
 
     colors {
         statusline #ffffff
-        background #323232
+        background #171717
         binding_mode #e1e1e1 #ffff00 #171717
-        inactive_workspace #323232ff #323232ff #5c5c5c
+        inactive_workspace #171717 #171717 #e5e6e6
     }
 }
 
