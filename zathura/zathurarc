@@ -10,3 +10,4 @@ set default-bg "#999999"
 set adjust-open width
 set search-hadjust false
 set link-hadjust false
+set recolor-keephue true
