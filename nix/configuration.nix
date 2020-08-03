@@ -92,14 +92,7 @@
 
   vscode.user = "xha";
   vscode.homeDir = "/home/xha";
-  vscode.extensions = with pkgs.vscode-extensions;
-    [ ms-vscode.cpptools ]
-    ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-      name = "clang-format";
-      publisher = "xaver";
-      version = "1.9.0";
-      sha256 = "0bwc4lpcjq1x73kwd6kxr674v3rb0d2cjj65g3r69y7gfs8yzl5b";
-    }];
+  vscode.extensions = with pkgs.vscode-extensions; [ ms-vscode.cpptools ];
 
   environment.systemPackages = with pkgs; [
     alacritty
@@ -108,12 +101,14 @@
     latest.firefox-beta-bin
     gimp
     git
+    go
     iw
     jq
     libnotify
     mako
     mpv
     nnn
+    nodejs-14_x
     pavucontrol
     sway
     swaylock
@@ -231,7 +226,7 @@
   };
   fonts = {
     enableDefaultFonts = false;
-    fonts = [ pkgs.ibm-plex pkgs.noto-fonts-emoji ];
+    fonts = [ pkgs.ibm-plex pkgs.jetbrains-mono pkgs.noto-fonts-emoji ];
     fontconfig = rec {
       dpi = 96; # hardware
       antialias = if dpi > 200 then false else true;
@@ -252,7 +247,6 @@
       ];
       localConf = ''
         <fontconfig>
-        <alias> <family>Consolas</family> <default><family>monospace</family></default> </alias>
         <match target='font'> <test name='fontformat' compare='not_eq'> <string/> </test> <test name='family'> <string>IBM Plex Mono</string> </test> <edit name='fontfeatures' mode='assign_replace'> <string>ss03</string> </edit> </match>
         <alias binding="weak"> <family>sans-serif</family> <prefer> <family>emoji</family> </prefer> </alias>
         <alias binding="weak"> <family>serif</family> <prefer> <family>emoji</family> </prefer> </alias>
@@ -286,7 +280,6 @@
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
     };
     etc = {
-      adjtime.source = "/persist/etc/adjtime";
       "iwd/main.conf".text = ''
         [General]
         EnableNetworkConfiguration=true
@@ -314,23 +307,21 @@
         image/vnd.djvu=org.pwmt.zathura.desktop
         image/x-djvu=org.pwmt.zathura.desktop
       '';
-      nixos.source = "/persist/etc/nixos"; # done after install
-      NIXOS.source = "/persist/etc/NIXOS"; # done after install
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d /mnt - - - - -"
-    "d /persist/var/lib/bluetooth - - - - -"
-    "d /root/.local 0700 root root - -"
-    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
-  ];
+  systemd.tmpfiles.rules =
+    [ "d /mnt - - - - -" "d /root/.local 0700 root root - -" ];
 
   security.sudo.extraConfig = ''
     Defaults insults
   '';
 
   security.pam.services.swaylock = { };
+
+  services.journald.extraConfig = ''
+    Storage=volatile
+  '';
 
   hardware = {
     acpilight.enable = true;
