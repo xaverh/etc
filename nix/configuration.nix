@@ -1,6 +1,56 @@
 { config, pkgs, ... }:
-
-{
+let
+  Qolor_K = "#171717"; # Graphite Black
+  Qolor_R = "#e32791"; # Deep Cerise
+  Qolor_G = "#30c798"; # Shamrock
+  Qolor_Y = "#e3c472"; # Chenin
+  Qolor_B = "#6796e6"; # Cornflower Blue
+  Qolor_M = "#e59fdf"; # Plum
+  Qolor_C = "#81d8d0"; # Riptide
+  Qolor_W = "#999999"; # Pearl Light Grey
+  Qolor_k = "#515151"; # Dark Grey
+  Qolor_r = "#e466ad"; # Hot Pink
+  Qolor_g = "#6cd1b2"; # Medium Aquamarine
+  Qolor_y = "#e4cf98"; # Double Colonial White
+  Qolor_b = "#91b0e6"; # Jordy Blue
+  Qolor_m = "#e5b6e1"; # French Lilac
+  Qolor_c = "#a2dcd7"; # Sinbad
+  Qolor_w = "#e5e6e6"; # Code Grey
+  Qolor_X = "#ff7135"; # Burnt Orange
+  Qolor_J = "#333333"; # Umbra Grey
+  Qolor_L = "#131313"; # Jet Black
+  Qolor_Q = "#0f3a4b"; # Cyprus
+  Qolor_P = "#553a63"; # Love Symbol #2
+  Qolor_O = "#522900"; # Baker’s Chocolate
+  Qolor_I = "#1680ac"; # Cerulean
+  Qolor_E = "#ed2939"; # Alizarin
+  Qolor_A = "#e9a700"; # Gamboge
+  Yolor_K = "#f6f5f4"; # Traffic White
+  Yolor_R = "#e32791"; # Deep Cerise
+  Yolor_G = "#488432"; # La Palma
+  Yolor_Y = "#a25d0e"; # Golden Brown
+  Yolor_B = "#2c65b5"; # Cerulean Blue
+  Yolor_M = "#b062a7"; # Violet Blue
+  Yolor_C = "#27bbbe"; # Light Sea Green
+  Yolor_W = "#999999"; # Pearl Light Grey
+  Yolor_k = "#b8b8b8"; # Fortress Grey
+  Yolor_r = "#9f1b66"; # Jazzberry Jam
+  Yolor_g = "#325d23"; # Parsley
+  Yolor_y = "#71410a"; # Raw Umber
+  Yolor_b = "#1f477f"; # Bahama Blue
+  Yolor_m = "#7b4474"; # Eminence
+  Yolor_c = "#1b8486"; # Atoll
+  Yolor_w = "#424242"; # Meaning of Everything Grey
+  Yolor_X = "#baddff"; # Onahau
+  Yolor_J = "#edece8"; # Signal White
+  Yolor_L = "#dcdad7"; # Skating Lessons
+  Yolor_Q = "#0f3a4b"; # Cyprus
+  Yolor_P = "#553a63"; # Love Symbol #2
+  Yolor_O = "#964f00"; # Saddle Brown
+  Yolor_I = "#20bbfc"; # Deep Sky Blue
+  Yolor_E = "#ed2939"; # Alizarin
+  Yolor_A = "#c08a00"; # Dark Goldenrod
+in {
   imports = [ ./hardware-configuration.nix ./vscode.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -30,22 +80,22 @@
   console = {
     keyMap = "de";
     colors = [
-      "171717"
-      "e32791"
-      "30c798"
-      "e3c472"
-      "6796e6"
-      "e59fdf"
-      "818d80"
-      "999999"
-      "515151"
-      "e466ad"
-      "6cd1b2"
-      "e4cf98"
-      "91b0e6"
-      "e5b6e1"
-      "a2dcd7"
-      "e5e6e6"
+      (builtins.substring 1 6 Qolor_K)
+      (builtins.substring 1 6 Qolor_R)
+      (builtins.substring 1 6 Qolor_G)
+      (builtins.substring 1 6 Qolor_Y)
+      (builtins.substring 1 6 Qolor_B)
+      (builtins.substring 1 6 Qolor_M)
+      (builtins.substring 1 6 Qolor_C)
+      (builtins.substring 1 6 Qolor_W)
+      (builtins.substring 1 6 Qolor_k)
+      (builtins.substring 1 6 Qolor_r)
+      (builtins.substring 1 6 Qolor_g)
+      (builtins.substring 1 6 Qolor_y)
+      (builtins.substring 1 6 Qolor_b)
+      (builtins.substring 1 6 Qolor_m)
+      (builtins.substring 1 6 Qolor_c)
+      (builtins.substring 1 6 Qolor_w)
     ];
   };
 
@@ -199,9 +249,7 @@
 
   # https://gist.github.com/caadar/7884b1bf16cb1fc2c7cde33d329ae37f
   systemd.services."autovt@tty1".description = "Autologin at the TTY1";
-  systemd.services."autovt@tty1".after = [
-    "systemd-logind.service"
-  ];
+  systemd.services."autovt@tty1".after = [ "systemd-logind.service" ];
   systemd.services."autovt@tty1".wantedBy = [ "multi-user.target" ];
   systemd.services."autovt@tty1".serviceConfig = {
     ExecStart = [
@@ -277,8 +325,58 @@
       CM_DIR = "$XDG_RUNTIME_DIR";
       MOZ_ENABLE_WAYLAND = "1";
       QT_QPA_PLATFORM = "wayland";
+      QOLOR_K = Qolor_K;
+      QOLOR_R = Qolor_R;
+      QOLOR_G = Qolor_G;
+      QOLOR_Y = Qolor_Y;
+      QOLOR_B = Qolor_B;
+      QOLOR_M = Qolor_M;
+      QOLOR_C = Qolor_C;
+      QOLOR_W = Qolor_W;
+      QOLOR_k = Qolor_k;
+      QOLOR_r = Qolor_r;
+      QOLOR_g = Qolor_g;
+      QOLOR_y = Qolor_y;
+      QOLOR_b = Qolor_b;
+      QOLOR_m = Qolor_m;
+      QOLOR_c = Qolor_c;
+      QOLOR_w = Qolor_w;
+      QOLOR_X = Qolor_X;
+      QOLOR_J = Qolor_J;
+      QOLOR_L = Qolor_L;
+      QOLOR_Q = Qolor_Q;
+      QOLOR_P = Qolor_P;
+      QOLOR_O = Qolor_O;
+      QOLOR_I = Qolor_I;
+      QOLOR_E = Qolor_E;
+      QOLOR_A = Qolor_A;
+      YOLOR_K = Yolor_K;
+      YOLOR_R = Yolor_R;
+      YOLOR_G = Yolor_G;
+      YOLOR_Y = Yolor_Y;
+      YOLOR_B = Yolor_B;
+      YOLOR_M = Yolor_M;
+      YOLOR_C = Yolor_C;
+      YOLOR_W = Yolor_W;
+      YOLOR_k = Yolor_k;
+      YOLOR_r = Yolor_r;
+      YOLOR_g = Yolor_g;
+      YOLOR_y = Yolor_y;
+      YOLOR_b = Yolor_b;
+      YOLOR_m = Yolor_m;
+      YOLOR_c = Yolor_c;
+      YOLOR_w = Yolor_w;
+      YOLOR_X = Yolor_X;
+      YOLOR_J = Yolor_J;
+      YOLOR_L = Yolor_L;
+      YOLOR_Q = Yolor_Q;
+      YOLOR_P = Yolor_P;
+      YOLOR_O = Yolor_O;
+      YOLOR_I = Yolor_I;
+      YOLOR_E = Yolor_E;
+      YOLOR_A = Yolor_A;
       BEMENU_OPTS = ''
-        --hb "#2f343f" --tb "#2f343f" --fb "#2f343f" --nb "#2f343f" --sb "#2f343f" --hb "#d8dee8" --hf "#2f343f" --tf "#d8dee8" --nf "#d8dee8" --scf "#7c7f84" --ff "#7c7f84" --fn sans 10''; # XXX
+        --tb "#2f343f" --fb "#2f343f" --nb "#2f343f" --sb "#2f343f" --hb "#d8dee8" --hf "#2f343f" --tf "#d8dee8" --nf "#d8dee8" --scf "#7c7f84" --ff "#7c7f84" --fn sans 9''; # XXX
       BEMENU_BACKEND = "wayland";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
     };
