@@ -27,7 +27,7 @@ default_border normal 3
 #######################################
 
 bindsym Mod4+space exec bemenu-run
-# TODO client specific addition of Ctrl+Q ?
+# TODO client specific behavior of Ctrl+Q ?
 bindsym Mod4+Shift+q kill
 bindsym Mod4+Return exec alacritty
 bindsym Mod4+i exec clipman pick -t bemenu -T'-p 📋' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
@@ -43,7 +43,14 @@ mode --pango_markup "$mode_launcher" {
     bindsym Return mode "default"
 }
 
-# behavior
+bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ false && makoctl list | jq -e '(.data[][0]).\"app-name\".data == \"vol\"' > /dev/null && makoctl dismiss ; notify-send -a vol "🔇 unmute"
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ true ; notify-send '🔇 mute'
+
+# pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; dunstify -r 7549 \"🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') %\"";
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ false && [[ $(($(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') + 5)) -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 100% && { makoctl list | jq -e \"(.data[][0]).\\\"app-name\\\".data == \\\"🔊\\\"\" > /dev/null && makoctl dismiss; }; notify-send -a 🔊 "🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }')"
+
+# tiling behavior
 #######################################
 
 default_orientation auto
