@@ -10,7 +10,7 @@
 
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
     mkdir /mnt
-    mount -o compress-force=zstd:6,ssd,noatime,subvol=/ /dev/mapper/luks-04f7a64c-e13f-4a09-a2bb-afbfc3c45390 /mnt
+    mount -o compress-force=zstd:6,ssd,noatime,discard=async,subvol=/ /dev/disk/by-uuid/23ccb92a-f945-4ef6-aecc-e32b46840ee1 /mnt
     echo "deleting /@ subvolume..." && btrfs subvolume delete /mnt/@
     echo "restoring blank /@ subvolume..." && btrfs subvolume snapshot /mnt/@blank /mnt/@
     umount /mnt

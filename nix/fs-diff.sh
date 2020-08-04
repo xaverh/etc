@@ -11,9 +11,7 @@ sudo btrfs subvolume find-new "/mnt/@" "$OLD_TRANSID" | sed '$d' | cut -f17- -d'
     		: # The path is a symbolic link, so is probably handled by NixOS already
   	elif [ -d "$path" ]; then
     		: # The path is a directory, ignore
-	elif [ -f "$path" ]; then
-		sudo ls -l "$path"
 	else
-		echo "Error: $path"
+		echo "$path"
 	fi
 done

@@ -125,7 +125,6 @@
 	"git.defaultCloneDirectory": "$HOME/src",
 	"terminal.integrated.cursorBlinking": true,
 	"editor.formatOnPaste": true,
-	"editor.minimap.showSlider": "always",
 	"editor.suggestSelection": "first",
 	"workbench.editor.highlightModifiedTabs": true,
 	"editor.wordWrap": "on",
@@ -211,7 +210,6 @@
 	"vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
 	"go.useLanguageServer": true,
 	"search.followSymlinks": false,
-	"editor.minimap.size": "fit",
 	"debug.javascript.usePreview": true,
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"workbench.list.smoothScrolling": true,
@@ -231,5 +229,11 @@
 	"[yaml]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-	"editor.fontFamily": "JetBrains Mono"
+	"editor.fontFamily": "JetBrains Mono",
+	"editor.minimap.size": "fit",
+	"editor.minimap.renderCharacters": false,
+	"editor.minimap.maxColumn": 100,
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }
