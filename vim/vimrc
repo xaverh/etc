@@ -1,16 +1,3 @@
-if &term =~ "^tmux"
-	let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
-	let &t_SR .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
-	let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[1 q\<Esc>\\"
-else
-	let &t_SI .= "\<Esc>[5 q"
-	let &t_SR .= "\<Esc>[3 q"
-	let &t_EI .= "\<Esc>[1 q"
-endif
-
-" Return to last edit position when opening files
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
 if has('unix')
 	if !isdirectory($XDG_DATA_HOME . "/vim")
 		call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
@@ -33,8 +20,16 @@ if has('unix')
 	set undodir=$XDG_DATA_HOME/vim/undo
 endif
 
-set undofile
+" change cursor when changing mode
+let &t_SI .= "\<Esc>[5 q"
+let &t_SR .= "\<Esc>[3 q"
+let &t_EI .= "\<Esc>[1 q"
 
+" Return to last edit position when opening files
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+
+set undofile
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -70,6 +65,8 @@ set tags-=./tags
 set tags^=./tags;
 set tags-=TAGS
 set tags-=./TAGS
+" set timeoutlen=1000 ???
+set ttimeoutlen=1
 set ttyfast
 " TODO: for rxvt-unicode: set ttymouse=urxvt
 set ttymouse=sgr
@@ -185,7 +182,6 @@ set wrap
 " set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ " %l\ \ \ Column:\ %v\ \ \ %p%%
 " set tabstop=4
 " set textwidth=0
-" set timeoutlen=1000
 " set visualbell t_vb=
 " set whichwrap+=<,>,[,],h,l
 " " http://stackoverflow.com/questions/526858/" how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
