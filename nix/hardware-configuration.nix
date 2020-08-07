@@ -101,6 +101,7 @@
       "ssd"
       "discard=async"
     ];
+    neededForBoot = true;
   };
 
   fileSystems."/srv" = {
@@ -114,5 +115,5 @@
     device = "/dev/disk/by-partuuid/3ccaab23-2dfd-4bb3-ab37-5b53325eb362";
     randomEncryption = true;
   }];
-
 }
+

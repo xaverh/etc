@@ -79,23 +79,23 @@ in {
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ];
   console = {
     keyMap = "de";
-    colors = [
-      (builtins.substring 1 6 Qolor_K)
-      (builtins.substring 1 6 Qolor_R)
-      (builtins.substring 1 6 Qolor_G)
-      (builtins.substring 1 6 Qolor_Y)
-      (builtins.substring 1 6 Qolor_B)
-      (builtins.substring 1 6 Qolor_M)
-      (builtins.substring 1 6 Qolor_C)
-      (builtins.substring 1 6 Qolor_W)
-      (builtins.substring 1 6 Qolor_k)
-      (builtins.substring 1 6 Qolor_r)
-      (builtins.substring 1 6 Qolor_g)
-      (builtins.substring 1 6 Qolor_y)
-      (builtins.substring 1 6 Qolor_b)
-      (builtins.substring 1 6 Qolor_m)
-      (builtins.substring 1 6 Qolor_c)
-      (builtins.substring 1 6 Qolor_w)
+    colors = with builtins; [
+      (substring 1 6 Qolor_K)
+      (substring 1 6 Qolor_R)
+      (substring 1 6 Qolor_G)
+      (substring 1 6 Qolor_Y)
+      (substring 1 6 Qolor_B)
+      (substring 1 6 Qolor_M)
+      (substring 1 6 Qolor_C)
+      (substring 1 6 Qolor_W)
+      (substring 1 6 Qolor_k)
+      (substring 1 6 Qolor_r)
+      (substring 1 6 Qolor_g)
+      (substring 1 6 Qolor_y)
+      (substring 1 6 Qolor_b)
+      (substring 1 6 Qolor_m)
+      (substring 1 6 Qolor_c)
+      (substring 1 6 Qolor_w)
     ];
   };
 
@@ -108,19 +108,32 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: rec {
-      sudo = pkgs.sudo.override { withInsults = true; };
-      vscode = pkgs.vscode.overrideAttrs (old: rec {
-        version = "1.47.3";
-        src = builtins.fetchurl {
-          url =
-            "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
-          name = "VSCode_${version}_linux-x64.tar.gz";
-          sha256 =
-            "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
-        };
+    packageOverrides = pkgs: {
+      sway = pkgs.sway.overrideAttrs (old: {
+        paths = old.paths ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
       });
-      noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: rec {
+      sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (old: {
+        buildInputs = old.buildInputs
+          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+      });
+      bemenu = pkgs.bemenu.override {
+        ncursesSupport = false;
+        x11Support = false;
+      };
+      sudo = pkgs.sudo.override { withInsults = true; };
+      vscode = pkgs.vscode.overrideAttrs (old:
+        let version = "1.47.3";
+        in {
+          version = version;
+          src = builtins.fetchurl {
+            url =
+              "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
+            name = "VSCode_${version}_linux-x64.tar.gz";
+            sha256 =
+              "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
+          };
+        });
+      noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: {
         version = "unstable-2020-07-22";
         src = builtins.fetchurl {
           url =
@@ -146,6 +159,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     alacritty
+    (lib.hiPrio bashInteractive_5)
     bemenu
     clipman
     latest.firefox-beta-bin
@@ -153,15 +167,18 @@ in {
     gimp
     git
     go
+    grim
     htop
     iw
     jq
+    kanshi
     libnotify
     mako
     mpv
     nnn
     nodejs-14_x
     pavucontrol
+    slurp
     strawberry
     sway
     swaylock
@@ -178,9 +195,17 @@ in {
 
   programs = {
     bash = {
-      enableCompletion = false;
-      enableLsColors = false;
-      promptInit = "";
+      loginShellInit =
+        "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> ~/.cache/sway.log";
+      interactiveShellInit = ''
+        shopt -s autocd
+      '';
+      promptInit = ''
+        if [ -n "$SSH_CLIENT" ]; then
+        	PS1='\[\e[1m\]\[$(tput setaf 2)\]\H:\w \$\[\e[0m\]\[$(tput sgr0)\] '
+        else
+        	PS1='\[\e[1m\]\w \$\[\e[0m\] '
+        fi'';
     };
     dconf.enable = true;
     gnupg.agent = {
@@ -189,7 +214,6 @@ in {
       pinentryFlavor = "gnome3";
     };
     # npm.npmrc = "";
-    slock.enable = true;
     udevil.enable = true;
     vim.defaultEditor = true;
     zsh = {
@@ -202,9 +226,10 @@ in {
     };
   };
 
-  services.openssh.enable = true;
+  services.openssh.enable = false;
   services.openssh.permitRootLogin = "no";
   services.openssh.passwordAuthentication = false;
+  services.gnome3.gnome-keyring.enable = true;
   programs.ssh.startAgent = true;
 
   services.resolved = {
@@ -261,7 +286,7 @@ in {
   };
 
   users.mutableUsers = false;
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.bashInteractive_5;
   users = {
     users = {
       xha = {
@@ -273,7 +298,7 @@ in {
         passwordFile = "/private/xha.passwd";
       };
     };
-    extraUsers.root = { shell = pkgs.zsh; };
+    extraUsers.root = { shell = pkgs.bashInteractive_5; };
   };
   fonts = {
     enableDefaultFonts = false;
@@ -308,6 +333,25 @@ in {
   };
 
   environment = {
+    shellAliases = {
+      ip = "ip --color=auto";
+      grep = "grep --color=auto";
+      ls = "ls --color=auto --classify --dereference-command-line-symlink-to-dir";
+      ll = "ls -l --si";
+      la = "ll --almost-all";
+      l = "ll --group-directories-first";
+      lx = "ll -X";
+      mv = "mv -i";
+      f = "df -H -T";
+      d = "dirs -v";
+      u = "du -s --si";
+      "..." = "../..";
+      "...." = "../../..";
+      "....." = "../../../..";
+      "......" = "../../../../..";
+      "......." = "../../../../../..";
+      IXIO = "curl -F 'f:1=<-' ix.io";
+    };
     variables = rec {
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_CACHE_HOME = "$HOME/.cache";
@@ -325,7 +369,7 @@ in {
       CM_DIR = "$XDG_RUNTIME_DIR";
       MOZ_ENABLE_WAYLAND = "1";
       QT_QPA_PLATFORM = "wayland";
-      QOLOR_K = Qolor_K;
+      QOLOR_K = Qolor_K; # make use of shell's default assignments/expansions
       QOLOR_R = Qolor_R;
       QOLOR_G = Qolor_G;
       QOLOR_Y = Qolor_Y;
@@ -375,10 +419,19 @@ in {
       YOLOR_I = Yolor_I;
       YOLOR_E = Yolor_E;
       YOLOR_A = Yolor_A;
-      BEMENU_OPTS = ''
-        --tb "#2f343f" --fb "#2f343f" --nb "#2f343f" --sb "#2f343f" --hb "#d8dee8" --hf "#2f343f" --tf "#d8dee8" --nf "#d8dee8" --scf "#7c7f84" --ff "#7c7f84" --fn sans 9''; # XXX
+      BEMENU_OPTS =
+        "--fn 'sans 10' --tb '${QOLOR_Q}' --tf '${QOLOR_w}' --fb '${QOLOR_K}' --ff '${QOLOR_w}' --nb '${QOLOR_K}' --nf '${QOLOR_w}' --hb '${QOLOR_K}' --hf '#5aaadf' --sb '${QOLOR_X}' --sf '${QOLOR_k}' --scb '${QOLOR_L}' --scf '${QOLOR_J}' ";
       BEMENU_BACKEND = "wayland";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
+      LESS_TERMCAP_mb = "[00;32m";
+      LESS_TERMCAP_md = "[00;94m";
+      LESS_TERMCAP_us = "[01;95m";
+      LESS_TERMCAP_so = "[00;100;2m";
+      LESS_TERMCAP_me = "[0m";
+      LESS_TERMCAP_ue = "[0m";
+      LESS_TERMCAP_se = "[0m";
+      GROFF_NO_SGR = "1";
+      NNN_COLORS = "4216";
     };
     etc = {
       "iwd/main.conf".text = ''

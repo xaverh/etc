@@ -61,42 +61,23 @@ zstyle ':completion:*:default' menu select=2
 zstyle ":completion:*:commands" rehash 1
 
 alias vi=vim
-alias grep="grep --color=auto"
-alias ...='../..'
-alias ....='../../..'
-alias .....='../../../..'
-alias ......='../../../../..'
-alias .......='../../../../../..'
-if [[ $OSTYPE == "linux-gnu" ]] then
-	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
-	alias ll='ls -l --si '
-	alias la='ll --almost-all'
-	alias l='ll --group-directories-first'
-	alias lx='ll -X'
-else
-	alias ls='ls -GFp'
-	alias ll='ls -lh'
-	alias la='ll -A'
-fi
-alias lss='ls -S'
-alias las='la -S'
-alias lls='ll -S'
-alias mv='mv -i'
 
-alias f='df -H -T'
+# if [[ $OSTYPE == "linux-gnu" ]] then
+# 	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
+# 	alias ll='ls -l --si '
+# 	alias la='ll --almost-all'
+# 	alias l='ll --group-directories-first'
+# 	alias lx='ll -X'
+# else
+# 	alias ls='ls -GFp'
+# 	alias ll='ls -lh'
+# 	alias la='ll -A'
+# fi
+
 alias -g G='|& grep -i --colour=auto'
-alias d='dirs -v'
 alias -g IX="| curl -F 'f:1=<-' ix.io"
-alias u='du -s --si'
 
 alias -s {epub,pdf,ps,djvu,cbz,PDF}=zathura
-
-alias xxup="nix-env -u"
-alias xxrm="nix-env -e"
-alias xxse="nix-env -qaP --description | grep"
-function xxin () {
-	nix-env -iA nixos.${^*}
-}
 
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
 preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
