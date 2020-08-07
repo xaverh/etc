@@ -50,7 +50,7 @@
     "command": "workbench.action.toggleActivityBarVisibility"
   },
   {
-    "key": "alt+f11",
+    "key": "f9",
     "command": "editor.action.toggleMinimap"
   },
   {
@@ -111,5 +111,39 @@
     "key": "ctrl+shift+i",
     "command": "-workbench.action.toggleDevTools",
     "when": "isDevelopment"
+  },
+  {
+    "key": "f10",
+    "command": "-extension.node-debug.startWithStopOnEntry",
+    "when": "!inDebugMode && debugConfigurationType == 'node'"
+  },
+  {
+    "key": "f10",
+    "command": "workbench.action.toggleZenMode",
+    "when": "!inDebugMode"
+  },
+  {
+    "key": "ctrl+k z",
+    "command": "-workbench.action.toggleZenMode"
+  },
+  {
+    "key": "pausebreak",
+    "command": "editor.debug.action.toggleBreakpoint",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "f9",
+    "command": "-editor.debug.action.toggleBreakpoint",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+pausebreak",
+    "command": "editor.debug.action.toggleInlineBreakpoint",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+f9",
+    "command": "-editor.debug.action.toggleInlineBreakpoint",
+    "when": "editorTextFocus"
   }
 ]

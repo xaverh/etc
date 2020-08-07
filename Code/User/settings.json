@@ -2,7 +2,6 @@
 	"editor.formatOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.acceptSuggestionOnEnter": "off",
-	"editor.wrappingIndent": "indent",
 	"editor.tabSize": 8,
 	"editor.insertSpaces": false,
 	"editor.renderLineHighlight": "gutter",
@@ -107,16 +106,12 @@
 	"window.openWithoutArgumentsInNewWindow": "off",
 	"window.openFoldersInNewWindow": "off",
 	"files.autoSaveDelay": 1001,
-	"zenMode.centerLayout": false,
-	"zenMode.hideLineNumbers": false,
-	"workbench.activityBar.visible": true,
 	"diffEditor.renderSideBySide": false,
 	"explorer.autoReveal": false,
 	"files.enableTrash": false,
 	"workbench.settings.editor": "ui",
-	"zenMode.fullScreen": true,
+	"zenMode.fullScreen": false,
 	"editor.cursorSmoothCaretAnimation": true,
-	"editor.cursorBlinking": "phase",
 	"editor.autoClosingQuotes": "never",
 	"editor.fontLigatures": "'liga','calt','zero'",
 	"javascript.preferences.quoteStyle": "single",
@@ -127,7 +122,6 @@
 	"editor.formatOnPaste": true,
 	"editor.suggestSelection": "first",
 	"workbench.editor.highlightModifiedTabs": true,
-	"editor.wordWrap": "on",
 	"files.autoSave": "afterDelay",
 	"editor.minimap.enabled": true,
 	"explorer.incrementalNaming": "smart",
@@ -216,12 +210,10 @@
 	"vetur.format.defaultFormatter.html": "prettier",
 	"prettier.useEditorConfig": false,
 	"editor.fontSize": 15,
-	"editor.cursorStyle": "line-thin",
 	"editor.wordWrapColumn": 100,
 	"editor.accessibilitySupport": "off",
 	"lua.format.singleQuote": true,
 	"lua.format.lineWidth": 100,
-	"lua.targetVersion": "5.3",
 	"workbench.colorTheme": "Night Owl",
 	"[c]": {
 		"editor.defaultFormatter": "ms-vscode.cpptools"
@@ -229,11 +221,17 @@
 	"[yaml]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-	"editor.fontFamily": "JetBrains Mono",
+	"editor.fontFamily": "IBM Plex Mono",
 	"editor.minimap.size": "fit",
 	"editor.minimap.renderCharacters": false,
 	"editor.minimap.maxColumn": 100,
 	"[javascript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	}
+	},
+	"extensions.showRecommendationsOnlyOnDemand": true,
+	"workbench.activityBar.visible": true,
+	"editor.cursorBlinking": "phase",
+	"editor.mouseWheelScrollSensitivity": 2,
+	"zenMode.hideStatusBar": false,
+	"editor.wordWrap": "on"
 }
