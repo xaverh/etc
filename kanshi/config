@@ -1,0 +1,9 @@
+profile {
+	output LVDS-1 disable
+	output "Fujitsu Siemens Computers GmbH S3260W YE8P001341" position 0,0 enable
+	output "Unknown i2352Vh DJNC8JA000375" position 1920,0 enable
+}
+
+profile {
+	output LVDS-1 enable
+}
