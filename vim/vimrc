@@ -20,16 +20,12 @@ if has('unix')
 	set undodir=$XDG_DATA_HOME/vim/undo
 endif
 
-" change cursor when changing mode
 let &t_SI .= "\<Esc>[5 q"
 let &t_SR .= "\<Esc>[3 q"
 let &t_EI .= "\<Esc>[1 q"
 
-" Return to last edit position when opening files
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-
-set undofile
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -65,11 +61,11 @@ set tags-=./tags
 set tags^=./tags;
 set tags-=TAGS
 set tags-=./TAGS
-" set timeoutlen=1000 ???
-set ttimeoutlen=1
+set ttimeoutlen=50
 set ttyfast
 " TODO: for rxvt-unicode: set ttymouse=urxvt
 set ttymouse=sgr
+set undofile
 set viewoptions-=options
 set viminfo^=!
 set wildmenu
@@ -182,7 +178,6 @@ set wrap
 " set statusline=%{HasPaste()}%F%M%R%H%W%Y\ [%{&ff}]\ \ %<CWD:\ %r%{getcwd()}%h\ %=Line:\ " %l\ \ \ Column:\ %v\ \ \ %p%%
 " set tabstop=4
 " set textwidth=0
-" set visualbell t_vb=
 " set whichwrap+=<,>,[,],h,l
 " " http://stackoverflow.com/questions/526858/" how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
 " set wildmode=longest,list,full

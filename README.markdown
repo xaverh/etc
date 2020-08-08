@@ -132,7 +132,7 @@ DNSSEC=false
 ### install packages and kernel
 
 ```sh
-sudo dnf install google-chrome at ffmpeg telegram-desktop discord rmlint unrar unzip exfat-utils git golang lua @c-development man-pages sent google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes groff-perl playerctl tmux rofi rxvt-unicode wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam weechat smartmontools
+sudo dnf install google-chrome at ffmpeg telegram-desktop discord rmlint unrar unzip exfat-utils git golang lua @c-development man-pages sent google-noto-{sans,serif}-tamil-fonts gdouros-aegean-fonts gdouros-aegyptus-fonts gdouros-symbola-fonts dmz-cursor-themes groff-perl playerctl tmux wireguard-tools iw libdvdcss bluez bluez-tools pulseaudio-module-bluetooth-freeworld steam weechat smartmontools
 ```
 
 ### configure keyboard layout and timezone
@@ -150,29 +150,6 @@ timedatectl set-timezone Europe/Berlin
 ```
 root=PARTUUID=0c8461cd-db5c-4249-96b8-18451311aab0 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
 root=UUID=23ccb92a-f945-4ef6-aecc-e32b46840ee1 rd.luks.uuid=04f7a64c-e13f-4a09-a2bb-afbfc3c45390 rd.luks.crypttab=0 rw rd.lvm=0 rd.md=0 rootflags=defaults,lazytime,compress-force=zstd:6,ssd i915.fastboot=1
-```
-
-### setup slock
-
-In `/usr/local/lib/systemd/system/slock@.service`:
-
-```ini
-[Unit]
-Description=Lock X session and deletes all SSH identities using slock for user %i
-Before=sleep.target
-
-[Service]
-User=%i
-Environment=DISPLAY=:0
-ExecStartPre=/usr/bin/xset dpms force suspend
-ExecStart=/usr/bin/slock ssh-add -D
-
-[Install]
-WantedBy=sleep.target
-```
-
-```sh
-systemctl enable slock@xha.service
 ```
 
 ### polkit rules
