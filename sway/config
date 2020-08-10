@@ -13,15 +13,82 @@ input "type:keyboard" {
     xkb_variant nodeadkeys
     xkb_options compose:rctrl-altgr
     xkb_model latitude
+    xkb_numlock enabled
 }
 
 # style
 #######################################
 
+# Graphite Black
+set $color_K "#171717"
+# Deep Cerise
+set $color_R "#e32791"
+# Shamrock
+set $color_G "#30c798"
+# Chenin
+set $color_Y "#e3c472"
+# Cornflower Blue
+set $color_B "#6796e6"
+# Plum
+set $color_M "#e59fdf"
+# Riptide
+set $color_C "#81d8d0"
+# Pearl Light Grey
+set $color_W "#999999"
+# Dark Grey
+set $color_k "#515151"
+# Hot Pink
+set $color_r "#e466ad"
+# Medium Aquamarine
+set $color_g "#6cd1b2"
+# Double Colonial White
+set $color_y "#e4cf98"
+# Jordy Blue
+set $color_b "#91b0e6"
+# French Lilac
+set $color_m "#e5b6e1"
+# Sinbad
+set $color_c "#a2dcd7"
+# Code Grey
+set $color_w "#e5e6e6"
+# Burnt Orange
+set $color_X "#ff7135"
+# Umbra Grey
+set $color_J "#333333"
+# Jet Black
+set $color_L "#131313"
+# Cyprus
+set $color_Q "#0f3a4b"
+# Love Symbol #2
+set $color_P "#553a63"
+# Baker's Chocolate
+set $color_O "#522900"
+# Cerulean
+set $color_I "#1680ac"
+# Alizarin
+set $color_E "#ed2939"
+# Gamboge
+set $color_A "#e9a700"
+
 output * bg ~/.local/wallpapers/common/isprwz.jpg fill
 
+set $borderwidth 3
+
 font IBM Plex Sans 9
-default_border normal 3
+default_border pixel $borderwidth
+default_floating_border normal $borderwidth
+gaps inner 5
+gaps outer 5
+smart_gaps on
+
+# class                 border   backgr.  text     indicator child_border
+client.focused          $color_X $color_X $color_w $color_R  $color_X
+client.focused_inactive $color_K $color_K $color_w #484e50   #5f676a
+client.unfocused        $color_K $color_K $color_w #292d2e   #222222
+client.urgent           #2f343a  #900000  $color_w #900000   #900000
+client.placeholder      $color_K #0c0c0c  $color_w $color_K  #0c0c0c
+client.background                #ffffff
+
 
 # launching
 #######################################
@@ -29,10 +96,14 @@ default_border normal 3
 bindsym Mod4+space exec bemenu-run
 # TODO client specific behavior of Ctrl+Q ?
 bindsym Mod4+Shift+q kill
-bindsym Mod4+Return exec alacritty
+bindsym Mod4+Shift+Return exec alacritty
 bindsym Mod4+i exec clipman pick -t bemenu -T'-p 📋' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
 bindsym Mod4+Shift+i exec clipman clear -t bemenu -T'-p 🚮' --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
 bindsym Mod4+e exec cat ~/.config/awesome/emoji.txt | bemenu -i -l 10 -p '¯\_(ツ)_/¯' | awk '{printf $1}' | wl-copy
+
+bindsym Print grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') ~/tmp/screenshot_`date --rfc-3339=ns`.png
+bindsym Mod4+Print grim -g `slurp` ~/tmp/screenshot_`date --rfc-3339=ns`.png | wl-copy
+bindsym Shift+Print grim ~/tmp/screenshot_`date --rfc-3339=ns`.png
 
 set $mode_launcher Launch:<span background='#e66000' foreground='#e5e6e6'> <u>F</u>irefox </span><span background='#0066b8' foreground='#e5e6e6'> Visual Studio <u>C</u>ode </span>
 bindsym Mod4+o mode "$mode_launcher"
@@ -43,65 +114,61 @@ mode --pango_markup "$mode_launcher" {
     bindsym Return mode "default"
 }
 
-bindsym XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ false && makoctl list | jq -e '(.data[][0]).\"app-name\".data == \"vol\"' > /dev/null && makoctl dismiss ; notify-send -a vol "🔇 unmute"
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ true ; notify-send '🔇 mute'
+bindsym XF86AudioRaiseVolume exec pamixer --get-mute && pamixer -u || pamixer -i 2 && echo `pamixer --get-volume` \"#dd${QOLOR_K:1}\" \"#dd${QOLOR_X:1}\" \"#dd${QOLOR_w:1}\" > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec pamixer --get-mute && pamixer -u || pamixer -d 2 && echo `pamixer --get-volume` \"#dd${QOLOR_K:1}\" \"#dd${QOLOR_Q:1}\" \"#dd${QOLOR_w:1}\" > $SWAYSOCK.wob
+bindsym XF86AudioMute exec pamixer -m && pamixer --get-mute && echo 0 \"#dd${QOLOR_R:1}\" \"#dd${QOLOR_K:1}\" \"#dd${QOLOR_w:1}\" > $SWAYSOCK.wob
 
-# pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; dunstify -r 7549 \"🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') %\"";
-
-bindsym XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ false && [[ $(($(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }') + 5)) -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 100% && { makoctl list | jq -e \"(.data[][0]).\\\"app-name\\\".data == \\\"🔊\\\"\" > /dev/null && makoctl dismiss; }; notify-send -a 🔊 "🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub(\"%\",\"\",$5); print $5 }')"
+# bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+# bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
 
 # tiling behavior
 #######################################
 
 default_orientation auto
-# hide_edge_borders --i3 smart
+
 hide_edge_borders smart
-bindsym Mod4+BackSpace border toggle
+# bindsym Mod4+BackSpace border toggle $borderwidth
 
-bindsym Mod4+t layout tabbed
-bindsym Mod4+Shift+t layout stacking
-bindsym Mod4+d layout toggle split
+bindsym Mod4+Return layout toggle all
+bindsym Mod4+s splitt
+focus_wrapping workspace
 
-bindsym Mod4+Tab focus parent; focus next
-bindcode Mod4+49 focus next sibling
-bindsym Mod4+h focus left
-bindsym Mod4+j focus down
-bindsym Mod4+k focus up
-bindsym Mod4+l focus right
-bindsym Mod4+Left focus left
-bindsym Mod4+Down focus down
-bindsym Mod4+Up focus up
-bindsym Mod4+Right focus right
-bindsym Mod4+Ctrl+h resize shrink width 2px
-bindsym Mod4+Ctrl+j resize grow height 2px
-bindsym Mod4+Ctrl+k resize shrink height 2px
-bindsym Mod4+Ctrl+l resize grow width 2px
-bindsym Mod4+Ctrl+Left resize shrink width 2px
-bindsym Mod4+Ctrl+Down resize grow height 2px
-bindsym Mod4+Ctrl+Up resize shrink height 2px
-bindsym Mod4+Ctrl+Right resize grow width 2px
+bindsym Mod1+Tab focus output right
+bindsym Mod1+Shift+Tab move workspace to output right
+bindsym Mod4+Tab focus right
+bindsym Mod4+Shift+Tab focus left
+bindcode Mod1+49 focus mode_toggle
+bindcode Mod4+49 focus down
+bindcode Mod4+Shift+49 focus up
+bindcode Mod4+Escape move left; move right
 
-# Mouse
+bindsym Mod4+h resize shrink width 2px
+bindsym Mod4+j resize grow height 2px
+bindsym Mod4+k resize shrink height 2px
+bindsym Mod4+l resize grow width 2px
+bindsym Mod4+Left resize shrink width 2px
+bindsym Mod4+Down resize grow height 2px
+bindsym Mod4+Up resize shrink height 2px
+bindsym Mod4+Right resize grow width 2px
+
+bindsym Mod4+Shift+h move left
+bindsym Mod4+Shift+j move down
+bindsym Mod4+Shift+k move up
+bindsym Mod4+Shift+l move right
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+
+# floating behavior
 #######################################
 
 floating_modifier Mod4 normal
+floating_maximum_size 1320 x 710
 
 bindsym Mod4+Shift+c reload
 bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-# Moving around:
-#
-
-    # Move the focused window with the same, but add Shift
-    bindsym Mod4+Shift+h move left
-    bindsym Mod4+Shift+j move down
-    bindsym Mod4+Shift+k move up
-    bindsym Mod4+Shift+l move right
-    # Ditto, with arrow keys
-    bindsym Mod4+Shift+Left move left
-    bindsym Mod4+Shift+Down move down
-    bindsym Mod4+Shift+Up move up
-    bindsym Mod4+Shift+Right move right
 #
 # Workspaces:
 #
@@ -111,11 +178,12 @@ bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
     bindsym Mod4+3 workspace number 3
     bindsym Mod4+4 workspace number 4
     bindsym Mod4+5 workspace number 5
-    bindsym Mod4+6 workspace 6: 🍓
+    bindsym Mod4+6 workspace number 6
     bindsym Mod4+7 workspace number 7
     bindsym Mod4+8 workspace number 8
     bindsym Mod4+9 workspace number 9
-    bindsym Mod4+0 workspace 💩
+    bindsym Mod4+0 workspace 0: 💩
+    bindsym Mod4+ssharp workspace 100: ß
     bindsym F12 workspace 🧻
     # Move focused container to workspace
     bindsym Mod4+Shift+1 move container to workspace number 1
@@ -123,31 +191,29 @@ bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
     bindsym Mod4+Shift+3 move container to workspace number 3
     bindsym Mod4+Shift+4 move container to workspace number 4
     bindsym Mod4+Shift+5 move container to workspace number 5
-    bindsym Mod4+Shift+6 move container to workspace 6: 🍓
+    bindsym Mod4+Shift+6 move container to workspace number 6
     bindsym Mod4+Shift+7 move container to workspace number 7
     bindsym Mod4+Shift+8 move container to workspace number 8
     bindsym Mod4+Shift+9 move container to workspace number 9
-    bindsym Mod4+Shift+0 move container to workspace number 💩
+    bindsym Mod4+Shift+0 move container to workspace 0: 💩
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
-#
-# Layout stuff:
-#
-    # You can "split" the current object of your focus with
-    # Mod4+b or Mod4+v, for horizontal and vertical splits
-    # respectively.
-    bindsym Mod4+b splith
-    bindsym Mod4+v splitv
 
+# default workspaces
+#######################################
+
+assign [app_id = "^org.strawberrymusicplayer.$"] → number "6: 🍓"
+
+
+
+focus_follows_mouse yes
+mouse_warping output
 
     # Make the current focus fullscreen
     bindsym Mod4+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
     bindsym Mod4+Shift+space floating toggle
-
-    # Swap focus between the tiling area and the floating area
-    # bindsym Mod4+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym Mod4+a focus parent
@@ -174,22 +240,20 @@ mode "resize 🍆" {
 }
 bindsym Mod4+r mode "resize 🍆"
 
-client.focused #0f3a4b #0f3a4b #e5e6e6
-client.unfocused #171717 #171717 #999999
-client.focused_inactive #171717 #171717 #e5e6e6
 
 bar {
     position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command go run $XDG_CONFIG_HOME/sway/stabilisator.go
+    # status_command $XDG_CONFIG_HOME/sway/stabilisator_bak
+    status_command $XDG_CONFIG_HOME/sway/barista/simple
     # status_command swaymsg -t subscribe -m \'\[\"window\"\]\' | jq -r .container.name
     swaybar_command swaybar
-
+    font IBM Plex Sans Condensed SemiBold 9
     colors {
-        statusline #ffffff
-        background #171717
+        statusline $color_w
+        background #171717f3
         binding_mode #e1e1e1 #ffff00 #171717
         inactive_workspace #171717 #171717 #e5e6e6
     }
@@ -199,5 +263,7 @@ bar {
 # Autostart
 #######################################
 
+exec kanshi
 exec wl-paste -t text --watch clipman store --histpath="$XDG_RUNTIME_DIR/clipman-primary.json"
 exec mako
+exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
