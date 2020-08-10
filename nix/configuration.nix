@@ -21,7 +21,7 @@ let
   Qolor_L = "#131313"; # Jet Black
   Qolor_Q = "#0f3a4b"; # Cyprus
   Qolor_P = "#553a63"; # Love Symbol #2
-  Qolor_O = "#522900"; # Baker’s Chocolate
+  Qolor_O = "#522900"; # Baker's Chocolate
   Qolor_I = "#1680ac"; # Cerulean
   Qolor_E = "#ed2939"; # Alizarin
   Qolor_A = "#e9a700"; # Gamboge
@@ -99,7 +99,6 @@ in {
     ];
   };
 
-  documentation.doc.enable = true;
   documentation.man.generateCaches = true;
 
   time.timeZone = "Europe/Berlin";
@@ -109,30 +108,10 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      sway = pkgs.sway.overrideAttrs (old: {
-        paths = old.paths ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
-      });
-      sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (old: {
-        buildInputs = old.buildInputs
-          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
-      });
       bemenu = pkgs.bemenu.override {
         ncursesSupport = false;
         x11Support = false;
       };
-      sudo = pkgs.sudo.override { withInsults = true; };
-      vscode = pkgs.vscode.overrideAttrs (old:
-        let version = "1.47.3";
-        in {
-          version = version;
-          src = builtins.fetchurl {
-            url =
-              "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
-            name = "VSCode_${version}_linux-x64.tar.gz";
-            sha256 =
-              "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
-          };
-        });
       noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: {
         version = "unstable-2020-07-22";
         src = builtins.fetchurl {
@@ -147,9 +126,107 @@ in {
         postPatch = ":";
         installPhase = ''
           mkdir -p $out/share/fonts/noto
-          cp $src $out/share/fonts/noto/NotoColorEmoji.ttf
-        '';
+          cp $src $out/share/fonts/noto/NotoColorEmoji.ttf'';
       });
+      sudo = pkgs.sudo.override { withInsults = true; };
+      sway = pkgs.sway.overrideAttrs (old: {
+        paths = old.paths ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+      });
+      sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (old: {
+        buildInputs = old.buildInputs
+          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+      });
+      myvim = pkgs.lib.overrideDerivation ((pkgs.vim_configurable.override {
+        python = pkgs.python3;
+        guiSupport = "none";
+      }).customize {
+        name = "vim";
+        vimrcConfig.customRC = ''
+          if !isdirectory($XDG_DATA_HOME . "/vim")
+          	call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
+          endif
+          set viminfofile=$XDG_DATA_HOME/vim/viminfo
+          if !isdirectory($XDG_DATA_HOME . "/vim/swap")
+            		call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
+          endif
+          set directory=$XDG_DATA_HOME/vim/swap//
+          if !isdirectory($XDG_DATA_HOME . "/vim/backup")
+             		call mkdir($XDG_DATA_HOME . "/vim/backup", "p", 0700)
+          endif
+          set backupdir=$XDG_DATA_HOME/vim/backup//
+          if !isdirectory($XDG_DATA_HOME . "/vim/undo")
+             		call mkdir($XDG_DATA_HOME . "/vim/undo", "p", 0700)
+          endif
+          set undodir=$XDG_DATA_HOME/vim/undo
+
+          let &t_SI .= "\<Esc>[5 q"
+          let &t_SR .= "\<Esc>[3 q"
+          let &t_EI .= "\<Esc>[1 q"
+
+          set autoindent
+          set autoread
+          set backspace=indent,eol,start
+          set belloff=all
+          set complete+=i
+          set cscopeverbose
+          set display+=lastline
+          set fillchars="vert:│,fold:·,sep:│"
+          set formatoptions+=j
+          set nofsync
+          set history=10000
+          set hlsearch
+          set incsearch
+          set nolangremap
+          set laststatus=2
+          set listchars=eol:¬,extends:»,tab:▸\ ,trail:·,nbsp:°
+          set mouse=a
+          set nrformats+=bin
+          set nrformats+=hex
+          set nrformats+=alpha
+          set nrformats+=octal
+          set ruler
+          set scrolloff=1
+          set sessionoptions-=options
+          set shortmess=atToOFS
+          set showcmd
+          set sidescroll=1
+          set sidescrolloff=5
+          set smarttab
+          set nostartofline
+          set tabpagemax=50
+          set tags-=./tags
+          set tags^=./tags;
+          set tags-=TAGS
+          set tags-=./TAGS
+          set ttimeoutlen=50
+          set ttyfast
+          set ttymouse=sgr
+          set t_Co=16
+          set undofile
+          set viewoptions-=options
+          set viminfo^=!
+          set wildmenu
+          autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+        '';
+        vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
+          start = [ ale vim-go ultisnips ];
+          # opt = [  ];
+          # To automatically load a plugin when opening a filetype, add vimrc lines like:
+          # autocmd FileType php :packadd phpCompletion
+        };
+      }) (o: { gui = false; });
+      vscode = pkgs.vscode.overrideAttrs (old:
+        let version = "1.47.3";
+        in {
+          version = version;
+          src = builtins.fetchurl {
+            url =
+              "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
+            name = "VSCode_${version}_linux-x64.tar.gz";
+            sha256 =
+              "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
+          };
+        });
     };
   };
 
@@ -177,6 +254,7 @@ in {
     mpv
     nnn
     nodejs-14_x
+    pamixer
     pavucontrol
     slurp
     strawberry
@@ -184,11 +262,15 @@ in {
     swaylock
     sxiv
     tmux
-    vim
+    unrar
+    unzip
+    (lib.hiPrio myvim)
     vscode
     wl-clipboard
+    wob
     xsel
     xwayland
+    youtube-dl
     zathura
     zsh
   ];
@@ -198,13 +280,13 @@ in {
       loginShellInit =
         "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> ~/.cache/sway.log";
       interactiveShellInit = ''
-        shopt -s autocd
+        shopt -s autocd cdable_vars cdspell
       '';
       promptInit = ''
         if [ -n "$SSH_CLIENT" ]; then
-        	PS1='\[\e[1m\]\[$(tput setaf 2)\]\H:\w \$\[\e[0m\]\[$(tput sgr0)\] '
+        	PS1='\n\[\e[1m\]\[$(tput setaf 2)\]\H:\w \$\[\e[0m\]\[$(tput sgr0)\] '
         else
-        	PS1='\[\e[1m\]\w \$\[\e[0m\] '
+        	PS1='\n\[\e[1m\]\w \$\[\e[0m\] '
         fi'';
     };
     dconf.enable = true;
@@ -215,7 +297,6 @@ in {
     };
     # npm.npmrc = "";
     udevil.enable = true;
-    vim.defaultEditor = true;
     zsh = {
       enable = true;
       shellInit = "export ZDOTDIR=~/.config/zsh";
@@ -336,7 +417,8 @@ in {
     shellAliases = {
       ip = "ip --color=auto";
       grep = "grep --color=auto";
-      ls = "ls --color=auto --classify --dereference-command-line-symlink-to-dir";
+      ls =
+        "ls --color=auto --classify --dereference-command-line-symlink-to-dir";
       ll = "ls -l --si";
       la = "ll --almost-all";
       l = "ll --group-directories-first";
@@ -476,15 +558,6 @@ in {
   services.journald.extraConfig = ''
     Storage=volatile
   '';
-
-  hardware = {
-    acpilight.enable = true;
-    bluetooth.enable = true;
-    bluetooth.package = pkgs.bluezFull;
-    cpu.intel.updateMicrocode = true;
-    cpu.amd.updateMicrocode = false;
-    usbWwan.enable = true;
-  };
 
   boot.kernelParams = [ "i915.fastboot=1" "mitigations=off" ];
 

@@ -1,74 +1,4 @@
-if has('unix')
-	if !isdirectory($XDG_DATA_HOME . "/vim")
-		call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
-	endif
-	set viminfofile=$XDG_DATA_HOME/vim/viminfo
-
-	if !isdirectory($XDG_DATA_HOME . "/vim/swap")
-   		call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
-	endif
-	set directory=$XDG_DATA_HOME/vim/swap//
-
-	if !isdirectory($XDG_DATA_HOME . "/vim/backup")
-    		call mkdir($XDG_DATA_HOME . "/vim/backup", "p", 0700)
-	endif
-	set backupdir=$XDG_DATA_HOME/vim/backup//
-
-	if !isdirectory($XDG_DATA_HOME . "/vim/undo")
-    		call mkdir($XDG_DATA_HOME . "/vim/undo", "p", 0700)
-	endif
-	set undodir=$XDG_DATA_HOME/vim/undo
-endif
-
-let &t_SI .= "\<Esc>[5 q"
-let &t_SR .= "\<Esc>[3 q"
-let &t_EI .= "\<Esc>[1 q"
-
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-set autoindent
-set autoread
-set backspace=indent,eol,start
-set belloff=all
-set complete+=i
-set cscopeverbose
-set display+=lastline
-set fillchars="vert:│,fold:·,sep:│"
-set formatoptions+=j
-set nofsync
-set history=10000
-set hlsearch
-set incsearch
-set nolangremap
-set laststatus=2
-set listchars=eol:¬,extends:»,tab:▸\ ,trail:·,nbsp:°
-set mouse=a
-set nrformats+=bin
-set nrformats+=hex
-set nrformats+=alpha
-set nrformats+=octal
-set ruler
-set scrolloff=1
-set sessionoptions-=options
-set shortmess=atToOFS
-set showcmd
-set sidescroll=1
-set sidescrolloff=5
-set smarttab
-set nostartofline
-set tabpagemax=50
-set tags-=./tags
-set tags^=./tags;
-set tags-=TAGS
-set tags-=./TAGS
-set ttimeoutlen=50
-set ttyfast
 " TODO: for rxvt-unicode: set ttymouse=urxvt
-set ttymouse=sgr
-set undofile
-set viewoptions-=options
-set viminfo^=!
-set wildmenu
 
 if has('autocmd')
 	filetype plugin indent on
@@ -84,13 +14,6 @@ endif
 " TODO do they both do the same?
 " Make delete key in Normal mode remove the persistently highlighted matches
 nmap <silent>  <BS>  :nohlsearch<CR>
-
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^Eterm'
-  	set t_Co=16
-endif
-
-colorscheme dim
 
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>

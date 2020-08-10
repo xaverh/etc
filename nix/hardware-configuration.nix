@@ -8,6 +8,15 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  hardware = {
+    acpilight.enable = true;
+    bluetooth.enable = true;
+    bluetooth.package = pkgs.bluezFull;
+    cpu.intel.updateMicrocode = true;
+    cpu.amd.updateMicrocode = false;
+    usbWwan.enable = true;
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/23ccb92a-f945-4ef6-aecc-e32b46840ee1";
     fsType = "btrfs";

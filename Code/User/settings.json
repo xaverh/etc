@@ -214,7 +214,6 @@
 	"editor.accessibilitySupport": "off",
 	"lua.format.singleQuote": true,
 	"lua.format.lineWidth": 100,
-	"workbench.colorTheme": "Night Owl",
 	"[c]": {
 		"editor.defaultFormatter": "ms-vscode.cpptools"
 	},
@@ -233,5 +232,6 @@
 	"editor.cursorBlinking": "phase",
 	"editor.mouseWheelScrollSensitivity": 2,
 	"zenMode.hideStatusBar": false,
-	"editor.wordWrap": "on"
+	"editor.wordWrap": "on",
+	"workbench.colorTheme": "Qillqaq"
 }
