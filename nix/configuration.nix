@@ -504,6 +504,10 @@ in {
       BEMENU_OPTS =
         "--fn 'sans 10' --tb '${QOLOR_Q}' --tf '${QOLOR_w}' --fb '${QOLOR_K}' --ff '${QOLOR_w}' --nb '${QOLOR_K}' --nf '${QOLOR_w}' --hb '${QOLOR_K}' --hf '#5aaadf' --sb '${QOLOR_X}' --sf '${QOLOR_k}' --scb '${QOLOR_L}' --scf '${QOLOR_J}' ";
       BEMENU_BACKEND = "wayland";
+      NNN_COLORS = "4256";
+      NNN_OPTS = "xe";
+      NNN_PLUG =
+        "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_|mpv \\$nnn;V:-_mpv --shuffle \\$nnn*;u:-uidgid;G:getplugs";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
       LESS_TERMCAP_mb = "[00;32m";
       LESS_TERMCAP_md = "[00;94m";
@@ -513,7 +517,6 @@ in {
       LESS_TERMCAP_ue = "[0m";
       LESS_TERMCAP_se = "[0m";
       GROFF_NO_SGR = "1";
-      NNN_COLORS = "4216";
     };
     etc = {
       "iwd/main.conf".text = ''
