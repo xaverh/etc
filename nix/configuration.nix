@@ -543,6 +543,21 @@ in {
         image/vnd.djvu=org.pwmt.zathura.desktop
         image/x-djvu=org.pwmt.zathura.desktop
       '';
+      zathurarc.text = ''
+        map r reload
+        map L rotate rotate-ccw
+        map R rotate rotate-cw
+        map g goto top
+        map W adjust_window width
+        map H adjust_window best-fit
+        set guioptions ""
+        set window-title-page true
+        set default-bg ${Qolor_W}
+        set adjust-open width
+        set search-hadjust false
+        set link-hadjust false
+        set recolor-keephue true
+      '';
     };
   };
 
