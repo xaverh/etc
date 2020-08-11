@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -15,8 +16,6 @@ import (
 
 const (
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
-	unpluggedSign     = "!"
-	pluggedSign       = "🔌"
 	separatorModules  = "  "
 	thermalZone       = "1"
 )
@@ -26,7 +25,7 @@ var (
 	wifiDevice        = ""
 	homeDirectory     = os.Getenv("HOME")
 	ssidRegex         = regexp.MustCompile("SSID: (.*?)\n")
-	btrfsRegex        = regexp.MustCompile(`Free \(estimated\):\s+([\d\.]+)([a-zA-Z]+)`)
+	btrfsRegex        = regexp.MustCompile(`Free \(estimated\):\s+([\d\.]+)([kMGTPE]?B)`)
 )
 
 func siPrefix(n int) string {
@@ -34,7 +33,7 @@ func siPrefix(n int) string {
 		return "err"
 	}
 
-	var prefix string
+	prefix := ""
 	if n > 1000 {
 		var d = float64(n)
 
@@ -61,7 +60,7 @@ func siPrefix(n int) string {
 
 func updateTemperature(c chan<- string, thermalZone string) {
 	for {
-		var θ, err = ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
+		θ, err := ioutil.ReadFile("/sys/class/thermal/thermal_zone" + thermalZone + "/temp")
 		if err != nil {
 			c <- "temp unknown"
 		} else {
@@ -75,7 +74,7 @@ func updateTime(c chan<- string) {
 	for {
 		c <- time.Now().Local().Format(dateAndTimeFormat)
 		// sleep until beginning of next second
-		var t = time.Now()
+		t := time.Now()
 		time.Sleep(t.Truncate(time.Second).Add(time.Second).Sub(t))
 	}
 }
@@ -114,15 +113,15 @@ func updateBtrfsUse(c chan<- string) {
 
 func updateMemUse(c chan<- string) {
 	for {
-		var file, err = os.Open("/proc/meminfo")
+		file, err := os.Open("/proc/meminfo")
 		if err != nil {
 			c <- "err"
 		}
 
 		// done must equal the flag combination (0001 | 0010 | 0100 | 1000) = 15
-		var used, done = 0, 0
+		used, done := 0, 0
 		for info := bufio.NewScanner(file); done != 15 && info.Scan(); {
-			var prop, val = "", 0
+			prop, val := "", 0
 			if _, err = fmt.Sscanf(info.Text(), "%s %d", &prop, &val); err != nil {
 				c <- "err"
 			}
@@ -157,9 +156,9 @@ func updateNetUse(c chan<- string) {
 			c <- "err"
 		}
 
-		var void = 0 // target for unused values
-		var dev, rx, tx, rxNow, txNow = "", 0, 0, 0, 0
-		var scanner = bufio.NewScanner(file)
+		var void int // target for unused values
+		dev, rx, tx, rxNow, txNow := "", 0, 0, 0, 0
+		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			_, err = fmt.Sscanf(scanner.Text(), "%s %d %d %d %d %d %d %d %d %d",
 				&dev, &rx, &void, &void, &void, &void, &void, &void, &void, &tx)
@@ -180,9 +179,9 @@ func updateNetUse(c chan<- string) {
 
 func updatePower(c chan<- string) {
 	const powerSupply = "/sys/class/power_supply/"
-	var enFull, enNow, enPerc int = 0, 0, 0
+	enFull, enNow, enPerc := 0, 0, 0
 	for {
-		var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
+		plugged, err := ioutil.ReadFile(powerSupply + "AC/online")
 		if err != nil {
 			c <- "error"
 			time.Sleep(time.Duration(10007 * time.Second))
@@ -196,7 +195,7 @@ func updatePower(c chan<- string) {
 		}
 
 		readval := func(name, field string) int {
-			var path = powerSupply + name + "/"
+			path := powerSupply + name + "/"
 			var file []byte
 			if tmp, err := ioutil.ReadFile(path + "energy_" + field); err == nil {
 				file = tmp
@@ -227,9 +226,9 @@ func updatePower(c chan<- string) {
 		}
 
 		enPerc = enNow * 100 / enFull
-		var icon = unpluggedSign
+		icon := "🔋"
 		if string(plugged) == "1\n" {
-			icon = pluggedSign
+			icon = "🔌"
 		}
 
 		c <- fmt.Sprintf("%d%%%s%s", enPerc, icon, separatorModules)
@@ -299,4 +298,6 @@ func main() {
 		case status[6] = <-powChan:
 		}
 	}
+	w := ioutil.Writer()
+	marshaler := json.NewEncoder(w)
 }

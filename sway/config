@@ -70,7 +70,8 @@ set $color_E "#ed2939"
 # Gamboge
 set $color_A "#e9a700"
 
-output * bg ~/.local/wallpapers/common/isprwz.jpg fill
+output HDMI-A-2 bg ~/.local/wallpapers/ysgrifennwr/index.jpeg fill
+output HDMI-A-3 bg ~/.local/wallpapers/common/isprwz.jpg fill
 
 set $borderwidth 3
 
@@ -253,7 +254,7 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command $XDG_CONFIG_HOME/sway/stabilisator_bak
-    status_command $XDG_CONFIG_HOME/sway/barista/simple
+    status_command ~/.config/stabilisator/stabilisator
     # status_command swaymsg -t subscribe -m \'\[\"window\"\]\' | jq -r .container.name
     swaybar_command swaybar
     font IBM Plex Sans Condensed SemiBold 9

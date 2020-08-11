@@ -135,86 +135,20 @@ in {
       sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (old: {
         buildInputs = old.buildInputs
           ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+        makeFlags = (old.makeFlags or [ ])
+          ++ [ "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
       });
-      myvim = pkgs.lib.overrideDerivation ((pkgs.vim_configurable.override {
-        python = pkgs.python3;
-        guiSupport = "none";
-      }).customize {
-        name = "vim";
-        vimrcConfig.customRC = ''
-          if !isdirectory($XDG_DATA_HOME . "/vim")
-          	call mkdir($XDG_DATA_HOME . "/vim", "p", 0700)
-          endif
-          set viminfofile=$XDG_DATA_HOME/vim/viminfo
-          if !isdirectory($XDG_DATA_HOME . "/vim/swap")
-            		call mkdir($XDG_DATA_HOME . "/vim/swap", "p", 0700)
-          endif
-          set directory=$XDG_DATA_HOME/vim/swap//
-          if !isdirectory($XDG_DATA_HOME . "/vim/backup")
-             		call mkdir($XDG_DATA_HOME . "/vim/backup", "p", 0700)
-          endif
-          set backupdir=$XDG_DATA_HOME/vim/backup//
-          if !isdirectory($XDG_DATA_HOME . "/vim/undo")
-             		call mkdir($XDG_DATA_HOME . "/vim/undo", "p", 0700)
-          endif
-          set undodir=$XDG_DATA_HOME/vim/undo
-
-          let &t_SI .= "\<Esc>[5 q"
-          let &t_SR .= "\<Esc>[3 q"
-          let &t_EI .= "\<Esc>[1 q"
-
-          set autoindent
-          set autoread
-          set backspace=indent,eol,start
-          set belloff=all
-          set complete+=i
-          set cscopeverbose
-          set display+=lastline
-          set fillchars="vert:│,fold:·,sep:│"
-          set formatoptions+=j
-          set nofsync
-          set history=10000
-          set hlsearch
-          set incsearch
-          set nolangremap
-          set laststatus=2
-          set listchars=eol:¬,extends:»,tab:▸\ ,trail:·,nbsp:°
-          set mouse=a
-          set nrformats+=bin
-          set nrformats+=hex
-          set nrformats+=alpha
-          set nrformats+=octal
-          set ruler
-          set scrolloff=1
-          set sessionoptions-=options
-          set shortmess=atToOFS
-          set showcmd
-          set sidescroll=1
-          set sidescrolloff=5
-          set smarttab
-          set nostartofline
-          set tabpagemax=50
-          set tags-=./tags
-          set tags^=./tags;
-          set tags-=TAGS
-          set tags-=./TAGS
-          set ttimeoutlen=50
-          set ttyfast
-          set ttymouse=sgr
-          set t_Co=16
-          set undofile
-          set viewoptions-=options
-          set viminfo^=!
-          set wildmenu
-          autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-        '';
-        vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [ ale vim-go ultisnips ];
-          # opt = [  ];
-          # To automatically load a plugin when opening a filetype, add vimrc lines like:
-          # autocmd FileType php :packadd phpCompletion
-        };
-      }) (o: { gui = false; });
+      vim = (pkgs.vim.overrideAttrs (old: {
+        buildInputs = old.buildInputs
+          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) pkgs.python3 ];
+        makeFlags = (old.makeFlags or [ ])
+          ++ [ "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
+        configureFlags = old.configureFlags ++ [
+          "--enable-python3interp=yes"
+          "--with-python3-config-dir=${pkgs.python3}/lib"
+          "--disable-pythoninterp"
+        ];
+      })).override { vimrc = ./vimrc; };
       vscode = pkgs.vscode.overrideAttrs (old:
         let version = "1.47.3";
         in {
@@ -264,7 +198,6 @@ in {
     tmux
     unrar
     unzip
-    (lib.hiPrio myvim)
     vscode
     wl-clipboard
     wob
@@ -278,9 +211,16 @@ in {
   programs = {
     bash = {
       loginShellInit =
-        "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> ~/.cache/sway.log";
+        "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log";
+      # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
+      # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
       interactiveShellInit = ''
-        shopt -s autocd cdable_vars cdspell
+        shopt -s autocd cdable_vars cdspell histappend histreedit histverify
+        HISTSIZE=""
+        HISTFILESIZE=""
+        HISTFILE="$HOME/.local/bash_history"
+        HISTCONTROL=ignoredups:erasedups
+        PROMPT_COMMAND="history -n; history -w; history -c; history -r"
       '';
       promptInit = ''
         if [ -n "$SSH_CLIENT" ]; then
@@ -297,6 +237,7 @@ in {
     };
     # npm.npmrc = "";
     udevil.enable = true;
+    vim.defaultEditor = true;
     zsh = {
       enable = true;
       shellInit = "export ZDOTDIR=~/.config/zsh";
@@ -502,7 +443,7 @@ in {
       YOLOR_E = Yolor_E;
       YOLOR_A = Yolor_A;
       BEMENU_OPTS =
-        "--fn 'sans 10' --tb '${QOLOR_Q}' --tf '${QOLOR_w}' --fb '${QOLOR_K}' --ff '${QOLOR_w}' --nb '${QOLOR_K}' --nf '${QOLOR_w}' --hb '${QOLOR_K}' --hf '#5aaadf' --sb '${QOLOR_X}' --sf '${QOLOR_k}' --scb '${QOLOR_L}' --scf '${QOLOR_J}' ";
+        "--fn 'sans 10' --tb '${YOLOR_Q}' --tf '${YOLOR_w}' --fb '${YOLOR_K}' --ff '${YOLOR_w}' --nb '${YOLOR_K}' --nf '${YOLOR_w}' --hb '${YOLOR_K}' --hf '#5aaadf' --sb '${YOLOR_X}' --sf '${YOLOR_k}' --scb '${YOLOR_L}' --scf '${YOLOR_J}' ";
       BEMENU_BACKEND = "wayland";
       NNN_COLORS = "4256";
       NNN_OPTS = "xe";

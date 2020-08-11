@@ -3,15 +3,16 @@ window:
     x: 10
     y: 10
   dynamic_padding: true
+  dynamic_title: true
 
 scrolling:
   history: 10000
   multiplier: 3
 
 font:
-  size: 10.5
+  size: 11.5
   normal:
-    family: monospace
+    family: Consolas
   offset:
     x: 0
     y: 0
@@ -74,11 +75,11 @@ yolors: #y
     cyan: '#1b8486'
     white: '#424242'
 
+background_opacity: 0.95
+
 selection:
   semantic_escape_chars: ",│`|\"' ()[]{}<>\t"
   save_to_clipboard: true
-
-dynamic_title: true
 
 cursor:
   style: Block
