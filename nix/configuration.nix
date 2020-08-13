@@ -174,7 +174,7 @@ in {
         ];
       })).override { vimrc = ./vimrc; };
       vscode = pkgs.vscode.overrideAttrs (old:
-        let version = "1.47.3";
+        let version = "1.48.0";
         in {
           version = version;
           src = builtins.fetchurl {
@@ -182,7 +182,7 @@ in {
               "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
             name = "VSCode_${version}_linux-x64.tar.gz";
             sha256 =
-              "7e8262884322e030a35d3ec111b86b17b31c83496b41e919bd3f0d52abe45898";
+              "b2a0fa2d29a9946388879e7fede700eb4884666d45eb1bb7f49dc27ed2163a67";
           };
         });
     };
@@ -564,16 +564,17 @@ in {
       NNN_PLUG =
         "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_|mpv \\$nnn;V:-_mpv --shuffle \\$nnn*;u:-uidgid;G:getplugs";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
-      LESS_TERMCAP_mb = "[00;32m";
-      LESS_TERMCAP_md = "[00;94m";
-      LESS_TERMCAP_us = "[01;95m";
-      LESS_TERMCAP_so = "[00;100;2m";
-      LESS_TERMCAP_me = "[0m";
-      LESS_TERMCAP_ue = "[0m";
+      LESS_TERMCAP_mb = "[00;34m";
+      LESS_TERMCAP_md = "[01;32m";
+      LESS_TERMCAP_so = "[02;03m";
+      LESS_TERMCAP_us = "[01;35m";
       LESS_TERMCAP_se = "[0m";
+      LESS_TERMCAP_ue = "[0m";
+      LESS_TERMCAP_me = "[0m";
       GROFF_NO_SGR = "1";
       LS_COLORS =
         "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=9:mh=4;35:pi=0;33:so=0;32:bd=4;34;58;5;46:cd=4;34;58;5;43:ex=1;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=0;38;5;232;48;2;221;224;90:*.jsx=0;38;5;232;48;2;221;224;90:*.ts=0;48;2;43;116;137;38;5;231:*.tsx=0;48;2;43;116;137;38;5;231:*.vue=0;38;2;44;62;80;48;2;65;184;131:*.cpp=0;48;2;243;75;125:*.cxx=0;48;2;243;75;125:*.hpp=0;48;2;243;75;125:*.hxx=0;48;2;243;75;125:*.c=7:*.h=7:*.go=0;38;5;231;48;2;0;173;216:*.svelte=0;48;5;231;38;2;255;62;0:*.lua=0;48;2;0;0;128;38;5;231:*.html=0;38;5;231;48;2;227;76;38:*.htm=0;38;5;231;48;2;227;76;38:*.xhtml=0;38;5;231;48;2;227;76;38:*.css=0;38;5;231;48;2;86;61;124:*.scss=0;38;5;231;48;2;207;100;154:*.sass=0;38;5;231;48;2;207;100;154:";
+      GREP_COLOR = "1;33;40";
     };
     etc = {
       "iwd/main.conf".text = ''

@@ -42,6 +42,10 @@ set nrformats+=hex
 set nrformats+=alpha
 set nrformats+=octal
 set ruler
+set runtimepath-=~/.vim
+set runtimepath-=~/.vim/after
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
 set scrolloff=1
 set sessionoptions-=options
 set shortmess=atToOFS
