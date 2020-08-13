@@ -6,7 +6,7 @@ let
   Qolor_Y = "#e3c472"; # Chenin
   Qolor_B = "#6796e6"; # Cornflower Blue
   Qolor_M = "#e59fdf"; # Plum
-  Qolor_C = "#81d8d0"; # Riptide
+  Qolor_C = "#81d8d0"; # Riptide / Tiffany
   Qolor_W = "#999999"; # Pearl Light Grey
   Qolor_k = "#515151"; # Dark Grey
   Qolor_r = "#e466ad"; # Hot Pink
@@ -50,6 +50,30 @@ let
   Yolor_I = "#20bbfc"; # Deep Sky Blue
   Yolor_E = "#ed2939"; # Alizarin
   Yolor_A = "#c08a00"; # Dark Goldenrod
+  Djungle_Love = "#affe69"; # Djungle Love
+  # "#dcdad7"; # Skating Lessons
+  # "#5aaadf"; # Giesing Blue
+  # "#002FA7": # International/Yves Klein Blue
+  # "#e11a27": # 🇨🇭 Red
+  # "#fff1e5": # Financial Times BG
+  # "#262a33": # Financial Times BG Black / N.N.
+  # "#fff9f5": # Financial Times BG J / Sugar Milk
+  # "#f2dfce": # Financial Times BG L / N.N.
+  # "#f2e5da": # Financial Times BG L / N.N.
+  # "#faeadc": # Financial Times BG L / N.N.
+  # "#ccc1b7": # Financial Times BG L / N.N.
+  # "#008845": # Financial Times UI Green / N.N.
+  # "#ffec1a": # Financial Times UI Yellow / Gadsden
+  # "#0d7680": # Financial Times UI Teal / N.N.
+  # "#cce6ff": # Financial Times UI Cyan / N.N.
+  # "#0f5499": # Financial Times UI/Text Blue / N.N.
+  # "#990f3d": # Financial Times UI/Text Magenta / N.N.
+  # "#3a1929": # Financial Times UI/Text Dark Red / N.N.
+  # "#ff767c": # Financial Times Text Pink / N.N.
+  # "#9cd321": # Financial Times Text Green / N.N.
+  # "#cf191d": # Financial Times Text Red / N.N.
+  # "#0a5e66": # Financial Times Text Blue / N.N.
+
 in {
   imports = [ ./hardware-configuration.nix ./vscode.nix ];
 
@@ -185,6 +209,7 @@ in {
     kanshi
     libnotify
     mako
+    megacmd
     mpv
     nnn
     nodejs-14_x
@@ -210,24 +235,114 @@ in {
 
   programs = {
     bash = {
-      loginShellInit =
-        "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log";
+      enableLsColors = false;
+      loginShellInit = ''
+        PATH+=":$npm_config_prefix/bin:$GOPATH/bin"
+        [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log
+      '';
       # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
       # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
       interactiveShellInit = ''
-        shopt -s autocd cdable_vars cdspell histappend histreedit histverify
+        shopt -s autocd cdable_vars cdspell globstar histappend histreedit histverify
         HISTSIZE=""
         HISTFILESIZE=""
         HISTFILE="$HOME/.local/bash_history"
+        HISTIGNORE="[ ]*"
         HISTCONTROL=ignoredups:erasedups
-        PROMPT_COMMAND="history -n; history -w; history -c; history -r"
+        function n ()
+        {
+          if [[ -n $NNNLVL ]] && [[ "''${NNNLVL:-0}" -ge 1 ]]; then
+            echo "nnn is already running"
+            return
+          fi
+
+          local NNN_TMPFILE="''${XDG_CONFIG_HOME}/nnn/.lastd"
+
+          nnn "$@"
+
+          if [[ -f "$NNN_TMPFILE" ]]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+          fi
+        }
+        alias nnn=n
+        [[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash
+        function sx() {
+        	local f
+        	for f in "$@"; do
+        		if [[ -f "$f" ]]; then
+        			case "$f" in
+        				*.tar.bz2) tar -xvjf "$f"           ;;
+        				*.tar.gz)  tar -xvzf "$f"           ;;
+        				*.tar.lz)  tar --lzip -xvf "$f"     ;;
+        				*.tar.xz)  tar -xvJf "$f"           ;;
+        				*.tar.zst) tar --zstd -xvf "$f"     ;;
+        				*.7z)      7z x "$f"                ;;
+        				*.7z.001)  7z x "$f"                ;;
+        				*.bz2)     bzip2 -d "$f"            ;;
+        				*.cpio)    cpio -rvd < "$f"         ;;
+        				*.deb)     ar -x "$f"               ;;
+        				*.gz)      gunzip -d --verbose "$f" ;;
+        				*.lzh)     lha x "$f"               ;;
+        				*.lzma)    unlzma "$f"              ;;
+        				*.pax)     pax -r < "$f"            ;;
+        				*.rar)     unrar x "$f"             ;;
+        				*.rpm)     7z x "$f"                ;;
+        				*.tar)     tar -xvf "$f"            ;;
+        				*.tgz)     tar -xvzf "$f"           ;;
+        				*.tbz2)    tar -xvjf "$f"           ;;
+        				*.txz)     tar -xvJf "$f"           ;;
+        				*.xz)      7z x "$f"                ;;
+        				*.zip)     unzip "$f"               ;;
+        				*.zst)     unzstd "$f"              ;;
+        				*.Z)       uncompress "$f"          ;;
+        				*)         echo "$f: Error: compression type unknown." && false ;;
+        			esac
+        		else
+        			echo "Error: '$f' is not a valid file" && false
+        		fi
+        	done
+        }
+        function clinton () {
+          local i
+          for i in "$@"; do
+          	sed -i "/$i/d" "$HISTFILE"
+          done
+        }
+        alias clinton=" clinton"
+        ix() {
+            local opts
+            local OPTIND
+            [ -f "$HOME/.netrc" ] && opts='-n'
+            while getopts ":hd:i:n:" x; do
+                case $x in
+                    h) echo "ix [-d ID] [-i ID] [-n N] [opts]"; return;;
+                    d) $echo curl $opts -X DELETE ix.io/$OPTARG; return;;
+                    i) opts="$opts -X PUT"; local id="$OPTARG";;
+                    n) opts="$opts -F read:1=$OPTARG";;
+                esac
+            done
+            shift $(($OPTIND - 1))
+            [ -t 0 ] && {
+                local filename="$1"
+                shift
+                [ "$filename" ] && {
+                    curl $opts -F f:1=@"$filename" $* ix.io/$id
+                    return
+                }
+                echo "^C to cancel, ^D to send."
+            }
+            curl $opts -F f:1='<-' $* ix.io/$id
+        }
       '';
       promptInit = ''
-        if [ -n "$SSH_CLIENT" ]; then
-        	PS1='\n\[\e[1m\]\[$(tput setaf 2)\]\H:\w \$\[\e[0m\]\[$(tput sgr0)\] '
+        PROMPT_COMMAND='[[ $? == 0 ]] && es= || es="$? "; history -n; history -w; history -c; history -r'
+        if [[ -n "$SSH_CLIENT" ]]; then
+        	PS1="\[]0;$TERM: \u@\H:\w \\$[1;31m\]\$es\[[1;32m\]\H:\w \\$\[(B[m\] "
         else
-        	PS1='\n\[\e[1m\]\w \$\[\e[0m\] '
-        fi'';
+        	PS1="\[]0;$TERM: \u@\w \\$[1;31m\]\$es\[(B[m[1m\]\w \\$\[(B[m\] "
+        fi
+      '';
     };
     dconf.enable = true;
     gnupg.agent = {
@@ -357,7 +472,7 @@ in {
   environment = {
     shellAliases = {
       ip = "ip --color=auto";
-      grep = "grep --color=auto";
+      grep = "grep --exclude-dir=node_modules --color=auto";
       ls =
         "ls --color=auto --classify --dereference-command-line-symlink-to-dir";
       ll = "ls -l --si";
@@ -373,7 +488,6 @@ in {
       "....." = "../../../..";
       "......" = "../../../../..";
       "......." = "../../../../../..";
-      IXIO = "curl -F 'f:1=<-' ix.io";
     };
     variables = rec {
       XDG_CONFIG_HOME = "$HOME/.config";
@@ -443,7 +557,7 @@ in {
       YOLOR_E = Yolor_E;
       YOLOR_A = Yolor_A;
       BEMENU_OPTS =
-        "--fn 'sans 10' --tb '${YOLOR_Q}' --tf '${YOLOR_w}' --fb '${YOLOR_K}' --ff '${YOLOR_w}' --nb '${YOLOR_K}' --nf '${YOLOR_w}' --hb '${YOLOR_K}' --hf '#5aaadf' --sb '${YOLOR_X}' --sf '${YOLOR_k}' --scb '${YOLOR_L}' --scf '${YOLOR_J}' ";
+        "--fn 'sans 10' --tb '${QOLOR_Q}' --tf '${QOLOR_w}' --fb '${QOLOR_K}' --ff '${QOLOR_w}' --nb '${QOLOR_K}' --nf '${QOLOR_w}' --hb '${QOLOR_K}' --hf '${Djungle_Love}' --sb '${QOLOR_X}' --sf '${QOLOR_k}' --scb '${QOLOR_L}' --scf '${QOLOR_J}' ";
       BEMENU_BACKEND = "wayland";
       NNN_COLORS = "4256";
       NNN_OPTS = "xe";
@@ -458,6 +572,8 @@ in {
       LESS_TERMCAP_ue = "[0m";
       LESS_TERMCAP_se = "[0m";
       GROFF_NO_SGR = "1";
+      LS_COLORS =
+        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=9:mh=4;35:pi=0;33:so=0;32:bd=4;34;58;5;46:cd=4;34;58;5;43:ex=1;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=0;38;5;232;48;2;221;224;90:*.jsx=0;38;5;232;48;2;221;224;90:*.ts=0;48;2;43;116;137;38;5;231:*.tsx=0;48;2;43;116;137;38;5;231:*.vue=0;38;2;44;62;80;48;2;65;184;131:*.cpp=0;48;2;243;75;125:*.cxx=0;48;2;243;75;125:*.hpp=0;48;2;243;75;125:*.hxx=0;48;2;243;75;125:*.c=7:*.h=7:*.go=0;38;5;231;48;2;0;173;216:*.svelte=0;48;5;231;38;2;255;62;0:*.lua=0;48;2;0;0;128;38;5;231:*.html=0;38;5;231;48;2;227;76;38:*.htm=0;38;5;231;48;2;227;76;38:*.xhtml=0;38;5;231;48;2;227;76;38:*.css=0;38;5;231;48;2;86;61;124:*.scss=0;38;5;231;48;2;207;100;154:*.sass=0;38;5;231;48;2;207;100;154:";
     };
     etc = {
       "iwd/main.conf".text = ''
