@@ -3,7 +3,6 @@
 ## within the live image
 
 ### preparations
-
 - set keymap
 - run `lsblk` to find hard drive, in the following I am going to assume `/dev/sda`
 - setup networking
@@ -157,30 +156,31 @@ root=UUID=23ccb92a-f945-4ef6-aecc-e32b46840ee1 rd.luks.uuid=04f7a64c-e13f-4a09-a
 To allow user to start/stop certain systemd-services without password, in `/etc/polkit-1/rules.d/49-nopasswd_limited.rules`:
 
 ```js
-polkit.addRule(function(action, subject) {
-  if (action.id == 'org.freedesktop.systemd1.manage-units') {
-    if (
-      subject.isInGroup('wheel') &&
-      (/wg-quick@mullvad\-[a-z]+[0-9]+.service/.test(action.lookup('unit')) ||
-        action.lookup('unit') == 'iwd.service')
-    ) {
-      var verb = action.lookup('verb')
-      if (verb == 'start' || verb == 'stop' || verb == 'restart') {
-        return polkit.Result.YES
-      }
-    }
-  }
+polkit.addRule(function (action, subject) {
+	if (action.id == 'org.freedesktop.systemd1.manage-units') {
+		if (
+			subject.isInGroup('wheel') &&
+			(/wg-quick@mullvad\-[a-z]+[0-9]+.service/.test(action.lookup('unit')) ||
+				action.lookup('unit') == 'iwd.service')
+		) {
+			var verb = action.lookup('verb')
+			if (verb == 'start' || verb == 'stop' || verb == 'restart') {
+				return polkit.Result.YES
+			}
+		}
+	}
 })
 
-polkit.addRule(function(action, subject) {
-  if (
-    action.id == 'org.freedesktop.policykit.exec' &&
-    action.lookup('program') == '/usr/bin/resolvectl'
-  ) {
-    return polkit.Result.YES
-  }
+polkit.addRule(function (action, subject) {
+	if (
+		action.id == 'org.freedesktop.policykit.exec' &&
+		action.lookup('program') == '/usr/bin/resolvectl'
+	) {
+		return polkit.Result.YES
+	}
 })
 ```
+
 ### (optionally) disable fn for F1-F12 keys / switch alt and cmd
 
 ```sh

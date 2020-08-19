@@ -5,19 +5,19 @@ DIR 1;34
 LINK 3;35
 ORPHAN 3;9;35
 MISSING 9
-MULTIHARDLINK 4;35 # regular file with more than one link
+MULTIHARDLINK 4;35
 FIFO 0;33 # pipe
 SOCK 0;32
+DOOR 4;32
 BLK 4;34;58;5;46  # hack for alacritty, should be 21;34;58;5;6
 CHR 4;34;58;5;43  # hack for alacritty, should be 21;34;58;5;3
 EXEC 1;31
+CAPABILITY 1;4;31
 SETUID 1;41
 SETGID 1;46
 STICKY_OTHER_WRITABLE 1;3;34;47 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 1;34;47 # dir that is other-writable (o+w) and not sticky
 STICKY 1;3;34 # dir with the sticky bit set (+t) and not other-writable
-DOOR 4;32 # door, only on Solaris?
-CAPABILITY 7;4;30;41 # file with capability, seems to not work
 # Languages
 .js 0;38;5;232;48;2;221;224;90
 .jsx 0;38;5;232;48;2;221;224;90
@@ -76,35 +76,16 @@ CAPABILITY 7;4;30;41 # file with capability, seems to not work
 *.git 37
 *package-lock.json 37
 
-*.pid 38;5;8
-*.swp 38;5;8
-*.tmp 38;5;8
-*.bak 38;5;8
-*.orig 38;5;8
-*.lock 38;5;8
-*.log 38;5;8
-*~ 38;5;8
-*COPYRIGHT 38;5;8
-*LICENSE 38;5;8
-*LICENSE-MIT 38;5;8
-*COPYING 38;5;8
-*LICENSE-APACHE 38;5;8
-
-*test.RESET 0
-*test.DIR 1;34
-*test.LINK 3;35
-*test.ORPHAN 3;9;35
-*test.MISSING 9
-*test.MULTIHARDLINK 4;35 # regular file with more than one link
-*test.FIFO 0;33 # pipe
-*test.SOCK 0;32
-*test.BLK 4;34;58;5;46  # hack for alacritty, should be 21;34;58;5;6
-*test.CHR 4;34;58;5;43  # hack for alacritty, should be 21;34;58;5;3
-*test.EXEC 1;31
-*test.SETUID 1;41
-*test.SETGID 1;46
-*test.STICKY_OTHER_WRITABLE 1;3;34;47 # dir that is sticky and other-writable (+t,o+w)
-*test.OTHER_WRITABLE 1;34;47 # dir that is other-writable (o+w) and not sticky
-*test.STICKY 1;3;34 # dir with the sticky bit set (+t) and not other-writable
-*test.DOOR 4;32 # door, only on Solaris?
-*test.CAPABILITY 7;4;30;41 # file with capability, seems to not work
+*.pid 90
+*.swp 90
+*.tmp 90
+*.bak 90
+*.orig 90
+*.lock 90
+*.log 90
+*~ 90
+*COPYRIGHT 90
+*LICENSE 90
+*LICENSE-MIT 90
+*COPYING 90
+*LICENSE-APACHE 90

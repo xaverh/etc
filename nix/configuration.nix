@@ -20,6 +20,7 @@ let
   Qolor_J = "#333333"; # Umbra Grey
   Qolor_L = "#131313"; # Jet Black
   Qolor_Q = "#0f3a4b"; # Cyprus
+  Qolor_q = "#5aaadf"; # Giesing Blue
   Qolor_P = "#553a63"; # Love Symbol #2
   Qolor_O = "#522900"; # Baker's Chocolate
   Qolor_I = "#1680ac"; # Cerulean
@@ -45,16 +46,13 @@ let
   Yolor_J = "#edece8"; # Signal White
   Yolor_L = "#dcdad7"; # Skating Lessons
   Yolor_Q = "#0f3a4b"; # Cyprus
+  Yolor_q = "#002fa7"; # International Yves Klein Blue
   Yolor_P = "#553a63"; # Love Symbol #2
   Yolor_O = "#964f00"; # Saddle Brown
   Yolor_I = "#20bbfc"; # Deep Sky Blue
-  Yolor_E = "#ed2939"; # Alizarin
+  Yolor_E = "#e11a27"; # 🇨🇭 Red
   Yolor_A = "#c08a00"; # Dark Goldenrod
   Djungle_Love = "#affe69"; # Djungle Love
-  # "#dcdad7"; # Skating Lessons
-  # "#5aaadf"; # Giesing Blue
-  # "#002FA7": # International/Yves Klein Blue
-  # "#e11a27": # 🇨🇭 Red
   # "#fff1e5": # Financial Times BG
   # "#262a33": # Financial Times BG Black / N.N.
   # "#fff9f5": # Financial Times BG J / Sugar Milk
@@ -132,26 +130,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      bemenu = pkgs.bemenu.override {
-        ncursesSupport = false;
-        x11Support = false;
-      };
-      noto-fonts-emoji = pkgs.noto-fonts-emoji.overrideAttrs (old: {
-        version = "unstable-2020-07-22";
-        src = builtins.fetchurl {
-          url =
-            "https://github.com/googlefonts/noto-emoji/raw/v2020-07-22-unicode13_0/fonts/NotoColorEmoji.ttf";
-          sha256 =
-            "02dd5d288f404d51e12eae28e4b77ff7c705047c273e096d3f7fbe4efdd28321";
-        };
-        buildInputs = [ ];
-        nativeBuildInputs = [ ];
-        unpackPhase = ":";
-        postPatch = ":";
-        installPhase = ''
-          mkdir -p $out/share/fonts/noto
-          cp $src $out/share/fonts/noto/NotoColorEmoji.ttf'';
-      });
       sudo = pkgs.sudo.override { withInsults = true; };
       sway = pkgs.sway.overrideAttrs (old: {
         paths = old.paths ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
@@ -193,11 +171,12 @@ in {
   vscode.extensions = with pkgs.vscode-extensions; [ ms-vscode.cpptools ];
 
   environment.systemPackages = with pkgs; [
-    alacritty
     (lib.hiPrio bashInteractive_5)
-    bemenu
+    brave
     clipman
+    exfat
     latest.firefox-beta-bin
+    fzf
     gcc
     gimp
     git
@@ -207,10 +186,24 @@ in {
     iw
     jq
     kanshi
+    kitty
     libnotify
+    light
     mako
     megacmd
-    mpv
+    (pkgs.mpv-unwrapped.override {
+      bluraySupport = false;
+      dvdnavSupport = false;
+      ffmpeg = pkgs.ffmpeg-full.override {
+        nonfreeLicensing = true;
+        fdkaacExtlib = true;
+        qtFaststartProgram = false;
+        enableLto = true;
+        nvenc = false;
+        fdk_aac = pkgs.fdk_aac;
+      };
+    })
+    nixfmt
     nnn
     nodejs-14_x
     pamixer
@@ -266,7 +259,6 @@ in {
           fi
         }
         alias nnn=n
-        [[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash
         function sx() {
         	local f
         	for f in "$@"; do
@@ -351,7 +343,7 @@ in {
       pinentryFlavor = "gnome3";
     };
     # npm.npmrc = "";
-    udevil.enable = true;
+    # udevil.enable = true;
     vim.defaultEditor = true;
     zsh = {
       enable = true;
@@ -439,14 +431,20 @@ in {
   };
   fonts = {
     enableDefaultFonts = false;
-    fonts = [ pkgs.ibm-plex pkgs.jetbrains-mono pkgs.noto-fonts-emoji ];
+    fonts = with pkgs; [
+      ibm-plex
+      joypixels
+      # (pkgs.iosevka.override { privateBuildPlan = { family = "Iosifovich"; design = [ "cv25" "cv40" "VXCA" "cv93" "cv51" "cv46" "cv16" "cv22" "cv29" "cv63" "cv33" "cv34" "cv38" "VXAI" "VXDA" "VXAT" "VXAE" "VXBV" "VXBR" "VXCZ" "cv96" "cv83" "VXAO" ]; upright = [ "VXBU" "cv09" "cv05" "cv01" "cv52" "cv11" ]; italic = [ "cv08" "cv24" "cv04" "cv02" "cv53" "cv45" "VXBS" "VXBM" "cv57" "VXBE" "cv78" "VXBA" ]; }; set = "Iosifovich"; })
+    ];
     fontconfig = rec {
       dpi = 96; # hardware
+      allowBitmaps = true;
       antialias = if dpi > 200 then false else true;
       hinting.enable = if dpi > 200 then false else true;
       subpixel.lcdfilter = if dpi > 200 then "none" else "default";
-      defaultFonts.emoji = [ "Noto Color Emoji" ];
-      defaultFonts.monospace = [ "IBM Plex Mono" ];
+      defaultFonts.emoji = [ "JoyPixels" ];
+      defaultFonts.monospace =
+        [ "PragmataPro" "PragmataPro Mono Liga" "IBM Plex Mono" ];
       defaultFonts.sansSerif =
         [ "IBM Plex Sans" "Segoe UI" "Segoe UI Historic" "PingFang SC" ];
       defaultFonts.serif = [
@@ -506,83 +504,183 @@ in {
       CM_DIR = "$XDG_RUNTIME_DIR";
       MOZ_ENABLE_WAYLAND = "1";
       QT_QPA_PLATFORM = "wayland";
-      QOLOR_K = Qolor_K; # make use of shell's default assignments/expansions
-      QOLOR_R = Qolor_R;
-      QOLOR_G = Qolor_G;
-      QOLOR_Y = Qolor_Y;
-      QOLOR_B = Qolor_B;
-      QOLOR_M = Qolor_M;
-      QOLOR_C = Qolor_C;
-      QOLOR_W = Qolor_W;
-      QOLOR_k = Qolor_k;
-      QOLOR_r = Qolor_r;
-      QOLOR_g = Qolor_g;
-      QOLOR_y = Qolor_y;
-      QOLOR_b = Qolor_b;
-      QOLOR_m = Qolor_m;
-      QOLOR_c = Qolor_c;
-      QOLOR_w = Qolor_w;
-      QOLOR_X = Qolor_X;
-      QOLOR_J = Qolor_J;
-      QOLOR_L = Qolor_L;
-      QOLOR_Q = Qolor_Q;
-      QOLOR_P = Qolor_P;
-      QOLOR_O = Qolor_O;
-      QOLOR_I = Qolor_I;
-      QOLOR_E = Qolor_E;
-      QOLOR_A = Qolor_A;
-      YOLOR_K = Yolor_K;
-      YOLOR_R = Yolor_R;
-      YOLOR_G = Yolor_G;
-      YOLOR_Y = Yolor_Y;
-      YOLOR_B = Yolor_B;
-      YOLOR_M = Yolor_M;
-      YOLOR_C = Yolor_C;
-      YOLOR_W = Yolor_W;
-      YOLOR_k = Yolor_k;
-      YOLOR_r = Yolor_r;
-      YOLOR_g = Yolor_g;
-      YOLOR_y = Yolor_y;
-      YOLOR_b = Yolor_b;
-      YOLOR_m = Yolor_m;
-      YOLOR_c = Yolor_c;
-      YOLOR_w = Yolor_w;
-      YOLOR_X = Yolor_X;
-      YOLOR_J = Yolor_J;
-      YOLOR_L = Yolor_L;
-      YOLOR_Q = Yolor_Q;
-      YOLOR_P = Yolor_P;
-      YOLOR_O = Yolor_O;
-      YOLOR_I = Yolor_I;
-      YOLOR_E = Yolor_E;
-      YOLOR_A = Yolor_A;
-      BEMENU_OPTS =
-        "--fn 'sans 10' --tb '${QOLOR_Q}' --tf '${QOLOR_w}' --fb '${QOLOR_K}' --ff '${QOLOR_w}' --nb '${QOLOR_K}' --nf '${QOLOR_w}' --hb '${QOLOR_K}' --hf '${Djungle_Love}' --sb '${QOLOR_X}' --sf '${QOLOR_k}' --scb '${QOLOR_L}' --scf '${QOLOR_J}' ";
-      BEMENU_BACKEND = "wayland";
+      FZF_DEFAULT_OPTS = "--cycle --color=16";
+      FZF_COMPLETION_TRIGGER = "?";
       NNN_COLORS = "4256";
       NNN_OPTS = "xe";
       NNN_PLUG =
         "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_|mpv \\$nnn;V:-_mpv --shuffle \\$nnn*;u:-uidgid;G:getplugs";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
+      NNN_BMS = "t:/tmp;v:/var/tmp;r:$XDG_RUNTIME_DIR;b:~/usr/edu/biz";
       LESS_TERMCAP_mb = "[00;34m";
       LESS_TERMCAP_md = "[01;32m";
-      LESS_TERMCAP_so = "[02;03m";
       LESS_TERMCAP_us = "[01;35m";
-      LESS_TERMCAP_se = "[0m";
       LESS_TERMCAP_ue = "[0m";
       LESS_TERMCAP_me = "[0m";
       GROFF_NO_SGR = "1";
       LS_COLORS =
-        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=9:mh=4;35:pi=0;33:so=0;32:bd=4;34;58;5;46:cd=4;34;58;5;43:ex=1;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=0;38;5;232;48;2;221;224;90:*.jsx=0;38;5;232;48;2;221;224;90:*.ts=0;48;2;43;116;137;38;5;231:*.tsx=0;48;2;43;116;137;38;5;231:*.vue=0;38;2;44;62;80;48;2;65;184;131:*.cpp=0;48;2;243;75;125:*.cxx=0;48;2;243;75;125:*.hpp=0;48;2;243;75;125:*.hxx=0;48;2;243;75;125:*.c=7:*.h=7:*.go=0;38;5;231;48;2;0;173;216:*.svelte=0;48;5;231;38;2;255;62;0:*.lua=0;48;2;0;0;128;38;5;231:*.html=0;38;5;231;48;2;227;76;38:*.htm=0;38;5;231;48;2;227;76;38:*.xhtml=0;38;5;231;48;2;227;76;38:*.css=0;38;5;231;48;2;86;61;124:*.scss=0;38;5;231;48;2;207;100;154:*.sass=0;38;5;231;48;2;207;100;154:";
-      GREP_COLOR = "1;33;40";
+        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=9:mh=4;35:pi=0;33:so=0;32:do=4;32:bd=4;34;58;5;46:cd=4;34;58;5;43:ex=1;31:ca=1;4;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=0;38;5;232;48;2;221;224;90:*.jsx=0;38;5;232;48;2;221;224;90:*.ts=0;48;2;43;116;137;38;5;231:*.tsx=0;48;2;43;116;137;38;5;231:*.vue=0;38;2;44;62;80;48;2;65;184;131:*.cpp=0;48;2;243;75;125:*.cxx=0;48;2;243;75;125:*.cc=0;48;2;243;75;125:*.hpp=0;48;2;243;75;125:*.hxx=0;48;2;243;75;125:*.hh=0;48;2;243;75;125:*.c=7:*.h=7:*.go=0;38;5;231;48;2;0;173;216:*.svelte=0;48;5;231;38;2;255;62;0:*.lua=0;48;2;0;0;128;38;5;231:*.html=0;38;5;231;48;2;227;76;38:*.htm=0;38;5;231;48;2;227;76;38:*.xhtml=0;38;5;231;48;2;227;76;38:*.css=0;38;5;231;48;2;86;61;124:*.scss=0;38;5;231;48;2;207;100;154:*.sass=0;38;5;231;48;2;207;100;154:*.nix=0;48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.pid=38;5;8:*.swp=38;5;8:*.tmp=38;5;8:*.bak=38;5;8:*.orig=38;5;8:*.lock=38;5;8:*.log=38;5;8:*~=38;5;8:*COPYRIGHT=38;5;8:*LICENSE=38;5;8:*LICENSE-MIT=38;5;8:*COPYING=38;5;8:*LICENSE-APACHE=38;5;8:";
+      GREP_COLORS = "mt=1;33";
     };
     etc = {
+      "bashrc.local".text = ''
+        . ${pkgs.fzf}/share/fzf/key-bindings.bash
+        . ${pkgs.fzf}/share/fzf/completion.bash
+        [[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash
+        . ${pkgs.vscode}/lib/vscode/resources/completions/bash/code
+
+      '';
       "iwd/main.conf".text = ''
         [General]
         EnableNetworkConfiguration=true
         UseDefaultInterface=true
         [Network]
         NameResolvingService=systemd
+      '';
+      "xdg/kitty/kitty.conf".text = ''
+        font_size 12
+        font_features IBMPlexMono +zero
+        cursor ${Qolor_X}
+        cursor_text_color background
+        cursor_shape block
+        cursor_stop_blinking_after 120.0
+        scrollback_lines -1
+        mouse_hide_wait -1
+        url_color ${Qolor_I}
+        url_style curly
+        copy_on_select clipboard
+        strip_trailing_spaces smart
+        select_by_word_characters $@-./_~?&=%+#
+        pointer_shape_when_grabbed beam
+        sync_to_monitor no
+        enable_audio_bell no
+        visual_bell_duration 0.2
+        command_on_bell none
+        remember_window_size  no
+        initial_window_width  100c
+        initial_window_height 24c
+        window_padding_width 12
+        active_border_color ${Qolor_I}
+        inactive_border_color ${Qolor_P}
+        bell_border_color ${Qolor_E}
+        inactive_text_alpha 0.9
+        resize_in_steps yes
+        tab_bar_edge top
+        tab_fade 0.25 0.5 0.75 1
+        active_tab_foreground ${Qolor_w}
+        active_tab_background ${Qolor_J}
+        active_tab_font_style bold
+        inactive_tab_foreground ${Qolor_W}
+        inactive_tab_background ${Qolor_K}
+        inactive_tab_font_style italic
+        foreground ${Qolor_w}
+        background ${Qolor_K}
+        selection_foreground none
+        selection_background ${Qolor_q}
+        color0 ${Qolor_K}
+        color1 ${Qolor_R}
+        color2 ${Qolor_G}
+        color3 ${Qolor_Y}
+        color4 ${Qolor_B}
+        color5 ${Qolor_M}
+        color6 ${Qolor_C}
+        color7 ${Qolor_W}
+        color8 ${Qolor_k}
+        color9 ${Qolor_r}
+        color10 ${Qolor_g}
+        color11 ${Qolor_y}
+        color12 ${Qolor_b}
+        color13 ${Qolor_m}
+        color14 ${Qolor_c}
+        color15 ${Qolor_w}
+        mark1_foreground ${Qolor_K}
+        mark1_background ${Qolor_Q}
+        mark2_foreground ${Qolor_K}
+        mark2_background ${Qolor_O}
+        mark3_foreground ${Qolor_K}
+        mark3_background ${Qolor_P}
+        close_on_child_death yes
+        allow_remote_control yes
+        update_check_interval 0
+        clipboard_control write-clipboard write-primary read-clipboard read-primary
+        linux_display_server wayland
+        map kitty_mod+n new_os_window_with_cwd
+        map kitty_mod+equal change_font_size all +1.0
+        map kitty_mod+minus change_font_size all -1.0
+        map shift+page_up scroll_page_up
+        map shift+page_down scroll_page_down
+      '';
+      "xdg/kitty/ysgrifennwr.conf".text = ''
+        cursor ${Yolor_X}
+        url_color ${Yolor_I}
+        active_border_color ${Yolor_I}
+        inactive_border_color ${Yolor_P}
+        bell_border_color ${Yolor_E}
+        active_tab_foreground ${Yolor_w}
+        active_tab_background ${Yolor_J}
+        inactive_tab_foreground ${Yolor_W}
+        inactive_tab_background ${Yolor_K}
+        foreground ${Yolor_w}
+        background ${Yolor_K}
+        selection_background ${Yolor_q}
+        color0 ${Yolor_K}
+        color1 ${Yolor_R}
+        color2 ${Yolor_G}
+        color3 ${Yolor_Y}
+        color4 ${Yolor_B}
+        color5 ${Yolor_M}
+        color6 ${Yolor_C}
+        color7 ${Yolor_W}
+        color8 ${Yolor_k}
+        color9 ${Yolor_r}
+        color10 ${Yolor_g}
+        color11 ${Yolor_y}
+        color12 ${Yolor_b}
+        color13 ${Yolor_m}
+        color14 ${Yolor_c}
+        color15 ${Yolor_w}
+        mark1_foreground ${Yolor_K}
+        mark1_background ${Yolor_Q}
+        mark2_foreground ${Yolor_K}
+        mark2_background ${Yolor_O}
+        mark3_foreground ${Yolor_K}
+        mark3_background ${Yolor_P}
+      '';
+      "xdg/kitty/fish-and-chips.conf".text = ''
+        cursor ${Yolor_X}
+        url_color ${Yolor_I}
+        active_border_color ${Yolor_I}
+        inactive_border_color ${Yolor_P}
+        bell_border_color ${Yolor_E}
+        active_tab_foreground #192126
+        active_tab_background ${Yolor_J}
+        inactive_tab_foreground #736c67
+        inactive_tab_background #FFF1E5
+        foreground #192126
+        background #FFF1E5
+        selection_background ${Yolor_q}
+        color0  #fff1e5
+        color1  #cf191d
+        color2  #9cd321
+        color3  #ff820c
+        color4  #002fa7
+        color5  #990f3d
+        color6  #0d7680
+        color7  #736c67
+        color8  #ccc1b7
+        color9  #660d0e
+        color10 #4e6a10
+        color11 #854000
+        color12 #001854
+        color13 #4d081f
+        color14 #063c41
+        color15 #192126
+        mark1_foreground #FFF1E5
+        mark1_background ${Yolor_Q}
+        mark2_foreground #FFF1E5
+        mark2_background ${Yolor_O}
+        mark3_foreground #FFF1E5
+        mark3_background ${Yolor_P}
       '';
       "xdg/mimeapps.list".text = ''
         [Default Applications]

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Description: Independent POSIX-compliant GUI application launcher.
 #              Fuzzy find executables in $PATH and launch an application.
@@ -9,7 +9,7 @@
 #
 #              xfce4-terminal -e "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/launch
 #
-# Requires: fzf/fzy
+# Dependencies: fzf
 #
 # Usage: launch [delay]
 #        delay is in seconds, if omitted launch waits for 1 sec
@@ -25,9 +25,7 @@ IFS=':'
 
 get_selection() {
     if which fzf >/dev/null 2>&1; then
-        { IFS=':'; ls -H $PATH; } | sort | fzf
-    elif which fzy >/dev/null 2>&1; then
-        { IFS=':'; ls -H $PATH; } | sort | fzy
+        { IFS=':'; \ls -H $PATH 2>/dev/null; } | fzf
     else
         exit 1
     fi

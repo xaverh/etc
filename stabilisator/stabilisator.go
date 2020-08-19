@@ -17,8 +17,10 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"image/color"
 	"io"
+	"net"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -1162,7 +1164,177 @@ func (s simpleClockModule) Stream(sink barSink) {
 	}
 }
 
+// wlanInfo represents the wireless card status.
+type wlanInfo struct {
+	Name           string
+	IPs            []net.IP
+	SSID           string
+	AccessPointMAC string
+}
+
+// notifierSource can be used to notify multiple listeners of a signal. It provides both
+// one-shot listeners that close the channel on the next signal, and continuous
+// listeners that emit a struct{} on every signal (but need to be cleaned up).
+type notifierSource struct {
+	obs  []chan struct{}
+	subs map[<-chan struct{}]func()
+	mu   sync.Mutex
+}
+
+// valueValue provides atomic value storage with update notifications.
+type valueValue struct {
+	value  atomic.Value
+	source notifierSource
+}
+
+// Module represents a wlan bar module.
+type wlanModule struct {
+	intf       string
+	outputFunc valueValue // of func(Info) bar.Output
+}
+
+// To allow storing different concrete types in the atomic.Value, for example
+// when the value just needs to store an interface.
+type valueBox struct {
+	value interface{}
+}
+
+// Notify notifies all interested listeners.
+func (s *notifierSource) Notify() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for _, o := range s.obs {
+		close(o)
+	}
+	s.obs = nil
+	for _, f := range s.subs {
+		f()
+	}
+}
+
+// Get returns the currently stored value.
+func (v *valueValue) Get() interface{} {
+	if b, ok := v.value.Load().(box); ok {
+		return b.value
+	}
+	return nil
+}
+
+// Set updates the stored values and notifies any subscribers.
+func (v *valueValue) Set(value interface{}) {
+	v.value.Store(valueBox{value})
+	v.source.Notify()
+}
+
+// Output configures a module to display the output of a user-defined function.
+func (m *wlanModule) Output(outputFunc func(wlanInfo) barOutput) *wlanModule {
+	m.outputFunc.Set(outputFunc)
+	return m
+}
+
+//Text constructs a simple text output from the given string.
+func outputsText(text string) *barSegment {
+	return barTextSegment(text)
+}
+
+// wlanNamed constructs an instance of the wlan module for the specified interface.
+func wlanNamed(iface string) *wlanModule {
+	m := &wlanModule{intf: iface}
+	// Default output is just the SSID when connected.
+	m.Output(func(i wlanInfo) barOutput {
+		return outputsText(i.SSID)
+	})
+	return m
+}
+
+// wlanAny constructs an instance of the wlan module that uses any available
+// wireless interface, choosing the 'best' state from all available.
+func wlanAny() *wlanModule {
+	return wlanNamed("")
+}
+
+// Subscribe returns a channel that will receive an empty struct{} on the next
+// signal, and a func to close the subscription.
+func (s *notifierSource) Subscribe() (sub <-chan struct{}, done func()) {
+	fn, sub := notifierNew()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.subs == nil {
+		s.subs = map[<-chan struct{}]func(){}
+	}
+	s.subs[sub] = fn
+	return sub, func() {
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		delete(s.subs, sub)
+	}
+}
+
+// Subscribe returns a channel that will receive an empty struct{} on each value
+// change until it's cleaned up using the done func.
+func (v *valueValue) Subscribe() (sub <-chan struct{}, done func()) {
+	return v.source.Subscribe()
+}
+
+func wlanFillWifiInfo(info *wlanInfo) {
+	ssid, err := iwgetid(info.Name, "-r")
+	if err != nil {
+		return
+	}
+	info.SSID = ssid
+	info.AccessPointMAC, _ = iwgetid(info.Name, "-a")
+	ch, _ := iwgetid(info.Name, "-c")
+	info.Channel, _ = strconv.Atoi(ch)
+	freq, _ := iwgetid(info.Name, "-f")
+	freqFloat, _ := strconv.ParseFloat(freq, 64)
+	info.Frequency = unit.Frequency(freqFloat) * unit.Hertz
+}
+
+
+func wlanHandleUpdate(link netlink.Link) Info {
+	info := wlanInfo{
+		Name:  link.Name,
+		IPs:   link.IPs,
+	}
+	wlanFillWifiInfo(&info)
+	return info
+}
+
+// Stream starts the module.
+func (m *wlanModule) Stream(s barSink) {
+	outputFunc := m.outputFunc.Get().(func(wlanInfo) barOutput)
+	nextOutputFunc, done := m.outputFunc.Subscribe()
+	defer done()
+
+	var linkSub *netlink.Subscription
+	if m.intf == "" {
+		linkSub = netlink.WithPrefix("wl")
+	} else {
+		linkSub = netlink.ByName(m.intf)
+	}
+	defer linkSub.Unsubscribe()
+
+	info := wlanHandleUpdate(linkSub.Get())
+	for {
+		s.Output(outputFunc(info))
+		select {
+		case <-linkSub.C:
+			info = wlanHandleUpdate(linkSub.Get())
+		case <-nextOutputFunc:
+			outputFunc = m.outputFunc.Get().(func(wlanInfo) barOutput)
+		}
+	}
+}
+
+var wifi = wlanAny().Output(func(w wlanInfo) barOutput {
+	out := fmt.Sprintf("W: (%s)", w.SSID)
+	if len(w.IPs) > 0 {
+		out += fmt.Sprintf(" %s", w.IPs[0])
+	}
+	return outputsText(out)
+})
+
 func main() {
 
-	panic(baristaRun(simpleClockModule{"Mon 2 Jan 15:04:05 MST", time.Second}))
+	panic(baristaRun(wifi, simpleClockModule{"Mon 2 Jan 15:04:05 MST", time.Second}))
 }

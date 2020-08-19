@@ -14,6 +14,93 @@ import (
 	"time"
 )
 
+type button int
+
+const (
+	buttonLeft button = iota + 1
+	buttonMiddle
+	buttonRight
+	scrollUp
+	scrollDown
+	scrollLeft
+	scrollRight
+	buttonBack
+	buttonForward
+)
+
+type alignment string
+
+const (
+	alignLeft   alignment = "left"
+	alignRight  alignment = "right"
+	alignCenter alignment = "center"
+)
+
+type markup string
+
+const (
+	none  markup = "none"
+	pango markup = "pango"
+)
+
+type header struct {
+	version     int  `json:"version"`
+	stopSignal  int  `json:"stop_signal,omitempty"`
+	contSignal  int  `json:"cont_signal,omitempty"`
+	clickEvents bool `json:"click_events"`
+}
+
+type clickEvent struct {
+	button  button `json:"button"`
+	x       int    `json:"relative_x,omitempty"`
+	y       int    `json:"relative_y,omitempty"`
+	width   int    `json:"width,omitempty"`
+	height  int    `json:"height,omitempty"`
+	screenX int    `json:"x,omitempty"`
+	screenY int    `json:"y,omitempty"`
+}
+
+/* segment is a single "block" of output that conforms to the i3bar protocol.
+See https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail for details.
+Example:
+{
+ "full_text": "E: 10.0.0.1 (1000 Mbit/s)",
+ "short_text": "10.0.0.1",
+ "color": "#00ff00",
+ "background": "#1c1c1c",
+ "border": "#ee0000",
+ "border_top": 1,
+ "border_right": 0,
+ "border_bottom": 3,
+ "border_left": 1,
+ "min_width": 300,
+ "align": "right",
+ "urgent": false,
+ "name": "ethernet",
+ "instance": "eth0",
+ "separator": true,
+ "separator_block_width": 9,
+ "markup": "none"
+} */
+type segment struct {
+	fullText            string `json:"full_text"`
+	shortText           string `json:"short_text,omitempty"`
+	color               string `json:"color,omitempty"`
+	background          string `json:"background,omitempty"`
+	border              int    `json:"border,omitempty"`
+	borderTop           int    `json:"border_top,omitempty"`
+	borderRight         int    `json:"border_right,omitempty"`
+	borderBottom        int    `json:"border_bottom,omitempty"`
+	borderLeft          int    `json:"border_left,omitempty"`
+	minWidth            int    `json:"min_width,omitempty"`
+	urgent              bool   `json:urgent,omitempty"`
+	name                string `"json:name,omitempty"`
+	instance            string `"json:instance,omitempty"`
+	separator           bool   `"json:separator,omitempty"`
+	separatorBlockWidth int    `"json:separator_block_width,omitempty"`
+	markup              string `"json:markup,omitempty"`
+}
+
 const (
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
 	separatorModules  = "  "
@@ -298,6 +385,4 @@ func main() {
 		case status[6] = <-powChan:
 		}
 	}
-	w := ioutil.Writer()
-	marshaler := json.NewEncoder(w)
 }

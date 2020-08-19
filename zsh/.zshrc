@@ -38,7 +38,7 @@ zstyle :compinstall filename "${ZDOTDIR:-$HOME}/.zshrc"
 
 autoload -Uz compinit
 compinit
-[[ -r "$NPMPATH"/lib/node_modules/gulp-cli/completion/zsh  ]] && . "$NPMPATH"/lib/node_modules/gulp-cli/completion/zsh
+[[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/zsh  ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/zsh
 
 autoload -U colors && colors
 
@@ -60,8 +60,6 @@ zstyle ':completion:*:default' menu select=2
 # https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
 zstyle ":completion:*:commands" rehash 1
 
-alias vi=vim
-
 # if [[ $OSTYPE == "linux-gnu" ]] then
 # 	alias ls='ls --classify --color=auto --dereference-command-line-symlink-to-dir'
 # 	alias ll='ls -l --si '
@@ -82,36 +80,39 @@ alias -s {epub,pdf,ps,djvu,cbz,PDF}=zathura
 chpwd () {print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"}
 preexec () {print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"}
 
-function sx () {
+function sx() {
 	local f
 	for f in "$@"; do
 		if [[ -f "$f" ]]; then
 			case "$f" in
-				*.tar.bz2)	tar -xvjf "$f"		;;
-				*.tar.gz)	tar -xvzf "$f"		;;
-				*.tar.lz)   	tar --lzip -xvf "$f"	;;
-				*.tar.xz)	tar -xvJf "$f"		;;
-				*.tar.zst)	tar --zstd -xvf "$f"	;;
-				*.7z)		7z x "$f"		;;
-				*.7z.001)	7z x "$f"		;;
-				*.lzma)		unlzma "$f"		;;
-				*.rar)		unrar x "$f"		;;
-				*.deb)		ar -x "$f"		;;
-				*.bz2)		bzip2 -d "$f"		;;
-				*.lzh)		lha x "$f"		;;
-				*.gz)		gunzip -d --verbose "$f";;
-				*.tar)		tar -xvf "$f"		;;
-				*.tgz)		tar -xvzf "$f"		;;
-				*.tbz2)		tar -xvjf "$f"		;;
-				*.txz)		tar -xvJf "$f"		;;
-				*.xz)		7z x "$f"		;;
-				*.zip)		unzip "$f"		;;
-				*.zst)		unzstd "$f"		;;
-				*.Z)		uncompress "$f"		;;
-				*)		echo "'$f' Error: compression type unknown to $0." ;;
+				*.tar.bz2) tar -xvjf "$f"           ;;
+				*.tar.gz)  tar -xvzf "$f"           ;;
+				*.tar.lz)  tar --lzip -xvf "$f"     ;;
+				*.tar.xz)  tar -xvJf "$f"           ;;
+				*.tar.zst) tar --zstd -xvf "$f"     ;;
+				*.7z)      7z x "$f"                ;;
+				*.7z.001)  7z x "$f"                ;;
+				*.bz2)     bzip2 -d "$f"            ;;
+				*.cpio)    cpio -rvd < "$f"         ;;
+				*.deb)     ar -x "$f"               ;;
+				*.gz)      gunzip -d --verbose "$f" ;;
+				*.lzh)     lha x "$f"               ;;
+				*.lzma)    unlzma "$f"              ;;
+				*.pax)     pax -r < "$f"            ;;
+				*.rar)     unrar x "$f"             ;;
+				*.rpm)     7z x "$f"                ;;
+				*.tar)     tar -xvf "$f"            ;;
+				*.tgz)     tar -xvzf "$f"           ;;
+				*.tbz2)    tar -xvjf "$f"           ;;
+				*.txz)     tar -xvJf "$f"           ;;
+				*.xz)      7z x "$f"                ;;
+				*.zip)     unzip "$f"               ;;
+				*.zst)     unzstd "$f"              ;;
+				*.Z)       uncompress "$f"          ;;
+				*)         echo "$f: Error: compression type unknown." && false ;;
 			esac
 		else
-			echo "Error: '$f' is not a valid file"
+			echo "Error: '$f' is not a valid file" && false
 		fi
 	done
 }

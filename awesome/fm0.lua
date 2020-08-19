@@ -8,7 +8,7 @@ local radio_stations = {
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_one.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_one.m3u8'
 	},
-	['🇬🇧 👨🏿‍🎤\tBBC Radio 1Xtra'] = {
+	['🇬🇧 🧑🏿‍🎤\tBBC Radio 1Xtra'] = {
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_1xtra.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_1xtra.m3u8'
 	},
@@ -52,7 +52,7 @@ local radio_stations = {
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_radio_wales_fm.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_radio_wales_fm.m3u8'
 	},
-	['🇬🇧 🏴󠁧󠁢󠁥󠁮󠁧󠁿\tBBC Local Radio London'] = {
+	['🇬🇧 💂🏻‍♂️\tBBC Local Radio London'] = {
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_high/ak/bbc_london.m3u8',
 		'http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_london.m3u8'
 	},
@@ -79,7 +79,7 @@ local radio_stations = {
 		'https://prod-107-23-202-222.wostreaming.net/univision-wxnyfmaac-imc1',
 		'http://in.icy2.abacast.com/univision-wxnyfmaac-im.m3u'
 	},
-	['🇬🇧 🔥\tKISS 100 London'] = {
+	['🇬🇧 💋\tKISS 100 London'] = {
 		'http://listenapi.bauerradio.com/api8/sharpstream/?i=kissnational.aac',
 		'http://tx.whatson.com/http_live_bauer.php?i=kissnational.aac'
 	},
@@ -87,7 +87,7 @@ local radio_stations = {
 		'http://playerservices.streamtheworld.com/api/livestream-redirect/CLASS95_PREM.m3u8',
 		'http://mediacorp.rastream.com/950fm'
 	},
-	['🇺🇸 🦄\tNightwave Plaza'] = {'http://radio.plaza.one/opus', 'http://radio.plaza.one/ogg'},
+	['🇺🇸 🦄\tNightwave Plaza'] = {'http://radio.plaza.one/opus'},
 	['🇩🇪 🥑\tDeutschlandfunk Nova'] = {'http://st03.dlf.de/dlf/03/104/ogg/stream.ogg'},
 	['🇩🇪 🎙️\tDeutschlandfunk'] = {
 		'http://st01.dlf.de/dlf/01/104/ogg/stream.ogg',
@@ -150,6 +150,11 @@ local radio_stations = {
 	['🇩🇪 🏔️\tBR Heimat'] = {
 		'http://streams.br.de/brheimat_2.m3u',
 		'http://streams.br.de/brheimat_1.m3u'
+	},
+	{
+		['lofi hip hop radio - beats to sleep/study to ☕️'] = {
+			'https://www.youtube.com/watch?v=US6iyJKGNLI'
+		}
 	}
 }
 
