@@ -1,0 +1,47 @@
+font=SF Mono 10
+margin=8,8,0,0
+padding=6,12
+border-size=2
+# anchor=top-center
+
+# background-color=#303030fa
+# border-color=#454545
+# text-color=#E6E1DA
+
+border-radius=8
+
+# width=400
+layer=overlay
+
+default-timeout=15000
+
+output=*
+max-icon-size=40
+icon-path=/usr/share/icons/elementary
+# icon-path=/usr/share/icons/hicolor
+
+format=<span size='10500' weight='medium'>%s</span>\n%b
+
+[app-icon=preferences-system-power]
+format=<span size='10500' weight='medium'>%s</span>\n%b
+default-timeout=1500
+group-by=app-name
+
+[app-icon="object-inverse"]
+format=<span size='10500' weight='medium'>%s</span>\n%b
+default-timeout=1500
+group-by=app-name
+
+[app-icon="audio-speakers"]
+format=<span size='10500' weight='medium'>%s</span>\n%b
+default-timeout=1500
+group-by=app-name
+
+[app-icon="preferences-system-network"]
+format=<span size='10500' weight='medium'>%s</span>\n%b
+default-timeout=2000
+group-by=app-name
+
+[hidden]
+format=(and %h more)
+text-color=#777777
