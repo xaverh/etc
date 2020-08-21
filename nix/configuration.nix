@@ -89,7 +89,6 @@ in {
   '';
 
   boot.initrd.luks.cryptoModules = [ "aes" "xts" "sha256" ];
-  boot.tmpOnTmpfs = true;
 
   networking.hostName = "andermatt";
   networking.hostId = "affeb00d";
@@ -121,24 +120,73 @@ in {
     ];
   };
 
-  documentation.man.generateCaches = true;
+  # documentation.man.generateCaches = true;
 
   time.timeZone = "Europe/Berlin";
 
-  nixpkgs.overlays = [ (import /etc/nixos/firefox-overlay.nix) ];
+  nixpkgs.overlays = [
+    (import /etc/nixos/firefox-overlay.nix)
+    (self: super: {
+      st = super.st.override {
+        patches = builtins.map super.fetchurl [
+          {
+            url =
+              "https://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff";
+            sha256 = "1cpap2jz80n90izhq5fdv2cvg29hj6bhhvjxk40zkskwmjn6k49j";
+          }
+          {
+            url =
+              "https://st.suckless.org/patches/clipboard/st-clipboard-0.8.3.diff";
+            sha256 = "1h1nwilwws02h2lnxzmrzr69lyh6pwsym21hvalp9kmbacwy6p0g";
+          }
+        ];
+      };
+    })
+  ];
 
   nixpkgs.config = {
+    st.conf = builtins.readFile ./st-config.h;
     allowUnfree = true;
     packageOverrides = pkgs: {
-      sudo = pkgs.sudo.override { withInsults = true; };
-      sway = pkgs.sway.overrideAttrs (old: {
-        paths = old.paths ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
-      });
-      sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (old: {
-        buildInputs = old.buildInputs
-          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+      dmenu = pkgs.dmenu.override {
+        patches = pkgs.dmenu.patches ++ [
+          ./dmenu-allowcoloremoji-4.9.diff # [TODO] move into configuration.nix and apply color variables
+          ./dmenu-qillqaqconfig-4.9.diff
+        ];
+      };
+      mpv = pkgs.mpv-unwrapped.override {
+        bluraySupport = false;
+        dvdnavSupport = false;
+        ffmpeg = pkgs.ffmpeg-full.override {
+          nonfreeLicensing = true;
+          fdkaacExtlib = true;
+          qtFaststartProgram = false;
+          enableLto = true;
+          nvenc = false;
+          fdk_aac = pkgs.fdk_aac;
+        };
+      };
+      rxvt-unicode-unwrapped = pkgs.rxvt-unicode-unwrapped.overrideAttrs (old: {
+        version = "9.22.2020816";
+        src = pkgs.fetchcvs {
+          cvsRoot = ":pserver:anonymous@cvs.schmorp.de/schmorpforge";
+          module = "rxvt-unicode";
+          date = "2020-08-16";
+          sha256 = "0iwl2r8aarbzbzrdkmf94r2bdzijm1nsdvr61srcz85kllzayivx";
+        };
+        configureFlags = [
+          "--with-terminfo=$terminfo/share/terminfo"
+          "--enable-unicode3"
+          "--disable-fallback"
+          "--with-codesets=all"
+          "--disable-transparency"
+          "--disable-next-scroll"
+          "--disable-xterm-scroll"
+          "--disable-slipwheeling"
+        ];
         makeFlags = (old.makeFlags or [ ])
           ++ [ "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
+        patches = old.patches ++ [ ./urxvt-patch-emoji ];
       });
       vim = (pkgs.vim.overrideAttrs (old: {
         buildInputs = old.buildInputs
@@ -152,7 +200,7 @@ in {
         ];
       })).override { vimrc = ./vimrc; };
       vscode = pkgs.vscode.overrideAttrs (old:
-        let version = "1.48.0";
+        let version = "1.48.1";
         in {
           version = version;
           src = builtins.fetchurl {
@@ -160,7 +208,7 @@ in {
               "https://vscode-update.azurewebsites.net/${version}/linux-x64/stable";
             name = "VSCode_${version}_linux-x64.tar.gz";
             sha256 =
-              "b2a0fa2d29a9946388879e7fede700eb4884666d45eb1bb7f49dc27ed2163a67";
+              "4c80ddab99582b6da418ef22f6b429d78c11372bb0eff808b6f7a5018d4459f9";
           };
         });
     };
@@ -173,57 +221,70 @@ in {
   environment.systemPackages = with pkgs; [
     (lib.hiPrio bashInteractive_5)
     brave
-    clipman
+    clipmenu
+    dmenu
+    (lib.hiPrio (stdenv.mkDerivation rec {
+      pname = "dwm";
+      version = "6.2.r7.gbb2e722";
+      src = pkgs.fetchgit {
+        url = "git://git.suckless.org/dwm";
+        rev = "bb2e7222baeec7776930354d0e9f210cc2aaad5f";
+        sha256 = "0z6hai7y99jfsvpb4ppnihv3brpx4wggpxnk6kpr886lz96nvd97";
+      };
+      conf = ./dwm/config.h;
+      buildInputs = with pkgs.xorg; [ libX11 libXinerama libXft ];
+      makeFlags = [ "PREFIX=$(out)" "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
+      postPatch = ''
+                cp -v ${conf} config.h
+              '';
+      patches = ./dwm-coloremoji-6.2.diff;
+      buildPhase = "make";
+      meta = {
+        homepage = "https://dwm.suckless.org/";
+        description = "Dynamic window manager for X";
+        license = pkgs.lib.licenses.mit;
+        platforms = pkgs.lib.platforms.linux;
+      };
+    }))
     exfat
     latest.firefox-beta-bin
     fzf
-    gcc
     gimp
     git
     go
-    grim
     htop
     iw
-    jq
-    kanshi
-    kitty
-    libnotify
-    light
-    mako
-    megacmd
-    (pkgs.mpv-unwrapped.override {
-      bluraySupport = false;
-      dvdnavSupport = false;
-      ffmpeg = pkgs.ffmpeg-full.override {
-        nonfreeLicensing = true;
-        fdkaacExtlib = true;
-        qtFaststartProgram = false;
-        enableLto = true;
-        nvenc = false;
-        fdk_aac = pkgs.fdk_aac;
-      };
+    (pkgs.buildGoPackage rec {
+      name = "jigglyroom";
+      goPackagePath = "github.com/xaverh/etc/nix/jigglyroom";
+      version = "1.0.1";
+      src = ./jigglyroom;
+      buildInputs = with pkgs; [ xorg.libX11 ];
     })
+    # libnotify # [TODO]
+    megacmd
+    mpv
     nixfmt
     nnn
     nodejs-14_x
-    pamixer
+    pamixer # [TODO]
     pavucontrol
-    slurp
+    rxvt_unicode
+    scrot
     strawberry
-    sway
-    swaylock
+    (lib.hiPrio (sudo.override { withInsults = true; }))
     sxiv
     tmux
     unrar
     unzip
     vscode
-    wl-clipboard
-    wob
+    # wob # [TODO]
+    xclip
     xsel
-    xwayland
+    haskellPackages.xmobar
     youtube-dl
     zathura
-    zsh
+    # (stdenv.mkDerivation rec { pname = "scroll"; version = "0.1"; src = builtins.fetchGit { url = "git://git.suckless.org/scroll"; }; conf = null; configFile = pkgs.lib.optionalString (conf != null) (writeText "config.def.h" conf); postPatch = pkgs.lib.optionalString (conf != null) "cp ${configFile} config.def.h"; nativeBuildInputs = [ pkgconfig ncurses ]; buildInputs = [ ]; makeFlags = [ "PREFIX=$(out)" ]; meta = { homepage = "https://git.suckless.org/scroll"; description = "This program provides a scroll back buffer for a terminal like st."; license = pkgs.lib.licenses.isc; platforms = pkgs.lib.platforms.linux; }; })
   ];
 
   programs = {
@@ -231,12 +292,12 @@ in {
       enableLsColors = false;
       loginShellInit = ''
         PATH+=":$npm_config_prefix/bin:$GOPATH/bin"
-        [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log
       '';
+      # [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log
       # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
       # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
       interactiveShellInit = ''
-        shopt -s autocd cdable_vars cdspell globstar histappend histreedit histverify
+        shopt -s autocd cdspell globstar histappend histreedit histverify
         HISTSIZE=""
         HISTFILESIZE=""
         HISTFILE="$HOME/.local/bash_history"
@@ -326,6 +387,10 @@ in {
             }
             curl $opts -F f:1='<-' $* ix.io/$id
         }
+        bind '"\t":menu-complete'
+        bind "set show-all-if-ambiguous on"
+        bind "set completion-ignore-case on"
+        bind "set menu-complete-display-prefix on"
       '';
       promptInit = ''
         PROMPT_COMMAND='[[ $? == 0 ]] && es= || es="$? "; history -n; history -w; history -c; history -r'
@@ -345,19 +410,20 @@ in {
     # npm.npmrc = "";
     # udevil.enable = true;
     vim.defaultEditor = true;
-    zsh = {
-      enable = true;
-      shellInit = "export ZDOTDIR=~/.config/zsh";
-      histFile = "~/.local/zsh_history";
-      histSize = 2147483647;
-      promptInit = "";
-      setOptions = [ "emacs" ];
-    };
+    # zsh = {
+    # enable = true;
+    # shellInit = "export ZDOTDIR=~/.config/zsh";
+    # histFile = "~/.local/zsh_history";
+    # histSize = 2147483647;
+    # promptInit = "";
+    # setOptions = [ "emacs" ];
+    # };
   };
 
   services.openssh.enable = false;
   services.openssh.permitRootLogin = "no";
   services.openssh.passwordAuthentication = false;
+
   services.gnome3.gnome-keyring.enable = true;
   programs.ssh.startAgent = true;
 
@@ -385,20 +451,27 @@ in {
 
   services.xserver = {
     autorun = false;
+    # desktopManager.default = "none"; # [TODO]
     exportConfiguration = true;
     enable = true;
-    inputClassSections = [''
-      Identifier "devname"
-      Driver "libinput"
-      MatchIsPointer "on"
-      Option "NaturalScrolling" "false"
-    ''];
     libinput.horizontalScrolling = false;
     libinput.naturalScrolling = true;
     libinput.disableWhileTyping = true;
     libinput.enable = true;
-    libinput.tappingDragLock = true; # ???
-    displayManager.startx.enable = false;
+    libinput.tappingDragLock = true;
+    displayManager.startx.enable = true;
+    windowManager.dwm = { enable = true; };
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = null; # [FIXME]
+      extraPackages = haskellPackages: [
+        haskellPackages.xmonad-contrib
+        haskellPackages.xmonad-extras
+        haskellPackages.xmonad
+        haskellPackages.xmobar
+      ];
+    };
   };
 
   # https://gist.github.com/caadar/7884b1bf16cb1fc2c7cde33d329ae37f
@@ -467,6 +540,8 @@ in {
     };
   };
 
+  #  security.pam.services.xha.enableGnomeKeyring = true; # [FIXME]
+
   environment = {
     shellAliases = {
       ip = "ip --color=auto";
@@ -491,7 +566,8 @@ in {
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_DATA_HOME = "$HOME/.local/share";
-      ABDUCO_SOCKET_DIR = "$XDG_RUNTIME_DIR";
+      RXVT_SOCKET = "$XDG_RUNTIME_DIR/urxvtd";
+      # ABDUCO_SOCKET_DIR = "$XDG_RUNTIME_DIR";
       GOPATH = "${XDG_DATA_HOME}/go";
       GNUPGHOME = "$HOME/.local/gnupg";
       LESSHISTFILE = "${XDG_CACHE_HOME}/less_history";
@@ -502,14 +578,14 @@ in {
       WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
       CM_DIR = "$XDG_RUNTIME_DIR";
-      MOZ_ENABLE_WAYLAND = "1";
-      QT_QPA_PLATFORM = "wayland";
+      # MOZ_ENABLE_WAYLAND = "1";
+      # QT_QPA_PLATFORM = "wayland";
       FZF_DEFAULT_OPTS = "--cycle --color=16";
       FZF_COMPLETION_TRIGGER = "?";
       NNN_COLORS = "4256";
       NNN_OPTS = "xe";
       NNN_PLUG =
-        "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_|mpv \\$nnn;V:-_mpv --shuffle \\$nnn*;u:-uidgid;G:getplugs";
+        "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_mpv --force-window=yes \\$nnn*;V:-_mpv --shuffle --force-window=yes \\$nnn*;u:-uidgid;G:getplugs";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
       NNN_BMS = "t:/tmp;v:/var/tmp;r:$XDG_RUNTIME_DIR;b:~/usr/edu/biz";
       LESS_TERMCAP_mb = "[00;34m";
@@ -519,7 +595,7 @@ in {
       LESS_TERMCAP_me = "[0m";
       GROFF_NO_SGR = "1";
       LS_COLORS =
-        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=9:mh=4;35:pi=0;33:so=0;32:do=4;32:bd=4;34;58;5;46:cd=4;34;58;5;43:ex=1;31:ca=1;4;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=0;38;5;232;48;2;221;224;90:*.jsx=0;38;5;232;48;2;221;224;90:*.ts=0;48;2;43;116;137;38;5;231:*.tsx=0;48;2;43;116;137;38;5;231:*.vue=0;38;2;44;62;80;48;2;65;184;131:*.cpp=0;48;2;243;75;125:*.cxx=0;48;2;243;75;125:*.cc=0;48;2;243;75;125:*.hpp=0;48;2;243;75;125:*.hxx=0;48;2;243;75;125:*.hh=0;48;2;243;75;125:*.c=7:*.h=7:*.go=0;38;5;231;48;2;0;173;216:*.svelte=0;48;5;231;38;2;255;62;0:*.lua=0;48;2;0;0;128;38;5;231:*.html=0;38;5;231;48;2;227;76;38:*.htm=0;38;5;231;48;2;227;76;38:*.xhtml=0;38;5;231;48;2;227;76;38:*.css=0;38;5;231;48;2;86;61;124:*.scss=0;38;5;231;48;2;207;100;154:*.sass=0;38;5;231;48;2;207;100;154:*.nix=0;48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.pid=38;5;8:*.swp=38;5;8:*.tmp=38;5;8:*.bak=38;5;8:*.orig=38;5;8:*.lock=38;5;8:*.log=38;5;8:*~=38;5;8:*COPYRIGHT=38;5;8:*LICENSE=38;5;8:*LICENSE-MIT=38;5;8:*COPYING=38;5;8:*LICENSE-APACHE=38;5;8:";
+        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=2:mh=4;35:pi=33:so=32:do=4;32:bd=21;34;58;5;6:cd=21;34;58;5;3:ex=1;31:ca=1;4;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=38;2;23;23;23;48;2;221;224;90:*.jsx=38;2;23;23;23;48;2;221;224;90:*.ts=48;2;43;116;137;38;2;229;230;230:*.tsx=48;2;43;116;137;38;2;229;230;230:*.vue=38;2;44;62;80;48;2;65;184;131:*.cpp=48;2;243;75;125:*.cxx=48;2;243;75;125:*.cc=48;2;243;75;125:*.hpp=48;2;243;75;125:*.hxx=48;2;243;75;125:*.hh=48;2;243;75;125:*.c=7:*.h=7:*.go=38;2;229;230;230;48;2;0;173;216:*.hs=38;2;94;80;134;48;2;235;228;243:*.svelte=48;2;229;230;230;38;2;255;62;0:*.lua=48;2;0;0;128;38;2;229;230;230:*.html=38;2;229;230;230;48;2;227;76;38:*.htm=38;2;229;230;230;48;2;227;76;38:*.xhtml=38;2;229;230;230;48;2;227;76;38:*.css=38;2;229;230;230;48;2;86;61;124:*.scss=38;2;229;230;230;48;2;207;100;154:*.sass=38;2;229;230;230;48;2;207;100;154:*.nix=48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.errors=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.pid=90:*.swp=90:*.tmp=90:*.bak=90:*.orig=90:*.lock=90:*.log=90:*~=90:*COPYRIGHT=90:*LICENSE=90:*LICENSE-MIT=90:*COPYING=90:*LICENSE-APACHE=90:";
       GREP_COLORS = "mt=1;33";
     };
     etc = {
@@ -603,7 +679,6 @@ in {
         allow_remote_control yes
         update_check_interval 0
         clipboard_control write-clipboard write-primary read-clipboard read-primary
-        linux_display_server wayland
         map kitty_mod+n new_os_window_with_cwd
         map kitty_mod+equal change_font_size all +1.0
         map kitty_mod+minus change_font_size all -1.0
@@ -716,18 +791,18 @@ in {
         set search-hadjust false
         set link-hadjust false
         set recolor-keephue true
+        set recolor-reverse-video true
+        set recolor-lightcolor ${Qolor_K}
+        set recolor-darkcolor ${Qolor_w}
       '';
     };
   };
 
-  systemd.tmpfiles.rules =
-    [ "d /mnt - - - - -" "d /root/.local 0700 root root - -" ];
+  # systemd.tmpfiles.rules = [ "d /mnt - - - - -" "d /root/.local 0700 root root - -" ];
 
   security.sudo.extraConfig = ''
     Defaults insults
   '';
-
-  security.pam.services.swaylock = { };
 
   services.journald.extraConfig = ''
     Storage=volatile
