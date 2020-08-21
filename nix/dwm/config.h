@@ -35,6 +35,8 @@ static const Layout layouts[] = {
 	{"[M]", monocle},
 };
 
+/* vim: set ft=c: */
+
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY, TAG)                                                                          \
