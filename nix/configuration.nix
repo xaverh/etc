@@ -26,52 +26,7 @@ let
   Qolor_I = "#1680ac"; # Cerulean
   Qolor_E = "#ed2939"; # Alizarin
   Qolor_A = "#e9a700"; # Gamboge
-  Yolor_K = "#f6f5f4"; # Traffic White
-  Yolor_R = "#e32791"; # Deep Cerise
-  Yolor_G = "#488432"; # La Palma
-  Yolor_Y = "#a25d0e"; # Golden Brown
-  Yolor_B = "#2c65b5"; # Cerulean Blue
-  Yolor_M = "#b062a7"; # Violet Blue
-  Yolor_C = "#27bbbe"; # Light Sea Green
-  Yolor_W = "#999999"; # Pearl Light Grey
-  Yolor_k = "#b8b8b8"; # Fortress Grey
-  Yolor_r = "#9f1b66"; # Jazzberry Jam
-  Yolor_g = "#325d23"; # Parsley
-  Yolor_y = "#71410a"; # Raw Umber
-  Yolor_b = "#1f477f"; # Bahama Blue
-  Yolor_m = "#7b4474"; # Eminence
-  Yolor_c = "#1b8486"; # Atoll
-  Yolor_w = "#424242"; # Meaning of Everything Grey
-  Yolor_X = "#baddff"; # Onahau
-  Yolor_J = "#edece8"; # Signal White
-  Yolor_L = "#dcdad7"; # Skating Lessons
-  Yolor_Q = "#0f3a4b"; # Cyprus
-  Yolor_q = "#002fa7"; # International Yves Klein Blue
-  Yolor_P = "#553a63"; # Love Symbol #2
-  Yolor_O = "#964f00"; # Saddle Brown
-  Yolor_I = "#20bbfc"; # Deep Sky Blue
-  Yolor_E = "#e11a27"; # 🇨🇭 Red
-  Yolor_A = "#c08a00"; # Dark Goldenrod
   Djungle_Love = "#affe69"; # Djungle Love
-  # "#fff1e5": # Financial Times BG
-  # "#262a33": # Financial Times BG Black / N.N.
-  # "#fff9f5": # Financial Times BG J / Sugar Milk
-  # "#f2dfce": # Financial Times BG L / N.N.
-  # "#f2e5da": # Financial Times BG L / N.N.
-  # "#faeadc": # Financial Times BG L / N.N.
-  # "#ccc1b7": # Financial Times BG L / N.N.
-  # "#008845": # Financial Times UI Green / N.N.
-  # "#ffec1a": # Financial Times UI Yellow / Gadsden
-  # "#0d7680": # Financial Times UI Teal / N.N.
-  # "#cce6ff": # Financial Times UI Cyan / N.N.
-  # "#0f5499": # Financial Times UI/Text Blue / N.N.
-  # "#990f3d": # Financial Times UI/Text Magenta / N.N.
-  # "#3a1929": # Financial Times UI/Text Dark Red / N.N.
-  # "#ff767c": # Financial Times Text Pink / N.N.
-  # "#9cd321": # Financial Times Text Green / N.N.
-  # "#cf191d": # Financial Times Text Red / N.N.
-  # "#0a5e66": # Financial Times Text Blue / N.N.
-
 in {
   imports = [ ./hardware-configuration.nix ./vscode.nix ];
 
@@ -124,28 +79,9 @@ in {
 
   time.timeZone = "Europe/Berlin";
 
-  nixpkgs.overlays = [
-    (import /etc/nixos/firefox-overlay.nix)
-    (self: super: {
-      st = super.st.override {
-        patches = builtins.map super.fetchurl [
-          {
-            url =
-              "https://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff";
-            sha256 = "1cpap2jz80n90izhq5fdv2cvg29hj6bhhvjxk40zkskwmjn6k49j";
-          }
-          {
-            url =
-              "https://st.suckless.org/patches/clipboard/st-clipboard-0.8.3.diff";
-            sha256 = "1h1nwilwws02h2lnxzmrzr69lyh6pwsym21hvalp9kmbacwy6p0g";
-          }
-        ];
-      };
-    })
-  ];
+  nixpkgs.overlays = [ (import /etc/nixos/firefox-overlay.nix) ];
 
   nixpkgs.config = {
-    st.conf = builtins.readFile ./st-config.h;
     allowUnfree = true;
     packageOverrides = pkgs: {
       dmenu = pkgs.dmenu.override {
@@ -214,7 +150,7 @@ in {
     };
   };
 
-  vscode.user = "xha";
+  vscode.user = "xha"; # [HACK]
   vscode.homeDir = "/home/xha";
   vscode.extensions = with pkgs.vscode-extensions; [ ms-vscode.cpptools ];
 
@@ -235,8 +171,8 @@ in {
       buildInputs = with pkgs.xorg; [ libX11 libXinerama libXft ];
       makeFlags = [ "PREFIX=$(out)" "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
       postPatch = ''
-                cp -v ${conf} config.h
-              '';
+        cp -v ${conf} config.h
+      '';
       patches = ./dwm-coloremoji-6.2.diff;
       buildPhase = "make";
       meta = {
@@ -281,10 +217,8 @@ in {
     # wob # [TODO]
     xclip
     xsel
-    haskellPackages.xmobar
     youtube-dl
     zathura
-    # (stdenv.mkDerivation rec { pname = "scroll"; version = "0.1"; src = builtins.fetchGit { url = "git://git.suckless.org/scroll"; }; conf = null; configFile = pkgs.lib.optionalString (conf != null) (writeText "config.def.h" conf); postPatch = pkgs.lib.optionalString (conf != null) "cp ${configFile} config.def.h"; nativeBuildInputs = [ pkgconfig ncurses ]; buildInputs = [ ]; makeFlags = [ "PREFIX=$(out)" ]; meta = { homepage = "https://git.suckless.org/scroll"; description = "This program provides a scroll back buffer for a terminal like st."; license = pkgs.lib.licenses.isc; platforms = pkgs.lib.platforms.linux; }; })
   ];
 
   programs = {
@@ -292,8 +226,8 @@ in {
       enableLsColors = false;
       loginShellInit = ''
         PATH+=":$npm_config_prefix/bin:$GOPATH/bin"
+        [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
       '';
-      # [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec sway -d 2> $XDG_RUNTIME_DIR/sway.log
       # https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash
       # http://unix.stackexchange.com/questions/18212/bash-history-ignoredups-and-erasedups-setting-conflict-with-common-history/18443#18443HISTCONTROL=ignoredups:erasedups
       interactiveShellInit = ''
@@ -410,14 +344,6 @@ in {
     # npm.npmrc = "";
     # udevil.enable = true;
     vim.defaultEditor = true;
-    # zsh = {
-    # enable = true;
-    # shellInit = "export ZDOTDIR=~/.config/zsh";
-    # histFile = "~/.local/zsh_history";
-    # histSize = 2147483647;
-    # promptInit = "";
-    # setOptions = [ "emacs" ];
-    # };
   };
 
   services.openssh.enable = false;
@@ -461,17 +387,6 @@ in {
     libinput.tappingDragLock = true;
     displayManager.startx.enable = true;
     windowManager.dwm = { enable = true; };
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      config = null; # [FIXME]
-      extraPackages = haskellPackages: [
-        haskellPackages.xmonad-contrib
-        haskellPackages.xmonad-extras
-        haskellPackages.xmonad
-        haskellPackages.xmobar
-      ];
-    };
   };
 
   # https://gist.github.com/caadar/7884b1bf16cb1fc2c7cde33d329ae37f
@@ -504,11 +419,7 @@ in {
   };
   fonts = {
     enableDefaultFonts = false;
-    fonts = with pkgs; [
-      ibm-plex
-      joypixels
-      # (pkgs.iosevka.override { privateBuildPlan = { family = "Iosifovich"; design = [ "cv25" "cv40" "VXCA" "cv93" "cv51" "cv46" "cv16" "cv22" "cv29" "cv63" "cv33" "cv34" "cv38" "VXAI" "VXDA" "VXAT" "VXAE" "VXBV" "VXBR" "VXCZ" "cv96" "cv83" "VXAO" ]; upright = [ "VXBU" "cv09" "cv05" "cv01" "cv52" "cv11" ]; italic = [ "cv08" "cv24" "cv04" "cv02" "cv53" "cv45" "VXBS" "VXBM" "cv57" "VXBE" "cv78" "VXBA" ]; }; set = "Iosifovich"; })
-    ];
+    fonts = with pkgs; [ ibm-plex joypixels ];
     fontconfig = rec {
       dpi = 96; # hardware
       allowBitmaps = true;
@@ -516,8 +427,7 @@ in {
       hinting.enable = if dpi > 200 then false else true;
       subpixel.lcdfilter = if dpi > 200 then "none" else "default";
       defaultFonts.emoji = [ "JoyPixels" ];
-      defaultFonts.monospace =
-        [ "PragmataPro" "PragmataPro Mono Liga" "IBM Plex Mono" ];
+      defaultFonts.monospace = [ "PragmataPro" "IBM Plex Mono" ];
       defaultFonts.sansSerif =
         [ "IBM Plex Sans" "Segoe UI" "Segoe UI Historic" "PingFang SC" ];
       defaultFonts.serif = [
@@ -539,8 +449,6 @@ in {
         </fontconfig>'';
     };
   };
-
-  #  security.pam.services.xha.enableGnomeKeyring = true; # [FIXME]
 
   environment = {
     shellAliases = {
@@ -567,7 +475,6 @@ in {
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_DATA_HOME = "$HOME/.local/share";
       RXVT_SOCKET = "$XDG_RUNTIME_DIR/urxvtd";
-      # ABDUCO_SOCKET_DIR = "$XDG_RUNTIME_DIR";
       GOPATH = "${XDG_DATA_HOME}/go";
       GNUPGHOME = "$HOME/.local/gnupg";
       LESSHISTFILE = "${XDG_CACHE_HOME}/less_history";
@@ -578,8 +485,6 @@ in {
       WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
       CM_DIR = "$XDG_RUNTIME_DIR";
-      # MOZ_ENABLE_WAYLAND = "1";
-      # QT_QPA_PLATFORM = "wayland";
       FZF_DEFAULT_OPTS = "--cycle --color=16";
       FZF_COMPLETION_TRIGGER = "?";
       NNN_COLORS = "4256";
@@ -604,7 +509,6 @@ in {
         . ${pkgs.fzf}/share/fzf/completion.bash
         [[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash
         . ${pkgs.vscode}/lib/vscode/resources/completions/bash/code
-
       '';
       "iwd/main.conf".text = ''
         [General]
@@ -612,150 +516,6 @@ in {
         UseDefaultInterface=true
         [Network]
         NameResolvingService=systemd
-      '';
-      "xdg/kitty/kitty.conf".text = ''
-        font_size 12
-        font_features IBMPlexMono +zero
-        cursor ${Qolor_X}
-        cursor_text_color background
-        cursor_shape block
-        cursor_stop_blinking_after 120.0
-        scrollback_lines -1
-        mouse_hide_wait -1
-        url_color ${Qolor_I}
-        url_style curly
-        copy_on_select clipboard
-        strip_trailing_spaces smart
-        select_by_word_characters $@-./_~?&=%+#
-        pointer_shape_when_grabbed beam
-        sync_to_monitor no
-        enable_audio_bell no
-        visual_bell_duration 0.2
-        command_on_bell none
-        remember_window_size  no
-        initial_window_width  100c
-        initial_window_height 24c
-        window_padding_width 12
-        active_border_color ${Qolor_I}
-        inactive_border_color ${Qolor_P}
-        bell_border_color ${Qolor_E}
-        inactive_text_alpha 0.9
-        resize_in_steps yes
-        tab_bar_edge top
-        tab_fade 0.25 0.5 0.75 1
-        active_tab_foreground ${Qolor_w}
-        active_tab_background ${Qolor_J}
-        active_tab_font_style bold
-        inactive_tab_foreground ${Qolor_W}
-        inactive_tab_background ${Qolor_K}
-        inactive_tab_font_style italic
-        foreground ${Qolor_w}
-        background ${Qolor_K}
-        selection_foreground none
-        selection_background ${Qolor_q}
-        color0 ${Qolor_K}
-        color1 ${Qolor_R}
-        color2 ${Qolor_G}
-        color3 ${Qolor_Y}
-        color4 ${Qolor_B}
-        color5 ${Qolor_M}
-        color6 ${Qolor_C}
-        color7 ${Qolor_W}
-        color8 ${Qolor_k}
-        color9 ${Qolor_r}
-        color10 ${Qolor_g}
-        color11 ${Qolor_y}
-        color12 ${Qolor_b}
-        color13 ${Qolor_m}
-        color14 ${Qolor_c}
-        color15 ${Qolor_w}
-        mark1_foreground ${Qolor_K}
-        mark1_background ${Qolor_Q}
-        mark2_foreground ${Qolor_K}
-        mark2_background ${Qolor_O}
-        mark3_foreground ${Qolor_K}
-        mark3_background ${Qolor_P}
-        close_on_child_death yes
-        allow_remote_control yes
-        update_check_interval 0
-        clipboard_control write-clipboard write-primary read-clipboard read-primary
-        map kitty_mod+n new_os_window_with_cwd
-        map kitty_mod+equal change_font_size all +1.0
-        map kitty_mod+minus change_font_size all -1.0
-        map shift+page_up scroll_page_up
-        map shift+page_down scroll_page_down
-      '';
-      "xdg/kitty/ysgrifennwr.conf".text = ''
-        cursor ${Yolor_X}
-        url_color ${Yolor_I}
-        active_border_color ${Yolor_I}
-        inactive_border_color ${Yolor_P}
-        bell_border_color ${Yolor_E}
-        active_tab_foreground ${Yolor_w}
-        active_tab_background ${Yolor_J}
-        inactive_tab_foreground ${Yolor_W}
-        inactive_tab_background ${Yolor_K}
-        foreground ${Yolor_w}
-        background ${Yolor_K}
-        selection_background ${Yolor_q}
-        color0 ${Yolor_K}
-        color1 ${Yolor_R}
-        color2 ${Yolor_G}
-        color3 ${Yolor_Y}
-        color4 ${Yolor_B}
-        color5 ${Yolor_M}
-        color6 ${Yolor_C}
-        color7 ${Yolor_W}
-        color8 ${Yolor_k}
-        color9 ${Yolor_r}
-        color10 ${Yolor_g}
-        color11 ${Yolor_y}
-        color12 ${Yolor_b}
-        color13 ${Yolor_m}
-        color14 ${Yolor_c}
-        color15 ${Yolor_w}
-        mark1_foreground ${Yolor_K}
-        mark1_background ${Yolor_Q}
-        mark2_foreground ${Yolor_K}
-        mark2_background ${Yolor_O}
-        mark3_foreground ${Yolor_K}
-        mark3_background ${Yolor_P}
-      '';
-      "xdg/kitty/fish-and-chips.conf".text = ''
-        cursor ${Yolor_X}
-        url_color ${Yolor_I}
-        active_border_color ${Yolor_I}
-        inactive_border_color ${Yolor_P}
-        bell_border_color ${Yolor_E}
-        active_tab_foreground #192126
-        active_tab_background ${Yolor_J}
-        inactive_tab_foreground #736c67
-        inactive_tab_background #FFF1E5
-        foreground #192126
-        background #FFF1E5
-        selection_background ${Yolor_q}
-        color0  #fff1e5
-        color1  #cf191d
-        color2  #9cd321
-        color3  #ff820c
-        color4  #002fa7
-        color5  #990f3d
-        color6  #0d7680
-        color7  #736c67
-        color8  #ccc1b7
-        color9  #660d0e
-        color10 #4e6a10
-        color11 #854000
-        color12 #001854
-        color13 #4d081f
-        color14 #063c41
-        color15 #192126
-        mark1_foreground #FFF1E5
-        mark1_background ${Yolor_Q}
-        mark2_foreground #FFF1E5
-        mark2_background ${Yolor_O}
-        mark3_foreground #FFF1E5
-        mark3_background ${Yolor_P}
       '';
       "xdg/mimeapps.list".text = ''
         [Default Applications]
@@ -797,8 +557,6 @@ in {
       '';
     };
   };
-
-  # systemd.tmpfiles.rules = [ "d /mnt - - - - -" "d /root/.local 0700 root root - -" ];
 
   security.sudo.extraConfig = ''
     Defaults insults
