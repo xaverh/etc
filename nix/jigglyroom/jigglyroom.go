@@ -21,7 +21,7 @@ import (
 
 const (
 	dateAndTimeFormat = "Mon 2 Jan 15:04:05 MST"
-	separatorModules  = "  "
+	separatorModules  = "\u2009"
 	thermalZone       = "1"
 )
 
@@ -58,10 +58,10 @@ func siPrefix(n int) string {
 			prefix = "k"
 		}
 
-		return fmt.Sprintf("%.1f\u2009%s", d, prefix)
+		return fmt.Sprintf("%.1f%s", d, prefix)
 
 	}
-	return fmt.Sprintf("%d\u2009%s", n, prefix)
+	return fmt.Sprintf("%d%s", n, prefix)
 }
 
 func updateTemperature(c chan<- string, thermalZone string) {
@@ -70,7 +70,7 @@ func updateTemperature(c chan<- string, thermalZone string) {
 		if err != nil {
 			c <- "temp unknown"
 		} else {
-			c <- fmt.Sprintf("θ\u2009%s\u2009°C%s", string(θ)[:len(θ)-4], separatorModules)
+			c <- fmt.Sprintf("%s°C%s", string(θ)[:len(θ)-4], separatorModules)
 		}
 		time.Sleep(time.Duration(6967 * time.Millisecond))
 	}
@@ -108,7 +108,7 @@ func updateBtrfsUse(c chan<- string) {
 		out, err := exec.Command("/run/current-system/sw/bin/btrfs", "filesystem", "usage", "--si", "/").Output()
 		if err == nil {
 			matches := btrfsRegex.FindStringSubmatch(string(out))
-			c <- fmt.Sprintf("/ %s\u2009%s%s", matches[1], matches[2], separatorModules)
+			c <- fmt.Sprintf("%s%s%s", matches[1], matches[2], separatorModules)
 		} else {
 			c <- ""
 			time.Sleep(time.Duration(24 * time.Hour))
@@ -147,7 +147,7 @@ func updateMemUse(c chan<- string) {
 			}
 		}
 		file.Close()
-		c <- fmt.Sprintf("m %sB%s", siPrefix(used*1000), separatorModules)
+		c <- fmt.Sprintf("%sB%s", siPrefix(used*1000), separatorModules)
 		time.Sleep(time.Duration(5077 * time.Millisecond))
 	}
 }
@@ -232,12 +232,12 @@ func updatePower(c chan<- string) {
 		}
 
 		enPerc = enNow * 100 / enFull
-		icon := "🔋"
+		icon := ""
 		if string(plugged) == "1\n" {
 			icon = "🔌"
 		}
 
-		c <- fmt.Sprintf("%d%%%s%s", enPerc, icon, separatorModules)
+		c <- fmt.Sprintf("%s%d%%%s", icon, enPerc, separatorModules)
 		time.Sleep(time.Duration(2027 * time.Millisecond))
 	}
 }
@@ -250,7 +250,7 @@ func updateWIFI(c chan<- string) {
 				ssidStrings := ssidRegex.FindStringSubmatch(string(iwOutput))
 				if len(ssidStrings) > 0 {
 					ssidString := ssidStrings[0]
-					c <- ssidString[6:len(ssidString)-1] + "\u2009" + string(iwOutput)[22:30] + separatorModules
+					c <- ssidString[6:len(ssidString)-1] + "\u202f" + string(iwOutput)[22:30] + separatorModules
 				}
 			} else {
 				c <- "no WiFi" + separatorModules

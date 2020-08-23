@@ -84,12 +84,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      dmenu = pkgs.dmenu.override {
-        patches = pkgs.dmenu.patches ++ [
-          ./dmenu-allowcoloremoji-4.9.diff # [TODO] move into configuration.nix and apply color variables
-          ./dmenu-qillqaqconfig-4.9.diff
-        ];
-      };
       mpv = pkgs.mpv-unwrapped.override {
         bluraySupport = false;
         dvdnavSupport = false;
@@ -102,12 +96,23 @@ in {
           fdk_aac = pkgs.fdk_aac;
         };
       };
+      nnn = pkgs.nnn.overrideAttrs (old: {
+        buildInputs = old.buildInputs
+          ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) ];
+        makeFlags = old.makeFlags ++ [
+          "O_ICONS=1"
+          "CFLAGS+=-march=ivybridge"
+          "CFLAGS+=-O3"
+          "SHELL=${pkgs.bashInteractive_5}/bin/bash"
+        ];
+        patches = [ ./nnn-icons.diff ];
+      });
       rxvt-unicode-unwrapped = pkgs.rxvt-unicode-unwrapped.overrideAttrs (old: {
-        version = "9.22.2020816";
+        version = "9.22.2020823";
         src = pkgs.fetchcvs {
           cvsRoot = ":pserver:anonymous@cvs.schmorp.de/schmorpforge";
           module = "rxvt-unicode";
-          date = "2020-08-16";
+          date = "2020-08-23";
           sha256 = "0iwl2r8aarbzbzrdkmf94r2bdzijm1nsdvr61srcz85kllzayivx";
         };
         configureFlags = [
@@ -117,13 +122,29 @@ in {
           "--with-codesets=all"
           "--disable-transparency"
           "--disable-next-scroll"
+          "--disable-rxvt-scroll"
           "--disable-xterm-scroll"
           "--disable-slipwheeling"
+          "--disable-fading"
+          "--disable-transparency"
         ];
         makeFlags = (old.makeFlags or [ ])
           ++ [ "CFLAGS+=-march=ivybridge" "CFLAGS+=-O3" ];
-        patches = old.patches ++ [ ./urxvt-patch-emoji ];
+        patches = old.patches
+          ++ [ ./urxvt-wcwidthcallback.patch ./urxvt-line-spacing-fix.patch ];
       });
+      slock = pkgs.slock.override {
+        conf = ''
+          static const char *user  = "nobody";
+          static const char *group = "nogroup";
+          static const char *colorname[NUMCOLS] = {
+          	[INIT] =   "black",
+          	[INPUT] =  "${Qolor_Q}",
+          	[FAILED] = "${Qolor_R}",
+          };
+          static const int failonclear = 1;
+           '';
+      };
       vim = (pkgs.vim.overrideAttrs (old: {
         buildInputs = old.buildInputs
           ++ [ (pkgs.lib.hiPrio pkgs.bashInteractive_5) pkgs.python3 ];
@@ -158,7 +179,12 @@ in {
     (lib.hiPrio bashInteractive_5)
     brave
     clipmenu
-    dmenu
+    (lib.hiPrio pkgs.dmenu.override {
+      patches = pkgs.dmenu.patches ++ [
+        ./dmenu-allowcoloremoji-4.9.diff # [TODO] move into configuration.nix and apply color variables
+        ./dmenu-qillqaqconfig2-4.9.diff
+      ];
+    })
     (lib.hiPrio (stdenv.mkDerivation rec {
       pname = "dwm";
       version = "6.2.r7.gbb2e722";
@@ -173,7 +199,10 @@ in {
       postPatch = ''
         cp -v ${conf} config.h
       '';
-      patches = ./dwm-coloremoji-6.2.diff;
+      patches = [
+        # ./dwm-hide_vacant_tags-6.2.diff
+        ./dwm-coloremoji-6.2.diff
+      ];
       buildPhase = "make";
       meta = {
         homepage = "https://dwm.suckless.org/";
@@ -184,7 +213,6 @@ in {
     }))
     exfat
     latest.firefox-beta-bin
-    fzf
     gimp
     git
     go
@@ -342,6 +370,7 @@ in {
       pinentryFlavor = "gnome3";
     };
     # npm.npmrc = "";
+    slock.enable = true;
     # udevil.enable = true;
     vim.defaultEditor = true;
   };
@@ -386,7 +415,7 @@ in {
     libinput.enable = true;
     libinput.tappingDragLock = true;
     displayManager.startx.enable = true;
-    windowManager.dwm = { enable = true; };
+    windowManager.dwm.enable = true;
   };
 
   # https://gist.github.com/caadar/7884b1bf16cb1fc2c7cde33d329ae37f
@@ -413,6 +442,7 @@ in {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGNEBSblJ8T4tJUSncos7NnCi3HNK7QyYRgYlhE5Dtp+ xaver.hellauer@gmail.com"
         ];
         passwordFile = "/private/xha.passwd";
+        description = "Xaver Hellauer";
       };
     };
     extraUsers.root = { shell = pkgs.bashInteractive_5; };
@@ -464,6 +494,7 @@ in {
       f = "df -H -T";
       d = "dirs -v";
       u = "du -s --si";
+      p = "ps aux | grep";
       "..." = "../..";
       "...." = "../../..";
       "....." = "../../../..";
@@ -485,14 +516,13 @@ in {
       WEECHAT_HOME = "${XDG_CONFIG_HOME}/weechat";
       XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
       CM_DIR = "$XDG_RUNTIME_DIR";
-      FZF_DEFAULT_OPTS = "--cycle --color=16";
-      FZF_COMPLETION_TRIGGER = "?";
       NNN_COLORS = "4256";
       NNN_OPTS = "xe";
       NNN_PLUG =
         "i:imgview;c:-_code -r \\$nnn*;x:sx;h:-hexview;v:-_mpv --force-window=yes \\$nnn*;V:-_mpv --shuffle --force-window=yes \\$nnn*;u:-uidgid;G:getplugs";
       NNN_SEL = "$XDG_RUNTIME_DIR/nnn_selection";
       NNN_BMS = "t:/tmp;v:/var/tmp;r:$XDG_RUNTIME_DIR;b:~/usr/edu/biz";
+      NNN_FCOLORS = "0b0304010f0e060740020a08";
       LESS_TERMCAP_mb = "[00;34m";
       LESS_TERMCAP_md = "[01;32m";
       LESS_TERMCAP_us = "[01;35m";
@@ -500,13 +530,11 @@ in {
       LESS_TERMCAP_me = "[0m";
       GROFF_NO_SGR = "1";
       LS_COLORS =
-        "rs=0:di=1;34:ln=3;35:or=3;9;35:mi=2:mh=4;35:pi=33:so=32:do=4;32:bd=21;34;58;5;6:cd=21;34;58;5;3:ex=1;31:ca=1;4;31:su=1;41:sg=1;46:tw=1;3;34;47:ow=1;34;47:st=1;3;34:*.js=38;2;23;23;23;48;2;221;224;90:*.jsx=38;2;23;23;23;48;2;221;224;90:*.ts=48;2;43;116;137;38;2;229;230;230:*.tsx=48;2;43;116;137;38;2;229;230;230:*.vue=38;2;44;62;80;48;2;65;184;131:*.cpp=48;2;243;75;125:*.cxx=48;2;243;75;125:*.cc=48;2;243;75;125:*.hpp=48;2;243;75;125:*.hxx=48;2;243;75;125:*.hh=48;2;243;75;125:*.c=7:*.h=7:*.go=38;2;229;230;230;48;2;0;173;216:*.hs=38;2;94;80;134;48;2;235;228;243:*.svelte=48;2;229;230;230;38;2;255;62;0:*.lua=48;2;0;0;128;38;2;229;230;230:*.html=38;2;229;230;230;48;2;227;76;38:*.htm=38;2;229;230;230;48;2;227;76;38:*.xhtml=38;2;229;230;230;48;2;227;76;38:*.css=38;2;229;230;230;48;2;86;61;124:*.scss=38;2;229;230;230;48;2;207;100;154:*.sass=38;2;229;230;230;48;2;207;100;154:*.nix=48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.errors=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.pid=90:*.swp=90:*.tmp=90:*.bak=90:*.orig=90:*.lock=90:*.log=90:*~=90:*COPYRIGHT=90:*LICENSE=90:*LICENSE-MIT=90:*COPYING=90:*LICENSE-APACHE=90:";
+        "rs=0:di=1;34:tw=1;3;94:ow=1;94:st=1;3;34:ex=1;31:sg=1;3;31:su=1;3;91:ca=1;4;31:ln=36:mh=96:or=38;5;64:mi=37:bd=93:cd=33:pi=32:so=92:do=4;92:*.js=38;2;23;23;23;48;2;221;224;90:*.jsx=38;2;23;23;23;48;2;221;224;90:*.ts=48;2;43;116;137;38;2;229;230;230:*.tsx=48;2;43;116;137;38;2;229;230;230:*.vue=38;2;44;62;80;48;2;65;184;131:*.cpp=48;2;243;75;125:*.cxx=48;2;243;75;125:*.cc=48;2;243;75;125:*.hpp=48;2;243;75;125:*.hxx=48;2;243;75;125:*.hh=48;2;243;75;125:*.c=7:*.h=7:*.go=38;2;229;230;230;48;2;0;173;216:*.hs=38;2;94;80;134;48;2;235;228;243:*.svelte=48;2;229;230;230;38;2;255;62;0:*.lua=48;2;0;0;128;38;2;229;230;230:*.html=38;2;229;230;230;48;2;227;76;38:*.htm=38;2;229;230;230;48;2;227;76;38:*.xhtml=38;2;229;230;230;48;2;227;76;38:*.css=38;2;229;230;230;48;2;86;61;124:*.scss=38;2;229;230;230;48;2;207;100;154:*.sass=38;2;229;230;230;48;2;207;100;154:*.nix=48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.errors=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.pid=90:*.swp=90:*.tmp=90:*.bak=90:*.orig=90:*.lock=90:*.log=90:*~=90:*COPYRIGHT=90:*LICENSE=90:*LICENSE-MIT=90:*COPYING=90:*LICENSE-APACHE=90:";
       GREP_COLORS = "mt=1;33";
     };
     etc = {
       "bashrc.local".text = ''
-        . ${pkgs.fzf}/share/fzf/key-bindings.bash
-        . ${pkgs.fzf}/share/fzf/completion.bash
         [[ -r "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash ]] && . "$npm_config_prefix"/lib/node_modules/gulp-cli/completion/bash
         . ${pkgs.vscode}/lib/vscode/resources/completions/bash/code
       '';

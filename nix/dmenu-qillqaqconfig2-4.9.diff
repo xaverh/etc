@@ -10,7 +10,7 @@ diff -up dmenu-4.9-original/config.def.h dmenu-4.9/config.def.h
 +static int topbar = 1;
  static const char *fonts[] = {
 -	"monospace:size=10"
-+	"PragmataPro:pixelsize=14",
++	"PragmataPro:pixelsize=16",
 +	"JoyPixels:pixelsize=36"
  };
 -static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */

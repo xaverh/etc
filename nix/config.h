@@ -1,7 +1,7 @@
 static int topbar = 1;
 static const char *fonts[] = {
-	"PragmataPro:pixelsize=14",
-	"JoyPixels:pixelsize=36"
+	"PragmataPro:pixelsize=18",
+	"JoyPixels:pixelsize=40"
 };
 static const char *prompt = NULL;
 static const char *colors[SchemeLast][2] = {
