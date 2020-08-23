@@ -185,11 +185,11 @@ func updateNetUse(c chan<- string) {
 
 func updatePower(c chan<- string) {
 	const powerSupply = "/sys/class/power_supply/"
-	enFull, enNow, enPerc := 0, 0, 0
 	for {
+		enFull, enNow, capacity := 0, 0, 0
 		plugged, err := ioutil.ReadFile(powerSupply + "AC/online")
 		if err != nil {
-			c <- "error"
+			c <- ""
 			time.Sleep(time.Duration(10007 * time.Second))
 			break
 		}
@@ -203,9 +203,7 @@ func updatePower(c chan<- string) {
 		readval := func(name, field string) int {
 			path := powerSupply + name + "/"
 			var file []byte
-			if tmp, err := ioutil.ReadFile(path + "energy_" + field); err == nil {
-				file = tmp
-			} else if tmp, err := ioutil.ReadFile(path + "charge_" + field); err == nil {
+			if tmp, err := ioutil.ReadFile(path + field); err == nil {
 				file = tmp
 			} else {
 				return 0
@@ -223,22 +221,60 @@ func updatePower(c chan<- string) {
 				continue
 			}
 
-			enFull += readval(name, "full")
-			enNow += readval(name, "now")
+			enFull += readval(name, "charge_full")
+			enNow += readval(name, "charge_now")
+			capacity += readval(name, "capacity")
 		}
 
 		if enFull == 0 {
-			c <- "Battery found but no readable full file"
+			c <- ""
 		}
 
-		enPerc = enNow * 100 / enFull
-		icon := ""
-		if string(plugged) == "1\n" {
-			icon = "🔌"
+		pluggedIcon := ""
+		load := enNow * 10000 / enFull / capacity
+		if string(plugged) == "0\n" {
+			switch {
+			case load < 10:
+				pluggedIcon = ""
+			case load < 20:
+				pluggedIcon = ""
+			case load < 30:
+				pluggedIcon = ""
+			case load < 40:
+				pluggedIcon = ""
+			case load < 50:
+				pluggedIcon = ""
+			case load < 60:
+				pluggedIcon = ""
+			case load < 70:
+				pluggedIcon = ""
+			case load < 80:
+				pluggedIcon = ""
+			case load < 90:
+				pluggedIcon = ""
+			default:
+				pluggedIcon = ""
+			}
+		} else {
+			switch {
+			case load < 20:
+				pluggedIcon = ""
+			case load < 30:
+				pluggedIcon = ""
+			case load < 40:
+				pluggedIcon = ""
+			case load < 60:
+				pluggedIcon = ""
+			case load < 80:
+				pluggedIcon = ""
+			case load < 90:
+				pluggedIcon = ""
+			default:
+				pluggedIcon = ""
+			}
 		}
-
-		c <- fmt.Sprintf("%s%d%%%s", icon, enPerc, separatorModules)
-		time.Sleep(time.Duration(2027 * time.Millisecond))
+		c <- fmt.Sprintf("%s%s", pluggedIcon, separatorModules)
+		time.Sleep(time.Duration(2579 * time.Millisecond))
 	}
 }
 
