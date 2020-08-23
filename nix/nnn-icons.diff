@@ -1,15 +1,15 @@
-From 88bdab601fda839065dc54926dd5208c8cb73bf9 Mon Sep 17 00:00:00 2001
+From 2ee4804aec6843f00e77cf2083ae6ff01d6252fe Mon Sep 17 00:00:00 2001
 From: Xaver Hellauer <xaver.hellauer@gmail.com>
-Date: Sun, 23 Aug 2020 22:13:04 +0200
+Date: Sun, 23 Aug 2020 23:11:38 +0200
 Subject: [PATCH] Icon Theme
 
 ---
- src/icons.h | 373 +++++++++++++++++++++++++++++-----------------------
+ src/icons.h | 381 +++++++++++++++++++++++++++++-----------------------
  src/nnn.c   |   8 +-
- 2 files changed, 209 insertions(+), 172 deletions(-)
+ 2 files changed, 217 insertions(+), 172 deletions(-)
 
 diff --git a/src/icons.h b/src/icons.h
-index 255ad37..abb308a 100644
+index 255ad37..79f82d3 100644
 --- a/src/icons.h
 +++ b/src/icons.h
 @@ -1,5 +1,3 @@
@@ -18,7 +18,7 @@ index 255ad37..abb308a 100644
  struct icon_pair {
  	const char *match;
  	const char *icon;
-@@ -15,14 +13,14 @@ struct icon_pair {
+@@ -15,14 +13,15 @@ struct icon_pair {
   * Adjust if the icons are not printed properly
   */
  
@@ -32,15 +32,16 @@ index 255ad37..abb308a 100644
 -#define IMAGE_COLOR    82 /* Chartreuse2 */
 -#define BOOKS_COLOR   202 /* OrangeRed1 */
 -#define ARCHIVE_COLOR 209 /* Salmon1 */
-+#define VIDEO_COLOR    0x44
-+#define AUDIO_COLOR    0x46
-+#define IMAGE_COLOR    0x2c
-+#define BOOKS_COLOR    0x21
-+#define ARCHIVE_COLOR  12
++#define VIDEO_COLOR       0x44
++#define AUDIO_COLOR       0x46
++#define IMAGE_COLOR       0x2c
++#define BOOKS_COLOR       0x21
++#define ARCHIVE_COLOR     12
++#define UNIMPORTANT_COLOR 8
  
  /*
   * Using symbols defined in icons-in-terminal.h, or even using icons-in-terminal is not necessary.
-@@ -30,26 +28,31 @@ struct icon_pair {
+@@ -30,26 +29,35 @@ struct icon_pair {
   * If you are using icons-in-terminal the creator recommends that you do use the symbols in the generated header.
   */
  
@@ -67,28 +68,32 @@ index 255ad37..abb308a 100644
 -	{"configure",    FILE_CONFIG,   0},
 -	{"License",      FA_COPYRIGHT,  0},
 -	{"Makefile",     FILE_CMAKE,    0},
-+	{".git",            "",          0},
-+	{"docs",            "",          0},
-+	{"node_modules",    "",          0},
-+	{"Music",           "",          0},
-+	{"pix",             "",          0},
-+	{"mov",             "",          0},
-+	{"CHANGELOG",       "",          0},
-+	{"config",          "",          0},
-+	{"configure",       "",          0},
-+	{"CMakeLists.txt",  "",          0},
-+	{"License",         "",          0},
-+	{"Makefile",        "",          0},
-+	{"gulpfile.js",     "",          0},
-+	{"Gruntfile.js",    "",          0},
-+	{"Gruntfile.coffee","",          0},
-+	{"Dockerfile",      "",          0},
-+	{".vscode",         "",          0},
-+	{"nix",             "",          0},
++	{".git",             "",          0},
++	{"docs",             "",          0},
++	{"node_modules",     "",          0},
++	{"Music",            "",          0},
++	{"pix",              "",          0},
++	{"src",              "",          0},
++	{"mov",              "",          0},
++	{"CHANGELOG",        "",          0},
++	{"config",           "",          0},
++	{"configure",        "",          0},
++	{"CMakeLists.txt",   "",          0},
++	{"License",          "",          UNIMPORTANT_COLOR},
++	{"Makefile",         "",          0},
++	{"gulpfile.js",      "",          0},
++	{"Gruntfile.js",     "",          0},
++	{"Gruntfile.coffee", "",          0},
++	{"Dockerfile",       "",          0},
++	{".vscode",          "",          0},
++	{"nix",              "",          0},
++	{".npmrc",           "",          0},
++	{"package-lock.json","",          0},
++	{"package.json",     "",          UNIMPORTANT_COLOR},
  };
  
  /*
-@@ -60,201 +63,235 @@ static const struct icon_pair icons_name[] = {
+@@ -60,201 +68,238 @@ static const struct icon_pair icons_name[] = {
  
  static const struct icon_pair icons_ext[] = {
  	/* Numbers */
@@ -149,8 +154,9 @@ index 255ad37..abb308a 100644
 +	{"c",        "",                 0},
 +	{"c++",      "",                 0},
 +	{"cab",      "",                 ARCHIVE_COLOR},
-+	{"cbr",      "",                 ARCHIVE_COLOR},
-+	{"cbz",      "",                 ARCHIVE_COLOR},
++	{"cb7",      "",                 BOOKS_COLOR},
++	{"cbr",      "",                 BOOKS_COLOR},
++	{"cbz",      "",                 BOOKS_COLOR},
 +	{"cc",       "",                 0},
 +	{"class",    "",                 0},
 +	{"clj",      "",                 0},
@@ -161,7 +167,7 @@ index 255ad37..abb308a 100644
 +	{"conf",     "",                 0},
 +	{"cpio",     "",                 ARCHIVE_COLOR},
 +	{"cpp",      "",                 0},
-+	{"css",      "",                 0},
++	{"cs",       "",                 0},
 +	{"css",      "",                 0},
 +	{"cvs",      "",                 0},
 +	{"cxx",      "",                 0},
@@ -323,6 +329,7 @@ index 255ad37..abb308a 100644
 +	{"oga",        "",               AUDIO_COLOR},
 +	{"ogg",        "",               AUDIO_COLOR},
 +	{"ogv",        "",               VIDEO_COLOR},
++	{"old",        "",               UNIMPORTANT_COLOR},
 +	{"otf",        "",               0},
 +	{"out",        "",               0},
  
@@ -340,7 +347,7 @@ index 255ad37..abb308a 100644
 -	{"pyc",      MFIZZ_PYTHON,         0},
 -	{"pyd",      MFIZZ_PYTHON,         0},
 -	{"pyo",      MFIZZ_PYTHON,         0},
-+	{"part",     "",                 0},
++	{"part",     "",                 UNIMPORTANT_COLOR},
 +	{"patch",    "",                 0},
 +	{"pax",      "",                 ARCHIVE_COLOR},
 +	{"pdf",      "",                 BOOKS_COLOR},
@@ -413,6 +420,7 @@ index 255ad37..abb308a 100644
 +	{"tgz",      "",                 ARCHIVE_COLOR},
 +	{"ts",       "",                 0},
 +	{"tsx",      "",                 0},
++	{"ttc",      "",                 0},
 +	{"ttf",      "",                 0},
 +	{"txt",      "",                 0},
 +	{"txz",      "",                 ARCHIVE_COLOR},
@@ -426,7 +434,7 @@ index 255ad37..abb308a 100644
 +	{"vid",      "",                 VIDEO_COLOR},
 +	{"vim",      "",                 0},
 +	{"vimrc",    "",                 0},
-+	{"vue",      "",                   0}, // ﵂
++	{"vue",      "",                 0}, // ﵂
  
  	/* W */
 -	{"wav",      FA_FILE_AUDIO_O,      AUDIO_COLOR},
