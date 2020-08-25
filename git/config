@@ -8,7 +8,6 @@
 [core]
 	# editor = code --wait
 	whitespace = fix
-	excludesfile = /home/xha/.config/gitignore_global
 [diff]
 	tool = default-difftool
 [difftool "default-difftool"]
