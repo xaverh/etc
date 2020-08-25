@@ -53,6 +53,8 @@ set showcmd
 set sidescroll=1
 set sidescrolloff=5
 set smarttab
+set splitbelow
+set splitright
 set nostartofline
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.png,.jpg
 set tabpagemax=50
