@@ -146,11 +146,20 @@ static unsigned int cursorstyle = 5;
 static Rune stcursor = 0x1F4A9;
 
 /*
+ * Whether to use pixel geometry or cell geometry
+ */
+
+static Geometry geometry = CellGeometry;
+
+/*
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 100;
+static unsigned int cols = 80;
 static unsigned int rows = 24;
+
+static unsigned int width = 564;
+static unsigned int height = 364;
 
 /*
  * Default colour and shape of the mouse cursor

@@ -57,6 +57,40 @@ static void halfandcentered(const Arg *arg)
 	Arg arg3 = {.i=TWOBWM_TELEPORT_CENTER};
 	teleport(&arg3);
 }
+
+#define MAX_BACKLIGHT 4882
+static void read_int(const char* file_name, int* i)
+{
+	FILE* file = fopen(file_name, "r");
+	fscanf(file, "%d", i);
+	fclose(file);
+}
+static void write_int(const char* file_name, int i)
+{
+	FILE* file = fopen(file_name, "w");
+	fprintf(file, "%d", i);
+	fclose(file);
+}
+/*
+void write_to_xob(int i)
+{
+	FILE* stream;
+	stream = fopen("/var/tmp/xobpipe", "w");
+	fprintf(stream, "%d\n", i);
+	fclose(stream);
+}
+*/
+static void change_backlight(const Arg* arg)
+{
+	int cur;
+	read_int("/sys/class/backlight/intel_backlight/actual_brightness", &cur);
+	int new = cur + arg->i;
+	new = (new < MAX_BACKLIGHT) ? new : MAX_BACKLIGHT;
+	new = (new >= 0) ? new : 0;
+	write_int("/sys/class/backlight/intel_backlight/brightness", new);
+/*	write_to_xob(new); */
+}
+
 ///---Sloppy focus behavior---///
 /*
  * Command to execute when switching from sloppy focus to click to focus
@@ -178,12 +212,14 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Right,      cursor_move,       {.i=TWOBWM_CURSOR_RIGHT}},
     {  MOD |SHIFT,        XK_Left,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT}},
     // Start programs
-    {  MOD ,              XK_w,          start,             {.com = menucmd}},
+    {  MOD ,              XK_space,      start,             {.com = menucmd}},
     {  MOD ,              XK_Return,     start,             {.com = termcmd}},
+    {  0,                 0x1008ff03,    change_backlight,  {.i = -128}},
+	{  0,                 0x1008ff02,    change_backlight,  {.i = 128}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
-    {  MOD ,              XK_space,      halfandcentered,   {.i=0}},
+    {  MOD ,              XK_w,          halfandcentered,   {.i=0}},
     {  MOD ,              XK_s,          toggle_sloppy,     {.com = sloppy_switch_cmd}},
     // Change current workspace
        DESKTOPCHANGE(     XK_1,                             0)

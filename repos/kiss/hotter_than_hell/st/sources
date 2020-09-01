@@ -8,3 +8,4 @@ patches/no_bright.diff
 patches/clipboard.diff
 patches/blink.diff
 patches/netwmicon.diff
+patches/anygeometry.diff
