@@ -1,5 +1,11 @@
-if [ -e /home/xha/.nix-profile/etc/profile.d/nix.sh ]; then . /home/xha/.nix-profile/etc/profile.d/nix.sh; fi
-export KISS_PATH=$HOME/etc/repos/kiss/hotter_than_hell:$HOME/etc/repos/kiss/repo/core:$HOME/etc/repos/kiss/repo/extra:$HOME/etc/repos/kiss/repo/xorg:$HOME/etc/repos/kiss/community/community
+export SSH_ENV=$HOME/.ssh/environment
+ssh-agent | grep -v echo > $SSH_ENV
+chmod 600 $SSH_ENV
+. $SSH_ENV > /dev/null
+
+[[ -e ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
+
+export KISS_PATH=$HOME/etc/repos/kiss/hotter_than_hell:$HOME/etc/repos/kiss/repo/core:$HOME/etc/repos/kiss/repo/extra:$HOME/etc/repos/kiss/repo/xorg:$HOME/etc/repos/kiss/community/community:$HOME/etc/repos/kiss/kiss-himmalerin/extra
 export KISS_HOOK=$HOME/.config/kh
 export CFLAGS='-march=native -pipe -O3 -fno-math-errno -fno-strict-aliasing -flto'
 export CXXFLAGS="$CFLAGS"
@@ -7,8 +13,8 @@ export MAKEFLAGS='-j5'
 export CCACHE_DIR=$HOME/.cache/ccache
 export PF_INFO='ascii title os host shell editor wm de kernel uptime pkgs memory palette'
 export GOPATH=$HOME/.local/share/go
-export npm_config_prefix=$HOME/.local/share/npm
 export npm_config_userconfig=$HOME/etc/npmrc
+export npm_config_prefix=$HOME/.local/share/npm
 export npm_config_cache=$HOME/.cache/npm
 export NODE_REPL_HISTORY=$HOME/.cache/node_repl_history
 export NNN_COLORS=4256
