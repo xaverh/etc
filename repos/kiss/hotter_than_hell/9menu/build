@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+patch -p1 < 9menu_xft_badly.patch
+
+cc ${CFLAGS} ${LDFLAGS} 9menu.c -I/usr/X11R6/include -I/usr/include/freetype2 -L/usr/X11R6/lib -lX11 -lXft -o 9menu
+
+install -Dm 0644 9menu.1 $1/usr/share/man/man1/9menu.1
+install -Dm 0755 9menu $1/usr/bin/9menu

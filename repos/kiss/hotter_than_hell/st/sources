@@ -1,0 +1,10 @@
+https://dl.suckless.org/st/st-0.8.4.tar.gz
+files/config.h
+files/hb.h
+files/hb.c
+files/icon.h
+patches/scroll.diff
+patches/no_bright.diff
+patches/clipboard.diff
+patches/blink.diff
+patches/netwmicon.diff
