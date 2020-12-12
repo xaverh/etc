@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-notify-send -t 3000 -i ~/.config/Icons/nnn.svg "Done!"
