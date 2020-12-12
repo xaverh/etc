@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}" # protect trailing \n
+
+if which wl-copy >/dev/null 2>&1; then
+    # Wayland
+    tr '\0' '\n' < "$NNN_SEL" | wl-copy
+elif which xclip >/dev/null 2>&1; then
+    # Linux
+    tr '\0' '\n' < "$NNN_SEL" | xclip -sel clip
+elif which xsel >/dev/null 2>&1; then
+    # Linux
+    tr '\0' '\n' < "$NNN_SEL" | xsel -bi
+elif which pbcopy >/dev/null 2>&1; then
+    # macOS
+    tr '\0' '\n' < "$NNN_SEL" | pbcopy
+elif which termux-clipboard-set >/dev/null 2>&1; then
+    # Termux
+    tr '\0' '\n' < "$NNN_SEL" | termux-clipboard-set
+elif which clip.exe >/dev/null 2>&1; then
+    # WSL
+    tr '\0' '\n' < "$NNN_SEL" | clip.exe
+elif which clip >/dev/null 2>&1; then
+    # Cygwin
+    tr '\0' '\n' < "$NNN_SEL" | clip
+fi

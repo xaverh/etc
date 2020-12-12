@@ -87,9 +87,6 @@ handle_pdf() {
     if [ "$GUI" -ne 0 ] && which zathura >/dev/null 2>&1; then
         zathura "${FPATH}" >/dev/null 2>&1 &
         exit 0
-    elif which mupdf >/dev/null 2>&1 ; then
-	    mupdf "${FPATH}" >/dev/null 2>&1 &
-        exit 0
     elif which pdftotext >/dev/null 2>&1; then
         ## Preview as text conversion
         pdftotext -l 10 -nopgbrk -q -- "${FPATH}" - | eval "$PAGER"
