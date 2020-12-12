@@ -1,0 +1,38 @@
+[user]
+	name = Xaver Hellauer
+	signingkey = 1119D14EB6DCAADB3669F8A80940C207E5E7CFEF
+	# useConfigOnly = true
+	email = xaver.hellauer@gmail.com
+[color]
+	ui = auto
+[core]
+	# editor = code --wait
+	whitespace = fix
+	excludesFiles = ~/etc/git/ignore
+[diff]
+	tool = default-difftool
+[difftool "default-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[alias]
+	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+	default = current
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	require = true
+[branch]
+	autosetuprebase = always
+
+# warning: Pulling without specifying how to reconcile divergent branches is
+# discouraged. You can squelch this message by running one of the following
+# commands sometime before your next pull:
+#
+#   git config pull.rebase false  # merge (the default strategy)
+#   git config pull.rebase true   # rebase
+#   git config pull.ff only       # fast-forward only
+#
+# You can replace "git config" with "git config --global" to set a default
+# preference for all repositories. You can also pass --rebase, --no-rebase,
+# or --ff-only on the command line to override the configured default per
+# invocation.

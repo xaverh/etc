@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+patch -p1 < nnn-icons.diff
+
+make O_NORL=1 O_ICONS=1 O_QSORT=1 strip
+make DESTDIR="$1" PREFIX=/usr install

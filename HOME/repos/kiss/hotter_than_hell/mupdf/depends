@@ -1,0 +1,15 @@
+expat
+glu
+libX11
+libXau
+libXdamage
+libXext
+libXfixes
+libXrandr
+libXrender
+libXxf86vm
+libdrm
+libressl
+libxcb
+libxshmfence
+mesa

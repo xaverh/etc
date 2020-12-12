@@ -1,0 +1,23 @@
+alsa-lib
+ffmpeg
+freetype-harfbuzz
+libass
+libXScrnSaver
+libXinerama
+libXrandr
+mesa
+pkgconf make
+python  make
+fontconfig
+lame
+libass
+libdrm
+libfdk-aac
+libjpeg-turbo
+libogg
+libpng
+libvorbis
+luajit
+opus
+x264
+x265
