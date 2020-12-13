@@ -9,10 +9,11 @@ export npm_config_cache="$XDG_CACHE_HOME/npm"
 export NODE_REPL_HISTORY="$XDG_CACHE_HOME/node_repl_history"
 export FIREFOX_INSTALL_DIR="$XDG_DATA_HOME/firefox"
 export TERMINFO_DIRS=/usr/local/share/terminfo:
+local ARCHITECTURE=haswell
 
 typeset -U path
 
-path=(/usr/local/bin /usr/bin /opt/3rd-party/bin $npm_config_prefix/bin $GOPATH/bin)
+path=(/usr/local/bin /usr/bin/haswell /usr/bin /opt/3rd-party/bin ~/src/github.com/xaverh/kiss ~/src/github.com/xaverh/kiss/contrib $npm_config_prefix/bin $GOPATH/bin)
 
 #if grep -q "flags.*:.* avx512bw" /proc/cpuinfo; then
 #        case ":${PATH:-}:" in
@@ -26,6 +27,10 @@ path=(/usr/local/bin /usr/bin /opt/3rd-party/bin $npm_config_prefix/bin $GOPATH/
 #        esac
 #fi
 
+if [[ -x /usr/bin/ccache ]] ; then
+	path=(/usr/lib64/ccache/bin $path)
+fi
+
 test -z "$TERM" && TERM="xterm" # Basic terminal capab. For screen etc.
 
 CFLAGS="-g -O3 -feliminate-unused-debug-types -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -m64 -fasynchronous-unwind-tables -Wp,-D_REENTRANT -ftree-loop-distribute-patterns -Wl,-z -Wl,now -Wl,-z -Wl,relro -fno-semantic-interposition -ffat-lto-objects -fno-trapping-math -Wl,-sort-common -Wl,--enable-new-dtags -mtune=skylake -Wa,-mbranches-within-32B-boundaries"
@@ -34,13 +39,13 @@ FCFLAGS="-g -O3 -feliminate-unused-debug-types -pipe -Wall -Wp,-D_FORTIFY_SOURCE
 
 MAKEFLAGS='-j4'
 
-CFLAGS="$CFLAGS -march=ivybridge -mtune=ivybridge -fno-math-errno -falign-functions=32 -fno-trapping-math -malign-data=abi -ftree-vectorize -ftree-loop-vectorize "
+CFLAGS="$CFLAGS -march=$ARCHITECTURE -mtune=$ARCHITECTURE -fno-math-errno -falign-functions=32 -fno-trapping-math -malign-data=abi -ftree-vectorize -ftree-loop-vectorize "
 CFLAGS="$CFLAGS -flto=auto -fgraphite-identity -floop-nest-optimize -funroll-loops -ftracer -mfpmath=both -fipa-pta -fdevirtualize-at-ltrans -fno-strict-aliasing "
 # XBPS_CFLAGS="-flto=auto -fgraphite-identity -floop-nest-optimize -funroll-loops -ftracer -mfpmath=both -fipa-pta -fdevirtualize-at-ltrans -ffat-lto-objects -flto-partition=none  -fno-strict-aliasing"
-FFLAGS="$FFLAGS -march=ivybridge -mtune=ivybridge "
-FCFLAGS="$FCFLAGS -march=ivybridge -mtune=ivybridge "
+FFLAGS="$FFLAGS -march=$ARCHITECTURE -mtune=$ARCHITECTURE "
+FCFLAGS="$FCFLAGS -march=$ARCHITECTURE -mtune=$ARCHITECTURE "
 
-export RUSTFLAGS="-C target-cpu=ivybridge -C opt-level=3 -g -Clink-args=-Wl,-z,relro,-z,now"
+export RUSTFLAGS="-C target-cpu=$ARCHITECTURE -C opt-level=3 -g -Clink-args=-Wl,-z,relro,-z,now"
 
 CXXFLAGS="$CFLAGS -fvisibility-inlines-hidden -Wl,--enable-new-dtags "
 
