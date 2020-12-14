@@ -1,0 +1,12 @@
+window:
+  padding:
+    x: &padding
+      9
+    y: *padding
+
+font:
+  normal:
+    family: PragmataPro Liga
+    style: Regular
+  size: 9
+

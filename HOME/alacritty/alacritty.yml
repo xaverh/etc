@@ -1,0 +1,47 @@
+import:
+  - ~/.config/alacritty/colorscheme.yml
+  - ~/.config/alacritty/font.yml
+
+window:
+  dimensions:
+    columns: 100
+    lines: 32
+  dynamic_padding: true
+
+scrolling:
+  history: 10000
+  multiplier: 1
+
+draw_bold_text_with_bright_colors: false
+
+bell:
+  animation: EaseOutQuint
+  duration: 64
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+cursor:
+  style:
+    shape: Block
+    blinking: Always
+  vi_mode_style: Beam
+  blink_interval: 500
+  unfocused_hollow: true
+
+live_config_reload: true
+
+mouse:
+  hide_when_typing: true
+  url:
+    launcher:
+      program: firefox
+      args: []
+    modifiers: Control
+
+mouse_bindings:
+  - { mouse: Right, action: Paste }
+
+debug:
+  log_level: None
