@@ -13,19 +13,15 @@ local ARCHITECTURE=haswell
 
 typeset -U path
 
-path=(/usr/local/bin /usr/bin/haswell /usr/bin /opt/3rd-party/bin ~/src/github.com/xaverh/kiss ~/src/github.com/xaverh/kiss/contrib $npm_config_prefix/bin $GOPATH/bin)
+path=(/usr/bin /opt/3rd-party/bin ~/src/github.com/xaverh/kiss ~/src/github.com/xaverh/kiss/contrib $npm_config_prefix/bin $GOPATH/bin)
 
-#if grep -q "flags.*:.* avx512bw" /proc/cpuinfo; then
-#        case ":${PATH:-}:" in
-#               *:/usr/bin/haswell/avx512_1:*) ;;
-#               *) PATH="/usr/bin/haswell/avx512_1:/usr/bin/haswell:$PATH" ;;
-#        esac
-#elif grep -q "flags.*:.* fma .* avx2" /proc/cpuinfo; then
-#        case ":${PATH:-}:" in
-#               *:/usr/bin/haswell:*) ;;
-#               *) PATH="/usr/bin/haswell:$PATH" ;;
-#        esac
-#fi
+if grep -q "flags.*:.* avx512bw" /proc/cpuinfo; then
+	path=(/usr/bin/haswell/avx512_1 /usr/bin/haswell $path)
+elif grep -q "flags.*:.* fma .* avx2" /proc/cpuinfo; then
+	path=(/usr/bin/haswell $path)
+fi
+
+path=(/usr/local/bin $path)
 
 if [[ -x /usr/bin/ccache ]] ; then
 	path=(/usr/lib64/ccache/bin $path)
