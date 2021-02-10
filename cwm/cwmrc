@@ -1,0 +1,79 @@
+borderwidth 2
+fontname "PragmataPro Liga:size=12"
+
+autogroup 1 Brave-browser
+autogroup 2 Code
+
+command term /usr/bin/alacritty
+command Terminal /usr/bin/alacritty
+command "Visual Studio Code" /opt/code/bin/code
+command Zathura /usr/bin/zathura
+command Brave /usr/bin/brave
+command Obsidian /usr/lib/obsidian/obsidian
+command Vim "/usr/bin/alacritty -e /usr/bin/vim"
+wm Fvwm2 /usr/bin/fvwm
+wm Fvwm fvwm
+wm Penis fvwm
+
+unbind-key all
+
+bind-key 4-comma window-vtile
+
+bind-key C4-Return terminal
+bind-key C4-Delete lock
+bind-key S4-p menu-exec
+bind-key C4-w menu-exec-wm
+bind-key 4-period menu-ssh
+bind-key 4-Return window-hide
+bind-key 4-Down window-lower
+bind-key 4-Up window-raise
+bind-key 4-slash menu-window
+bind-key 4-p menu-cmd
+bind-key 4-Tab window-cycle
+bind-key 4S-Tab window-rcycle
+bind-key C4-n window-menu-label
+bind-key S4-q window-close
+bind-key 4-0 group-toggle-all
+bind-key 4-1 group-toggle-1
+bind-key 4-2 group-toggle-2
+bind-key 4-3 group-toggle-3
+bind-key 4-4 group-toggle-4
+bind-key 4-5 group-toggle-5
+bind-key 4-6 group-toggle-6
+bind-key 4-7 group-toggle-7
+bind-key 4-8 group-toggle-8
+bind-key 4-9 group-toggle-9
+bind-key 4-Right group-cycle
+bind-key 4-Left group-rcycle
+bind-key C4-g window-group
+bind-key C4-f window-fullscreen
+bind-key C4-m window-maximize
+bind-key C4-s window-stick
+bind-key C4-equal window-vmaximize
+bind-key C4S-equal window-hmaximize
+bind-key C4S-f window-freeze
+bind-key C4S-r restart
+bind-key 4S-Escape quit
+bind-key 4-h window-move-left
+bind-key 4-j window-move-down
+bind-key 4-k window-move-up
+bind-key 4-l window-move-right
+bind-key 4S-h window-move-left-big
+bind-key 4S-j window-move-down-big
+bind-key 4S-k window-move-up-big
+bind-key 4S-l window-move-right-big
+bind-key C4-h window-resize-left
+bind-key C4-j window-resize-down
+bind-key C4-k window-resize-up
+bind-key C4-l window-resize-right
+bind-key C4S-h window-resize-left-big
+bind-key C4S-j window-resize-down-big
+bind-key C4S-k window-resize-up-big
+bind-key C4S-l window-resize-right-big
+
+bind-mouse 4-1 window-move
+bind-mouse C4-1 window-group
+bind-mouse 4-2 window-lower
+bind-mouse 4-3 window-resize
+bind-mouse C4S-3 window-hide
+

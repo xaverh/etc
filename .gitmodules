@@ -1,9 +1,0 @@
-[submodule "repos/kiss/repo"]
-	path = repos/kiss/repo
-	url = https://github.com/kisslinux/repo
-[submodule "repos/kiss/community"]
-	path = repos/kiss/community
-	url = https://github.com/kisslinux/community
-[submodule "repos/kiss/kiss-himmalerin"]
-	path = repos/kiss/kiss-himmalerin
-	url = https://git.sr.ht/~himmalerin/kiss-himmalerin

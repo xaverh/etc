@@ -3295,4 +3295,4 @@ echo '
 🏴󠁧󠁢󠁥󠁮󠁧󠁿        flag: England
 🏴󠁧󠁢󠁳󠁣󠁴󠁿        flag: Scotland
 🏴󠁧󠁢󠁷󠁬󠁳󠁿        flag: Wales
-' | dmenu -i -l 12
+' | dmenu -i -l 12 -fn "Unifont:pixelsize=16"

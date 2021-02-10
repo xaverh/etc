@@ -270,8 +270,8 @@ bindkey -M menuselect 'i' accept-and-menu-complete
 ## https://unix.stackexchange.com/questions/2179/rebuild-auto-complete-index-or-whatever-its-called-and-binaries-in-path-cach
 
 # FIXME does not work within tmux sessions
-chpwd () { print -Pn "\e]0;$TERM: ($USERNAME@$HOST) $0 %~\a"; }
-preexec () { print -n "\e]0;$TERM: ($USERNAME@$HOST) $SHELL: $2 \a"; }
+chpwd () { print -Pn "\e]0;$USERNAME@$HOST: $0 %~\a"; }
+preexec () { print -n "\e]0;$USERNAME@$HOST: $SHELL: $2 \a"; }
 
 
 function unz sx() {
