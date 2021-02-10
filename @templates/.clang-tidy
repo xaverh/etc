@@ -1,0 +1,10 @@
+Checks: "*,-modernize-use-trailing-return-type"
+CheckOptions:
+  - key: bugprone-argument-comment.StrictMode
+    value: 1
+  - key: bugprone-exception-escape.FunctionsThatShouldNotThrow
+    value: WinMain,SDL_main
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: 1
+  - key: modernize-loop-convert.MinConfidence
+    value: risky
