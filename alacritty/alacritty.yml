@@ -1,6 +1,6 @@
 import:
-  - ~/.config/alacritty/colorscheme.yml
-  - ~/.config/alacritty/font.yml
+  - /home/xha/etc/alacritty/colorscheme.yml
+  - /home/xha/etc/alacritty/font.yml
 
 window:
   dimensions:
@@ -44,4 +44,4 @@ mouse_bindings:
   - { mouse: Right, action: Paste }
 
 debug:
-  log_level: None
+  log_level: OFF

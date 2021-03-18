@@ -12,8 +12,6 @@ command Brave /usr/bin/brave
 command Obsidian /usr/lib/obsidian/obsidian
 command Vim "/usr/bin/alacritty -e /usr/bin/vim"
 wm Fvwm2 /usr/bin/fvwm
-wm Fvwm fvwm
-wm Penis fvwm
 
 unbind-key all
 
@@ -76,4 +74,3 @@ bind-mouse C4-1 window-group
 bind-mouse 4-2 window-lower
 bind-mouse 4-3 window-resize
 bind-mouse C4S-3 window-hide
-

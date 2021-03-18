@@ -132,8 +132,8 @@ Panda*color13:      #fd95d0
 Panda*color14:      #26ffd4
 Panda*color15:      #f0f0f0
 
-*.font: -sgi-screen-medium-r-normal--10-100-72-72-m-60-iso8859-1
-*.boldFont: -sgi-screen-bold-r-normal--10-100-72-72-m-70-iso8859-1
+!*.font: -sgi-screen-medium-r-normal--10-100-72-72-m-60-iso8859-1
+!*.boldFont: -sgi-screen-bold-r-normal--10-100-72-72-m-70-iso8859-1
 XTerm*cursorBlink: true
 XTerm*cursorColor: LightSalmon1
 XTerm*selectToClipboard: true
