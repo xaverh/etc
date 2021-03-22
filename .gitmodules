@@ -1,0 +1,6 @@
+[submodule "vim/pack/plugins/start/idris-vim"]
+	path = vim/pack/plugins/start/idris-vim
+	url = https://github.com/idris-hackers/idris-vim
+[submodule "vim/pack/plugins/start/deol.nvim"]
+	path = vim/pack/plugins/start/deol.nvim
+	url = https://github.com/Shougo/deol.nvim

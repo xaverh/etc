@@ -36,7 +36,8 @@ mod_statusbar.create{
     -- right, respectively, and %systray is a placeholder for system tray
     -- windows and icons.
     --
-    template="[ %wifi || load: %load || %uptime ]",
+    -- template="[ %wifi || load: %load || %uptime ]",
+    template="[ load: %load || %uptime ]",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
 }
 
@@ -50,5 +51,4 @@ mod_statusbar.launch_statusd{
         --important_threshold=1.5,
         --critical_threshold=4.0,
     },
-    wifi = {}
 }
