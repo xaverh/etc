@@ -1,0 +1,5 @@
+" set guifont=PragmataPro\ Mono\ Liga\ 12
+set guifont=SF\ Mono\ 12
+set lines=30 columns=90
+colorscheme 256_noir
+

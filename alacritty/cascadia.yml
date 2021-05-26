@@ -1,0 +1,12 @@
+window:
+  padding:
+    x: &padding
+      12
+    y: *padding
+
+font:
+  normal:
+    family: Cascadia Code PL
+    style: Regular
+  size: 12
+

@@ -1,0 +1,9 @@
+map W adjust_window width
+map H adjust_window best-fit
+set guioptions ""
+set adjust-open width
+set search-hadjust false
+set link-hadjust false
+map I set recolor true
+set recolor-keephue true
+set default-bg "#171717"

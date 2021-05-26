@@ -1,0 +1,55 @@
+colors:
+  primary:
+    background: &bg
+      '#010040'
+    foreground: &fg
+      '#ffffff'
+
+  cursor:
+    text: CellBackground
+    # cursor: CellForeground
+    cursor: '#ffa07a'
+
+  #selection:
+  #  text: CellBackground
+  #  background: CellForeground
+
+  #search:
+    #matches:
+    #  foreground: '#000000'
+    #  background: '#ffffff'
+    #focused_match:
+    #  foreground: CellBackground
+    #  background: CellForeground
+    #bar:
+    #  background: '#c5c8c6'
+    #  foreground: '#1d1f21'
+
+  normal:
+    black:   '#000000'
+    red:     '#cd0000'
+    green:   '#00cd00'
+    yellow:  '#cdcd00'
+    blue:    '#1e90ff'
+    magenta: '#cd00cd'
+    cyan:    '#00cdcd'
+    white:   '#bbbbbb'
+  bright:
+    black:   '#7f7f7f'
+    red:     '#ff0000'
+    green:   '#00ff00'
+    yellow:  '#ffff00'
+    blue:    '#cae1ff'
+    magenta: '#ff00ff'
+    cyan:    '#00ffff'
+    white:   '#ffffff'
+
+bell:
+  color: '#eee0e5'
+
+
+
+# Another choice was from the Debian settings:
+# #1e90ff		DodgerBlue1
+# #cae1ff		SteelBlue1
+#

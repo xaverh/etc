@@ -1,6 +1,6 @@
 import:
-  - /home/xha/etc/alacritty/colorscheme.yml
-  - /home/xha/etc/alacritty/font.yml
+  - /home/xha/.config/alacritty/colorscheme.yml
+  - /home/xha/.config/alacritty/font.yml
 
 window:
   dimensions:
@@ -34,11 +34,11 @@ live_config_reload: true
 
 mouse:
   hide_when_typing: true
-  url:
-    launcher:
-      program: firefox
-      args: []
-    modifiers: Control
+    #  url:
+    #launcher:
+    #  program: firefox
+    #  args: []
+    #modifiers: Control
 
 mouse_bindings:
   - { mouse: Right, action: Paste }

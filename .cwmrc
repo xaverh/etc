@@ -1,16 +1,20 @@
-borderwidth 2
-fontname "PragmataPro Liga:size=12"
+borderwidth 5
+color activeborder '#affe69'
+color inactiveborder '#00ffff'
+color groupborder '#ffff00'
+fontname "New York Small:size=12"
 
 autogroup 1 Brave-browser
 autogroup 2 Code
 
-command term /usr/bin/alacritty
-command Terminal /usr/bin/alacritty
+command term /usr/bin/kitty -1
+command Terminal /usr/bin/kitty -1
 command "Visual Studio Code" /opt/code/bin/code
 command Zathura /usr/bin/zathura
-command Brave /usr/bin/brave
+command Brave /usr/bin/brave-browser-nightly
 command Obsidian /usr/lib/obsidian/obsidian
-command Vim "/usr/bin/alacritty -e /usr/bin/vim"
+command GVim /usr/bin/gvim
+command Lite /home/xha/src/github.com/rxi/lite/lite
 wm Fvwm2 /usr/bin/fvwm
 
 unbind-key all

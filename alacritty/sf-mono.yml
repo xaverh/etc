@@ -1,12 +1,12 @@
 window:
   padding:
     x: &padding
-      9
+      12
     y: *padding
 
 font:
   normal:
     family: SF Mono
     style: Regular
-  size: 9
+  size: 12
 

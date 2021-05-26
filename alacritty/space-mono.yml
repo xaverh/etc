@@ -1,0 +1,12 @@
+window:
+  padding:
+    x: &padding
+      13
+    y: *padding
+
+font:
+  normal:
+    family: Space Mono
+    style: Regular
+  size: 13
+

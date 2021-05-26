@@ -112,30 +112,30 @@ FishChips*color15: #192126
 FishChips*foreground: #192126
 FishChips*cursorColor: #5aaadf
 
-Panda*foreground:   #f0f0f0
-Panda*background:   #1d1e20
-Panda*cursorColor:  #f0f0f0
-Panda*color0:       #1f1f20
-Panda*color1:       #fb055a
-Panda*color2:       #26ffd4
-Panda*color3:       #fdaa5a
-Panda*color4:       #5c9fff
-Panda*color5:       #fc59a6
-Panda*color6:       #26ffd4
-Panda*color7:       #f0f0f0
-Panda*color8:       #5c6370
-Panda*color9:       #fb055a
-Panda*color10:      #26ffd4
-Panda*color11:      #febe7e
-Panda*color12:      #55adff
-Panda*color13:      #fd95d0
-Panda*color14:      #26ffd4
-Panda*color15:      #f0f0f0
+! Panda*foreground:   #f0f0f0
+! Panda*background:   #1d1e20
+! Panda*cursorColor:  #f0f0f0
+! Panda*color0:       #1f1f20
+! Panda*color1:       #fb055a
+! Panda*color2:       #26ffd4
+! Panda*color3:       #fdaa5a
+! Panda*color4:       #5c9fff
+! Panda*color5:       #fc59a6
+! Panda*color6:       #26ffd4
+! Panda*color7:       #f0f0f0
+! Panda*color8:       #5c6370
+! Panda*color9:       #fb055a
+! Panda*color10:      #26ffd4
+! Panda*color11:      #febe7e
+! Panda*color12:      #55adff
+! Panda*color13:      #fd95d0
+! Panda*color14:      #26ffd4
+! Panda*color15:      #f0f0f0
 
-!*.font: -sgi-screen-medium-r-normal--10-100-72-72-m-60-iso8859-1
-!*.boldFont: -sgi-screen-bold-r-normal--10-100-72-72-m-70-iso8859-1
+*.font: -sgi-screen-medium-r-normal--16-*-*-*-*-*-iso8859-1
+*.boldFont: -sgi-screen-bold-r-normal--16-*-*-*-*-*-iso8859-1
 XTerm*cursorBlink: true
-XTerm*cursorColor: LightSalmon1
+*cursorColor: LightSalmon1
 XTerm*selectToClipboard: true
 XTerm*limitFallbacks: 10
 ! $MXTermId: XTerm-col.ad,v 1.20 2006/06/24 14:57:29 tom Exp $
@@ -163,11 +163,14 @@ XTerm*limitFallbacks: 10
 ! These are the 8 ANSI colors and their bright equivalents.  Depending on
 ! other resource settings, xterm may use the bright colors when displaying
 ! bold text (see the boldColors resource).
+*VT100*background:            #010040
+*background:            #010040
 *color0: black
 *color1: red3
 *color2: green3
 *color3: yellow3
-*color4: blue2
+! *color4: blue2
+*color4: DodgerBlue1
 *color5: magenta3
 *color6: cyan3
 *color7: gray90
@@ -175,7 +178,8 @@ XTerm*limitFallbacks: 10
 *color9: red
 *color10: green
 *color11: yellow
-*color12: rgb:5c/5c/ff
+!*color12: rgb:5c/5c/ff
+*color12: SteelBlue1
 *color13: magenta
 *color14: cyan
 *color15: white
@@ -221,5 +225,4 @@ XTerm*limitFallbacks: 10
 !
 ! Some refinement is certainly possible (you are welcome to try) -TD
 
-*VT100*background:            #010040
-URxvt*background:            #010040
+

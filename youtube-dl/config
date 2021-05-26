@@ -1,6 +1,7 @@
 --console-title
 --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
 --mark-watched
---output '%(playlist_index)02d %(title)s.%(ext)s'
+--output '%(playlist_index)#03.0F%(title)s@%(id)s.%(ext)s'
+--output-na-placeholder ""
 --netrc
---cookies "$XDG_DATA_HOME"/youtube-dl/cookies.txt
+--cookies ~/.config/youtube-dl/cookies.txt

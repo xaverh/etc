@@ -1,36 +1,39 @@
-HISTFILE="$XDG_DATA_HOME/zsh_history"
+HISTFILE="$HOME/.zsh_history"
 HISTSIZE=2147483647
 SAVEHIST=$HISTSIZE
 export NNN_COLORS=4256
 export NNN_OPTS=xe
 export NNN_FCOLORS=0b0304010f0e060740020a08
 export NNN_PLUG='i:imgview;c:-_code -r $nnn*;x:sx;h:-hexview;v:-_mpv --force-window=yes $nnn*;V:-_mpv --shuffle --force-window=yes $nnn*;u:-uidgid;G:getplugs'
-export GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export LS_COLORS='rs=0:di=1;34:tw=1;3;94:ow=1;94:st=1;3;34:ex=1;31:sg=1;3;31:su=1;3;91:ca=1;4;31:ln=36:mh=96:or=38;5;64:mi=37:bd=93:cd=33:pi=32:so=92:do=4;92:*.js=38;2;23;23;23;48;2;221;224;90:*.jsx=38;2;23;23;23;48;2;221;224;90:*.ts=48;2;43;116;137;38;2;229;230;230:*.tsx=48;2;43;116;137;38;2;229;230;230:*.vue=38;2;44;62;80;48;2;65;184;131:*.cpp=48;2;243;75;125:*.cxx=48;2;243;75;125:*.cc=48;2;243;75;125:*.hpp=48;2;243;75;125:*.hxx=48;2;243;75;125:*.hh=48;2;243;75;125:*.c=7:*.h=7:*.go=38;2;229;230;230;48;2;0;173;216:*.hs=38;2;94;80;134;48;2;235;228;243:*.svelte=48;2;229;230;230;38;2;255;62;0:*.lua=48;2;0;0;128;38;2;229;230;230:*.html=38;2;229;230;230;48;2;227;76;38:*.htm=38;2;229;230;230;48;2;227;76;38:*.xhtml=38;2;229;230;230;48;2;227;76;38:*.css=38;2;229;230;230;48;2;86;61;124:*.scss=38;2;229;230;230;48;2;207;100;154:*.sass=38;2;229;230;230;48;2;207;100;154:*.nix=48;2;126;126;255:*.vim=48;2;25;159;75;38;2;204;204;153:*vimrc=48;2;25;159;75;38;2;204;204;153:*Makefile.in=37:*CMakeCache.txt=37:*.la=37:*.o=37:*.lo=37:*.dyn_hi=37:*.cache=37:*.dyn_o=37:*.hi=37:*.errors=37:*.class=37:*.aux=37:*.bbl=37:*.ilg=37:*.idx=37:*.blg=37:*.out=37:*.toc=37:*.ind=37:*.sty=37:*.synctex.gz=37:*.fdb_latexmk=37:*.fls=37:*.bcf=37:*.bc=37:*.pyc=37:*.rlib=37:*.sconsign.dblite=37:*.scons_opt=37:*.git=37:*package-lock.json=37:*.avi=38;5;68:*.flv=38;5;68:*.m4v=38;5;68:*.mkv=38;5;68:*.mov=38;5;68:*.mp4=38;5;68:*.mpeg=38;5;68:*.mpg=38;5;68:*.ogv=38;5;68:*.vid=38;5;68:*.webm=38;5;68:*.wmv=38;5;68:*.aac=38;5;70:*.aup=38;5;70:*.flac=38;5;70:*.m4a=38;5;70:*.mp3=38;5;70:*.oga=38;5;70:*.ogg=38;5;70:*.opus=38;5;70:*.wav=38;5;70:*.wma=38;5;70:*.wv=38;5;70:*.jpeg=38;5;44:*.cbr=38;5;33:*.cbz=38;5;33:*.epub=38;5;33:*.7z=35:*.a=35:*.ace=35:*.alz=35:*.apk=35:*.arc=35:*.arj=35:*.bz=35:*.bz2=35:*.cab=35:*.cpio=35:*.deb=35:*.gz=35:*.jar=35:*.lha=35:*.lz=35:*.lzh=35:*.lzma=35:*.lzo=35:*.nar=35:*.pax=35:*.rar=35:*.rpm=35:*.rz=35:*.t7z=35:*.tar=35:*.tbz=35:*.tbz2=35:*.tgz=35:*.tlz=35:*.txz=35:*.tZ=35:*.tzo=35:*.war=35:*.xbps=35:*.xpi=35:*.xz=35:*.Z=35:*.zip=35:*.zstd=35:*.pid=90:*.swp=90:*.tmp=90:*.bak=90:*.orig=90:*.lock=90:*.log=90:*~=90:*COPYRIGHT=90:*LICENSE=90:*LICENSE-MIT=90:*COPYING=90:*LICENSE-APACHE=90:'
+export LESS_TERMCAP_mb='[00;34m'
+export LESS_TERMCAP_md='[01;36m'
+export LESS_TERMCAP_us='[01;35m'
+export LESS_TERMCAP_ue='[0m'
+export LESS_TERMCAP_me='[0m'
 
-alias mv='nocorrect mv -i'
-alias cp='nocorrect cp'
+alias mv='nocorrect mv -iv'
+alias cp='nocorrect cp -iv'
 alias mkdir='nocorrect mkdir'
-alias rmdir=' rmdir'
-alias rm=' nocorrect rm'
+alias rmdir=' rmdir -v'
+alias rm=' nocorrect rm -v'
+alias chmod="chmod -c"
+alias chown="chown -c"
+alias ln='ln -v'
 
-# if [[ -x /usr/local/bin/exa ]]; then
-       # alias ls="exa -F"
-       # alias ll="exa -Fl@ --git"
-       # alias la="exa -Fl@a --git"
-       # alias l="exa -Fl@ --git --group-directories-first"
-       # alias lx="exa -Fl@ --sort=ext --git --group-directories-first"
-# else
-alias ls="ls --color=auto --classify --dereference-command-line-symlink-to-dir"
-alias ll="ls -l --si"
-alias la="ll --almost-all"
-alias l="ll --group-directories-first"
-alias lx="ll -X"
-# fi
+alias ls="ls --color=auto -F -H"
+alias l="ls -l -h --group-directories-first"
+alias la="l -A"
+alias lx="l -X"
+function ll () {
+	l $1 | less -F
+}
 
-alias ip="ip --color=auto"
-alias grep="grep --exclude-dir=node_modules --color=auto"
-alias f="df -H -T"
+#alias ip="ip --color=auto"
+#alias grep="grep --exclude-dir=node_modules --color=auto"
+alias grep="grep --color=auto"
+alias f="df -h -T"
 alias d="dirs -v"
 alias u="du -s --si"
 alias p="ps aux | grep"
@@ -40,8 +43,7 @@ alias -g .....=../../../..
 alias -g ......=../../../../..
 alias -g .......=../../../../../..
 
-#hash -d etc=~/src/github.com/xaverh/etc
-#hash -d void=~/src/github.com/void-linux/void-packages
+hash -d repo=/var/db/kiss/repo
 
 autoload -U colors && colors
 
@@ -77,7 +79,7 @@ setopt appendhistory \
        no_shwordsplit \
        unset
 
-disable -p '^'
+# disable -p '^'
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit
@@ -94,6 +96,8 @@ zle -N down-line-or-beginning-search
 
 # Enable Ctrl-R history search
 bindkey '^R' history-incremental-search-backward
+
+bindkey "^H" backward-kill-word # control + backspace
 
 # Enable home/end keys
 # http://www.zshwiki.org/home/zle/bindkeys#reading_terminfo
@@ -208,8 +212,8 @@ zstyle -e ':completion:*' completer '
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 
-if [[ ! -d $XDG_CACHE_HOME/zsh ]]; then
-	command mkdir -p "$XDG_CACHE_HOME/zsh"
+if [[ ! -d ${HOME}/.cache/zsh ]]; then
+	command mkdir -p "${HOME}/.cache/zsh"
 fi
 
 zstyle ':completion:*' use-cache on
@@ -413,11 +417,29 @@ alias nnn=n
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 	function zle-line-init () {
-    		echoti smkx
-}
-function zle-line-finish () {
-    echoti rmkx
-}
+		echoti smkx
+	}
+	function zle-line-finish () {
+	    echoti rmkx
+	}
 	zle -N zle-line-init
 	zle -N zle-line-finish
 fi
+
+function 16c () {
+	printf '		'
+	for i in 0 1 2 3 4 5 6 7; do
+    	printf '[4%sm  [m' "$i"
+	done
+
+	printf '\n		'
+
+	for i in 0 1 2 3 4 5 6 7; do
+    	printf '[10%sm  [m' "$i"
+	done
+
+	printf '\n'
+}
+
+. /home/xha/.nix-profile/etc/profile.d/nix.sh
+

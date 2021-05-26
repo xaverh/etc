@@ -1,0 +1,127 @@
+#!/bin/sh
+
+herbstclient chain \
+🍂 emit_hook reload \
+🍂 keybind Mod4-Shift-q quit \
+🍂 keybind Mod4-Shift-r reload \
+🍂 keybind Mod4-Shift-c close \
+🍂 keybind Mod4-Return spawn st \
+🍂 keybind Mod4-Left focus left \
+🍂 keybind Mod4-Down focus down \
+🍂 keybind Mod4-Up focus up \
+🍂 keybind Mod4-Right focus right \
+🍂 keybind Mod4-h focus left \
+🍂 keybind Mod4-j focus down \
+🍂 keybind Mod4-k focus up \
+🍂 keybind Mod4-l focus right \
+🍂 keybind Mod4-Shift-Left shift left \
+🍂 keybind Mod4-Shift-Down shift down \
+🍂 keybind Mod4-Shift-Up shift up \
+🍂 keybind Mod4-Shift-Right shift right \
+🍂 keybind Mod4-Shift-h shift left \
+🍂 keybind Mod4-Shift-j shift down \
+🍂 keybind Mod4-Shift-k shift up \
+🍂 keybind Mod4-Shift-l shift right \
+🍂 keybind Mod4-u split bottom 0.5 \
+🍂 keybind Mod4-o split right 0.5 \
+🍂 keybind Mod4-Control-space split explode \
+🍂 keybind Mod4-Control-h resize left +0.02 \
+🍂 keybind Mod4-Control-j resize down +0.02 \
+🍂 keybind Mod4-Control-k resize up +0.02 \
+🍂 keybind Mod4-Control-l resize right +0.02 \
+🍂 keybind Mod4-Control-Left resize left +0.02 \
+🍂 keybind Mod4-Control-Down resize down +0.02 \
+🍂 keybind Mod4-Control-Up resize up +0.02 \
+🍂 keybind Mod4-Control-Right resize right +0.02 \
+🍂 silent rename default 1 \
+🍂 add 2 \
+🍂 add 3 \
+🍂 add 4 \
+🍂 add 5 \
+🍂 add 6 \
+🍂 keybind "Mod4-1" use_index 0 \
+🍂 keybind "Mod4-Shift-1" move_index 0 \
+🍂 keybind "Mod4-2" use_index 1 \
+🍂 keybind "Mod4-Shift-2" move_index 1 \
+🍂 keybind "Mod4-3" use_index 2 \
+🍂 keybind "Mod4-Shift-3" move_index 2 \
+🍂 keybind "Mod4-4" use_index 3 \
+🍂 keybind "Mod4-Shift-4" move_index 3 \
+🍂 keybind "Mod4-5" use_index 4 \
+🍂 keybind "Mod4-Shift-5" move_index 4 \
+🍂 keybind "Mod4-6" use_index 5 \
+🍂 keybind "Mod4-Shift-6" move_index 5 \
+🍂 keybind Mod4-period use_index +1 --skip-visible \
+🍂 keybind Mod4-comma  use_index -1 --skip-visible \
+🍂 keybind Mod4-r rotate \
+🍂 keybind Mod4-Delete remove \
+🍂 keybind Mod4-s floating toggle \
+🍂 keybind Mod4-f fullscreen toggle \
+🍂 keybind Mod4-Shift-f set_attr clients.focus.floating toggle \
+🍂 keybind Mod4-Shift-m set_attr clients.focus.minimized true \
+🍂 keybind Mod4-Ctrl-m foreach CLIENT clients. \
+     sprintf MINATT "%c.minimized" CLIENT \
+     sprintf TAGATT "%c.tag" CLIENT and \
+       , compare MINATT "=" "true" \
+       , substitute FOCUS "tags.focus.name" compare TAGATT "=" FOCUS \
+       , set_attr MINATT false \
+🍂 keybind Mod4-Shift-p pseudotile toggle \
+🍂 keybind Mod4-p spawn dmenu_run \
+🍂 keybind Mod4-space                                                           \
+            or , and . compare tags.focus.curframe_wcount = 2                   \
+                     . cycle_layout +1 vertical horizontal max vertical grid    \
+               , cycle_layout +1 \
+🍂 mouseunbind --all \
+🍂 mousebind Mod4-Button1 move \
+🍂 mousebind Mod4-Button2 zoom \
+🍂 mousebind Mod4-Button3 resize \
+🍂 keybind Mod4-BackSpace cycle_monitor \
+🍂 keybind Mod4-Tab cycle_all +1 \
+🍂 keybind Mod4-Shift-Tab cycle_all -1 \
+🍂 keybind Mod4-c cycle \
+🍂 keybind Mod4-i jumpto urgent \
+🍂 attr theme.tiling.reset 1 \
+🍂 attr theme.floating.reset 1 \
+🍂 set frame_border_active_color '#222222' \
+🍂 set frame_border_normal_color '#101010' \
+🍂 set frame_bg_normal_color '#565656' \
+🍂 set frame_bg_active_color '#345F0C' \
+🍂 set frame_border_width 1 \
+🍂 set always_show_frame on \
+🍂 set frame_bg_transparent on \
+🍂 set frame_transparent_width 5 \
+🍂 set frame_gap 12 \
+🍂 attr theme.active.color '#9fbc00' \
+🍂 attr theme.normal.color '#454545' \
+🍂 attr theme.urgent.color orange \
+🍂 attr theme.inner_width 1 \
+🍂 attr theme.inner_color black \
+🍂 attr theme.border_width 3 \
+🍂 attr theme.floating.border_width 4 \
+🍂 attr theme.floating.outer_width 1 \
+🍂 attr theme.floating.outer_color black \
+🍂 attr theme.active.inner_color '#3E4A00' \
+🍂 attr theme.active.outer_color '#3E4A00' \
+🍂 attr theme.background_color '#141414' \
+🍂 set window_gap 0 \
+🍂 set frame_padding 0 \
+🍂 set smart_window_surroundings off \
+🍂 set smart_frame_surroundings on \
+🍂 set mouse_recenter_gap 0 \
+🍂 unrule -F \
+🍂 rule focus=on \
+🍂 rule floatplacement=smart \
+🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on \
+🍂 rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on \
+🍂 rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off \
+🍂 set tree_style '╾│ ├└╼─┐' \
+🍂 detect_monitors \
+🍂 unlock
+
+# find the panel
+#panel=~/.config/herbstluftwm/panel.sh
+#[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+#for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+    ## start it on each monitor
+    #"$panel" "$monitor" &
+#done

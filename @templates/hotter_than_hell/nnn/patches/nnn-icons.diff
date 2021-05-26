@@ -21,12 +21,12 @@ index 255ad37..79f82d3 100644
 @@ -15,14 +13,15 @@ struct icon_pair {
   * Adjust if the icons are not printed properly
   */
- 
+
 -#define ICON_PADDING_LEFT  ""
 -#define ICON_PADDING_RIGHT " "
 +#define ICON_PADDING_LEFT  " "
 +#define ICON_PADDING_RIGHT "  "
- 
+
 -#define VIDEO_COLOR    93 /* Purple */
 -#define AUDIO_COLOR   220 /* Gold1 */
 -#define IMAGE_COLOR    82 /* Chartreuse2 */
@@ -38,22 +38,22 @@ index 255ad37..79f82d3 100644
 +#define BOOKS_COLOR       0x21
 +#define ARCHIVE_COLOR     12
 +#define UNIMPORTANT_COLOR 8
- 
+
  /*
   * Using symbols defined in icons-in-terminal.h, or even using icons-in-terminal is not necessary.
 @@ -30,26 +29,35 @@ struct icon_pair {
   * If you are using icons-in-terminal the creator recommends that you do use the symbols in the generated header.
   */
- 
+
 -static const struct icon_pair dir_icon  = {"", FA_FOLDER, 0};
 -static const struct icon_pair file_icon = {"", FA_FILE_O, 0};
 -static const struct icon_pair exec_icon = {"", FA_COG,    0};
 +static const struct icon_pair dir_icon = {"", "", 0};
 +static const struct icon_pair file_icon = {"", "", 0};
 +static const struct icon_pair exec_icon = {"", "", 0};
- 
+
  /* All entries are case-insensitive */
- 
+
  static const struct icon_pair icons_name[] = {
 -	{".git",         FA_GIT,        0},
 -	{"Desktop",      FA_DESKTOP,    0},
@@ -91,10 +91,10 @@ index 255ad37..79f82d3 100644
 +	{"package-lock.json","",          0},
 +	{"package.json",     "",          UNIMPORTANT_COLOR},
  };
- 
+
  /*
 @@ -60,201 +68,238 @@ static const struct icon_pair icons_name[] = {
- 
+
  static const struct icon_pair icons_ext[] = {
  	/* Numbers */
 -	{"1",        FILE_MANPAGE,         0},
@@ -107,7 +107,7 @@ index 255ad37..79f82d3 100644
 +	{"6",        "",                 0},
 +	{"7",        "",                 0},
 +	{"7z",       "",                 ARCHIVE_COLOR},
- 
+
  	/* A */
 -	{"a",        FILE_MANPAGE,         0},
 -	{"apk",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
@@ -121,7 +121,7 @@ index 255ad37..79f82d3 100644
 +	{"avi",      "",                 VIDEO_COLOR},
 +	{"azw",      "",                 BOOKS_COLOR},
 +	{"azw3",     "",                 BOOKS_COLOR},
- 
+
  	/* B */
 -	{"bat",      MFIZZ_SCRIPT,         0},
 -	{"bin",      OCT_FILE_BINARY,      0},
@@ -130,7 +130,7 @@ index 255ad37..79f82d3 100644
 +	{"bat",      "",                 0},
 +	{"bmp",      "",                 IMAGE_COLOR},
 +	{"bz2",      "",                 ARCHIVE_COLOR},
- 
+
  	 /* C */
 -	{"c",        MFIZZ_C,              0},
 -	{"c++",      MFIZZ_CPLUSPLUS,      0},
@@ -171,7 +171,7 @@ index 255ad37..79f82d3 100644
 +	{"css",      "",                 0},
 +	{"cvs",      "",                 0},
 +	{"cxx",      "",                 0},
- 
+
  	/* D */
 -	{"db",       MFIZZ_DATABASE_ALT2,  0},
 -	{"deb",      MFIZZ_DEBIAN,         ARCHIVE_COLOR},
@@ -188,7 +188,7 @@ index 255ad37..79f82d3 100644
 +	{"dmg",      "",                 ARCHIVE_COLOR},
 +	{"doc",      "",                 0},
 +	{"docx",     "",                 0},
- 
+
  	 /* E */
 -	{"ejs",      FA_FILE_CODE_O,       0},
 -	{"elf",      FA_LINUX,             0},
@@ -199,7 +199,7 @@ index 255ad37..79f82d3 100644
 +	{"epub",     "",                 BOOKS_COLOR},
 +	{"erl",      "",                 0},
 +	{"exe",      "",                 0},
- 
+
  	/* F */
 -	{"f#",       DEV_FSHARP,           0},
 -	{"flac",     FA_FILE_AUDIO_O,      AUDIO_COLOR},
@@ -215,7 +215,7 @@ index 255ad37..79f82d3 100644
 +	{"fsi",      "",                 0},
 +	{"fsscript", "",                 0},
 +	{"fsx",      "",                 0},
- 
+
  	/* G */
 -	{"gem",      FA_FILE_ARCHIVE_O,    0},
 -	{"gif",      FA_FILE_IMAGE_O,      IMAGE_COLOR},
@@ -227,7 +227,7 @@ index 255ad37..79f82d3 100644
 +	{"go",       "",                 0},
 +	{"gz",       "",                 ARCHIVE_COLOR},
 +	{"gzip",     "",                 ARCHIVE_COLOR},
- 
+
  	/* H */
 -	{"h",        MFIZZ_C,              0},
 -	{"hh",       MFIZZ_CPLUSPLUS,      0},
@@ -245,7 +245,7 @@ index 255ad37..79f82d3 100644
 +	{"htm",      "",                 0},
 +	{"html",     "",                 0},
 +	{"hxx",      "",                 0},
- 
+
  	/* I */
 -	{"ico",      FA_FILE_IMAGE_O,      IMAGE_COLOR},
 -	{"img",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
@@ -255,7 +255,7 @@ index 255ad37..79f82d3 100644
 +	{"img",      "",                 ARCHIVE_COLOR},
 +	{"ini",      "",                 0},
 +	{"iso",      "",                 ARCHIVE_COLOR},
- 
+
  	/* J */
 -	{"jar",      MFIZZ_JAVA,           0},
 -	{"java",     MFIZZ_JAVA,           0},
@@ -273,9 +273,9 @@ index 255ad37..79f82d3 100644
 +	{"js",       "",                 0},
 +	{"json",     "",                 0},
 +	{"jsx",      "",                 0},
- 
+
  	/* K */
- 
+
  	/* L */
 -	{"lha",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
 -	{"log",      FA_FILE_TEXT_O,       0},
@@ -288,7 +288,7 @@ index 255ad37..79f82d3 100644
 +	{"lua",      "",                 0},
 +	{"lzh",      "",                 ARCHIVE_COLOR},
 +	{"lzma",     "",                 ARCHIVE_COLOR},
- 
+
  	/* M */
 -	{"m4a",      FA_FILE_AUDIO_O,      AUDIO_COLOR},
 -	{"m4v",      FA_FILE_MOVIE_O,      VIDEO_COLOR},
@@ -315,11 +315,11 @@ index 255ad37..79f82d3 100644
 +	{"mpeg",     "",                 VIDEO_COLOR},
 +	{"mpg",      "",                 VIDEO_COLOR},
 +	{"msi",      "",                 0},
- 
+
  	/* N */
 +	{"nar",       "",                 ARCHIVE_COLOR},
 +	{"nix",       "",                0},
- 
+
  	/* O */
 -	{"o",          FILE_MANPAGE,       0},
 -	{"ogg",        FA_FILE_AUDIO_O,    AUDIO_COLOR},
@@ -332,7 +332,7 @@ index 255ad37..79f82d3 100644
 +	{"old",        "",               UNIMPORTANT_COLOR},
 +	{"otf",        "",               0},
 +	{"out",        "",               0},
- 
+
  	/* P */
 -	{"part",     FA_DOWNLOAD,          0},
 -	{"patch",    FILE_PATCH,           0},
@@ -365,9 +365,9 @@ index 255ad37..79f82d3 100644
 +	{"pyc",      "",                 0},
 +	{"pyd",      "",                 0},
 +	{"pyo",      "",                 0},
- 
+
  	/* Q */
- 
+
  	/* R */
 -	{"rar",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
 -	{"rc",       FA_COGS,              0},
@@ -383,7 +383,7 @@ index 255ad37..79f82d3 100644
 +	{"rs",       "",                 0},
 +	{"rss",      "",                 0},
 +	{"rtf",      "",                 0},
- 
+
  	/* S */
 -	{"so",       FILE_MANPAGE,         0},
 -	{"scala",    MFIZZ_SCALA,          0},
@@ -406,7 +406,7 @@ index 255ad37..79f82d3 100644
 +	{"sub",      "",                 0},
 +	{"svg",      "",                 IMAGE_COLOR}, // ﰟ
 +	{"swift",    "",                 0},
- 
+
  	/* T */
 -	{"tar",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
 -	{"tex",      FILE_TEX,             0},
@@ -424,9 +424,9 @@ index 255ad37..79f82d3 100644
 +	{"ttf",      "",                 0},
 +	{"txt",      "",                 0},
 +	{"txz",      "",                 ARCHIVE_COLOR},
- 
+
  	/* U */
- 
+
  	/* V */
 -	{"vid",      FA_FILE_MOVIE_O,      VIDEO_COLOR},
 -	{"vim",      DEV_VIM,              0},
@@ -435,7 +435,7 @@ index 255ad37..79f82d3 100644
 +	{"vim",      "",                 0},
 +	{"vimrc",    "",                 0},
 +	{"vue",      "",                 0}, // ﵂
- 
+
  	/* W */
 -	{"wav",      FA_FILE_AUDIO_O,      AUDIO_COLOR},
 -	{"webm",     FA_FILE_MOVIE_O,      VIDEO_COLOR},
@@ -446,7 +446,7 @@ index 255ad37..79f82d3 100644
 +	{"wma",      "",                 AUDIO_COLOR},
 +	{"wmv",      "",                 VIDEO_COLOR},
 +	{"wv",       "",                 AUDIO_COLOR},
- 
+
  	/* X */
 -	{"xbps",     FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR},
 -	{"xhtml",    FA_FILE_CODE_O,       0},
@@ -460,19 +460,19 @@ index 255ad37..79f82d3 100644
 +	{"xlsx",     "",                 0},
 +	{"xml",      "",                 0},
 +	{"xz",       "",                 ARCHIVE_COLOR},
- 
+
  	/* Y */
 -	{"yaml",     FA_COGS,              0},
 -	{"yml",      FA_COGS,              0},
 +	{"yaml",     "",                 0},
 +	{"yml",      "",                 0},
- 
+
  	/* Z */
 -	{"zip",      FA_FILE_ARCHIVE_O,    ARCHIVE_COLOR}
 +	{"Z",        "",                 ARCHIVE_COLOR},
 +	{"zip",      "",                 ARCHIVE_COLOR},
 +	{"zstd",     "",                 ARCHIVE_COLOR},
- 
+
  	/* Other */
  };
 diff --git a/src/nnn.c b/src/nnn.c
@@ -481,7 +481,7 @@ index be25850..7a6fb7e 100644
 +++ b/src/nnn.c
 @@ -1680,7 +1680,7 @@ static bool initcurses(void *oldmask)
  		use_default_colors();
- 
+
  		/* Initialize file colors */
 -		if (COLORS >= 256) {
 +		if (COLORS >= 88) {
@@ -491,16 +491,16 @@ index be25850..7a6fb7e 100644
 @@ -1695,7 +1695,7 @@ static bool initcurses(void *oldmask)
  		if (colors && *colors == '#') {
  			char *sep = strchr(colors, ';');
- 
+
 -			if (COLORS >= 256) {
 +			if (COLORS >= 88) {
  				++colors;
  				ext = TRUE;
- 
+
 @@ -3524,17 +3524,17 @@ static void print_icon(const struct entry *ent, const int attrs)
  {
  	const struct icon_pair *picon = get_icon(ent);
- 
+
 -	addstr(ICON_PADDING_LEFT);
  	if (picon->color)
  		attron(COLOR_PAIR(C_UND + 1 + picon->color));
@@ -516,7 +516,7 @@ index be25850..7a6fb7e 100644
 -	addstr(ICON_PADDING_RIGHT);
  }
  #endif
- 
--- 
+
+--
 2.28.0
 
