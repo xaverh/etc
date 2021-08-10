@@ -1,3 +1,0 @@
-git+https://git.suckless.org/dmenu
-files/config.h
-patches/dmenu-allowcoloremoji.diff

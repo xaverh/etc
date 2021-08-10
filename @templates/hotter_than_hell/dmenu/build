@@ -1,6 +1,0 @@
-#!/bin/sh -e
-
-patch -p 1 < dmenu-allowcoloremoji.diff
-
-make
-make DESTDIR="$1" PREFIX=/usr install
