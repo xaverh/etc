@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-sh install.sh --prefix=/usr --destdir=$1 --disable-ldconfig
-rm $1/usr/lib/rustlib/uninstall.sh
