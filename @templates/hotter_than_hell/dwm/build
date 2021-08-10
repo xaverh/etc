@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-patch -p 1 < coloremoji-6.2.diff
-
-# Amend install path to '/usr'.
-sed -i'' "s#/usr/local#/usr#" config.mk
-
-make
-make DESTDIR="$1" install
