@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-find . -type f \( -iname "*.mp3" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.webm" -o -iname "*.wma" \) | shuf | head -n 100 | xargs -d "\n" "mpv" > /dev/null 2>&1 &
-sleep 1
