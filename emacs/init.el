@@ -17,7 +17,6 @@
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(size-indication-mode t)
- '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
 (custom-set-faces
@@ -27,7 +26,4 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "SF Mono" :foundry "APPL" :slant normal :weight normal :height 121 :width normal)))))
 
-
 (set-fontset-font t 'symbol "JoyPixels")
-
-
