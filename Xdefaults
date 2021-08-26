@@ -24,14 +24,10 @@ URxvt.pointerBlank:      true
 URxvt.pointerBlankDelay: 987654321
 URxvt.saveLines:         65536
 URxvt.scrollBar:         false
-! URxvt.font:              xft:PragmataPro Liga:pixelsize=16,xft:PingFang SC:pixelsize=16,xft:JoyPixels:pixelsize=16
-! URxvt.boldfont:          xft:PragmataPro Liga:style=Bold:pixelsize=16,xft:PingFang SC:style=Bold:pixelsize=16,xft:JoyPixels:pixelsize=16
-! URxvt.italicfont:        xft:PragmataPro Liga:style=Italic:pixelsize=16,xft:PingFang SC:style=Italic:pixelsize=16,xft:JoyPixels:pixelsize=16
-! URxvt.boldItalicfont:    xft:PragmataPro Liga:style=BoldItalic:pixelsize=16,xft:PingFang SC:style=BoldItalic:pixelsize=16,xft:JoyPixels:pixelsize=16
-URxvt.font:              xft:Fira Mono:pixelsize=14
-URxvt.boldfont:          xft:Fira Mono:style=Bold:pixelsize=14
-URxvt.italicfont:        xft:Fira Mono:style=Italic:pixelsize=14
-URxvt.boldItalicfont:    xft:Fira Mono:style=BoldItalic:pixelsize=14
+URxvt.font:              xft:PragmataPro Liga:pixelsize=16,xft:PingFang SC:pixelsize=16,xft:JoyPixels:pixelsize=16
+URxvt.boldfont:          xft:PragmataPro Liga:style=Bold:pixelsize=16,xft:PingFang SC:style=Bold:pixelsize=16,xft:JoyPixels:pixelsize=16
+URxvt.italicfont:        xft:PragmataPro Liga:style=Italic:pixelsize=16,xft:PingFang SC:style=Italic:pixelsize=16,xft:JoyPixels:pixelsize=16
+URxvt.boldItalicfont:    xft:PragmataPro Liga:style=BoldItalic:pixelsize=16,xft:PingFang SC:style=BoldItalic:pixelsize=16,xft:JoyPixels:pixelsize=16
 URxvt.iconFile:          /home/xha/.config/terminal.png
 URxvt.scrollTtyOutput:   false
 URxvt.scrollWithBuffer:  true
