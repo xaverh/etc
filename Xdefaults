@@ -14,7 +14,7 @@ xclock*background:        #171717
 
 URxvt.cursorBlink:       true
 URxvt.fadeColor:         #1e1e1e
-URxvt.internalBorder:    12
+URxvt.internalBorder:    32
 URxvt.intensityStyles:   false
 URxvt.iso14755:          true
 URxvt.iso14755_52:       false
@@ -50,26 +50,6 @@ SshAskpass.Indicator*background:   #515151
 SshAskpass*topShadowColor:         #171717
 SshAskpass*bottomShadowColor:      #171717
 SshAskpass.*borderWidth:           1
-
-*.background: #171717
-*.color0: #171717
-*.color1: #e32791
-*.color2: #30c798
-*.color3: #e3c472
-*.color4: #6796e6
-*.color5: #e59fdf
-*.color6: #81d8d0
-*.color7: #999999
-*.color8: #515151
-*.color9: #e466ad
-*.color10: #6cd1b2
-*.color11: #e4cf98
-*.color12: #91b0e6
-*.color13: #e5b6e1
-*.color14: #a2dcd7
-*.color15: #e5e6e6
-*.foreground: #e5e6e6
-*.cursorColor: #ff7135
 
 
 Ysgrifennwr*background: #f6f5f4
@@ -163,26 +143,26 @@ XTerm*limitFallbacks: 10
 ! These are the 8 ANSI colors and their bright equivalents.  Depending on
 ! other resource settings, xterm may use the bright colors when displaying
 ! bold text (see the boldColors resource).
-*VT100*background:            #010040
-*background:            #010040
-*color0: black
-*color1: red3
-*color2: green3
-*color3: yellow3
-! *color4: blue2
-*color4: DodgerBlue1
-*color5: magenta3
-*color6: cyan3
-*color7: gray90
-*color8: gray50
-*color9: red
-*color10: green
-*color11: yellow
-!*color12: rgb:5c/5c/ff
-*color12: SteelBlue1
-*color13: magenta
-*color14: cyan
-*color15: white
+! *VT100*background:            #010040
+! *background:            #010040
+! *color0: black
+! *color1: red3
+! *color2: green3
+! *color3: yellow3
+! ! *color4: blue2
+! *color4: DodgerBlue1
+! *color5: magenta3
+! *color6: cyan3
+! *color7: gray90
+! *color8: gray50
+! *color9: red
+! *color10: green
+! *color11: yellow
+! !*color12: rgb:5c/5c/ff
+! *color12: SteelBlue1
+! *color13: magenta
+! *color14: cyan
+! *color15: white
 
 ! Disclaimer: there are no standard colors used in terminal emulation.
 !
@@ -225,4 +205,25 @@ XTerm*limitFallbacks: 10
 !
 ! Some refinement is certainly possible (you are welcome to try) -TD
 
+
+
+*.background: #171717
+*.color0: #171717
+*.color1: #e32791
+*.color2: #30c798
+*.color3: #e3c472
+*.color4: #6796e6
+*.color5: #e59fdf
+*.color6: #81d8d0
+*.color7: #999999
+*.color8: #515151
+*.color9: #e466ad
+*.color10: #6cd1b2
+*.color11: #e4cf98
+*.color12: #91b0e6
+*.color13: #e5b6e1
+*.color14: #a2dcd7
+*.color15: #e5e6e6
+*.foreground: #e5e6e6
+*.cursorColor: #ff7135
 
