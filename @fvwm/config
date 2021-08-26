@@ -1,0 +1,299 @@
+InfoStoreAdd wallpaper $[XDG_DATA_HOME]/Tapet/3eec6c7edfed414fb29982217f83d6e1.png
+InfoStoreAdd wallpaper2 $[HOME]/var/BingWallpaper-2020-03-02.png
+ExecUseShell
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Test (Init, f $[infostore.wallpaper]) Exec exec fvwm-root $[infostore.wallpaper]
++ I Test (f $[infostore.wallpaper2]) Exec exec fvwm-root $[infostore.wallpaper2]
++ I Module FvwmCommandS
++ I Test (Init) Exec xrdb -merge <<<"rofi.window-command: FvwmCommand 'WindowId {window} PlaceAgain\nWindowId {window} Iconify off\nWindowId {window} Focus\nWindowId {window} Raise'"
++ I Test (Init) Exec exec tint2
+
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+
+DestroyFunc ToggleTitle
+AddToFunc ToggleTitle
++ I ThisWindow (State 1) WindowStyle Title
++ I TestRc (Match) State 1 False
++ I TestRc (Match) Break
++ I WindowStyle !Title
++ I State 1 True
+
+DestroyFunc ToggleOnTop
+AddToFunc   ToggleOnTop
++ I ThisWindow (Layer 6) Layer
++ I TestRc (NoMatch) Layer 0 6
++ I Raise
+
+DestroyFunc ScrollAndRefocus
+AddToFunc ScrollAndRefocus
++ I Scroll $0 $1
++ I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
++ I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
+
+DestroyFunc URxvtClient
+AddToFunc URxvtClient
++ I Exec urxvtc $* ; if [[ $? -eq 2 ]] ; then ; urxvtd -q -o -f ; urxvtc $* ; fi
+
+EwmhNumberOfDesktops 3 0
+DesktopName 0 🌐
+DesktopName 1 ☕
+DesktopName 2 👾
+DesktopName 3 🧠
+DesktopName 4 🥑
+DesktopName 5 🍓
+DesktopName 6 🎲
+DesktopName 7 🎰
+DesktopName 8 🎱
+DesktopName 9 🏜️
+DesktopName 10 🦄
+DesktopSize 2x2
+
+DefaultFont "xft:.SF Compact Display:style=Medium:size=11:antialias=True:encoding=iso10646-1"
+
+IgnoreModifiers L25
+
+ClickTime 250
+MoveThreshold 3
+EdgeScroll 0 0
+EdgeResistance -1
+EdgeThickness 1
+OpaqueMoveSize unlimited
+
+Style * ResizeOpaque, \
+	SnapAttraction 5 SameType ScreenAll, \
+	SnapGrid, \
+	DecorateTransient, \
+	StackTransientParent, \
+	WindowShadeScrolls, \
+	WindowShadeSteps 10, \
+	!Icon, \
+	EdgeMoveResistance 10, \
+	EdgeMoveDelay 128, \
+	EdgeResizeDelay -1, \
+	ClickToFocus, \
+	FPFocusByFunctionWarpPointer, \
+	!FPGrabFocusTransient, \
+	FPReleaseFocusTransient, \
+        Colorset 1, \
+        HilightColorset 2, \
+	MWMButtons, \
+	FvwmBorder, \
+	FirmBorder, \
+	HandleWidth 1, \
+	MinOverlapPercentPlacement, \
+	!UsePPosition
+
+Style Tint2 !Title, !Borders, !Handles, Sticky, WindowListSkip, NeverFocus, StaysOnTop, FixedPosition, UsePPosition
+
+CleanupColorsets
+# inactive windows
+Colorset 1  fg #e5e6e6, bg #171717
+# active windows/menu items
+Colorset 2 bg #553a63, fg #e5e6e6
+# inactive menu item
+Colorset 3 fg #424242, bg #f9f8f4, VGradient 200 #edece8 #f0efed
+
+MenuStyle * MenuColorset 3, ActiveColorset 2, TitleColorset 1, HilightBack, HilightTitleBack, SeparatorsLong, TrianglesSolid, TrianglesUseFore
+
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot@/home/xha/.config/fvwm/linux_menu.xpm@^#005577^
++ "&Programs" Popup MenuPrograms
++ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" Function URxvtClient
++ "r&xvt-unicode font%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" PopUp TerminalFontMenu
++ "Bluetooth%bluetooth.svg:0x24%" Popup BluetoothMenu
++ "Video%youtube.svg:0x16%" Popup YoutubeMenu
++ "" Nop
++ "Screenshot%camera.svg:0x24%" Exec exec flameshot full -c -p $[HOME]/tmp
++ "" Nop
++ "Bar?%bar.svg:0x24%" ToggleTitle
++ "Stay on Top%aboveground.svg:0x24%" Pick Layer 0 6
++ "Stay Put%groundlevel.svg:0x24%" Pick Layer 0 4
++ "Stay on Bottom%underground.svg:0x24%" Pick Layer 0 2
++ "Kill Client%kill.svg:0x24%" Destroy
++ "" Nop
++ "&Quit" Popup QuitMenu
+
+DestroyMenu QuitMenu
+AddToMenu QuitMenu
++ "Re&fresh" Refresh
++ "&Restart" Restart
++ "" Nop
++ "&Quit FVWM" Quit
++ "Re&boot" Exec systemctl reboot
++ "&Suspend%suspend.svg:0x24%" Exec systemctl suspend
++ "&Power off%poweroff.svg:0x24%" Exec systemctl poweroff
+
+DestroyMenu MenuPrograms
+AddToMenu   MenuPrograms "Programs" Title
++ "tmux" PopUp TmuxMenu
++ "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
++ "Google Chrome%/opt/google/chrome/product_logo_24_dev.png%" Exec exec google-chrome
++ "Discord%discord.svg:0x24%" Exec exec Discord
++ "&Visual Studio Code%/usr/share/code/resources/app/out/vs/workbench/contrib/update/browser/media/code-icon.svg:0x24%" Exec /usr/share/code/code --no-sandbox --new-window
++ "&GIMP%/usr/share/icons/hicolor/24x24/apps/gimp.png%" Exec exec gimp
+
+DestroyMenu BluetoothMenu
+AddToMenu BluetoothMenu Bluetooth Title
++ "Connect Setúbal%/usr/share/icons/Adwaita/scalable/devices/bluetooth-symbolic.svg%" Exec exec bluetoothctl connect 88:C6:26:F4:8A:90
++ "Disconnect Setúbal" Exec exec bluetoothctl disconnect 88:C6:26:F4:8A:90
++ "Connect JBL GO" Exec exec bluetoothctl connect 78:44:05:E4:E0:D4
++ "Disconnect JBL GO" Exec exec bluetoothctl disconnect 78:44:05:E4:E0:D4
+
+DestroyFunc GenTmuxMenu
+AddToFunc GenTmuxMenu
++ I AddToMenu TmuxMenu "tmux" Title
++ I PipeRead `tmux list-sessions -F '+ "#S" Function URxvtClient -e tmux new-session -A -s "#S"'`
++ I AddToMenu TmuxMenu "" Nop
++ I AddToMenu TmuxMenu "<new session>" Function URxvtClient -e tmux
+
+DestroyMenu TmuxMenu
+AddToMenu TmuxMenu
++ DynamicPopUpAction GenTmuxMenu
++ DynamicPopDownAction DestroyMenu recreate TmuxMenu
+
+DestroyFunc GenYoutubeMenu
+AddToFunc GenYoutubeMenu
++ I AddToMenu YoutubeMenu "tmux" Title
++ I AddToMenu YoutubeMenu "YouTube Watch Later%youtube-wl.svg:0x24%" Exec exec mpv "https://www.youtube.com/playlist?list=WL"
++ I AddToMenu YoutubeMenu "" Nop
++ I PipeRead `grep --no-filename --only-matching --perl-regexp "http(s?):\\/\\/[^ \\"\\(\\)\\<\\>\\]]*" $[CM_DIR]/clipmenu.5.$[USER]/*\\ * | awk '!x[$$$$0]++ { print "+ \\""$$$$0"\\" Exec exec mpv --really-quiet \\""$$$$0"\\"" }'`
+
+DestroyMenu YoutubeMenu
+AddToMenu YoutubeMenu
++ DynamicPopUpAction GenYoutubeMenu
++ DynamicPopDownAction DestroyMenu recreate YoutubeMenu
+
+DestroyMenu TerminalFontMenu
+AddToMenu TerminalFontMenu
++ "SGI Screen 10" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--10-100-72-72-m-60-iso8859-1,-misc-fixed-medium-r-normal--10-100-75-75-c-60-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--10-100-72-72-m-70-iso8859-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SGI Screen 13" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--13-130-72-72-m-70-iso8859-1,-misc-fixed-medium-o-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--13-130-72-72-m-80-iso8859-1,-misc-fixed-bold-r-normal--13-120-75-75-c-70-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SGI Screen 15" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;-sgi-screen-medium-r-normal--15-150-72-72-m-80-iso8859-1,-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007\033]711;-sgi-screen-bold-r-normal--15-150-72-72-m-90-iso8859-1,-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=12px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=12px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=13px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=13px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "IBM Plex Mono 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:IBM Plex Mono:style=Regular:pixelsize=14px,xft:Symbola:style=Regular\007\033]711;xft:IBM Plex Mono:style=Bold:pixelsize=14px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=12px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=12px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=13px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=13px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=14px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=14px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "Consolas 15px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:Consolas:style=Regular:pixelsize=15px,xft:Symbola:style=Regular\007\033]711;xft:Consolas:style=Bold:pixelsize=15px,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 12px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=12,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=12,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 13px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=13,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=13,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 14px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=14,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=14,xft:Symbola:style=Regular\007' > $i ; fi ; done`
++ "SF Mono 16px" -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]710;xft:SF Mono:style=Regular:pixelsize=16,xft:Symbola:style=Regular\007\033]711;xft:SF Mono:style=Bold:pixelsize=16,xft:Symbola:style=Regular\007' > $i ; fi ; done`
+
+DestroyFunc Ysgrifennwrify
+AddToFunc Ysgrifennwrify
++ I Exec `exec sed -i "s/Qillqaq/Ysgrifennwr/" $[XDG_CONFIG_HOME]/Code/User/settings.json`
++ I -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -ne '\033]4;0;#f9f8f4;1;#e32791;2;#488432;3;#a25d0e;4;#2c65b5;5;#b062a7;6;#27bbbe;7;#999999;8;#b8b8b8;9;#9f1b66;10;#325d23;11;#71410a;12;#1f477f;13;#7b4474;14;#1b8486;15;#424242\007\033]10;#424242\007\033]11;#f9f8f4\007\033]12;#20bbfc\007\033]708;#f9f8f4\007' > $i ; fi ; done`
+
+DestroyFunc Qillqaqify
+AddToFunc Qillqaqify
++ I Exec `exec sed -i "s/Ysgrifennwr/Qillqaq/" $[XDG_CONFIG_HOME]/Code/User/settings.json`
++ I -Exec `for i in /dev/pts/* ; do ; if [[ $i != /dev/pts/ptmx ]] ; then ; echo -en '\033]4;0;#171717;1;#e32791;2;#30c798;3;#e3c472;4;#6796e6;5;#e59fdf;6;#81d8d0;7;#999999;8;#515151;9;#e466ad;10;#6cd1b2;11;#e4cf98;12;#91b0e6;13;#e5b6e1;14;#a2dcd7;15;#e5e6e6\007\033]10;#e5e6e6\007\033]11;#171717\007\033]12;#ff7135\007\033]708;#171717\007' > $i ; fi ; done`
+
+Silent Key Menu A A Menu MenuFvwmRoot
+Key space A 4 Exec exec rofi -combi-modi window,drun,run -show combi -modi combi
+-Key e A 4 Exec `awk 'BEGIN {FS="# "} /;[[:blank:]]fully-qualified/ { sub(" E[[:digit:]]*.[[:digit:]]* ", "\t", $$2); print $$2 }' /usr/share/unicode/emoji/emoji-test.txt | rofi -dmenu -i -p '¯\_(ツ)_/¯' -no-custom | awk '{printf $$1}' | xsel -ib`
+Key u A 4 Exec `xdg-open $(\ls -1Qt $[CM_DIR]/clipmenu.5.$[USER]/*\ * | xargs awk 1 | grep --only-matching --perl-regexp "http(s?):\/\/[^ \"\(\)\<\>\]]*" | uniq | rofi -dmenu -i -p 'open URL')`
+Key v A 4 Menu YoutubeMenu
+-Key F1 A 4 Exec `mupdf-gl =(man -Tpdf $(apropos . | rofi -dmenu -i -p mansplain | awk '{gsub(/[()]/,""); print $$2" "$$1}'))`
+Key a A 4 Menu TmuxMenu
+Key i A 4 Exec exec clipmenu -i -p '📋'
+Key F6 A 4 Ysgrifennwrify
+Key F6 A S4 Qillqaqify
+Silent Key XF86AudioNext A N Exec exec playerctl next
+Silent Key XF86AudioPrev A N Exec exec playerctl previous
+Silent Key XF86AudioPlay A N Exec exec playerctl play-pause
+Silent Key XF86AudioStop A N Exec exec playerctl stop
+Silent Key XF86AudioRaiseVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; [[ $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') -lt 95 ]] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ 65536; exec notify-send "🔊 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
+Silent Key XF86AudioLowerVolume A N Exec `pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; exec notify-send "🔉 $(pacmd list-sinks | grep -A 15 '* index' | awk '/volume: front/{gsub("%","",$$$$5); print $$$$5 }') %"`
+Silent Key XF86AudioMute A N Exec `pactl set-sink-mute @DEFAULT_SINK@ true && exec notify-send "🔇 mute"`
+Silent Key Print A N Exec exec flameshot full -c -p $[HOME]/tmp
+Silent Key XF86LaunchA A N Exec exec flameshot full -c -p $[HOME]/tmp
+Silent Key Print A 4 Exec exec flameshot gui -p $[HOME]/tmp
+Silent Key XF86LaunchA A 4 Exec exec flameshot gui -p $[HOME]/tmp
+Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
+Key r A 4C Restart
+Key Return A 4 URxvtClient
+Key h A SM4 MovetoPage -1p 0p
+Key j A SM4 MovetoPage 0p +1p
+Key k A SM4 MovetoPage 0p -1p
+Key l A SM4 MovetoPage +1p 0p
+Key h A S4 AnimatedMove w-10 keep ewmhiwa
+Key j A S4 AnimatedMove keep w10 ewmhiwa
+Key k A S4 AnimatedMove keep w-10 ewmhiwa
+Key l A S4 AnimatedMove w10 keep ewmhiwa
+Key 1 A 4 GotoDesk 0 0
+Key 2 A 4 GotoDesk 0 1
+Key 3 A 4 GotoDesk 0 2
+Key 4 A 4 GotoDesk 0 3
+Key 5 A 4 GotoDesk 0 4
+Key 6 A 4 GotoDesk 0 5
+Key 7 A 4 GotoDesk 0 6
+Key 8 A 4 GotoDesk 0 7
+Key 9 A 4 GotoDesk 0 8
+Key 0 A 4 GotoDesk 0 9
+Key 1 A S4 MovetoDesk 0 0
+Key 2 A S4 MovetoDesk 0 1
+Key 3 A S4 MovetoDesk 0 2
+Key 4 A S4 MovetoDesk 0 3
+Key 5 A S4 MovetoDesk 0 4
+Key 6 A S4 MovetoDesk 0 5
+Key 7 A S4 MovetoDesk 0 6
+Key 8 A S4 MovetoDesk 0 7
+Key 9 A S4 MovetoDesk 0 8
+Key 0 A S4 MovetoDesk 0 9
+Key h A 4 ScrollAndRefocus -25 0
+Key j A 4 ScrollAndRefocus +0 +50
+Key k A 4 ScrollAndRefocus +0 -50
+Key l A 4 ScrollAndRefocus +25 +0
+Key Prior A 4 GoToDesk +1
+Key Next A 4 GoToDesk -1
+Key Prior A S4 MoveToDesk +1
+Key Next A S4 MoveToDesk -1
+Silent Key odiaeresis A 4 ResizeMoveMaximize 59 100 0 0
+Silent Key udiaeresis A 4 ResizeMoveMaximize frame 40wa 40wa -0 0
+Silent Key adiaeresis A 4 ResizeMoveMaximize frame 40wa 59wa -0 -0
+
+Mouse 1 1    A ToggleOnTop
+Mouse 2 T    A StickAcrossPages
+Mouse 3 T    A StickAcrossDesks
+Mouse 1 2    A Close
+Mouse 1 4    A Maximize 100 100
+Mouse 1 6    A Iconify
+Mouse 1	T    A RaiseMoveX Move Maximize
+Mouse 1	FS   A RaiseMoveX Resize Maximize
+Mouse 1 W    4 RaiseMoveX Move Maximize
+Mouse 3 W    4 RaiseMoveX `Resize Direction SE` Maximize
+Mouse 4	T    A WindowShade True
+Mouse 5	T    A WindowShade False
+Mouse 3	R    A Menu MenuFvwmRoot
+Mouse 2	R    A WindowList
+Mouse 1 R    A Scroll reverse
+
+ButtonStyle Reset
+TitleStyle Centered Height 19 Active (Colorset 2 -- Flat) Inactive (Colorset 1 -- Flat) ToggledActive (Colorset 2 -- Flat) ToggledInactive (Colorset 1 -- Flat)
+BorderStyle -- Flat
+ButtonStyle 1 - MwmDecorLayer 6
+ButtonStyle 1 AllNormal Vector 5 40x40@1 60x40@3 60x60@3 40x60@3 40x40@3
+ButtonStyle 1 AllToggled Vector 4 50x35@1 65x65@3 35x65@3 50x35@3
+ButtonStyle 1 AllDown Vector 4 50x25@1 75x75@3 25x75@3 50x25@3
+ButtonStyle 1 ToggledActiveDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
+ButtonStyle 1 ToggledInActiveDown Vector 4 50x75@1 25x25@3 75x25@3 50x75@3
+ButtonStyle 2 AllUp Vector 4 35x65@1 65x35@3 35x35@4 65x65@3
+ButtonStyle 2 AllDown Vector 4 10x90@1 90x10@3 10x10@4 90x90@3
+ButtonStyle 4 - MwmDecorMax
+ButtonStyle 4 AllNormal Vector 6 50x65@1 35x65@3 35x50@3 50x35@4 65x35@3 65x50@3
+ButtonStyle 4 AllToggled Vector 6 35x55@1 45x55@3 45x65@3 55x35@4 55x45@3 65x45@3
+ButtonStyle 4 AllDown Vector 6 50x90@1 10x90@3 10x50@3 50x10@4 90x10@3 90x50@3
+ButtonStyle 4 ToggledActiveDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
+ButtonStyle 4 ToggledInactiveDown Vector 6 10x55@1 45x55@3 45x90@3 55x10@4 55x45@3 90x45@3
+ButtonStyle 6 - MwmDecorMin
+ButtonStyle 6 AllUp Vector 2 35x65@1 65x65@3
+ButtonStyle 6 AllDown Vector 2 10x65@1 90x65@3
+ButtonStyle All -- UseTitleStyle Flat
