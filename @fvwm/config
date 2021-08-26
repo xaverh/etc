@@ -1,14 +1,16 @@
-InfoStoreAdd wallpaper $[XDG_DATA_HOME]/Tapet/3eec6c7edfed414fb29982217f83d6e1.png
-InfoStoreAdd wallpaper2 $[HOME]/var/BingWallpaper-2020-03-02.png
+
+InfoStoreAdd wallpaper $[HOME]/Downloads/8vwuoSx.png
+
 ExecUseShell
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Test (Init, f $[infostore.wallpaper]) Exec exec fvwm-root $[infostore.wallpaper]
-+ I Test (f $[infostore.wallpaper2]) Exec exec fvwm-root $[infostore.wallpaper2]
 + I Module FvwmCommandS
-+ I Test (Init) Exec xrdb -merge <<<"rofi.window-command: FvwmCommand 'WindowId {window} PlaceAgain\nWindowId {window} Iconify off\nWindowId {window} Focus\nWindowId {window} Raise'"
-+ I Test (Init) Exec exec tint2
++ I Test (Init) Exec urxvtd -q -o -f
+
+# + I Test (Init) Exec xrdb -merge <<<"rofi.window-command: FvwmCommand 'WindowId {window} PlaceAgain\nWindowId {window} Iconify off\nWindowId {window} Focus\nWindowId {window} Raise'"
+# + I Test (Init) Exec exec tint2
 
 DestroyFunc RaiseMoveX
 AddToFunc RaiseMoveX
@@ -35,10 +37,6 @@ AddToFunc ScrollAndRefocus
 + I Scroll $0 $1
 + I All (CurrentPage, Focused, !Iconic) FlipFocus NoWarp
 + I TestRc (NoMatch) Prev (CurrentPage, AcceptsFocus, !Iconic) FlipFocus NoWarp
-
-DestroyFunc URxvtClient
-AddToFunc URxvtClient
-+ I Exec urxvtc $* ; if [[ $? -eq 2 ]] ; then ; urxvtd -q -o -f ; urxvtc $* ; fi
 
 EwmhNumberOfDesktops 3 0
 DesktopName 0 🌐
@@ -104,7 +102,7 @@ MenuStyle * MenuColorset 3, ActiveColorset 2, TitleColorset 1, HilightBack, Hili
 DestroyMenu MenuFvwmRoot
 AddToMenu   MenuFvwmRoot@/home/xha/.config/fvwm/linux_menu.xpm@^#005577^
 + "&Programs" Popup MenuPrograms
-+ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" Function URxvtClient
++ "rxv&t-unicode%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" Exec urxvtc
 + "r&xvt-unicode font%/usr/share/doc/nodejs/npm/docs/src/images/terminal-icon.svg:0x24%" PopUp TerminalFontMenu
 + "Bluetooth%bluetooth.svg:0x24%" Popup BluetoothMenu
 + "Video%youtube.svg:0x16%" Popup YoutubeMenu
@@ -131,7 +129,7 @@ AddToMenu QuitMenu
 
 DestroyMenu MenuPrograms
 AddToMenu   MenuPrograms "Programs" Title
-+ "tmux" PopUp TmuxMenu
+# + "tmux" PopUp TmuxMenu
 + "Firefox%/usr/share/icons/hicolor/24x24/apps/firefox.png%" Exec exec firefox
 + "Google Chrome%/opt/google/chrome/product_logo_24_dev.png%" Exec exec google-chrome
 + "Discord%discord.svg:0x24%" Exec exec Discord
@@ -145,12 +143,12 @@ AddToMenu BluetoothMenu Bluetooth Title
 + "Connect JBL GO" Exec exec bluetoothctl connect 78:44:05:E4:E0:D4
 + "Disconnect JBL GO" Exec exec bluetoothctl disconnect 78:44:05:E4:E0:D4
 
-DestroyFunc GenTmuxMenu
-AddToFunc GenTmuxMenu
-+ I AddToMenu TmuxMenu "tmux" Title
-+ I PipeRead `tmux list-sessions -F '+ "#S" Function URxvtClient -e tmux new-session -A -s "#S"'`
-+ I AddToMenu TmuxMenu "" Nop
-+ I AddToMenu TmuxMenu "<new session>" Function URxvtClient -e tmux
+# DestroyFunc GenTmuxMenu
+# AddToFunc GenTmuxMenu
+# + I AddToMenu TmuxMenu "tmux" Title
+# + I PipeRead `tmux list-sessions -F '+ "#S" Function URxvtClient -e tmux new-session -A -s "#S"'`
+# + I AddToMenu TmuxMenu "" Nop
+# + I AddToMenu TmuxMenu "<new session>" Function URxvtClient -e tmux
 
 DestroyMenu TmuxMenu
 AddToMenu TmuxMenu
@@ -219,7 +217,7 @@ Silent Key Print A 4 Exec exec flameshot gui -p $[HOME]/tmp
 Silent Key XF86LaunchA A 4 Exec exec flameshot gui -p $[HOME]/tmp
 Key Tab A 4 WindowList Root c c NoDeskSort, SelectOnRelease Super_L, CurrentAtEnd, IconifiedAtEnd
 Key r A 4C Restart
-Key Return A 4 URxvtClient
+Key Return A 4 Exec exec urxvtc
 Key h A SM4 MovetoPage -1p 0p
 Key j A SM4 MovetoPage 0p +1p
 Key k A SM4 MovetoPage 0p -1p
