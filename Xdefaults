@@ -33,12 +33,12 @@ URxvt.scrollTtyOutput:   false
 URxvt.scrollWithBuffer:  true
 URxvt.scrollTtyKeypress: true
 
-URxvt.keysym.C-4: command:\033]710;xft:scientifica:size=8\007\033]711;xft:scientifica:style=Bold:size=8\007\033]712;xft:scientifica:style=Italic:size=8\007
-URxvt.keysym.C-5: command:\033]710;xft:PragmataPro:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]711;xft:PragmataPro:style=Bold:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]712;xft:PragmataPro:style=Italic:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=14,xft:JoyPixels:pixelsize=32\007
-URxvt.keysym.C-6: command:\033]710;xft:PragmataPro:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]711;xft:PragmataPro:style=Bold:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]712;xft:PragmataPro:style=Italic:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=16,xft:JoyPixels:pixelsize=36\007
-URxvt.keysym.C-7: command:\033]710;xft:PragmataPro:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]711;xft:PragmataPro:style=Bold:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]712;xft:PragmataPro:style=Italic:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=18,xft:JoyPixels:pixelsize=38\007
-URxvt.keysym.C-8: command:\033]710;xft:PragmataPro:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]711;xft:PragmataPro:style=Bold:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]712;xft:PragmataPro:style=Italic:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=20,xft:JoyPixels:pixelsize=40\007
-URxvt.keysym.C-9: command:\033]710;xft:PragmataPro:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]711;xft:PragmataPro:style=Bold:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]712;xft:PragmataPro:style=Italic:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=24,xft:JoyPixels:pixelsize=48\007
+! URxvt.keysym.C-4: command:\033]710;xft:scientifica:size=8\007\033]711;xft:scientifica:style=Bold:size=8\007\033]712;xft:scientifica:style=Italic:size=8\007
+! URxvt.keysym.C-5: command:\033]710;xft:PragmataPro:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]711;xft:PragmataPro:style=Bold:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]712;xft:PragmataPro:style=Italic:pixelsize=14,xft:JoyPixels:pixelsize=32\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=14,xft:JoyPixels:pixelsize=32\007
+! URxvt.keysym.C-6: command:\033]710;xft:PragmataPro:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]711;xft:PragmataPro:style=Bold:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]712;xft:PragmataPro:style=Italic:pixelsize=16,xft:JoyPixels:pixelsize=36\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=16,xft:JoyPixels:pixelsize=36\007
+! URxvt.keysym.C-7: command:\033]710;xft:PragmataPro:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]711;xft:PragmataPro:style=Bold:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]712;xft:PragmataPro:style=Italic:pixelsize=18,xft:JoyPixels:pixelsize=38\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=18,xft:JoyPixels:pixelsize=38\007
+! URxvt.keysym.C-8: command:\033]710;xft:PragmataPro:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]711;xft:PragmataPro:style=Bold:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]712;xft:PragmataPro:style=Italic:pixelsize=20,xft:JoyPixels:pixelsize=40\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=20,xft:JoyPixels:pixelsize=40\007
+! URxvt.keysym.C-9: command:\033]710;xft:PragmataPro:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]711;xft:PragmataPro:style=Bold:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]712;xft:PragmataPro:style=Italic:pixelsize=24,xft:JoyPixels:pixelsize=48\007\033]713;xft:PragmataPro:style=BoldItalic:pixelsize=24,xft:JoyPixels:pixelsize=48\007
 
 URxvt.keysym.C-2: command:\033]4;0;#f6f5f4;1;#e32791;2;#488432;3;#a25d0e;4;#2c65b5;5;#b062a7;6;#27bbbe;7;#999999;8;#b8b8b8;9;#9f1b66;10;#325d23;11;#71410a;12;#1f477f;13;#7b4474;14;#1b8486;15;#424242\007\033]10;#424242\007\033]11;#f6f5f4\007\033]12;#baddff\007\033]708;#f6f5f4\007
 
@@ -51,46 +51,6 @@ SshAskpass*topShadowColor:         #171717
 SshAskpass*bottomShadowColor:      #171717
 SshAskpass.*borderWidth:           1
 
-
-Ysgrifennwr*background: #f6f5f4
-Ysgrifennwr*color0: #f6f5f4
-Ysgrifennwr*color1: #e32791
-Ysgrifennwr*color2: #488432
-Ysgrifennwr*color3: #a25d0e
-Ysgrifennwr*color4: #2c65b5
-Ysgrifennwr*color5: #b062a7
-Ysgrifennwr*color6: #27bbbe
-Ysgrifennwr*color7: #999999
-Ysgrifennwr*color8: #b8b8b8
-Ysgrifennwr*color9: #9f1b66
-Ysgrifennwr*color10: #325d23
-Ysgrifennwr*color11: #71410a
-Ysgrifennwr*color12: #1f477f
-Ysgrifennwr*color13: #7b4474
-Ysgrifennwr*color14: #1b8486
-Ysgrifennwr*color15: #424242
-Ysgrifennwr*foreground: #424242
-Ysgrifennwr*cursorColor: #baddff
-
-FishChips*background: #fff1e5
-FishChips*color0: #fff1e5
-FishChips*color1: #cf191d
-FishChips*color2: #9cd321
-FishChips*color3: #ff820c
-FishChips*color4: #002fa7
-FishChips*color5: #990f3d
-FishChips*color6: #0d7680
-FishChips*color7: #736c67
-FishChips*color8: #ccc1b7
-FishChips*color9: #660d0e
-FishChips*color10: #4e6a10
-FishChips*color11: #854000
-FishChips*color12: #001854
-FishChips*color13: #4d081f
-FishChips*color14: #063c41
-FishChips*color15: #192126
-FishChips*foreground: #192126
-FishChips*cursorColor: #5aaadf
 
 ! Panda*foreground:   #f0f0f0
 ! Panda*background:   #1d1e20
@@ -143,26 +103,26 @@ XTerm*limitFallbacks: 10
 ! These are the 8 ANSI colors and their bright equivalents.  Depending on
 ! other resource settings, xterm may use the bright colors when displaying
 ! bold text (see the boldColors resource).
-! *VT100*background:            #010040
-! *background:            #010040
-! *color0: black
-! *color1: red3
-! *color2: green3
-! *color3: yellow3
-! ! *color4: blue2
-! *color4: DodgerBlue1
-! *color5: magenta3
-! *color6: cyan3
-! *color7: gray90
-! *color8: gray50
-! *color9: red
-! *color10: green
-! *color11: yellow
-! !*color12: rgb:5c/5c/ff
-! *color12: SteelBlue1
-! *color13: magenta
-! *color14: cyan
-! *color15: white
+*VT100*background:            #010040
+*background:            #010040
+*color0: black
+*color1: red3
+*color2: green3
+*color3: yellow3
+! *color4: blue2
+*color4: DodgerBlue1
+*color5: magenta3
+*color6: cyan3
+*color7: gray90
+*color8: gray50
+*color9: red
+*color10: green
+*color11: yellow
+!*color12: rgb:5c/5c/ff
+*color12: SteelBlue1
+*color13: magenta
+*color14: cyan
+*color15: white
 
 ! Disclaimer: there are no standard colors used in terminal emulation.
 !
@@ -206,6 +166,8 @@ XTerm*limitFallbacks: 10
 ! Some refinement is certainly possible (you are welcome to try) -TD
 
 
+XTerm*utf8: always
+XTerm*metaSendsEscape: true
 
 *.background: #171717
 *.color0: #171717
@@ -227,3 +189,121 @@ XTerm*limitFallbacks: 10
 *.foreground: #e5e6e6
 *.cursorColor: #ff7135
 
+!!! Fish & Chips
+*.background:           #fff1e5
+*.foreground:           #192126
+! selection_background MistyRose
+! selection_foreground none
+*.color0:	#fff1e5
+*.color1:	#cf191d
+*.color2:	#008845
+*.color3:	#FFCB19
+*.color4:	#0f5499
+*.color5:	#990f3d
+*.color6:	#089995
+*.color7:	#736c67
+*.color8:	#ccc1b7
+*.color9:	#FF383B
+*.color10:	#00D46A
+*.color11:	#FFDB66
+*.color12:	#177EE5
+*.color13:	#E5175C
+*.color14:	#0BE5DE
+*.color15:	#192126
+*.cursorColor:  #553a63
+! cursor_text_color background
+! #5aaadf
+! #ff7135
+
+!!! IRIX
+*.background:            	#010040
+*.foreground:				white
+!selection_background	DodgerBlue3
+!selection_foreground    none
+*.color0: 			black
+*.color1: 			red3
+*.color2: 			green3
+*.color3: 			yellow3
+*.color4: 			#1e90ff
+*.color5: 			magenta3
+*.color6: 			cyan3
+*.color7:			gray90
+*.color8: 			gray50
+*.color9: 			red
+*.color10:			green
+*.color11:			yellow
+*.color12:			#cae1ff
+*.color13:			magenta
+*.color14:			cyan
+*.color15:			white
+*.cursorColor:                     LightSalmon1
+! cursor_text_color          background
+! url_color DodgerBlue1
+! Another choice was from the Debian settings:
+! #1e90ff		DodgerBlue1
+! #cae1ff		SteelBlue1
+
+
+!!! Qillqaq
+*.background: #171717
+*.foreground: #F0EDE5
+! selection_foreground    #000000
+! selection_background	#553a63
+*.color0:		#171717
+*.color1:		#e32791
+*.color2:		#30c798
+!! Illuminating:
+*.color3:		#F3DF4D
+*.color4:		#6796e6
+*.color5:		#e59fdf
+*.color6:		#81d8d0
+!! Ultimate Gray:
+*.color7:		#939597
+*.color8:		#515151
+*.color9:		#e466ad
+*.color10:		#6cd1b2
+*.color11:		#e4cf98
+*.color12:		#91b0e6
+*.color13:		#e5b6e1
+*.color14:		#a2dcd7
+!! Coconut Milk:
+*.color15:		#F0EDE5
+*.cursorColor:          #ff7315
+! cursor_text_color          #171717
+! url_color #1680ac
+! # 5aaadf
+! # ff7135
+
+!!! Ysgrifennwr
+*.background:		#F0EDE5
+*.foreground:		#3D4140
+!*.selection_background:	light goldenrod yellow
+!! Coconut Milk:
+*.color0:	#F0EDE5
+*.color1:	#e32791
+*.color2:	#488432
+!! Daylilly:
+*.color3:	#EEAF0C
+*.color4:	#2c65b5
+*.color5:	#b062a7
+*.color6:	#27bbbe
+!! Ultimate Gray:
+*.color7:	#96999B
+!! TODO:
+*.color8:	#666666
+*.color9:	#9f1b66
+*.color10:	#325d23
+!! Symphonic Sunset:
+*.color11:	#DFA41E
+*.color12:	#1f477f
+*.color13:	#7b4474
+*.color14:	#1b8486
+!! Pirate Black:
+*.color15:	#3D4140
+*.cursorColor:  #0f3a4b
+! cursor_text_color          white
+! cursor #20bbfc
+! cursor_text_color          background
+! url_color #20bbfc
+! "#563C66" ! Acal
+! "#A2B9BC"
