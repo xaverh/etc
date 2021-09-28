@@ -313,7 +313,6 @@
    (version "0.0.1")
    (source (origin
             (method url-fetch/zipbomb)
-            (uri (string-append "https://files.catbox.moe/8314ww.zip"))
             (sha256
              (base32
               "0z17kzk0d6zlka8v9bd5965y2230yhzmild7fsxyl75hlj8mn5p8"))))
@@ -329,7 +328,6 @@
    (version "0.829")
    (source (origin
             (method url-fetch/zipbomb)
-            (uri (string-append "https://files.catbox.moe/3nh2tk.zip"))
             (sha256
              (base32
               "1njp0xwk9kkf9djds6r8ihyc5bh58hkgxggawx6r3sj98fg58wss"))))
