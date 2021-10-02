@@ -1,5 +1,0 @@
-#!/usr/bin/bash
-
-xrdb -merge ~/.config/Xdefaults
-exec herbstluftwm --locked
-
