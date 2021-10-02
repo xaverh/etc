@@ -35,7 +35,6 @@
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
 	     (gnu packages xdisorg)
-             (gnu packages xorg)
              (gnu packages xorg))
 (use-service-modules networking ssh)
 (use-package-modules ssh)
@@ -50,7 +49,7 @@
      (uri "https://github.com/brave/brave-browser/releases/download/v1.30.86/brave-browser_1.30.86_amd64.deb")
      (sha256
       (base32
-       "1jq4x6l754c19cqsw33xb80jksn9zz8lw19hswv5x8hyixrz5hiv"))))
+       "0pg29i01dm5gqfd3aagsc83dbx0n3051wfxi0r1c9l93dwm5bmq9"))))
    (build-system trivial-build-system)
    (native-inputs
     `(("patchelf" ,(@ (gnu packages elf) patchelf))
@@ -89,7 +88,6 @@
         (use-modules (guix build utils))
         (let* ((output (assoc-ref %outputs "out"))
                (source (assoc-ref %build-inputs "source"))
-                                        ;(working-dir (string-append (getcwd) "/package"))
                (working-dir output)
                (ar (string-append (assoc-ref %build-inputs "binutils") "/bin/ar"))
                (tar (string-append (assoc-ref %build-inputs "tar") "/bin/tar"))
@@ -123,8 +121,7 @@
           (wrap-program (string-append working-dir "/opt/brave.com/brave/brave")
 			`("LD_LIBRARY_PATH" ":" prefix
 			  ,(map (lambda (input)
-				  (string-append (assoc-ref %build-inputs input)
-						 "/lib"))
+				  (string-append (assoc-ref %build-inputs input) "/lib"))
 				'("libxcomposite" "libxtst" "nss" "nspr"
 				  "cups" "libxrandr" "libxscrnsaver" "alsa-lib"
 				  "gcc" "libxcursor" "libxdamage"
@@ -135,6 +132,7 @@
 			`("FONTCONFIG_PATH" ":" prefix (,(string-append
 							  (assoc-ref %build-inputs "fontconfig")
 							  "/etc/fonts"))))
+	  ;; --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=VaapiVideoDecoder --use-gl=egl
 
           ;; Polishing phase
           (mkdir-p (string-append working-dir "/bin"))
@@ -313,6 +311,7 @@
    (version "0.0.1")
    (source (origin
             (method url-fetch/zipbomb)
+            (uri (string-append "https://files.catbox.moe/8314ww.zip"))
             (sha256
              (base32
               "0z17kzk0d6zlka8v9bd5965y2230yhzmild7fsxyl75hlj8mn5p8"))))
@@ -328,6 +327,7 @@
    (version "0.829")
    (source (origin
             (method url-fetch/zipbomb)
+            (uri (string-append "https://files.catbox.moe/3nh2tk.zip"))
             (sha256
              (base32
               "1njp0xwk9kkf9djds6r8ihyc5bh58hkgxggawx6r3sj98fg58wss"))))
@@ -372,23 +372,57 @@
    (description "An emoji font with originally crafted icon designs.")
    (license (nonfree "https://cdn.joypixels.com/arch-linux/license/free-license.pdf"))))
 
-;; (define-public font-sf-pro
-;;   (package
-;;     (name "font-sf-pro")
-;;     (version "17.0d9e1")
-;;     (source (origin
-;;               (method url-fetch/zipbomb)
-;;               (uri (string-append "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"))
-;;               (sha256
-;;                (base32
-;;                 "1wy3v2c87cpd9w333w78s6nn7fl5cnbsv8wff01xml6m3wgl7brz"))))
-;;     (build-system font-build-system)
-;;    (native-inputs `(("p7zip" ,p7zip)))
-;;     (home-page "https://developer.apple.com/fonts/")
-;;     (synopsis "SF Pro sans-serif typeface")
-;;     (description
-;;      "This neutral, flexible, sans-serif typeface is the system font for iOS, iPad OS, macOS and tvOS. SF Pro features nine weights, variable optical sizes for optimal legibility, and includes a rounded variant. SF Pro supports over 150 languages across Latin, Greek, and Cyrillic scripts.")
-;;     (license (nonfree "https://www.apple.com/legal/sla/"))))
+(define-public font-sf-mono
+  (package
+   (name "font-sf-mono")
+   (version "16.0d2e1")
+   (native-inputs `(("p7zip" ,p7zip)))
+   (source (origin
+            (method url-fetch)
+            (uri (string-append "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg"))
+            (sha256
+             (base32
+	      "1abh2d35d5x2ga06ya1fkyhz2f3bvc9j213arj3l0lp0mvlibi3n"))))
+   (build-system font-build-system)
+   (arguments
+    '(#:phases (modify-phases %standard-phases
+			      (replace 'unpack
+				       (lambda* (#:key inputs #:allow-other-keys)
+					 (let ((source (assoc-ref inputs "source")))
+					   (invoke "7z" "x" source "SFMonoFonts/SF Mono Fonts.pkg")
+					   (invoke "7z" "x" "SFMonoFonts/SF Mono Fonts.pkg")
+					   (invoke "7z" "x" "Payload~")))))))
+    (home-page "https://developer.apple.com/fonts/")
+    (synopsis "SF Mono monospace typeface")
+    (description
+     "This monospaced variant of San Francisco enables alignment between rows and columns of text, and is used in coding environments like Xcode. SF Mono features six weights and supports Latin, Greek, and Cyrillic scripts.")
+    (license (nonfree "https://www.apple.com/legal/sla/"))))
+
+(define-public font-sf-pro
+  (package
+   (name "font-sf-pro")
+   (version "17.0d9e1")
+   (native-inputs `(("p7zip" ,p7zip)))
+   (source (origin
+            (method url-fetch)
+            (uri (string-append "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"))
+            (sha256
+             (base32
+              "1qq8ik4rq7lfa49n99jsk96kgwdsfq0zxndnrjrzy5adgk120r23"))))
+   (build-system font-build-system)
+   (arguments
+    '(#:phases (modify-phases %standard-phases
+			      (replace 'unpack
+				       (lambda* (#:key inputs #:allow-other-keys)
+					 (let ((source (assoc-ref inputs "source")))
+					   (invoke "7z" "x" source "SanFranciscoPro/San Francisco Pro.pkg")
+					   (invoke "7z" "x" "SanFranciscoPro/San Francisco Pro.pkg")
+					   (invoke "7z" "x" "Payload~")))))))
+    (home-page "https://developer.apple.com/fonts/")
+    (synopsis "SF Pro sans-serif typeface")
+    (description
+     "This neutral, flexible, sans-serif typeface is the system font for iOS, iPad OS, macOS and tvOS. SF Pro features nine weights, variable optical sizes for optimal legibility, and includes a rounded variant. SF Pro supports over 150 languages across Latin, Greek, and Cyrillic scripts.")
+    (license (nonfree "https://www.apple.com/legal/sla/"))))
 
 (operating-system
  (host-name "andermatt")
@@ -451,7 +485,6 @@
 
  ;; Globally-installed packages.
  (packages (cons* alsa-utils
-		  bemenu
 		  bluez
 		  brave
 		  btrfs-progs
@@ -460,32 +493,43 @@
 		  dmenu
 		  emacs-next
 		  emacs-evil
+		  emacs-guix
+		  emacs-haskell-mode
 		  emacs-ivy
 		  emacs-rainbow-delimiters
 		  emacs-typescript-mode
 		  emacs-web-mode
+		  ffmpeg
 		  font-adobe-source-code-pro
 		  font-berlin
-		  font-google-noto
 		  font-joypixels
 		  font-modernsuite
+		  font-mplus-testflight
 		  font-pragmatapro
-		  foot
+		  font-sf-mono
+		  font-sf-pro
 		  gimp
 		  git
-		  google-chrome
-		  grim
-		  imv
+		  ; grim
+		  intel-vaapi-driver
+		  kitty
 		  mpv
 		  neofetch
 		  nss-certs
 		  p7zip
 		  pavucontrol
-		  ;;		   pipewire
-		  slurp
+		  ; pipewire
+		  ; slurp
 		  sway
+		  sxiv
 		  tmux
 		  vim
+		  xf86-input-libinput
+		  xinit
+		  xmobar
+		  xmonad
+		  xorg-server
+		  xrandr
                   youtube-dl
 		  zathura
 		  zathura-cb
@@ -497,7 +541,7 @@
  (services (append (list fontconfig-file-system-service
                          (service network-manager-service-type)
                          (service wpa-supplicant-service-type)
-                         (elogind-service)
+                         ; (elogind-service)
                          (service ntp-service-type
                                   (ntp-configuration
                                    (allow-large-adjustment? #t)))
