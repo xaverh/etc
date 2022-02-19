@@ -1,55 +1,25 @@
 (use-modules (gnu)
-	     (guix download)
-	     (guix build-system font)
-	     (guix build-system trivial)
-	     (nonguix licenses)
-             (gnu packages)
-	     (guix packages)
-             (gnu packages admin)
-             (gnu packages certs)
-             (gnu packages chromium)
-             (gnu packages compression)
-             (gnu packages conky)
-             (gnu packages curl)
-             (gnu services desktop)
-             (gnu packages emacs)
-	     (gnu packages emacs-xyz)
-             (gnu packages fonts)
-             (gnu packages fontutils)
-             (gnu packages freedesktop)
-             (gnu packages gimp)
-             (gnu packages image)
-             (gnu packages image-viewers)
-             (gnu packages linux)
-             (gnu packages pdf)
-	     (gnu packages pulseaudio)
-             (gnu services sound)
-             (gnu packages suckless)
-             (gnu packages terminals)
-             (gnu packages tmux)
-             (gnu packages version-control)
-             (gnu packages video)
-             (gnu packages vim)
-             (gnu packages wm)
-             (gnu services xorg)
-	     (nongnu packages linux)
-	     (nongnu system linux-initrd)
-	     (gnu packages xdisorg)
-             (gnu packages xorg))
-(use-service-modules networking ssh)
-(use-package-modules ssh)
+             (srfi srfi-1)
+             (guix packages)
+             (guix download)
+             (guix build-system font)
+             (guix build-system trivial)
+             (nongnu packages linux)
+             (nongnu system linux-initrd)
+             (nonguix licenses))
+(use-service-modules desktop networking ssh xorg)
 
 (define-public brave
   (package
    (name "brave")
-   (version "1.30.86")
+   (version "1.35.101")
    (source
     (origin
      (method url-fetch)
-     (uri "https://github.com/brave/brave-browser/releases/download/v1.30.86/brave-browser_1.30.86_amd64.deb")
+     (uri (string-append "https://github.com/brave/brave-browser/releases/download/v" version "/brave-browser_" version "_amd64.deb"))
      (sha256
       (base32
-       "0pg29i01dm5gqfd3aagsc83dbx0n3051wfxi0r1c9l93dwm5bmq9"))))
+       "02gfrp02lggly6qqw5cd7igmxr8842aa0g935sc7hvrv3zlqp4db"))))
    (build-system trivial-build-system)
    (native-inputs
     `(("patchelf" ,(@ (gnu packages elf) patchelf))
@@ -57,30 +27,30 @@
       ("xz" ,(@ (gnu packages compression) xz))
       ("binutils" ,(@ (gnu packages base) binutils))))
    (inputs
-    `(("libxcomposite" ,(@ (gnu packages xorg) libxcomposite))
-      ("libxtst" ,(@ (gnu packages xorg) libxtst))
-      ("nss" ,(@ (gnu packages nss) nss))
-      ("nspr" ,(@ (gnu packages nss) nspr))
-      ("cups" ,(@ (gnu packages cups) cups))
-      ("libxrandr" ,(@ (gnu packages xorg) libxrandr))
-      ("libxscrnsaver" ,(@ (gnu packages xorg) libxscrnsaver))
-      ("alsa-lib" ,(@ (gnu packages linux) alsa-lib))
-      ("gcc" ,(@ (gnu packages gcc) gcc-7) "lib")
-      ("libxcursor" ,(@ (gnu packages xorg) libxcursor))
-      ("libxdamage" ,(@ (gnu packages xorg) libxdamage))
+    `(("alsa-lib"              ,(@ (gnu packages linux) alsa-lib))
+      ("atk"                   ,(@ (gnu packages gtk) atk))
+      ("bash"                  ,(@ (gnu packages bash) bash))
+      ("cairo"                 ,(@ (gnu packages gtk) cairo))
+      ("cups"                  ,(@ (gnu packages cups) cups))
+      ("dbus"                  ,(@ (gnu packages glib) dbus))
+      ("expat"                 ,(@ (gnu packages xml) expat))
+      ("fontconfig"            ,(@ (gnu packages fontutils) fontconfig))
+      ("gcc"                   ,(@ (gnu packages gcc) gcc) "lib")
+      ("gdk-pixbuf"            ,(@ (gnu packages gtk) gdk-pixbuf))
+      ("glib"                  ,(@ (gnu packages glib) glib))
+      ("glibc"                 ,(@ (gnu packages base) glibc))
       ("gobject-introspection" ,(@ (gnu packages glib) gobject-introspection))
-      ("glib" ,(@ (gnu packages glib) glib))
-      ("dbus" ,(@ (gnu packages glib) dbus))
-      ("expat" ,(@ (gnu packages xml) expat))
-      ("pango" ,(@ (gnu packages gtk) pango))
-      ("cairo" ,(@ (gnu packages gtk) cairo))
-      ("atk" ,(@ (gnu packages gtk) atk))
-      ("gtk+" ,(@ (gnu packages gtk) gtk+))
-      ("gdk-pixbuf" ,(@ (gnu packages gtk) gdk-pixbuf))
-      ("pulseaudio" ,(@ (gnu packages pulseaudio) pulseaudio))
-      ("fontconfig" ,(@ (gnu packages fontutils) fontconfig))
-      ("bash" ,(@ (gnu packages bash) bash))
-      ("glibc" ,(@ (gnu packages base) glibc))))
+      ("gtk+"                  ,(@ (gnu packages gtk) gtk+))
+      ("libxcomposite"         ,(@ (gnu packages xorg) libxcomposite))
+      ("libxcursor"            ,(@ (gnu packages xorg) libxcursor))
+      ("libxdamage"            ,(@ (gnu packages xorg) libxdamage))
+      ("libxrandr"             ,(@ (gnu packages xorg) libxrandr))
+      ("libxscrnsaver"         ,(@ (gnu packages xorg) libxscrnsaver))
+      ("libxtst"               ,(@ (gnu packages xorg) libxtst))
+      ("nspr"                  ,(@ (gnu packages nss) nspr))
+      ("nss"                   ,(@ (gnu packages nss) nss))
+      ("pango"                 ,(@ (gnu packages gtk) pango))
+      ("pulseaudio"            ,(@ (gnu packages pulseaudio) pulseaudio))))
    (arguments
     `(#:modules ((guix build utils))
       #:builder
@@ -163,194 +133,114 @@
                     Type=Application~%"
                       (assoc-ref %outputs "out"))))
           ))))
-   (home-page "https://www.google.com")
-   (synopsis "Google Chrome web browser.")
-   (description "Google Chrome web browser.")
+   (home-page "https://www.brave.com")
+   (synopsis "Brave web browser.")
+   (description "Brave web browser.")
    (license #f)))
 
-;; Downloads and wraps Chrome
-;; latest version txt files at https://omahaproxy.appspot.com/all?os=linux&channel=stable
-;; https://github.com/voidlinux/void-packages/blob/master/srcpkgs/google-chrome/template
-;; guix environment --ad-hoc libxcomposite libxtst nss nspr cups libxrandr libxscrnsaver alsa-lib gcc:lib libxcursor libxdamage gobject-introspection glib dbus expat pango cairo atk gtk+ gdk-pixbuf -- sh -c "LD_LIBRARY_PATH=\$GUIX_ENVIRONMENT/lib:\$GUIX_ENVIRONMENT/lib/nss ./chrome"
-;; FONTCONFIG_PATH=$GUIX_ENVIRONMENT/etc/fonts LD_LIBRARY_PATH=$GUIX_ENVIRONMENT/lib:$GUIX_ENVIRONMENT/lib/nss:$(pwd):$(guix build fontconfig)/lib:/run/current-system/profile/lib ./chrome netflix.com
-(define-public google-chrome
+#!
+
+(define-public discord
   (package
-   (name "google-chrome")
-   (version "94.0.4606.61")
-   (source
-    (origin
-     (method url-fetch)
-     (uri "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_94.0.4606.61-1_amd64.deb")
-     (sha256
-      (base32
-       "116xrf8hcprbdpdx6a4xysac2phyvw88vs3n1bs24ly6pxydsasz"))))
+   (name "discord")
+   (version "0.0.16")
+   (source (origin
+            (method url-fetch)
+            (uri (string-append "https://cdn.discordapp.com/apps/linux/"
+                                version
+                                "/"
+                                name
+                                "-"
+                                version
+                                ".tar.gz"))
+            (sha256
+             (base32
+              "1s9qym58cjm8m8kg3zywvwai2i3adiq6sdayygk2zv72ry74ldai"))))
    (build-system trivial-build-system)
-   (native-inputs
-    `(("patchelf" ,(@ (gnu packages elf) patchelf))
-      ("tar" ,(@ (gnu packages base) tar))
-      ("xz" ,(@ (gnu packages compression) xz))
-      ("binutils" ,(@ (gnu packages base) binutils))))
-   (inputs
-    `(("libxcomposite" ,(@ (gnu packages xorg) libxcomposite))
-      ("libxtst" ,(@ (gnu packages xorg) libxtst))
-      ("nss" ,(@ (gnu packages nss) nss))
-      ("nspr" ,(@ (gnu packages nss) nspr))
-      ("cups" ,(@ (gnu packages cups) cups))
-      ("libxrandr" ,(@ (gnu packages xorg) libxrandr))
-      ("libxscrnsaver" ,(@ (gnu packages xorg) libxscrnsaver))
-      ("alsa-lib" ,(@ (gnu packages linux) alsa-lib))
-      ("gcc" ,(@ (gnu packages gcc) gcc-7) "lib")
-      ("libxcursor" ,(@ (gnu packages xorg) libxcursor))
-      ("libxdamage" ,(@ (gnu packages xorg) libxdamage))
-      ("gobject-introspection" ,(@ (gnu packages glib) gobject-introspection))
-      ("glib" ,(@ (gnu packages glib) glib))
-      ("dbus" ,(@ (gnu packages glib) dbus))
-      ("expat" ,(@ (gnu packages xml) expat))
-      ("pango" ,(@ (gnu packages gtk) pango))
-      ("cairo" ,(@ (gnu packages gtk) cairo))
-      ("atk" ,(@ (gnu packages gtk) atk))
-      ("gtk+" ,(@ (gnu packages gtk) gtk+))
-      ("gdk-pixbuf" ,(@ (gnu packages gtk) gdk-pixbuf))
-      ("pulseaudio" ,(@ (gnu packages pulseaudio) pulseaudio))
-      ("fontconfig" ,(@ (gnu packages fontutils) fontconfig))
-      ("bash" ,(@ (gnu packages bash) bash))
-      ("glibc" ,(@ (gnu packages base) glibc))))
+   (inputs `(("alsa-lib"      ,(@ (gnu packages linux) alsa-lib))
+	     ("atk"           ,(@ (gnu packages gtk) atk))
+             ("at-spi2-atk"   ,(@ (gnu packages gtk) atk))
+             ("cairo"         ,(@ (gnu packages gtk) cairo))
+	     ("cups"          ,(@ (gnu packages cups) cups))
+             ("dbus"          ,(@ (gnu packages glib) dbus))
+	     ("expat"         ,(@ (gnu packages xml) expat))
+             ("fontconfig"    ,(@ (gnu packages fontutils) fontconfig))
+             ("freetype"      ,(@ (gnu packages fontutils) freetype))
+	     ("gdk-pixbuf"    ,(@ (gnu packages gtk) gdk-pixbuf))
+             ("glib"          ,(@ (gnu packages glib) glib))
+             ("gtk3"          ,(@ (gnu packages gtk) gtk+))
+             ("libcxx"        ,(@ (gnu packages llvm) clang-runtime))
+             ("libffmpeg"     ,(@ (gnu packages video) ffmpeg))
+	     ("libnotify"     ,(@ (gnu packages gnome) libnotify))
+	     ("libpulseaudio" ,(@ (gnu packages pulseaudio) pulseaudio))
+             ("libuuid"       ,(@ (gnu packages linux) util-linux))
+             ("libx11"        ,(@ (gnu packages xorg) libx11))
+             ("libxcb"        ,(@ (gnu packages xorg) libxcb))
+             ("libxcomposite" ,(@ (gnu packages xorg) libxcomposite))
+             ("libxcursor"    ,(@ (gnu packages xorg) libxcursor))
+             ("libxdamage"    ,(@ (gnu packages xorg) libxdamage))
+             ("libxext"       ,(@ (gnu packages xorg) libxext))
+             ("libxfixes"     ,(@ (gnu packages xorg) libxfixes))
+             ("libxi"         ,(@ (gnu packages xorg) libxi))
+             ("libxrandr"     ,(@ (gnu packages xorg) libxrandr))
+             ("libxrender"    ,(@ (gnu packages xorg) libxrender))
+	     ("libxscrnsaver" ,(@ (gnu packages xorg) libxscrnsaver))
+             ("libxtst"       ,(@ (gnu packages xorg) libxtst))
+             ("nspr"          ,(@ (gnu packages nss) nspr))
+             ("nss"           ,(@ (gnu packages nss) nss))
+             ("pango"         ,(@ (gnu packages gtk) pango))
+	     ("gcc"           ,(@ (gnu packages gcc) gcc) "lib")))
+   (native-inputs `(("patchelf" ,(@ (gnu packages elf) patchelf))
+                    ("tar"      ,(@ (gnu packages base) tar))
+                    ("gzip"     ,(@ (gnu packages compression) gzip))
+                    ("glibc"    ,(@ (gnu packages base) glibc))))
    (arguments
     `(#:modules ((guix build utils))
-      #:builder
-      (begin
-        (use-modules (guix build utils))
-        (let* ((output (assoc-ref %outputs "out"))
-               (source (assoc-ref %build-inputs "source"))
-                                        ;(working-dir (string-append (getcwd) "/package"))
-               (working-dir output)
-               (ar (string-append (assoc-ref %build-inputs "binutils") "/bin/ar"))
-               (tar (string-append (assoc-ref %build-inputs "tar") "/bin/tar"))
-               (patchelf (string-append (assoc-ref %build-inputs "patchelf") "/bin/patchelf")))
+      #:builder (begin
+                  (use-modules (guix build utils)
+                               (srfi srfi-26))
+                  (let* ((patchelf (assoc-ref %build-inputs "patchelf"))
+                         (glibc    (assoc-ref %build-inputs "glibc"))
+                         (source   (assoc-ref %build-inputs "source"))
+                         (tar      (assoc-ref %build-inputs "tar"))
+                         (gzip     (assoc-ref %build-inputs "gzip"))
+                         (output   (assoc-ref %outputs "out")))
+                    (define libpath "")
+                    (for-each
+                     (lambda (i)
+                       (set! libpath
+                         (string-append libpath (string-append (cdr i) "/lib") ":")))
+                     %build-inputs)
+                    (set! libpath
+                      (string-append libpath (assoc-ref %build-inputs "nss") "/lib/nss"))
+                    (setenv "PATH" (string-append gzip "/bin"))
+                    (mkdir-p (string-append output "/opt/discord"))
+                    (invoke (string-append tar "/bin/tar") "xpvf" source)
+                    (copy-recursively "./Discord" (string-append output "/opt/discord"))
+                    (mkdir-p (string-append output "/bin")) 
+                    (mkdir-p (string-append output "/share/pixmaps"))
+                    (chmod (string-append output "/opt/discord/Discord") #o755)
+                    (let ((output-port (open-file (string-append output "/bin/discord") "a")))
+                      (display "#!/bin/sh\n" output-port)
+                      (display (string-append "cd " output "/opt/discord\n") output-port)
+                      (display (string-append "LD_LIBRARY_PATH=" libpath " " "./Discord\n") output-port)
+                      (close output-port))
+                    (chmod (string-append output "/bin/discord") #o755) 
+                    (invoke (string-append patchelf "/bin/patchelf")
+                            "--set-interpreter"
+                            (string-append glibc "/lib/ld-linux-x86-64.so.2")
+                            (string-append output "/opt/discord/Discord"))
+                    ;(link (string-append %output "/opt/discord/Discord")
+                    ;      (string-append %output "/bin/discord"))
+                    (link (string-append %output "/opt/discord/discord.png")
+                          (string-append %output "/share/pixmaps/discord.png"))
+                    #t))))
+   (synopsis "Discord chat client.")
+   (description "Discord chat client.")
+   (license #f)
+   (home-page "https://discordapp.com")))
 
-          ;; Extraction phase
-          (mkdir-p working-dir)
-          (setenv "PATH" (string-append (assoc-ref %build-inputs "xz") "/bin"))
-          (zero? (system* ar "x" source "data.tar.xz"))
-          (zero? (system* tar "xvf" "data.tar.xz" "-C" working-dir "./opt"))
-
-          ;; Patching phase
-          (invoke patchelf "--set-interpreter"
-                  (string-append (assoc-ref %build-inputs "glibc") "/lib/ld-linux-x86-64.so.2")
-                  (string-append working-dir "/opt/google/chrome/chrome"))
-          (invoke patchelf "--set-interpreter"
-                  (string-append (assoc-ref %build-inputs "glibc") "/lib/ld-linux-x86-64.so.2")
-                  (string-append working-dir "/opt/google/chrome/nacl_helper"))
-          (invoke patchelf "--set-interpreter"
-                  (string-append (assoc-ref %build-inputs "glibc") "/lib/ld-linux-x86-64.so.2")
-                  (string-append working-dir "/opt/google/chrome/chrome_crashpad_handler"))
-
-          ;; Wrapping phase - give it libraries and some other envars
-          (setenv "PATH" (string-append (assoc-ref %build-inputs "bash") "/bin"))
-          (wrap-program (string-append working-dir "/opt/google/chrome/chrome")
-			`("LD_LIBRARY_PATH" ":" prefix ("/run/current-system/profile/lib")))
-          (wrap-program (string-append working-dir "/opt/google/chrome/chrome")
-			`("LD_LIBRARY_PATH" ":" prefix (,(string-append
-							  (assoc-ref %build-inputs "nss")
-							  "/lib/nss"))))
-          (wrap-program (string-append working-dir "/opt/google/chrome/chrome")
-			`("LD_LIBRARY_PATH" ":" prefix
-			  ,(map (lambda (input)
-				  (string-append (assoc-ref %build-inputs input)
-						 "/lib"))
-				'("libxcomposite" "libxtst" "nss" "nspr"
-				  "cups" "libxrandr" "libxscrnsaver" "alsa-lib"
-				  "gcc" "libxcursor" "libxdamage"
-				  "gobject-introspection" "glib" "dbus" "expat"
-				  "pango" "cairo" "atk" "gtk+" "gdk-pixbuf"
-				  "pulseaudio")))
-			;; Reads fontconfig config (version 1.12.6 compatible required)
-			`("FONTCONFIG_PATH" ":" prefix (,(string-append
-							  (assoc-ref %build-inputs "fontconfig")
-							  "/etc/fonts"))))
-
-          ;; Polishing phase
-          (mkdir-p (string-append working-dir "/bin"))
-          (symlink
-           "../opt/google/chrome/chrome"
-           (string-append working-dir "/bin/chrome"))
-
-          (with-directory-excursion (string-append working-dir "/opt/google/chrome")
-				    (for-each
-				     (lambda (size)
-				       (let ((icons (string-append output "/share/icons/hicolor/"
-								   size "x" size "/apps")))
-					 (mkdir-p icons)
-					 (copy-file (string-append "product_logo_" size ".png")
-						    (string-append icons "/chrome.png"))))
-				     '("24" "48" "64" "128" "256")))
-
-          (mkdir-p (string-append (assoc-ref %outputs "out") "/share/applications"))
-          (with-output-to-file
-              (string-append (assoc-ref %outputs "out") "/share/applications/chrome.desktop")
-            (lambda _
-              (format #t
-                      "[Desktop Entry]~@
-                    Name=Chrome~@
-                    Comment=Surf the Web to find Nora~@
-                    Exec=~a/bin/chrome~@
-                    Icon=chrome~@
-                    Categories=Network~@
-                    Type=Application~%"
-                      (assoc-ref %outputs "out"))))
-          ))))
-   (home-page "https://www.google.com")
-   (synopsis "Google Chrome web browser.")
-   (description "Google Chrome web browser.")
-   (license #f)))
-
-
-(define-public font-modernsuite
-  (package
-   (name "font-modernsuite")
-   (version "0.0.1")
-   (source (origin
-            (method url-fetch/zipbomb)
-            (sha256
-             (base32
-              "0z17kzk0d6zlka8v9bd5965y2230yhzmild7fsxyl75hlj8mn5p8"))))
-   (build-system font-build-system)
-   (home-page "https://shinntype.com/typefaces/scotch-modern/")
-   (synopsis "Scotch Modern and Figgins Sans typefaces")
-   (description "The two faces which comprise the Modern Suite are based on types from the middle of the 19th century.")
-   (license (nonfree "http://shinntype.com/wp-content/uploads/files/pdf/Scotch_Modern.pdf"))))
-
-(define-public font-pragmatapro
-  (package
-   (name "font-pragmatapro")
-   (version "0.829")
-   (source (origin
-            (method url-fetch/zipbomb)
-            (sha256
-             (base32
-              "1njp0xwk9kkf9djds6r8ihyc5bh58hkgxggawx6r3sj98fg58wss"))))
-   (build-system font-build-system)
-   (home-page "https://fsd.it/shop/fonts/pragmatapro/")
-   (synopsis "PragmataPro monospace typeface")
-   (description
-    "PragmataPro™ is a condensed monospaced font optimized for screen, designed by Fabrizio Schiavi to be the ideal font for coding, math and engineering.")
-   (license (nonfree "https://fsd.it/shop/terms/"))))
-
-(define-public font-berlin
-  (package
-   (name "font-berlin")
-   (version "1")
-   (source (origin
-            (method url-fetch/zipbomb)
-            (uri "http://www.enpassant.dk/chess/downl/berlin.zip")
-            (sha256
-             (base32
-              "1g0zjhn69381ssnlkc6jvgh263sz2lgq477cfrywck9dr68xnlsp"))))
-   (build-system font-build-system)
-   (home-page "http://www.enpassant.dk/chess/fonteng.htm")
-   (synopsis "True Type Font for chess diagrams and figurine notation")
-   (description "True Type Font by Eric Bentzen for diagrams and figurine notation. Based on the familiar design from the East German \"Sportverlag\", that published so many popular chess books. Support for fairy chess diagrams.")
-   (license (nonfree "http://www.enpassant.dk/chess/fonteng.htm")))) ; TODO
+!#
 
 (define-public font-joypixels
   (package
@@ -374,13 +264,13 @@
   (package
    (name "font-sf-mono")
    (version "16.0d2e1")
-   (native-inputs `(("p7zip" ,p7zip)))
+   (native-inputs `(("p7zip" ,(specification->package "p7zip"))))
    (source (origin
             (method url-fetch)
             (uri (string-append "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg"))
             (sha256
              (base32
-	      "1abh2d35d5x2ga06ya1fkyhz2f3bvc9j213arj3l0lp0mvlibi3n"))))
+              "0spqlf4ndxh8k6dr7vcrhqrsb8b767mgab12a6sz46g19lz8jy7j"))))
    (build-system font-build-system)
    (arguments
     '(#:phases (modify-phases %standard-phases
@@ -396,159 +286,86 @@
      "This monospaced variant of San Francisco enables alignment between rows and columns of text, and is used in coding environments like Xcode. SF Mono features six weights and supports Latin, Greek, and Cyrillic scripts.")
     (license (nonfree "https://www.apple.com/legal/sla/"))))
 
-(define-public font-sf-pro
-  (package
-   (name "font-sf-pro")
-   (version "17.0d9e1")
-   (native-inputs `(("p7zip" ,p7zip)))
-   (source (origin
-            (method url-fetch)
-            (uri (string-append "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"))
-            (sha256
-             (base32
-              "1qq8ik4rq7lfa49n99jsk96kgwdsfq0zxndnrjrzy5adgk120r23"))))
-   (build-system font-build-system)
-   (arguments
-    '(#:phases (modify-phases %standard-phases
-			      (replace 'unpack
-				       (lambda* (#:key inputs #:allow-other-keys)
-					 (let ((source (assoc-ref inputs "source")))
-					   (invoke "7z" "x" source "SanFranciscoPro/San Francisco Pro.pkg")
-					   (invoke "7z" "x" "SanFranciscoPro/San Francisco Pro.pkg")
-					   (invoke "7z" "x" "Payload~")))))))
-    (home-page "https://developer.apple.com/fonts/")
-    (synopsis "SF Pro sans-serif typeface")
-    (description
-     "This neutral, flexible, sans-serif typeface is the system font for iOS, iPad OS, macOS and tvOS. SF Pro features nine weights, variable optical sizes for optimal legibility, and includes a rounded variant. SF Pro supports over 150 languages across Latin, Greek, and Cyrillic scripts.")
-    (license (nonfree "https://www.apple.com/legal/sla/"))))
 
 (operating-system
- (host-name "andermatt")
- (timezone "Europe/Berlin")
- (locale "en_US.utf8")
- (keyboard-layout (keyboard-layout "us" "altgr-intl" #:model "latitude" #:options '("compose:menu" "rupeesign:4")))
- (kernel linux)
- (initrd (lambda (file-systems . rest)
-	   (apply microcode-initrd file-systems
-		  #:initrd base-initrd
-		  #:microcode-packages (list intel-microcode)
-		  rest)))
- (firmware (cons* iwlwifi-firmware
-                  %base-firmware))
- (bootloader (bootloader-configuration
-              (bootloader grub-efi-bootloader)
-              (targets (list "/boot/efi"))))
- (file-systems (cons* (file-system
-                       (device (uuid "6102df92-ed4b-44be-8392-5530097ae0f8" 'btrfs))
-                       (mount-point "/")
-                       (flags '(no-atime))
-                       (needed-for-boot? #t)
-                       (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/@guix/@")
-                       (type "btrfs"))
-                      (file-system
-                       (device (uuid "6102df92-ed4b-44be-8392-5530097ae0f8" 'btrfs))
-                       (mount-point "/gnu")
-                       (flags '(no-atime))
-                       (needed-for-boot? #f)
-                       (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/@guix/@gnu")
-                       (type "btrfs"))
-                      (file-system
-                       (device (uuid "6102df92-ed4b-44be-8392-5530097ae0f8" 'btrfs))
-                       (mount-point "/home")
-                       (flags '(no-atime))
-                       (needed-for-boot? #f)
-                       (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/@guix/@home")
-                       (type "btrfs"))
-                      (file-system
-                       (device (uuid "6102df92-ed4b-44be-8392-5530097ae0f8" 'btrfs))
-                       (mount-point "/var/log")
-                       (flags '(no-atime))
-                       (needed-for-boot? #t)
-                       (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/@guix/@var-log")
-                       (type "btrfs"))
-                      (file-system
-                       (mount-point "/boot/efi")
-                       (device (uuid "C3EE-5047" 'fat32))
-                       (type "vfat"))
-                      %base-file-systems))
-
- ;; This is where user accounts are specified.  The "root"
- ;; account is implicit, and is initially created with the
- ;; empty password.
- (users (cons (user-account
-               (name "xha")
-               (group "users")
-               (supplementary-groups '("wheel" "audio" "video" "input" "tty" "netdev")))
-              %base-user-accounts))
-
- ;; Globally-installed packages.
- (packages (cons* alsa-utils
-		  bluez
-		  brave
-		  btrfs-progs
-		  conky
-                  curl
-		  dmenu
-		  emacs-next
-		  emacs-evil
-		  emacs-guix
-		  emacs-haskell-mode
-		  emacs-ivy
-		  emacs-rainbow-delimiters
-		  emacs-typescript-mode
-		  emacs-web-mode
-		  ffmpeg
-		  font-adobe-source-code-pro
-		  font-berlin
-		  font-joypixels
-		  font-modernsuite
-		  font-mplus-testflight
-		  font-pragmatapro
-		  font-sf-mono
-		  font-sf-pro
-		  gimp
-		  git
-		  ; grim
-		  intel-vaapi-driver
-		  kitty
-		  mpv
-		  neofetch
-		  nss-certs
-		  p7zip
-		  pavucontrol
-		  ; pipewire
-		  ; slurp
-		  sway
-		  sxiv
-		  tmux
-		  vim
-		  xf86-input-libinput
-		  xinit
-		  xmobar
-		  xmonad
-		  xorg-server
-		  xrandr
-                  youtube-dl
-		  zathura
-		  zathura-cb
-		  zathura-djvu
-		  zathura-pdf-mupdf
-		  zathura-ps
-		  %base-packages))
-
- (services (append (list fontconfig-file-system-service
-                         (service network-manager-service-type)
-                         (service wpa-supplicant-service-type)
-                         ; (elogind-service)
-                         (service ntp-service-type
-                                  (ntp-configuration
-                                   (allow-large-adjustment? #t)))
-			 (service pulseaudio-service-type)
-			 (service bluetooth-service-type)
-                         (service alsa-service-type)
-                         (service openssh-service-type
-                                  (openssh-configuration
-                                   (openssh openssh-sans-x)
-                                   (port-number 2222))))
-                   %base-services)))
-
+  (kernel linux)
+  (initrd (lambda (file-systems . rest)
+            (apply microcode-initrd file-systems
+              #:initrd base-initrd
+              #:microcode-packages (list intel-microcode)
+              rest)))
+  (firmware (cons* iwlwifi-firmware
+                   %base-firmware))
+  (locale "en_US.utf8")
+  (timezone "Europe/Berlin")
+  (keyboard-layout
+    (keyboard-layout "us" "altgr-intl"))
+  (host-name "andermatt")
+  (users (cons* (user-account
+                  (name "xha")
+                  (comment "Xaver Hellauer")
+                  (group "users")
+                  (home-directory "/home/xha")
+                  (supplementary-groups
+                    '("wheel" "netdev" "audio" "video" "input")))
+                %base-user-accounts))
+  (packages
+    (append
+      (list (specification->package "nss-certs")
+            (specification->package "sx")
+            (specification->package "dwm")
+            (specification->package "dmenu")
+            brave
+            ; discord
+            font-joypixels
+            font-sf-mono
+            (specification->package "kitty")
+            (specification->package "emacs-next-pgtk")
+            (specification->package "firefox")
+            (specification->package "htop")
+            (specification->package "pavucontrol")
+            (specification->package "mpv")
+            (specification->package "pfetch"))
+      %base-packages))
+  (services
+    (cons*
+      (service xorg-server-service-type)
+      (modify-services
+        (remove (lambda (service)
+                (member (service-kind service)
+                  (list gdm-service-type)))
+                (modify-services %desktop-services
+                  (guix-service-type config => (guix-configuration
+                    (inherit config)
+                    (substitute-urls
+                      (append (list "https://substitutes.nonguix.org")
+                        %default-substitute-urls))
+                    (authorized-keys
+                      (append (list (plain-file "non-guix.pub"
+                                      "(public-key 
+                                        (ecc 
+                                          (curve Ed25519)
+                                          (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))"))
+                        %default-authorized-guix-keys)))))))))
+  (bootloader
+    (bootloader-configuration
+      (bootloader grub-efi-bootloader)
+      (target "/boot/efi")
+      (keyboard-layout keyboard-layout)))
+  (swap-devices
+    (list (uuid "3d70525a-3f5e-471d-b731-f6ade7c917c2")))
+  (file-systems
+    (cons* (file-system
+             (mount-point "/")
+             (device
+               (uuid "e2bc7478-31ec-4326-bd8e-8ae86d128738"
+                     'btrfs))
+             (flags '(no-atime))
+             (needed-for-boot? #t)
+             (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/guix")
+             (type "btrfs"))
+           (file-system
+             (mount-point "/boot/efi")
+             (device (uuid "3397-BD8C" 'fat32))
+             (type "vfat"))
+           %base-file-systems)))
