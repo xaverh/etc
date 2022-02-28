@@ -22,11 +22,11 @@
 
 ; (set-window-margins (selected-window) 3 3)
 
-(require-soft 'evil)
-(evil-mode 1)
+;; (require-soft 'evil)
+;; (evil-mode 1)
 
-(require-soft 'ivy)
-(ivy-mode 1)
+;; (require-soft 'ivy)
+;; (ivy-mode 1)
 
 (require-soft 'rainbow-delimiters
 	      (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
