@@ -1,13 +1,15 @@
 (use-modules (gnu)
-             (srfi srfi-1)
-             (guix packages)
-             (guix download)
-             (guix build-system font)
-             (guix build-system trivial)
              (nongnu packages linux)
              (nongnu system linux-initrd)
              (nonguix licenses))
-(use-service-modules desktop networking ssh xorg)
+(use-service-modules
+  cups
+  desktop
+  networking
+  ssh
+  xorg)
+
+#!
 
 (define-public brave
   (package
@@ -138,110 +140,6 @@
    (description "Brave web browser.")
    (license #f)))
 
-#!
-
-(define-public discord
-  (package
-   (name "discord")
-   (version "0.0.16")
-   (source (origin
-            (method url-fetch)
-            (uri (string-append "https://cdn.discordapp.com/apps/linux/"
-                                version
-                                "/"
-                                name
-                                "-"
-                                version
-                                ".tar.gz"))
-            (sha256
-             (base32
-              "1s9qym58cjm8m8kg3zywvwai2i3adiq6sdayygk2zv72ry74ldai"))))
-   (build-system trivial-build-system)
-   (inputs `(("alsa-lib"      ,(@ (gnu packages linux) alsa-lib))
-	     ("atk"           ,(@ (gnu packages gtk) atk))
-             ("at-spi2-atk"   ,(@ (gnu packages gtk) atk))
-             ("cairo"         ,(@ (gnu packages gtk) cairo))
-	     ("cups"          ,(@ (gnu packages cups) cups))
-             ("dbus"          ,(@ (gnu packages glib) dbus))
-	     ("expat"         ,(@ (gnu packages xml) expat))
-             ("fontconfig"    ,(@ (gnu packages fontutils) fontconfig))
-             ("freetype"      ,(@ (gnu packages fontutils) freetype))
-	     ("gdk-pixbuf"    ,(@ (gnu packages gtk) gdk-pixbuf))
-             ("glib"          ,(@ (gnu packages glib) glib))
-             ("gtk3"          ,(@ (gnu packages gtk) gtk+))
-             ("libcxx"        ,(@ (gnu packages llvm) clang-runtime))
-             ("libffmpeg"     ,(@ (gnu packages video) ffmpeg))
-	     ("libnotify"     ,(@ (gnu packages gnome) libnotify))
-	     ("libpulseaudio" ,(@ (gnu packages pulseaudio) pulseaudio))
-             ("libuuid"       ,(@ (gnu packages linux) util-linux))
-             ("libx11"        ,(@ (gnu packages xorg) libx11))
-             ("libxcb"        ,(@ (gnu packages xorg) libxcb))
-             ("libxcomposite" ,(@ (gnu packages xorg) libxcomposite))
-             ("libxcursor"    ,(@ (gnu packages xorg) libxcursor))
-             ("libxdamage"    ,(@ (gnu packages xorg) libxdamage))
-             ("libxext"       ,(@ (gnu packages xorg) libxext))
-             ("libxfixes"     ,(@ (gnu packages xorg) libxfixes))
-             ("libxi"         ,(@ (gnu packages xorg) libxi))
-             ("libxrandr"     ,(@ (gnu packages xorg) libxrandr))
-             ("libxrender"    ,(@ (gnu packages xorg) libxrender))
-	     ("libxscrnsaver" ,(@ (gnu packages xorg) libxscrnsaver))
-             ("libxtst"       ,(@ (gnu packages xorg) libxtst))
-             ("nspr"          ,(@ (gnu packages nss) nspr))
-             ("nss"           ,(@ (gnu packages nss) nss))
-             ("pango"         ,(@ (gnu packages gtk) pango))
-	     ("gcc"           ,(@ (gnu packages gcc) gcc) "lib")))
-   (native-inputs `(("patchelf" ,(@ (gnu packages elf) patchelf))
-                    ("tar"      ,(@ (gnu packages base) tar))
-                    ("gzip"     ,(@ (gnu packages compression) gzip))
-                    ("glibc"    ,(@ (gnu packages base) glibc))))
-   (arguments
-    `(#:modules ((guix build utils))
-      #:builder (begin
-                  (use-modules (guix build utils)
-                               (srfi srfi-26))
-                  (let* ((patchelf (assoc-ref %build-inputs "patchelf"))
-                         (glibc    (assoc-ref %build-inputs "glibc"))
-                         (source   (assoc-ref %build-inputs "source"))
-                         (tar      (assoc-ref %build-inputs "tar"))
-                         (gzip     (assoc-ref %build-inputs "gzip"))
-                         (output   (assoc-ref %outputs "out")))
-                    (define libpath "")
-                    (for-each
-                     (lambda (i)
-                       (set! libpath
-                         (string-append libpath (string-append (cdr i) "/lib") ":")))
-                     %build-inputs)
-                    (set! libpath
-                      (string-append libpath (assoc-ref %build-inputs "nss") "/lib/nss"))
-                    (setenv "PATH" (string-append gzip "/bin"))
-                    (mkdir-p (string-append output "/opt/discord"))
-                    (invoke (string-append tar "/bin/tar") "xpvf" source)
-                    (copy-recursively "./Discord" (string-append output "/opt/discord"))
-                    (mkdir-p (string-append output "/bin")) 
-                    (mkdir-p (string-append output "/share/pixmaps"))
-                    (chmod (string-append output "/opt/discord/Discord") #o755)
-                    (let ((output-port (open-file (string-append output "/bin/discord") "a")))
-                      (display "#!/bin/sh\n" output-port)
-                      (display (string-append "cd " output "/opt/discord\n") output-port)
-                      (display (string-append "LD_LIBRARY_PATH=" libpath " " "./Discord\n") output-port)
-                      (close output-port))
-                    (chmod (string-append output "/bin/discord") #o755) 
-                    (invoke (string-append patchelf "/bin/patchelf")
-                            "--set-interpreter"
-                            (string-append glibc "/lib/ld-linux-x86-64.so.2")
-                            (string-append output "/opt/discord/Discord"))
-                    ;(link (string-append %output "/opt/discord/Discord")
-                    ;      (string-append %output "/bin/discord"))
-                    (link (string-append %output "/opt/discord/discord.png")
-                          (string-append %output "/share/pixmaps/discord.png"))
-                    #t))))
-   (synopsis "Discord chat client.")
-   (description "Discord chat client.")
-   (license #f)
-   (home-page "https://discordapp.com")))
-
-!#
-
 (define-public font-joypixels
   (package
    (name "font-joypixels")
@@ -286,6 +184,7 @@
      "This monospaced variant of San Francisco enables alignment between rows and columns of text, and is used in coding environments like Xcode. SF Mono features six weights and supports Latin, Greek, and Cyrillic scripts.")
     (license (nonfree "https://www.apple.com/legal/sla/"))))
 
+!#
 
 (operating-system
   (kernel linux)
@@ -298,8 +197,7 @@
                    %base-firmware))
   (locale "en_US.utf8")
   (timezone "Europe/Berlin")
-  (keyboard-layout
-    (keyboard-layout "us" "altgr-intl"))
+  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
   (host-name "andermatt")
   (users (cons* (user-account
                   (name "xha")
@@ -311,49 +209,39 @@
                 %base-user-accounts))
   (packages
     (append
-      (list (specification->package "nss-certs")
-            (specification->package "sx")
+      (list (specification->package "xterm")
             (specification->package "dwm")
             (specification->package "dmenu")
-            brave
-            ; discord
-            font-joypixels
-            font-sf-mono
-            (specification->package "kitty")
-            (specification->package "emacs-next-pgtk")
-            (specification->package "firefox")
-            (specification->package "htop")
-            (specification->package "pavucontrol")
+            (specification->package "st")
             (specification->package "mpv")
-            (specification->package "pfetch"))
+            (specification->package "kitty")
+            (specification->package "pulsemixer")
+            (specification->package "stumpwm")
+            (specification->package "git")
+            (specification->package "gnupg")
+            (specification->package "pinentry-tty") ; required for gnupg
+            (specification->package "tmux")
+            (specification->package "pfetch")
+            (specification->package "nnn")
+            (specification->package "btrfs-progs")
+            (specification->package "mupdf")
+            (specification->package "vim")
+            (specification->package "nss-certs"))
       %base-packages))
   (services
-    (cons*
-      (service xorg-server-service-type)
-      (modify-services
-        (remove (lambda (service)
-                (member (service-kind service)
-                  (list gdm-service-type)))
-                (modify-services %desktop-services
-                  (guix-service-type config => (guix-configuration
-                    (inherit config)
-                    (substitute-urls
-                      (append (list "https://substitutes.nonguix.org")
-                        %default-substitute-urls))
-                    (authorized-keys
-                      (append (list (plain-file "non-guix.pub"
-                                      "(public-key 
-                                        (ecc 
-                                          (curve Ed25519)
-                                          (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))"))
-                        %default-authorized-guix-keys)))))))))
+    (append
+      (list
+	(bluetooth-service #:auto-enable? #t)
+	(service openssh-service-type)
+            (set-xorg-configuration
+              (xorg-configuration
+                (keyboard-layout keyboard-layout))))
+      %desktop-services))
   (bootloader
     (bootloader-configuration
       (bootloader grub-efi-bootloader)
-      (target "/boot/efi")
+      (targets (list "/boot/efi"))
       (keyboard-layout keyboard-layout)))
-  (swap-devices
-    (list (uuid "3d70525a-3f5e-471d-b731-f6ade7c917c2")))
   (file-systems
     (cons* (file-system
              (mount-point "/")
@@ -361,8 +249,7 @@
                (uuid "e2bc7478-31ec-4326-bd8e-8ae86d128738"
                      'btrfs))
              (flags '(no-atime))
-             (needed-for-boot? #t)
-             (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/guix")
+             (options "compress-force=zstd:6,user_subvol_rm_allowed,discard=async,subvol=/@guix")
              (type "btrfs"))
            (file-system
              (mount-point "/boot/efi")

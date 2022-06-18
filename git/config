@@ -1,6 +1,6 @@
 [user]
 	name = Xaver Hellauer
-	signingkey = 1119D14EB6DCAADB3669F8A80940C207E5E7CFEF
+	signingKey = 994A2F91D8EDA3A7E4535B9056BFD6BBF2F3B1B4
 	# useConfigOnly = true
 	email = xaver.hellauer@gmail.com
 [color]
@@ -8,7 +8,7 @@
 [core]
 	# editor = code --wait
 	whitespace = fix
-	excludesFiles = ~/etc/git/ignore
+	excludesFiles = ~/.config/git/ignore
 [diff]
 	tool = default-difftool
 [difftool "default-difftool"]
@@ -38,3 +38,7 @@
 # invocation.
 [init]
 	defaultBranch = master
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
