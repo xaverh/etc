@@ -1,8 +1,10 @@
 vim9script
 
+colorscheme quiet
 
 &compatible = 0
 
+# There must a be a better place for this on Windows, cf. Neovim
 &backupdir = expand('~/.vim/backup//')
 &directory = expand('~/.vim/swap//')
 &undodir = expand('~/.vim/undo//')
@@ -30,15 +32,28 @@ endif
 &backup = 1
 &display = 'lastline'
 &encoding = 'utf-8'
-# fillchars
+# fillchars 
 set formatoptions+=j
 &joinspaces = 0
 &laststatus = 2
 &number = 1
 &ruler = 1
 
+set nrformats-=octal
+set nrformats+=alpha
+
 if has('syntax') && !exists('g:syntax_on')
     syntax enable
 endif
 
+set pastetoggle=<F8>
+set textwidth=80
+set colorcolumn=+1
+set hlsearch
+set incsearch
 
+# nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+# wozu brauchen wir das hintere <C-l> ? wozu das <C-u> ?
+nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
+# nnoremap <F3> :set hlsearch! hlsearch?<CR>
+nnoremap <F5> :echo getcwd()<CR>
