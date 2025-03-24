@@ -1,7 +1,7 @@
-;;; early-init.el --- Emacs-Solo (no external packages) Configuration  -*- lexical-binding: t; -*-
+;;; early-init.el --- Emacs Configuration  -*- lexical-binding: t; -*-
 ;;
 ;;; Commentary:
-;; Early init configuration for Emacs-Solo
+;; Early init configuration for Emacs
 ;;
 ;;; Code:
 
