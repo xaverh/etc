@@ -1,59 +1,152 @@
 vim9script
 
-colorscheme quiet
-
-&compatible = 0
-
-# There must a be a better place for this on Windows, cf. Neovim
-&backupdir = expand('~/.vim/backup//')
-&directory = expand('~/.vim/swap//')
-&undodir = expand('~/.vim/undo//')
-&undofile = 1
-
-if !isdirectory(&undodir)
-	call mkdir(&undodir, 'p', 0o700)
-endif
-
+filetype plugin indent on
+&autoindent = true
+&autoread = true
+&backupdir = expand('~/.cache/vim/backup//')
 if !isdirectory(&backupdir)
 	call mkdir(&backupdir, 'p', 0o700)
 endif
-
+&bufhidden = ''
+set complete-=i
+&completeopt = 'menu,popup'
+set diffopt+=linematch:40
+&directory = expand('~/.cache/vim/swap//')
 if !isdirectory(&directory)
 	call mkdir(&directory, 'p', 0o700)
 endif
-
-# let &t_SI .= "\<Esc>[5 q"
-# let &t_SR .= "\<Esc>[3 q"
-# let &t_EI .= "\<Esc>[1 q"
-
-&autoindent = 1
-&autoread = 1
-&backspace = 'indent,eol,start'
-&backup = 1
-&display = 'lastline'
-&encoding = 'utf-8'
-# fillchars 
-set formatoptions+=j
-&joinspaces = 0
+&display = 'truncate'
+&expandtab = false
+set formatoptions+=tcr/qn1jp
+# formatoption 'wa' for Markdown?, buffer-specific option?
+&hidden = false
+&history = 10000
+&hlsearch = true
+&incsearch = true
+&joinspaces = false
+&langremap = true
 &laststatus = 2
-&number = 1
-&ruler = 1
-
-set nrformats-=octal
-set nrformats+=alpha
-
-if has('syntax') && !exists('g:syntax_on')
-    syntax enable
+&listchars = "tab:→\ ,extends:⇄,eol:¬,trail:·,leadmultispace:·,nbsp:°,precedes:⇆,conceal:▒"
+&maxsearchcount = 999
+&mouse = 'a'
+&mousemodel = 'popup_setpos'
+&number = true
+&relativenumber = false
+&scrolloff = 5
+&shelltemp = false
+&smartindent = true
+&smarttab = true
+set shortmess-=S
+&showmatch = true
+&sidescroll = 1
+&startofline = false
+set switchbuf+=uselast
+&title = true
+&ttimeout = true
+&ttimeoutlen = 50
+&t_SI = "\<Esc>[5 q"
+&t_SR = "\<Esc>[3 q"
+&t_EI = "\<Esc>[1 q"
+&undodir = expand('~/.cache/vim/undo//')
+if !isdirectory(&undodir)
+	call mkdir(&undodir, 'p', 0o700)
 endif
+&viminfofile = expand('~/.cache/vim/viminfo')
+set wildoptions+=pum,tagfile
 
-set pastetoggle=<F8>
-set textwidth=80
-set colorcolumn=+1
-set hlsearch
-set incsearch
+syntax on
 
-# nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
-# wozu brauchen wir das hintere <C-l> ? wozu das <C-u> ?
-nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
-# nnoremap <F3> :set hlsearch! hlsearch?<CR>
-nnoremap <F5> :echo getcwd()<CR>
+colorscheme quiet
+
+# ALE setup for ELP (Erlang) and Gleam language servers via ALE.
+# Erlang uses custom linter for /usr/bin/elp; Gleam uses built-in gleamlsp (gleam lsp).
+# Linter registration for ELP delayed until after ALE plugin loads (vim9 compatible).
+g:ale_linters = {'erlang': ['elp'], 'gleam': ['gleamlsp']}
+g:ale_completion_enabled = 1
+g:ale_set_highlights = 1
+g:ale_set_signs = 1
+g:ale_set_loclist = 1
+
+def FindELPProjectRoot(buffer: number): string
+    var markers = [
+        'rebar.config',
+        'rebar.lock',
+        'erlang_ls.config',
+        '_build/',
+        'deps/',
+        '.git',
+    ]
+    for marker in markers
+        var path = marker[-1 : ] == '/'
+            ? ale#path#FindNearestDirectory(buffer, marker)
+            : ale#path#FindNearestFile(buffer, marker)
+        if !empty(path)
+            return ale#path#Dirname(path)
+        endif
+    endfor
+    return ''
+enddef
+
+def GetELPExecutable(b: number): string
+    return ale#Var(b, 'erlang_elp_executable')
+enddef
+
+def RegisterELPLinter()
+    if !exists('*ale#linter#Define')
+        return
+    endif
+    ale#Set('erlang_elp_executable', '/usr/bin/elp')
+    ale#Set('gleam_gleamlsp_executable', '/usr/bin/gleam')
+    ale#linter#Define('erlang', {
+        name: 'elp',
+        lsp: 'stdio',
+        executable: GetELPExecutable,
+        command: '%e server',
+        project_root: FindELPProjectRoot,
+    })
+enddef
+
+autocmd VimEnter * ++once RegisterELPLinter()
+
+# ====================== ERLANG KEYMAPS (ALE) ======================
+autocmd FileType erlang {
+    nnoremap <buffer> gd <Cmd>ALEGoToDefinition<CR>
+    nnoremap <buffer> gr <Cmd>ALEFindReferences<CR>
+    nnoremap <buffer> K  <Cmd>ALEHover<CR>
+    nnoremap <buffer> gi <Cmd>ALEGoToImplementation<CR>
+    nnoremap <buffer> gt <Cmd>ALEGoToTypeDefinition<CR>
+
+    nnoremap <buffer> [d <Cmd>ALEPrevious<CR>
+    nnoremap <buffer> ]d <Cmd>ALENext<CR>
+    nnoremap <buffer> <leader>d <Cmd>ALEDetail<CR>
+
+    nnoremap <buffer> <leader>rn <Cmd>ALERename<CR>
+    nnoremap <buffer> <leader>ca <Cmd>ALECodeAction<CR>
+    nnoremap <buffer> <leader>f  <Cmd>ALEFix<CR>
+
+    nnoremap <buffer> <leader>o <Cmd>ALEInfo<CR>
+
+    setlocal omnifunc=ale#completion#OmniFunc
+}
+
+# ====================== GLEAM KEYMAPS (ALE) ======================
+autocmd FileType gleam {
+    nnoremap <buffer> gd <Cmd>ALEGoToDefinition<CR>
+    nnoremap <buffer> gr <Cmd>ALEFindReferences<CR>
+    nnoremap <buffer> K  <Cmd>ALEHover<CR>
+    nnoremap <buffer> gi <Cmd>ALEGoToImplementation<CR>
+    nnoremap <buffer> gt <Cmd>ALEGoToTypeDefinition<CR>
+
+    nnoremap <buffer> [d <Cmd>ALEPrevious<CR>
+    nnoremap <buffer> ]d <Cmd>ALENext<CR>
+    nnoremap <buffer> <leader>d <Cmd>ALEDetail<CR>
+
+    nnoremap <buffer> <leader>rn <Cmd>ALERename<CR>
+    nnoremap <buffer> <leader>ca <Cmd>ALECodeAction<CR>
+    nnoremap <buffer> <leader>f  <Cmd>ALEFix<CR>
+
+    nnoremap <buffer> <leader>o <Cmd>ALEInfo<CR>
+
+    setlocal omnifunc=ale#completion#OmniFunc
+}
+
