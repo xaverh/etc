@@ -1,6 +1,11 @@
 vim9script
 
+if &compatible
+	set nocompatible
+endif
+
 filetype plugin indent on
+
 &autoindent = true
 &autoread = true
 &backupdir = expand('~/.cache/vim/backup//')
@@ -8,8 +13,11 @@ if !isdirectory(&backupdir)
 	call mkdir(&backupdir, 'p', 0o700)
 endif
 &bufhidden = ''
+&colorcolumn = '78'
 set complete-=i
 &completeopt = 'menu,popup'
+&conceallevel = 0
+&copyindent = true
 set diffopt+=linematch:40
 &directory = expand('~/.cache/vim/swap//')
 if !isdirectory(&directory)
@@ -17,6 +25,7 @@ if !isdirectory(&directory)
 endif
 &display = 'truncate'
 &expandtab = false
+&fillchars = 'vert:┃'
 set formatoptions+=tcr/qn1jp
 # formatoption 'wa' for Markdown?, buffer-specific option?
 &hidden = false
@@ -31,16 +40,22 @@ set formatoptions+=tcr/qn1jp
 &mouse = 'a'
 &mousemodel = 'popup_setpos'
 &number = true
+&preserveindent = true
 &relativenumber = false
 &scrolloff = 5
+&shiftwidth = 0
 &shelltemp = false
-&smartindent = true
-&smarttab = true
-set shortmess-=S
+&smartindent = false
+&smarttab = false
+&shortmess = 'filnxtToO'
 &showmatch = true
 &sidescroll = 1
 &startofline = false
-set switchbuf+=uselast
+&softtabstop = -1
+&switchbuf = 'uselast'
+&tabstop = 8
+&termguicolors = true
+&textwidth = 100
 &title = true
 &ttimeout = true
 &ttimeoutlen = 50
@@ -54,9 +69,20 @@ endif
 &viminfofile = expand('~/.cache/vim/viminfo')
 set wildoptions+=pum,tagfile
 
+g:netrw_banner = 0
+
+cabbrev h tab h
+
+if maparg('<C-l>', 'n') ==# ''
+  nnoremap <C-l> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-l>
+endif
+
 syntax on
 
-colorscheme quiet
+colorscheme mies
+hi link HelpBar Normal
+hi link HelpStar Normal
+
 
 # ALE setup for ELP (Erlang) and Gleam language servers via ALE.
 # Erlang uses custom linter for /usr/bin/elp; Gleam uses built-in gleamlsp (gleam lsp).
