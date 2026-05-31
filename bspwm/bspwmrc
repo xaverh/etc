@@ -1,0 +1,35 @@
+#!/usr/bin/zsh
+
+pgrep -x sxhkd > /dev/null || sxhkd -c ~/.config/bspwm/sxhkdrc &
+
+xset r rate 256 32
+
+# feh --no-fehbg --bg-fill /.old/old/home/xha/Downloads/test/Interview_2021_Sept_Issue-538_Azealia-Banks_6_1.png &
+# xsetroot -solid \#19191c
+
+# feh --no-fehbg --bg-fill -z ~/Downloads/*/*.jpg
+xsetroot -bg \#19191c -fg \#2d3c4d -bitmap ~/backdrops/worm.xbm
+
+bspc monitor --reset-desktops yin yang swap dumpster
+
+bspc config border_width         1
+bspc config window_gap           7
+bspc config focused_border_color '#2d3c4d'
+bspc config normal_border_color  '#19191c'
+
+bspc config split_ratio          0.618034
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config borderless_singleton false
+bspc config single_monocle       false
+bspc config click_to_focus       none
+bspc config honor_size_hints     true
+bspc config automatic_scheme     alternate
+bspc config initial_polarity     first_child
+
+bspc rule --add firefox:Navigator follow=on focus=on locked=on private=on
+bspc rule --add firefox:Navigator:'Pay with PayPal — Personal — Mozilla Firefox' follow=on focus=on locked=on state=floating
+bspc rule --add mpv:gl split_dir=south split_ratio=0.607657 follow=off focus=off locked=on
+bspc rule --add firefox:Toolkit:Picture-in-Picture node=@/2 split_ratio=0.607657 layer=normal split_dir=south
+
+xset fp+ /home/xha/.local/share/fonts && pgrep -x panel > /dev/null || ~/.config/bspwm/panel &
