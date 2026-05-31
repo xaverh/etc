@@ -1,0 +1,32 @@
+#! /bin/sh
+
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	printf "%s\n" "The panel is already running." >&2
+	exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
+date > "$PANEL_FIFO" &
+bspc subscribe report > "$PANEL_FIFO" &
+
+. /home/xha/.config/bspwm/panel_colors
+
+# exec dbus-run-session -- zsh
+export XDG_RUNTIME_DIR=`mkrundir`
+
+# Only start X if we're on the first virtual terminal and not already in X
+if [[ -z "$DISPLAY" && "$(tty)" == "/dev/tty1" ]]; then
+    exec startx
+fi
+
+~/.config/bspwm/panel_bar < "$PANEL_FIFO" | lemonbar -u 2 -n "$PANEL_WM_NAME" -g x13 -f '-nerdypepper-scientifica-medium-r-*-*-11-*-*-*-*-*-*-*' -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+
+wid=$(xdo id -m -a "$PANEL_WM_NAME")
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait

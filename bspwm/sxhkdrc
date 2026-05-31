@@ -1,0 +1,129 @@
+super + alt + Return
+      	st -f "Screen:size=16" tmux -2 new-session -ADXs aaliyah
+
+super + shift + Return
+      	kitty -1
+
+super + v
+	gvim
+
+super + @p
+	dmenu_run -fn scientifica:pixelsize=11
+
+super + Escape
+	pkill -USR1 -x sxhkd
+
+super + alt + Escape
+	pkill -x panel; bspc quit
+
+super + alt + r
+	bspc wm -r
+
+alt + {_,shift + }F4
+	bspc node -{c,k}
+
+super + m
+	bspc desktop -l next
+
+super + {t,F9,f}
+	bspc node -t tiled || bspc node -t \~{pseudo_tiled,floating,fullscreen}
+
+super + a
+	bspc node @swap:/\#any.local.\!hidden.leaf -d focused --focus
+
+super + s
+	bspc node -d swap
+
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+super + {h,Left,j,Down,k,Up,l,Right}
+	bspc node -f {west,west,south,south,north,north,east,east}
+ 
+super + {semicolon,period,comma,slash}
+    	bspc node -f @{parent,brother,first,second}
+
+super + {_,shift + }Tab
+	bspc node -f @/1.\!focused || bspc node -f @/2/1.window || bspc node -f @/2
+
+alt + Tab
+	bspc desktop \^2 -b prev -f
+
+super + {_,shift + }F{1-4}
+	bspc {desktop -f,node -d} '^{1-4}'
+
+super + d
+      	bspc desktop -f dumpster.\!focused || bspc desktop -f last
+
+super + shift + d
+      	bspc node -d dumpster || bspc node -d \^1 --follow
+
+super + ctrl + {h,Left}
+      	bspc node -v -20 0 || bspc node -p west
+
+super + ctrl + {j,Down}
+      	bspc node -v 0 20 || bspc node -p south
+
+super + ctrl + {k,Up}
+      	bspc node -v 0 -20 || bspc node -p north
+
+super + ctrl + {l,Right}
+      	bspc node -v 20 0 || bspc node -p east
+
+super + ctrl + space
+      	bspc node -p cancel
+
+super + n
+	bspc node `bspc query -N -n any.marked || echo focused` -n `bspc query -N -n any.leaf.\!window || echo newest.\!automatic` --follow
+
+super + y
+	bspc node -i
+
+super + shift + {h,Left}
+	receptacle=`bspc query -N -n any.leaf.\!window`; if [[ -n `bspc query -N -n west.\!floating` ]]; then bspc node -s west; elif [[ -n $receptacle ]]; then bspc node focused -n "$receptacle" --follow; else bspc node @/ -p west -i && bspc node -n "$receptacle" --follow; fi
+
+super + shift + {j,Down}
+	receptacle=`bspc query -N -n any.leaf.\!window`; if [[ -n `bspc query -N -n south.\!floating` ]]; then bspc node -s south; elif [[ -n $receptacle ]]; then bspc node focused -n "$receptacle" --follow; else bspc node @/ -p south -i && bspc node -n "$receptacle" --follow; fi
+
+super + shift + {k,Up}
+	receptacle=`bspc query -N -n any.leaf.\!window`; if [[ -n `bspc query -N -n north.\!floating` ]]; then bspc node -s north; elif [[ -n $receptacle ]]; then bspc node focused -n "$receptacle" --follow; else bspc node @/ -p north -i && bspc node -n "$receptacle" --follow; fi
+
+super + shift + {l,Right}
+	receptacle=`bspc query -N -n any.leaf.\!window`; if [[ -n `bspc query -N -n east.\!floating` ]]; then bspc node -s east; elif [[ -n $receptacle ]]; then bspc node focused -n "$receptacle" --follow; else bspc node @/ -p east -i && bspc node -n "$receptacle" --follow; fi
+
+super + {_,shift} + r
+      	bspc node @{parent,/} -R 90
+
+super + {backslash,bar}
+      	bspc node @/ -F {horizontal,vertical}
+
+super + Return
+      	bspc node biggest.local.focused.window -s biggest.local.\!focused.window && bspc node -f biggest.local.window
+
+super + {_,shift} + space
+      	bspc node @/ -C {forward,backward}
+
+super + {grave,asciitilde}
+      	{_,bspc node @swap:/ -C forward && }bspc node -s @swap:/\#newest.local
+
+super + {minus,plus,0}
+      	bspc node @parent -r {-0.005,+0.005,0.618034}
+
+super + equal
+      	bspc node @parent -B
+
+super + BackSpace
+	bspc config split_ratio 0.618034 && bspc node @/ -E && bspc node @/2 -r 0.607657
+
+super + e
+	emacsclient --alternate-editor="" --create-frame --eval '(fancy-startup-screen)'
+
+super + 1
+      	bspc node -f @/1.window.\!focused || bspc node @swap:/\#newest.local -s @/1 && bspc node @swap:/ -C forward
+
+super + 2
+      	bspc query -N -n @/2.window && \{ bspc node -f @/2.window.\!focused || bspc node @swap:/\#newest.local -s @/2 && bspc node @swap:/ -C forward \} || bspc node -f @/2/1.window.\!focused || bspc node @swap:/\#newest.local -s @/2/1 && bspc node @swap:/ -C forward
+
+super + 3
+      	bspc query -N -n @/2/2.leaf && \{ bspc query -N -n @/2/2.window && \{ bspc node -f @/2/2.window.\!focused || bspc node @swap:/\#newest.local -s @/2/2 && bspc node @swap:/ -C forward && true \} || bspc node @swap:/\#newest.local -n @/2/2.\!window --follow && true \} || \{ bspc node @/2 -p south -o 0.607657 && bspc node -f @/2 && bspc node -i \}
+
